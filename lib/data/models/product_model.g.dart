@@ -18,20 +18,25 @@ class _$ProductListResponseSerializer
   @override
   final Iterable<Type> types = const [
     ProductListResponse,
-    _$ProductListResponse
+    _$ProductListResponse,
   ];
   @override
   final String wireName = 'ProductListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, ProductListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    ProductListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(ProductEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(ProductEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$ProductListResponseSerializer
 
   @override
   ProductListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProductListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$ProductListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ProductEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ProductEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$ProductItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     ProductItemResponse,
-    _$ProductItemResponse
+    _$ProductItemResponse,
   ];
   @override
   final String wireName = 'ProductItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, ProductItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    ProductItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(ProductEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(ProductEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$ProductItemResponseSerializer
 
   @override
   ProductItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProductItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,8 +116,13 @@ class _$ProductItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity))! as ProductEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ProductEntity),
+                )!
+                as ProductEntity,
+          );
           break;
       }
     }
@@ -115,84 +138,136 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   final String wireName = 'ProductEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ProductEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ProductEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'product_key',
-      serializers.serialize(object.productKey,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.productKey,
+        specifiedType: const FullType(String),
+      ),
       'notes',
-      serializers.serialize(object.notes,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.notes,
+        specifiedType: const FullType(String),
+      ),
       'cost',
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
       'price',
-      serializers.serialize(object.price,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.price,
+        specifiedType: const FullType(double),
+      ),
       'quantity',
-      serializers.serialize(object.quantity,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.quantity,
+        specifiedType: const FullType(double),
+      ),
       'tax_name1',
-      serializers.serialize(object.taxName1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName1,
+        specifiedType: const FullType(String),
+      ),
       'tax_rate1',
-      serializers.serialize(object.taxRate1,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate1,
+        specifiedType: const FullType(double),
+      ),
       'tax_name2',
-      serializers.serialize(object.taxName2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName2,
+        specifiedType: const FullType(String),
+      ),
       'tax_rate2',
-      serializers.serialize(object.taxRate2,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate2,
+        specifiedType: const FullType(double),
+      ),
       'tax_name3',
-      serializers.serialize(object.taxName3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName3,
+        specifiedType: const FullType(String),
+      ),
       'tax_rate3',
-      serializers.serialize(object.taxRate3,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate3,
+        specifiedType: const FullType(double),
+      ),
       'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue1,
+        specifiedType: const FullType(String),
+      ),
       'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue2,
+        specifiedType: const FullType(String),
+      ),
       'custom_value3',
-      serializers.serialize(object.customValue3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue3,
+        specifiedType: const FullType(String),
+      ),
       'custom_value4',
-      serializers.serialize(object.customValue4,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue4,
+        specifiedType: const FullType(String),
+      ),
       'in_stock_quantity',
-      serializers.serialize(object.stockQuantity,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.stockQuantity,
+        specifiedType: const FullType(int),
+      ),
       'stock_notification_threshold',
-      serializers.serialize(object.stockNotificationThreshold,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.stockNotificationThreshold,
+        specifiedType: const FullType(int),
+      ),
       'stock_notification',
-      serializers.serialize(object.stockNotification,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.stockNotification,
+        specifiedType: const FullType(bool),
+      ),
       'product_image',
-      serializers.serialize(object.imageUrl,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.imageUrl,
+        specifiedType: const FullType(String),
+      ),
       'max_quantity',
-      serializers.serialize(object.maxQuantity,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.maxQuantity,
+        specifiedType: const FullType(int),
+      ),
       'tax_id',
-      serializers.serialize(object.taxCategoryId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxCategoryId,
+        specifiedType: const FullType(String),
+      ),
       'documents',
-      serializers.serialize(object.documents,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DocumentEntity)])),
+      serializers.serialize(
+        object.documents,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DocumentEntity),
+        ]),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -202,36 +277,42 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   ProductEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProductEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -241,126 +322,247 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'product_key':
-          result.productKey = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.productKey =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'notes':
-          result.notes = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.notes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'cost':
-          result.cost = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.cost =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'price':
-          result.price = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.price =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'quantity':
-          result.quantity = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.quantity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name1':
-          result.taxName1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_rate1':
-          result.taxRate1 = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name2':
-          result.taxName2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_rate2':
-          result.taxRate2 = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name3':
-          result.taxName3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_rate3':
-          result.taxRate3 = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'in_stock_quantity':
-          result.stockQuantity = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.stockQuantity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'stock_notification_threshold':
-          result.stockNotificationThreshold = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.stockNotificationThreshold =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'stock_notification':
-          result.stockNotification = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.stockNotification =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'product_image':
-          result.imageUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.imageUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'max_quantity':
-          result.maxQuantity = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.maxQuantity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'tax_id':
-          result.taxCategoryId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxCategoryId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'documents':
-          result.documents.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))!
-              as BuiltList<Object?>);
+          result.documents.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -373,15 +575,15 @@ class _$ProductListResponse extends ProductListResponse {
   @override
   final BuiltList<ProductEntity> data;
 
-  factory _$ProductListResponse(
-          [void Function(ProductListResponseBuilder)? updates]) =>
-      (ProductListResponseBuilder()..update(updates))._build();
+  factory _$ProductListResponse([
+    void Function(ProductListResponseBuilder)? updates,
+  ]) => (ProductListResponseBuilder()..update(updates))._build();
 
   _$ProductListResponse._({required this.data}) : super._();
   @override
   ProductListResponse rebuild(
-          void Function(ProductListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ProductListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ProductListResponseBuilder toBuilder() =>
@@ -405,9 +607,9 @@ class _$ProductListResponse extends ProductListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ProductListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'ProductListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -447,10 +649,7 @@ class ProductListResponseBuilder
   _$ProductListResponse _build() {
     _$ProductListResponse _$result;
     try {
-      _$result = _$v ??
-          _$ProductListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$ProductListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -458,7 +657,10 @@ class ProductListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProductListResponse', _$failedField, e.toString());
+          r'ProductListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -471,15 +673,15 @@ class _$ProductItemResponse extends ProductItemResponse {
   @override
   final ProductEntity data;
 
-  factory _$ProductItemResponse(
-          [void Function(ProductItemResponseBuilder)? updates]) =>
-      (ProductItemResponseBuilder()..update(updates))._build();
+  factory _$ProductItemResponse([
+    void Function(ProductItemResponseBuilder)? updates,
+  ]) => (ProductItemResponseBuilder()..update(updates))._build();
 
   _$ProductItemResponse._({required this.data}) : super._();
   @override
   ProductItemResponse rebuild(
-          void Function(ProductItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ProductItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ProductItemResponseBuilder toBuilder() =>
@@ -503,9 +705,9 @@ class _$ProductItemResponse extends ProductItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ProductItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'ProductItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -544,10 +746,7 @@ class ProductItemResponseBuilder
   _$ProductItemResponse _build() {
     _$ProductItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$ProductItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$ProductItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -555,7 +754,10 @@ class ProductItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProductItemResponse', _$failedField, e.toString());
+          r'ProductItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -629,38 +831,38 @@ class _$ProductEntity extends ProductEntity {
   factory _$ProductEntity([void Function(ProductEntityBuilder)? updates]) =>
       (ProductEntityBuilder()..update(updates))._build();
 
-  _$ProductEntity._(
-      {required this.productKey,
-      required this.notes,
-      required this.cost,
-      required this.price,
-      required this.quantity,
-      required this.taxName1,
-      required this.taxRate1,
-      required this.taxName2,
-      required this.taxRate2,
-      required this.taxName3,
-      required this.taxRate3,
-      required this.customValue1,
-      required this.customValue2,
-      required this.customValue3,
-      required this.customValue4,
-      required this.stockQuantity,
-      required this.stockNotificationThreshold,
-      required this.stockNotification,
-      required this.imageUrl,
-      required this.maxQuantity,
-      required this.taxCategoryId,
-      required this.documents,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$ProductEntity._({
+    required this.productKey,
+    required this.notes,
+    required this.cost,
+    required this.price,
+    required this.quantity,
+    required this.taxName1,
+    required this.taxRate1,
+    required this.taxName2,
+    required this.taxRate2,
+    required this.taxName3,
+    required this.taxRate3,
+    required this.customValue1,
+    required this.customValue2,
+    required this.customValue3,
+    required this.customValue4,
+    required this.stockQuantity,
+    required this.stockNotificationThreshold,
+    required this.stockNotification,
+    required this.imageUrl,
+    required this.maxQuantity,
+    required this.taxCategoryId,
+    required this.documents,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   ProductEntity rebuild(void Function(ProductEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -970,65 +1172,139 @@ class ProductEntityBuilder
   _$ProductEntity _build() {
     _$ProductEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ProductEntity._(
             productKey: BuiltValueNullFieldError.checkNotNull(
-                productKey, r'ProductEntity', 'productKey'),
+              productKey,
+              r'ProductEntity',
+              'productKey',
+            ),
             notes: BuiltValueNullFieldError.checkNotNull(
-                notes, r'ProductEntity', 'notes'),
+              notes,
+              r'ProductEntity',
+              'notes',
+            ),
             cost: BuiltValueNullFieldError.checkNotNull(
-                cost, r'ProductEntity', 'cost'),
+              cost,
+              r'ProductEntity',
+              'cost',
+            ),
             price: BuiltValueNullFieldError.checkNotNull(
-                price, r'ProductEntity', 'price'),
+              price,
+              r'ProductEntity',
+              'price',
+            ),
             quantity: BuiltValueNullFieldError.checkNotNull(
-                quantity, r'ProductEntity', 'quantity'),
+              quantity,
+              r'ProductEntity',
+              'quantity',
+            ),
             taxName1: BuiltValueNullFieldError.checkNotNull(
-                taxName1, r'ProductEntity', 'taxName1'),
+              taxName1,
+              r'ProductEntity',
+              'taxName1',
+            ),
             taxRate1: BuiltValueNullFieldError.checkNotNull(
-                taxRate1, r'ProductEntity', 'taxRate1'),
+              taxRate1,
+              r'ProductEntity',
+              'taxRate1',
+            ),
             taxName2: BuiltValueNullFieldError.checkNotNull(
-                taxName2, r'ProductEntity', 'taxName2'),
+              taxName2,
+              r'ProductEntity',
+              'taxName2',
+            ),
             taxRate2: BuiltValueNullFieldError.checkNotNull(
-                taxRate2, r'ProductEntity', 'taxRate2'),
+              taxRate2,
+              r'ProductEntity',
+              'taxRate2',
+            ),
             taxName3: BuiltValueNullFieldError.checkNotNull(
-                taxName3, r'ProductEntity', 'taxName3'),
+              taxName3,
+              r'ProductEntity',
+              'taxName3',
+            ),
             taxRate3: BuiltValueNullFieldError.checkNotNull(
-                taxRate3, r'ProductEntity', 'taxRate3'),
+              taxRate3,
+              r'ProductEntity',
+              'taxRate3',
+            ),
             customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'ProductEntity', 'customValue1'),
+              customValue1,
+              r'ProductEntity',
+              'customValue1',
+            ),
             customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, r'ProductEntity', 'customValue2'),
+              customValue2,
+              r'ProductEntity',
+              'customValue2',
+            ),
             customValue3: BuiltValueNullFieldError.checkNotNull(
-                customValue3, r'ProductEntity', 'customValue3'),
+              customValue3,
+              r'ProductEntity',
+              'customValue3',
+            ),
             customValue4: BuiltValueNullFieldError.checkNotNull(
-                customValue4, r'ProductEntity', 'customValue4'),
+              customValue4,
+              r'ProductEntity',
+              'customValue4',
+            ),
             stockQuantity: BuiltValueNullFieldError.checkNotNull(
-                stockQuantity, r'ProductEntity', 'stockQuantity'),
+              stockQuantity,
+              r'ProductEntity',
+              'stockQuantity',
+            ),
             stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(
-                stockNotificationThreshold,
-                r'ProductEntity',
-                'stockNotificationThreshold'),
+              stockNotificationThreshold,
+              r'ProductEntity',
+              'stockNotificationThreshold',
+            ),
             stockNotification: BuiltValueNullFieldError.checkNotNull(
-                stockNotification, r'ProductEntity', 'stockNotification'),
+              stockNotification,
+              r'ProductEntity',
+              'stockNotification',
+            ),
             imageUrl: BuiltValueNullFieldError.checkNotNull(
-                imageUrl, r'ProductEntity', 'imageUrl'),
+              imageUrl,
+              r'ProductEntity',
+              'imageUrl',
+            ),
             maxQuantity: BuiltValueNullFieldError.checkNotNull(
-                maxQuantity, r'ProductEntity', 'maxQuantity'),
+              maxQuantity,
+              r'ProductEntity',
+              'maxQuantity',
+            ),
             taxCategoryId: BuiltValueNullFieldError.checkNotNull(
-                taxCategoryId, r'ProductEntity', 'taxCategoryId'),
+              taxCategoryId,
+              r'ProductEntity',
+              'taxCategoryId',
+            ),
             documents: documents.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'ProductEntity', 'createdAt'),
+              createdAt,
+              r'ProductEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'ProductEntity', 'updatedAt'),
+              updatedAt,
+              r'ProductEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'ProductEntity', 'archivedAt'),
+              archivedAt,
+              r'ProductEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'ProductEntity', 'id'),
+              id,
+              r'ProductEntity',
+              'id',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -1037,7 +1313,10 @@ class ProductEntityBuilder
         documents.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProductEntity', _$failedField, e.toString());
+          r'ProductEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

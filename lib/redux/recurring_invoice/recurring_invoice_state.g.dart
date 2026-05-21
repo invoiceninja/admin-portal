@@ -16,24 +16,33 @@ class _$RecurringInvoiceStateSerializer
   @override
   final Iterable<Type> types = const [
     RecurringInvoiceState,
-    _$RecurringInvoiceState
+    _$RecurringInvoiceState,
   ];
   @override
   final String wireName = 'RecurringInvoiceState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, RecurringInvoiceState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    RecurringInvoiceState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(InvoiceEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(InvoiceEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -41,8 +50,10 @@ class _$RecurringInvoiceStateSerializer
 
   @override
   RecurringInvoiceState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = RecurringInvoiceStateBuilder();
 
     final iterator = serialized.iterator;
@@ -52,17 +63,26 @@ class _$RecurringInvoiceStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(InvoiceEntity)
-              ]))!);
+                const FullType(InvoiceEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -76,45 +96,58 @@ class _$RecurringInvoiceUIStateSerializer
   @override
   final Iterable<Type> types = const [
     RecurringInvoiceUIState,
-    _$RecurringInvoiceUIState
+    _$RecurringInvoiceUIState,
   ];
   @override
   final String wireName = 'RecurringInvoiceUIState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, RecurringInvoiceUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    RecurringInvoiceUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(InvoiceEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(InvoiceEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   RecurringInvoiceUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = RecurringInvoiceUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -124,20 +157,38 @@ class _$RecurringInvoiceUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity))! as InvoiceEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(InvoiceEntity),
+                )!
+                as InvoiceEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -152,16 +203,16 @@ class _$RecurringInvoiceState extends RecurringInvoiceState {
   @override
   final BuiltList<String> list;
 
-  factory _$RecurringInvoiceState(
-          [void Function(RecurringInvoiceStateBuilder)? updates]) =>
-      (RecurringInvoiceStateBuilder()..update(updates))._build();
+  factory _$RecurringInvoiceState([
+    void Function(RecurringInvoiceStateBuilder)? updates,
+  ]) => (RecurringInvoiceStateBuilder()..update(updates))._build();
 
   _$RecurringInvoiceState._({required this.map, required this.list})
-      : super._();
+    : super._();
   @override
   RecurringInvoiceState rebuild(
-          void Function(RecurringInvoiceStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(RecurringInvoiceStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   RecurringInvoiceStateBuilder toBuilder() =>
@@ -236,11 +287,9 @@ class RecurringInvoiceStateBuilder
   _$RecurringInvoiceState _build() {
     _$RecurringInvoiceState _$result;
     try {
-      _$result = _$v ??
-          _$RecurringInvoiceState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result =
+          _$v ??
+          _$RecurringInvoiceState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -250,7 +299,10 @@ class RecurringInvoiceStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'RecurringInvoiceState', _$failedField, e.toString());
+          r'RecurringInvoiceState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -279,25 +331,25 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
   @override
   final Completer<Null>? cancelCompleter;
 
-  factory _$RecurringInvoiceUIState(
-          [void Function(RecurringInvoiceUIStateBuilder)? updates]) =>
-      (RecurringInvoiceUIStateBuilder()..update(updates))._build();
+  factory _$RecurringInvoiceUIState([
+    void Function(RecurringInvoiceUIStateBuilder)? updates,
+  ]) => (RecurringInvoiceUIStateBuilder()..update(updates))._build();
 
-  _$RecurringInvoiceUIState._(
-      {this.editing,
-      this.editingItemIndex,
-      this.historyActivityId,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$RecurringInvoiceUIState._({
+    this.editing,
+    this.editingItemIndex,
+    this.historyActivityId,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   RecurringInvoiceUIState rebuild(
-          void Function(RecurringInvoiceUIStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(RecurringInvoiceUIStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   RecurringInvoiceUIStateBuilder toBuilder() =>
@@ -436,7 +488,8 @@ class RecurringInvoiceUIStateBuilder
   _$RecurringInvoiceUIState _build() {
     _$RecurringInvoiceUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$RecurringInvoiceUIState._(
             editing: _editing?.build(),
             editingItemIndex: editingItemIndex,
@@ -445,7 +498,10 @@ class RecurringInvoiceUIStateBuilder
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'RecurringInvoiceUIState', 'tabIndex'),
+              tabIndex,
+              r'RecurringInvoiceUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -459,7 +515,10 @@ class RecurringInvoiceUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'RecurringInvoiceUIState', _$failedField, e.toString());
+          r'RecurringInvoiceUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

@@ -48,6 +48,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
 
   final _eInvoiceCertificatePassphraseController = TextEditingController();
   final _eInvoiceForwardEmailController = TextEditingController();
+  final _eExpenseForwardEmailController = TextEditingController();
   String _paymentMeansCode = '';
   final _paymentMeansCodeController = TextEditingController();
   final _paymentMeansCodeFocusNode = FocusNode();
@@ -118,6 +119,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     _controllers = [
       _eInvoiceCertificatePassphraseController,
       _eInvoiceForwardEmailController,
+      _eExpenseForwardEmailController,
     ];
 
     _controllers
@@ -130,6 +132,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
     _eInvoiceForwardEmailController.text = settings.eInvoiceForwardEmail ?? '';
+    _eExpenseForwardEmailController.text = settings.eExpenseForwardEmail ?? '';
 
     // Pre-populate PEPPOL onboarding from company settings
     _partyNameController.text = settings.name ?? '';
@@ -157,8 +160,9 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
 
-    final settings = viewModel.settings.rebuild((b) =>
-        b..eInvoiceForwardEmail = _eInvoiceForwardEmailController.text.trim());
+    final settings = viewModel.settings.rebuild((b) => b
+      ..eInvoiceForwardEmail = _eInvoiceForwardEmailController.text.trim()
+      ..eExpenseForwardEmail = _eExpenseForwardEmailController.text.trim());
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
@@ -472,8 +476,14 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                       ],
                     ),
                     DecoratedFormField(
-                      label: localization.forwardEmail,
+                      label: localization.forwardInvoices,
                       controller: _eInvoiceForwardEmailController,
+                      keyboardType: TextInputType.emailAddress,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    DecoratedFormField(
+                      label: localization.forwardExpenses,
+                      controller: _eExpenseForwardEmailController,
                       keyboardType: TextInputType.emailAddress,
                       onSavePressed: _onSavePressed,
                     ),

@@ -17,17 +17,27 @@ class _$ExpenseStateSerializer implements StructuredSerializer<ExpenseState> {
   final String wireName = 'ExpenseState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ExpenseState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ExpenseState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(ExpenseEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(ExpenseEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -35,8 +45,10 @@ class _$ExpenseStateSerializer implements StructuredSerializer<ExpenseState> {
 
   @override
   ExpenseState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ExpenseStateBuilder();
 
     final iterator = serialized.iterator;
@@ -46,17 +58,26 @@ class _$ExpenseStateSerializer implements StructuredSerializer<ExpenseState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(ExpenseEntity)
-              ]))!);
+                const FullType(ExpenseEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -73,38 +94,52 @@ class _$ExpenseUIStateSerializer
   final String wireName = 'ExpenseUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ExpenseUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ExpenseUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ExpenseEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(ExpenseEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   ExpenseUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ExpenseUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -114,20 +149,38 @@ class _$ExpenseUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ExpenseEntity))! as ExpenseEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ExpenseEntity),
+                )!
+                as ExpenseEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -220,11 +273,7 @@ class ExpenseStateBuilder
   _$ExpenseState _build() {
     _$ExpenseState _$result;
     try {
-      _$result = _$v ??
-          _$ExpenseState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$ExpenseState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -234,7 +283,10 @@ class ExpenseStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ExpenseState', _$failedField, e.toString());
+          r'ExpenseState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -262,15 +314,15 @@ class _$ExpenseUIState extends ExpenseUIState {
   factory _$ExpenseUIState([void Function(ExpenseUIStateBuilder)? updates]) =>
       (ExpenseUIStateBuilder()..update(updates))._build();
 
-  _$ExpenseUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$ExpenseUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   ExpenseUIState rebuild(void Function(ExpenseUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -392,14 +444,18 @@ class ExpenseUIStateBuilder
   _$ExpenseUIState _build() {
     _$ExpenseUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ExpenseUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'ExpenseUIState', 'tabIndex'),
+              tabIndex,
+              r'ExpenseUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -412,7 +468,10 @@ class ExpenseUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ExpenseUIState', _$failedField, e.toString());
+          r'ExpenseUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

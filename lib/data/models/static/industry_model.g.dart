@@ -18,20 +18,25 @@ class _$IndustryListResponseSerializer
   @override
   final Iterable<Type> types = const [
     IndustryListResponse,
-    _$IndustryListResponse
+    _$IndustryListResponse,
   ];
   @override
   final String wireName = 'IndustryListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, IndustryListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    IndustryListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(IndustryEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(IndustryEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$IndustryListResponseSerializer
 
   @override
   IndustryListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = IndustryListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$IndustryListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(IndustryEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(IndustryEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$IndustryItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     IndustryItemResponse,
-    _$IndustryItemResponse
+    _$IndustryItemResponse,
   ];
   @override
   final String wireName = 'IndustryItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, IndustryItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    IndustryItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(IndustryEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(IndustryEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$IndustryItemResponseSerializer
 
   @override
   IndustryItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = IndustryItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,9 +116,13 @@ class _$IndustryItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(IndustryEntity))!
-              as IndustryEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(IndustryEntity),
+                )!
+                as IndustryEntity,
+          );
           break;
       }
     }
@@ -117,8 +139,11 @@ class _$IndustryEntitySerializer
   final String wireName = 'IndustryEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, IndustryEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    IndustryEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -131,8 +156,10 @@ class _$IndustryEntitySerializer
 
   @override
   IndustryEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = IndustryEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -142,12 +169,20 @@ class _$IndustryEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -160,15 +195,15 @@ class _$IndustryListResponse extends IndustryListResponse {
   @override
   final BuiltList<IndustryEntity> data;
 
-  factory _$IndustryListResponse(
-          [void Function(IndustryListResponseBuilder)? updates]) =>
-      (IndustryListResponseBuilder()..update(updates))._build();
+  factory _$IndustryListResponse([
+    void Function(IndustryListResponseBuilder)? updates,
+  ]) => (IndustryListResponseBuilder()..update(updates))._build();
 
   _$IndustryListResponse._({required this.data}) : super._();
   @override
   IndustryListResponse rebuild(
-          void Function(IndustryListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(IndustryListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   IndustryListResponseBuilder toBuilder() =>
@@ -192,9 +227,9 @@ class _$IndustryListResponse extends IndustryListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'IndustryListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'IndustryListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -234,10 +269,7 @@ class IndustryListResponseBuilder
   _$IndustryListResponse _build() {
     _$IndustryListResponse _$result;
     try {
-      _$result = _$v ??
-          _$IndustryListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$IndustryListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -245,7 +277,10 @@ class IndustryListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'IndustryListResponse', _$failedField, e.toString());
+          r'IndustryListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -258,15 +293,15 @@ class _$IndustryItemResponse extends IndustryItemResponse {
   @override
   final IndustryEntity data;
 
-  factory _$IndustryItemResponse(
-          [void Function(IndustryItemResponseBuilder)? updates]) =>
-      (IndustryItemResponseBuilder()..update(updates))._build();
+  factory _$IndustryItemResponse([
+    void Function(IndustryItemResponseBuilder)? updates,
+  ]) => (IndustryItemResponseBuilder()..update(updates))._build();
 
   _$IndustryItemResponse._({required this.data}) : super._();
   @override
   IndustryItemResponse rebuild(
-          void Function(IndustryItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(IndustryItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   IndustryItemResponseBuilder toBuilder() =>
@@ -290,9 +325,9 @@ class _$IndustryItemResponse extends IndustryItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'IndustryItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'IndustryItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -331,10 +366,7 @@ class IndustryItemResponseBuilder
   _$IndustryItemResponse _build() {
     _$IndustryItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$IndustryItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$IndustryItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -342,7 +374,10 @@ class IndustryItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'IndustryItemResponse', _$failedField, e.toString());
+          r'IndustryItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -432,12 +467,19 @@ class IndustryEntityBuilder
   IndustryEntity build() => _build();
 
   _$IndustryEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$IndustryEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'IndustryEntity', 'name'),
+            name,
+            r'IndustryEntity',
+            'name',
+          ),
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'IndustryEntity', 'id'),
+            id,
+            r'IndustryEntity',
+            'id',
+          ),
         );
     replace(_$result);
     return _$result;

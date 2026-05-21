@@ -13,7 +13,7 @@ Serializer<HealthCheckPHPResponse> _$healthCheckPHPResponseSerializer =
 Serializer<HealthCheckQueueResponse> _$healthCheckQueueResponseSerializer =
     _$HealthCheckQueueResponseSerializer();
 Serializer<HealthCheckLastErrorResponse>
-    _$healthCheckLastErrorResponseSerializer =
+_$healthCheckLastErrorResponseSerializer =
     _$HealthCheckLastErrorResponseSerializer();
 
 class _$HealthCheckResponseSerializer
@@ -21,67 +21,103 @@ class _$HealthCheckResponseSerializer
   @override
   final Iterable<Type> types = const [
     HealthCheckResponse,
-    _$HealthCheckResponse
+    _$HealthCheckResponse,
   ];
   @override
   final String wireName = 'HealthCheckResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, HealthCheckResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    HealthCheckResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'system_health',
-      serializers.serialize(object.systemHealth,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.systemHealth,
+        specifiedType: const FullType(bool),
+      ),
       'php_version',
-      serializers.serialize(object.phpVersion,
-          specifiedType: const FullType(HealthCheckPHPResponse)),
+      serializers.serialize(
+        object.phpVersion,
+        specifiedType: const FullType(HealthCheckPHPResponse),
+      ),
       'queue_data',
-      serializers.serialize(object.queueData,
-          specifiedType: const FullType(HealthCheckQueueResponse)),
+      serializers.serialize(
+        object.queueData,
+        specifiedType: const FullType(HealthCheckQueueResponse),
+      ),
       'env_writable',
-      serializers.serialize(object.envWritable,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.envWritable,
+        specifiedType: const FullType(bool),
+      ),
       'simple_db_check',
-      serializers.serialize(object.dbCheck,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.dbCheck,
+        specifiedType: const FullType(bool),
+      ),
       'cache_enabled',
-      serializers.serialize(object.cacheEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.cacheEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'phantom_enabled',
-      serializers.serialize(object.phantomEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.phantomEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'open_basedir',
-      serializers.serialize(object.openBasedir,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.openBasedir,
+        specifiedType: const FullType(bool),
+      ),
       'file_permissions',
-      serializers.serialize(object.filePermissions,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.filePermissions,
+        specifiedType: const FullType(String),
+      ),
       'exec',
-      serializers.serialize(object.execEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.execEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'mail_mailer',
-      serializers.serialize(object.emailDriver,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.emailDriver,
+        specifiedType: const FullType(String),
+      ),
       'jobs_pending',
-      serializers.serialize(object.pendingJobs,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.pendingJobs,
+        specifiedType: const FullType(int),
+      ),
       'pdf_engine',
-      serializers.serialize(object.pdfEngine,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.pdfEngine,
+        specifiedType: const FullType(String),
+      ),
       'trailing_slash',
-      serializers.serialize(object.trailingSlash,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.trailingSlash,
+        specifiedType: const FullType(bool),
+      ),
       'exchange_rate_api_not_configured',
-      serializers.serialize(object.exchangeRateApiNotConfigured,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.exchangeRateApiNotConfigured,
+        specifiedType: const FullType(bool),
+      ),
       'pending_migration',
-      serializers.serialize(object.pendingMigration,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.pendingMigration,
+        specifiedType: const FullType(bool),
+      ),
       'queue',
-      serializers.serialize(object.queue,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.queue,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -89,8 +125,10 @@ class _$HealthCheckResponseSerializer
 
   @override
   HealthCheckResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = HealthCheckResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -100,74 +138,142 @@ class _$HealthCheckResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'system_health':
-          result.systemHealth = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.systemHealth =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'php_version':
-          result.phpVersion.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(HealthCheckPHPResponse))!
-              as HealthCheckPHPResponse);
+          result.phpVersion.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(HealthCheckPHPResponse),
+                )!
+                as HealthCheckPHPResponse,
+          );
           break;
         case 'queue_data':
-          result.queueData.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(HealthCheckQueueResponse))!
-              as HealthCheckQueueResponse);
+          result.queueData.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(HealthCheckQueueResponse),
+                )!
+                as HealthCheckQueueResponse,
+          );
           break;
         case 'env_writable':
-          result.envWritable = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.envWritable =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'simple_db_check':
-          result.dbCheck = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.dbCheck =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'cache_enabled':
-          result.cacheEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.cacheEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'phantom_enabled':
-          result.phantomEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.phantomEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'open_basedir':
-          result.openBasedir = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.openBasedir =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'file_permissions':
-          result.filePermissions = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.filePermissions =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'exec':
-          result.execEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.execEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'mail_mailer':
-          result.emailDriver = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.emailDriver =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'jobs_pending':
-          result.pendingJobs = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.pendingJobs =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'pdf_engine':
-          result.pdfEngine = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.pdfEngine =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'trailing_slash':
-          result.trailingSlash = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.trailingSlash =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'exchange_rate_api_not_configured':
-          result.exchangeRateApiNotConfigured = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.exchangeRateApiNotConfigured =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'pending_migration':
-          result.pendingMigration = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.pendingMigration =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'queue':
-          result.queue = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.queue =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -181,30 +287,40 @@ class _$HealthCheckPHPResponseSerializer
   @override
   final Iterable<Type> types = const [
     HealthCheckPHPResponse,
-    _$HealthCheckPHPResponse
+    _$HealthCheckPHPResponse,
   ];
   @override
   final String wireName = 'HealthCheckPHPResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, HealthCheckPHPResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    HealthCheckPHPResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'minimum_php_version',
-      serializers.serialize(object.minimumPHPVersion,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.minimumPHPVersion,
+        specifiedType: const FullType(String),
+      ),
       'current_php_version',
-      serializers.serialize(object.currentPHPVersion,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.currentPHPVersion,
+        specifiedType: const FullType(String),
+      ),
       'current_php_cli_version',
-      serializers.serialize(object.currentPHPCLIVersion,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.currentPHPCLIVersion,
+        specifiedType: const FullType(String),
+      ),
       'is_okay',
       serializers.serialize(object.isOkay, specifiedType: const FullType(bool)),
       'memory_limit',
-      serializers.serialize(object.memoryLimit,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.memoryLimit,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -212,8 +328,10 @@ class _$HealthCheckPHPResponseSerializer
 
   @override
   HealthCheckPHPResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = HealthCheckPHPResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -223,24 +341,44 @@ class _$HealthCheckPHPResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'minimum_php_version':
-          result.minimumPHPVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.minimumPHPVersion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'current_php_version':
-          result.currentPHPVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.currentPHPVersion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'current_php_cli_version':
-          result.currentPHPCLIVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.currentPHPCLIVersion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'is_okay':
-          result.isOkay = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isOkay =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'memory_limit':
-          result.memoryLimit = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.memoryLimit =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -254,23 +392,27 @@ class _$HealthCheckQueueResponseSerializer
   @override
   final Iterable<Type> types = const [
     HealthCheckQueueResponse,
-    _$HealthCheckQueueResponse
+    _$HealthCheckQueueResponse,
   ];
   @override
   final String wireName = 'HealthCheckQueueResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, HealthCheckQueueResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    HealthCheckQueueResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'failed',
       serializers.serialize(object.failed, specifiedType: const FullType(int)),
       'pending',
       serializers.serialize(object.pending, specifiedType: const FullType(int)),
       'last_error',
-      serializers.serialize(object.lastError,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.lastError,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -278,8 +420,10 @@ class _$HealthCheckQueueResponseSerializer
 
   @override
   HealthCheckQueueResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = HealthCheckQueueResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -289,16 +433,28 @@ class _$HealthCheckQueueResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'failed':
-          result.failed = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.failed =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'pending':
-          result.pending = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.pending =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'last_error':
-          result.lastError = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.lastError =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -312,19 +468,23 @@ class _$HealthCheckLastErrorResponseSerializer
   @override
   final Iterable<Type> types = const [
     HealthCheckLastErrorResponse,
-    _$HealthCheckLastErrorResponse
+    _$HealthCheckLastErrorResponse,
   ];
   @override
   final String wireName = 'HealthCheckLastErrorResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, HealthCheckLastErrorResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    HealthCheckLastErrorResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'last_error',
-      serializers.serialize(object.lastError,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.lastError,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -332,8 +492,10 @@ class _$HealthCheckLastErrorResponseSerializer
 
   @override
   HealthCheckLastErrorResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = HealthCheckLastErrorResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -343,8 +505,12 @@ class _$HealthCheckLastErrorResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'last_error':
-          result.lastError = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.lastError =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -389,33 +555,33 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final String queue;
 
-  factory _$HealthCheckResponse(
-          [void Function(HealthCheckResponseBuilder)? updates]) =>
-      (HealthCheckResponseBuilder()..update(updates))._build();
+  factory _$HealthCheckResponse([
+    void Function(HealthCheckResponseBuilder)? updates,
+  ]) => (HealthCheckResponseBuilder()..update(updates))._build();
 
-  _$HealthCheckResponse._(
-      {required this.systemHealth,
-      required this.phpVersion,
-      required this.queueData,
-      required this.envWritable,
-      required this.dbCheck,
-      required this.cacheEnabled,
-      required this.phantomEnabled,
-      required this.openBasedir,
-      required this.filePermissions,
-      required this.execEnabled,
-      required this.emailDriver,
-      required this.pendingJobs,
-      required this.pdfEngine,
-      required this.trailingSlash,
-      required this.exchangeRateApiNotConfigured,
-      required this.pendingMigration,
-      required this.queue})
-      : super._();
+  _$HealthCheckResponse._({
+    required this.systemHealth,
+    required this.phpVersion,
+    required this.queueData,
+    required this.envWritable,
+    required this.dbCheck,
+    required this.cacheEnabled,
+    required this.phantomEnabled,
+    required this.openBasedir,
+    required this.filePermissions,
+    required this.execEnabled,
+    required this.emailDriver,
+    required this.pendingJobs,
+    required this.pdfEngine,
+    required this.trailingSlash,
+    required this.exchangeRateApiNotConfigured,
+    required this.pendingMigration,
+    required this.queue,
+  }) : super._();
   @override
   HealthCheckResponse rebuild(
-          void Function(HealthCheckResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(HealthCheckResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   HealthCheckResponseBuilder toBuilder() =>
@@ -621,42 +787,86 @@ class HealthCheckResponseBuilder
   _$HealthCheckResponse _build() {
     _$HealthCheckResponse _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$HealthCheckResponse._(
             systemHealth: BuiltValueNullFieldError.checkNotNull(
-                systemHealth, r'HealthCheckResponse', 'systemHealth'),
+              systemHealth,
+              r'HealthCheckResponse',
+              'systemHealth',
+            ),
             phpVersion: phpVersion.build(),
             queueData: queueData.build(),
             envWritable: BuiltValueNullFieldError.checkNotNull(
-                envWritable, r'HealthCheckResponse', 'envWritable'),
+              envWritable,
+              r'HealthCheckResponse',
+              'envWritable',
+            ),
             dbCheck: BuiltValueNullFieldError.checkNotNull(
-                dbCheck, r'HealthCheckResponse', 'dbCheck'),
+              dbCheck,
+              r'HealthCheckResponse',
+              'dbCheck',
+            ),
             cacheEnabled: BuiltValueNullFieldError.checkNotNull(
-                cacheEnabled, r'HealthCheckResponse', 'cacheEnabled'),
+              cacheEnabled,
+              r'HealthCheckResponse',
+              'cacheEnabled',
+            ),
             phantomEnabled: BuiltValueNullFieldError.checkNotNull(
-                phantomEnabled, r'HealthCheckResponse', 'phantomEnabled'),
+              phantomEnabled,
+              r'HealthCheckResponse',
+              'phantomEnabled',
+            ),
             openBasedir: BuiltValueNullFieldError.checkNotNull(
-                openBasedir, r'HealthCheckResponse', 'openBasedir'),
+              openBasedir,
+              r'HealthCheckResponse',
+              'openBasedir',
+            ),
             filePermissions: BuiltValueNullFieldError.checkNotNull(
-                filePermissions, r'HealthCheckResponse', 'filePermissions'),
+              filePermissions,
+              r'HealthCheckResponse',
+              'filePermissions',
+            ),
             execEnabled: BuiltValueNullFieldError.checkNotNull(
-                execEnabled, r'HealthCheckResponse', 'execEnabled'),
+              execEnabled,
+              r'HealthCheckResponse',
+              'execEnabled',
+            ),
             emailDriver: BuiltValueNullFieldError.checkNotNull(
-                emailDriver, r'HealthCheckResponse', 'emailDriver'),
+              emailDriver,
+              r'HealthCheckResponse',
+              'emailDriver',
+            ),
             pendingJobs: BuiltValueNullFieldError.checkNotNull(
-                pendingJobs, r'HealthCheckResponse', 'pendingJobs'),
+              pendingJobs,
+              r'HealthCheckResponse',
+              'pendingJobs',
+            ),
             pdfEngine: BuiltValueNullFieldError.checkNotNull(
-                pdfEngine, r'HealthCheckResponse', 'pdfEngine'),
+              pdfEngine,
+              r'HealthCheckResponse',
+              'pdfEngine',
+            ),
             trailingSlash: BuiltValueNullFieldError.checkNotNull(
-                trailingSlash, r'HealthCheckResponse', 'trailingSlash'),
+              trailingSlash,
+              r'HealthCheckResponse',
+              'trailingSlash',
+            ),
             exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(
-                exchangeRateApiNotConfigured,
-                r'HealthCheckResponse',
-                'exchangeRateApiNotConfigured'),
+              exchangeRateApiNotConfigured,
+              r'HealthCheckResponse',
+              'exchangeRateApiNotConfigured',
+            ),
             pendingMigration: BuiltValueNullFieldError.checkNotNull(
-                pendingMigration, r'HealthCheckResponse', 'pendingMigration'),
+              pendingMigration,
+              r'HealthCheckResponse',
+              'pendingMigration',
+            ),
             queue: BuiltValueNullFieldError.checkNotNull(
-                queue, r'HealthCheckResponse', 'queue'),
+              queue,
+              r'HealthCheckResponse',
+              'queue',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -667,7 +877,10 @@ class HealthCheckResponseBuilder
         queueData.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'HealthCheckResponse', _$failedField, e.toString());
+          r'HealthCheckResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -688,21 +901,21 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   @override
   final String memoryLimit;
 
-  factory _$HealthCheckPHPResponse(
-          [void Function(HealthCheckPHPResponseBuilder)? updates]) =>
-      (HealthCheckPHPResponseBuilder()..update(updates))._build();
+  factory _$HealthCheckPHPResponse([
+    void Function(HealthCheckPHPResponseBuilder)? updates,
+  ]) => (HealthCheckPHPResponseBuilder()..update(updates))._build();
 
-  _$HealthCheckPHPResponse._(
-      {required this.minimumPHPVersion,
-      required this.currentPHPVersion,
-      required this.currentPHPCLIVersion,
-      required this.isOkay,
-      required this.memoryLimit})
-      : super._();
+  _$HealthCheckPHPResponse._({
+    required this.minimumPHPVersion,
+    required this.currentPHPVersion,
+    required this.currentPHPCLIVersion,
+    required this.isOkay,
+    required this.memoryLimit,
+  }) : super._();
   @override
   HealthCheckPHPResponse rebuild(
-          void Function(HealthCheckPHPResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(HealthCheckPHPResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   HealthCheckPHPResponseBuilder toBuilder() =>
@@ -803,24 +1016,34 @@ class HealthCheckPHPResponseBuilder
   HealthCheckPHPResponse build() => _build();
 
   _$HealthCheckPHPResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$HealthCheckPHPResponse._(
           minimumPHPVersion: BuiltValueNullFieldError.checkNotNull(
-              minimumPHPVersion,
-              r'HealthCheckPHPResponse',
-              'minimumPHPVersion'),
+            minimumPHPVersion,
+            r'HealthCheckPHPResponse',
+            'minimumPHPVersion',
+          ),
           currentPHPVersion: BuiltValueNullFieldError.checkNotNull(
-              currentPHPVersion,
-              r'HealthCheckPHPResponse',
-              'currentPHPVersion'),
+            currentPHPVersion,
+            r'HealthCheckPHPResponse',
+            'currentPHPVersion',
+          ),
           currentPHPCLIVersion: BuiltValueNullFieldError.checkNotNull(
-              currentPHPCLIVersion,
-              r'HealthCheckPHPResponse',
-              'currentPHPCLIVersion'),
+            currentPHPCLIVersion,
+            r'HealthCheckPHPResponse',
+            'currentPHPCLIVersion',
+          ),
           isOkay: BuiltValueNullFieldError.checkNotNull(
-              isOkay, r'HealthCheckPHPResponse', 'isOkay'),
+            isOkay,
+            r'HealthCheckPHPResponse',
+            'isOkay',
+          ),
           memoryLimit: BuiltValueNullFieldError.checkNotNull(
-              memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit'),
+            memoryLimit,
+            r'HealthCheckPHPResponse',
+            'memoryLimit',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -835,17 +1058,19 @@ class _$HealthCheckQueueResponse extends HealthCheckQueueResponse {
   @override
   final String lastError;
 
-  factory _$HealthCheckQueueResponse(
-          [void Function(HealthCheckQueueResponseBuilder)? updates]) =>
-      (HealthCheckQueueResponseBuilder()..update(updates))._build();
+  factory _$HealthCheckQueueResponse([
+    void Function(HealthCheckQueueResponseBuilder)? updates,
+  ]) => (HealthCheckQueueResponseBuilder()..update(updates))._build();
 
-  _$HealthCheckQueueResponse._(
-      {required this.failed, required this.pending, required this.lastError})
-      : super._();
+  _$HealthCheckQueueResponse._({
+    required this.failed,
+    required this.pending,
+    required this.lastError,
+  }) : super._();
   @override
   HealthCheckQueueResponse rebuild(
-          void Function(HealthCheckQueueResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(HealthCheckQueueResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   HealthCheckQueueResponseBuilder toBuilder() =>
@@ -926,14 +1151,24 @@ class HealthCheckQueueResponseBuilder
   HealthCheckQueueResponse build() => _build();
 
   _$HealthCheckQueueResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$HealthCheckQueueResponse._(
           failed: BuiltValueNullFieldError.checkNotNull(
-              failed, r'HealthCheckQueueResponse', 'failed'),
+            failed,
+            r'HealthCheckQueueResponse',
+            'failed',
+          ),
           pending: BuiltValueNullFieldError.checkNotNull(
-              pending, r'HealthCheckQueueResponse', 'pending'),
+            pending,
+            r'HealthCheckQueueResponse',
+            'pending',
+          ),
           lastError: BuiltValueNullFieldError.checkNotNull(
-              lastError, r'HealthCheckQueueResponse', 'lastError'),
+            lastError,
+            r'HealthCheckQueueResponse',
+            'lastError',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -944,15 +1179,15 @@ class _$HealthCheckLastErrorResponse extends HealthCheckLastErrorResponse {
   @override
   final String lastError;
 
-  factory _$HealthCheckLastErrorResponse(
-          [void Function(HealthCheckLastErrorResponseBuilder)? updates]) =>
-      (HealthCheckLastErrorResponseBuilder()..update(updates))._build();
+  factory _$HealthCheckLastErrorResponse([
+    void Function(HealthCheckLastErrorResponseBuilder)? updates,
+  ]) => (HealthCheckLastErrorResponseBuilder()..update(updates))._build();
 
   _$HealthCheckLastErrorResponse._({required this.lastError}) : super._();
   @override
   HealthCheckLastErrorResponse rebuild(
-          void Function(HealthCheckLastErrorResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(HealthCheckLastErrorResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   HealthCheckLastErrorResponseBuilder toBuilder() =>
@@ -977,16 +1212,18 @@ class _$HealthCheckLastErrorResponse extends HealthCheckLastErrorResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'HealthCheckLastErrorResponse')
-          ..add('lastError', lastError))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'HealthCheckLastErrorResponse',
+    )..add('lastError', lastError)).toString();
   }
 }
 
 class HealthCheckLastErrorResponseBuilder
     implements
-        Builder<HealthCheckLastErrorResponse,
-            HealthCheckLastErrorResponseBuilder> {
+        Builder<
+          HealthCheckLastErrorResponse,
+          HealthCheckLastErrorResponseBuilder
+        > {
   _$HealthCheckLastErrorResponse? _$v;
 
   String? _lastError;
@@ -1018,10 +1255,14 @@ class HealthCheckLastErrorResponseBuilder
   HealthCheckLastErrorResponse build() => _build();
 
   _$HealthCheckLastErrorResponse _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$HealthCheckLastErrorResponse._(
           lastError: BuiltValueNullFieldError.checkNotNull(
-              lastError, r'HealthCheckLastErrorResponse', 'lastError'),
+            lastError,
+            r'HealthCheckLastErrorResponse',
+            'lastError',
+          ),
         );
     replace(_$result);
     return _$result;

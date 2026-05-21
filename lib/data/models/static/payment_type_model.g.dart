@@ -18,20 +18,25 @@ class _$PaymentTypeListResponseSerializer
   @override
   final Iterable<Type> types = const [
     PaymentTypeListResponse,
-    _$PaymentTypeListResponse
+    _$PaymentTypeListResponse,
   ];
   @override
   final String wireName = 'PaymentTypeListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, PaymentTypeListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    PaymentTypeListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(PaymentTypeEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(PaymentTypeEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$PaymentTypeListResponseSerializer
 
   @override
   PaymentTypeListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PaymentTypeListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$PaymentTypeListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentTypeEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(PaymentTypeEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$PaymentTypeItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     PaymentTypeItemResponse,
-    _$PaymentTypeItemResponse
+    _$PaymentTypeItemResponse,
   ];
   @override
   final String wireName = 'PaymentTypeItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, PaymentTypeItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    PaymentTypeItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(PaymentTypeEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(PaymentTypeEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$PaymentTypeItemResponseSerializer
 
   @override
   PaymentTypeItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PaymentTypeItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,9 +116,13 @@ class _$PaymentTypeItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PaymentTypeEntity))!
-              as PaymentTypeEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(PaymentTypeEntity),
+                )!
+                as PaymentTypeEntity,
+          );
           break;
       }
     }
@@ -117,8 +139,11 @@ class _$PaymentTypeEntitySerializer
   final String wireName = 'PaymentTypeEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, PaymentTypeEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    PaymentTypeEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -131,8 +156,10 @@ class _$PaymentTypeEntitySerializer
 
   @override
   PaymentTypeEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PaymentTypeEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -142,12 +169,20 @@ class _$PaymentTypeEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -160,15 +195,15 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
   @override
   final BuiltList<PaymentTypeEntity> data;
 
-  factory _$PaymentTypeListResponse(
-          [void Function(PaymentTypeListResponseBuilder)? updates]) =>
-      (PaymentTypeListResponseBuilder()..update(updates))._build();
+  factory _$PaymentTypeListResponse([
+    void Function(PaymentTypeListResponseBuilder)? updates,
+  ]) => (PaymentTypeListResponseBuilder()..update(updates))._build();
 
   _$PaymentTypeListResponse._({required this.data}) : super._();
   @override
   PaymentTypeListResponse rebuild(
-          void Function(PaymentTypeListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PaymentTypeListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PaymentTypeListResponseBuilder toBuilder() =>
@@ -192,9 +227,9 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'PaymentTypeListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'PaymentTypeListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -235,10 +270,7 @@ class PaymentTypeListResponseBuilder
   _$PaymentTypeListResponse _build() {
     _$PaymentTypeListResponse _$result;
     try {
-      _$result = _$v ??
-          _$PaymentTypeListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$PaymentTypeListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -246,7 +278,10 @@ class PaymentTypeListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'PaymentTypeListResponse', _$failedField, e.toString());
+          r'PaymentTypeListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -259,15 +294,15 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
   @override
   final PaymentTypeEntity data;
 
-  factory _$PaymentTypeItemResponse(
-          [void Function(PaymentTypeItemResponseBuilder)? updates]) =>
-      (PaymentTypeItemResponseBuilder()..update(updates))._build();
+  factory _$PaymentTypeItemResponse([
+    void Function(PaymentTypeItemResponseBuilder)? updates,
+  ]) => (PaymentTypeItemResponseBuilder()..update(updates))._build();
 
   _$PaymentTypeItemResponse._({required this.data}) : super._();
   @override
   PaymentTypeItemResponse rebuild(
-          void Function(PaymentTypeItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PaymentTypeItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PaymentTypeItemResponseBuilder toBuilder() =>
@@ -291,9 +326,9 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'PaymentTypeItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'PaymentTypeItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -334,10 +369,7 @@ class PaymentTypeItemResponseBuilder
   _$PaymentTypeItemResponse _build() {
     _$PaymentTypeItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$PaymentTypeItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$PaymentTypeItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -345,7 +377,10 @@ class PaymentTypeItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'PaymentTypeItemResponse', _$failedField, e.toString());
+          r'PaymentTypeItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -360,9 +395,9 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   @override
   final String id;
 
-  factory _$PaymentTypeEntity(
-          [void Function(PaymentTypeEntityBuilder)? updates]) =>
-      (PaymentTypeEntityBuilder()..update(updates))._build();
+  factory _$PaymentTypeEntity([
+    void Function(PaymentTypeEntityBuilder)? updates,
+  ]) => (PaymentTypeEntityBuilder()..update(updates))._build();
 
   _$PaymentTypeEntity._({required this.name, required this.id}) : super._();
   @override
@@ -437,12 +472,19 @@ class PaymentTypeEntityBuilder
   PaymentTypeEntity build() => _build();
 
   _$PaymentTypeEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$PaymentTypeEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'PaymentTypeEntity', 'name'),
+            name,
+            r'PaymentTypeEntity',
+            'name',
+          ),
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'PaymentTypeEntity', 'id'),
+            id,
+            r'PaymentTypeEntity',
+            'id',
+          ),
         );
     replace(_$result);
     return _$result;

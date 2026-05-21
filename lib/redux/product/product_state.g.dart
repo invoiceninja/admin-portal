@@ -17,17 +17,27 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
   final String wireName = 'ProductState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ProductState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ProductState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(ProductEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(ProductEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -35,8 +45,10 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
 
   @override
   ProductState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProductStateBuilder();
 
     final iterator = serialized.iterator;
@@ -46,17 +58,26 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(ProductEntity)
-              ]))!);
+                const FullType(ProductEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -73,38 +94,52 @@ class _$ProductUIStateSerializer
   final String wireName = 'ProductUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ProductUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ProductUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ProductEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(ProductEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   ProductUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProductUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -114,20 +149,38 @@ class _$ProductUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity))! as ProductEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ProductEntity),
+                )!
+                as ProductEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -220,11 +273,7 @@ class ProductStateBuilder
   _$ProductState _build() {
     _$ProductState _$result;
     try {
-      _$result = _$v ??
-          _$ProductState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$ProductState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -234,7 +283,10 @@ class ProductStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProductState', _$failedField, e.toString());
+          r'ProductState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -262,15 +314,15 @@ class _$ProductUIState extends ProductUIState {
   factory _$ProductUIState([void Function(ProductUIStateBuilder)? updates]) =>
       (ProductUIStateBuilder()..update(updates))._build();
 
-  _$ProductUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$ProductUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   ProductUIState rebuild(void Function(ProductUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -392,14 +444,18 @@ class ProductUIStateBuilder
   _$ProductUIState _build() {
     _$ProductUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ProductUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'ProductUIState', 'tabIndex'),
+              tabIndex,
+              r'ProductUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -412,7 +468,10 @@ class ProductUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProductUIState', _$failedField, e.toString());
+          r'ProductUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

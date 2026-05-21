@@ -17,34 +17,55 @@ class _$ReportsUIStateSerializer
   final String wireName = 'ReportsUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ReportsUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ReportsUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'report',
-      serializers.serialize(object.report,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.report,
+        specifiedType: const FullType(String),
+      ),
       'group',
-      serializers.serialize(object.group,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.group,
+        specifiedType: const FullType(String),
+      ),
       'selectedGroup',
-      serializers.serialize(object.selectedGroup,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.selectedGroup,
+        specifiedType: const FullType(String),
+      ),
       'chart',
-      serializers.serialize(object.chart,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.chart,
+        specifiedType: const FullType(String),
+      ),
       'subgroup',
-      serializers.serialize(object.subgroup,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.subgroup,
+        specifiedType: const FullType(String),
+      ),
       'customStartDate',
-      serializers.serialize(object.customStartDate,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customStartDate,
+        specifiedType: const FullType(String),
+      ),
       'customEndDate',
-      serializers.serialize(object.customEndDate,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customEndDate,
+        specifiedType: const FullType(String),
+      ),
       'filters',
-      serializers.serialize(object.filters,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+      serializers.serialize(
+        object.filters,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -52,8 +73,10 @@ class _$ReportsUIStateSerializer
 
   @override
   ReportsUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ReportsUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -63,37 +86,71 @@ class _$ReportsUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'report':
-          result.report = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.report =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'group':
-          result.group = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.group =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'selectedGroup':
-          result.selectedGroup = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.selectedGroup =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'chart':
-          result.chart = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.chart =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'subgroup':
-          result.subgroup = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.subgroup =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'customStartDate':
-          result.customStartDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customStartDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'customEndDate':
-          result.customEndDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customEndDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'filters':
-          result.filters.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)]))!);
+          result.filters.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(String),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -123,16 +180,16 @@ class _$ReportsUIState extends ReportsUIState {
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder)? updates]) =>
       (ReportsUIStateBuilder()..update(updates))._build();
 
-  _$ReportsUIState._(
-      {required this.report,
-      required this.group,
-      required this.selectedGroup,
-      required this.chart,
-      required this.subgroup,
-      required this.customStartDate,
-      required this.customEndDate,
-      required this.filters})
-      : super._();
+  _$ReportsUIState._({
+    required this.report,
+    required this.group,
+    required this.selectedGroup,
+    required this.chart,
+    required this.subgroup,
+    required this.customStartDate,
+    required this.customEndDate,
+    required this.filters,
+  }) : super._();
   @override
   ReportsUIState rebuild(void Function(ReportsUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -260,22 +317,44 @@ class ReportsUIStateBuilder
   _$ReportsUIState _build() {
     _$ReportsUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ReportsUIState._(
             report: BuiltValueNullFieldError.checkNotNull(
-                report, r'ReportsUIState', 'report'),
+              report,
+              r'ReportsUIState',
+              'report',
+            ),
             group: BuiltValueNullFieldError.checkNotNull(
-                group, r'ReportsUIState', 'group'),
+              group,
+              r'ReportsUIState',
+              'group',
+            ),
             selectedGroup: BuiltValueNullFieldError.checkNotNull(
-                selectedGroup, r'ReportsUIState', 'selectedGroup'),
+              selectedGroup,
+              r'ReportsUIState',
+              'selectedGroup',
+            ),
             chart: BuiltValueNullFieldError.checkNotNull(
-                chart, r'ReportsUIState', 'chart'),
+              chart,
+              r'ReportsUIState',
+              'chart',
+            ),
             subgroup: BuiltValueNullFieldError.checkNotNull(
-                subgroup, r'ReportsUIState', 'subgroup'),
+              subgroup,
+              r'ReportsUIState',
+              'subgroup',
+            ),
             customStartDate: BuiltValueNullFieldError.checkNotNull(
-                customStartDate, r'ReportsUIState', 'customStartDate'),
+              customStartDate,
+              r'ReportsUIState',
+              'customStartDate',
+            ),
             customEndDate: BuiltValueNullFieldError.checkNotNull(
-                customEndDate, r'ReportsUIState', 'customEndDate'),
+              customEndDate,
+              r'ReportsUIState',
+              'customEndDate',
+            ),
             filters: filters.build(),
           );
     } catch (_) {
@@ -285,7 +364,10 @@ class ReportsUIStateBuilder
         filters.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ReportsUIState', _$failedField, e.toString());
+          r'ReportsUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

@@ -18,20 +18,25 @@ class _$CountryListResponseSerializer
   @override
   final Iterable<Type> types = const [
     CountryListResponse,
-    _$CountryListResponse
+    _$CountryListResponse,
   ];
   @override
   final String wireName = 'CountryListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CountryListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CountryListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(CountryEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(CountryEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$CountryListResponseSerializer
 
   @override
   CountryListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CountryListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$CountryListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CountryEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(CountryEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$CountryItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     CountryItemResponse,
-    _$CountryItemResponse
+    _$CountryItemResponse,
   ];
   @override
   final String wireName = 'CountryItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CountryItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CountryItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(CountryEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(CountryEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$CountryItemResponseSerializer
 
   @override
   CountryItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CountryItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,8 +116,13 @@ class _$CountryItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CountryEntity))! as CountryEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(CountryEntity),
+                )!
+                as CountryEntity,
+          );
           break;
       }
     }
@@ -115,23 +138,34 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   final String wireName = 'CountryEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, CountryEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    CountryEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'swap_postal_code',
-      serializers.serialize(object.swapPostalCode,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.swapPostalCode,
+        specifiedType: const FullType(bool),
+      ),
       'swap_currency_symbol',
-      serializers.serialize(object.swapCurrencySymbol,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.swapCurrencySymbol,
+        specifiedType: const FullType(bool),
+      ),
       'thousand_separator',
-      serializers.serialize(object.thousandSeparator,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.thousandSeparator,
+        specifiedType: const FullType(String),
+      ),
       'decimal_separator',
-      serializers.serialize(object.decimalSeparator,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.decimalSeparator,
+        specifiedType: const FullType(String),
+      ),
       'iso_3166_2',
       serializers.serialize(object.iso2, specifiedType: const FullType(String)),
       'iso_3166_3',
@@ -145,8 +179,10 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
 
   @override
   CountryEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CountryEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -156,36 +192,68 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'swap_postal_code':
-          result.swapPostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.swapPostalCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'swap_currency_symbol':
-          result.swapCurrencySymbol = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.swapCurrencySymbol =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'thousand_separator':
-          result.thousandSeparator = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.thousandSeparator =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'decimal_separator':
-          result.decimalSeparator = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.decimalSeparator =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'iso_3166_2':
-          result.iso2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.iso2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'iso_3166_3':
-          result.iso3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.iso3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -198,15 +266,15 @@ class _$CountryListResponse extends CountryListResponse {
   @override
   final BuiltList<CountryEntity> data;
 
-  factory _$CountryListResponse(
-          [void Function(CountryListResponseBuilder)? updates]) =>
-      (CountryListResponseBuilder()..update(updates))._build();
+  factory _$CountryListResponse([
+    void Function(CountryListResponseBuilder)? updates,
+  ]) => (CountryListResponseBuilder()..update(updates))._build();
 
   _$CountryListResponse._({required this.data}) : super._();
   @override
   CountryListResponse rebuild(
-          void Function(CountryListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CountryListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CountryListResponseBuilder toBuilder() =>
@@ -230,9 +298,9 @@ class _$CountryListResponse extends CountryListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CountryListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'CountryListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -272,10 +340,7 @@ class CountryListResponseBuilder
   _$CountryListResponse _build() {
     _$CountryListResponse _$result;
     try {
-      _$result = _$v ??
-          _$CountryListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$CountryListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -283,7 +348,10 @@ class CountryListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CountryListResponse', _$failedField, e.toString());
+          r'CountryListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -296,15 +364,15 @@ class _$CountryItemResponse extends CountryItemResponse {
   @override
   final CountryEntity data;
 
-  factory _$CountryItemResponse(
-          [void Function(CountryItemResponseBuilder)? updates]) =>
-      (CountryItemResponseBuilder()..update(updates))._build();
+  factory _$CountryItemResponse([
+    void Function(CountryItemResponseBuilder)? updates,
+  ]) => (CountryItemResponseBuilder()..update(updates))._build();
 
   _$CountryItemResponse._({required this.data}) : super._();
   @override
   CountryItemResponse rebuild(
-          void Function(CountryItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CountryItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CountryItemResponseBuilder toBuilder() =>
@@ -328,9 +396,9 @@ class _$CountryItemResponse extends CountryItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CountryItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'CountryItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -369,10 +437,7 @@ class CountryItemResponseBuilder
   _$CountryItemResponse _build() {
     _$CountryItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$CountryItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$CountryItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -380,7 +445,10 @@ class CountryItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CountryItemResponse', _$failedField, e.toString());
+          r'CountryItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -410,16 +478,16 @@ class _$CountryEntity extends CountryEntity {
   factory _$CountryEntity([void Function(CountryEntityBuilder)? updates]) =>
       (CountryEntityBuilder()..update(updates))._build();
 
-  _$CountryEntity._(
-      {required this.name,
-      required this.swapPostalCode,
-      required this.swapCurrencySymbol,
-      required this.thousandSeparator,
-      required this.decimalSeparator,
-      required this.iso2,
-      required this.iso3,
-      required this.id})
-      : super._();
+  _$CountryEntity._({
+    required this.name,
+    required this.swapPostalCode,
+    required this.swapCurrencySymbol,
+    required this.thousandSeparator,
+    required this.decimalSeparator,
+    required this.iso2,
+    required this.iso3,
+    required this.id,
+  }) : super._();
   @override
   CountryEntity rebuild(void Function(CountryEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -545,22 +613,44 @@ class CountryEntityBuilder
   CountryEntity build() => _build();
 
   _$CountryEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$CountryEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'CountryEntity', 'name'),
+            name,
+            r'CountryEntity',
+            'name',
+          ),
           swapPostalCode: BuiltValueNullFieldError.checkNotNull(
-              swapPostalCode, r'CountryEntity', 'swapPostalCode'),
+            swapPostalCode,
+            r'CountryEntity',
+            'swapPostalCode',
+          ),
           swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
-              swapCurrencySymbol, r'CountryEntity', 'swapCurrencySymbol'),
+            swapCurrencySymbol,
+            r'CountryEntity',
+            'swapCurrencySymbol',
+          ),
           thousandSeparator: BuiltValueNullFieldError.checkNotNull(
-              thousandSeparator, r'CountryEntity', 'thousandSeparator'),
+            thousandSeparator,
+            r'CountryEntity',
+            'thousandSeparator',
+          ),
           decimalSeparator: BuiltValueNullFieldError.checkNotNull(
-              decimalSeparator, r'CountryEntity', 'decimalSeparator'),
+            decimalSeparator,
+            r'CountryEntity',
+            'decimalSeparator',
+          ),
           iso2: BuiltValueNullFieldError.checkNotNull(
-              iso2, r'CountryEntity', 'iso2'),
+            iso2,
+            r'CountryEntity',
+            'iso2',
+          ),
           iso3: BuiltValueNullFieldError.checkNotNull(
-              iso3, r'CountryEntity', 'iso3'),
+            iso3,
+            r'CountryEntity',
+            'iso3',
+          ),
           id: BuiltValueNullFieldError.checkNotNull(id, r'CountryEntity', 'id'),
         );
     replace(_$result);

@@ -20,17 +20,26 @@ class _$PurchaseOrderStateSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, PurchaseOrderState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    PurchaseOrderState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(InvoiceEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(InvoiceEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -38,8 +47,10 @@ class _$PurchaseOrderStateSerializer
 
   @override
   PurchaseOrderState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PurchaseOrderStateBuilder();
 
     final iterator = serialized.iterator;
@@ -49,17 +60,26 @@ class _$PurchaseOrderStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(InvoiceEntity)
-              ]))!);
+                const FullType(InvoiceEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -73,45 +93,58 @@ class _$PurchaseOrderUIStateSerializer
   @override
   final Iterable<Type> types = const [
     PurchaseOrderUIState,
-    _$PurchaseOrderUIState
+    _$PurchaseOrderUIState,
   ];
   @override
   final String wireName = 'PurchaseOrderUIState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, PurchaseOrderUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    PurchaseOrderUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(InvoiceEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(InvoiceEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   PurchaseOrderUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PurchaseOrderUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -121,20 +154,38 @@ class _$PurchaseOrderUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity))! as InvoiceEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(InvoiceEntity),
+                )!
+                as InvoiceEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -149,15 +200,15 @@ class _$PurchaseOrderState extends PurchaseOrderState {
   @override
   final BuiltList<String> list;
 
-  factory _$PurchaseOrderState(
-          [void Function(PurchaseOrderStateBuilder)? updates]) =>
-      (PurchaseOrderStateBuilder()..update(updates))._build();
+  factory _$PurchaseOrderState([
+    void Function(PurchaseOrderStateBuilder)? updates,
+  ]) => (PurchaseOrderStateBuilder()..update(updates))._build();
 
   _$PurchaseOrderState._({required this.map, required this.list}) : super._();
   @override
   PurchaseOrderState rebuild(
-          void Function(PurchaseOrderStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PurchaseOrderStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PurchaseOrderStateBuilder toBuilder() =>
@@ -232,11 +283,8 @@ class PurchaseOrderStateBuilder
   _$PurchaseOrderState _build() {
     _$PurchaseOrderState _$result;
     try {
-      _$result = _$v ??
-          _$PurchaseOrderState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result =
+          _$v ?? _$PurchaseOrderState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -246,7 +294,10 @@ class PurchaseOrderStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'PurchaseOrderState', _$failedField, e.toString());
+          r'PurchaseOrderState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -275,25 +326,25 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
   @override
   final Completer<Null>? cancelCompleter;
 
-  factory _$PurchaseOrderUIState(
-          [void Function(PurchaseOrderUIStateBuilder)? updates]) =>
-      (PurchaseOrderUIStateBuilder()..update(updates))._build();
+  factory _$PurchaseOrderUIState([
+    void Function(PurchaseOrderUIStateBuilder)? updates,
+  ]) => (PurchaseOrderUIStateBuilder()..update(updates))._build();
 
-  _$PurchaseOrderUIState._(
-      {this.editing,
-      this.editingItemIndex,
-      this.historyActivityId,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$PurchaseOrderUIState._({
+    this.editing,
+    this.editingItemIndex,
+    this.historyActivityId,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   PurchaseOrderUIState rebuild(
-          void Function(PurchaseOrderUIStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PurchaseOrderUIStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PurchaseOrderUIStateBuilder toBuilder() =>
@@ -431,7 +482,8 @@ class PurchaseOrderUIStateBuilder
   _$PurchaseOrderUIState _build() {
     _$PurchaseOrderUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$PurchaseOrderUIState._(
             editing: _editing?.build(),
             editingItemIndex: editingItemIndex,
@@ -440,7 +492,10 @@ class PurchaseOrderUIStateBuilder
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'PurchaseOrderUIState', 'tabIndex'),
+              tabIndex,
+              r'PurchaseOrderUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -454,7 +509,10 @@ class PurchaseOrderUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'PurchaseOrderUIState', _$failedField, e.toString());
+          r'PurchaseOrderUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

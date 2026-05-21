@@ -17,25 +17,38 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
   final String wireName = 'VendorState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, VendorState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    VendorState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(VendorEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(VendorEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  VendorState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  VendorState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = VendorStateBuilder();
 
     final iterator = serialized.iterator;
@@ -45,17 +58,26 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(VendorEntity)
-              ]))!);
+                const FullType(VendorEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -71,45 +93,63 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
   final String wireName = 'VendorUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, VendorUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    VendorUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(VendorEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(VendorEntity),
+          ),
+        );
     }
     value = object.editingContact;
     if (value != null) {
       result
         ..add('editingContact')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(VendorContactEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(VendorContactEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   VendorUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = VendorUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -119,25 +159,47 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(VendorEntity))! as VendorEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(VendorEntity),
+                )!
+                as VendorEntity,
+          );
           break;
         case 'editingContact':
-          result.editingContact.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(VendorContactEntity))!
-              as VendorContactEntity);
+          result.editingContact.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(VendorContactEntity),
+                )!
+                as VendorContactEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -229,11 +291,7 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   _$VendorState _build() {
     _$VendorState _$result;
     try {
-      _$result = _$v ??
-          _$VendorState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$VendorState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -243,7 +301,10 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'VendorState', _$failedField, e.toString());
+          r'VendorState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -273,16 +334,16 @@ class _$VendorUIState extends VendorUIState {
   factory _$VendorUIState([void Function(VendorUIStateBuilder)? updates]) =>
       (VendorUIStateBuilder()..update(updates))._build();
 
-  _$VendorUIState._(
-      {this.editing,
-      this.editingContact,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$VendorUIState._({
+    this.editing,
+    this.editingContact,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   VendorUIState rebuild(void Function(VendorUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -413,7 +474,8 @@ class VendorUIStateBuilder
   _$VendorUIState _build() {
     _$VendorUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$VendorUIState._(
             editing: _editing?.build(),
             editingContact: _editingContact?.build(),
@@ -421,7 +483,10 @@ class VendorUIStateBuilder
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'VendorUIState', 'tabIndex'),
+              tabIndex,
+              r'VendorUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -436,7 +501,10 @@ class VendorUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'VendorUIState', _$failedField, e.toString());
+          r'VendorUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

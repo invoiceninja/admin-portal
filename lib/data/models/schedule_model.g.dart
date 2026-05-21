@@ -20,20 +20,25 @@ class _$ScheduleListResponseSerializer
   @override
   final Iterable<Type> types = const [
     ScheduleListResponse,
-    _$ScheduleListResponse
+    _$ScheduleListResponse,
   ];
   @override
   final String wireName = 'ScheduleListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, ScheduleListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    ScheduleListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(ScheduleEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(ScheduleEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -41,8 +46,10 @@ class _$ScheduleListResponseSerializer
 
   @override
   ScheduleListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ScheduleListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -52,10 +59,15 @@ class _$ScheduleListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ScheduleEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ScheduleEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -69,19 +81,23 @@ class _$ScheduleItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     ScheduleItemResponse,
-    _$ScheduleItemResponse
+    _$ScheduleItemResponse,
   ];
   @override
   final String wireName = 'ScheduleItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, ScheduleItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    ScheduleItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(ScheduleEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(ScheduleEntity),
+      ),
     ];
 
     return result;
@@ -89,8 +105,10 @@ class _$ScheduleItemResponseSerializer
 
   @override
   ScheduleItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ScheduleItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -100,9 +118,13 @@ class _$ScheduleItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ScheduleEntity))!
-              as ScheduleEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ScheduleEntity),
+                )!
+                as ScheduleEntity,
+          );
           break;
       }
     }
@@ -119,36 +141,57 @@ class _$ScheduleEntitySerializer
   final String wireName = 'ScheduleEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ScheduleEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ScheduleEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'frequency_id',
-      serializers.serialize(object.frequencyId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.frequencyId,
+        specifiedType: const FullType(String),
+      ),
       'next_run',
-      serializers.serialize(object.nextRun,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.nextRun,
+        specifiedType: const FullType(String),
+      ),
       'template',
-      serializers.serialize(object.template,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.template,
+        specifiedType: const FullType(String),
+      ),
       'is_paused',
-      serializers.serialize(object.isPaused,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isPaused,
+        specifiedType: const FullType(bool),
+      ),
       'remaining_cycles',
-      serializers.serialize(object.remainingCycles,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.remainingCycles,
+        specifiedType: const FullType(int),
+      ),
       'parameters',
-      serializers.serialize(object.parameters,
-          specifiedType: const FullType(ScheduleParameters)),
+      serializers.serialize(
+        object.parameters,
+        specifiedType: const FullType(ScheduleParameters),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -158,36 +201,42 @@ class _$ScheduleEntitySerializer
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   ScheduleEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ScheduleEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -197,61 +246,117 @@ class _$ScheduleEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'frequency_id':
-          result.frequencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.frequencyId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'next_run':
-          result.nextRun = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.nextRun =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'template':
-          result.template = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.template =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'is_paused':
-          result.isPaused = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isPaused =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'remaining_cycles':
-          result.remainingCycles = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.remainingCycles =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'parameters':
-          result.parameters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ScheduleParameters))!
-              as ScheduleParameters);
+          result.parameters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ScheduleParameters),
+                )!
+                as ScheduleParameters,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -269,123 +374,146 @@ class _$ScheduleParametersSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, ScheduleParameters object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    ScheduleParameters object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.dateRange;
     if (value != null) {
       result
         ..add('date_range')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.showPaymentsTable;
     if (value != null) {
       result
         ..add('show_payments_table')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.showCreditsTable;
     if (value != null) {
       result
         ..add('show_credits_table')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.showAgingTable;
     if (value != null) {
       result
         ..add('show_aging_table')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.onlyClientsWithInvoices;
     if (value != null) {
       result
         ..add('only_clients_with_invoices')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.status;
     if (value != null) {
       result
         ..add('status')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.template;
     if (value != null) {
       result
         ..add('template')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.clients;
     if (value != null) {
       result
         ..add('clients')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(String),
+            ]),
+          ),
+        );
     }
     value = object.entityType;
     if (value != null) {
       result
         ..add('entity')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.entityId;
     if (value != null) {
       result
         ..add('entity_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.reportName;
     if (value != null) {
       result
         ..add('report_name')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.autoSend;
     if (value != null) {
       result
         ..add('auto_send')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.includeProjectTasks;
     if (value != null) {
       result
         ..add('include_project_tasks')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.invoiceId;
     if (value != null) {
       result
         ..add('invoice_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.autoBill;
     if (value != null) {
       result
         ..add('auto_bill')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     return result;
   }
 
   @override
   ScheduleParameters deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ScheduleParametersBuilder();
 
     final iterator = serialized.iterator;
@@ -395,66 +523,127 @@ class _$ScheduleParametersSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'date_range':
-          result.dateRange = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.dateRange =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'show_payments_table':
-          result.showPaymentsTable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.showPaymentsTable =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'show_credits_table':
-          result.showCreditsTable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.showCreditsTable =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'show_aging_table':
-          result.showAgingTable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.showAgingTable =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'only_clients_with_invoices':
-          result.onlyClientsWithInvoices = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.onlyClientsWithInvoices =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'status':
-          result.status = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.status =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'template':
-          result.template = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.template =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'clients':
-          result.clients.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.clients.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'entity':
-          result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.entityType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'entity_id':
-          result.entityId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.entityId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'report_name':
-          result.reportName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.reportName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'auto_send':
-          result.autoSend = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.autoSend =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'include_project_tasks':
-          result.includeProjectTasks = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.includeProjectTasks =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'invoice_id':
-          result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.invoiceId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'auto_bill':
-          result.autoBill = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.autoBill =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
       }
     }
@@ -467,15 +656,15 @@ class _$ScheduleListResponse extends ScheduleListResponse {
   @override
   final BuiltList<ScheduleEntity> data;
 
-  factory _$ScheduleListResponse(
-          [void Function(ScheduleListResponseBuilder)? updates]) =>
-      (ScheduleListResponseBuilder()..update(updates))._build();
+  factory _$ScheduleListResponse([
+    void Function(ScheduleListResponseBuilder)? updates,
+  ]) => (ScheduleListResponseBuilder()..update(updates))._build();
 
   _$ScheduleListResponse._({required this.data}) : super._();
   @override
   ScheduleListResponse rebuild(
-          void Function(ScheduleListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ScheduleListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ScheduleListResponseBuilder toBuilder() =>
@@ -499,9 +688,9 @@ class _$ScheduleListResponse extends ScheduleListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ScheduleListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'ScheduleListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -541,10 +730,7 @@ class ScheduleListResponseBuilder
   _$ScheduleListResponse _build() {
     _$ScheduleListResponse _$result;
     try {
-      _$result = _$v ??
-          _$ScheduleListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$ScheduleListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -552,7 +738,10 @@ class ScheduleListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ScheduleListResponse', _$failedField, e.toString());
+          r'ScheduleListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -565,15 +754,15 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
   @override
   final ScheduleEntity data;
 
-  factory _$ScheduleItemResponse(
-          [void Function(ScheduleItemResponseBuilder)? updates]) =>
-      (ScheduleItemResponseBuilder()..update(updates))._build();
+  factory _$ScheduleItemResponse([
+    void Function(ScheduleItemResponseBuilder)? updates,
+  ]) => (ScheduleItemResponseBuilder()..update(updates))._build();
 
   _$ScheduleItemResponse._({required this.data}) : super._();
   @override
   ScheduleItemResponse rebuild(
-          void Function(ScheduleItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ScheduleItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ScheduleItemResponseBuilder toBuilder() =>
@@ -597,9 +786,9 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ScheduleItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'ScheduleItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -638,10 +827,7 @@ class ScheduleItemResponseBuilder
   _$ScheduleItemResponse _build() {
     _$ScheduleItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$ScheduleItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$ScheduleItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -649,7 +835,10 @@ class ScheduleItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ScheduleItemResponse', _$failedField, e.toString());
+          r'ScheduleItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -691,22 +880,22 @@ class _$ScheduleEntity extends ScheduleEntity {
   factory _$ScheduleEntity([void Function(ScheduleEntityBuilder)? updates]) =>
       (ScheduleEntityBuilder()..update(updates))._build();
 
-  _$ScheduleEntity._(
-      {required this.frequencyId,
-      required this.nextRun,
-      required this.template,
-      required this.isPaused,
-      required this.remainingCycles,
-      required this.parameters,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$ScheduleEntity._({
+    required this.frequencyId,
+    required this.nextRun,
+    required this.template,
+    required this.isPaused,
+    required this.remainingCycles,
+    required this.parameters,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   ScheduleEntity rebuild(void Function(ScheduleEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -883,31 +1072,59 @@ class ScheduleEntityBuilder
   _$ScheduleEntity _build() {
     _$ScheduleEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ScheduleEntity._(
             frequencyId: BuiltValueNullFieldError.checkNotNull(
-                frequencyId, r'ScheduleEntity', 'frequencyId'),
+              frequencyId,
+              r'ScheduleEntity',
+              'frequencyId',
+            ),
             nextRun: BuiltValueNullFieldError.checkNotNull(
-                nextRun, r'ScheduleEntity', 'nextRun'),
+              nextRun,
+              r'ScheduleEntity',
+              'nextRun',
+            ),
             template: BuiltValueNullFieldError.checkNotNull(
-                template, r'ScheduleEntity', 'template'),
+              template,
+              r'ScheduleEntity',
+              'template',
+            ),
             isPaused: BuiltValueNullFieldError.checkNotNull(
-                isPaused, r'ScheduleEntity', 'isPaused'),
+              isPaused,
+              r'ScheduleEntity',
+              'isPaused',
+            ),
             remainingCycles: BuiltValueNullFieldError.checkNotNull(
-                remainingCycles, r'ScheduleEntity', 'remainingCycles'),
+              remainingCycles,
+              r'ScheduleEntity',
+              'remainingCycles',
+            ),
             parameters: parameters.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'ScheduleEntity', 'createdAt'),
+              createdAt,
+              r'ScheduleEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'ScheduleEntity', 'updatedAt'),
+              updatedAt,
+              r'ScheduleEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'ScheduleEntity', 'archivedAt'),
+              archivedAt,
+              r'ScheduleEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'ScheduleEntity', 'id'),
+              id,
+              r'ScheduleEntity',
+              'id',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -916,7 +1133,10 @@ class ScheduleEntityBuilder
         parameters.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ScheduleEntity', _$failedField, e.toString());
+          r'ScheduleEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -957,31 +1177,31 @@ class _$ScheduleParameters extends ScheduleParameters {
   @override
   final bool? autoBill;
 
-  factory _$ScheduleParameters(
-          [void Function(ScheduleParametersBuilder)? updates]) =>
-      (ScheduleParametersBuilder()..update(updates))._build();
+  factory _$ScheduleParameters([
+    void Function(ScheduleParametersBuilder)? updates,
+  ]) => (ScheduleParametersBuilder()..update(updates))._build();
 
-  _$ScheduleParameters._(
-      {this.dateRange,
-      this.showPaymentsTable,
-      this.showCreditsTable,
-      this.showAgingTable,
-      this.onlyClientsWithInvoices,
-      this.status,
-      this.template,
-      this.clients,
-      this.entityType,
-      this.entityId,
-      this.reportName,
-      this.autoSend,
-      this.includeProjectTasks,
-      this.invoiceId,
-      this.autoBill})
-      : super._();
+  _$ScheduleParameters._({
+    this.dateRange,
+    this.showPaymentsTable,
+    this.showCreditsTable,
+    this.showAgingTable,
+    this.onlyClientsWithInvoices,
+    this.status,
+    this.template,
+    this.clients,
+    this.entityType,
+    this.entityId,
+    this.reportName,
+    this.autoSend,
+    this.includeProjectTasks,
+    this.invoiceId,
+    this.autoBill,
+  }) : super._();
   @override
   ScheduleParameters rebuild(
-          void Function(ScheduleParametersBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(ScheduleParametersBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ScheduleParametersBuilder toBuilder() =>
@@ -1164,7 +1384,8 @@ class ScheduleParametersBuilder
   _$ScheduleParameters _build() {
     _$ScheduleParameters _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ScheduleParameters._(
             dateRange: dateRange,
             showPaymentsTable: showPaymentsTable,
@@ -1189,7 +1410,10 @@ class ScheduleParametersBuilder
         _clients?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ScheduleParameters', _$failedField, e.toString());
+          r'ScheduleParameters',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

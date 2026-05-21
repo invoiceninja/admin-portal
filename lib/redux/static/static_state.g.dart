@@ -15,65 +15,108 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   final String wireName = 'StaticState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, StaticState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    StaticState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'currencyMap',
-      serializers.serialize(object.currencyMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(CurrencyEntity)])),
+      serializers.serialize(
+        object.currencyMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(CurrencyEntity),
+        ]),
+      ),
       'sizeMap',
-      serializers.serialize(object.sizeMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(SizeEntity)])),
+      serializers.serialize(
+        object.sizeMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(SizeEntity),
+        ]),
+      ),
       'gatewayMap',
-      serializers.serialize(object.gatewayMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(GatewayEntity)])),
+      serializers.serialize(
+        object.gatewayMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(GatewayEntity),
+        ]),
+      ),
       'industryMap',
-      serializers.serialize(object.industryMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(IndustryEntity)])),
+      serializers.serialize(
+        object.industryMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(IndustryEntity),
+        ]),
+      ),
       'timezoneMap',
-      serializers.serialize(object.timezoneMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(TimezoneEntity)])),
+      serializers.serialize(
+        object.timezoneMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TimezoneEntity),
+        ]),
+      ),
       'dateFormatMap',
-      serializers.serialize(object.dateFormatMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(DateFormatEntity)
-          ])),
+      serializers.serialize(
+        object.dateFormatMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(DateFormatEntity),
+        ]),
+      ),
       'languageMap',
-      serializers.serialize(object.languageMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(LanguageEntity)])),
+      serializers.serialize(
+        object.languageMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(LanguageEntity),
+        ]),
+      ),
       'paymentTypeMap',
-      serializers.serialize(object.paymentTypeMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(PaymentTypeEntity)
-          ])),
+      serializers.serialize(
+        object.paymentTypeMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(PaymentTypeEntity),
+        ]),
+      ),
       'countryMap',
-      serializers.serialize(object.countryMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(CountryEntity)])),
+      serializers.serialize(
+        object.countryMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(CountryEntity),
+        ]),
+      ),
       'templateMap',
-      serializers.serialize(object.templateMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(TemplateEntity)])),
+      serializers.serialize(
+        object.templateMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TemplateEntity),
+        ]),
+      ),
       'bulkUpdates',
-      serializers.serialize(object.bulkUpdates,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(BuiltList, const [const FullType(String)])
-          ])),
+      serializers.serialize(
+        object.bulkUpdates,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(BuiltList, const [const FullType(String)]),
+        ]),
+      ),
       'eInvoiceSchema',
-      serializers.serialize(object.eInvoiceSchema,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(EInvoiceFieldEntity)
-          ])),
+      serializers.serialize(
+        object.eInvoiceSchema,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(EInvoiceFieldEntity),
+        ]),
+      ),
     ];
     Object? value;
     value = object.updatedAt;
@@ -86,8 +129,11 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   }
 
   @override
-  StaticState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  StaticState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = StaticStateBuilder();
 
     final iterator = serialized.iterator;
@@ -97,92 +143,141 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'updatedAt':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.updatedAt =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'currencyMap':
-          result.currencyMap.replace(serializers.deserialize(value,
+          result.currencyMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(CurrencyEntity)
-              ]))!);
+                const FullType(CurrencyEntity),
+              ]),
+            )!,
+          );
           break;
         case 'sizeMap':
-          result.sizeMap.replace(serializers.deserialize(value,
+          result.sizeMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(SizeEntity)
-              ]))!);
+                const FullType(SizeEntity),
+              ]),
+            )!,
+          );
           break;
         case 'gatewayMap':
-          result.gatewayMap.replace(serializers.deserialize(value,
+          result.gatewayMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(GatewayEntity)
-              ]))!);
+                const FullType(GatewayEntity),
+              ]),
+            )!,
+          );
           break;
         case 'industryMap':
-          result.industryMap.replace(serializers.deserialize(value,
+          result.industryMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(IndustryEntity)
-              ]))!);
+                const FullType(IndustryEntity),
+              ]),
+            )!,
+          );
           break;
         case 'timezoneMap':
-          result.timezoneMap.replace(serializers.deserialize(value,
+          result.timezoneMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TimezoneEntity)
-              ]))!);
+                const FullType(TimezoneEntity),
+              ]),
+            )!,
+          );
           break;
         case 'dateFormatMap':
-          result.dateFormatMap.replace(serializers.deserialize(value,
+          result.dateFormatMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(DateFormatEntity)
-              ]))!);
+                const FullType(DateFormatEntity),
+              ]),
+            )!,
+          );
           break;
         case 'languageMap':
-          result.languageMap.replace(serializers.deserialize(value,
+          result.languageMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(LanguageEntity)
-              ]))!);
+                const FullType(LanguageEntity),
+              ]),
+            )!,
+          );
           break;
         case 'paymentTypeMap':
-          result.paymentTypeMap.replace(serializers.deserialize(value,
+          result.paymentTypeMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(PaymentTypeEntity)
-              ]))!);
+                const FullType(PaymentTypeEntity),
+              ]),
+            )!,
+          );
           break;
         case 'countryMap':
-          result.countryMap.replace(serializers.deserialize(value,
+          result.countryMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(CountryEntity)
-              ]))!);
+                const FullType(CountryEntity),
+              ]),
+            )!,
+          );
           break;
         case 'templateMap':
-          result.templateMap.replace(serializers.deserialize(value,
+          result.templateMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TemplateEntity)
-              ]))!);
+                const FullType(TemplateEntity),
+              ]),
+            )!,
+          );
           break;
         case 'bulkUpdates':
-          result.bulkUpdates.replace(serializers.deserialize(value,
+          result.bulkUpdates.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(BuiltList, const [const FullType(String)])
-              ]))!);
+                const FullType(BuiltList, const [const FullType(String)]),
+              ]),
+            )!,
+          );
           break;
         case 'eInvoiceSchema':
-          result.eInvoiceSchema.replace(serializers.deserialize(value,
+          result.eInvoiceSchema.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(EInvoiceFieldEntity)
-              ]))!);
+                const FullType(EInvoiceFieldEntity),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -222,21 +317,21 @@ class _$StaticState extends StaticState {
   factory _$StaticState([void Function(StaticStateBuilder)? updates]) =>
       (StaticStateBuilder()..update(updates))._build();
 
-  _$StaticState._(
-      {this.updatedAt,
-      required this.currencyMap,
-      required this.sizeMap,
-      required this.gatewayMap,
-      required this.industryMap,
-      required this.timezoneMap,
-      required this.dateFormatMap,
-      required this.languageMap,
-      required this.paymentTypeMap,
-      required this.countryMap,
-      required this.templateMap,
-      required this.bulkUpdates,
-      required this.eInvoiceSchema})
-      : super._();
+  _$StaticState._({
+    this.updatedAt,
+    required this.currencyMap,
+    required this.sizeMap,
+    required this.gatewayMap,
+    required this.industryMap,
+    required this.timezoneMap,
+    required this.dateFormatMap,
+    required this.languageMap,
+    required this.paymentTypeMap,
+    required this.countryMap,
+    required this.templateMap,
+    required this.bulkUpdates,
+    required this.eInvoiceSchema,
+  }) : super._();
   @override
   StaticState rebuild(void Function(StaticStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -425,7 +520,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   _$StaticState _build() {
     _$StaticState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$StaticState._(
             updatedAt: updatedAt,
             currencyMap: currencyMap.build(),
@@ -470,7 +566,10 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         eInvoiceSchema.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'StaticState', _$failedField, e.toString());
+          r'StaticState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

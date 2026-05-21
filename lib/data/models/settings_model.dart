@@ -902,6 +902,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'e_invoice_forward_email')
   String? get eInvoiceForwardEmail;
 
+  @BuiltValueField(wireName: 'e_expense_forward_email')
+  String? get eExpenseForwardEmail;
+
   @BuiltValueField(wireName: 'skip_automatic_email_with_peppol')
   bool? get skipAutomaticEmailWithPeppol;
 

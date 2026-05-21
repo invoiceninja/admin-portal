@@ -20,20 +20,25 @@ class _$StaticDataListResponseSerializer
   @override
   final Iterable<Type> types = const [
     StaticDataListResponse,
-    _$StaticDataListResponse
+    _$StaticDataListResponse,
   ];
   @override
   final String wireName = 'StaticDataListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, StaticDataListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    StaticDataListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(StaticDataEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(StaticDataEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -41,8 +46,10 @@ class _$StaticDataListResponseSerializer
 
   @override
   StaticDataListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = StaticDataListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -52,10 +59,15 @@ class _$StaticDataListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(StaticDataEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(StaticDataEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -69,19 +81,23 @@ class _$StaticDataItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     StaticDataItemResponse,
-    _$StaticDataItemResponse
+    _$StaticDataItemResponse,
   ];
   @override
   final String wireName = 'StaticDataItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, StaticDataItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    StaticDataItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(StaticDataEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(StaticDataEntity),
+      ),
     ];
 
     return result;
@@ -89,8 +105,10 @@ class _$StaticDataItemResponseSerializer
 
   @override
   StaticDataItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = StaticDataItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -100,9 +118,13 @@ class _$StaticDataItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(StaticDataEntity))!
-              as StaticDataEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(StaticDataEntity),
+                )!
+                as StaticDataEntity,
+          );
           break;
       }
     }
@@ -119,65 +141,106 @@ class _$StaticDataEntitySerializer
   final String wireName = 'StaticDataEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, StaticDataEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    StaticDataEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'currencies',
-      serializers.serialize(object.currencies,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(CurrencyEntity)])),
+      serializers.serialize(
+        object.currencies,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(CurrencyEntity),
+        ]),
+      ),
       'sizes',
-      serializers.serialize(object.sizes,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(SizeEntity)])),
+      serializers.serialize(
+        object.sizes,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(SizeEntity),
+        ]),
+      ),
       'industries',
-      serializers.serialize(object.industries,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(IndustryEntity)])),
+      serializers.serialize(
+        object.industries,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(IndustryEntity),
+        ]),
+      ),
       'timezones',
-      serializers.serialize(object.timezones,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(TimezoneEntity)])),
+      serializers.serialize(
+        object.timezones,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(TimezoneEntity),
+        ]),
+      ),
       'gateways',
-      serializers.serialize(object.gateways,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(GatewayEntity)])),
+      serializers.serialize(
+        object.gateways,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(GatewayEntity),
+        ]),
+      ),
       'date_formats',
-      serializers.serialize(object.dateFormats,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DateFormatEntity)])),
+      serializers.serialize(
+        object.dateFormats,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DateFormatEntity),
+        ]),
+      ),
       'languages',
-      serializers.serialize(object.languages,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(LanguageEntity)])),
+      serializers.serialize(
+        object.languages,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(LanguageEntity),
+        ]),
+      ),
       'payment_types',
-      serializers.serialize(object.paymentTypes,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(PaymentTypeEntity)])),
+      serializers.serialize(
+        object.paymentTypes,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(PaymentTypeEntity),
+        ]),
+      ),
       'countries',
-      serializers.serialize(object.countries,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(CountryEntity)])),
+      serializers.serialize(
+        object.countries,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(CountryEntity),
+        ]),
+      ),
       'invoice_status',
-      serializers.serialize(object.invoiceStatus,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(InvoiceStatusEntity)])),
+      serializers.serialize(
+        object.invoiceStatus,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(InvoiceStatusEntity),
+        ]),
+      ),
       'bulk_updates',
-      serializers.serialize(object.bulkUpdates,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(BuiltList, const [const FullType(String)])
-          ])),
+      serializers.serialize(
+        object.bulkUpdates,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(BuiltList, const [const FullType(String)]),
+        ]),
+      ),
       'templates',
-      serializers.serialize(object.templates,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(TemplateEntity)])),
+      serializers.serialize(
+        object.templates,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TemplateEntity),
+        ]),
+      ),
       'einvoice_schema',
-      serializers.serialize(object.eInvoiceSchema,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(EInvoiceFieldEntity)
-          ])),
+      serializers.serialize(
+        object.eInvoiceSchema,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(EInvoiceFieldEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -185,8 +248,10 @@ class _$StaticDataEntitySerializer
 
   @override
   StaticDataEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = StaticDataEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -196,85 +261,147 @@ class _$StaticDataEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'currencies':
-          result.currencies.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CurrencyEntity)]))!
-              as BuiltList<Object?>);
+          result.currencies.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(CurrencyEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'sizes':
-          result.sizes.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(SizeEntity)]))!
-              as BuiltList<Object?>);
+          result.sizes.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(SizeEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'industries':
-          result.industries.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(IndustryEntity)]))!
-              as BuiltList<Object?>);
+          result.industries.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(IndustryEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'timezones':
-          result.timezones.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(TimezoneEntity)]))!
-              as BuiltList<Object?>);
+          result.timezones.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TimezoneEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'gateways':
-          result.gateways.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(GatewayEntity)]))!
-              as BuiltList<Object?>);
+          result.gateways.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(GatewayEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'date_formats':
-          result.dateFormats.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DateFormatEntity)]))!
-              as BuiltList<Object?>);
+          result.dateFormats.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DateFormatEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'languages':
-          result.languages.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(LanguageEntity)]))!
-              as BuiltList<Object?>);
+          result.languages.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(LanguageEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'payment_types':
-          result.paymentTypes.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentTypeEntity)]))!
-              as BuiltList<Object?>);
+          result.paymentTypes.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(PaymentTypeEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'countries':
-          result.countries.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CountryEntity)]))!
-              as BuiltList<Object?>);
+          result.countries.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(CountryEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'invoice_status':
-          result.invoiceStatus.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceStatusEntity)]))!
-              as BuiltList<Object?>);
+          result.invoiceStatus.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(InvoiceStatusEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'bulk_updates':
-          result.bulkUpdates.replace(serializers.deserialize(value,
+          result.bulkUpdates.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(BuiltList, const [const FullType(String)])
-              ]))!);
+                const FullType(BuiltList, const [const FullType(String)]),
+              ]),
+            )!,
+          );
           break;
         case 'templates':
-          result.templates.replace(serializers.deserialize(value,
+          result.templates.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TemplateEntity)
-              ]))!);
+                const FullType(TemplateEntity),
+              ]),
+            )!,
+          );
           break;
         case 'einvoice_schema':
-          result.eInvoiceSchema.replace(serializers.deserialize(value,
+          result.eInvoiceSchema.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(EInvoiceFieldEntity)
-              ]))!);
+                const FullType(EInvoiceFieldEntity),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -291,12 +418,17 @@ class _$TemplateEntitySerializer
   final String wireName = 'TemplateEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TemplateEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TemplateEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'subject',
-      serializers.serialize(object.subject,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.subject,
+        specifiedType: const FullType(String),
+      ),
       'body',
       serializers.serialize(object.body, specifiedType: const FullType(String)),
     ];
@@ -306,8 +438,10 @@ class _$TemplateEntitySerializer
 
   @override
   TemplateEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TemplateEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -317,12 +451,20 @@ class _$TemplateEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'subject':
-          result.subject = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.subject =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'body':
-          result.body = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.body =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -335,15 +477,15 @@ class _$StaticDataListResponse extends StaticDataListResponse {
   @override
   final BuiltList<StaticDataEntity> data;
 
-  factory _$StaticDataListResponse(
-          [void Function(StaticDataListResponseBuilder)? updates]) =>
-      (StaticDataListResponseBuilder()..update(updates))._build();
+  factory _$StaticDataListResponse([
+    void Function(StaticDataListResponseBuilder)? updates,
+  ]) => (StaticDataListResponseBuilder()..update(updates))._build();
 
   _$StaticDataListResponse._({required this.data}) : super._();
   @override
   StaticDataListResponse rebuild(
-          void Function(StaticDataListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(StaticDataListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   StaticDataListResponseBuilder toBuilder() =>
@@ -367,9 +509,9 @@ class _$StaticDataListResponse extends StaticDataListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'StaticDataListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'StaticDataListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -409,10 +551,7 @@ class StaticDataListResponseBuilder
   _$StaticDataListResponse _build() {
     _$StaticDataListResponse _$result;
     try {
-      _$result = _$v ??
-          _$StaticDataListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$StaticDataListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -420,7 +559,10 @@ class StaticDataListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'StaticDataListResponse', _$failedField, e.toString());
+          r'StaticDataListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -433,15 +575,15 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
   @override
   final StaticDataEntity data;
 
-  factory _$StaticDataItemResponse(
-          [void Function(StaticDataItemResponseBuilder)? updates]) =>
-      (StaticDataItemResponseBuilder()..update(updates))._build();
+  factory _$StaticDataItemResponse([
+    void Function(StaticDataItemResponseBuilder)? updates,
+  ]) => (StaticDataItemResponseBuilder()..update(updates))._build();
 
   _$StaticDataItemResponse._({required this.data}) : super._();
   @override
   StaticDataItemResponse rebuild(
-          void Function(StaticDataItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(StaticDataItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   StaticDataItemResponseBuilder toBuilder() =>
@@ -465,9 +607,9 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'StaticDataItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'StaticDataItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -507,10 +649,7 @@ class StaticDataItemResponseBuilder
   _$StaticDataItemResponse _build() {
     _$StaticDataItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$StaticDataItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$StaticDataItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -518,7 +657,10 @@ class StaticDataItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'StaticDataItemResponse', _$failedField, e.toString());
+          r'StaticDataItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -555,25 +697,25 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltMap<String, EInvoiceFieldEntity> eInvoiceSchema;
 
-  factory _$StaticDataEntity(
-          [void Function(StaticDataEntityBuilder)? updates]) =>
-      (StaticDataEntityBuilder()..update(updates))._build();
+  factory _$StaticDataEntity([
+    void Function(StaticDataEntityBuilder)? updates,
+  ]) => (StaticDataEntityBuilder()..update(updates))._build();
 
-  _$StaticDataEntity._(
-      {required this.currencies,
-      required this.sizes,
-      required this.industries,
-      required this.timezones,
-      required this.gateways,
-      required this.dateFormats,
-      required this.languages,
-      required this.paymentTypes,
-      required this.countries,
-      required this.invoiceStatus,
-      required this.bulkUpdates,
-      required this.templates,
-      required this.eInvoiceSchema})
-      : super._();
+  _$StaticDataEntity._({
+    required this.currencies,
+    required this.sizes,
+    required this.industries,
+    required this.timezones,
+    required this.gateways,
+    required this.dateFormats,
+    required this.languages,
+    required this.paymentTypes,
+    required this.countries,
+    required this.invoiceStatus,
+    required this.bulkUpdates,
+    required this.templates,
+    required this.eInvoiceSchema,
+  }) : super._();
   @override
   StaticDataEntity rebuild(void Function(StaticDataEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -765,7 +907,8 @@ class StaticDataEntityBuilder
   _$StaticDataEntity _build() {
     _$StaticDataEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$StaticDataEntity._(
             currencies: currencies.build(),
             sizes: sizes.build(),
@@ -812,7 +955,10 @@ class StaticDataEntityBuilder
         eInvoiceSchema.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'StaticDataEntity', _$failedField, e.toString());
+          r'StaticDataEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -904,12 +1050,19 @@ class TemplateEntityBuilder
   TemplateEntity build() => _build();
 
   _$TemplateEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TemplateEntity._(
           subject: BuiltValueNullFieldError.checkNotNull(
-              subject, r'TemplateEntity', 'subject'),
+            subject,
+            r'TemplateEntity',
+            'subject',
+          ),
           body: BuiltValueNullFieldError.checkNotNull(
-              body, r'TemplateEntity', 'body'),
+            body,
+            r'TemplateEntity',
+            'body',
+          ),
         );
     replace(_$result);
     return _$result;

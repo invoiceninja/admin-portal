@@ -17,25 +17,38 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
   final String wireName = 'ClientState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ClientState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ClientState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(ClientEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(ClientEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  ClientState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  ClientState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ClientStateBuilder();
 
     final iterator = serialized.iterator;
@@ -45,17 +58,26 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(ClientEntity)
-              ]))!);
+                const FullType(ClientEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -71,45 +93,63 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
   final String wireName = 'ClientUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ClientUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ClientUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ClientEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(ClientEntity),
+          ),
+        );
     }
     value = object.editingContact;
     if (value != null) {
       result
         ..add('editingContact')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ClientContactEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(ClientContactEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   ClientUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ClientUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -119,25 +159,47 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientEntity))! as ClientEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ClientEntity),
+                )!
+                as ClientEntity,
+          );
           break;
         case 'editingContact':
-          result.editingContact.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ClientContactEntity))!
-              as ClientContactEntity);
+          result.editingContact.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ClientContactEntity),
+                )!
+                as ClientContactEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -229,11 +291,7 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
   _$ClientState _build() {
     _$ClientState _$result;
     try {
-      _$result = _$v ??
-          _$ClientState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$ClientState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -243,7 +301,10 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ClientState', _$failedField, e.toString());
+          r'ClientState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -273,16 +334,16 @@ class _$ClientUIState extends ClientUIState {
   factory _$ClientUIState([void Function(ClientUIStateBuilder)? updates]) =>
       (ClientUIStateBuilder()..update(updates))._build();
 
-  _$ClientUIState._(
-      {this.editing,
-      this.editingContact,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$ClientUIState._({
+    this.editing,
+    this.editingContact,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   ClientUIState rebuild(void Function(ClientUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -413,7 +474,8 @@ class ClientUIStateBuilder
   _$ClientUIState _build() {
     _$ClientUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ClientUIState._(
             editing: _editing?.build(),
             editingContact: _editingContact?.build(),
@@ -421,7 +483,10 @@ class ClientUIStateBuilder
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'ClientUIState', 'tabIndex'),
+              tabIndex,
+              r'ClientUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -436,7 +501,10 @@ class ClientUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ClientUIState', _$failedField, e.toString());
+          r'ClientUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

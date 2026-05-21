@@ -16,25 +16,38 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
   final String wireName = 'TokenState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TokenState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TokenState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(TokenEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TokenEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  TokenState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  TokenState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TokenStateBuilder();
 
     final iterator = serialized.iterator;
@@ -44,17 +57,26 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TokenEntity)
-              ]))!);
+                const FullType(TokenEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -70,38 +92,52 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
   final String wireName = 'TokenUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TokenUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TokenUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(TokenEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(TokenEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   TokenUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TokenUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -111,20 +147,38 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TokenEntity))! as TokenEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TokenEntity),
+                )!
+                as TokenEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -216,11 +270,7 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
   _$TokenState _build() {
     _$TokenState _$result;
     try {
-      _$result = _$v ??
-          _$TokenState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$TokenState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -230,7 +280,10 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TokenState', _$failedField, e.toString());
+          r'TokenState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -258,15 +311,15 @@ class _$TokenUIState extends TokenUIState {
   factory _$TokenUIState([void Function(TokenUIStateBuilder)? updates]) =>
       (TokenUIStateBuilder()..update(updates))._build();
 
-  _$TokenUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$TokenUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   TokenUIState rebuild(void Function(TokenUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -387,14 +440,18 @@ class TokenUIStateBuilder
   _$TokenUIState _build() {
     _$TokenUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TokenUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'TokenUIState', 'tabIndex'),
+              tabIndex,
+              r'TokenUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -407,7 +464,10 @@ class TokenUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TokenUIState', _$failedField, e.toString());
+          r'TokenUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

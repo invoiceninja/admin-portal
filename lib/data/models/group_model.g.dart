@@ -20,13 +20,19 @@ class _$GroupListResponseSerializer
   final String wireName = 'GroupListResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GroupListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    GroupListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(GroupEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(GroupEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -34,8 +40,10 @@ class _$GroupListResponseSerializer
 
   @override
   GroupListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = GroupListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -45,10 +53,15 @@ class _$GroupListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(GroupEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(GroupEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -65,12 +78,17 @@ class _$GroupItemResponseSerializer
   final String wireName = 'GroupItemResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GroupItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    GroupItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(GroupEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(GroupEntity),
+      ),
     ];
 
     return result;
@@ -78,8 +96,10 @@ class _$GroupItemResponseSerializer
 
   @override
   GroupItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = GroupItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -89,8 +109,13 @@ class _$GroupItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GroupEntity))! as GroupEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(GroupEntity),
+                )!
+                as GroupEntity,
+          );
           break;
       }
     }
@@ -106,27 +131,41 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
   final String wireName = 'GroupEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GroupEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    GroupEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(SettingsEntity)),
+      serializers.serialize(
+        object.settings,
+        specifiedType: const FullType(SettingsEntity),
+      ),
       'documents',
-      serializers.serialize(object.documents,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DocumentEntity)])),
+      serializers.serialize(
+        object.documents,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DocumentEntity),
+        ]),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -136,35 +175,42 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  GroupEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  GroupEntity deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = GroupEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -174,51 +220,96 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SettingsEntity))!
-              as SettingsEntity);
+          result.settings.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(SettingsEntity),
+                )!
+                as SettingsEntity,
+          );
           break;
         case 'documents':
-          result.documents.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))!
-              as BuiltList<Object?>);
+          result.documents.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -231,9 +322,9 @@ class _$GroupListResponse extends GroupListResponse {
   @override
   final BuiltList<GroupEntity> data;
 
-  factory _$GroupListResponse(
-          [void Function(GroupListResponseBuilder)? updates]) =>
-      (GroupListResponseBuilder()..update(updates))._build();
+  factory _$GroupListResponse([
+    void Function(GroupListResponseBuilder)? updates,
+  ]) => (GroupListResponseBuilder()..update(updates))._build();
 
   _$GroupListResponse._({required this.data}) : super._();
   @override
@@ -262,9 +353,9 @@ class _$GroupListResponse extends GroupListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GroupListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'GroupListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -304,10 +395,7 @@ class GroupListResponseBuilder
   _$GroupListResponse _build() {
     _$GroupListResponse _$result;
     try {
-      _$result = _$v ??
-          _$GroupListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$GroupListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -315,7 +403,10 @@ class GroupListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'GroupListResponse', _$failedField, e.toString());
+          r'GroupListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -328,9 +419,9 @@ class _$GroupItemResponse extends GroupItemResponse {
   @override
   final GroupEntity data;
 
-  factory _$GroupItemResponse(
-          [void Function(GroupItemResponseBuilder)? updates]) =>
-      (GroupItemResponseBuilder()..update(updates))._build();
+  factory _$GroupItemResponse([
+    void Function(GroupItemResponseBuilder)? updates,
+  ]) => (GroupItemResponseBuilder()..update(updates))._build();
 
   _$GroupItemResponse._({required this.data}) : super._();
   @override
@@ -359,9 +450,9 @@ class _$GroupItemResponse extends GroupItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GroupItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'GroupItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -400,10 +491,7 @@ class GroupItemResponseBuilder
   _$GroupItemResponse _build() {
     _$GroupItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$GroupItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$GroupItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -411,7 +499,10 @@ class GroupItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'GroupItemResponse', _$failedField, e.toString());
+          r'GroupItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -447,19 +538,19 @@ class _$GroupEntity extends GroupEntity {
   factory _$GroupEntity([void Function(GroupEntityBuilder)? updates]) =>
       (GroupEntityBuilder()..update(updates))._build();
 
-  _$GroupEntity._(
-      {required this.name,
-      required this.settings,
-      required this.documents,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$GroupEntity._({
+    required this.name,
+    required this.settings,
+    required this.documents,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   GroupEntity rebuild(void Function(GroupEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -613,19 +704,32 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   _$GroupEntity _build() {
     _$GroupEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$GroupEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'GroupEntity', 'name'),
+              name,
+              r'GroupEntity',
+              'name',
+            ),
             settings: settings.build(),
             documents: documents.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'GroupEntity', 'createdAt'),
+              createdAt,
+              r'GroupEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'GroupEntity', 'updatedAt'),
+              updatedAt,
+              r'GroupEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'GroupEntity', 'archivedAt'),
+              archivedAt,
+              r'GroupEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
@@ -640,7 +744,10 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
         documents.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'GroupEntity', _$failedField, e.toString());
+          r'GroupEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

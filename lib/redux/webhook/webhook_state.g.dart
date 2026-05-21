@@ -17,17 +17,27 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
   final String wireName = 'WebhookState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, WebhookState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    WebhookState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(WebhookEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(WebhookEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -35,8 +45,10 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
 
   @override
   WebhookState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = WebhookStateBuilder();
 
     final iterator = serialized.iterator;
@@ -46,17 +58,26 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(WebhookEntity)
-              ]))!);
+                const FullType(WebhookEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -73,38 +94,52 @@ class _$WebhookUIStateSerializer
   final String wireName = 'WebhookUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, WebhookUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    WebhookUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(WebhookEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(WebhookEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   WebhookUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = WebhookUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -114,20 +149,38 @@ class _$WebhookUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(WebhookEntity))! as WebhookEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(WebhookEntity),
+                )!
+                as WebhookEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -220,11 +273,7 @@ class WebhookStateBuilder
   _$WebhookState _build() {
     _$WebhookState _$result;
     try {
-      _$result = _$v ??
-          _$WebhookState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$WebhookState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -234,7 +283,10 @@ class WebhookStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'WebhookState', _$failedField, e.toString());
+          r'WebhookState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -262,15 +314,15 @@ class _$WebhookUIState extends WebhookUIState {
   factory _$WebhookUIState([void Function(WebhookUIStateBuilder)? updates]) =>
       (WebhookUIStateBuilder()..update(updates))._build();
 
-  _$WebhookUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$WebhookUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   WebhookUIState rebuild(void Function(WebhookUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -392,14 +444,18 @@ class WebhookUIStateBuilder
   _$WebhookUIState _build() {
     _$WebhookUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$WebhookUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'WebhookUIState', 'tabIndex'),
+              tabIndex,
+              r'WebhookUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -412,7 +468,10 @@ class WebhookUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'WebhookUIState', _$failedField, e.toString());
+          r'WebhookUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

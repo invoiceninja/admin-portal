@@ -19,19 +19,27 @@ class _$TaskStatusStateSerializer
   final String wireName = 'TaskStatusState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaskStatusState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaskStatusState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaskStatusEntity)
-          ])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TaskStatusEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +47,10 @@ class _$TaskStatusStateSerializer
 
   @override
   TaskStatusState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaskStatusStateBuilder();
 
     final iterator = serialized.iterator;
@@ -50,17 +60,26 @@ class _$TaskStatusStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TaskStatusEntity)
-              ]))!);
+                const FullType(TaskStatusEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -77,38 +96,52 @@ class _$TaskStatusUIStateSerializer
   final String wireName = 'TaskStatusUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaskStatusUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaskStatusUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(TaskStatusEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(TaskStatusEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   TaskStatusUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaskStatusUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -118,21 +151,38 @@ class _$TaskStatusUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TaskStatusEntity))!
-              as TaskStatusEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TaskStatusEntity),
+                )!
+                as TaskStatusEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -225,11 +275,8 @@ class TaskStatusStateBuilder
   _$TaskStatusState _build() {
     _$TaskStatusState _$result;
     try {
-      _$result = _$v ??
-          _$TaskStatusState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result =
+          _$v ?? _$TaskStatusState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -239,7 +286,10 @@ class TaskStatusStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaskStatusState', _$failedField, e.toString());
+          r'TaskStatusState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -264,19 +314,19 @@ class _$TaskStatusUIState extends TaskStatusUIState {
   @override
   final Completer<Null>? cancelCompleter;
 
-  factory _$TaskStatusUIState(
-          [void Function(TaskStatusUIStateBuilder)? updates]) =>
-      (TaskStatusUIStateBuilder()..update(updates))._build();
+  factory _$TaskStatusUIState([
+    void Function(TaskStatusUIStateBuilder)? updates,
+  ]) => (TaskStatusUIStateBuilder()..update(updates))._build();
 
-  _$TaskStatusUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$TaskStatusUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   TaskStatusUIState rebuild(void Function(TaskStatusUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -399,14 +449,18 @@ class TaskStatusUIStateBuilder
   _$TaskStatusUIState _build() {
     _$TaskStatusUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TaskStatusUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'TaskStatusUIState', 'tabIndex'),
+              tabIndex,
+              r'TaskStatusUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -419,7 +473,10 @@ class TaskStatusUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaskStatusUIState', _$failedField, e.toString());
+          r'TaskStatusUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

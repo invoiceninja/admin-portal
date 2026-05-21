@@ -18,17 +18,27 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
   final String wireName = 'DocumentState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DocumentState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DocumentState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(DocumentEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(DocumentEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -36,8 +46,10 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
 
   @override
   DocumentState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DocumentStateBuilder();
 
     final iterator = serialized.iterator;
@@ -47,17 +59,26 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(DocumentEntity)
-              ]))!);
+                const FullType(DocumentEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -74,38 +95,52 @@ class _$DocumentUIStateSerializer
   final String wireName = 'DocumentUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DocumentUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DocumentUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DocumentEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(DocumentEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   DocumentUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DocumentUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -115,21 +150,38 @@ class _$DocumentUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DocumentEntity))!
-              as DocumentEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DocumentEntity),
+                )!
+                as DocumentEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -222,11 +274,7 @@ class DocumentStateBuilder
   _$DocumentState _build() {
     _$DocumentState _$result;
     try {
-      _$result = _$v ??
-          _$DocumentState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$DocumentState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -236,7 +284,10 @@ class DocumentStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DocumentState', _$failedField, e.toString());
+          r'DocumentState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -264,15 +315,15 @@ class _$DocumentUIState extends DocumentUIState {
   factory _$DocumentUIState([void Function(DocumentUIStateBuilder)? updates]) =>
       (DocumentUIStateBuilder()..update(updates))._build();
 
-  _$DocumentUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$DocumentUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   DocumentUIState rebuild(void Function(DocumentUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -394,14 +445,18 @@ class DocumentUIStateBuilder
   _$DocumentUIState _build() {
     _$DocumentUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$DocumentUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'DocumentUIState', 'tabIndex'),
+              tabIndex,
+              r'DocumentUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -414,7 +469,10 @@ class DocumentUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DocumentUIState', _$failedField, e.toString());
+          r'DocumentUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

@@ -25,6 +25,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
+      'forward_invoices': 'Forward Invoices',
+      'forward_expenses': 'Forward Expenses',
       'cc_only': 'CC Only',
       'activity_149': ':user emailed credit :credit for :client to :contact',
       'activity_150': 'Account deleted :notes',
@@ -132547,6 +132549,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get forwardEmail =>
       _localizedValues[localeCode]!['forward_email'] ??
       _localizedValues['en']!['forward_email']!;
+
+  String get forwardInvoices =>
+      _localizedValues[localeCode]!['forward_invoices'] ??
+      _localizedValues['en']!['forward_invoices']!;
+
+  String get forwardExpenses =>
+      _localizedValues[localeCode]!['forward_expenses'] ??
+      _localizedValues['en']!['forward_expenses']!;
 
   String get eInvoiceSettings =>
       _localizedValues[localeCode]!['e_invoice_settings'] ??

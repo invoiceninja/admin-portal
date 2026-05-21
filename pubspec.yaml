@@ -6,7 +6,7 @@ documentation: https://invoiceninja.github.io
 publish_to: none
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.9.0 <4.0.0'
 
 flutter_icons:
   android: true
@@ -31,7 +31,7 @@ dependencies:
   path_provider: ^2.0.2
   shared_preferences: ^2.0.6
   material_design_icons_flutter: ^7.0.7296
-  built_value: ^8.1.2
+  built_value: ^8.12.2
   built_collection: ^5.1.0
   memoize: ^3.0.0
   url_launcher: ^6.3.1
@@ -130,7 +130,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.1.0
-  built_value_generator: ^8.1.1
+  built_value_generator: ^8.12.2
   faker: ^2.0.0
   msix: ^3.5.1
   import_sorter: ^4.6.0

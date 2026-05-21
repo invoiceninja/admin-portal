@@ -17,17 +17,27 @@ class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
   final String wireName = 'ProjectState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ProjectState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ProjectState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(ProjectEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(ProjectEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -35,8 +45,10 @@ class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
 
   @override
   ProjectState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProjectStateBuilder();
 
     final iterator = serialized.iterator;
@@ -46,17 +58,26 @@ class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(ProjectEntity)
-              ]))!);
+                const FullType(ProjectEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -73,38 +94,52 @@ class _$ProjectUIStateSerializer
   final String wireName = 'ProjectUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ProjectUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ProjectUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ProjectEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(ProjectEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   ProjectUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ProjectUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -114,20 +149,38 @@ class _$ProjectUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProjectEntity))! as ProjectEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ProjectEntity),
+                )!
+                as ProjectEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -220,11 +273,7 @@ class ProjectStateBuilder
   _$ProjectState _build() {
     _$ProjectState _$result;
     try {
-      _$result = _$v ??
-          _$ProjectState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$ProjectState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -234,7 +283,10 @@ class ProjectStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProjectState', _$failedField, e.toString());
+          r'ProjectState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -262,15 +314,15 @@ class _$ProjectUIState extends ProjectUIState {
   factory _$ProjectUIState([void Function(ProjectUIStateBuilder)? updates]) =>
       (ProjectUIStateBuilder()..update(updates))._build();
 
-  _$ProjectUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$ProjectUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   ProjectUIState rebuild(void Function(ProjectUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -392,14 +444,18 @@ class ProjectUIStateBuilder
   _$ProjectUIState _build() {
     _$ProjectUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ProjectUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'ProjectUIState', 'tabIndex'),
+              tabIndex,
+              r'ProjectUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -412,7 +468,10 @@ class ProjectUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ProjectUIState', _$failedField, e.toString());
+          r'ProjectUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

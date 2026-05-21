@@ -20,20 +20,25 @@ class _$SubscriptionListResponseSerializer
   @override
   final Iterable<Type> types = const [
     SubscriptionListResponse,
-    _$SubscriptionListResponse
+    _$SubscriptionListResponse,
   ];
   @override
   final String wireName = 'SubscriptionListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, SubscriptionListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    SubscriptionListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(SubscriptionEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(SubscriptionEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -41,8 +46,10 @@ class _$SubscriptionListResponseSerializer
 
   @override
   SubscriptionListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = SubscriptionListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -52,10 +59,15 @@ class _$SubscriptionListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(SubscriptionEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(SubscriptionEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -69,19 +81,23 @@ class _$SubscriptionItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     SubscriptionItemResponse,
-    _$SubscriptionItemResponse
+    _$SubscriptionItemResponse,
   ];
   @override
   final String wireName = 'SubscriptionItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, SubscriptionItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    SubscriptionItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(SubscriptionEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(SubscriptionEntity),
+      ),
     ];
 
     return result;
@@ -89,8 +105,10 @@ class _$SubscriptionItemResponseSerializer
 
   @override
   SubscriptionItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = SubscriptionItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -100,9 +118,13 @@ class _$SubscriptionItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SubscriptionEntity))!
-              as SubscriptionEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(SubscriptionEntity),
+                )!
+                as SubscriptionEntity,
+          );
           break;
       }
     }
@@ -120,92 +142,148 @@ class _$SubscriptionEntitySerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, SubscriptionEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    SubscriptionEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'group_id',
-      serializers.serialize(object.groupId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.groupId,
+        specifiedType: const FullType(String),
+      ),
       'product_ids',
-      serializers.serialize(object.productIds,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.productIds,
+        specifiedType: const FullType(String),
+      ),
       'recurring_product_ids',
-      serializers.serialize(object.recurringProductIds,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.recurringProductIds,
+        specifiedType: const FullType(String),
+      ),
       'optional_product_ids',
-      serializers.serialize(object.optionalProductIds,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.optionalProductIds,
+        specifiedType: const FullType(String),
+      ),
       'optional_recurring_product_ids',
-      serializers.serialize(object.optionalRecurringProductIds,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.optionalRecurringProductIds,
+        specifiedType: const FullType(String),
+      ),
       'registration_required',
-      serializers.serialize(object.registrationRequired,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.registrationRequired,
+        specifiedType: const FullType(bool),
+      ),
       'use_inventory_management',
-      serializers.serialize(object.useInventoryManagement,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.useInventoryManagement,
+        specifiedType: const FullType(bool),
+      ),
       'frequency_id',
-      serializers.serialize(object.frequencyId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.frequencyId,
+        specifiedType: const FullType(String),
+      ),
       'auto_bill',
-      serializers.serialize(object.autoBill,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.autoBill,
+        specifiedType: const FullType(String),
+      ),
       'promo_code',
-      serializers.serialize(object.promoCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.promoCode,
+        specifiedType: const FullType(String),
+      ),
       'promo_discount',
-      serializers.serialize(object.promoDiscount,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.promoDiscount,
+        specifiedType: const FullType(double),
+      ),
       'price',
-      serializers.serialize(object.price,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.price,
+        specifiedType: const FullType(double),
+      ),
       'is_amount_discount',
-      serializers.serialize(object.isAmountDiscount,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isAmountDiscount,
+        specifiedType: const FullType(bool),
+      ),
       'allow_cancellation',
-      serializers.serialize(object.allowCancellation,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.allowCancellation,
+        specifiedType: const FullType(bool),
+      ),
       'per_seat_enabled',
-      serializers.serialize(object.perSeatEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.perSeatEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'max_seats_limit',
-      serializers.serialize(object.maxSeatsLimit,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.maxSeatsLimit,
+        specifiedType: const FullType(int),
+      ),
       'trial_enabled',
-      serializers.serialize(object.trialEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.trialEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'trial_duration',
-      serializers.serialize(object.trialDuration,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.trialDuration,
+        specifiedType: const FullType(int),
+      ),
       'allow_query_overrides',
-      serializers.serialize(object.allowQueryOverrides,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.allowQueryOverrides,
+        specifiedType: const FullType(bool),
+      ),
       'allow_plan_changes',
-      serializers.serialize(object.allowPlanChanges,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.allowPlanChanges,
+        specifiedType: const FullType(bool),
+      ),
       'refund_period',
-      serializers.serialize(object.refundPeriod,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.refundPeriod,
+        specifiedType: const FullType(int),
+      ),
       'webhook_configuration',
-      serializers.serialize(object.webhookConfiguration,
-          specifiedType: const FullType(WebhookConfigurationEntity)),
+      serializers.serialize(
+        object.webhookConfiguration,
+        specifiedType: const FullType(WebhookConfigurationEntity),
+      ),
       'purchase_page',
-      serializers.serialize(object.purchasePage,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.purchasePage,
+        specifiedType: const FullType(String),
+      ),
       'steps',
-      serializers.serialize(object.steps,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.steps,
+        specifiedType: const FullType(String),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -221,36 +299,42 @@ class _$SubscriptionEntitySerializer
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   SubscriptionEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = SubscriptionEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -260,141 +344,274 @@ class _$SubscriptionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'group_id':
-          result.groupId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.groupId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'product_ids':
-          result.productIds = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.productIds =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'recurring_product_ids':
-          result.recurringProductIds = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.recurringProductIds =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'optional_product_ids':
-          result.optionalProductIds = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.optionalProductIds =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'optional_recurring_product_ids':
-          result.optionalRecurringProductIds = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.optionalRecurringProductIds =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'registration_required':
-          result.registrationRequired = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.registrationRequired =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'use_inventory_management':
-          result.useInventoryManagement = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.useInventoryManagement =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'remaining_cycles':
-          result.remainingCycles = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.remainingCycles =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'frequency_id':
-          result.frequencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.frequencyId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'auto_bill':
-          result.autoBill = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.autoBill =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'promo_code':
-          result.promoCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.promoCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'promo_discount':
-          result.promoDiscount = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.promoDiscount =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'price':
-          result.price = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.price =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'is_amount_discount':
-          result.isAmountDiscount = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isAmountDiscount =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'allow_cancellation':
-          result.allowCancellation = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.allowCancellation =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'per_seat_enabled':
-          result.perSeatEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.perSeatEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'max_seats_limit':
-          result.maxSeatsLimit = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.maxSeatsLimit =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'trial_enabled':
-          result.trialEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.trialEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'trial_duration':
-          result.trialDuration = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.trialDuration =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'allow_query_overrides':
-          result.allowQueryOverrides = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.allowQueryOverrides =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'allow_plan_changes':
-          result.allowPlanChanges = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.allowPlanChanges =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'refund_period':
-          result.refundPeriod = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.refundPeriod =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'webhook_configuration':
-          result.webhookConfiguration.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(WebhookConfigurationEntity))!
-              as WebhookConfigurationEntity);
+          result.webhookConfiguration.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(WebhookConfigurationEntity),
+                )!
+                as WebhookConfigurationEntity,
+          );
           break;
         case 'purchase_page':
-          result.purchasePage = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.purchasePage =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'steps':
-          result.steps = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.steps =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -408,32 +625,46 @@ class _$WebhookConfigurationEntitySerializer
   @override
   final Iterable<Type> types = const [
     WebhookConfigurationEntity,
-    _$WebhookConfigurationEntity
+    _$WebhookConfigurationEntity,
   ];
   @override
   final String wireName = 'WebhookConfigurationEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, WebhookConfigurationEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    WebhookConfigurationEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'return_url',
-      serializers.serialize(object.returnUrl,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.returnUrl,
+        specifiedType: const FullType(String),
+      ),
       'post_purchase_url',
-      serializers.serialize(object.postPurchaseUrl,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.postPurchaseUrl,
+        specifiedType: const FullType(String),
+      ),
       'post_purchase_rest_method',
-      serializers.serialize(object.postPurchaseRestMethod,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.postPurchaseRestMethod,
+        specifiedType: const FullType(String),
+      ),
       'post_purchase_headers',
-      serializers.serialize(object.postPurchaseHeaders,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+      serializers.serialize(
+        object.postPurchaseHeaders,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(String),
+        ]),
+      ),
       'post_purchase_body',
-      serializers.serialize(object.postPurchaseBody,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.postPurchaseBody,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -441,8 +672,10 @@ class _$WebhookConfigurationEntitySerializer
 
   @override
   WebhookConfigurationEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = WebhookConfigurationEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -452,25 +685,47 @@ class _$WebhookConfigurationEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'return_url':
-          result.returnUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.returnUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'post_purchase_url':
-          result.postPurchaseUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.postPurchaseUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'post_purchase_rest_method':
-          result.postPurchaseRestMethod = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.postPurchaseRestMethod =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'post_purchase_headers':
-          result.postPurchaseHeaders.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)]))!);
+          result.postPurchaseHeaders.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(String),
+              ]),
+            )!,
+          );
           break;
         case 'post_purchase_body':
-          result.postPurchaseBody = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.postPurchaseBody =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -483,15 +738,15 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
   @override
   final BuiltList<SubscriptionEntity> data;
 
-  factory _$SubscriptionListResponse(
-          [void Function(SubscriptionListResponseBuilder)? updates]) =>
-      (SubscriptionListResponseBuilder()..update(updates))._build();
+  factory _$SubscriptionListResponse([
+    void Function(SubscriptionListResponseBuilder)? updates,
+  ]) => (SubscriptionListResponseBuilder()..update(updates))._build();
 
   _$SubscriptionListResponse._({required this.data}) : super._();
   @override
   SubscriptionListResponse rebuild(
-          void Function(SubscriptionListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SubscriptionListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionListResponseBuilder toBuilder() =>
@@ -515,9 +770,9 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'SubscriptionListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'SubscriptionListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -558,10 +813,7 @@ class SubscriptionListResponseBuilder
   _$SubscriptionListResponse _build() {
     _$SubscriptionListResponse _$result;
     try {
-      _$result = _$v ??
-          _$SubscriptionListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$SubscriptionListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -569,7 +821,10 @@ class SubscriptionListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'SubscriptionListResponse', _$failedField, e.toString());
+          r'SubscriptionListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -582,15 +837,15 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
   @override
   final SubscriptionEntity data;
 
-  factory _$SubscriptionItemResponse(
-          [void Function(SubscriptionItemResponseBuilder)? updates]) =>
-      (SubscriptionItemResponseBuilder()..update(updates))._build();
+  factory _$SubscriptionItemResponse([
+    void Function(SubscriptionItemResponseBuilder)? updates,
+  ]) => (SubscriptionItemResponseBuilder()..update(updates))._build();
 
   _$SubscriptionItemResponse._({required this.data}) : super._();
   @override
   SubscriptionItemResponse rebuild(
-          void Function(SubscriptionItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SubscriptionItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionItemResponseBuilder toBuilder() =>
@@ -614,9 +869,9 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'SubscriptionItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'SubscriptionItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -657,10 +912,7 @@ class SubscriptionItemResponseBuilder
   _$SubscriptionItemResponse _build() {
     _$SubscriptionItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$SubscriptionItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$SubscriptionItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -668,7 +920,10 @@ class SubscriptionItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'SubscriptionItemResponse', _$failedField, e.toString());
+          r'SubscriptionItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -747,50 +1002,50 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final String id;
 
-  factory _$SubscriptionEntity(
-          [void Function(SubscriptionEntityBuilder)? updates]) =>
-      (SubscriptionEntityBuilder()..update(updates))._build();
+  factory _$SubscriptionEntity([
+    void Function(SubscriptionEntityBuilder)? updates,
+  ]) => (SubscriptionEntityBuilder()..update(updates))._build();
 
-  _$SubscriptionEntity._(
-      {required this.name,
-      required this.groupId,
-      required this.productIds,
-      required this.recurringProductIds,
-      required this.optionalProductIds,
-      required this.optionalRecurringProductIds,
-      required this.registrationRequired,
-      required this.useInventoryManagement,
-      this.remainingCycles,
-      required this.frequencyId,
-      required this.autoBill,
-      required this.promoCode,
-      required this.promoDiscount,
-      required this.price,
-      required this.isAmountDiscount,
-      required this.allowCancellation,
-      required this.perSeatEnabled,
-      required this.maxSeatsLimit,
-      required this.trialEnabled,
-      required this.trialDuration,
-      required this.allowQueryOverrides,
-      required this.allowPlanChanges,
-      required this.refundPeriod,
-      required this.webhookConfiguration,
-      required this.purchasePage,
-      required this.steps,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$SubscriptionEntity._({
+    required this.name,
+    required this.groupId,
+    required this.productIds,
+    required this.recurringProductIds,
+    required this.optionalProductIds,
+    required this.optionalRecurringProductIds,
+    required this.registrationRequired,
+    required this.useInventoryManagement,
+    this.remainingCycles,
+    required this.frequencyId,
+    required this.autoBill,
+    required this.promoCode,
+    required this.promoDiscount,
+    required this.price,
+    required this.isAmountDiscount,
+    required this.allowCancellation,
+    required this.perSeatEnabled,
+    required this.maxSeatsLimit,
+    required this.trialEnabled,
+    required this.trialDuration,
+    required this.allowQueryOverrides,
+    required this.allowPlanChanges,
+    required this.refundPeriod,
+    required this.webhookConfiguration,
+    required this.purchasePage,
+    required this.steps,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   SubscriptionEntity rebuild(
-          void Function(SubscriptionEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(SubscriptionEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionEntityBuilder toBuilder() =>
@@ -1035,8 +1290,8 @@ class SubscriptionEntityBuilder
   WebhookConfigurationEntityBuilder get webhookConfiguration =>
       _$this._webhookConfiguration ??= WebhookConfigurationEntityBuilder();
   set webhookConfiguration(
-          WebhookConfigurationEntityBuilder? webhookConfiguration) =>
-      _$this._webhookConfiguration = webhookConfiguration;
+    WebhookConfigurationEntityBuilder? webhookConfiguration,
+  ) => _$this._webhookConfiguration = webhookConfiguration;
 
   String? _purchasePage;
   String? get purchasePage => _$this._purchasePage;
@@ -1142,82 +1397,155 @@ class SubscriptionEntityBuilder
   _$SubscriptionEntity _build() {
     _$SubscriptionEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$SubscriptionEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'SubscriptionEntity', 'name'),
+              name,
+              r'SubscriptionEntity',
+              'name',
+            ),
             groupId: BuiltValueNullFieldError.checkNotNull(
-                groupId, r'SubscriptionEntity', 'groupId'),
+              groupId,
+              r'SubscriptionEntity',
+              'groupId',
+            ),
             productIds: BuiltValueNullFieldError.checkNotNull(
-                productIds, r'SubscriptionEntity', 'productIds'),
+              productIds,
+              r'SubscriptionEntity',
+              'productIds',
+            ),
             recurringProductIds: BuiltValueNullFieldError.checkNotNull(
-                recurringProductIds,
-                r'SubscriptionEntity',
-                'recurringProductIds'),
+              recurringProductIds,
+              r'SubscriptionEntity',
+              'recurringProductIds',
+            ),
             optionalProductIds: BuiltValueNullFieldError.checkNotNull(
-                optionalProductIds,
-                r'SubscriptionEntity',
-                'optionalProductIds'),
+              optionalProductIds,
+              r'SubscriptionEntity',
+              'optionalProductIds',
+            ),
             optionalRecurringProductIds: BuiltValueNullFieldError.checkNotNull(
-                optionalRecurringProductIds,
-                r'SubscriptionEntity',
-                'optionalRecurringProductIds'),
+              optionalRecurringProductIds,
+              r'SubscriptionEntity',
+              'optionalRecurringProductIds',
+            ),
             registrationRequired: BuiltValueNullFieldError.checkNotNull(
-                registrationRequired,
-                r'SubscriptionEntity',
-                'registrationRequired'),
+              registrationRequired,
+              r'SubscriptionEntity',
+              'registrationRequired',
+            ),
             useInventoryManagement: BuiltValueNullFieldError.checkNotNull(
-                useInventoryManagement,
-                r'SubscriptionEntity',
-                'useInventoryManagement'),
+              useInventoryManagement,
+              r'SubscriptionEntity',
+              'useInventoryManagement',
+            ),
             remainingCycles: remainingCycles,
             frequencyId: BuiltValueNullFieldError.checkNotNull(
-                frequencyId, r'SubscriptionEntity', 'frequencyId'),
+              frequencyId,
+              r'SubscriptionEntity',
+              'frequencyId',
+            ),
             autoBill: BuiltValueNullFieldError.checkNotNull(
-                autoBill, r'SubscriptionEntity', 'autoBill'),
+              autoBill,
+              r'SubscriptionEntity',
+              'autoBill',
+            ),
             promoCode: BuiltValueNullFieldError.checkNotNull(
-                promoCode, r'SubscriptionEntity', 'promoCode'),
+              promoCode,
+              r'SubscriptionEntity',
+              'promoCode',
+            ),
             promoDiscount: BuiltValueNullFieldError.checkNotNull(
-                promoDiscount, r'SubscriptionEntity', 'promoDiscount'),
+              promoDiscount,
+              r'SubscriptionEntity',
+              'promoDiscount',
+            ),
             price: BuiltValueNullFieldError.checkNotNull(
-                price, r'SubscriptionEntity', 'price'),
+              price,
+              r'SubscriptionEntity',
+              'price',
+            ),
             isAmountDiscount: BuiltValueNullFieldError.checkNotNull(
-                isAmountDiscount, r'SubscriptionEntity', 'isAmountDiscount'),
+              isAmountDiscount,
+              r'SubscriptionEntity',
+              'isAmountDiscount',
+            ),
             allowCancellation: BuiltValueNullFieldError.checkNotNull(
-                allowCancellation, r'SubscriptionEntity', 'allowCancellation'),
+              allowCancellation,
+              r'SubscriptionEntity',
+              'allowCancellation',
+            ),
             perSeatEnabled: BuiltValueNullFieldError.checkNotNull(
-                perSeatEnabled, r'SubscriptionEntity', 'perSeatEnabled'),
+              perSeatEnabled,
+              r'SubscriptionEntity',
+              'perSeatEnabled',
+            ),
             maxSeatsLimit: BuiltValueNullFieldError.checkNotNull(
-                maxSeatsLimit, r'SubscriptionEntity', 'maxSeatsLimit'),
+              maxSeatsLimit,
+              r'SubscriptionEntity',
+              'maxSeatsLimit',
+            ),
             trialEnabled: BuiltValueNullFieldError.checkNotNull(
-                trialEnabled, r'SubscriptionEntity', 'trialEnabled'),
+              trialEnabled,
+              r'SubscriptionEntity',
+              'trialEnabled',
+            ),
             trialDuration: BuiltValueNullFieldError.checkNotNull(
-                trialDuration, r'SubscriptionEntity', 'trialDuration'),
+              trialDuration,
+              r'SubscriptionEntity',
+              'trialDuration',
+            ),
             allowQueryOverrides: BuiltValueNullFieldError.checkNotNull(
-                allowQueryOverrides,
-                r'SubscriptionEntity',
-                'allowQueryOverrides'),
+              allowQueryOverrides,
+              r'SubscriptionEntity',
+              'allowQueryOverrides',
+            ),
             allowPlanChanges: BuiltValueNullFieldError.checkNotNull(
-                allowPlanChanges, r'SubscriptionEntity', 'allowPlanChanges'),
+              allowPlanChanges,
+              r'SubscriptionEntity',
+              'allowPlanChanges',
+            ),
             refundPeriod: BuiltValueNullFieldError.checkNotNull(
-                refundPeriod, r'SubscriptionEntity', 'refundPeriod'),
+              refundPeriod,
+              r'SubscriptionEntity',
+              'refundPeriod',
+            ),
             webhookConfiguration: webhookConfiguration.build(),
             purchasePage: BuiltValueNullFieldError.checkNotNull(
-                purchasePage, r'SubscriptionEntity', 'purchasePage'),
+              purchasePage,
+              r'SubscriptionEntity',
+              'purchasePage',
+            ),
             steps: BuiltValueNullFieldError.checkNotNull(
-                steps, r'SubscriptionEntity', 'steps'),
+              steps,
+              r'SubscriptionEntity',
+              'steps',
+            ),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'SubscriptionEntity', 'createdAt'),
+              createdAt,
+              r'SubscriptionEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'SubscriptionEntity', 'updatedAt'),
+              updatedAt,
+              r'SubscriptionEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'SubscriptionEntity', 'archivedAt'),
+              archivedAt,
+              r'SubscriptionEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'SubscriptionEntity', 'id'),
+              id,
+              r'SubscriptionEntity',
+              'id',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -1226,7 +1554,10 @@ class SubscriptionEntityBuilder
         webhookConfiguration.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'SubscriptionEntity', _$failedField, e.toString());
+          r'SubscriptionEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1247,21 +1578,21 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
   @override
   final String postPurchaseBody;
 
-  factory _$WebhookConfigurationEntity(
-          [void Function(WebhookConfigurationEntityBuilder)? updates]) =>
-      (WebhookConfigurationEntityBuilder()..update(updates))._build();
+  factory _$WebhookConfigurationEntity([
+    void Function(WebhookConfigurationEntityBuilder)? updates,
+  ]) => (WebhookConfigurationEntityBuilder()..update(updates))._build();
 
-  _$WebhookConfigurationEntity._(
-      {required this.returnUrl,
-      required this.postPurchaseUrl,
-      required this.postPurchaseRestMethod,
-      required this.postPurchaseHeaders,
-      required this.postPurchaseBody})
-      : super._();
+  _$WebhookConfigurationEntity._({
+    required this.returnUrl,
+    required this.postPurchaseUrl,
+    required this.postPurchaseRestMethod,
+    required this.postPurchaseHeaders,
+    required this.postPurchaseBody,
+  }) : super._();
   @override
   WebhookConfigurationEntity rebuild(
-          void Function(WebhookConfigurationEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(WebhookConfigurationEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   WebhookConfigurationEntityBuilder toBuilder() =>
@@ -1367,23 +1698,30 @@ class WebhookConfigurationEntityBuilder
   _$WebhookConfigurationEntity _build() {
     _$WebhookConfigurationEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$WebhookConfigurationEntity._(
             returnUrl: BuiltValueNullFieldError.checkNotNull(
-                returnUrl, r'WebhookConfigurationEntity', 'returnUrl'),
+              returnUrl,
+              r'WebhookConfigurationEntity',
+              'returnUrl',
+            ),
             postPurchaseUrl: BuiltValueNullFieldError.checkNotNull(
-                postPurchaseUrl,
-                r'WebhookConfigurationEntity',
-                'postPurchaseUrl'),
+              postPurchaseUrl,
+              r'WebhookConfigurationEntity',
+              'postPurchaseUrl',
+            ),
             postPurchaseRestMethod: BuiltValueNullFieldError.checkNotNull(
-                postPurchaseRestMethod,
-                r'WebhookConfigurationEntity',
-                'postPurchaseRestMethod'),
+              postPurchaseRestMethod,
+              r'WebhookConfigurationEntity',
+              'postPurchaseRestMethod',
+            ),
             postPurchaseHeaders: postPurchaseHeaders.build(),
             postPurchaseBody: BuiltValueNullFieldError.checkNotNull(
-                postPurchaseBody,
-                r'WebhookConfigurationEntity',
-                'postPurchaseBody'),
+              postPurchaseBody,
+              r'WebhookConfigurationEntity',
+              'postPurchaseBody',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -1392,7 +1730,10 @@ class WebhookConfigurationEntityBuilder
         postPurchaseHeaders.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'WebhookConfigurationEntity', _$failedField, e.toString());
+          r'WebhookConfigurationEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

@@ -26,13 +26,19 @@ class _$UserListResponseSerializer
   final String wireName = 'UserListResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(UserEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(UserEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -40,8 +46,10 @@ class _$UserListResponseSerializer
 
   @override
   UserListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -51,10 +59,15 @@ class _$UserListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(UserEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(UserEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -71,12 +84,17 @@ class _$UserItemResponseSerializer
   final String wireName = 'UserItemResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(UserEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(UserEntity),
+      ),
     ];
 
     return result;
@@ -84,8 +102,10 @@ class _$UserItemResponseSerializer
 
   @override
   UserItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -95,8 +115,13 @@ class _$UserItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserEntity))! as UserEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserEntity),
+                )!
+                as UserEntity,
+          );
           break;
       }
     }
@@ -110,19 +135,23 @@ class _$UserTwoFactorResponseSerializer
   @override
   final Iterable<Type> types = const [
     UserTwoFactorResponse,
-    _$UserTwoFactorResponse
+    _$UserTwoFactorResponse,
   ];
   @override
   final String wireName = 'UserTwoFactorResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, UserTwoFactorResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    UserTwoFactorResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(UserTwoFactorData)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(UserTwoFactorData),
+      ),
     ];
 
     return result;
@@ -130,8 +159,10 @@ class _$UserTwoFactorResponseSerializer
 
   @override
   UserTwoFactorResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserTwoFactorResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -141,9 +172,13 @@ class _$UserTwoFactorResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserTwoFactorData))!
-              as UserTwoFactorData);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserTwoFactorData),
+                )!
+                as UserTwoFactorData,
+          );
           break;
       }
     }
@@ -160,15 +195,22 @@ class _$UserTwoFactorDataSerializer
   final String wireName = 'UserTwoFactorData';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserTwoFactorData object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserTwoFactorData object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'secret',
-      serializers.serialize(object.secret,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.secret,
+        specifiedType: const FullType(String),
+      ),
       'qrCode',
-      serializers.serialize(object.qrCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.qrCode,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -176,8 +218,10 @@ class _$UserTwoFactorDataSerializer
 
   @override
   UserTwoFactorData deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserTwoFactorDataBuilder();
 
     final iterator = serialized.iterator;
@@ -187,12 +231,20 @@ class _$UserTwoFactorDataSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'secret':
-          result.secret = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.secret =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'qrCode':
-          result.qrCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.qrCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -206,19 +258,23 @@ class _$UserCompanyItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     UserCompanyItemResponse,
-    _$UserCompanyItemResponse
+    _$UserCompanyItemResponse,
   ];
   @override
   final String wireName = 'UserCompanyItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, UserCompanyItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    UserCompanyItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(UserCompanyEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(UserCompanyEntity),
+      ),
     ];
 
     return result;
@@ -226,8 +282,10 @@ class _$UserCompanyItemResponseSerializer
 
   @override
   UserCompanyItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserCompanyItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -237,9 +295,13 @@ class _$UserCompanyItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))!
-              as UserCompanyEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserCompanyEntity),
+                )!
+                as UserCompanyEntity,
+          );
           break;
       }
     }
@@ -255,76 +317,125 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
   final String wireName = 'UserEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'first_name',
-      serializers.serialize(object.firstName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.firstName,
+        specifiedType: const FullType(String),
+      ),
       'last_name',
-      serializers.serialize(object.lastName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.lastName,
+        specifiedType: const FullType(String),
+      ),
       'email',
-      serializers.serialize(object.email,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.email,
+        specifiedType: const FullType(String),
+      ),
       'phone',
-      serializers.serialize(object.phone,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.phone,
+        specifiedType: const FullType(String),
+      ),
       'password',
-      serializers.serialize(object.password,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.password,
+        specifiedType: const FullType(String),
+      ),
       'verified_phone_number',
-      serializers.serialize(object.phoneVerified,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.phoneVerified,
+        specifiedType: const FullType(bool),
+      ),
       'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue1,
+        specifiedType: const FullType(String),
+      ),
       'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue2,
+        specifiedType: const FullType(String),
+      ),
       'custom_value3',
-      serializers.serialize(object.customValue3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue3,
+        specifiedType: const FullType(String),
+      ),
       'custom_value4',
-      serializers.serialize(object.customValue4,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue4,
+        specifiedType: const FullType(String),
+      ),
       'google_2fa_secret',
-      serializers.serialize(object.isTwoFactorEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isTwoFactorEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'has_password',
-      serializers.serialize(object.hasPassword,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hasPassword,
+        specifiedType: const FullType(bool),
+      ),
       'last_confirmed_email_address',
-      serializers.serialize(object.lastEmailAddress,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.lastEmailAddress,
+        specifiedType: const FullType(String),
+      ),
       'oauth_user_token',
-      serializers.serialize(object.oauthUserToken,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.oauthUserToken,
+        specifiedType: const FullType(String),
+      ),
       'oauth_provider_id',
-      serializers.serialize(object.oauthProvider,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.oauthProvider,
+        specifiedType: const FullType(String),
+      ),
       'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.languageId,
+        specifiedType: const FullType(String),
+      ),
       'user_logged_in_notification',
-      serializers.serialize(object.userLoggedInNotification,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.userLoggedInNotification,
+        specifiedType: const FullType(bool),
+      ),
       'referral_code',
-      serializers.serialize(object.referralCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.referralCode,
+        specifiedType: const FullType(String),
+      ),
       'referral_meta',
-      serializers.serialize(object.referralMeta,
-          specifiedType: const FullType(
-              BuiltMap, const [const FullType(String), const FullType(int)])),
+      serializers.serialize(
+        object.referralMeta,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(int),
+        ]),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -339,43 +450,54 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
     if (value != null) {
       result
         ..add('company_user')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(UserCompanyEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(UserCompanyEntity),
+          ),
+        );
     }
     value = object.isChanged;
     if (value != null) {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  UserEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  UserEntity deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -385,122 +507,237 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'first_name':
-          result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.firstName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'last_name':
-          result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.lastName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'email':
-          result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.email =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'phone':
-          result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.phone =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'password':
-          result.password = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.password =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'email_verified_at':
-          result.emailVerifiedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.emailVerifiedAt =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'verified_phone_number':
-          result.phoneVerified = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.phoneVerified =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'google_2fa_secret':
-          result.isTwoFactorEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isTwoFactorEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'has_password':
-          result.hasPassword = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.hasPassword =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'last_confirmed_email_address':
-          result.lastEmailAddress = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.lastEmailAddress =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'oauth_user_token':
-          result.oauthUserToken = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.oauthUserToken =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'company_user':
-          result.userCompany.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))!
-              as UserCompanyEntity);
+          result.userCompany.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserCompanyEntity),
+                )!
+                as UserCompanyEntity,
+          );
           break;
         case 'oauth_provider_id':
-          result.oauthProvider = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.oauthProvider =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.languageId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'user_logged_in_notification':
-          result.userLoggedInNotification = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.userLoggedInNotification =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'referral_code':
-          result.referralCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.referralCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'referral_meta':
-          result.referralMeta.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(int)]))!);
+          result.referralMeta.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(int),
+              ]),
+            )!,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -513,9 +750,9 @@ class _$UserListResponse extends UserListResponse {
   @override
   final BuiltList<UserEntity> data;
 
-  factory _$UserListResponse(
-          [void Function(UserListResponseBuilder)? updates]) =>
-      (UserListResponseBuilder()..update(updates))._build();
+  factory _$UserListResponse([
+    void Function(UserListResponseBuilder)? updates,
+  ]) => (UserListResponseBuilder()..update(updates))._build();
 
   _$UserListResponse._({required this.data}) : super._();
   @override
@@ -544,8 +781,9 @@ class _$UserListResponse extends UserListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'UserListResponse')..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'UserListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -585,10 +823,7 @@ class UserListResponseBuilder
   _$UserListResponse _build() {
     _$UserListResponse _$result;
     try {
-      _$result = _$v ??
-          _$UserListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$UserListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -596,7 +831,10 @@ class UserListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserListResponse', _$failedField, e.toString());
+          r'UserListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -609,9 +847,9 @@ class _$UserItemResponse extends UserItemResponse {
   @override
   final UserEntity data;
 
-  factory _$UserItemResponse(
-          [void Function(UserItemResponseBuilder)? updates]) =>
-      (UserItemResponseBuilder()..update(updates))._build();
+  factory _$UserItemResponse([
+    void Function(UserItemResponseBuilder)? updates,
+  ]) => (UserItemResponseBuilder()..update(updates))._build();
 
   _$UserItemResponse._({required this.data}) : super._();
   @override
@@ -640,8 +878,9 @@ class _$UserItemResponse extends UserItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'UserItemResponse')..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'UserItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -680,10 +919,7 @@ class UserItemResponseBuilder
   _$UserItemResponse _build() {
     _$UserItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$UserItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$UserItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -691,7 +927,10 @@ class UserItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserItemResponse', _$failedField, e.toString());
+          r'UserItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -704,15 +943,15 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
   @override
   final UserTwoFactorData data;
 
-  factory _$UserTwoFactorResponse(
-          [void Function(UserTwoFactorResponseBuilder)? updates]) =>
-      (UserTwoFactorResponseBuilder()..update(updates))._build();
+  factory _$UserTwoFactorResponse([
+    void Function(UserTwoFactorResponseBuilder)? updates,
+  ]) => (UserTwoFactorResponseBuilder()..update(updates))._build();
 
   _$UserTwoFactorResponse._({required this.data}) : super._();
   @override
   UserTwoFactorResponse rebuild(
-          void Function(UserTwoFactorResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(UserTwoFactorResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   UserTwoFactorResponseBuilder toBuilder() =>
@@ -736,9 +975,9 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'UserTwoFactorResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'UserTwoFactorResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -778,10 +1017,7 @@ class UserTwoFactorResponseBuilder
   _$UserTwoFactorResponse _build() {
     _$UserTwoFactorResponse _$result;
     try {
-      _$result = _$v ??
-          _$UserTwoFactorResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$UserTwoFactorResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -789,7 +1025,10 @@ class UserTwoFactorResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserTwoFactorResponse', _$failedField, e.toString());
+          r'UserTwoFactorResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -804,12 +1043,12 @@ class _$UserTwoFactorData extends UserTwoFactorData {
   @override
   final String qrCode;
 
-  factory _$UserTwoFactorData(
-          [void Function(UserTwoFactorDataBuilder)? updates]) =>
-      (UserTwoFactorDataBuilder()..update(updates))._build();
+  factory _$UserTwoFactorData([
+    void Function(UserTwoFactorDataBuilder)? updates,
+  ]) => (UserTwoFactorDataBuilder()..update(updates))._build();
 
   _$UserTwoFactorData._({required this.secret, required this.qrCode})
-      : super._();
+    : super._();
   @override
   UserTwoFactorData rebuild(void Function(UserTwoFactorDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -884,12 +1123,19 @@ class UserTwoFactorDataBuilder
   UserTwoFactorData build() => _build();
 
   _$UserTwoFactorData _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$UserTwoFactorData._(
           secret: BuiltValueNullFieldError.checkNotNull(
-              secret, r'UserTwoFactorData', 'secret'),
+            secret,
+            r'UserTwoFactorData',
+            'secret',
+          ),
           qrCode: BuiltValueNullFieldError.checkNotNull(
-              qrCode, r'UserTwoFactorData', 'qrCode'),
+            qrCode,
+            r'UserTwoFactorData',
+            'qrCode',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -900,15 +1146,15 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
   @override
   final UserCompanyEntity data;
 
-  factory _$UserCompanyItemResponse(
-          [void Function(UserCompanyItemResponseBuilder)? updates]) =>
-      (UserCompanyItemResponseBuilder()..update(updates))._build();
+  factory _$UserCompanyItemResponse([
+    void Function(UserCompanyItemResponseBuilder)? updates,
+  ]) => (UserCompanyItemResponseBuilder()..update(updates))._build();
 
   _$UserCompanyItemResponse._({required this.data}) : super._();
   @override
   UserCompanyItemResponse rebuild(
-          void Function(UserCompanyItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(UserCompanyItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   UserCompanyItemResponseBuilder toBuilder() =>
@@ -932,9 +1178,9 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'UserCompanyItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'UserCompanyItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -975,10 +1221,7 @@ class UserCompanyItemResponseBuilder
   _$UserCompanyItemResponse _build() {
     _$UserCompanyItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$UserCompanyItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$UserCompanyItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -986,7 +1229,10 @@ class UserCompanyItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserCompanyItemResponse', _$failedField, e.toString());
+          r'UserCompanyItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1058,37 +1304,37 @@ class _$UserEntity extends UserEntity {
   factory _$UserEntity([void Function(UserEntityBuilder)? updates]) =>
       (UserEntityBuilder()..update(updates))._build();
 
-  _$UserEntity._(
-      {required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.phone,
-      required this.password,
-      this.emailVerifiedAt,
-      required this.phoneVerified,
-      required this.customValue1,
-      required this.customValue2,
-      required this.customValue3,
-      required this.customValue4,
-      required this.isTwoFactorEnabled,
-      required this.hasPassword,
-      required this.lastEmailAddress,
-      required this.oauthUserToken,
-      this.userCompany,
-      required this.oauthProvider,
-      required this.languageId,
-      required this.userLoggedInNotification,
-      required this.referralCode,
-      required this.referralMeta,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$UserEntity._({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phone,
+    required this.password,
+    this.emailVerifiedAt,
+    required this.phoneVerified,
+    required this.customValue1,
+    required this.customValue2,
+    required this.customValue3,
+    required this.customValue4,
+    required this.isTwoFactorEnabled,
+    required this.hasPassword,
+    required this.lastEmailAddress,
+    required this.oauthUserToken,
+    this.userCompany,
+    required this.oauthProvider,
+    required this.languageId,
+    required this.userLoggedInNotification,
+    required this.referralCode,
+    required this.referralMeta,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   UserEntity rebuild(void Function(UserEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -1394,56 +1640,118 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   _$UserEntity _build() {
     _$UserEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$UserEntity._(
             firstName: BuiltValueNullFieldError.checkNotNull(
-                firstName, r'UserEntity', 'firstName'),
+              firstName,
+              r'UserEntity',
+              'firstName',
+            ),
             lastName: BuiltValueNullFieldError.checkNotNull(
-                lastName, r'UserEntity', 'lastName'),
+              lastName,
+              r'UserEntity',
+              'lastName',
+            ),
             email: BuiltValueNullFieldError.checkNotNull(
-                email, r'UserEntity', 'email'),
+              email,
+              r'UserEntity',
+              'email',
+            ),
             phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'UserEntity', 'phone'),
+              phone,
+              r'UserEntity',
+              'phone',
+            ),
             password: BuiltValueNullFieldError.checkNotNull(
-                password, r'UserEntity', 'password'),
+              password,
+              r'UserEntity',
+              'password',
+            ),
             emailVerifiedAt: emailVerifiedAt,
             phoneVerified: BuiltValueNullFieldError.checkNotNull(
-                phoneVerified, r'UserEntity', 'phoneVerified'),
+              phoneVerified,
+              r'UserEntity',
+              'phoneVerified',
+            ),
             customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'UserEntity', 'customValue1'),
+              customValue1,
+              r'UserEntity',
+              'customValue1',
+            ),
             customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, r'UserEntity', 'customValue2'),
+              customValue2,
+              r'UserEntity',
+              'customValue2',
+            ),
             customValue3: BuiltValueNullFieldError.checkNotNull(
-                customValue3, r'UserEntity', 'customValue3'),
+              customValue3,
+              r'UserEntity',
+              'customValue3',
+            ),
             customValue4: BuiltValueNullFieldError.checkNotNull(
-                customValue4, r'UserEntity', 'customValue4'),
+              customValue4,
+              r'UserEntity',
+              'customValue4',
+            ),
             isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(
-                isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled'),
+              isTwoFactorEnabled,
+              r'UserEntity',
+              'isTwoFactorEnabled',
+            ),
             hasPassword: BuiltValueNullFieldError.checkNotNull(
-                hasPassword, r'UserEntity', 'hasPassword'),
+              hasPassword,
+              r'UserEntity',
+              'hasPassword',
+            ),
             lastEmailAddress: BuiltValueNullFieldError.checkNotNull(
-                lastEmailAddress, r'UserEntity', 'lastEmailAddress'),
+              lastEmailAddress,
+              r'UserEntity',
+              'lastEmailAddress',
+            ),
             oauthUserToken: BuiltValueNullFieldError.checkNotNull(
-                oauthUserToken, r'UserEntity', 'oauthUserToken'),
+              oauthUserToken,
+              r'UserEntity',
+              'oauthUserToken',
+            ),
             userCompany: _userCompany?.build(),
             oauthProvider: BuiltValueNullFieldError.checkNotNull(
-                oauthProvider, r'UserEntity', 'oauthProvider'),
+              oauthProvider,
+              r'UserEntity',
+              'oauthProvider',
+            ),
             languageId: BuiltValueNullFieldError.checkNotNull(
-                languageId, r'UserEntity', 'languageId'),
+              languageId,
+              r'UserEntity',
+              'languageId',
+            ),
             userLoggedInNotification: BuiltValueNullFieldError.checkNotNull(
-                userLoggedInNotification,
-                r'UserEntity',
-                'userLoggedInNotification'),
+              userLoggedInNotification,
+              r'UserEntity',
+              'userLoggedInNotification',
+            ),
             referralCode: BuiltValueNullFieldError.checkNotNull(
-                referralCode, r'UserEntity', 'referralCode'),
+              referralCode,
+              r'UserEntity',
+              'referralCode',
+            ),
             referralMeta: referralMeta.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'UserEntity', 'createdAt'),
+              createdAt,
+              r'UserEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'UserEntity', 'updatedAt'),
+              updatedAt,
+              r'UserEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'UserEntity', 'archivedAt'),
+              archivedAt,
+              r'UserEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
@@ -1459,7 +1767,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
         referralMeta.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserEntity', _$failedField, e.toString());
+          r'UserEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

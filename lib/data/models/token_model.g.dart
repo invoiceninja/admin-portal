@@ -20,13 +20,19 @@ class _$TokenListResponseSerializer
   final String wireName = 'TokenListResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TokenListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TokenListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(TokenEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(TokenEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -34,8 +40,10 @@ class _$TokenListResponseSerializer
 
   @override
   TokenListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TokenListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -45,10 +53,15 @@ class _$TokenListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(TokenEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TokenEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -65,12 +78,17 @@ class _$TokenItemResponseSerializer
   final String wireName = 'TokenItemResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TokenItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TokenItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(TokenEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(TokenEntity),
+      ),
     ];
 
     return result;
@@ -78,8 +96,10 @@ class _$TokenItemResponseSerializer
 
   @override
   TokenItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TokenItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -89,8 +109,13 @@ class _$TokenItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TokenEntity))! as TokenEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TokenEntity),
+                )!
+                as TokenEntity,
+          );
           break;
       }
     }
@@ -106,26 +131,39 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
   final String wireName = 'TokenEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TokenEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TokenEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'is_system',
-      serializers.serialize(object.isSystem,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isSystem,
+        specifiedType: const FullType(bool),
+      ),
       'token',
-      serializers.serialize(object.token,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.token,
+        specifiedType: const FullType(String),
+      ),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -135,35 +173,42 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  TokenEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  TokenEntity deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TokenEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -173,48 +218,92 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'is_system':
-          result.isSystem = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isSystem =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'token':
-          result.token = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.token =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -227,9 +316,9 @@ class _$TokenListResponse extends TokenListResponse {
   @override
   final BuiltList<TokenEntity> data;
 
-  factory _$TokenListResponse(
-          [void Function(TokenListResponseBuilder)? updates]) =>
-      (TokenListResponseBuilder()..update(updates))._build();
+  factory _$TokenListResponse([
+    void Function(TokenListResponseBuilder)? updates,
+  ]) => (TokenListResponseBuilder()..update(updates))._build();
 
   _$TokenListResponse._({required this.data}) : super._();
   @override
@@ -258,9 +347,9 @@ class _$TokenListResponse extends TokenListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'TokenListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'TokenListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -300,10 +389,7 @@ class TokenListResponseBuilder
   _$TokenListResponse _build() {
     _$TokenListResponse _$result;
     try {
-      _$result = _$v ??
-          _$TokenListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$TokenListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -311,7 +397,10 @@ class TokenListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TokenListResponse', _$failedField, e.toString());
+          r'TokenListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -324,9 +413,9 @@ class _$TokenItemResponse extends TokenItemResponse {
   @override
   final TokenEntity data;
 
-  factory _$TokenItemResponse(
-          [void Function(TokenItemResponseBuilder)? updates]) =>
-      (TokenItemResponseBuilder()..update(updates))._build();
+  factory _$TokenItemResponse([
+    void Function(TokenItemResponseBuilder)? updates,
+  ]) => (TokenItemResponseBuilder()..update(updates))._build();
 
   _$TokenItemResponse._({required this.data}) : super._();
   @override
@@ -355,9 +444,9 @@ class _$TokenItemResponse extends TokenItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'TokenItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'TokenItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -396,10 +485,7 @@ class TokenItemResponseBuilder
   _$TokenItemResponse _build() {
     _$TokenItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$TokenItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$TokenItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -407,7 +493,10 @@ class TokenItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TokenItemResponse', _$failedField, e.toString());
+          r'TokenItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -443,19 +532,19 @@ class _$TokenEntity extends TokenEntity {
   factory _$TokenEntity([void Function(TokenEntityBuilder)? updates]) =>
       (TokenEntityBuilder()..update(updates))._build();
 
-  _$TokenEntity._(
-      {required this.isSystem,
-      required this.token,
-      required this.name,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$TokenEntity._({
+    required this.isSystem,
+    required this.token,
+    required this.name,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   TokenEntity rebuild(void Function(TokenEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -602,21 +691,40 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   TokenEntity build() => _build();
 
   _$TokenEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TokenEntity._(
           isSystem: BuiltValueNullFieldError.checkNotNull(
-              isSystem, r'TokenEntity', 'isSystem'),
+            isSystem,
+            r'TokenEntity',
+            'isSystem',
+          ),
           token: BuiltValueNullFieldError.checkNotNull(
-              token, r'TokenEntity', 'token'),
+            token,
+            r'TokenEntity',
+            'token',
+          ),
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'TokenEntity', 'name'),
+            name,
+            r'TokenEntity',
+            'name',
+          ),
           isChanged: isChanged,
           createdAt: BuiltValueNullFieldError.checkNotNull(
-              createdAt, r'TokenEntity', 'createdAt'),
+            createdAt,
+            r'TokenEntity',
+            'createdAt',
+          ),
           updatedAt: BuiltValueNullFieldError.checkNotNull(
-              updatedAt, r'TokenEntity', 'updatedAt'),
+            updatedAt,
+            r'TokenEntity',
+            'updatedAt',
+          ),
           archivedAt: BuiltValueNullFieldError.checkNotNull(
-              archivedAt, r'TokenEntity', 'archivedAt'),
+            archivedAt,
+            r'TokenEntity',
+            'archivedAt',
+          ),
           isDeleted: isDeleted,
           createdUserId: createdUserId,
           assignedUserId: assignedUserId,
