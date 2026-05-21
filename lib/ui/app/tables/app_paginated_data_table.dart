@@ -285,6 +285,11 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   int _selectedRowCount = 0;
   final Map<int, DataRow?> _rows = <int, DataRow?>{};
 
+  List<double>? _cachedColumnWidths;
+  int? _cachedFirstRowIndex;
+  int? _cachedColumnsLength;
+  Object? _cachedSource;
+
 
 
   void _handleDataSourceChanged() {
@@ -293,6 +298,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       _rowCountApproximate = widget.source.isRowCountApproximate;
       _selectedRowCount = widget.source.selectedRowCount;
       _rows.clear();
+      _cachedColumnWidths = null;
     });
   }
 
@@ -392,6 +398,9 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       widget.source.addListener(_handleDataSourceChanged);
       _handleDataSourceChanged();
     }
+    if (oldWidget.columns.length != widget.columns.length) {
+      _cachedColumnWidths = null;
+    }
   }
 
   @override
@@ -404,7 +413,106 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     super.dispose();
   }
 
-  List<double> _calculateColumnWidths(BuildContext context) {
+  Widget? _findTextWidget(Widget widget) {
+    if (widget is Text || widget is RichText) {
+      return widget;
+    }
+    if (widget is Container) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is Padding) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is SizedBox) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is ConstrainedBox) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is Center) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is Align) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is Expanded) {
+      return _findTextWidget(widget.child);
+    }
+    if (widget is Flexible) {
+      return _findTextWidget(widget.child);
+    }
+    if (widget is Tooltip) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is GestureDetector) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    if (widget is InkWell) {
+      if (widget.child != null) {
+        return _findTextWidget(widget.child!);
+      }
+    }
+    return null;
+  }
+
+  double _measureWidgetText(BuildContext context, Widget rootWidget, TextStyle defaultStyle) {
+    final Widget? textWidget = _findTextWidget(rootWidget);
+    if (textWidget == null) {
+      return 0.0;
+    }
+    if (textWidget is RichText) {
+      final TextPainter textPainter = TextPainter(
+        text: textWidget.text,
+        maxLines: textWidget.maxLines,
+        textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
+      )..layout(minWidth: 0, maxWidth: double.infinity);
+      return textPainter.size.width;
+    }
+    if (textWidget is Text) {
+      final String text = textWidget.data ?? '';
+      if (text.isEmpty) {
+        return 0.0;
+      }
+      TextStyle style = defaultStyle;
+      if (textWidget.style != null) {
+        style = defaultStyle.merge(textWidget.style);
+      }
+      final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        maxLines: textWidget.maxLines ?? 1,
+        textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
+      )..layout(minWidth: 0, maxWidth: double.infinity);
+      return textPainter.size.width;
+    }
+    return 0.0;
+  }
+
+  List<double> _calculateColumnWidths(BuildContext context, List<DataRow> originalRows) {
+    final ThemeData themeData = Theme.of(context);
+    final DataTableThemeData dataTableTheme = DataTableTheme.of(context);
+    final TextStyle headingStyle = dataTableTheme.headingTextStyle ??
+        themeData.textTheme.titleSmall ??
+        const TextStyle();
+    final TextStyle dataStyle = dataTableTheme.dataTextStyle ??
+        themeData.textTheme.bodyMedium ??
+        const TextStyle();
+
     final List<double> resolvedWidths = [];
     for (int i = 0; i < widget.columns.length; i++) {
       double minW = 0.0;
@@ -416,33 +524,36 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         maxW = math.min(maxW, max);
       });
 
-      final sampleRows = _getRows(_firstRowIndex, math.min(5, widget.rowsPerPage));
+      double maxTextWidth = _measureWidgetText(context, column.label, headingStyle);
+
+      final sampleRows = originalRows.take(5).toList();
       for (final row in sampleRows) {
         if (i < row.cells.length) {
-          _updateConstraints(row.cells[i].child, (min, max) {
+          final cellChild = row.cells[i].child;
+          _updateConstraints(cellChild, (min, max) {
             minW = math.max(minW, min);
             maxW = math.min(maxW, max);
           });
+          final cellTextWidth = _measureWidgetText(context, cellChild, dataStyle);
+          maxTextWidth = math.max(maxTextWidth, cellTextWidth);
         }
       }
 
-      double width = 140.0;
+      double estimatedWidth = maxTextWidth + 32.0;
+      if (column.onSort != null) {
+        estimatedWidth += 24.0;
+      }
+
+      double width = math.max(140.0, estimatedWidth);
       if (minW > 0.0) {
-        width = minW;
+        width = math.max(width, minW);
       }
       if (maxW < double.infinity && maxW > 0.0) {
         width = math.min(width, maxW);
       }
 
-      if (column.label is Text) {
-        final text = (column.label as Text).data ?? '';
-        width = _guessWidthFromText(text, width);
-      } else if (column.label is Container && (column.label as Container).child is Text) {
-        final text = ((column.label as Container).child as Text).data ?? '';
-        width = _guessWidthFromText(text, width);
-      }
-
-      if (column.label is SizedBox || (column.label is Container && (column.label as Container).child == null)) {
+      if (column.label is SizedBox ||
+          (column.label is Container && (column.label as Container).child == null)) {
         width = 96.0;
       }
 
@@ -474,23 +585,18 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     }
   }
 
-  double _guessWidthFromText(String text, double currentWidth) {
-    final lowerText = text.toLowerCase();
-    double width = currentWidth;
-    if (lowerText.contains('description') || lowerText.contains('notes') || lowerText.contains('details')) {
-      width = math.max(width, 260.0);
-    } else if (lowerText.contains('amount') || lowerText.contains('price') || lowerText.contains('total') || lowerText.contains('balance')) {
-      width = math.max(width, 120.0);
-    } else if (lowerText.contains('date')) {
-      width = math.max(width, 110.0);
-    } else if (lowerText.contains('number') || lowerText.contains('id') || lowerText.contains('status')) {
-      width = math.max(width, 100.0);
-    } else {
-      width = math.max(width, 140.0);
+  List<double> _getColumnWidths(BuildContext context, List<DataRow> originalRows) {
+    if (_cachedColumnWidths != null &&
+        _cachedFirstRowIndex == _firstRowIndex &&
+        _cachedColumnsLength == widget.columns.length &&
+        _cachedSource == widget.source) {
+      return _cachedColumnWidths!;
     }
-    final estimatedTextWidth = text.length * 8.0 + 32.0;
-    width = math.max(width, estimatedTextWidth);
-    return width;
+    _cachedColumnWidths = _calculateColumnWidths(context, originalRows);
+    _cachedFirstRowIndex = _firstRowIndex;
+    _cachedColumnsLength = widget.columns.length;
+    _cachedSource = widget.source;
+    return _cachedColumnWidths!;
   }
 
   Widget _buildHeader(ThemeData themeData, MaterialLocalizations localizations, List<Widget> headerWidgets) {
@@ -513,7 +619,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                 : null,
             child: Padding(
               padding: const EdgeInsetsDirectional.only(
-                  start: 24, end: 14.0),
+                  start: 24, end: 14.0), // to match trailing padding in case we overflow and end up scrolling
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: headerWidgets,
@@ -549,6 +655,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO(ianh): This whole build function doesn't handle RTL yet.
     assert(debugCheckHasMaterialLocalizations(context));
     final ThemeData themeData = Theme.of(context);
     final MaterialLocalizations localizations =
@@ -591,7 +698,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         Container(width: 14.0),
         Text(localizations.rowsPerPageTitle),
         ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 64.0),
+          constraints: const BoxConstraints(minWidth: 64.0), // 40.0 for the text, 24.0 for the icon
           child: Align(
             alignment: AlignmentDirectional.centerEnd,
             child: DropdownButtonHideUnderline(
@@ -658,7 +765,21 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
           Widget tableWidget;
           if (useScrollableLayout) {
-            final List<double> columnWidths = _calculateColumnWidths(context);
+            final List<DataRow> originalRows = _getRows(_firstRowIndex, widget.rowsPerPage);
+            final List<double> columnWidths = _getColumnWidths(context, originalRows);
+            final bool hasSelectableRows = originalRows.any((row) => row.onSelectChanged != null);
+            final List<DataRow> headerDummyRows = hasSelectableRows
+                ? <DataRow>[
+                    DataRow(
+                      onSelectChanged: (bool? selected) {},
+                      cells: List<DataCell>.filled(
+                        widget.columns.length,
+                        const DataCell(SizedBox.shrink()),
+                      ),
+                    ),
+                  ]
+                : const <DataRow>[];
+
             // Build header columns
             final List<DataColumn> headerColumns = [];
             for (int i = 0; i < widget.columns.length; i++) {
@@ -678,7 +799,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
             // Build body rows
             final List<DataRow> bodyRows = [];
-            final List<DataRow> originalRows = _getRows(_firstRowIndex, widget.rowsPerPage);
             for (final row in originalRows) {
               final List<DataCell> cells = [];
               for (int i = 0; i < row.cells.length; i++) {
@@ -737,21 +857,26 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              DataTable(
-                                columns: headerColumns,
-                                sortColumnIndex: widget.sortColumnIndex,
-                                sortAscending: widget.sortAscending,
-                                onSelectAll: widget.onSelectAll,
-                                decoration: const BoxDecoration(),
-                                dataRowMinHeight: widget.dataRowMinHeight,
-                                dataRowMaxHeight: widget.dataRowMaxHeight,
-                                headingRowHeight: widget.headingRowHeight,
-                                horizontalMargin: widget.horizontalMargin,
-                                checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
-                                columnSpacing: widget.columnSpacing,
-                                showCheckboxColumn: widget.showCheckboxColumn,
-                                showBottomBorder: true,
-                                rows: const <DataRow>[],
+                              ClipRect(
+                                child: SizedBox(
+                                  height: widget.headingRowHeight,
+                                  child: DataTable(
+                                    columns: headerColumns,
+                                    sortColumnIndex: widget.sortColumnIndex,
+                                    sortAscending: widget.sortAscending,
+                                    onSelectAll: widget.onSelectAll,
+                                    decoration: const BoxDecoration(),
+                                    dataRowMinHeight: widget.dataRowMinHeight,
+                                    dataRowMaxHeight: widget.dataRowMaxHeight,
+                                    headingRowHeight: widget.headingRowHeight,
+                                    horizontalMargin: widget.horizontalMargin,
+                                    checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
+                                    columnSpacing: widget.columnSpacing,
+                                    showCheckboxColumn: widget.showCheckboxColumn,
+                                    showBottomBorder: true,
+                                    rows: headerDummyRows,
+                                  ),
+                                ),
                               ),
                               Expanded(
                                 child: SingleChildScrollView(
@@ -761,8 +886,8 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                                   child: DataTable(
                                     key: _tableKey,
                                     columns: headerColumns,
-                                    sortColumnIndex: widget.sortColumnIndex,
-                                    sortAscending: widget.sortAscending,
+                                    sortColumnIndex: null,
+                                    sortAscending: true,
                                     onSelectAll: null,
                                     decoration: const BoxDecoration(),
                                     dataRowMinHeight: widget.dataRowMinHeight,
