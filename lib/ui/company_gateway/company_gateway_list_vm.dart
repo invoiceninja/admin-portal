@@ -31,9 +31,7 @@ class CompanyGatewayListBuilder extends StatelessWidget {
     return StoreConnector<AppState, CompanyGatewayListVM>(
       converter: CompanyGatewayListVM.fromStore,
       builder: (context, viewModel) {
-        return CompanyGatewayList(
-          viewModel: viewModel,
-        );
+        return CompanyGatewayList(viewModel: viewModel);
       },
     );
   }
@@ -57,8 +55,9 @@ class CompanyGatewayListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -87,8 +86,9 @@ class CompanyGatewayListVM {
       filter: state.companyGatewayUIState.listUIState.filter,
       onCompanyGatewayTap: (context, companyGateway) {
         if (store.state.companyGatewayListState.isInMultiselect()) {
-          handleCompanyGatewayAction(
-              context, [companyGateway], EntityAction.toggleMultiselect);
+          handleCompanyGatewayAction(context, [
+            companyGateway,
+          ], EntityAction.toggleMultiselect);
         } else {
           viewEntity(entity: companyGateway);
         }
@@ -96,9 +96,12 @@ class CompanyGatewayListVM {
       onRefreshed: (context) => _handleRefresh(context),
       onRemovePressed: (gatewayId) {
         gatewayIds.remove(gatewayId);
-        final settings = uiState.settings.rebuild((b) => b
-          ..companyGatewayIds =
-              gatewayIds.isEmpty ? '0' : gatewayIds.join(','));
+        final settings = uiState.settings.rebuild(
+          (b) => b
+            ..companyGatewayIds = gatewayIds.isEmpty
+                ? '0'
+                : gatewayIds.join(','),
+        );
         store.dispatch(UpdateSettings(settings: settings));
       },
       onSortChanged: (int oldIndex, int newIndex) {
@@ -106,8 +109,9 @@ class CompanyGatewayListVM {
         gatewayIds.remove(gatewayId);
         gatewayIds.insert(newIndex, gatewayId);
 
-        final settings = uiState.settings
-            .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
+        final settings = uiState.settings.rebuild(
+          (b) => b..companyGatewayIds = gatewayIds.join(','),
+        );
         store.dispatch(UpdateSettings(settings: settings));
       },
     );

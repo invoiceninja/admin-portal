@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEditNotes extends StatefulWidget {
-  const ExpenseEditNotes({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseEditNotes({Key? key, required this.viewModel}) : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
 
@@ -38,20 +35,19 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _publicNotesController,
-      _privateNotesController,
-    ];
+    _controllers = [_publicNotesController, _privateNotesController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final expense = widget.viewModel.expense!;
     _publicNotesController.text = expense.publicNotes;
     _privateNotesController.text = expense.privateNotes;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -68,9 +64,11 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense!.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim());
+    final expense = viewModel.expense!.rebuild(
+      (b) => b
+        ..publicNotes = _publicNotesController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim(),
+    );
     if (expense != viewModel.expense) {
       _debouncer.run(() {
         viewModel.onChanged!(expense);
@@ -88,7 +86,8 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
     final company = state.company;
 
-    final showDocuments = isDesktop(context) &&
+    final showDocuments =
+        isDesktop(context) &&
         state.isEnterprisePlan &&
         company.isModuleEnabled(EntityType.document);
 
@@ -125,12 +124,16 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                 SizedBox(height: 8),
                 DocumentGrid(
                   documents: expense.documents.toList(),
-                  onUploadDocument: (path, isPrivate) => widget
-                      .viewModel.onUploadDocument!(context, path, isPrivate),
+                  onUploadDocument: (path, isPrivate) =>
+                      widget.viewModel.onUploadDocument!(
+                        context,
+                        path,
+                        isPrivate,
+                      ),
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
-                )
-              ]
+                ),
+              ],
           ],
         ),
       ],

@@ -10,6 +10,7 @@ class AppReview {
   static void requestReview() => inAppReview.requestReview();
 
   static void openStoreListing() => inAppReview.openStoreListing(
-      appStoreId: isAndroid() ? kPlayStoreAppId : kAppStoreAppId,
-      microsoftStoreId: kMicrosoftAppStoreId);
+    appStoreId: isAndroid() ? kPlayStoreAppId : kAppStoreAppId,
+    microsoftStoreId: kMicrosoftAppStoreId,
+  );
 }

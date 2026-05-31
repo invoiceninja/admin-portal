@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewContacts extends StatelessWidget {
   const InvoiceViewContacts({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
 
@@ -25,18 +25,22 @@ class InvoiceViewContacts extends StatelessWidget {
     return ScrollableListView(
       padding: const EdgeInsets.all(8),
       children: invoice.invitations
-          .map((invitation) => _InvitationListTile(
-                invitation: invitation,
-                viewModel: viewModel,
-              ))
+          .map(
+            (invitation) => _InvitationListTile(
+              invitation: invitation,
+              viewModel: viewModel,
+            ),
+          )
           .toList(),
     );
   }
 }
 
 class _InvitationListTile extends StatelessWidget {
-  const _InvitationListTile(
-      {required this.invitation, required this.viewModel});
+  const _InvitationListTile({
+    required this.invitation,
+    required this.viewModel,
+  });
 
   final InvitationEntity invitation;
   final AbstractInvoiceViewVM viewModel;
@@ -52,8 +56,9 @@ class _InvitationListTile extends StatelessWidget {
 
     if (viewModel.invoice!.isPurchaseOrder) {
       final contact = vendor.contacts.firstWhere(
-          (contact) => contact.id == invitation.vendorContactId,
-          orElse: () => VendorContactEntity());
+        (contact) => contact.id == invitation.vendorContactId,
+        orElse: () => VendorContactEntity(),
+      );
       if (contact.isNew) {
         return SizedBox();
       }
@@ -63,8 +68,9 @@ class _InvitationListTile extends StatelessWidget {
       }
     } else {
       final contact = client.contacts.firstWhere(
-          (contact) => contact.id == invitation.clientContactId,
-          orElse: () => ClientContactEntity());
+        (contact) => contact.id == invitation.clientContactId,
+        orElse: () => ClientContactEntity(),
+      );
       if (contact.isNew) {
         return SizedBox();
       }
@@ -83,16 +89,10 @@ class _InvitationListTile extends StatelessWidget {
         );
         break;
       case InvitationEntity.EMAIL_STATUS_BOUNCED:
-        icon = Tooltip(
-          child: Icon(Icons.error),
-          message: localization.bounced,
-        );
+        icon = Tooltip(child: Icon(Icons.error), message: localization.bounced);
         break;
       case InvitationEntity.EMAIL_STATUS_SPAM:
-        icon = Tooltip(
-          child: Icon(Icons.error),
-          message: localization.spam,
-        );
+        icon = Tooltip(child: Icon(Icons.error), message: localization.spam);
         break;
     }
 
@@ -143,7 +143,7 @@ class _InvitationListTile extends StatelessWidget {
             viewLink: invitation.silentLink,
             copyLink: invitation.link,
             client: client,
-          )
+          ),
         ],
       ),
       leading: icon,

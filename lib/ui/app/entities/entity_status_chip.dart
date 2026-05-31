@@ -48,51 +48,58 @@ class EntityStatusChip extends StatelessWidget {
         case EntityType.payment:
           final payment = entity as PaymentEntity;
           label = kPaymentStatuses[payment.calculatedStatusId];
-          color = PaymentStatusColors(state.prefState.colorThemeModel)
-              .colors[payment.calculatedStatusId];
+          color = PaymentStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[payment.calculatedStatusId];
           break;
         case EntityType.invoice:
           final invoice = entity as InvoiceEntity;
           final statusId = invoice.calculatedStatusId;
           label = kInvoiceStatuses[statusId];
-          color = InvoiceStatusColors(state.prefState.colorThemeModel)
-              .colors[statusId];
+          color = InvoiceStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[statusId];
           isBounced = invoice.isBounced;
           break;
         case EntityType.recurringInvoice:
           final invoice = entity as InvoiceEntity;
           final statusId = invoice.calculatedStatusId;
           label = kRecurringInvoiceStatuses[statusId];
-          color = RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
-              .colors[statusId];
+          color = RecurringInvoiceStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[statusId];
           break;
         case EntityType.quote:
           final quote = entity as InvoiceEntity;
           final statusId = quote.calculatedStatusId;
           label = kQuoteStatuses[statusId];
-          color = QuoteStatusColors(state.prefState.colorThemeModel)
-              .colors[statusId];
+          color = QuoteStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[statusId];
           isBounced = quote.isBounced;
           break;
         case EntityType.credit:
           final credit = entity as InvoiceEntity;
           label = kCreditStatuses[credit.calculatedStatusId];
-          color = CreditStatusColors(state.prefState.colorThemeModel)
-              .colors[credit.calculatedStatusId];
+          color = CreditStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[credit.calculatedStatusId];
           isBounced = credit.isBounced;
           break;
         case EntityType.purchaseOrder:
           final purchaseOrder = entity as InvoiceEntity;
           label = kPurchaseOrderStatuses[purchaseOrder.calculatedStatusId];
-          color = PurchaseOrderStatusColors(state.prefState.colorThemeModel)
-              .colors[purchaseOrder.calculatedStatusId];
+          color = PurchaseOrderStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[purchaseOrder.calculatedStatusId];
           isBounced = purchaseOrder.isBounced;
           break;
         case EntityType.transaction:
           final transaction = entity as TransactionEntity;
           label = kTransactionStatuses[transaction.statusId];
-          color = TransactionStatusColors(state.prefState.colorThemeModel)
-              .colors[transaction.statusId];
+          color = TransactionStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[transaction.statusId];
           break;
         case EntityType.expense:
           final expense = entity as ExpenseEntity;
@@ -100,15 +107,17 @@ class EntityStatusChip extends StatelessWidget {
           label = kExpenseStatuses[expense.calculatedStatusId];
           color = category.color.isNotEmpty && category.color != '#fff'
               ? convertHexStringToColor(category.color)
-              : ExpenseStatusColors(state.prefState.colorThemeModel)
-                  .colors[expense.calculatedStatusId];
+              : ExpenseStatusColors(
+                  state.prefState.colorThemeModel,
+                ).colors[expense.calculatedStatusId];
           break;
         case EntityType.recurringExpense:
           final expense = entity as ExpenseEntity;
           final statusId = expense.calculatedStatusId;
           label = kRecurringExpenseStatuses[statusId];
-          color = RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
-              .colors[statusId];
+          color = RecurringInvoiceStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[statusId];
           break;
         case EntityType.task:
           final task = entity as TaskEntity;
@@ -116,18 +125,19 @@ class EntityStatusChip extends StatelessWidget {
           label = task.isInvoiced
               ? localization.invoiced
               : task.isRunning
-                  ? localization.running
-                  : status.name.isNotEmpty
-                      ? status.name
-                      : localization.logged;
+              ? localization.running
+              : status.name.isNotEmpty
+              ? status.name
+              : localization.logged;
           color = task.isInvoiced
               ? state.prefState.colorThemeModel!.colorSuccess
               : task.isRunning
-                  ? state.prefState.colorThemeModel!.colorInfo
-                  : status.color.isNotEmpty && status.color != '#fff'
-                      ? convertHexStringToColor(status.color)
-                      : TaskStatusColors(state.prefState.colorThemeModel)
-                          .colors[task.calculateStatusId];
+              ? state.prefState.colorThemeModel!.colorInfo
+              : status.color.isNotEmpty && status.color != '#fff'
+              ? convertHexStringToColor(status.color)
+              : TaskStatusColors(
+                  state.prefState.colorThemeModel,
+                ).colors[task.calculateStatusId];
           break;
         default:
           return SizedBox();
@@ -171,10 +181,7 @@ class EntityStatusChip extends StatelessWidget {
             if (isBounced)
               Padding(
                 padding: const EdgeInsets.only(left: 4),
-                child: Icon(
-                  MdiIcons.alertCircleOutline,
-                  size: 16,
-                ),
+                child: Icon(MdiIcons.alertCircleOutline, size: 16),
               ),
           ],
         ),

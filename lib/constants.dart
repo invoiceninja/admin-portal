@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.195';
+const String kClientVersion = '5.0.196';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -104,14 +104,7 @@ const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 const String kGoogleAnalyticsUrl =
     'https://support.google.com/analytics/answer/1037249?hl=en';
 
-enum AppEnvironment {
-  hosted,
-  selfhosted,
-  testing,
-  demo,
-  staging,
-  develop,
-}
+enum AppEnvironment { hosted, selfhosted, testing, demo, staging, develop }
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefUrl = 'url';

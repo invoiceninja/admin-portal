@@ -19,10 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'group_screen_vm.dart';
 
 class GroupSettingsScreen extends StatelessWidget {
-  const GroupSettingsScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const GroupSettingsScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsGroupSettings';
 
@@ -60,9 +58,7 @@ class GroupSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,
         onSelectedSortField: (value) => store.dispatch(SortGroups(value)),
-        sortFields: [
-          GroupFields.name,
-        ],
+        sortFields: [GroupFields.name],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterGroupsByState(state));
         },
@@ -74,19 +70,19 @@ class GroupSettingsScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMobile &&
+      floatingActionButton:
+          state.prefState.isMobile &&
               state.userCompany.canCreate(EntityType.group)
           ? FloatingActionButton(
               heroTag: 'group_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.group);
+                  context: context,
+                  entityType: EntityType.group,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newGroup,
             )
           : null,

@@ -22,9 +22,7 @@ class TokenScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, TokenScreenVM>(
       converter: TokenScreenVM.fromStore,
       builder: (context, vm) {
-        return TokenScreen(
-          viewModel: vm,
-        );
+        return TokenScreen(viewModel: vm);
       },
     );
   }
@@ -51,15 +49,19 @@ class TokenScreenVM {
     return TokenScreenVM(
       tokenMap: state.tokenState.map,
       tokenList: memoizedFilteredTokenList(
-          state.getUISelection(EntityType.token),
-          state.tokenState.map,
-          state.tokenState.list,
-          state.tokenListState),
+        state.getUISelection(EntityType.token),
+        state.tokenState.map,
+        state.tokenState.list,
+        state.tokenListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.tokenListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> tokens,
-              EntityAction action) =>
-          handleTokenAction(context, tokens, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> tokens,
+            EntityAction action,
+          ) => handleTokenAction(context, tokens, action),
     );
   }
 }

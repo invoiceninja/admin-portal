@@ -25,10 +25,7 @@ class ViewUserList implements PersistUI {
 }
 
 class ViewUser implements PersistUI, PersistPrefs {
-  ViewUser({
-    required this.userId,
-    this.force = false,
-  });
+  ViewUser({required this.userId, this.force = false});
 
   final String? userId;
   final bool force;
@@ -239,12 +236,7 @@ class RestoreUserFailure implements StopSaving {
 }
 
 class RemoveUserRequest implements StartSaving {
-  RemoveUserRequest({
-    this.completer,
-    this.userId,
-    this.password,
-    this.idToken,
-  });
+  RemoveUserRequest({this.completer, this.userId, this.password, this.idToken});
 
   final Completer? completer;
   final String? userId;
@@ -333,7 +325,10 @@ class FilterUsersByCustom4 implements PersistUI {
 }
 
 void handleUserAction(
-    BuildContext? context, List<BaseEntity> users, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> users,
+  EntityAction? action,
+) {
   if (users.isEmpty) {
     return;
   }
@@ -350,19 +345,25 @@ void handleUserAction(
       break;
     case EntityAction.newClient:
       createEntity(
-          entity: ClientEntity(state: state)
-              .rebuild((b) => b.assignedUserId = user.id));
+        entity: ClientEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
+      );
       break;
     case EntityAction.newInvoice:
       createEntity(
-          entity: InvoiceEntity(state: state)
-              .rebuild((b) => b.assignedUserId = user.id));
+        entity: InvoiceEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
+      );
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
-          entity: InvoiceEntity(
-                  state: state, entityType: EntityType.recurringInvoice)
-              .rebuild((b) => b.assignedUserId = user.id));
+        entity: InvoiceEntity(
+          state: state,
+          entityType: EntityType.recurringInvoice,
+        ).rebuild((b) => b.assignedUserId = user.id),
+      );
       break;
     case EntityAction.newQuote:
       createEntity(
@@ -382,126 +383,136 @@ void handleUserAction(
       break;
     case EntityAction.newExpense:
       createEntity(
-        entity: ExpenseEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user.id),
+        entity: ExpenseEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newPayment:
       createEntity(
-        entity: PaymentEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user.id),
+        entity: PaymentEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
-        entity: ProjectEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user.id),
+        entity: ProjectEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newTask:
       createEntity(
-        entity:
-            TaskEntity(state: state).rebuild((b) => b.assignedUserId = user.id),
+        entity: TaskEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newVendor:
       createEntity(
-        entity: VendorEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user.id),
+        entity: VendorEntity(
+          state: state,
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.restore:
       final message = userIds.length > 1
           ? localization!.restoredUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.restoredUser;
-      final dispatch = ([String? password, String? idToken]) =>
-          store.dispatch(RestoreUserRequest(
-            completer: snackBarCompleter<Null>(message),
-            userIds: userIds,
-            password: password,
-            idToken: idToken,
-          ));
+      final dispatch = ([String? password, String? idToken]) => store.dispatch(
+        RestoreUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userIds: userIds,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       passwordCallback(
-          context: context,
-          callback: (password, idToken) {
-            dispatch(password, idToken);
-          });
+        context: context,
+        callback: (password, idToken) {
+          dispatch(password, idToken);
+        },
+      );
       break;
     case EntityAction.archive:
       final message = userIds.length > 1
           ? localization!.archivedUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.archivedUser;
-      final dispatch = ([String? password, String? idToken]) =>
-          store.dispatch(ArchiveUserRequest(
-            completer: snackBarCompleter<Null>(message),
-            userIds: userIds,
-            password: password,
-            idToken: idToken,
-          ));
+      final dispatch = ([String? password, String? idToken]) => store.dispatch(
+        ArchiveUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userIds: userIds,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       passwordCallback(
-          context: context,
-          callback: (password, idToken) {
-            dispatch(password, idToken);
-          });
+        context: context,
+        callback: (password, idToken) {
+          dispatch(password, idToken);
+        },
+      );
       break;
     case EntityAction.delete:
       final message = userIds.length > 1
           ? localization!.deletedUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.deletedUser;
-      final dispatch = ([
-        String? password,
-        String? idToken,
-      ]) =>
-          store.dispatch(DeleteUserRequest(
-            completer: snackBarCompleter<Null>(message),
-            userIds: userIds,
-            password: password,
-            idToken: idToken,
-          ));
+      final dispatch = ([String? password, String? idToken]) => store.dispatch(
+        DeleteUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userIds: userIds,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       passwordCallback(
-          context: context,
-          callback: (password, idToken) {
-            dispatch(password, idToken);
-          });
+        context: context,
+        callback: (password, idToken) {
+          dispatch(password, idToken);
+        },
+      );
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-          entity: ExpenseEntity(
-              state: state,
-              user: user,
-              entityType: EntityType.recurringExpense));
+        entity: ExpenseEntity(
+          state: state,
+          user: user,
+          entityType: EntityType.recurringExpense,
+        ),
+      );
       break;
     case EntityAction.remove:
       final message = userIds.length > 1
           ? localization!.removedUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.removedUser;
-      final dispatch = ([
-        String? password,
-        String? idToken,
-      ]) =>
-          store.dispatch(RemoveUserRequest(
-            completer: snackBarCompleter<Null>(message),
-            userId: user.id,
-            password: password,
-            idToken: idToken,
-          ));
+      final dispatch = ([String? password, String? idToken]) => store.dispatch(
+        RemoveUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userId: user.id,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       confirmCallback(
-          context: context,
-          callback: (_) {
-            passwordCallback(
-                context: context,
-                callback: (password, idToken) {
-                  dispatch(password, idToken);
-                });
-          });
+        context: context,
+        callback: (_) {
+          passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              dispatch(password, idToken);
+            },
+          );
+        },
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {
@@ -522,21 +533,23 @@ void handleUserAction(
       break;
     case EntityAction.resendInvite:
       passwordCallback(
-          context: context,
-          callback: (password, idToken) {
-            store.dispatch(ResendInviteRequest(
+        context: context,
+        callback: (password, idToken) {
+          store.dispatch(
+            ResendInviteRequest(
               userId: user.id,
               password: password,
               idToken: idToken,
               completer: snackBarCompleter<Null>(
-                  localization!.emailSentToConfirmEmail),
-            ));
-          });
+                localization!.emailSentToConfirmEmail,
+              ),
+            ),
+          );
+        },
+      );
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [user],
-      );
+      showEntityActionsDialog(entities: [user]);
       break;
   }
 }

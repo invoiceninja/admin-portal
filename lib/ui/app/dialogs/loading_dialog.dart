@@ -17,11 +17,9 @@ class LoadingDialog extends StatelessWidget {
           child: Text('${localization.loading}...'),
         ),
         Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              height: 4.0,
-              child: LinearProgressIndicator(),
-            ))
+          padding: const EdgeInsets.all(16.0),
+          child: SizedBox(height: 4.0, child: LinearProgressIndicator()),
+        ),
       ],
     );
   }

@@ -32,28 +32,29 @@ class TokenListBuilder extends StatelessWidget {
       converter: TokenListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.token,
-            presenter: TokenPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.tokenList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final tokenId = viewModel.tokenList[index];
-              final token = viewModel.tokenMap[tokenId]!;
-              final listState = state.getListState(EntityType.token);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.token,
+          presenter: TokenPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.tokenList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final tokenId = viewModel.tokenList[index];
+            final token = viewModel.tokenMap[tokenId]!;
+            final listState = state.getListState(EntityType.token);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return TokenListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                token: token,
-                isChecked: isInMultiselect && listState.isSelected(token.id),
-              );
-            });
+            return TokenListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              token: token,
+              isChecked: isInMultiselect && listState.isSelected(token.id),
+            );
+          },
+        );
       },
     );
   }
@@ -80,8 +81,9 @@ class TokenListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -93,20 +95,24 @@ class TokenListVM {
       userCompany: state.userCompany,
       listState: state.tokenListState,
       tokenList: memoizedFilteredTokenList(
-          state.getUISelection(EntityType.token),
-          state.tokenState.map,
-          state.tokenState.list,
-          state.tokenListState),
+        state.getUISelection(EntityType.token),
+        state.tokenState.map,
+        state.tokenState.list,
+        state.tokenListState,
+      ),
       tokenMap: state.tokenState.map,
       isLoading: state.isLoading,
       filter: state.tokenUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> tokens,
-              EntityAction action) =>
-          handleTokenAction(context, tokens, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> tokens,
+            EntityAction action,
+          ) => handleTokenAction(context, tokens, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.token) ??
-              TokenPresenter.getDefaultTableFields(state.userCompany),
+          TokenPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTokens(field)),
       onClearMultielsect: () => store.dispatch(ClearTokenMultiselect()),
     );

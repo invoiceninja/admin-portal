@@ -9,12 +9,14 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/schedule/schedule_state.dart';
 
 EntityUIState scheduleUIReducer(ScheduleUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(scheduleListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(scheduleListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -40,14 +42,19 @@ final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveSchedulesSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteSchedulesSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.schedule ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.schedule ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewSchedule>(
-      (String? selectedId, dynamic action) => action.scheduleId),
+    (String? selectedId, dynamic action) => action.scheduleId,
+  ),
   TypedReducer<String?, AddScheduleSuccess>(
-      (String? selectedId, dynamic action) => action.schedule.id),
+    (String? selectedId, dynamic action) => action.schedule.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortSchedules>((selectedId, action) => ''),
   TypedReducer<String?, FilterSchedules>((selectedId, action) => ''),
@@ -57,11 +64,12 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterSchedulesByCustom3>((selectedId, action) => ''),
   TypedReducer<String?, FilterSchedulesByCustom4>((selectedId, action) => ''),
   TypedReducer<String?, FilterByEntity>(
-      (selectedId, action) => action.clearSelection
-          ? ''
-          : action.entityType == EntityType.schedule
-              ? action.entityId
-              : selectedId),
+    (selectedId, action) => action.clearSelection
+        ? ''
+        : action.entityType == EntityType.schedule
+        ? action.entityId
+        : selectedId,
+  ),
 ]);
 
 final editingReducer = combineReducers<ScheduleEntity?>([
@@ -96,95 +104,133 @@ final scheduleListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterSchedulesByState>(_filterSchedulesByState),
   TypedReducer<ListUIState, FilterSchedules>(_filterSchedules),
   TypedReducer<ListUIState, FilterSchedulesByCustom1>(
-      _filterSchedulesByCustom1),
+    _filterSchedulesByCustom1,
+  ),
   TypedReducer<ListUIState, FilterSchedulesByCustom2>(
-      _filterSchedulesByCustom2),
+    _filterSchedulesByCustom2,
+  ),
   TypedReducer<ListUIState, StartScheduleMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToScheduleMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromScheduleMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearScheduleMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewScheduleList>(_viewScheduleList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewScheduleList(
-    ListUIState scheduleListState, ViewScheduleList action) {
-  return scheduleListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState scheduleListState,
+  ViewScheduleList action,
+) {
+  return scheduleListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterSchedulesByCustom1(
-    ListUIState scheduleListState, FilterSchedulesByCustom1 action) {
+  ListUIState scheduleListState,
+  FilterSchedulesByCustom1 action,
+) {
   if (scheduleListState.custom1Filters.contains(action.value)) {
-    return scheduleListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return scheduleListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
-    return scheduleListState
-        .rebuild((b) => b..custom1Filters.add(action.value));
+    return scheduleListState.rebuild(
+      (b) => b..custom1Filters.add(action.value),
+    );
   }
 }
 
 ListUIState _filterSchedulesByCustom2(
-    ListUIState scheduleListState, FilterSchedulesByCustom2 action) {
+  ListUIState scheduleListState,
+  FilterSchedulesByCustom2 action,
+) {
   if (scheduleListState.custom2Filters.contains(action.value)) {
-    return scheduleListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return scheduleListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
-    return scheduleListState
-        .rebuild((b) => b..custom2Filters.add(action.value));
+    return scheduleListState.rebuild(
+      (b) => b..custom2Filters.add(action.value),
+    );
   }
 }
 
 ListUIState _filterSchedulesByState(
-    ListUIState scheduleListState, FilterSchedulesByState action) {
+  ListUIState scheduleListState,
+  FilterSchedulesByState action,
+) {
   if (scheduleListState.stateFilters.contains(action.state)) {
-    return scheduleListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return scheduleListState.rebuild(
+      (b) => b..stateFilters.remove(action.state),
+    );
   } else {
     return scheduleListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
 ListUIState _filterSchedules(
-    ListUIState scheduleListState, FilterSchedules action) {
-  return scheduleListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : scheduleListState.filterClearedAt);
+  ListUIState scheduleListState,
+  FilterSchedules action,
+) {
+  return scheduleListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : scheduleListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortSchedules(
-    ListUIState scheduleListState, SortSchedules action) {
-  return scheduleListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  ListUIState scheduleListState,
+  SortSchedules action,
+) {
+  return scheduleListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState productListState, StartScheduleMultiselect action) {
+  ListUIState productListState,
+  StartScheduleMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState productListState, AddToScheduleMultiselect action) {
+  ListUIState productListState,
+  AddToScheduleMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState productListState, RemoveFromScheduleMultiselect action) {
-  return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState productListState,
+  RemoveFromScheduleMultiselect action,
+) {
+  return productListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState productListState, ClearScheduleMultiselect action) {
+  ListUIState productListState,
+  ClearScheduleMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -200,7 +246,9 @@ final schedulesReducer = combineReducers<ScheduleState>([
 ]);
 
 ScheduleState _archiveScheduleSuccess(
-    ScheduleState scheduleState, ArchiveSchedulesSuccess action) {
+  ScheduleState scheduleState,
+  ArchiveSchedulesSuccess action,
+) {
   return scheduleState.rebuild((b) {
     for (final schedule in action.schedules) {
       b.map[schedule.id] = schedule;
@@ -209,7 +257,9 @@ ScheduleState _archiveScheduleSuccess(
 }
 
 ScheduleState _deleteScheduleSuccess(
-    ScheduleState scheduleState, DeleteSchedulesSuccess action) {
+  ScheduleState scheduleState,
+  DeleteSchedulesSuccess action,
+) {
   return scheduleState.rebuild((b) {
     for (final schedule in action.schedules) {
       b.map[schedule.id] = schedule;
@@ -218,7 +268,9 @@ ScheduleState _deleteScheduleSuccess(
 }
 
 ScheduleState _restoreScheduleSuccess(
-    ScheduleState scheduleState, RestoreSchedulesSuccess action) {
+  ScheduleState scheduleState,
+  RestoreSchedulesSuccess action,
+) {
   return scheduleState.rebuild((b) {
     for (final schedule in action.schedules) {
       b.map[schedule.id] = schedule;
@@ -227,30 +279,43 @@ ScheduleState _restoreScheduleSuccess(
 }
 
 ScheduleState _addSchedule(
-    ScheduleState scheduleState, AddScheduleSuccess action) {
-  return scheduleState.rebuild((b) => b
-    ..map[action.schedule.id] = action.schedule
-    ..list.add(action.schedule.id));
+  ScheduleState scheduleState,
+  AddScheduleSuccess action,
+) {
+  return scheduleState.rebuild(
+    (b) => b
+      ..map[action.schedule.id] = action.schedule
+      ..list.add(action.schedule.id),
+  );
 }
 
 ScheduleState _updateSchedule(
-    ScheduleState scheduleState, SaveScheduleSuccess action) {
-  return scheduleState
-      .rebuild((b) => b..map[action.schedule.id] = action.schedule);
+  ScheduleState scheduleState,
+  SaveScheduleSuccess action,
+) {
+  return scheduleState.rebuild(
+    (b) => b..map[action.schedule.id] = action.schedule,
+  );
 }
 
 ScheduleState _setLoadedSchedule(
-    ScheduleState scheduleState, LoadScheduleSuccess action) {
-  return scheduleState
-      .rebuild((b) => b..map[action.schedule.id] = action.schedule);
+  ScheduleState scheduleState,
+  LoadScheduleSuccess action,
+) {
+  return scheduleState.rebuild(
+    (b) => b..map[action.schedule.id] = action.schedule,
+  );
 }
 
 ScheduleState _setLoadedSchedules(
-        ScheduleState scheduleState, LoadSchedulesSuccess action) =>
-    scheduleState.loadSchedules(action.schedules);
+  ScheduleState scheduleState,
+  LoadSchedulesSuccess action,
+) => scheduleState.loadSchedules(action.schedules);
 
 ScheduleState _setLoadedCompany(
-    ScheduleState scheduleState, LoadCompanySuccess action) {
+  ScheduleState scheduleState,
+  LoadCompanySuccess action,
+) {
   final company = action.userCompany.company;
   return scheduleState.loadSchedules(company.schedules);
 }

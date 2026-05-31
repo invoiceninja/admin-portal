@@ -32,10 +32,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:url_launcher/url_launcher.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
-  const TemplatesAndReminders({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TemplatesAndReminders({Key? key, required this.viewModel})
+    : super(key: key);
 
   final TemplatesAndRemindersVM viewModel;
 
@@ -45,8 +43,9 @@ class TemplatesAndReminders extends StatefulWidget {
 
 class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_templatesAndReminders',
+  );
   final _debouncer = Debouncer();
 
   EmailTemplate? _selectedTemplate;
@@ -82,13 +81,13 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     _focusNode = FocusScopeNode();
     _controller = TabController(
-        vsync: this, length: length, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: length,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
 
-    _controllers = [
-      _subjectController,
-      _bodyController,
-    ];
+    _controllers = [_subjectController, _bodyController];
 
     _subjectController.addListener(_onTextChanged);
     _bodyController.addListener(_onTextChanged);
@@ -148,8 +147,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
       // TODO remove this, it's currently needed to fix $start\_date
       if (emailTemplate.name == EmailTemplate.statement.name) {
-        _bodyController.text =
-            _bodyController.text.replaceAll('\\_date', '_date');
+        _bodyController.text = _bodyController.text.replaceAll(
+          '\\_date',
+          '_date',
+        );
       }
     }
 
@@ -197,69 +198,101 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     }
 
     if (_selectedTemplate == EmailTemplate.invoice) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyInvoice = body
-        ..emailSubjectInvoice = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyInvoice = body
+          ..emailSubjectInvoice = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.quote) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyQuote = body
-        ..emailSubjectQuote = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyQuote = body
+          ..emailSubjectQuote = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.credit) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyCredit = body
-        ..emailSubjectCredit = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyCredit = body
+          ..emailSubjectCredit = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.payment) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyPayment = body
-        ..emailSubjectPayment = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyPayment = body
+          ..emailSubjectPayment = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.payment_partial) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyPaymentPartial = body
-        ..emailSubjectPaymentPartial = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyPaymentPartial = body
+          ..emailSubjectPaymentPartial = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.payment_failed) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyPaymentFailed = body
-        ..emailSubjectPaymentFailed = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyPaymentFailed = body
+          ..emailSubjectPaymentFailed = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.reminder1) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder1 = body
-        ..emailSubjectReminder1 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyReminder1 = body
+          ..emailSubjectReminder1 = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.reminder2) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder2 = body
-        ..emailSubjectReminder2 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyReminder2 = body
+          ..emailSubjectReminder2 = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.reminder3) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminder3 = body
-        ..emailSubjectReminder3 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyReminder3 = body
+          ..emailSubjectReminder3 = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.reminder_endless) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyReminderEndless = body
-        ..emailSubjectReminderEndless = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyReminderEndless = body
+          ..emailSubjectReminderEndless = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.custom1) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyCustom1 = body
-        ..emailSubjectCustom1 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyCustom1 = body
+          ..emailSubjectCustom1 = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.custom2) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyCustom2 = body
-        ..emailSubjectCustom2 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyCustom2 = body
+          ..emailSubjectCustom2 = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.custom3) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyCustom3 = body
-        ..emailSubjectCustom3 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyCustom3 = body
+          ..emailSubjectCustom3 = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.statement) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyStatement = body
-        ..emailSubjectStatement = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyStatement = body
+          ..emailSubjectStatement = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.purchase_order) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyPurchaseOrder = body
-        ..emailSubjectPurchaseOrder = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyPurchaseOrder = body
+          ..emailSubjectPurchaseOrder = subject,
+      );
     } else if (_selectedTemplate == EmailTemplate.quote_reminder1) {
-      settings = settings.rebuild((b) => b
-        ..emailBodyQuoteReminder1 = body
-        ..emailSubjectQuoteReminder1 = subject);
+      settings = settings.rebuild(
+        (b) => b
+          ..emailBodyQuoteReminder1 = body
+          ..emailSubjectQuoteReminder1 = subject,
+      );
     }
 
     if (settings != widget.viewModel.settings) {
@@ -301,22 +334,23 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     });
 
     loadEmailTemplate(
-        context: context,
-        template: '${widget.viewModel.selectedTemplate}',
-        body: body,
-        subject: subject,
-        onComplete: (subject, body, email, rawSubject, rawBody) {
-          if (!mounted) {
-            return;
-          }
+      context: context,
+      template: '${widget.viewModel.selectedTemplate}',
+      body: body,
+      subject: subject,
+      onComplete: (subject, body, email, rawSubject, rawBody) {
+        if (!mounted) {
+          return;
+        }
 
-          setState(() {
-            _isLoading = false;
-            _subjectPreview = subject!.trim();
-            _bodyPreview = body!.trim();
-            _emailPreview = email!.trim();
-          });
+        setState(() {
+          _isLoading = false;
+          _subjectPreview = subject!.trim();
+          _bodyPreview = body!.trim();
+          _emailPreview = email!.trim();
         });
+      },
+    );
   }
 
   @override
@@ -340,16 +374,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         controller: _controller,
         isScrollable: false,
         tabs: [
-          Tab(
-            text: localization.settings,
-          ),
-          if (company.markdownEmailEnabled)
-            Tab(
-              text: localization.design,
-            ),
-          Tab(
-            text: localization.preview,
-          ),
+          Tab(text: localization.settings),
+          if (company.markdownEmailEnabled) Tab(text: localization.design),
+          Tab(text: localization.preview),
         ],
       ),
       body: AppTabForm(
@@ -361,160 +388,183 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
           ScrollableListView(
             primary: true,
             children: <Widget>[
-              FormCard(children: <Widget>[
-                AppDropdownButton<EmailTemplate>(
-                  labelText: localization.template,
-                  value: template,
-                  showBlank: false,
-                  onChanged: (dynamic value) => setState(() {
-                    _loadTemplate(value);
-                    _onChanged();
-                    viewModel.onTemplateChanged(value);
-                  }),
-                  items: EmailTemplate.values.where((value) {
-                    if ([
-                          EmailTemplate.invoice,
-                          EmailTemplate.statement,
-                          EmailTemplate.payment,
-                          EmailTemplate.payment_partial,
-                          EmailTemplate.payment_failed,
-                        ].contains(value) &&
-                        !company.isModuleEnabled(EntityType.invoice)) {
-                      return false;
-                    } else if ([
-                          EmailTemplate.quote,
-                          EmailTemplate.quote_reminder1,
-                        ].contains(value) &&
-                        !company.isModuleEnabled(EntityType.quote)) {
-                      return false;
-                    } else if (value == EmailTemplate.credit &&
-                        !company.isModuleEnabled(EntityType.credit)) {
-                      return false;
-                    } else if (value == EmailTemplate.purchase_order &&
-                        !company.isModuleEnabled(EntityType.purchaseOrder)) {
-                      return false;
-                    }
-                    return true;
-                  }).map((item) {
-                    var name = localization.lookup(item.name);
-                    if (item == EmailTemplate.reminder1) {
-                      name = localization.firstReminder;
-                    } else if (item == EmailTemplate.reminder2) {
-                      name = localization.secondReminder;
-                    } else if (item == EmailTemplate.reminder3) {
-                      name = localization.thirdReminder;
-                    } else if (item == EmailTemplate.custom1) {
-                      name = localization.firstCustom;
-                    } else if (item == EmailTemplate.custom2) {
-                      name = localization.secondCustom;
-                    } else if (item == EmailTemplate.custom3) {
-                      name = localization.thirdCustom;
-                    }
+              FormCard(
+                children: <Widget>[
+                  AppDropdownButton<EmailTemplate>(
+                    labelText: localization.template,
+                    value: template,
+                    showBlank: false,
+                    onChanged: (dynamic value) => setState(() {
+                      _loadTemplate(value);
+                      _onChanged();
+                      viewModel.onTemplateChanged(value);
+                    }),
+                    items: EmailTemplate.values
+                        .where((value) {
+                          if ([
+                                EmailTemplate.invoice,
+                                EmailTemplate.statement,
+                                EmailTemplate.payment,
+                                EmailTemplate.payment_partial,
+                                EmailTemplate.payment_failed,
+                              ].contains(value) &&
+                              !company.isModuleEnabled(EntityType.invoice)) {
+                            return false;
+                          } else if ([
+                                EmailTemplate.quote,
+                                EmailTemplate.quote_reminder1,
+                              ].contains(value) &&
+                              !company.isModuleEnabled(EntityType.quote)) {
+                            return false;
+                          } else if (value == EmailTemplate.credit &&
+                              !company.isModuleEnabled(EntityType.credit)) {
+                            return false;
+                          } else if (value == EmailTemplate.purchase_order &&
+                              !company.isModuleEnabled(
+                                EntityType.purchaseOrder,
+                              )) {
+                            return false;
+                          }
+                          return true;
+                        })
+                        .map((item) {
+                          var name = localization.lookup(item.name);
+                          if (item == EmailTemplate.reminder1) {
+                            name = localization.firstReminder;
+                          } else if (item == EmailTemplate.reminder2) {
+                            name = localization.secondReminder;
+                          } else if (item == EmailTemplate.reminder3) {
+                            name = localization.thirdReminder;
+                          } else if (item == EmailTemplate.custom1) {
+                            name = localization.firstCustom;
+                          } else if (item == EmailTemplate.custom2) {
+                            name = localization.secondCustom;
+                          } else if (item == EmailTemplate.custom3) {
+                            name = localization.thirdCustom;
+                          }
 
-                    return DropdownMenuItem<EmailTemplate>(
-                      child: Text(name),
-                      value: item,
-                    );
-                  }).toList(),
-                ),
-                if (!enableCustomEmail && state.isTrial)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: IconMessage(localization.customEmailsDisabledHelp),
+                          return DropdownMenuItem<EmailTemplate>(
+                            child: Text(name),
+                            value: item,
+                          );
+                        })
+                        .toList(),
                   ),
-                DecoratedFormField(
-                  label: localization.subject,
-                  controller: _subjectController,
-                  hint: _defaultSubject,
-                  keyboardType: TextInputType.text,
-                  enabled: enableCustomEmail,
-                ),
-                DecoratedFormField(
-                  label: localization.body,
-                  controller: _bodyController,
-                  maxLines: 8,
-                  keyboardType: TextInputType.multiline,
-                  hint: _defaultBody,
-                  enabled: enableCustomEmail,
-                ),
-              ]),
+                  if (!enableCustomEmail && state.isTrial)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: IconMessage(localization.customEmailsDisabledHelp),
+                    ),
+                  DecoratedFormField(
+                    label: localization.subject,
+                    controller: _subjectController,
+                    hint: _defaultSubject,
+                    keyboardType: TextInputType.text,
+                    enabled: enableCustomEmail,
+                  ),
+                  DecoratedFormField(
+                    label: localization.body,
+                    controller: _bodyController,
+                    maxLines: 8,
+                    keyboardType: TextInputType.multiline,
+                    hint: _defaultBody,
+                    enabled: enableCustomEmail,
+                  ),
+                ],
+              ),
               if (template == EmailTemplate.reminder1)
                 ReminderSettings(
-                    key: ValueKey('__reminder1_${template}__'),
-                    viewModel: viewModel,
-                    enabled: settings.enableReminder1,
-                    numDays: settings.numDaysReminder1,
-                    schedule: settings.scheduleReminder1,
-                    feeAmount: settings.lateFeeAmount1,
-                    feePercent: settings.lateFeePercent1,
-                    onChanged:
-                        (enabled, days, schedule, feeAmount, feePercent) {
-                      _updateReminders = true;
-                      viewModel.onSettingsChanged(settings.rebuild((b) => b
-                        ..enableReminder1 = enabled
-                        ..numDaysReminder1 = days
-                        ..scheduleReminder1 = schedule
-                        ..lateFeeAmount1 = feeAmount
-                        ..lateFeePercent1 = feePercent));
-                    }),
+                  key: ValueKey('__reminder1_${template}__'),
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder1,
+                  numDays: settings.numDaysReminder1,
+                  schedule: settings.scheduleReminder1,
+                  feeAmount: settings.lateFeeAmount1,
+                  feePercent: settings.lateFeePercent1,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) {
+                    _updateReminders = true;
+                    viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
+                          ..enableReminder1 = enabled
+                          ..numDaysReminder1 = days
+                          ..scheduleReminder1 = schedule
+                          ..lateFeeAmount1 = feeAmount
+                          ..lateFeePercent1 = feePercent,
+                      ),
+                    );
+                  },
+                ),
               if (template == EmailTemplate.reminder2)
                 ReminderSettings(
-                    key: ValueKey('__reminder2_${template}__'),
-                    viewModel: viewModel,
-                    enabled: settings.enableReminder2,
-                    numDays: settings.numDaysReminder2,
-                    schedule: settings.scheduleReminder2,
-                    feeAmount: settings.lateFeeAmount2,
-                    feePercent: settings.lateFeePercent2,
-                    onChanged:
-                        (enabled, days, schedule, feeAmount, feePercent) {
-                      _updateReminders = true;
-                      viewModel.onSettingsChanged(settings.rebuild((b) => b
-                        ..enableReminder2 = enabled
-                        ..numDaysReminder2 = days
-                        ..scheduleReminder2 = schedule
-                        ..lateFeeAmount2 = feeAmount
-                        ..lateFeePercent2 = feePercent));
-                    }),
+                  key: ValueKey('__reminder2_${template}__'),
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder2,
+                  numDays: settings.numDaysReminder2,
+                  schedule: settings.scheduleReminder2,
+                  feeAmount: settings.lateFeeAmount2,
+                  feePercent: settings.lateFeePercent2,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) {
+                    _updateReminders = true;
+                    viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
+                          ..enableReminder2 = enabled
+                          ..numDaysReminder2 = days
+                          ..scheduleReminder2 = schedule
+                          ..lateFeeAmount2 = feeAmount
+                          ..lateFeePercent2 = feePercent,
+                      ),
+                    );
+                  },
+                ),
               if (template == EmailTemplate.reminder3)
                 ReminderSettings(
-                    key: ValueKey('__reminder3_${template}__'),
-                    viewModel: viewModel,
-                    enabled: settings.enableReminder3,
-                    numDays: settings.numDaysReminder3,
-                    schedule: settings.scheduleReminder3,
-                    feeAmount: settings.lateFeeAmount3,
-                    feePercent: settings.lateFeePercent3,
-                    onChanged:
-                        (enabled, days, schedule, feeAmount, feePercent) {
-                      _updateReminders = true;
-                      viewModel.onSettingsChanged(settings.rebuild((b) => b
-                        ..enableReminder3 = enabled
-                        ..numDaysReminder3 = days
-                        ..scheduleReminder3 = schedule
-                        ..lateFeeAmount3 = feeAmount
-                        ..lateFeePercent3 = feePercent));
-                    }),
+                  key: ValueKey('__reminder3_${template}__'),
+                  viewModel: viewModel,
+                  enabled: settings.enableReminder3,
+                  numDays: settings.numDaysReminder3,
+                  schedule: settings.scheduleReminder3,
+                  feeAmount: settings.lateFeeAmount3,
+                  feePercent: settings.lateFeePercent3,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) {
+                    _updateReminders = true;
+                    viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
+                          ..enableReminder3 = enabled
+                          ..numDaysReminder3 = days
+                          ..scheduleReminder3 = schedule
+                          ..lateFeeAmount3 = feeAmount
+                          ..lateFeePercent3 = feePercent,
+                      ),
+                    );
+                  },
+                ),
               if (template == EmailTemplate.quote_reminder1)
                 ReminderSettings(
-                    key: ValueKey('__quote_reminder1_${template}__'),
-                    isQuote: true,
-                    viewModel: viewModel,
-                    enabled: settings.enableQuoteReminder1,
-                    numDays: settings.numDaysQuoteReminder1,
-                    schedule: settings.scheduleQuoteReminder1,
-                    feeAmount: settings.quoteLateFeeAmount1,
-                    feePercent: settings.quoteLateFeePercent1,
-                    onChanged:
-                        (enabled, days, schedule, feeAmount, feePercent) {
-                      _updateReminders = true;
-                      viewModel.onSettingsChanged(settings.rebuild((b) => b
-                        ..enableQuoteReminder1 = enabled
-                        ..numDaysQuoteReminder1 = days
-                        ..scheduleQuoteReminder1 = schedule
-                        ..quoteLateFeeAmount1 = feeAmount
-                        ..quoteLateFeePercent1 = feePercent));
-                    }),
+                  key: ValueKey('__quote_reminder1_${template}__'),
+                  isQuote: true,
+                  viewModel: viewModel,
+                  enabled: settings.enableQuoteReminder1,
+                  numDays: settings.numDaysQuoteReminder1,
+                  schedule: settings.scheduleQuoteReminder1,
+                  feeAmount: settings.quoteLateFeeAmount1,
+                  feePercent: settings.quoteLateFeePercent1,
+                  onChanged: (enabled, days, schedule, feeAmount, feePercent) {
+                    _updateReminders = true;
+                    viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
+                          ..enableQuoteReminder1 = enabled
+                          ..numDaysQuoteReminder1 = days
+                          ..scheduleQuoteReminder1 = schedule
+                          ..quoteLateFeeAmount1 = feeAmount
+                          ..quoteLateFeePercent1 = feePercent,
+                      ),
+                    );
+                  },
+                ),
               if (template == EmailTemplate.reminder_endless)
                 FormCard(
                   children: <Widget>[
@@ -523,32 +573,41 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                       value: settings.enableReminderEndless,
                       onChanged: (value) {
                         _updateReminders = true;
-                        viewModel.onSettingsChanged(settings
-                            .rebuild((b) => b..enableReminderEndless = value));
+                        viewModel.onSettingsChanged(
+                          settings.rebuild(
+                            (b) => b..enableReminderEndless = value,
+                          ),
+                        );
                       },
                       iconData: Icons.email,
                     ),
                     AppDropdownButton(
-                        labelText: localization.frequency,
-                        value: settings.endlessReminderFrequencyId == '0'
-                            ? null
-                            : settings.endlessReminderFrequencyId,
-                        onChanged: (dynamic value) {
-                          _updateReminders = true;
-                          viewModel.onSettingsChanged(settings.rebuild(
-                              (b) => b..endlessReminderFrequencyId = value));
-                        },
-                        items: kFrequencies
-                            .map((id, frequency) =>
+                      labelText: localization.frequency,
+                      value: settings.endlessReminderFrequencyId == '0'
+                          ? null
+                          : settings.endlessReminderFrequencyId,
+                      onChanged: (dynamic value) {
+                        _updateReminders = true;
+                        viewModel.onSettingsChanged(
+                          settings.rebuild(
+                            (b) => b..endlessReminderFrequencyId = value,
+                          ),
+                        );
+                      },
+                      items: kFrequencies
+                          .map(
+                            (id, frequency) =>
                                 MapEntry<String, DropdownMenuItem<String>>(
-                                    id,
-                                    DropdownMenuItem<String>(
-                                      child:
-                                          Text(localization.lookup(frequency)),
-                                      value: id,
-                                    )))
-                            .values
-                            .toList()),
+                                  id,
+                                  DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(frequency)),
+                                    value: id,
+                                  ),
+                                ),
+                          )
+                          .values
+                          .toList(),
+                    ),
                   ],
                 ),
               Padding(
@@ -677,16 +736,24 @@ class _ReminderSettingsState extends State<ReminderSettings> {
     ];
 
     _controllers.forEach(
-        (dynamic controller) => controller.removeListener(_onTextChanged));
+      (dynamic controller) => controller.removeListener(_onTextChanged),
+    );
 
     _daysController.text = '${widget.numDays ?? ''}';
-    _feeAmountController.text = formatNumber(widget.feeAmount, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
-    _feePercentController.text = formatNumber(widget.feePercent, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _feeAmountController.text = formatNumber(
+      widget.feeAmount,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
+    _feePercentController.text = formatNumber(
+      widget.feePercent,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
 
     _controllers.forEach(
-        (dynamic controller) => controller.addListener(_onTextChanged));
+      (dynamic controller) => controller.addListener(_onTextChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -699,10 +766,14 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
   void _onChanged() {
     final int? days = parseInt(_daysController.text.trim(), zeroIsNull: true);
-    final feeAmount =
-        parseDouble(_feeAmountController.text.trim(), zeroIsNull: true);
-    final feePercent =
-        parseDouble(_feePercentController.text.trim(), zeroIsNull: true);
+    final feeAmount = parseDouble(
+      _feeAmountController.text.trim(),
+      zeroIsNull: true,
+    );
+    final feePercent = parseDouble(
+      _feePercentController.text.trim(),
+      zeroIsNull: true,
+    );
 
     widget.onChanged(_enabled, days, _schedule, feeAmount, feePercent);
   }
@@ -723,8 +794,9 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             ),
             AppDropdownButton(
               showBlank: true,
-              blankLabel:
-                  state.settingsUIState.isFiltered ? '' : localization.disabled,
+              blankLabel: state.settingsUIState.isFiltered
+                  ? ''
+                  : localization.disabled,
               value: widget.schedule,
               labelText: localization.schedule,
               onChanged: (dynamic value) {
@@ -777,15 +849,19 @@ class _ReminderSettingsState extends State<ReminderSettings> {
               label: localization.lateFeeAmount,
               controller: _feeAmountController,
               isMoney: true,
-              keyboardType:
-                  TextInputType.numberWithOptions(decimal: true, signed: true),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: true,
+                signed: true,
+              ),
             ),
             DecoratedFormField(
               label: localization.lateFeePercent,
               controller: _feePercentController,
               isPercent: true,
-              keyboardType:
-                  TextInputType.numberWithOptions(decimal: true, signed: true),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: true,
+                signed: true,
+              ),
             ),
           ],
         ),
@@ -819,24 +895,22 @@ class EmailPreview extends StatelessWidget {
               ListDivider(),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 24, right: 10, top: 12, bottom: 12),
+                  left: 24,
+                  right: 10,
+                  top: 12,
+                  bottom: 12,
+                ),
                 child: Text(
                   subject,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Colors.black),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge!.copyWith(color: Colors.black),
                 ),
               ),
-              Expanded(
-                child: AppWebView(html: body),
-              ),
+              Expanded(child: AppWebView(html: body)),
             ],
           ),
-          if (isLoading)
-            SizedBox(
-              child: LinearProgressIndicator(),
-            ),
+          if (isLoading) SizedBox(child: LinearProgressIndicator()),
         ],
       ),
     );

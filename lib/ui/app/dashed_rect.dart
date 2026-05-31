@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class DashedRect extends StatelessWidget {
-  const DashedRect(
-      {this.color = Colors.black, this.strokeWidth = 1.0, this.gap = 5.0});
+  const DashedRect({
+    this.color = Colors.black,
+    this.strokeWidth = 1.0,
+    this.gap = 5.0,
+  });
 
   final Color color;
   final double strokeWidth;
@@ -18,8 +21,11 @@ class DashedRect extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(strokeWidth / 2),
         child: CustomPaint(
-          painter:
-              DashRectPainter(color: color, strokeWidth: strokeWidth, gap: gap),
+          painter: DashRectPainter(
+            color: color,
+            strokeWidth: strokeWidth,
+            gap: gap,
+          ),
         ),
       ),
     );
@@ -27,8 +33,11 @@ class DashedRect extends StatelessWidget {
 }
 
 class DashRectPainter extends CustomPainter {
-  DashRectPainter(
-      {this.strokeWidth = 5.0, this.color = Colors.red, this.gap = 5.0});
+  DashRectPainter({
+    this.strokeWidth = 5.0,
+    this.color = Colors.red,
+    this.gap = 5.0,
+  });
 
   double strokeWidth;
   Color color;
@@ -100,10 +109,7 @@ class DashRectPainter extends CustomPainter {
           ? path.lineTo(currentPoint.x as double, currentPoint.y as double)
           : path.moveTo(currentPoint.x as double, currentPoint.y as double);
       shouldDraw = !shouldDraw;
-      currentPoint = math.Point(
-        currentPoint.x + dx,
-        currentPoint.y + dy,
-      );
+      currentPoint = math.Point(currentPoint.x + dx, currentPoint.y + dy);
     }
     return path;
   }

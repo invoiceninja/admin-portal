@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PaymentScreen({Key? key, required this.viewModel}) : super(key: key);
 
   final PaymentScreenVM viewModel;
 
@@ -111,26 +108,38 @@ class PaymentScreen extends StatelessWidget {
         entityType: EntityType.payment,
         iconButtons: [
           IconButton(
-              icon: Icon(getEntityIcon(EntityType.settings)),
-              onPressed: () {
-                store.dispatch(ViewSettings(
+            icon: Icon(getEntityIcon(EntityType.settings)),
+            onPressed: () {
+              store.dispatch(
+                ViewSettings(
                   section: kSettingsPaymentSettings,
                   company: state.company,
-                ));
-              })
+                ),
+              );
+            },
+          ),
         ],
         tableColumns: PaymentPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            PaymentPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: PaymentPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) => store.dispatch(SortPayments(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.payment1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.payment2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.payment3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.payment4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.payment1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.payment2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.payment3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.payment4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterPaymentsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -160,19 +169,19 @@ class PaymentScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.payment)
           ? FloatingActionButton(
               heroTag: 'payment_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.payment);
+                  context: context,
+                  entityType: EntityType.payment,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.enterPayment,
             )
           : null,

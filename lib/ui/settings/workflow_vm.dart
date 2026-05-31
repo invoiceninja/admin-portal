@@ -51,39 +51,55 @@ class WorkflowSettingsVM {
     final state = store.state;
 
     return WorkflowSettingsVM(
-        state: state,
-        settings: state.uiState.settingsUIState.settings,
-        company: state.uiState.settingsUIState.company,
-        onSettingsChanged: (settings) {
-          store.dispatch(UpdateSettings(settings: settings));
-        },
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onSavePressed: (context) {
-          Debouncer.runOnComplete(() {
-            final settingsUIState = store.state.uiState.settingsUIState;
-            switch (settingsUIState.entityType) {
-              case EntityType.company:
-                final completer = snackBarCompleter<Null>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveCompanyRequest(
-                    completer: completer, company: settingsUIState.company));
-                break;
-              case EntityType.group:
-                final completer = snackBarCompleter<GroupEntity>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveGroupRequest(
-                    completer: completer, group: settingsUIState.group));
-                break;
-              case EntityType.client:
-                final completer = snackBarCompleter<ClientEntity>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveClientRequest(
-                    completer: completer, client: settingsUIState.client));
-                break;
-            }
-          });
+      state: state,
+      settings: state.uiState.settingsUIState.settings,
+      company: state.uiState.settingsUIState.company,
+      onSettingsChanged: (settings) {
+        store.dispatch(UpdateSettings(settings: settings));
+      },
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onSavePressed: (context) {
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          switch (settingsUIState.entityType) {
+            case EntityType.company:
+              final completer = snackBarCompleter<Null>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
+              break;
+            case EntityType.group:
+              final completer = snackBarCompleter<GroupEntity>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
+              break;
+            case EntityType.client:
+              final completer = snackBarCompleter<ClientEntity>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
+              break;
+          }
         });
+      },
+    );
   }
 
   final AppState state;

@@ -32,10 +32,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SubscriptionEdit extends StatefulWidget {
-  const SubscriptionEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const SubscriptionEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final SubscriptionEditVM viewModel;
 
@@ -45,8 +42,9 @@ class SubscriptionEdit extends StatefulWidget {
 
 class _SubscriptionEditState extends State<SubscriptionEdit>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_subscriptionEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_subscriptionEdit',
+  );
   final _debouncer = Debouncer();
   FocusScopeNode? _focusNode;
   TabController? _controller;
@@ -69,7 +67,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: 3,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -98,11 +99,15 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     _nameController.text = subscription.name;
     _promoCodeController.text = subscription.promoCode;
     _promoDiscountController.text = formatNumber(
-        subscription.promoDiscount, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+      subscription.promoDiscount,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _maxSeatsLimitController.text = formatNumber(
-        subscription.maxSeatsLimit.toDouble(), context,
-        formatNumberType: FormatNumberType.inputAmount)!;
+      subscription.maxSeatsLimit.toDouble(),
+      context,
+      formatNumberType: FormatNumberType.inputAmount,
+    )!;
     _returnUrlController.text = webhookConfiguration.returnUrl;
     _postPurchaseUrlController.text = webhookConfiguration.postPurchaseUrl;
 
@@ -124,14 +129,16 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   }
 
   void _onChanged() {
-    final subscription = widget.viewModel.subscription.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..promoCode = _promoCodeController.text.trim()
-      ..promoDiscount = parseDouble(_promoDiscountController.text)
-      ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
-      ..webhookConfiguration.returnUrl = _returnUrlController.text.trim()
-      ..webhookConfiguration.postPurchaseUrl =
-          _postPurchaseUrlController.text.trim());
+    final subscription = widget.viewModel.subscription.rebuild(
+      (b) => b
+        ..name = _nameController.text.trim()
+        ..promoCode = _promoCodeController.text.trim()
+        ..promoDiscount = parseDouble(_promoDiscountController.text)
+        ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
+        ..webhookConfiguration.returnUrl = _returnUrlController.text.trim()
+        ..webhookConfiguration.postPurchaseUrl = _postPurchaseUrlController.text
+            .trim(),
+    );
     if (subscription != widget.viewModel.subscription) {
       _debouncer.run(() {
         widget.viewModel.onChanged(subscription);
@@ -203,15 +210,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
         controller: _controller,
         isScrollable: isMobile(context),
         tabs: [
-          Tab(
-            text: localization.overview,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.webhook,
-          ),
+          Tab(text: localization.overview),
+          Tab(text: localization.settings),
+          Tab(text: localization.webhook),
         ],
       ),
       body: AppTabForm(
@@ -234,12 +235,14 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityIds: memoizedGroupList(state.groupState.map),
                     entityId: subscription.groupId,
                     onChanged: (groupId) => viewModel.onChanged(
-                        subscription.rebuild((b) => b..groupId = groupId)),
+                      subscription.rebuild((b) => b..groupId = groupId),
+                    ),
                   ),
                   UserPicker(
                     userId: subscription.assignedUserId,
-                    onChanged: (userId) => viewModel.onChanged(subscription
-                        .rebuild((b) => b..assignedUserId = userId)),
+                    onChanged: (userId) => viewModel.onChanged(
+                      subscription.rebuild((b) => b..assignedUserId = userId),
+                    ),
                   ),
                 ],
               ),
@@ -247,87 +250,110 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 children: <Widget>[
                   EntityDropdown(
                     entityType: EntityType.product,
-                    entityList: dropdownProductsSelector(state.productState.map,
-                        state.productState.list, state.userState.map),
+                    entityList: dropdownProductsSelector(
+                      state.productState.map,
+                      state.productState.list,
+                      state.userState.map,
+                    ),
                     entityMap: state.productState.map,
                     labelText: localization.oneTimeProducts,
                     onSelected: (value) {
                       if (value != null) {
                         final parts = subscription.productIds.split(',');
-                        viewModel.onChanged(subscription.rebuild((b) => b
-                          ..productIds = <String>[...parts, value.id]
-                              .where((part) => part.isNotEmpty)
-                              .join(',')));
+                        viewModel.onChanged(
+                          subscription.rebuild(
+                            (b) => b
+                              ..productIds = <String>[
+                                ...parts,
+                                value.id,
+                              ].where((part) => part.isNotEmpty).join(','),
+                          ),
+                        );
 
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((duration) {
+                        WidgetsBinding.instance.addPostFrameCallback((
+                          duration,
+                        ) {
                           FocusScope.of(context).unfocus();
                         });
                       }
                     },
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  SizedBox(height: 8),
                   ...subscription.productIds
                       .split(',')
                       .where((element) => element.isNotEmpty)
-                      .map((productId) => ListTile(
-                            title: Text(
-                                state.productState.get(productId).productKey),
-                            trailing: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                final parts =
-                                    subscription.productIds.split(',');
-                                parts.remove(productId);
-                                viewModel.onChanged(subscription.rebuild(
-                                    (b) => b..productIds = parts.join(',')));
-                              },
-                            ),
-                          ))
+                      .map(
+                        (productId) => ListTile(
+                          title: Text(
+                            state.productState.get(productId).productKey,
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              final parts = subscription.productIds.split(',');
+                              parts.remove(productId);
+                              viewModel.onChanged(
+                                subscription.rebuild(
+                                  (b) => b..productIds = parts.join(','),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
                       .toList(),
-                  SizedBox(
-                    height: 16,
-                  ),
+                  SizedBox(height: 16),
                   EntityDropdown(
                     entityType: EntityType.product,
-                    entityList: dropdownProductsSelector(state.productState.map,
-                        state.productState.list, state.userState.map),
+                    entityList: dropdownProductsSelector(
+                      state.productState.map,
+                      state.productState.list,
+                      state.userState.map,
+                    ),
                     entityMap: state.productState.map,
                     labelText: localization.recurringProducts,
                     onSelected: (value) {
                       final parts = subscription.recurringProductIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..recurringProductIds = <String>[...parts, value!.id]
-                            .where((part) => part.isNotEmpty)
-                            .join(',')));
+                      viewModel.onChanged(
+                        subscription.rebuild(
+                          (b) => b
+                            ..recurringProductIds = <String>[
+                              ...parts,
+                              value!.id,
+                            ].where((part) => part.isNotEmpty).join(','),
+                        ),
+                      );
 
                       WidgetsBinding.instance.addPostFrameCallback((duration) {
                         FocusScope.of(context).unfocus();
                       });
                     },
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  SizedBox(height: 8),
                   ...subscription.recurringProductIds
                       .split(',')
                       .where((element) => element.isNotEmpty)
-                      .map((productId) => ListTile(
-                            title: Text(
-                                state.productState.get(productId).productKey),
-                            trailing: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                final parts =
-                                    subscription.recurringProductIds.split(',');
-                                parts.remove(productId);
-                                viewModel.onChanged(subscription.rebuild((b) =>
-                                    b..recurringProductIds = parts.join(',')));
-                              },
-                            ),
-                          ))
+                      .map(
+                        (productId) => ListTile(
+                          title: Text(
+                            state.productState.get(productId).productKey,
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              final parts = subscription.recurringProductIds
+                                  .split(',');
+                              parts.remove(productId);
+                              viewModel.onChanged(
+                                subscription.rebuild(
+                                  (b) =>
+                                      b..recurringProductIds = parts.join(','),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
                       .toList(),
                 ],
               ),
@@ -336,96 +362,122 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                 children: <Widget>[
                   EntityDropdown(
                     entityType: EntityType.product,
-                    entityList: dropdownProductsSelector(state.productState.map,
-                        state.productState.list, state.userState.map),
+                    entityList: dropdownProductsSelector(
+                      state.productState.map,
+                      state.productState.list,
+                      state.userState.map,
+                    ),
                     entityMap: state.productState.map,
                     labelText: localization.optionalOneTimeProducts,
                     onSelected: (value) {
                       if (value != null) {
-                        final parts =
-                            subscription.optionalProductIds.split(',');
-                        viewModel.onChanged(subscription.rebuild((b) => b
-                          ..optionalProductIds = <String>[...parts, value.id]
-                              .where((part) => part.isNotEmpty)
-                              .join(',')));
+                        final parts = subscription.optionalProductIds.split(
+                          ',',
+                        );
+                        viewModel.onChanged(
+                          subscription.rebuild(
+                            (b) => b
+                              ..optionalProductIds = <String>[
+                                ...parts,
+                                value.id,
+                              ].where((part) => part.isNotEmpty).join(','),
+                          ),
+                        );
 
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((duration) {
+                        WidgetsBinding.instance.addPostFrameCallback((
+                          duration,
+                        ) {
                           FocusScope.of(context).unfocus();
                         });
                       }
                     },
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  SizedBox(height: 8),
                   ...subscription.optionalProductIds
                       .split(',')
                       .where((element) => element.isNotEmpty)
-                      .map((productId) => ListTile(
-                            title: Text(
-                                state.productState.get(productId).productKey),
-                            trailing: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                final parts =
-                                    subscription.optionalProductIds.split(',');
-                                parts.remove(productId);
-                                viewModel.onChanged(subscription.rebuild((b) =>
-                                    b..optionalProductIds = parts.join(',')));
-                              },
-                            ),
-                          ))
+                      .map(
+                        (productId) => ListTile(
+                          title: Text(
+                            state.productState.get(productId).productKey,
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              final parts = subscription.optionalProductIds
+                                  .split(',');
+                              parts.remove(productId);
+                              viewModel.onChanged(
+                                subscription.rebuild(
+                                  (b) =>
+                                      b..optionalProductIds = parts.join(','),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
                       .toList(),
-                  SizedBox(
-                    height: 16,
-                  ),
+                  SizedBox(height: 16),
                   EntityDropdown(
                     entityType: EntityType.product,
-                    entityList: dropdownProductsSelector(state.productState.map,
-                        state.productState.list, state.userState.map),
+                    entityList: dropdownProductsSelector(
+                      state.productState.map,
+                      state.productState.list,
+                      state.userState.map,
+                    ),
                     entityMap: state.productState.map,
                     labelText: localization.optionalRecurringProducts,
                     onSelected: (value) {
                       if (value != null) {
-                        final parts =
-                            subscription.optionalRecurringProductIds.split(',');
-                        viewModel.onChanged(subscription.rebuild((b) => b
-                          ..optionalRecurringProductIds = <String>[
-                            ...parts,
-                            value.id
-                          ].where((part) => part.isNotEmpty).join(',')));
+                        final parts = subscription.optionalRecurringProductIds
+                            .split(',');
+                        viewModel.onChanged(
+                          subscription.rebuild(
+                            (b) => b
+                              ..optionalRecurringProductIds = <String>[
+                                ...parts,
+                                value.id,
+                              ].where((part) => part.isNotEmpty).join(','),
+                          ),
+                        );
 
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((duration) {
+                        WidgetsBinding.instance.addPostFrameCallback((
+                          duration,
+                        ) {
                           FocusScope.of(context).unfocus();
                         });
                       }
                     },
                   ),
-                  SizedBox(
-                    height: 8,
-                  ),
+                  SizedBox(height: 8),
                   ...subscription.optionalRecurringProductIds
                       .split(',')
                       .where((element) => element.isNotEmpty)
-                      .map((productId) => ListTile(
-                            title: Text(
-                                state.productState.get(productId).productKey),
-                            trailing: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                final parts = subscription
-                                    .optionalRecurringProductIds
-                                    .split(',');
-                                parts.remove(productId);
-                                viewModel.onChanged(subscription.rebuild((b) =>
-                                    b
-                                      ..optionalRecurringProductIds =
-                                          parts.join(',')));
-                              },
-                            ),
-                          ))
+                      .map(
+                        (productId) => ListTile(
+                          title: Text(
+                            state.productState.get(productId).productKey,
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              final parts = subscription
+                                  .optionalRecurringProductIds
+                                  .split(',');
+                              parts.remove(productId);
+                              viewModel.onChanged(
+                                subscription.rebuild(
+                                  (b) => b
+                                    ..optionalRecurringProductIds = parts.join(
+                                      ',',
+                                    ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      )
                       .toList(),
                 ],
               ),
@@ -436,44 +488,51 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
               FormCard(
                 children: [
                   AppDropdownButton<String>(
-                      labelText: localization.frequency,
-                      value: subscription.frequencyId,
-                      onChanged: (dynamic value) {
-                        viewModel.onChanged(subscription
-                            .rebuild((b) => b..frequencyId = value));
-                      },
-                      showBlank: true,
-                      items: kFrequencies.entries
-                          .map((entry) => DropdownMenuItem(
-                                value: entry.key,
-                                child: Text(localization.lookup(entry.value)),
-                              ))
-                          .toList()),
+                    labelText: localization.frequency,
+                    value: subscription.frequencyId,
+                    onChanged: (dynamic value) {
+                      viewModel.onChanged(
+                        subscription.rebuild((b) => b..frequencyId = value),
+                      );
+                    },
+                    showBlank: true,
+                    items: kFrequencies.entries
+                        .map(
+                          (entry) => DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(localization.lookup(entry.value)),
+                          ),
+                        )
+                        .toList(),
+                  ),
                   AppDropdownButton<int>(
                     labelText: localization.remainingCycles,
                     value: subscription.remainingCycles,
                     blankValue: null,
                     onChanged: (dynamic value) => viewModel.onChanged(
-                        subscription
-                            .rebuild((b) => b..remainingCycles = value)),
+                      subscription.rebuild((b) => b..remainingCycles = value),
+                    ),
                     items: [
                       DropdownMenuItem(
                         child: Text(localization.endless),
                         value: -1,
                       ),
                       ...List<int>.generate(61, (i) => i)
-                          .map((value) => DropdownMenuItem(
-                                child: Text('$value'),
-                                value: value,
-                              ))
-                          .toList()
+                          .map(
+                            (value) => DropdownMenuItem(
+                              child: Text('$value'),
+                              value: value,
+                            ),
+                          )
+                          .toList(),
                     ],
                   ),
                   AppDropdownButton<String>(
                     labelText: localization.autoBill,
                     value: subscription.autoBill,
                     onChanged: (dynamic value) => viewModel.onChanged(
-                        subscription.rebuild((b) => b..autoBill = value)),
+                      subscription.rebuild((b) => b..autoBill = value),
+                    ),
                     showBlank: true,
                     selectedItemBuilder: (context) => [
                       '',
@@ -482,17 +541,20 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       SettingsEntity.AUTO_BILL_OPT_IN,
                       SettingsEntity.AUTO_BILL_OFF,
                     ].map((type) => Text(localization.lookup(type))).toList(),
-                    items: [
-                      SettingsEntity.AUTO_BILL_ALWAYS,
-                      SettingsEntity.AUTO_BILL_OPT_OUT,
-                      SettingsEntity.AUTO_BILL_OPT_IN,
-                      SettingsEntity.AUTO_BILL_OFF,
-                    ]
-                        .map((value) => DropdownMenuItem(
-                              child: AutobillDropdownMenuItem(type: value),
-                              value: value,
-                            ))
-                        .toList(),
+                    items:
+                        [
+                              SettingsEntity.AUTO_BILL_ALWAYS,
+                              SettingsEntity.AUTO_BILL_OPT_OUT,
+                              SettingsEntity.AUTO_BILL_OPT_IN,
+                              SettingsEntity.AUTO_BILL_OFF,
+                            ]
+                            .map(
+                              (value) => DropdownMenuItem(
+                                child: AutobillDropdownMenuItem(type: value),
+                                value: value,
+                              ),
+                            )
+                            .toList(),
                   ),
                   DecoratedFormField(
                     label: localization.promoCode,
@@ -505,25 +567,34 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     controller: _promoDiscountController,
                     value: subscription.promoDiscount,
                     isAmountDiscount: subscription.isAmountDiscount,
-                    onTypeChanged: (value) => viewModel.onChanged(subscription
-                        .rebuild((b) => b..isAmountDiscount = value)),
+                    onTypeChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b..isAmountDiscount = value),
+                    ),
                   ),
                 ],
               ),
               FormCard(
                 children: [
                   BoolDropdownButton(
-                      label: localization.registrationRequired,
-                      helpLabel: localization.registrationRequiredHelp,
-                      value: subscription.registrationRequired,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b..registrationRequired = value))),
+                    label: localization.registrationRequired,
+                    helpLabel: localization.registrationRequiredHelp,
+                    value: subscription.registrationRequired,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild(
+                        (b) => b..registrationRequired = value,
+                      ),
+                    ),
+                  ),
                   BoolDropdownButton(
-                      label: localization.useInventoryManagement,
-                      helpLabel: localization.useInventoryManagementHelp,
-                      value: subscription.useInventoryManagement,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b..useInventoryManagement = value))),
+                    label: localization.useInventoryManagement,
+                    helpLabel: localization.useInventoryManagementHelp,
+                    value: subscription.useInventoryManagement,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild(
+                        (b) => b..useInventoryManagement = value,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               FormCard(
@@ -537,20 +608,28 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                   ),
                   SizedBox(height: 16),
                   BoolDropdownButton(
-                      label: localization.allowQueryOverrides,
-                      value: subscription.allowQueryOverrides,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b..allowQueryOverrides = value))),
+                    label: localization.allowQueryOverrides,
+                    value: subscription.allowQueryOverrides,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild(
+                        (b) => b..allowQueryOverrides = value,
+                      ),
+                    ),
+                  ),
                   BoolDropdownButton(
-                      label: localization.allowPlanChanges,
-                      value: subscription.allowPlanChanges,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b..allowPlanChanges = value))),
+                    label: localization.allowPlanChanges,
+                    value: subscription.allowPlanChanges,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b..allowPlanChanges = value),
+                    ),
+                  ),
                   BoolDropdownButton(
-                      label: localization.allowCancellation,
-                      value: subscription.allowCancellation,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b..allowCancellation = value))),
+                    label: localization.allowCancellation,
+                    value: subscription.allowCancellation,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b..allowCancellation = value),
+                    ),
+                  ),
                   if (subscription.allowCancellation)
                     AppDropdownButton<int>(
                       showBlank: true,
@@ -558,14 +637,17 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       labelText: localization.refundPeriod,
                       value: subscription.refundPeriod,
                       onChanged: (dynamic value) => viewModel.onChanged(
-                          subscription.rebuild((b) => b..refundPeriod = value)),
+                        subscription.rebuild((b) => b..refundPeriod = value),
+                      ),
                       items: durations,
                     ),
                   BoolDropdownButton(
-                      label: localization.trialEnabled,
-                      value: subscription.trialEnabled,
-                      onChanged: (value) => viewModel.onChanged(
-                          subscription.rebuild((b) => b.trialEnabled = value))),
+                    label: localization.trialEnabled,
+                    value: subscription.trialEnabled,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b.trialEnabled = value),
+                    ),
+                  ),
                   if (subscription.trialEnabled)
                     AppDropdownButton<int>(
                       showBlank: true,
@@ -573,15 +655,17 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       labelText: localization.trialDuration,
                       value: subscription.trialDuration,
                       onChanged: (dynamic value) => viewModel.onChanged(
-                          subscription
-                              .rebuild((b) => b..trialDuration = value)),
+                        subscription.rebuild((b) => b..trialDuration = value),
+                      ),
                       items: durations,
                     ),
                   BoolDropdownButton(
-                      label: localization.perSeatEnabled,
-                      value: subscription.perSeatEnabled,
-                      onChanged: (value) => viewModel.onChanged(subscription
-                          .rebuild((b) => b.perSeatEnabled = value))),
+                    label: localization.perSeatEnabled,
+                    value: subscription.perSeatEnabled,
+                    onChanged: (value) => viewModel.onChanged(
+                      subscription.rebuild((b) => b.perSeatEnabled = value),
+                    ),
+                  ),
                   if (subscription.perSeatEnabled)
                     DecoratedFormField(
                       label: localization.maxSeatsLimit,
@@ -593,64 +677,58 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       onSavePressed: _onSavePressed,
                     ),
                 ],
-              )
+              ),
             ],
           ),
-          ScrollableListView(children: [
-            FormCard(
-              isLast: true,
-              children: [
-                DecoratedFormField(
-                  label: localization.webhookUrl,
-                  controller: _postPurchaseUrlController,
-                  keyboardType: TextInputType.url,
-                  onSavePressed: _onSavePressed,
-                ),
-                AppDropdownButton<String>(
-                  showBlank: true,
-                  labelText: localization.restMethod,
-                  value: webhookConfiguration.postPurchaseRestMethod,
-                  onChanged: (dynamic value) => viewModel.onChanged(
-                      subscription.rebuild((b) => b
-                        ..webhookConfiguration.postPurchaseRestMethod = value)),
-                  items: [
-                    DropdownMenuItem(
-                      child: Text('POST'),
-                      value: 'post',
-                    ),
-                    DropdownMenuItem(
-                      child: Text('PUT'),
-                      value: 'put',
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DecoratedFormField(
-                        label: localization.headerKey,
-                        controller: _postPurchaseHeaderKeyController,
-                        onSavePressed: _onSavePressed,
-                        onChanged: (value) => setState(() {}),
-                        keyboardType: TextInputType.text,
+          ScrollableListView(
+            children: [
+              FormCard(
+                isLast: true,
+                children: [
+                  DecoratedFormField(
+                    label: localization.webhookUrl,
+                    controller: _postPurchaseUrlController,
+                    keyboardType: TextInputType.url,
+                    onSavePressed: _onSavePressed,
+                  ),
+                  AppDropdownButton<String>(
+                    showBlank: true,
+                    labelText: localization.restMethod,
+                    value: webhookConfiguration.postPurchaseRestMethod,
+                    onChanged: (dynamic value) => viewModel.onChanged(
+                      subscription.rebuild(
+                        (b) => b
+                          ..webhookConfiguration.postPurchaseRestMethod = value,
                       ),
                     ),
-                    SizedBox(
-                      width: kTableColumnGap,
-                    ),
-                    Expanded(
-                      child: DecoratedFormField(
-                        label: localization.headerValue,
-                        controller: _postPurchaseHeaderValueController,
-                        onSavePressed: _onSavePressed,
-                        onChanged: (value) => setState(() {}),
-                        keyboardType: TextInputType.text,
+                    items: [
+                      DropdownMenuItem(child: Text('POST'), value: 'post'),
+                      DropdownMenuItem(child: Text('PUT'), value: 'put'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DecoratedFormField(
+                          label: localization.headerKey,
+                          controller: _postPurchaseHeaderKeyController,
+                          onSavePressed: _onSavePressed,
+                          onChanged: (value) => setState(() {}),
+                          keyboardType: TextInputType.text,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: kTableColumnGap,
-                    ),
-                    IconButton(
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: DecoratedFormField(
+                          label: localization.headerValue,
+                          controller: _postPurchaseHeaderValueController,
+                          onSavePressed: _onSavePressed,
+                          onChanged: (value) => setState(() {}),
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      IconButton(
                         tooltip: localization.addHeader,
                         icon: Icon(Icons.add_circle_outline),
                         onPressed: (key.isEmpty || value.isEmpty)
@@ -664,52 +742,58 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                                   return;
                                 }
 
-                                viewModel.onChanged(subscription.rebuild((b) =>
-                                    b
+                                viewModel.onChanged(
+                                  subscription.rebuild(
+                                    (b) => b
                                       ..webhookConfiguration
-                                          .postPurchaseHeaders[key] = value));
-                              })
-                  ],
-                ),
-                SizedBox(height: 8),
-                if (webhookConfiguration.postPurchaseHeaders.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 8),
-                    child: Center(
-                      child: HelpText(localization.noHeaders),
-                    ),
-                  )
-                else
-                  ...webhookConfiguration.postPurchaseHeaders.keys.map(
-                    (key) => ListTile(
-                      contentPadding: const EdgeInsets.all(0),
-                      title: Row(
-                        children: [
-                          Expanded(
-                            child: Text(key),
-                          ),
-                          SizedBox(width: kTableColumnGap),
-                          Expanded(
-                            child: Text(
-                                webhookConfiguration.postPurchaseHeaders[key]!),
-                          )
-                        ],
+                                              .postPurchaseHeaders[key] =
+                                          value,
+                                  ),
+                                );
+                              },
                       ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.clear),
-                        tooltip: localization.removeHeader,
-                        onPressed: () {
-                          viewModel.onChanged(subscription.rebuild((b) => b
-                            ..webhookConfiguration
-                                .postPurchaseHeaders
-                                .remove(key)));
-                        },
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  if (webhookConfiguration.postPurchaseHeaders.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 8),
+                      child: Center(child: HelpText(localization.noHeaders)),
+                    )
+                  else
+                    ...webhookConfiguration.postPurchaseHeaders.keys.map(
+                      (key) => ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        title: Row(
+                          children: [
+                            Expanded(child: Text(key)),
+                            SizedBox(width: kTableColumnGap),
+                            Expanded(
+                              child: Text(
+                                webhookConfiguration.postPurchaseHeaders[key]!,
+                              ),
+                            ),
+                          ],
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.clear),
+                          tooltip: localization.removeHeader,
+                          onPressed: () {
+                            viewModel.onChanged(
+                              subscription.rebuild(
+                                (b) => b
+                                  ..webhookConfiguration.postPurchaseHeaders
+                                      .remove(key),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  )
-              ],
-            ),
-          ]),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

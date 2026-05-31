@@ -61,53 +61,72 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         }
         if (company.hasCustomField(CustomFieldType.vendorContact1) &&
             contact.customValue1.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.vendorContact1, contact.customValue1));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.vendorContact1,
+              contact.customValue1,
+            ),
+          );
         }
         if (company.hasCustomField(CustomFieldType.vendorContact2) &&
             contact.customValue2.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.vendorContact2, contact.customValue2));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.vendorContact2,
+              contact.customValue2,
+            ),
+          );
         }
         if (company.hasCustomField(CustomFieldType.vendorContact3) &&
             contact.customValue3.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.vendorContact3, contact.customValue3));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.vendorContact3,
+              contact.customValue3,
+            ),
+          );
         }
         if (company.hasCustomField(CustomFieldType.vendorContact4) &&
             contact.customValue4.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.vendorContact4, contact.customValue4));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.vendorContact4,
+              contact.customValue4,
+            ),
+          );
         }
 
-        listTiles.add(AppListTile(
-          buttonRow: PortalLinks(
-            viewLink: contact.silentLink,
-            copyLink: contact.link,
-            client: null,
-          ),
-          icon: Icons.email,
-          title: contact.fullName.isEmpty
-              ? localization!.blankContact
-              : contact.fullName,
-          subtitle: subtitleParts.join('\n'),
-          copyValue: contact.email,
-          onLongPress: () => setState(() {
-            if (contact.email.isEmpty) {
-              return;
-            }
+        listTiles.add(
+          AppListTile(
+            buttonRow: PortalLinks(
+              viewLink: contact.silentLink,
+              copyLink: contact.link,
+              client: null,
+            ),
+            icon: Icons.email,
+            title: contact.fullName.isEmpty
+                ? localization!.blankContact
+                : contact.fullName,
+            subtitle: subtitleParts.join('\n'),
+            copyValue: contact.email,
+            onLongPress: () => setState(() {
+              if (contact.email.isEmpty) {
+                return;
+              }
 
-            _launched = _launchURL(context, 'mailto:' + contact.email);
-          }),
-        ));
+              _launched = _launchURL(context, 'mailto:' + contact.email);
+            }),
+          ),
+        );
 
         if (contact.phone.isNotEmpty) {
-          listTiles.add(AppListTile(
-            icon: Icons.phone,
-            title: contact.fullName + '\n' + contact.phone,
-            copyValue: contact.phone,
-            subtitle: localization!.phone,
-            /*
+          listTiles.add(
+            AppListTile(
+              icon: Icons.phone,
+              title: contact.fullName + '\n' + contact.phone,
+              copyValue: contact.phone,
+              subtitle: localization!.phone,
+              /*
             trailing: isApple() || isAndroid()
                 ? IconButton(
                     onPressed: () async {
@@ -121,32 +140,38 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
                     icon: Icon(MdiIcons.dialpad))
                 : null,
                 */
-            onLongPress: () => setState(() {
-              _launched =
-                  _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
-              //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
-            }),
-          ));
+              onLongPress: () => setState(() {
+                _launched = _launchURL(
+                  context,
+                  'sms:' + cleanPhoneNumber(contact.phone),
+                );
+                //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
+              }),
+            ),
+          );
         }
       });
 
       if (vendor.website.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.link,
-          title: vendor.website,
-          subtitle: localization!.website,
-          onLongPress: () => setState(() {
-            _launched = _launchURL(context, formatURL(vendor.website));
-          }),
-        ));
+        listTiles.add(
+          AppListTile(
+            icon: Icons.link,
+            title: vendor.website,
+            subtitle: localization!.website,
+            onLongPress: () => setState(() {
+              _launched = _launchURL(context, formatURL(vendor.website));
+            }),
+          ),
+        );
       }
 
       if (vendor.phone.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.phone,
-          title: vendor.phone,
-          subtitle: localization!.phone,
-          /*
+        listTiles.add(
+          AppListTile(
+            icon: Icons.phone,
+            title: vendor.phone,
+            subtitle: localization!.phone,
+            /*
           trailing: isApple() || isAndroid()
               ? IconButton(
                   onPressed: () async {
@@ -160,28 +185,35 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
                   icon: Icon(MdiIcons.dialpad))
               : null,
               */
-          onLongPress: () => setState(() {
-            _launched =
-                _launchURL(context, 'sms:' + cleanPhoneNumber(vendor.phone));
-            //_launched = _launchURL('tel:' + cleanPhoneNumber(vendor.workPhone));
-          }),
-        ));
+            onLongPress: () => setState(() {
+              _launched = _launchURL(
+                context,
+                'sms:' + cleanPhoneNumber(vendor.phone),
+              );
+              //_launched = _launchURL('tel:' + cleanPhoneNumber(vendor.workPhone));
+            }),
+          ),
+        );
       }
 
       if (vendor.vatNumber.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.location_city,
-          title: vendor.vatNumber,
-          subtitle: localization!.vatNumber,
-        ));
+        listTiles.add(
+          AppListTile(
+            icon: Icons.location_city,
+            title: vendor.vatNumber,
+            subtitle: localization!.vatNumber,
+          ),
+        );
       }
 
       if (vendor.idNumber.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.business,
-          title: vendor.idNumber,
-          subtitle: localization!.idNumber,
-        ));
+        listTiles.add(
+          AppListTile(
+            icon: Icons.business,
+            title: vendor.idNumber,
+            subtitle: localization!.idNumber,
+          ),
+        );
       }
 
       final store = StoreProvider.of<AppState>(context);
@@ -189,29 +221,34 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
       final address = formatAddress(state, object: vendor);
 
       if (address.isNotEmpty) {
-        listTiles.add(AppListTile(
+        listTiles.add(
+          AppListTile(
             icon: Icons.pin_drop,
             title: address,
             subtitle: localization!.billingAddress,
             onLongPress: () {
               _launched = _launchURL(
-                  context,
-                  getMapURL(context) +
-                      Uri.encodeFull(formatAddress(state,
-                          object: vendor, delimiter: ',')));
-            }));
+                context,
+                getMapURL(context) +
+                    Uri.encodeFull(
+                      formatAddress(state, object: vendor, delimiter: ','),
+                    ),
+              );
+            },
+          ),
+        );
       }
 
-      listTiles.add(Padding(
-        padding: const EdgeInsets.all(16),
-        child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
-      ));
+      listTiles.add(
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
+        ),
+      );
 
       return listTiles;
     }
 
-    return ScrollableListView(
-      children: _buildDetailsList(),
-    );
+    return ScrollableListView(children: _buildDetailsList());
   }
 }

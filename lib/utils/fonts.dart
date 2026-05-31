@@ -731,5 +731,5 @@ final kGoogleFonts = [
   {'value': 'Yellowtail', 'label': 'Yellowtail'},
   {'value': 'Yeseva_One', 'label': 'Yeseva One'},
   {'value': 'Yesteryear', 'label': 'Yesteryear'},
-  {'value': 'Zeyada', 'label': 'Zeyada'}
+  {'value': 'Zeyada', 'label': 'Zeyada'},
 ];

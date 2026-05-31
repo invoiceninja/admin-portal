@@ -97,12 +97,14 @@ class _CustomFieldState extends State<CustomField> {
       case kFieldTypeSwitch:
         return BoolDropdownButton(
           onChanged: (value) {
-            _controller!.text =
-                value == true ? kSwitchValueYes : kSwitchValueNo;
+            _controller!.text = value == true
+                ? kSwitchValueYes
+                : kSwitchValueNo;
             Debouncer.complete();
             if (widget.onChanged != null) {
-              widget
-                  .onChanged!(value == true ? kSwitchValueYes : kSwitchValueNo);
+              widget.onChanged!(
+                value == true ? kSwitchValueYes : kSwitchValueNo,
+              );
             }
           },
           value: widget.value == null ? null : widget.value == kSwitchValueYes,
@@ -128,10 +130,12 @@ class _CustomFieldState extends State<CustomField> {
           showBlank: true,
           value: _value,
           items: fieldOptions
-              .map((option) => DropdownMenuItem<String>(
-                    value: option,
-                    child: Text(option),
-                  ))
+              .map(
+                (option) => DropdownMenuItem<String>(
+                  value: option,
+                  child: Text(option),
+                ),
+              )
               .toList(),
           onChanged: (dynamic value) {
             setState(() {

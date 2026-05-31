@@ -37,25 +37,33 @@ List<Middleware<AppState>> createStoreRecurringExpensesMiddleware([
 
   return [
     TypedMiddleware<AppState, ViewRecurringExpenseList>(
-        viewRecurringExpenseList),
+      viewRecurringExpenseList,
+    ),
     TypedMiddleware<AppState, ViewRecurringExpense>(viewRecurringExpense),
     TypedMiddleware<AppState, EditRecurringExpense>(editRecurringExpense),
     TypedMiddleware<AppState, LoadRecurringExpenses>(loadRecurringExpenses),
     TypedMiddleware<AppState, LoadRecurringExpense>(loadRecurringExpense),
     TypedMiddleware<AppState, SaveRecurringExpenseRequest>(
-        saveRecurringExpense),
+      saveRecurringExpense,
+    ),
     TypedMiddleware<AppState, ArchiveRecurringExpensesRequest>(
-        archiveRecurringExpense),
+      archiveRecurringExpense,
+    ),
     TypedMiddleware<AppState, DeleteRecurringExpensesRequest>(
-        deleteRecurringExpense),
+      deleteRecurringExpense,
+    ),
     TypedMiddleware<AppState, RestoreRecurringExpensesRequest>(
-        restoreRecurringExpense),
+      restoreRecurringExpense,
+    ),
     TypedMiddleware<AppState, StartRecurringExpensesRequest>(
-        startRecurringExpense),
+      startRecurringExpense,
+    ),
     TypedMiddleware<AppState, StopRecurringExpensesRequest>(
-        stopRecurringExpense),
+      stopRecurringExpense,
+    ),
     TypedMiddleware<AppState, SaveRecurringExpenseDocumentRequest>(
-        saveDocument),
+      saveDocument,
+    ),
   ];
 }
 
@@ -74,8 +82,11 @@ Middleware<AppState> _editRecurringExpense() {
 }
 
 Middleware<AppState> _viewRecurringExpense() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewRecurringExpense?;
 
     next(action);
@@ -102,107 +113,134 @@ Middleware<AppState> _viewRecurringExpenseList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          RecurringExpenseScreen.route, (Route<dynamic> route) => false);
+        RecurringExpenseScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
 
 Middleware<AppState> _archiveRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveRecurringExpensesRequest;
     final prevRecurringExpenses = action.recurringExpenseIds
         .map((id) => store.state.recurringExpenseState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.recurringExpenseIds,
-            EntityAction.archive)
+        .bulkAction(
+          store.state.credentials,
+          action.recurringExpenseIds,
+          EntityAction.archive,
+        )
         .then((List<ExpenseEntity> recurringExpenses) {
-      store.dispatch(ArchiveRecurringExpensesSuccess(recurringExpenses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveRecurringExpensesFailure(prevRecurringExpenses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveRecurringExpensesSuccess(recurringExpenses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(
+            ArchiveRecurringExpensesFailure(prevRecurringExpenses),
+          );
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _deleteRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteRecurringExpensesRequest;
     final prevRecurringExpenses = action.recurringExpenseIds
         .map((id) => store.state.recurringExpenseState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.recurringExpenseIds,
-            EntityAction.delete)
+        .bulkAction(
+          store.state.credentials,
+          action.recurringExpenseIds,
+          EntityAction.delete,
+        )
         .then((List<ExpenseEntity> recurringExpenses) {
-      store.dispatch(DeleteRecurringExpensesSuccess(recurringExpenses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteRecurringExpensesFailure(prevRecurringExpenses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteRecurringExpensesSuccess(recurringExpenses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteRecurringExpensesFailure(prevRecurringExpenses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _restoreRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreRecurringExpensesRequest;
     final prevRecurringExpenses = action.recurringExpenseIds
         .map((id) => store.state.recurringExpenseState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.recurringExpenseIds,
-            EntityAction.restore)
+        .bulkAction(
+          store.state.credentials,
+          action.recurringExpenseIds,
+          EntityAction.restore,
+        )
         .then((List<ExpenseEntity> recurringExpenses) {
-      store.dispatch(RestoreRecurringExpensesSuccess(recurringExpenses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreRecurringExpensesFailure(prevRecurringExpenses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreRecurringExpensesSuccess(recurringExpenses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(
+            RestoreRecurringExpensesFailure(prevRecurringExpenses),
+          );
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _saveRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveRecurringExpenseRequest;
     repository
-        .saveData(store.state.credentials, action.recurringExpense!,
-            action: action.action)
+        .saveData(
+          store.state.credentials,
+          action.recurringExpense!,
+          action: action.action,
+        )
         .then((ExpenseEntity recurringExpense) {
-      if (action.recurringExpense!.isNew) {
-        store.dispatch(AddRecurringExpenseSuccess(recurringExpense));
-      } else {
-        store.dispatch(SaveRecurringExpenseSuccess(recurringExpense));
-      }
+          if (action.recurringExpense!.isNew) {
+            store.dispatch(AddRecurringExpenseSuccess(recurringExpense));
+          } else {
+            store.dispatch(SaveRecurringExpenseSuccess(recurringExpense));
+          }
 
-      action.completer!.complete(recurringExpense);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveRecurringExpenseFailure(error));
-      action.completer!.completeError(error);
-    });
+          action.completer!.complete(recurringExpense);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveRecurringExpenseFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _loadRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadRecurringExpense;
     final AppState state = store.state;
@@ -211,103 +249,122 @@ Middleware<AppState> _loadRecurringExpense(
     repository
         .loadItem(state.credentials, action.recurringExpenseId)
         .then((recurringExpense) {
-      store.dispatch(LoadRecurringExpenseSuccess(recurringExpense));
+          store.dispatch(LoadRecurringExpenseSuccess(recurringExpense));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadRecurringExpenseFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadRecurringExpenseFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _loadRecurringExpenses(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadRecurringExpenses?;
     final AppState state = store.state;
 
     store.dispatch(LoadRecurringExpensesRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadRecurringExpensesSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadRecurringExpensesSuccess(data));
 
-      final documents = <DocumentEntity>[];
-      data.forEach((expense) {
-        expense.documents.forEach((document) {
-          documents.add(document.rebuild((b) => b
-            ..parentId = expense.id
-            ..parentType = EntityType.recurringExpense));
+          final documents = <DocumentEntity>[];
+          data.forEach((expense) {
+            expense.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = expense.id
+                    ..parentType = EntityType.recurringExpense,
+                ),
+              );
+            });
+          });
+          store.dispatch(LoadDocumentsSuccess(documents));
+
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+
+          store.dispatch(LoadTransactions());
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadRecurringExpensesFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
         });
-      });
-      store.dispatch(LoadDocumentsSuccess(documents));
-
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-
-      store.dispatch(LoadTransactions());
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadRecurringExpensesFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
 
     next(action);
   };
 }
 
 Middleware<AppState> _startRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as StartRecurringExpensesRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.expenseIds!, EntityAction.start)
+          store.state.credentials,
+          action.expenseIds!,
+          EntityAction.start,
+        )
         .then((List<ExpenseEntity> expenses) {
-      store.dispatch(StartRecurringExpensesSuccess(expenses));
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(StartRecurringExpensesFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          store.dispatch(StartRecurringExpensesSuccess(expenses));
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(StartRecurringExpensesFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _stopRecurringExpense(
-    RecurringExpenseRepository repository) {
+  RecurringExpenseRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as StopRecurringExpensesRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.expenseIds!, EntityAction.stop)
+          store.state.credentials,
+          action.expenseIds!,
+          EntityAction.stop,
+        )
         .then((List<ExpenseEntity> expenses) {
-      store.dispatch(StopRecurringExpensesSuccess(expenses));
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(StopRecurringExpensesFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          store.dispatch(StopRecurringExpensesSuccess(expenses));
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(StopRecurringExpensesFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -319,27 +376,32 @@ Middleware<AppState> _saveDocument(RecurringExpenseRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-        store.state.credentials,
-        action!.expense,
-        action.multipartFile,
-        action.isPrivate,
-      )
+            store.state.credentials,
+            action!.expense,
+            action.multipartFile,
+            action.isPrivate,
+          )
           .then((expense) {
-        store.dispatch(SaveRecurringExpenseSuccess(expense));
+            store.dispatch(SaveRecurringExpenseSuccess(expense));
 
-        final documents = <DocumentEntity>[];
-        expense.documents.forEach((document) {
-          documents.add(document.rebuild((b) => b
-            ..parentId = expense.id
-            ..parentType = EntityType.recurringExpense));
-        });
-        store.dispatch(LoadDocumentsSuccess(documents));
-        action.completer.complete(documents);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveRecurringExpenseDocumentFailure(error));
-        action.completer.completeError(error);
-      });
+            final documents = <DocumentEntity>[];
+            expense.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = expense.id
+                    ..parentType = EntityType.recurringExpense,
+                ),
+              );
+            });
+            store.dispatch(LoadDocumentsSuccess(documents));
+            action.completer.complete(documents);
+          })
+          .catchError((Object error) {
+            print(error);
+            store.dispatch(SaveRecurringExpenseDocumentFailure(error));
+            action.completer.completeError(error);
+          });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveRecurringExpenseDocumentFailure(error));

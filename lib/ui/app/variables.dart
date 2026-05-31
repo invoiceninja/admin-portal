@@ -57,11 +57,14 @@ class _VariablesHelpState extends State<VariablesHelp>
           isScrollable: true,
           tabs: [
             Tab(
-                child: Text(widget.showInvoiceAsQuote
+              child: Text(
+                widget.showInvoiceAsQuote
                     ? localization.quote
                     : widget.showInvoiceAsInvoices
-                        ? localization.invoices
-                        : localization.invoice)),
+                    ? localization.invoices
+                    : localization.invoice,
+              ),
+            ),
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
             Tab(child: Text(localization.company)),
@@ -221,37 +224,41 @@ class _VariableGrid extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: LayoutBuilder(builder: (context, constraints) {
-        return GridView.count(
-          //physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(6),
-          shrinkWrap: true,
-          primary: true,
-          crossAxisCount: 2,
-          childAspectRatio: ((constraints.maxWidth / 2) - 8) / 50,
-          children: fields!
-              .map(
-                (field) => TextButton(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '\$$field',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.count(
+            //physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(6),
+            shrinkWrap: true,
+            primary: true,
+            crossAxisCount: 2,
+            childAspectRatio: ((constraints.maxWidth / 2) - 8) / 50,
+            children: fields!
+                .map(
+                  (field) => TextButton(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '\$$field',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: '\$$field'));
+                      showToast(
+                        AppLocalization.of(
+                          context,
+                        )!.copiedToClipboard.replaceFirst(':value', '\$$field'),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: '\$$field'));
-                    showToast(AppLocalization.of(context)!
-                        .copiedToClipboard
-                        .replaceFirst(':value', '\$$field'));
-                  },
-                ),
-              )
-              .toList(),
-        );
-      }),
+                )
+                .toList(),
+          );
+        },
+      ),
     );
   }
 }

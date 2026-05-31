@@ -37,8 +37,9 @@ class _ScheduleViewState extends State<ScheduleView> {
     BaseEntity? entity;
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
       final entityType = EntityType.valueOf(schedule.parameters.entityType!);
-      entity = state.getEntityMap(entityType)![schedule.parameters.entityId]
-          as BaseEntity?;
+      entity =
+          state.getEntityMap(entityType)![schedule.parameters.entityId]
+              as BaseEntity?;
     }
 
     return ViewScaffold(
@@ -61,22 +62,21 @@ class _ScheduleViewState extends State<ScheduleView> {
           if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD)
             FieldGrid({
               localization.lookup(schedule.parameters.entityType):
-                  entity?.listDisplayName
+                  entity?.listDisplayName,
             })
           else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
             FieldGrid({
-              localization.frequency:
-                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.frequency: localization.lookup(
+                kFrequencies[schedule.frequencyId],
+              ),
               localization.remainingCycles: schedule.remainingCycles == -1
                   ? localization.endless
                   : '${schedule.remainingCycles}',
               localization.clients: parameters.clients!.isEmpty
                   ? localization.allClients
                   : parameters.clients!.length == 1
-                      ? state.clientState
-                          .get(parameters.clients!.first)
-                          .displayName
-                      : '${parameters.clients!.length} ${localization.clients}',
+                  ? state.clientState.get(parameters.clients!.first).displayName
+                  : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
               localization.showAgingTable: parameters.showAgingTable!
                   ? localization.yes
@@ -86,64 +86,67 @@ class _ScheduleViewState extends State<ScheduleView> {
                   : localization.no,
               localization.onlyClientsWithInvoices:
                   (parameters.onlyClientsWithInvoices != null &&
-                          parameters.onlyClientsWithInvoices!)
-                      ? localization.yes
-                      : localization.no,
+                      parameters.onlyClientsWithInvoices!)
+                  ? localization.yes
+                  : localization.no,
               localization.status: localization.lookup(parameters.status),
             })
           else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_REPORT)
             FieldGrid({
-              localization.frequency:
-                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.frequency: localization.lookup(
+                kFrequencies[schedule.frequencyId],
+              ),
               localization.remainingCycles: schedule.remainingCycles == -1
                   ? localization.endless
                   : '${schedule.remainingCycles}',
-              localization.report:
-                  localization.lookup(schedule.parameters.reportName),
+              localization.report: localization.lookup(
+                schedule.parameters.reportName,
+              ),
               localization.dateRange: localization.lookup(parameters.dateRange),
             })
           else if (schedule.template ==
               ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS)
             FieldGrid({
-              localization.frequency:
-                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.frequency: localization.lookup(
+                kFrequencies[schedule.frequencyId],
+              ),
               localization.remainingCycles: schedule.remainingCycles == -1
                   ? localization.endless
                   : '${schedule.remainingCycles}',
               localization.clients: parameters.clients!.isEmpty
                   ? localization.allClients
                   : parameters.clients!.length == 1
-                      ? state.clientState
-                          .get(parameters.clients!.first)
-                          .displayName
-                      : '${parameters.clients!.length} ${localization.clients}',
+                  ? state.clientState.get(parameters.clients!.first).displayName
+                  : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
               localization.autoSend: parameters.autoSend == true
                   ? localization.yes
                   : localization.no,
               localization.includeProjectTasks:
                   parameters.includeProjectTasks == true
-                      ? localization.yes
-                      : localization.no,
+                  ? localization.yes
+                  : localization.no,
             })
           else if (schedule.template ==
               ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE)
             FieldGrid({
-              localization.frequency:
-                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.frequency: localization.lookup(
+                kFrequencies[schedule.frequencyId],
+              ),
               localization.remainingCycles: schedule.remainingCycles == -1
                   ? localization.endless
                   : '${schedule.remainingCycles}',
-              localization.invoice: parameters.invoiceId != null &&
+              localization.invoice:
+                  parameters.invoiceId != null &&
                       parameters.invoiceId!.isNotEmpty
                   ? state.invoiceState
-                      .get(parameters.invoiceId!)
-                      .listDisplayName
+                        .get(parameters.invoiceId!)
+                        .listDisplayName
                   : '',
               localization.autoBill: parameters.autoBill == true
                   ? localization.yes
                   : localization.no,
-            })
+            }),
         ],
       ),
     );

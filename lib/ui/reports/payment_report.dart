@@ -63,8 +63,7 @@ var memoizedPaymentReport = memo8(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, InvoiceEntity> creditMap,
     StaticState staticState,
-  ) =>
-      paymentReport(
+  ) => paymentReport(
     userCompany!,
     reportsUIState,
     paymentMap,
@@ -104,10 +103,12 @@ ReportResult paymentReport(
   ];
 
   if (paymentReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(paymentReportSettings.columns
-        .map((e) => EnumUtils.fromString(PaymentReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      paymentReportSettings.columns
+          .map((e) => EnumUtils.fromString(PaymentReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -277,8 +278,9 @@ ReportResult paymentReport(
           value = (paymentCreditMap[payment.id] ?? []).join(', ');
           break;
         case PaymentReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(payment.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(payment.entityState);
           break;
         case PaymentReportFields.refunded:
           value = payment.refunded;
@@ -303,11 +305,16 @@ ReportResult paymentReport(
       if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
       } else if (column == PaymentReportFields.converted_amount) {
-        row.add(payment.getReportDouble(
-            value: value, currencyId: payment.exchangeCurrencyId));
+        row.add(
+          payment.getReportDouble(
+            value: value,
+            currencyId: payment.exchangeCurrencyId,
+          ),
+        );
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(payment.getReportDouble(
-            value: value, currencyId: client.currencyId));
+        row.add(
+          payment.getReportDouble(value: value, currencyId: client.currencyId),
+        );
       } else {
         row.add(payment.getReportString(value: value));
       }
@@ -320,15 +327,23 @@ ReportResult paymentReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, paymentReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      paymentReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        PaymentReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: PaymentReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

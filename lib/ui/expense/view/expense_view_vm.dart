@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseViewScreen extends StatelessWidget {
-  const ExpenseViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const ExpenseViewScreen({Key? key, this.isFilter = false}) : super(key: key);
 
   final bool isFilter;
   static const String route = '/expense/view';
@@ -83,25 +80,27 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     bool? isLoading,
     bool? isDirty,
   }) : super(
-          state: state,
-          expense: expense,
-          company: company,
-          onEntityAction: onEntityAction,
-          onRefreshed: onRefreshed,
-          onUploadDocuments: onUploadDocuments,
-          isSaving: isSaving,
-          isLoading: isLoading,
-          isDirty: isDirty,
-        );
+         state: state,
+         expense: expense,
+         company: company,
+         onEntityAction: onEntityAction,
+         onRefreshed: onRefreshed,
+         onUploadDocuments: onUploadDocuments,
+         isSaving: isSaving,
+         isLoading: isLoading,
+         isDirty: isDirty,
+       );
 
   factory ExpenseViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final expense = state.expenseState.map[state.expenseUIState.selectedId] ??
+    final expense =
+        state.expenseState.map[state.expenseUIState.selectedId] ??
         ExpenseEntity(id: state.expenseUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadExpense(completer: completer, expenseId: expense.id));
       return completer.future;
     }
@@ -116,25 +115,38 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([expense], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveExpenseDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFiles,
-            expense: expense,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveExpenseDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFiles,
+                expense: expense,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 }

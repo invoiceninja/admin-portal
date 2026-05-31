@@ -32,8 +32,8 @@ class CompanyGatewayListItem extends StatelessWidget {
   final Function? onRemovePressed;
   final bool isChecked;
 
-  static final companyGatewayItemKey =
-      (int id) => Key('__company_gateway_item_${id}__');
+  static final companyGatewayItemKey = (int id) =>
+      Key('__company_gateway_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +81,10 @@ class CompanyGatewayListItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Text(formatNumber(companyGateway!.listDisplayAmount, context)!,
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              formatNumber(companyGateway!.listDisplayAmount, context)!,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ],
         ),
       ),
@@ -92,11 +94,7 @@ class CompanyGatewayListItem extends StatelessWidget {
         children: <Widget>[
           if (companyGateway!.isTestMode) Text(localization!.testMode),
           subtitle != null && subtitle.isNotEmpty
-              ? Text(
-                  subtitle,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                )
+              ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
               : Container(),
           EntityStateLabel(companyGateway),
         ],

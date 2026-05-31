@@ -628,8 +628,9 @@ abstract class CompanyEntity extends Object
       return CompanyFields.cityStatePostal;
     }
 
-    if (settings.pdfVariables![kPdfFieldsCompanyAddress]!
-        .contains(CompanyFields.cityStatePostal)) {
+    if (settings.pdfVariables![kPdfFieldsCompanyAddress]!.contains(
+      CompanyFields.cityStatePostal,
+    )) {
       return CompanyFields.cityStatePostal;
     } else {
       return CompanyFields.postalCityState;
@@ -691,8 +692,11 @@ abstract class CompanyEntity extends Object
   String getCustomFieldType(String? field) {
     if ((customFields[field] ?? '').contains('|')) {
       final value = customFields[field]!.split('|').last;
-      if ([kFieldTypeSingleLineText, kFieldTypeDate, kFieldTypeSwitch]
-          .contains(value)) {
+      if ([
+        kFieldTypeSingleLineText,
+        kFieldTypeDate,
+        kFieldTypeSwitch,
+      ].contains(value)) {
         return value;
       } else {
         return kFieldTypeDropdown;
@@ -726,8 +730,11 @@ abstract class CompanyEntity extends Object
       final data = parts.last.split(',');
 
       if (parts.length == 2) {
-        if ([kFieldTypeDate, kFieldTypeSwitch, kFieldTypeSingleLineText]
-            .contains(parts[1])) {
+        if ([
+          kFieldTypeDate,
+          kFieldTypeSwitch,
+          kFieldTypeSingleLineText,
+        ].contains(parts[1])) {
           return [];
         }
       }
@@ -742,25 +749,25 @@ abstract class CompanyEntity extends Object
 
   // TODO make sure to clear everything
   CompanyEntity get coreCompany => rebuild(
-        (b) => b
-          ..clients.clear()
-          ..products.clear()
-          ..invoices.clear()
-          ..payments.clear()
-          ..quotes.clear()
-          ..purchaseOrders.clear()
-          ..bankAccounts.clear()
-          ..transactions.clear()
-          ..transactionRules.clear()
-          ..credits.clear()
-          ..tasks.clear()
-          ..projects.clear()
-          ..vendors.clear()
-          ..expenses.clear()
-          ..webhooks.clear()
-          ..designs.clear()
-          ..companyGateways.clear(),
-      );
+    (b) => b
+      ..clients.clear()
+      ..products.clear()
+      ..invoices.clear()
+      ..payments.clear()
+      ..quotes.clear()
+      ..purchaseOrders.clear()
+      ..bankAccounts.clear()
+      ..transactions.clear()
+      ..transactionRules.clear()
+      ..credits.clear()
+      ..tasks.clear()
+      ..projects.clear()
+      ..vendors.clear()
+      ..expenses.clear()
+      ..webhooks.clear()
+      ..designs.clear()
+      ..companyGateways.clear(),
+  );
 
   bool isModuleEnabled(EntityType? entityType) {
     if ((entityType == EntityType.invoice ||
@@ -1070,8 +1077,10 @@ abstract class GatewayEntity extends Object
     }
   }
 
-  static String? getPaymentUrl(
-      {String? gatewayId, String? transactionReference}) {
+  static String? getPaymentUrl({
+    String? gatewayId,
+    String? transactionReference,
+  }) {
     switch (gatewayId) {
       case kGatewayStripe:
       case kGatewayStripeConnect:
@@ -1145,9 +1154,12 @@ abstract class UserCompanyEntity
       user: UserEntity(),
       token: TokenEntity(),
       account: AccountEntity(reportErrors),
-      notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
-        ..[kNotificationChannelEmail] =
-            BuiltList<String>(<String>[kNotificationsAll])),
+      notifications: BuiltMap<String, BuiltList<String>>().rebuild(
+        (b) => b
+          ..[kNotificationChannelEmail] = BuiltList<String>(<String>[
+            kNotificationsAll,
+          ]),
+      ),
     );
   }
 
@@ -1252,10 +1264,14 @@ abstract class UserCompanyEntity
     ..token.replace(TokenEntity())
     ..account.replace(AccountEntity(false))
     ..settings.replace(UserSettingsEntity())
-    ..notifications.replace(BuiltMap<String, BuiltList<String>>().rebuild((b) =>
-        b
-          ..[kNotificationChannelEmail] =
-              BuiltList<String>(<String>[kNotificationsAll])))
+    ..notifications.replace(
+      BuiltMap<String, BuiltList<String>>().rebuild(
+        (b) => b
+          ..[kNotificationChannelEmail] = BuiltList<String>(<String>[
+            kNotificationsAll,
+          ]),
+      ),
+    )
     ..permissionsUpdatedAt = 0
     ..ninjaPortalUrl = '';
 
@@ -1347,20 +1363,22 @@ abstract class UserSettingsEntity
     ..numberYearsActive = 3
     ..tableColumns.replace(BuiltMap<String, BuiltList<String>>())
     ..reportSettings.replace(BuiltMap<String, ReportSettingsEntity>())
-    ..dashboardFields.replace(BuiltList<DashboardField>(<DashboardField>[
-      DashboardField(
-        field: DashboardUISettings.FIELD_ACTIVE_INVOICES,
-        period: DashboardUISettings.PERIOD_CURRENT,
-      ),
-      DashboardField(
-        field: DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
-        period: DashboardUISettings.PERIOD_CURRENT,
-      ),
-      DashboardField(
-        field: DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
-        period: DashboardUISettings.PERIOD_CURRENT,
-      ),
-    ]))
+    ..dashboardFields.replace(
+      BuiltList<DashboardField>(<DashboardField>[
+        DashboardField(
+          field: DashboardUISettings.FIELD_ACTIVE_INVOICES,
+          period: DashboardUISettings.PERIOD_CURRENT,
+        ),
+        DashboardField(
+          field: DashboardUISettings.FIELD_OUTSTANDING_INVOICES,
+          period: DashboardUISettings.PERIOD_CURRENT,
+        ),
+        DashboardField(
+          field: DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
+          period: DashboardUISettings.PERIOD_CURRENT,
+        ),
+      ]),
+    )
     ..dashboardFieldsPerRowMobile = 1
     ..dashboardFieldsPerRowDesktop = 3
     ..includeDeletedClients = false;

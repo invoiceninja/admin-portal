@@ -32,28 +32,26 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:printing/printing.dart';
 
 class ViewCreditList implements PersistUI {
-  ViewCreditList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewCreditList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewCredit implements PersistUI, PersistPrefs {
-  ViewCredit({
-    this.creditId,
-    this.force = false,
-  });
+  ViewCredit({this.creditId, this.force = false});
 
   final String? creditId;
   final bool force;
 }
 
 class EditCredit implements PersistUI, PersistPrefs {
-  EditCredit(
-      {this.credit, this.creditItemIndex, this.completer, this.force = false});
+  EditCredit({
+    this.credit,
+    this.creditItemIndex,
+    this.completer,
+    this.force = false,
+  });
 
   final InvoiceEntity? credit;
   final int? creditItemIndex;
@@ -171,20 +169,14 @@ class RemoveCreditContact implements PersistUI {
 }
 
 class AddCreditItem implements PersistUI {
-  AddCreditItem({
-    this.creditItem,
-    this.index,
-  });
+  AddCreditItem({this.creditItem, this.index});
 
   final int? index;
   final InvoiceItemEntity? creditItem;
 }
 
 class MoveCreditItem implements PersistUI {
-  MoveCreditItem({
-    this.oldIndex,
-    this.newIndex,
-  });
+  MoveCreditItem({this.oldIndex, this.newIndex});
 
   final int? oldIndex;
   final int? newIndex;
@@ -197,10 +189,7 @@ class AddCreditItems implements PersistUI {
 }
 
 class UpdateCreditItem implements PersistUI {
-  UpdateCreditItem({
-    required this.index,
-    required this.creditItem,
-  });
+  UpdateCreditItem({required this.index, required this.creditItem});
 
   final int index;
   final InvoiceItemEntity creditItem;
@@ -481,8 +470,11 @@ class SaveCreditDocumentFailure implements StopSaving {
   final Object error;
 }
 
-Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
-    EntityAction? action) async {
+Future handleCreditAction(
+  BuildContext context,
+  List<BaseEntity> credits,
+  EntityAction? action,
+) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -501,9 +493,12 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       launchUrl(Uri.parse(credit.invitationSilentLink));
       break;
     case EntityAction.markSent:
-      store.dispatch(MarkSentCreditRequest(
+      store.dispatch(
+        MarkSentCreditRequest(
           snackBarCompleter<Null>(localization!.markedCreditAsSent),
-          creditIds));
+          creditIds,
+        ),
+      );
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
@@ -519,89 +514,116 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       });
       if (!emailValid) {
         showMessageDialog(
-            message: localization!.clientEmailNotSet,
-            secondaryActions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    editEntity(entity: client);
-                  },
-                  child: Text(localization.editClient.toUpperCase()))
-            ]);
+          message: localization!.clientEmailNotSet,
+          secondaryActions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                editEntity(entity: client);
+              },
+              child: Text(localization.editClient.toUpperCase()),
+            ),
+          ],
+        );
         return;
       }
       if (action == EntityAction.sendEmail) {
-        store.dispatch(ShowEmailCredit(
+        store.dispatch(
+          ShowEmailCredit(
             completer: snackBarCompleter<Null>(localization!.emailedCredit),
             credit: credit,
-            context: context));
+            context: context,
+          ),
+        );
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              message: localization!.upgradeToPaidPlanToSchedule,
-              secondaryActions: [
-                TextButton(
-                    onPressed: () {
-                      store.dispatch(
-                          ViewSettings(section: kSettingsAccountManagement));
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(localization.upgrade.toUpperCase())),
-              ]);
+            message: localization!.upgradeToPaidPlanToSchedule,
+            secondaryActions: [
+              TextButton(
+                onPressed: () {
+                  store.dispatch(
+                    ViewSettings(section: kSettingsAccountManagement),
+                  );
+                  Navigator.of(context).pop();
+                },
+                child: Text(localization.upgrade.toUpperCase()),
+              ),
+            ],
+          );
           return;
         }
 
         createEntity(
-            entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
-                .rebuild((b) => b
-                  ..parameters.entityType = EntityType.credit.apiValue
-                  ..parameters.entityId = credit.id));
+          entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD).rebuild(
+            (b) => b
+              ..parameters.entityType = EntityType.credit.apiValue
+              ..parameters.entityId = credit.id,
+          ),
+        );
       } else {
         confirmCallback(
-            context: context,
-            message: localization!.bulkEmailCredits,
-            callback: (_) {
-              store.dispatch(BulkEmailCreditsRequest(
-                completer: snackBarCompleter<Null>(creditIds.length == 1
-                    ? localization.emailedCredit
-                    : localization.emailedCredits),
+          context: context,
+          message: localization!.bulkEmailCredits,
+          callback: (_) {
+            store.dispatch(
+              BulkEmailCreditsRequest(
+                completer: snackBarCompleter<Null>(
+                  creditIds.length == 1
+                      ? localization.emailedCredit
+                      : localization.emailedCredits,
+                ),
                 creditIds: creditIds,
-              ));
-            });
+              ),
+            );
+          },
+        );
       }
       break;
     case EntityAction.cloneToPurchaseOrder:
       final designId = getDesignIdForVendorByEntity(
-          state: state,
-          vendorId: credit.vendorId,
-          entityType: EntityType.purchaseOrder);
+        state: state,
+        vendorId: credit.vendorId,
+        entityType: EntityType.purchaseOrder,
+      );
       createEntity(
-          entity: credit.clone.rebuild((b) => b
+        entity: credit.clone.rebuild(
+          (b) => b
             ..entityType = EntityType.purchaseOrder
-            ..designId = designId));
+            ..designId = designId,
+        ),
+      );
       break;
     case EntityAction.cloneToOther:
       cloneToDialog(invoice: credit);
       break;
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
-          state: state,
-          clientId: credit.clientId,
-          entityType: EntityType.invoice);
+        state: state,
+        clientId: credit.clientId,
+        entityType: EntityType.invoice,
+      );
       createEntity(
-          entity: credit.clone.rebuild((b) => b
+        entity: credit.clone.rebuild(
+          (b) => b
             ..entityType = EntityType.invoice
-            ..designId = designId));
+            ..designId = designId,
+        ),
+      );
       break;
     case EntityAction.cloneToQuote:
       final designId = getDesignIdForClientByEntity(
-          state: state,
-          clientId: credit.clientId,
-          entityType: EntityType.quote);
+        state: state,
+        clientId: credit.clientId,
+        entityType: EntityType.quote,
+      );
       createEntity(
-          entity: credit.clone.rebuild((b) => b
+        entity: credit.clone.rebuild(
+          (b) => b
             ..entityType = EntityType.quote
-            ..designId = designId));
+            ..designId = designId,
+        ),
+      );
       break;
     case EntityAction.clone:
     case EntityAction.cloneToCredit:
@@ -609,97 +631,124 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       break;
     case EntityAction.cloneToRecurring:
       final designId = getDesignIdForClientByEntity(
-          state: state,
-          clientId: credit.clientId,
-          entityType: EntityType.invoice);
+        state: state,
+        clientId: credit.clientId,
+        entityType: EntityType.invoice,
+      );
       createEntity(
-          entity: credit.clone.rebuild((b) => b
+        entity: credit.clone.rebuild(
+          (b) => b
             ..entityType = EntityType.recurringInvoice
-            ..designId = designId));
+            ..designId = designId,
+        ),
+      );
       break;
     case EntityAction.markPaid:
-      store.dispatch(MarkCreditsPaidRequest(
-          snackBarCompleter<Null>(credits.length == 1
-              ? localization!.markedCreditAsPaid
-              : localization!.markedCreditsAsPaid),
-          creditIds));
+      store.dispatch(
+        MarkCreditsPaidRequest(
+          snackBarCompleter<Null>(
+            credits.length == 1
+                ? localization!.markedCreditAsPaid
+                : localization!.markedCreditsAsPaid,
+          ),
+          creditIds,
+        ),
+      );
       break;
     case EntityAction.applyCredit:
       createEntity(
-        entity: PaymentEntity(state: state, client: client).rebuild((b) => b
-          ..typeId = kPaymentTypeCredit
-          ..credits.addAll(credits
-              .map((credit) =>
-                  PaymentableEntity.fromCredit(credit as InvoiceEntity))
-              .toList())),
+        entity: PaymentEntity(state: state, client: client).rebuild(
+          (b) => b
+            ..typeId = kPaymentTypeCredit
+            ..credits.addAll(
+              credits
+                  .map(
+                    (credit) =>
+                        PaymentableEntity.fromCredit(credit as InvoiceEntity),
+                  )
+                  .toList(),
+            ),
+        ),
         filterEntity: client,
       );
       break;
     case EntityAction.eCredit:
       store.dispatch(StartLoading());
       await WebClient()
-          .get(credit.invitationECreditDownloadLink, state.token,
-              rawResponse: true)
+          .get(
+            credit.invitationECreditDownloadLink,
+            state.token,
+            rawResponse: true,
+          )
           .then((response) {
-        store.dispatch(StopLoading());
-        saveDownloadedFile(
-          response.bodyBytes,
-          credit.number + '.xml',
-          prefix: EntityType.invoice.apiValue,
-          languageId: client.languageId,
-        );
-      }).catchError((error) {
-        store.dispatch(StopLoading());
-        showErrorDialog(message: error);
-      });
+            store.dispatch(StopLoading());
+            saveDownloadedFile(
+              response.bodyBytes,
+              credit.number + '.xml',
+              prefix: EntityType.invoice.apiValue,
+              languageId: client.languageId,
+            );
+          })
+          .catchError((error) {
+            store.dispatch(StopLoading());
+            showErrorDialog(message: error);
+          });
       break;
     case EntityAction.download:
       store.dispatch(StartLoading());
       await WebClient()
           .get(credit.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
-        store.dispatch(StopLoading());
-        saveDownloadedFile(
-          response.bodyBytes,
-          credit.number + '.pdf',
-          prefix: EntityType.credit.apiValue,
-          languageId: client.languageId,
-        );
-      }).catchError((error) {
-        store.dispatch(StopLoading());
-        showErrorDialog(message: error);
-      });
+            store.dispatch(StopLoading());
+            saveDownloadedFile(
+              response.bodyBytes,
+              credit.number + '.pdf',
+              prefix: EntityType.credit.apiValue,
+              languageId: client.languageId,
+            );
+          })
+          .catchError((error) {
+            store.dispatch(StopLoading());
+            showErrorDialog(message: error);
+          });
       break;
     case EntityAction.bulkDownload:
-      store.dispatch(DownloadCreditsRequest(
-          snackBarCompleter<Null>(localization!.exportedData), creditIds));
+      store.dispatch(
+        DownloadCreditsRequest(
+          snackBarCompleter<Null>(localization!.exportedData),
+          creditIds,
+        ),
+      );
       break;
     case EntityAction.restore:
       final message = creditIds.length > 1
           ? localization!.restoredCredits
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', creditIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', creditIds.length.toString())
           : localization!.restoredCredit;
       store.dispatch(
-          RestoreCreditsRequest(snackBarCompleter<Null>(message), creditIds));
+        RestoreCreditsRequest(snackBarCompleter<Null>(message), creditIds),
+      );
       break;
     case EntityAction.archive:
       final message = creditIds.length > 1
           ? localization!.archivedCredits
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', creditIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', creditIds.length.toString())
           : localization!.archivedCredit;
       store.dispatch(
-          ArchiveCreditsRequest(snackBarCompleter<Null>(message), creditIds));
+        ArchiveCreditsRequest(snackBarCompleter<Null>(message), creditIds),
+      );
       break;
     case EntityAction.delete:
       final message = creditIds.length > 1
           ? localization!.deletedCredits
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', creditIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', creditIds.length.toString())
           : localization!.deletedCredit;
       store.dispatch(
-          DeleteCreditsRequest(snackBarCompleter<Null>(message), creditIds));
+        DeleteCreditsRequest(snackBarCompleter<Null>(message), creditIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.creditListState.isInMultiselect()) {
@@ -717,39 +766,52 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       final invitation = credit.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response =
-          await WebClient().get(url, state.token, rawResponse: true);
+      final http.Response? response = await WebClient().get(
+        url,
+        state.token,
+        rawResponse: true,
+      );
       store.dispatch(StopSaving());
       try {
         await Printing.layoutPdf(
-            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
+          onLayout: (_) => response!.bodyBytes,
+          dynamicLayout: false,
+        );
       } catch (error) {
         showDialog<void>(
-            context: navigatorKey.currentContext!,
-            builder: (context) => ErrorDialog(error));
+          context: navigatorKey.currentContext!,
+          builder: (context) => ErrorDialog(error),
+        );
       }
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
       final url = state.credentials.url + '/credits/bulk';
-      final data = json.encode(
-          {'ids': creditIds, 'action': EntityAction.bulkPrint.toApiParam()});
-      final http.Response? response = await WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true);
+      final data = json.encode({
+        'ids': creditIds,
+        'action': EntityAction.bulkPrint.toApiParam(),
+      });
+      final http.Response? response = await WebClient().post(
+        url,
+        state.credentials.token,
+        data: data,
+        rawResponse: true,
+      );
       store.dispatch(StopSaving());
       try {
         await Printing.layoutPdf(
-            onLayout: (_) => response!.bodyBytes, dynamicLayout: false);
+          onLayout: (_) => response!.bodyBytes,
+          dynamicLayout: false,
+        );
       } catch (error) {
         showDialog<void>(
-            context: navigatorKey.currentContext!,
-            builder: (context) => ErrorDialog(error));
+          context: navigatorKey.currentContext!,
+          builder: (context) => ErrorDialog(error),
+        );
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [credit],
-      );
+      showEntityActionsDialog(entities: [credit]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -764,9 +826,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }
@@ -775,10 +835,8 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       showDialog<void>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
-        builder: (context) => RunTemplateDialog(
-          entityType: EntityType.credit,
-          entities: credits,
-        ),
+        builder: (context) =>
+            RunTemplateDialog(entityType: EntityType.credit, entities: credits),
       );
       break;
     case EntityAction.addComment:

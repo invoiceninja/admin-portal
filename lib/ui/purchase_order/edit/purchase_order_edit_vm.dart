@@ -58,17 +58,17 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
-          state: state,
-          company: company,
-          invoice: purchaseOrder,
-          invoiceItemIndex: invoiceItemIndex,
-          origInvoice: origInvoice,
-          onSavePressed: onSavePressed,
-          onItemsAdded: onItemsAdded,
-          isSaving: isSaving,
-          onCancelPressed: onCancelPressed,
-          onUploadDocuments: onUploadDocuments,
-        );
+         state: state,
+         company: company,
+         invoice: purchaseOrder,
+         invoiceItemIndex: invoiceItemIndex,
+         origInvoice: origInvoice,
+         onSavePressed: onSavePressed,
+         onItemsAdded: onItemsAdded,
+         isSaving: isSaving,
+         onCancelPressed: onCancelPressed,
+         onUploadDocuments: onUploadDocuments,
+       );
 
   factory PurchaseOrderEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -88,10 +88,11 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           final navigator = navigatorKey.currentState;
           if (purchaseOrder.vendorId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(localization!.pleaseSelectAVendor);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization!.pleaseSelectAVendor);
+              },
+            );
             return null;
           }
           if (purchaseOrder.isOld &&
@@ -102,51 +103,62 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           } else {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
-            store.dispatch(SavePurchaseOrderRequest(
-              completer: completer,
-              purchaseOrder: purchaseOrder,
-              action: action,
-            ));
-            return completer.future.then((savedPurchaseOrder) {
-              showToast(purchaseOrder.isNew
-                  ? localization!.createdPurchaseOrder
-                  : localization!.updatedPurchaseOrder);
+            store.dispatch(
+              SavePurchaseOrderRequest(
+                completer: completer,
+                purchaseOrder: purchaseOrder,
+                action: action,
+              ),
+            );
+            return completer.future
+                .then((savedPurchaseOrder) {
+                  showToast(
+                    purchaseOrder.isNew
+                        ? localization!.createdPurchaseOrder
+                        : localization!.updatedPurchaseOrder,
+                  );
 
-              if (state.prefState.isMobile) {
-                store.dispatch(
-                    UpdateCurrentRoute(PurchaseOrderViewScreen.route));
-                if (purchaseOrder.isNew) {
-                  navigator!
-                      .pushReplacementNamed(PurchaseOrderViewScreen.route);
-                } else {
-                  navigator!.pop(savedPurchaseOrder);
-                }
-              } else {
-                if (!state.prefState.isPreviewVisible) {
-                  store.dispatch(TogglePreviewSidebar());
-                }
+                  if (state.prefState.isMobile) {
+                    store.dispatch(
+                      UpdateCurrentRoute(PurchaseOrderViewScreen.route),
+                    );
+                    if (purchaseOrder.isNew) {
+                      navigator!.pushReplacementNamed(
+                        PurchaseOrderViewScreen.route,
+                      );
+                    } else {
+                      navigator!.pop(savedPurchaseOrder);
+                    }
+                  } else {
+                    if (!state.prefState.isPreviewVisible) {
+                      store.dispatch(TogglePreviewSidebar());
+                    }
 
-                viewEntity(entity: savedPurchaseOrder);
+                    viewEntity(entity: savedPurchaseOrder);
 
-                if (state.prefState.isEditorFullScreen(EntityType.invoice) &&
-                    state.prefState.editAfterSaving) {
-                  editEntity(entity: savedPurchaseOrder);
-                }
-              }
+                    if (state.prefState.isEditorFullScreen(
+                          EntityType.invoice,
+                        ) &&
+                        state.prefState.editAfterSaving) {
+                      editEntity(entity: savedPurchaseOrder);
+                    }
+                  }
 
-              if (action != null && action.isClientSide) {
-                handleEntityAction(savedPurchaseOrder, action);
-              } else if (action != null && action.requiresSecondRequest) {
-                handleEntityAction(savedPurchaseOrder, action);
-                viewEntity(entity: savedPurchaseOrder, force: true);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+                  if (action != null && action.isClientSide) {
+                    handleEntityAction(savedPurchaseOrder, action);
+                  } else if (action != null && action.requiresSecondRequest) {
+                    handleEntityAction(savedPurchaseOrder, action);
+                    viewEntity(entity: savedPurchaseOrder, force: true);
+                  }
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
           }
         });
       },
@@ -164,25 +176,38 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool? isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SavePurchaseOrderDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFiles,
-            purchaseOrder: purchaseOrder,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool? isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SavePurchaseOrderDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFiles,
+                purchaseOrder: purchaseOrder,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 }

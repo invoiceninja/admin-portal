@@ -13,10 +13,8 @@ import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayList extends StatefulWidget {
-  const CompanyGatewayList({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const CompanyGatewayList({Key? key, required this.viewModel})
+    : super(key: key);
 
   final CompanyGatewayListVM viewModel;
 
@@ -54,7 +52,8 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
 
     if (viewModel.companyGatewayList.isEmpty) {
       return Center(
-          child: HelpText(AppLocalization.of(context)!.noRecordsFound));
+        child: HelpText(AppLocalization.of(context)!.noRecordsFound),
+      );
     }
 
     return Stack(
@@ -79,22 +78,24 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
 
                 widget.viewModel.onSortChanged(oldIndex, newIndex);
               },
-              children:
-                  widget.viewModel.companyGatewayList.map((companyGatewayId) {
+              children: widget.viewModel.companyGatewayList.map((
+                companyGatewayId,
+              ) {
                 final companyGateway =
                     widget.viewModel.companyGatewayMap[companyGatewayId];
                 return CompanyGatewayListItem(
-                    key: ValueKey('__company_gateway_$companyGatewayId'),
-                    user: state.userCompany.user,
-                    filter: widget.viewModel.filter,
-                    companyGateway: companyGateway,
-                    onRemovePressed: widget
-                            .viewModel.state.settingsUIState.isFiltered
-                        ? () =>
-                            widget.viewModel.onRemovePressed(companyGatewayId)
-                        : null,
-                    isChecked: isInMultiselect &&
-                        listUIState.isSelected(companyGateway!.id));
+                  key: ValueKey('__company_gateway_$companyGatewayId'),
+                  user: state.userCompany.user,
+                  filter: widget.viewModel.filter,
+                  companyGateway: companyGateway,
+                  onRemovePressed:
+                      widget.viewModel.state.settingsUIState.isFiltered
+                      ? () => widget.viewModel.onRemovePressed(companyGatewayId)
+                      : null,
+                  isChecked:
+                      isInMultiselect &&
+                      listUIState.isSelected(companyGateway!.id),
+                );
               }).toList(),
             ),
           ),

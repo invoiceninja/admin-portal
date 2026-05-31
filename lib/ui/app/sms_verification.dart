@@ -32,8 +32,9 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
   String _phone = '';
   final _webClient = WebClient();
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_accountSmsVerification');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_accountSmsVerification',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   void _sendCode() {
@@ -53,21 +54,19 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     });
 
     _webClient
-        .post(url, credentials.token,
-            data: json.encode(
-              {'phone': _phone},
-            ))
+        .post(url, credentials.token, data: json.encode({'phone': _phone}))
         .then((dynamic data) {
-      setState(() {
-        _isLoading = false;
-        _showCode = true;
-      });
-    }).catchError((dynamic error) {
-      setState(() {
-        _isLoading = false;
-      });
-      showErrorDialog(message: error);
-    });
+          setState(() {
+            _isLoading = false;
+            _showCode = true;
+          });
+        })
+        .catchError((dynamic error) {
+          setState(() {
+            _isLoading = false;
+          });
+          showErrorDialog(message: error);
+        });
   }
 
   void _verifyCode() {
@@ -90,20 +89,21 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     _webClient
         .post(url, credentials.token, data: json.encode({'code': _code}))
         .then((dynamic data) {
-      setState(() {
-        _isLoading = false;
-      });
-      if (navigator.canPop()) {
-        navigator.pop();
-      }
-      showToast(localization!.verifiedPhoneNumber);
-      store.dispatch(RefreshData());
-    }).catchError((dynamic error) {
-      setState(() {
-        _isLoading = false;
-      });
-      showErrorDialog(message: error);
-    });
+          setState(() {
+            _isLoading = false;
+          });
+          if (navigator.canPop()) {
+            navigator.pop();
+          }
+          showToast(localization!.verifiedPhoneNumber);
+          store.dispatch(RefreshData());
+        })
+        .catchError((dynamic error) {
+          setState(() {
+            _isLoading = false;
+          });
+          showErrorDialog(message: error);
+        });
   }
 
   @override
@@ -137,17 +137,13 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
                   if (_showCode) ...[
                     Text(localization.codeWasSent),
                     SizedBox(height: 20),
-                    AppPinput(
-                      onCompleted: (code) => _code = code,
-                    ),
+                    AppPinput(onCompleted: (code) => _code = code),
                   ] else
                     IntlPhoneField(
                       disableLengthCheck: true,
                       autofocus: true,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[0-9]'),
-                        ),
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
                       initialCountryCode: country!.iso2.toUpperCase(),
                       onChanged: (phone) => _phone = phone.completeNumber,
@@ -161,31 +157,23 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            localization.cancel.toUpperCase(),
-          ),
+          child: Text(localization.cancel.toUpperCase()),
         ),
         if (_showCode) ...[
           TextButton(
             onPressed: () => _sendCode(),
-            child: Text(
-              localization.resend.toUpperCase(),
-            ),
+            child: Text(localization.resend.toUpperCase()),
           ),
           TextButton(
             onPressed: () => _verifyCode(),
-            child: Text(
-              localization.verify.toUpperCase(),
-            ),
+            child: Text(localization.verify.toUpperCase()),
           ),
         ] else ...[
           TextButton(
             onPressed: () => _sendCode(),
-            child: Text(
-              localization.sendCode.toUpperCase(),
-            ),
+            child: Text(localization.sendCode.toUpperCase()),
           ),
-        ]
+        ],
       ],
     );
   }
@@ -210,8 +198,9 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
   String _code = '';
   final _webClient = WebClient();
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_userSmsVerification');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_userSmsVerification',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   @override
@@ -234,20 +223,22 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     });
 
     _webClient
-        .post('$url/sms_reset', credentials.token,
-            data: json.encode(
-              {'email': widget.email ?? state.user.email},
-            ))
+        .post(
+          '$url/sms_reset',
+          credentials.token,
+          data: json.encode({'email': widget.email ?? state.user.email}),
+        )
         .then((dynamic data) {
-      setState(() {
-        _isLoading = false;
-      });
-    }).catchError((dynamic error) {
-      setState(() {
-        _isLoading = false;
-      });
-      showErrorDialog(message: error);
-    });
+          setState(() {
+            _isLoading = false;
+          });
+        })
+        .catchError((dynamic error) {
+          setState(() {
+            _isLoading = false;
+          });
+          showErrorDialog(message: error);
+        });
   }
 
   void _verifyCode() {
@@ -274,28 +265,34 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     });
 
     _webClient
-        .post(url, credentials.token,
-            data: json.encode({
-              'code': _code,
-              'email': widget.email ?? state.user.email,
-            }))
+        .post(
+          url,
+          credentials.token,
+          data: json.encode({
+            'code': _code,
+            'email': widget.email ?? state.user.email,
+          }),
+        )
         .then((dynamic data) {
-      setState(() {
-        _isLoading = false;
-      });
-      if (navigator.canPop()) {
-        navigator.pop();
-      }
-      showToast(widget.email == null
-          ? localization!.verifiedPhoneNumber
-          : localization!.disabledTwoFactor);
-      store.dispatch(RefreshData());
-    }).catchError((dynamic error) {
-      setState(() {
-        _isLoading = false;
-      });
-      showErrorDialog(message: error);
-    });
+          setState(() {
+            _isLoading = false;
+          });
+          if (navigator.canPop()) {
+            navigator.pop();
+          }
+          showToast(
+            widget.email == null
+                ? localization!.verifiedPhoneNumber
+                : localization!.disabledTwoFactor,
+          );
+          store.dispatch(RefreshData());
+        })
+        .catchError((dynamic error) {
+          setState(() {
+            _isLoading = false;
+          });
+          showErrorDialog(message: error);
+        });
   }
 
   @override
@@ -311,9 +308,11 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     final state = store.state;
 
     return AlertDialog(
-      title: Text(widget.email == null
-          ? localization.verifyPhoneNumber
-          : localization.disableTwoFactor),
+      title: Text(
+        widget.email == null
+            ? localization.verifyPhoneNumber
+            : localization.disableTwoFactor,
+      ),
       content: _isLoading
           ? LoadingIndicator(height: 80)
           : AppForm(
@@ -323,21 +322,21 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(localization.codeWasSentTo
-                      .replaceFirst(':number', state.user.phone)),
-                  SizedBox(height: 20),
-                  AppPinput(
-                    onCompleted: (code) => _code = code,
+                  Text(
+                    localization.codeWasSentTo.replaceFirst(
+                      ':number',
+                      state.user.phone,
+                    ),
                   ),
+                  SizedBox(height: 20),
+                  AppPinput(onCompleted: (code) => _code = code),
                 ],
               ),
             ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            localization.cancel.toUpperCase(),
-          ),
+          child: Text(localization.cancel.toUpperCase()),
         ),
         if (!_isLoading) ...[
           if (widget.showChangeNumber)
@@ -346,21 +345,15 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 store.dispatch(ViewSettings(section: kSettingsUserDetails));
                 Navigator.of(context).pop();
               },
-              child: Text(
-                localization.changeNumber.toUpperCase(),
-              ),
+              child: Text(localization.changeNumber.toUpperCase()),
             ),
           TextButton(
             onPressed: () => _sendCode(),
-            child: Text(
-              localization.resendCode.toUpperCase(),
-            ),
+            child: Text(localization.resendCode.toUpperCase()),
           ),
           TextButton(
             onPressed: () => _verifyCode(),
-            child: Text(
-              localization.verify.toUpperCase(),
-            ),
+            child: Text(localization.verify.toUpperCase()),
           ),
         ],
       ],

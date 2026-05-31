@@ -35,10 +35,7 @@ class LearnMoreUrl extends StatelessWidget {
           child,
           SizedBox(height: 8),
           OutlinedButton(
-            child: Text(
-              label ?? localization!.learnMore,
-              maxLines: 4,
-            ),
+            child: Text(label ?? localization!.learnMore, maxLines: 4),
             onPressed: () => launchUrl(Uri.parse(url)),
           ),
         ],
@@ -46,19 +43,11 @@ class LearnMoreUrl extends StatelessWidget {
     } else {
       return Row(
         children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: child,
-          ),
-          SizedBox(
-            width: 10,
-          ),
+          Expanded(flex: 2, child: child),
+          SizedBox(width: 10),
           Expanded(
             child: TextButton(
-              child: Text(
-                label ?? localization!.learnMore,
-                maxLines: 4,
-              ),
+              child: Text(label ?? localization!.learnMore, maxLines: 4),
               onPressed: () => launchUrl(Uri.parse(url)),
             ),
           ),
@@ -85,20 +74,17 @@ class LearnMoreDialog extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        Expanded(
-          child: child,
-        ),
-        SizedBox(
-          width: 10,
-        ),
+        Expanded(child: child),
+        SizedBox(width: 10),
         TextButton(
           child: Text(label ?? localization!.learnMore),
           onPressed: () {
             showDialog<AlertDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return dialog;
-                });
+              context: context,
+              builder: (BuildContext context) {
+                return dialog;
+              },
+            );
           },
         ),
       ],

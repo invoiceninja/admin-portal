@@ -14,7 +14,9 @@ String toSnakeCase(String? value) {
   }
 
   return value!.replaceAllMapped(
-      RegExp(r'[A-Z]'), (Match match) => '_' + match[0]!.toLowerCase());
+    RegExp(r'[A-Z]'),
+    (Match match) => '_' + match[0]!.toLowerCase(),
+  );
 }
 
 String toCamelCase(String subject) {
@@ -39,7 +41,9 @@ String toSpaceCase(String value) {
   }
 
   return value.replaceAllMapped(
-      RegExp(r'[A-Z]'), (Match match) => ' ' + match[0]!.toLowerCase());
+    RegExp(r'[A-Z]'),
+    (Match match) => ' ' + match[0]!.toLowerCase(),
+  );
 }
 
 String toTitleCase(String text) {
@@ -73,11 +77,7 @@ String toTitleCase(String text) {
 
 // https://stackoverflow.com/a/57541846/497368
 String removeAllHtmlTags(String htmlText) {
-  final exp = RegExp(
-    r'<[^>]*>',
-    multiLine: true,
-    caseSensitive: true,
-  );
+  final exp = RegExp(r'<[^>]*>', multiLine: true, caseSensitive: true);
 
   return htmlText.replaceAll(exp, '');
 }
@@ -116,20 +116,14 @@ void printWrapped(String text) {
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
-bool matchesStrings({
-  List<String?>? haystacks,
-  String? needle,
-}) {
+bool matchesStrings({List<String?>? haystacks, String? needle}) {
   if (needle == null || needle.isEmpty) {
     return true;
   }
 
   bool isMatch = false;
   haystacks!.forEach((haystack) {
-    if (matchesString(
-      haystack: haystack,
-      needle: needle,
-    )) {
+    if (matchesString(haystack: haystack, needle: needle)) {
       isMatch = true;
     }
   });
@@ -165,10 +159,7 @@ bool matchesString({String? haystack, String? needle}) {
   }
 }
 
-String? matchesStringsValue({
-  List<String?>? haystacks,
-  String? needle,
-}) {
+String? matchesStringsValue({List<String?>? haystacks, String? needle}) {
   if (needle == null || needle.isEmpty) {
     return null;
   }
@@ -177,10 +168,7 @@ String? matchesStringsValue({
 
   String? match;
   haystacks!.forEach((haystack) {
-    final value = matchesStringValue(
-      haystack: haystack,
-      needle: needle,
-    );
+    final value = matchesStringValue(haystack: haystack, needle: needle);
     if (value != null) {
       match = value;
     }
@@ -242,6 +230,10 @@ String trimUrl(String url) {
 String getRandomString([int length = 32]) {
   const _chars =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(Random().nextInt(_chars.length))));
+  return String.fromCharCodes(
+    Iterable.generate(
+      length,
+      (_) => _chars.codeUnitAt(Random().nextInt(_chars.length)),
+    ),
+  );
 }

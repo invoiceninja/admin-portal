@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class InvoiceEditPDF extends StatefulWidget {
-  const InvoiceEditPDF({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const InvoiceEditPDF({Key? key, required this.viewModel}) : super(key: key);
 
   final EntityEditPDFVM viewModel;
 
@@ -71,24 +68,30 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
 
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     webClient
-        .post(url, credentials.token,
-            data: json.encode(data), rawResponse: true)
+        .post(
+          url,
+          credentials.token,
+          data: json.encode(data),
+          rawResponse: true,
+        )
         .then((dynamic response) {
-      setState(() {
-        _isLoading = false;
-        _response = response;
+          setState(() {
+            _isLoading = false;
+            _response = response;
 
-        if (kIsWeb && state.prefState.enableNativeBrowser) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        }
-      });
-    }).catchError((dynamic error) {
-      setState(() {
-        _isLoading = false;
-      });
-    });
+            if (kIsWeb && state.prefState.enableNativeBrowser) {
+              _pdfString =
+                  'data:application/pdf;base64,' +
+                  base64Encode(response.bodyBytes);
+              WebUtils.registerWebView(_pdfString);
+            }
+          });
+        })
+        .catchError((dynamic error) {
+          setState(() {
+            _isLoading = false;
+          });
+        });
   }
 
   @override
@@ -100,9 +103,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     }
 
     if (_response == null) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
+      return Center(child: CircularProgressIndicator());
     }
 
     return Center(

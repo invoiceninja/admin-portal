@@ -38,10 +38,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const DashboardScreen({Key? key, required this.viewModel}) : super(key: key);
 
   final DashboardVM viewModel;
 
@@ -84,14 +81,15 @@ class _DashboardScreenState extends State<DashboardScreen>
     }
 
     _mainTabController = TabController(vsync: this, length: mainTabCount);
-    _sideTabController =
-        TabController(vsync: this, length: _tabs.length, initialIndex: 0)
-          ..addListener(onTabListener);
+    _sideTabController = TabController(
+      vsync: this,
+      length: _tabs.length,
+      initialIndex: 0,
+    )..addListener(onTabListener);
     _scrollController = ScrollController(
-        // initialScrollOffset: (index > 0 ? index + 1 : 0) *
-        // (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)
-        )
-      ..addListener(onScrollListener);
+      // initialScrollOffset: (index > 0 ? index + 1 : 0) *
+      // (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)
+    )..addListener(onScrollListener);
 
     final companyName = state.company.settings.name ?? '';
     if (!state.isDemo &&
@@ -100,14 +98,12 @@ class _DashboardScreenState extends State<DashboardScreen>
         state.company.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<void>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return SettingsWizard(
-                user: state.user,
-                company: state.company,
-              );
-            });
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return SettingsWizard(user: state.user, company: state.company);
+          },
+        );
       });
     }
   }
@@ -214,15 +210,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     controller: _mainTabController,
                     isScrollable: true,
                     tabs: [
-                      Tab(
-                        text: localization!.overview,
-                      ),
-                      Tab(
-                        text: localization.activity,
-                      ),
-                      Tab(
-                        text: localization.systemLogs,
-                      ),
+                      Tab(text: localization!.overview),
+                      Tab(text: localization.activity),
+                      Tab(text: localization.systemLogs),
                     ],
                   ),
                 ),
@@ -230,8 +220,9 @@ class _DashboardScreenState extends State<DashboardScreen>
             Expanded(
               flex: 2,
               child: ListFilter(
-                key:
-                    ValueKey('__cleared_at_${state.uiState.filterClearedAt}__'),
+                key: ValueKey(
+                  '__cleared_at_${state.uiState.filterClearedAt}__',
+                ),
                 entityType: EntityType.dashboard,
                 entityIds: [],
                 filter: state.uiState.filter,
@@ -251,11 +242,12 @@ class _DashboardScreenState extends State<DashboardScreen>
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
-                  tooltip: state.prefState.enableTooltips
-                      ? localization!.upgrade
-                      : null,
-                  onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
-                  icon: Icon(Icons.rocket_launch)),
+                tooltip: state.prefState.enableTooltips
+                    ? localization!.upgrade
+                    : null,
+                onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
+                icon: Icon(Icons.rocket_launch),
+              ),
             ),
           if (!kReleaseMode ||
               (kIsWeb &&
@@ -272,32 +264,36 @@ class _DashboardScreenState extends State<DashboardScreen>
                     launchUrl(Uri.parse(kAppReactUrl));
                   } else {
                     confirmCallback(
-                        context: context,
-                        message: localization.enableReactApp,
-                        callback: (_) {
-                          final credentials = state.credentials;
-                          final account = state.account
-                              .rebuild((b) => b..setReactAsDefaultAP = true);
-                          final url =
-                              '${credentials.url}/accounts/${account.id}';
-                          final data = serializers.serializeWith(
-                              AccountEntity.serializer, account);
+                      context: context,
+                      message: localization.enableReactApp,
+                      callback: (_) {
+                        final credentials = state.credentials;
+                        final account = state.account.rebuild(
+                          (b) => b..setReactAsDefaultAP = true,
+                        );
+                        final url = '${credentials.url}/accounts/${account.id}';
+                        final data = serializers.serializeWith(
+                          AccountEntity.serializer,
+                          account,
+                        );
 
-                          store.dispatch(StartSaving());
-                          WebClient()
-                              .put(
-                            url,
-                            credentials.token,
-                            data: json.encode(data),
-                          )
-                              .then((dynamic _) {
-                            store.dispatch(StopSaving());
-                            WebUtils.reloadBrowser();
-                          }).catchError((Object error) {
-                            store.dispatch(StopSaving());
-                            showErrorDialog(message: error as String?);
-                          });
-                        });
+                        store.dispatch(StartSaving());
+                        WebClient()
+                            .put(
+                              url,
+                              credentials.token,
+                              data: json.encode(data),
+                            )
+                            .then((dynamic _) {
+                              store.dispatch(StopSaving());
+                              WebUtils.reloadBrowser();
+                            })
+                            .catchError((Object error) {
+                              store.dispatch(StopSaving());
+                              showErrorDialog(message: error as String?);
+                            });
+                      },
+                    );
                   }
                 },
                 icon: Icon(MdiIcons.react),
@@ -316,7 +312,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Scaffold.of(context).openEndDrawer();
                   } else {
                     store.dispatch(
-                        UpdateUserPreferences(sidebar: AppSidebar.history));
+                      UpdateUserPreferences(sidebar: AppSidebar.history),
+                    );
                   }
                 },
               ),
@@ -327,40 +324,24 @@ class _DashboardScreenState extends State<DashboardScreen>
                 controller: _mainTabController,
                 isScrollable: isMobile(context),
                 tabs: [
-                  Tab(
-                    text: localization!.overview,
-                  ),
-                  Tab(
-                    text: localization.activity,
-                  ),
-                  Tab(
-                    text: localization.systemLogs,
-                  ),
+                  Tab(text: localization!.overview),
+                  Tab(text: localization.activity),
+                  Tab(text: localization.systemLogs),
                   if (isMobile(context) &&
                       company.isModuleEnabled(EntityType.invoice))
-                    Tab(
-                      text: localization.invoices,
-                    ),
+                    Tab(text: localization.invoices),
                   if (isMobile(context) &&
                       company.isModuleEnabled(EntityType.payment))
-                    Tab(
-                      text: localization.payments,
-                    ),
+                    Tab(text: localization.payments),
                   if (isMobile(context) &&
                       company.isModuleEnabled(EntityType.quote))
-                    Tab(
-                      text: localization.quotes,
-                    ),
+                    Tab(text: localization.quotes),
                   if (isMobile(context) &&
                       company.isModuleEnabled(EntityType.task))
-                    Tab(
-                      text: localization.tasks,
-                    ),
+                    Tab(text: localization.tasks),
                   if (isMobile(context) &&
                       company.isModuleEnabled(EntityType.expense))
-                    Tab(
-                      text: localization.expense,
-                    ),
+                    Tab(text: localization.expense),
                 ],
               )
             : null,
@@ -376,17 +357,12 @@ class _DashboardScreenState extends State<DashboardScreen>
     return isDesktop(context)
         ? Row(
             children: [
-              Flexible(
-                child: mainScaffold,
-                flex: 3,
-              ),
+              Flexible(child: mainScaffold, flex: 3),
               if (state.dashboardUIState.showSidebar)
                 Flexible(
                   child: AppBorder(
                     isLeft: true,
-                    child: SidebarScaffold(
-                      tabController: _sideTabController,
-                    ),
+                    child: SidebarScaffold(tabController: _sideTabController),
                   ),
                   flex: 2,
                 ),
@@ -415,22 +391,25 @@ class _CustomTabBarView extends StatelessWidget {
 
     if ((viewModel.filter ?? '').isNotEmpty) {
       return ScrollableListViewBuilder(
-          itemCount: viewModel.filteredList.length,
-          itemBuilder: (BuildContext context, index) {
-            final localization = AppLocalization.of(context);
-            final entity = viewModel.filteredList[index];
-            final subtitle = entity.matchesFilterValue(viewModel.filter);
+        itemCount: viewModel.filteredList.length,
+        itemBuilder: (BuildContext context, index) {
+          final localization = AppLocalization.of(context);
+          final entity = viewModel.filteredList[index];
+          final subtitle = entity.matchesFilterValue(viewModel.filter);
 
-            return ListTile(
-              title: Text(entity.listDisplayName),
-              leading: Icon(getEntityIcon(entity.entityType)),
-              trailing: Icon(Icons.navigate_next),
-              subtitle: Text(subtitle != null
+          return ListTile(
+            title: Text(entity.listDisplayName),
+            leading: Icon(getEntityIcon(entity.entityType)),
+            trailing: Icon(Icons.navigate_next),
+            subtitle: Text(
+              subtitle != null
                   ? subtitle
-                  : localization!.lookup('${entity.entityType}')),
-              onTap: () => viewEntity(entity: entity),
-            );
-          });
+                  : localization!.lookup('${entity.entityType}'),
+            ),
+            onTap: () => viewEntity(entity: entity),
+          );
+        },
+      );
     }
 
     return TabBarView(

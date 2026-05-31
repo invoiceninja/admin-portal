@@ -15,10 +15,8 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart'
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class PurchaseOrderEditItemsScreen extends StatelessWidget {
-  const PurchaseOrderEditItemsScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PurchaseOrderEditItemsScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -60,18 +58,18 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
     Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
     Function(int, int)? onMovedInvoiceItem,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          addLineItem: addLineItem,
-          cloneLineItem: cloneLineItem,
-          deleteLineItem: deleteLineItem,
-          invoiceItemIndex: invoiceItemIndex,
-          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-          clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
-          onChangedInvoiceItem: onChangedInvoiceItem,
-          onMovedInvoiceItem: onMovedInvoiceItem,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         addLineItem: addLineItem,
+         cloneLineItem: cloneLineItem,
+         deleteLineItem: deleteLineItem,
+         invoiceItemIndex: invoiceItemIndex,
+         onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+         clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
+         onChangedInvoiceItem: onChangedInvoiceItem,
+         onMovedInvoiceItem: onMovedInvoiceItem,
+       );
 
   factory PurchaseOrderEditItemsVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -93,10 +91,15 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
         final purchaseOrder = store.state.purchaseOrderUIState.editing!;
         if (index == purchaseOrder.lineItems.length) {
           store.dispatch(
-              AddPurchaseOrderItem(purchaseOrderItem: purchaseOrderItem));
+            AddPurchaseOrderItem(purchaseOrderItem: purchaseOrderItem),
+          );
         } else {
-          store.dispatch(UpdatePurchaseOrderItem(
-              purchaseOrderItem: purchaseOrderItem, index: index));
+          store.dispatch(
+            UpdatePurchaseOrderItem(
+              purchaseOrderItem: purchaseOrderItem,
+              index: index,
+            ),
+          );
         }
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {

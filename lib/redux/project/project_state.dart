@@ -49,9 +49,11 @@ abstract class ProjectState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<ProjectState> get serializer => _$projectStateSerializer;
@@ -62,8 +64,10 @@ abstract class ProjectUIState extends Object
     implements Built<ProjectUIState, ProjectUIStateBuilder> {
   factory ProjectUIState(PrefStateSortField? sortField) {
     return _$ProjectUIState._(
-      listUIState: ListUIState(sortField?.field ?? ProjectFields.number,
-          sortAscending: sortField?.ascending ?? false),
+      listUIState: ListUIState(
+        sortField?.field ?? ProjectFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: ProjectEntity(),
       selectedId: '',
       tabIndex: 0,

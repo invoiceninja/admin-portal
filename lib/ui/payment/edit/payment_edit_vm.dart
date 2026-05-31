@@ -97,52 +97,59 @@ class PaymentEditVM {
 
           if (amount < 0) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(localization.creditPaymentError);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization.creditPaymentError);
+              },
+            );
             return null;
           } else if (!state.company.enableApplyingPayments &&
               payment.invoices.isEmpty &&
               payment.credits.isEmpty &&
               payment.isNew) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(
-                      localization.pleaseSelectAnInvoiceOrCredit);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization.pleaseSelectAnInvoiceOrCredit);
+              },
+            );
             return null;
           }
 
           final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
           store.dispatch(
-              SavePaymentRequest(completer: completer, payment: payment));
-          return completer.future.then((savedPayment) {
-            showToast(payment.isNew
-                ? localization.createdPayment
-                : localization.updatedPayment);
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
-              if (payment.isNew) {
-                navigator!.pushReplacementNamed(PaymentViewScreen.route);
-              } else {
-                navigator!.pop(savedPayment);
-              }
-            } else {
-              if (payment.isApplying == true) {
-                navigator!.pop();
-              } else {
-                viewEntity(entity: savedPayment);
-              }
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+            SavePaymentRequest(completer: completer, payment: payment),
+          );
+          return completer.future
+              .then((savedPayment) {
+                showToast(
+                  payment.isNew
+                      ? localization.createdPayment
+                      : localization.updatedPayment,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
+                  if (payment.isNew) {
+                    navigator!.pushReplacementNamed(PaymentViewScreen.route);
+                  } else {
+                    navigator!.pop(savedPayment);
+                  }
+                } else {
+                  if (payment.isApplying == true) {
+                    navigator!.pop();
+                  } else {
+                    viewEntity(entity: savedPayment);
+                  }
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

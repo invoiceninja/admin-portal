@@ -29,10 +29,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EInvoiceSettings extends StatefulWidget {
-  const EInvoiceSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const EInvoiceSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final EInvoiceSettingsVM viewModel;
 
@@ -41,8 +38,9 @@ class EInvoiceSettings extends StatefulWidget {
 }
 
 class _EInvoiceSettingsState extends State<EInvoiceSettings> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_eInvoiceSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_eInvoiceSettings',
+  );
 
   FocusScopeNode? _focusNode;
 
@@ -122,8 +120,9 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
       _eExpenseForwardEmailController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final viewModel = widget.viewModel;
     final company = viewModel.company;
@@ -147,8 +146,9 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     _actsAsSender = company.taxConfig.actsAsSender;
     _actsAsReceiver = company.taxConfig.actsAsReceiver;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -160,18 +160,22 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
 
-    final settings = viewModel.settings.rebuild((b) => b
-      ..eInvoiceForwardEmail = _eInvoiceForwardEmailController.text.trim()
-      ..eExpenseForwardEmail = _eExpenseForwardEmailController.text.trim());
+    final settings = viewModel.settings.rebuild(
+      (b) => b
+        ..eInvoiceForwardEmail = _eInvoiceForwardEmailController.text.trim()
+        ..eExpenseForwardEmail = _eExpenseForwardEmailController.text.trim(),
+    );
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
 
-    final company = viewModel.company.rebuild((b) => b
-      ..eInvoiceCertificatePassphrase =
-          isFiltered && eInvoiceCertificatePassphrase.isEmpty
-              ? null
-              : eInvoiceCertificatePassphrase);
+    final company = viewModel.company.rebuild(
+      (b) => b
+        ..eInvoiceCertificatePassphrase =
+            isFiltered && eInvoiceCertificatePassphrase.isEmpty
+            ? null
+            : eInvoiceCertificatePassphrase,
+    );
     if (company != viewModel.company) {
       viewModel.onCompanyChanged(company);
     }
@@ -200,9 +204,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
     final state = store.state;
     final url = state.credentials.url + '/einvoice/configurations';
 
-    final data = <String, dynamic>{
-      'code': code,
-    };
+    final data = <String, dynamic>{'code': code};
     final fields = _visibleFields;
     if (fields.contains('iban')) data['iban'] = _ibanController.text.trim();
     if (fields.contains('bic_swift'))
@@ -222,19 +224,20 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
 
     WebClient()
         .post(
-      url,
-      state.credentials.token,
-      rawResponse: true,
-      data: json.encode({
-        'entity': 'company',
-        'payment_means': [data],
-      }),
-    )
+          url,
+          state.credentials.token,
+          rawResponse: true,
+          data: json.encode({
+            'entity': 'company',
+            'payment_means': [data],
+          }),
+        )
         .then((_) {
-      // Saved with the main settings save
-    }).catchError((error) {
-      showErrorDialog(message: '$error');
-    });
+          // Saved with the main settings save
+        })
+        .catchError((error) {
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -260,21 +263,25 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               AppDropdownButton<String>(
-                  labelText: localization.eInvoiceType,
-                  showBlank: settingsUIState.isFiltered,
-                  value: settings.eInvoiceType,
-                  onChanged: (dynamic value) {
-                    viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..eInvoiceType = value));
-                  },
-                  items: kEInvoiceTypes
-                      .map((type) => DropdownMenuItem<String>(
-                            child: Text(type
-                                .replaceFirst('_', ' ')
-                                .replaceAll('_', '.')),
-                            value: type,
-                          ))
-                      .toList()),
+                labelText: localization.eInvoiceType,
+                showBlank: settingsUIState.isFiltered,
+                value: settings.eInvoiceType,
+                onChanged: (dynamic value) {
+                  viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..eInvoiceType = value),
+                  );
+                },
+                items: kEInvoiceTypes
+                    .map(
+                      (type) => DropdownMenuItem<String>(
+                        child: Text(
+                          type.replaceFirst('_', ' ').replaceAll('_', '.'),
+                        ),
+                        value: type,
+                      ),
+                    )
+                    .toList(),
+              ),
               if (settings.eInvoiceType == kEInvoiceTypeVERIFACTU)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -310,7 +317,8 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                   value: settings.enableEInvoice,
                   iconData: MdiIcons.fileXmlBox,
                   onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..enableEInvoice = value)),
+                    settings.rebuild((b) => b..enableEInvoice = value),
+                  ),
                 ),
                 if (settings.enableEInvoice == true) ...[
                   BoolDropdownButton(
@@ -327,25 +335,30 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                     iconData: MdiIcons.email,
                     onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild(
-                          (b) => b..skipAutomaticEmailWithPeppol = value),
+                        (b) => b..skipAutomaticEmailWithPeppol = value,
+                      ),
                     ),
                   ),
                   AppDropdownButton<String>(
-                      labelText: localization.eQuoteType,
-                      showBlank: settingsUIState.isFiltered,
-                      value: settings.eQuoteType,
-                      onChanged: (dynamic value) {
-                        viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..eQuoteType = value));
-                      },
-                      items: kEQuoteTypes
-                          .map((type) => DropdownMenuItem<String>(
-                                child: Text(type
-                                    .replaceFirst('_', ' ')
-                                    .replaceAll('_', '.')),
-                                value: type,
-                              ))
-                          .toList()),
+                    labelText: localization.eQuoteType,
+                    showBlank: settingsUIState.isFiltered,
+                    value: settings.eQuoteType,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..eQuoteType = value),
+                      );
+                    },
+                    items: kEQuoteTypes
+                        .map(
+                          (type) => DropdownMenuItem<String>(
+                            child: Text(
+                              type.replaceFirst('_', ' ').replaceAll('_', '.'),
+                            ),
+                            value: type,
+                          ),
+                        )
+                        .toList(),
+                  ),
                   if (!settingsUIState.isFiltered) ...[
                     SizedBox(height: 22),
                     Row(
@@ -360,9 +373,12 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   onPressed: () {
-                                    viewModel.onCompanyChanged(company.rebuild(
+                                    viewModel.onCompanyChanged(
+                                      company.rebuild(
                                         (b) =>
-                                            b..hasEInvoiceCertificate = false));
+                                            b..hasEInvoiceCertificate = false,
+                                      ),
+                                    );
                                     viewModel.onSavePressed(context);
                                   },
                                 )
@@ -387,13 +403,16 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
 
                                     if (files != null && files.isNotEmpty) {
                                       viewModel.onEInvoiceCertificateSelected(
-                                          files.first);
+                                        files.first,
+                                      );
                                     }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(12),
-                                    child: Text(localization.uploadCertificate
-                                        .toUpperCase()),
+                                    child: Text(
+                                      localization.uploadCertificate
+                                          .toUpperCase(),
+                                    ),
                                   ),
                                 ),
                         ),
@@ -437,7 +456,8 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                                   ),
                                   onPressed: () {
                                     _eInvoiceCertificatePassphraseController
-                                        .text = '';
+                                            .text =
+                                        '';
                                     _onChanged();
                                     viewModel.onSavePressed(context);
                                   },
@@ -452,27 +472,29 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                         ),
                         SizedBox(width: kTableColumnGap),
                         Expanded(
-                          child: Row(children: [
-                            Icon(
-                              company.hasEInvoiceCertificatePassphrase
-                                  ? Icons.check_circle_outline
-                                  : Icons.circle_outlined,
-                              size: 16,
-                              color: company.hasEInvoiceCertificatePassphrase
-                                  ? Colors.green
-                                  : Colors.grey,
-                            ),
-                            SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
+                          child: Row(
+                            children: [
+                              Icon(
                                 company.hasEInvoiceCertificatePassphrase
-                                    ? localization.passphraseSet
-                                    : localization.passphraseNotSet,
-                                maxLines: 2,
+                                    ? Icons.check_circle_outline
+                                    : Icons.circle_outlined,
+                                size: 16,
+                                color: company.hasEInvoiceCertificatePassphrase
+                                    ? Colors.green
+                                    : Colors.grey,
                               ),
-                            ),
-                          ]),
-                        )
+                              SizedBox(width: 8),
+                              Flexible(
+                                child: Text(
+                                  company.hasEInvoiceCertificatePassphrase
+                                      ? localization.passphraseSet
+                                      : localization.passphraseNotSet,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                     DecoratedFormField(
@@ -545,10 +567,12 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                   optionsBuilder: (TextEditingValue textEditingValue) {
                     final filter = textEditingValue.text.toLowerCase();
                     return kPaymentMeansCodes.entries
-                        .where((entry) =>
-                            filter.isEmpty ||
-                            entry.key.contains(filter) ||
-                            entry.value.toLowerCase().contains(filter))
+                        .where(
+                          (entry) =>
+                              filter.isEmpty ||
+                              entry.key.contains(filter) ||
+                              entry.value.toLowerCase().contains(filter),
+                        )
                         .map((entry) => '${entry.key} - ${entry.value}')
                         .toList();
                   },
@@ -557,58 +581,63 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                     setState(() => _paymentMeansCode = code);
                     _paymentMeansCodeController.text = value;
                   },
-                  fieldViewBuilder: (BuildContext context,
-                      TextEditingController textEditingController,
-                      FocusNode focusNode,
-                      VoidCallback onFieldSubmitted) {
-                    return DecoratedFormField(
-                      label: localization.lookup('code'),
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      keyboardType: TextInputType.text,
-                      onFieldSubmitted: (value) => onFieldSubmitted(),
-                    );
-                  },
-                  optionsViewBuilder: (BuildContext context,
-                      AutocompleteOnSelected<String> onSelected,
-                      Iterable<String> options) {
-                    final highlightedIndex =
-                        AutocompleteHighlightedOption.of(context);
-                    return Align(
-                      alignment: Alignment.topLeft,
-                      child: Material(
-                        elevation: 4,
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                          width: 500,
-                          constraints: BoxConstraints(maxHeight: 270),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: options.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                color: highlightedIndex == index
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withValues(alpha: 0.1)
-                                    : Theme.of(context).cardColor,
-                                child: ListTile(
-                                  title: Text(
-                                    options.elementAt(index),
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  onTap: () =>
-                                      onSelected(options.elementAt(index)),
-                                ),
-                              );
-                            },
+                  fieldViewBuilder:
+                      (
+                        BuildContext context,
+                        TextEditingController textEditingController,
+                        FocusNode focusNode,
+                        VoidCallback onFieldSubmitted,
+                      ) {
+                        return DecoratedFormField(
+                          label: localization.lookup('code'),
+                          controller: textEditingController,
+                          focusNode: focusNode,
+                          keyboardType: TextInputType.text,
+                          onFieldSubmitted: (value) => onFieldSubmitted(),
+                        );
+                      },
+                  optionsViewBuilder:
+                      (
+                        BuildContext context,
+                        AutocompleteOnSelected<String> onSelected,
+                        Iterable<String> options,
+                      ) {
+                        final highlightedIndex =
+                            AutocompleteHighlightedOption.of(context);
+                        return Align(
+                          alignment: Alignment.topLeft,
+                          child: Material(
+                            elevation: 4,
+                            child: Container(
+                              color: Theme.of(context).cardColor,
+                              width: 500,
+                              constraints: BoxConstraints(maxHeight: 270),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: options.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    color: highlightedIndex == index
+                                        ? Theme.of(context).colorScheme.primary
+                                              .withValues(alpha: 0.1)
+                                        : Theme.of(context).cardColor,
+                                    child: ListTile(
+                                      title: Text(
+                                        options.elementAt(index),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleMedium,
+                                      ),
+                                      onTap: () =>
+                                          onSelected(options.elementAt(index)),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
+                        );
+                      },
                 ),
                 if (_visibleFields.contains('iban'))
                   DecoratedFormField(
@@ -707,13 +736,16 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
   void _loadQuota() {
     final state = widget.store.state;
     final url = state.credentials.url + '/einvoice/quota';
-    WebClient().get(url, state.credentials.token).then((response) {
-      if (mounted) {
-        setState(() {
-          _quota = (response['quota'] ?? '').toString();
-        });
-      }
-    }).catchError((_) {});
+    WebClient()
+        .get(url, state.credentials.token)
+        .then((response) {
+          if (mounted) {
+            setState(() {
+              _quota = (response['quota'] ?? '').toString();
+            });
+          }
+        })
+        .catchError((_) {});
   }
 
   void _updatePeppolPreferences({
@@ -724,20 +756,21 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
     final url = state.credentials.url + '/einvoice/peppol/update';
     WebClient()
         .put(
-      url,
-      state.credentials.token,
-      data: json.encode({
-        'acts_as_sender': actsAsSender,
-        'acts_as_receiver': actsAsReceiver,
-        'legal_entity_id': widget.company.legalEntityId,
-        'e_invoicing_token': '',
-      }),
-    )
+          url,
+          state.credentials.token,
+          data: json.encode({
+            'acts_as_sender': actsAsSender,
+            'acts_as_receiver': actsAsReceiver,
+            'legal_entity_id': widget.company.legalEntityId,
+            'e_invoicing_token': '',
+          }),
+        )
         .then((_) {
-      showToast(widget.localization.lookup('saved_settings'));
-    }).catchError((error) {
-      showErrorDialog(message: '$error');
-    });
+          showToast(widget.localization.lookup('saved_settings'));
+        })
+        .catchError((error) {
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -802,13 +835,16 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
                 final url =
                     state.credentials.url + '/einvoice/peppol/disconnect';
                 widget.store.dispatch(StartSaving());
-                WebClient().post(url, state.credentials.token).then((_) {
-                  widget.store.dispatch(StopSaving());
-                  widget.store.dispatch(RefreshData());
-                }).catchError((error) {
-                  widget.store.dispatch(StopSaving());
-                  showErrorDialog(message: '$error');
-                });
+                WebClient()
+                    .post(url, state.credentials.token)
+                    .then((_) {
+                      widget.store.dispatch(StopSaving());
+                      widget.store.dispatch(RefreshData());
+                    })
+                    .catchError((error) {
+                      widget.store.dispatch(StopSaving());
+                      showErrorDialog(message: '$error');
+                    });
               },
             );
           },
@@ -864,10 +900,7 @@ class _PeppolOnboarding extends StatelessWidget {
     return FormCard(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'PEPPOL',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        Text('PEPPOL', style: Theme.of(context).textTheme.titleMedium),
         SizedBox(height: 16),
         RadioGroup<bool>(
           groupValue: isBusinessEntity,
@@ -949,34 +982,37 @@ class _PeppolOnboarding extends StatelessWidget {
             store.dispatch(StartSaving());
             WebClient()
                 .post(
-              url,
-              state.credentials.token,
-              data: json.encode({
-                'party_name': partyNameController.text.trim(),
-                'line1': line1Controller.text.trim(),
-                'line2': line2Controller.text.trim(),
-                'city': cityController.text.trim(),
-                'county': countyController.text.trim(),
-                'zip': zipController.text.trim(),
-                'country': countryId,
-                if (isBusinessEntity)
-                  'vat_number': vatNumberController.text.trim()
-                else
-                  'id_number': idNumberController.text.trim(),
-                'acts_as_sender': actsAsSender,
-                'acts_as_receiver': actsAsReceiver,
-                'classification': isBusinessEntity ? 'business' : 'individual',
-                'tenant_id': company.id,
-              }),
-            )
+                  url,
+                  state.credentials.token,
+                  data: json.encode({
+                    'party_name': partyNameController.text.trim(),
+                    'line1': line1Controller.text.trim(),
+                    'line2': line2Controller.text.trim(),
+                    'city': cityController.text.trim(),
+                    'county': countyController.text.trim(),
+                    'zip': zipController.text.trim(),
+                    'country': countryId,
+                    if (isBusinessEntity)
+                      'vat_number': vatNumberController.text.trim()
+                    else
+                      'id_number': idNumberController.text.trim(),
+                    'acts_as_sender': actsAsSender,
+                    'acts_as_receiver': actsAsReceiver,
+                    'classification': isBusinessEntity
+                        ? 'business'
+                        : 'individual',
+                    'tenant_id': company.id,
+                  }),
+                )
                 .then((_) {
-              store.dispatch(StopSaving());
-              showToast(localization.lookup('saved_settings'));
-              store.dispatch(RefreshData());
-            }).catchError((error) {
-              store.dispatch(StopSaving());
-              showErrorDialog(message: '$error');
-            });
+                  store.dispatch(StopSaving());
+                  showToast(localization.lookup('saved_settings'));
+                  store.dispatch(RefreshData());
+                })
+                .catchError((error) {
+                  store.dispatch(StopSaving());
+                  showErrorDialog(message: '$error');
+                });
           },
         ),
       ],
@@ -1047,31 +1083,31 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: Row(
               children: [
-                Expanded(
-                  child: Text('${country.name}: $vatNumber'),
-                ),
+                Expanded(child: Text('${country.name}: $vatNumber')),
                 IconButton(
                   icon: Icon(Icons.remove_circle_outline, color: Colors.red),
                   onPressed: () {
-                    final url = state.credentials.url +
+                    final url =
+                        state.credentials.url +
                         '/einvoice/peppol/remove_additional_legal_identifier';
                     widget.store.dispatch(StartSaving());
                     WebClient()
                         .delete(
-                      url,
-                      state.credentials.token,
-                      data: json.encode({
-                        'country': country.id,
-                        'vat_number': vatNumber,
-                      }),
-                    )
+                          url,
+                          state.credentials.token,
+                          data: json.encode({
+                            'country': country.id,
+                            'vat_number': vatNumber,
+                          }),
+                        )
                         .then((_) {
-                      widget.store.dispatch(StopSaving());
-                      widget.store.dispatch(RefreshData());
-                    }).catchError((error) {
-                      widget.store.dispatch(StopSaving());
-                      showErrorDialog(message: '$error');
-                    });
+                          widget.store.dispatch(StopSaving());
+                          widget.store.dispatch(RefreshData());
+                        })
+                        .catchError((error) {
+                          widget.store.dispatch(StopSaving());
+                          showErrorDialog(message: '$error');
+                        });
                   },
                 ),
               ],
@@ -1093,10 +1129,11 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final peppolCountryList = countryMap.values
-                .where((country) => kPeppolCountries.contains(country.id))
-                .toList()
-              ..sort((a, b) => a.name.compareTo(b.name));
+            final peppolCountryList =
+                countryMap.values
+                    .where((country) => kPeppolCountries.contains(country.id))
+                    .toList()
+                  ..sort((a, b) => a.name.compareTo(b.name));
 
             return AlertDialog(
               title: Text(widget.localization.lookup('add_tax_identifier')),
@@ -1111,10 +1148,12 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
                       setDialogState(() => selectedCountryId = value ?? '');
                     },
                     items: peppolCountryList
-                        .map((country) => DropdownMenuItem<String>(
-                              value: country.id,
-                              child: Text(country.name),
-                            ))
+                        .map(
+                          (country) => DropdownMenuItem<String>(
+                            value: country.id,
+                            child: Text(country.name),
+                          ),
+                        )
                         .toList(),
                   ),
                   SizedBox(height: 16),
@@ -1137,25 +1176,27 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
                       return;
                     }
                     Navigator.pop(context);
-                    final url = state.credentials.url +
+                    final url =
+                        state.credentials.url +
                         '/einvoice/peppol/add_additional_legal_identifier';
                     widget.store.dispatch(StartSaving());
                     WebClient()
                         .post(
-                      url,
-                      state.credentials.token,
-                      data: json.encode({
-                        'country': selectedCountryId,
-                        'vat_number': vatNumber,
-                      }),
-                    )
+                          url,
+                          state.credentials.token,
+                          data: json.encode({
+                            'country': selectedCountryId,
+                            'vat_number': vatNumber,
+                          }),
+                        )
                         .then((_) {
-                      widget.store.dispatch(StopSaving());
-                      widget.store.dispatch(RefreshData());
-                    }).catchError((error) {
-                      widget.store.dispatch(StopSaving());
-                      showErrorDialog(message: '$error');
-                    });
+                          widget.store.dispatch(StopSaving());
+                          widget.store.dispatch(RefreshData());
+                        })
+                        .catchError((error) {
+                          widget.store.dispatch(StopSaving());
+                          showErrorDialog(message: '$error');
+                        });
                   },
                   child: Text(widget.localization.save.toUpperCase()),
                 ),

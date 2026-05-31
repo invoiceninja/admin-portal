@@ -49,8 +49,11 @@ class _TimePickerState extends State<TimePicker> {
   void didChangeDependencies() {
     if (widget.selectedDateTime != null) {
       final formatted = formatDate(
-          widget.selectedDateTime!.toIso8601String(), context,
-          showDate: false, showTime: true);
+        widget.selectedDateTime!.toIso8601String(),
+        context,
+        showDate: false,
+        showTime: true,
+      );
 
       _textController.text = formatted;
     }
@@ -61,8 +64,11 @@ class _TimePickerState extends State<TimePicker> {
   void _onFoucsChanged() {
     if (!_focusNode.hasFocus && widget.selectedDateTime != null) {
       _textController.text = formatDate(
-          widget.selectedDateTime!.toIso8601String(), context,
-          showDate: false, showTime: true);
+        widget.selectedDateTime!.toIso8601String(),
+        context,
+        showDate: false,
+        showTime: true,
+      );
 
       setState(() {
         _pendingValue = null;
@@ -93,8 +99,9 @@ class _TimePickerState extends State<TimePicker> {
         final enableMilitaryTime =
             store.state.company.settings.enableMilitaryTime;
         return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(alwaysUse24HourFormat: enableMilitaryTime),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(alwaysUse24HourFormat: enableMilitaryTime),
           child: child!,
         );
       },
@@ -104,8 +111,11 @@ class _TimePickerState extends State<TimePicker> {
       final dateTime = convertTimeOfDayToDateTime(selectedTime);
 
       _textController.text = formatDate(
-          dateTime.toIso8601String(), navigatorKey.currentContext,
-          showTime: true, showDate: false);
+        dateTime.toIso8601String(),
+        navigatorKey.currentContext,
+        showTime: true,
+        showDate: false,
+      );
 
       widget.onSelected(dateTime.toLocal());
     }
@@ -143,8 +153,10 @@ class _TimePickerState extends State<TimePicker> {
           value = value.replaceAll(RegExp('[^\\d\:]'), '');
           value = value.toLowerCase().replaceAll('.', ':');
 
-          final parts =
-              value.split(':').where((element) => element.isNotEmpty).toList();
+          final parts = value
+              .split(':')
+              .where((element) => element.isNotEmpty)
+              .toList();
           String dateTimeStr = '';
 
           if (parts.length == 1) {
@@ -207,8 +219,11 @@ class _TimePickerState extends State<TimePicker> {
 
             setState(() {
               _pendingValue = formatDate(
-                  selectedDate.toIso8601String(), context,
-                  showTime: true, showDate: false);
+                selectedDate.toIso8601String(),
+                context,
+                showTime: true,
+                showDate: false,
+              );
             });
           }
         }

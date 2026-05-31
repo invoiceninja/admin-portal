@@ -8,9 +8,9 @@ part 'datetime_format_model.g.dart';
 abstract class DatetimeFormatListResponse
     implements
         Built<DatetimeFormatListResponse, DatetimeFormatListResponseBuilder> {
-  factory DatetimeFormatListResponse(
-          [void updates(DatetimeFormatListResponseBuilder b)]) =
-      _$DatetimeFormatListResponse;
+  factory DatetimeFormatListResponse([
+    void updates(DatetimeFormatListResponseBuilder b),
+  ]) = _$DatetimeFormatListResponse;
   DatetimeFormatListResponse._();
 
   @override
@@ -26,9 +26,9 @@ abstract class DatetimeFormatListResponse
 abstract class DatetimeFormatItemResponse
     implements
         Built<DatetimeFormatItemResponse, DatetimeFormatItemResponseBuilder> {
-  factory DatetimeFormatItemResponse(
-          [void updates(DatetimeFormatItemResponseBuilder b)]) =
-      _$DatetimeFormatItemResponse;
+  factory DatetimeFormatItemResponse([
+    void updates(DatetimeFormatItemResponseBuilder b),
+  ]) = _$DatetimeFormatItemResponse;
   DatetimeFormatItemResponse._();
 
   @override
@@ -49,10 +49,7 @@ class DatetimeFormatFields {
 abstract class DatetimeFormatEntity
     implements Built<DatetimeFormatEntity, DatetimeFormatEntityBuilder> {
   factory DatetimeFormatEntity() {
-    return _$DatetimeFormatEntity._(
-      id: '',
-      format: '',
-    );
+    return _$DatetimeFormatEntity._(id: '', format: '');
   }
   DatetimeFormatEntity._();
 

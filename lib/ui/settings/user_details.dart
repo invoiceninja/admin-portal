@@ -45,10 +45,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class UserDetails extends StatefulWidget {
-  const UserDetails({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const UserDetails({Key? key, required this.viewModel}) : super(key: key);
 
   final UserDetailsVM viewModel;
 
@@ -58,8 +55,9 @@ class UserDetails extends StatefulWidget {
 
 class _UserDetailsState extends State<UserDetails>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_userDetails');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_userDetails',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController? _controller;
 
@@ -81,7 +79,10 @@ class _UserDetailsState extends State<UserDetails>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -112,8 +113,9 @@ class _UserDetailsState extends State<UserDetails>
       _passwordController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final user = widget.viewModel.state.user;
     _firstNameController.text = user.firstName;
@@ -122,19 +124,22 @@ class _UserDetailsState extends State<UserDetails>
     _phoneController.text = user.phone;
     _passwordController.text = user.password;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
 
   void _onChanged() {
-    final user = widget.viewModel.user.rebuild((b) => b
-      ..firstName = _firstNameController.text.trim()
-      ..lastName = _lastNameController.text.trim()
-      ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim()
-      ..password = _passwordController.text.trim());
+    final user = widget.viewModel.user.rebuild(
+      (b) => b
+        ..firstName = _firstNameController.text.trim()
+        ..lastName = _lastNameController.text.trim()
+        ..email = _emailController.text.trim()
+        ..phone = _phoneController.text.trim()
+        ..password = _passwordController.text.trim(),
+    );
     if (user != widget.viewModel.user) {
       _debouncer.run(() {
         widget.viewModel.onChanged(user);
@@ -168,7 +173,8 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user.isConnectedToEmail ||
+        onPressed:
+            state.user.isConnectedToEmail ||
                 state.user.isConnectedToApple ||
                 state.user.isConnectedToMicrosoft
             ? null
@@ -222,7 +228,8 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user.isConnectedToEmail ||
+        onPressed:
+            state.user.isConnectedToEmail ||
                 state.user.isConnectedToGoogle ||
                 state.user.isConnectedToApple
             ? null
@@ -262,7 +269,8 @@ class _UserDetailsState extends State<UserDetails>
                   viewModel.onDisconnectMicrosoftEmailPressed(context);
                 } else {
                   launchUrl(
-                      Uri.parse('${state.account.defaultUrl}/auth/microsoft'));
+                    Uri.parse('${state.account.defaultUrl}/auth/microsoft'),
+                  );
                 }
               },
       ),
@@ -277,8 +285,8 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user.isConnectedToGoogle ||
-                state.user.isConnectedToMicrosoft
+        onPressed:
+            state.user.isConnectedToGoogle || state.user.isConnectedToMicrosoft
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -301,12 +309,8 @@ class _UserDetailsState extends State<UserDetails>
       appBarBottom: TabBar(
         controller: _controller,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.notifications,
-          ),
+          Tab(text: localization.details),
+          Tab(text: localization.notifications),
         ],
       ),
       body: AppTabForm(
@@ -317,50 +321,56 @@ class _UserDetailsState extends State<UserDetails>
           ScrollableListView(
             primary: true,
             children: <Widget>[
-              FormCard(children: <Widget>[
-                DecoratedFormField(
-                  label: localization.firstName,
-                  controller: _firstNameController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterAFirstName
-                      : null,
-                  onSavePressed: _onSavePressed,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.words,
-                ),
-                DecoratedFormField(
-                  label: localization.lastName,
-                  controller: _lastNameController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterALastName
-                      : null,
-                  onSavePressed: _onSavePressed,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.words,
-                ),
-                DecoratedFormField(
-                  label: localization.email,
-                  controller: _emailController,
-                  validator: (val) => val.isEmpty || val.trim().isEmpty
-                      ? localization.pleaseEnterYourEmail
-                      : null,
-                  onSavePressed: _onSavePressed,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                DecoratedFormField(
-                  label: localization.phone,
-                  controller: _phoneController,
-                  onSavePressed: _onSavePressed,
-                  keyboardType: TextInputType.phone,
-                ),
-                PasswordFormField(
-                  controller: _passwordController,
-                  onSavePressed: _onSavePressed,
-                ),
-              ]),
+              FormCard(
+                children: <Widget>[
+                  DecoratedFormField(
+                    label: localization.firstName,
+                    controller: _firstNameController,
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
+                        ? localization.pleaseEnterAFirstName
+                        : null,
+                    onSavePressed: _onSavePressed,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                  DecoratedFormField(
+                    label: localization.lastName,
+                    controller: _lastNameController,
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
+                        ? localization.pleaseEnterALastName
+                        : null,
+                    onSavePressed: _onSavePressed,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                  DecoratedFormField(
+                    label: localization.email,
+                    controller: _emailController,
+                    validator: (val) => val.isEmpty || val.trim().isEmpty
+                        ? localization.pleaseEnterYourEmail
+                        : null,
+                    onSavePressed: _onSavePressed,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  DecoratedFormField(
+                    label: localization.phone,
+                    controller: _phoneController,
+                    onSavePressed: _onSavePressed,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  PasswordFormField(
+                    controller: _passwordController,
+                    onSavePressed: _onSavePressed,
+                  ),
+                ],
+              ),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 18, top: 20, right: 18, bottom: 10),
+                  left: 18,
+                  top: 20,
+                  right: 18,
+                  bottom: 10,
+                ),
                 child: Row(
                   children: [
                     if (!kReleaseMode || !isDesktopOS()) ...[
@@ -387,7 +397,7 @@ class _UserDetailsState extends State<UserDetails>
                         SizedBox(width: kTableColumnGap),
                         if (kIsWeb) microsoftButton else gmailButton,
                         SizedBox(width: kTableColumnGap),
-                      ]
+                      ],
                     ],
                     Expanded(
                       child: OutlinedButton(
@@ -401,7 +411,8 @@ class _UserDetailsState extends State<UserDetails>
                         onPressed: () async {
                           if (state.settingsUIState.isChanged) {
                             showMessageDialog(
-                                message: localization.errorUnsavedChanges);
+                              message: localization.errorUnsavedChanges,
+                            );
                             return;
                           }
 
@@ -411,18 +422,19 @@ class _UserDetailsState extends State<UserDetails>
                             if (state.user.phone.isEmpty ||
                                 user.phone.isEmpty) {
                               showMessageDialog(
-                                  message:
-                                      localization.enterPhoneToEnableTwoFactor);
+                                message:
+                                    localization.enterPhoneToEnableTwoFactor,
+                              );
                               return;
                             }
 
                             if (state.isHosted && !state.user.phoneVerified) {
                               final bool? phoneVerified =
                                   await showDialog<bool>(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    UserSmsVerification(),
-                              );
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        UserSmsVerification(),
+                                  );
 
                               if (phoneVerified == true) {
                                 showDialog<void>(
@@ -452,27 +464,36 @@ class _UserDetailsState extends State<UserDetails>
                     labelText: localization.accentColor,
                     initialValue: user.userCompany!.settings.accentColor,
                     onSelected: (value) {
-                      widget.viewModel.onChanged(user.rebuild((b) => b
-                        ..userCompany.settings.accentColor =
-                            value ?? '#ffffff'));
+                      widget.viewModel.onChanged(
+                        user.rebuild(
+                          (b) => b
+                            ..userCompany.settings.accentColor =
+                                value ?? '#ffffff',
+                        ),
+                      );
                     },
                   ),
                   EntityDropdown(
                     entityType: EntityType.language,
-                    entityList:
-                        memoizedLanguageList(state.staticState.languageMap),
-                    labelText: localization.language +
+                    entityList: memoizedLanguageList(
+                      state.staticState.languageMap,
+                    ),
+                    labelText:
+                        localization.language +
                         (user.languageId.isNotEmpty
                             ? ''
                             : ' - ' +
-                                state
-                                    .staticState
-                                    .languageMap[state.company.languageId]!
-                                    .name),
+                                  state
+                                      .staticState
+                                      .languageMap[state.company.languageId]!
+                                      .name),
                     entityId: user.languageId,
                     onSelected: (SelectableEntity? language) =>
-                        viewModel.onChanged(user.rebuild(
-                            (b) => b..languageId = language?.id ?? '')),
+                        viewModel.onChanged(
+                          user.rebuild(
+                            (b) => b..languageId = language?.id ?? '',
+                          ),
+                        ),
                   ),
                   if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
@@ -480,8 +501,12 @@ class _UserDetailsState extends State<UserDetails>
                       labelText: localization.yearsDataShown,
                       value: user.userCompany!.settings.numberYearsActive,
                       onChanged: (dynamic value) {
-                        widget.viewModel.onChanged(user.rebuild((b) =>
-                            b..userCompany.settings.numberYearsActive = value));
+                        widget.viewModel.onChanged(
+                          user.rebuild(
+                            (b) => b
+                              ..userCompany.settings.numberYearsActive = value,
+                          ),
+                        );
                       },
                       items: [
                         DropdownMenuItem(
@@ -489,11 +514,13 @@ class _UserDetailsState extends State<UserDetails>
                           value: 0,
                         ),
                         ...List<int>.generate(10, (i) => i + 1)
-                            .map((value) => DropdownMenuItem(
-                                  child: Text('$value'),
-                                  value: value,
-                                ))
-                            .toList()
+                            .map(
+                              (value) => DropdownMenuItem(
+                                child: Text('$value'),
+                                value: value,
+                              ),
+                            )
+                            .toList(),
                       ],
                     ),
                     SizedBox(height: 8),
@@ -502,11 +529,15 @@ class _UserDetailsState extends State<UserDetails>
                       helpLabel: localization.includeDeletedClientsHelp,
                       value: user.userCompany!.settings.includeDeletedClients,
                       onChanged: (value) {
-                        widget.viewModel.onChanged(user.rebuild((b) => b
-                          ..userCompany.settings.includeDeletedClients =
-                              value));
+                        widget.viewModel.onChanged(
+                          user.rebuild(
+                            (b) => b
+                              ..userCompany.settings.includeDeletedClients =
+                                  value,
+                          ),
+                        );
                       },
-                    )
+                    ),
                   ],
                 ],
               ),
@@ -522,31 +553,43 @@ class _UserDetailsState extends State<UserDetails>
                     helpLabel: localization.userLoggedInNotificationHelp,
                     value: user.userLoggedInNotification,
                     onChanged: (value) {
-                      widget.viewModel.onChanged(user
-                          .rebuild((b) => b..userLoggedInNotification = value));
+                      widget.viewModel.onChanged(
+                        user.rebuild(
+                          (b) => b..userLoggedInNotification = value,
+                        ),
+                      );
                     },
                   ),
                   BoolDropdownButton(
                     label: localization.taskAssignedNotification,
                     helpLabel: localization.taskAssignedNotificationHelp,
                     value: user
-                        .userCompany!.notifications[kNotificationChannelEmail]!
+                        .userCompany!
+                        .notifications[kNotificationChannelEmail]!
                         .contains(kNotificationsTaskAssigned),
                     onChanged: (value) {
-                      final values = user.userCompany!
+                      final values = user
+                          .userCompany!
                           .notifications[kNotificationChannelEmail]!;
                       BuiltList<String> updatedValues;
                       if (value == true) {
-                        updatedValues = values
-                            .rebuild((b) => b..add(kNotificationsTaskAssigned));
+                        updatedValues = values.rebuild(
+                          (b) => b..add(kNotificationsTaskAssigned),
+                        );
                       } else {
                         updatedValues = values.rebuild(
-                            (b) => b..remove(kNotificationsTaskAssigned));
+                          (b) => b..remove(kNotificationsTaskAssigned),
+                        );
                       }
 
-                      widget.viewModel.onChanged(user.rebuild((b) => b
-                        ..userCompany.notifications[kNotificationChannelEmail] =
-                            updatedValues));
+                      widget.viewModel.onChanged(
+                        user.rebuild(
+                          (b) => b
+                            ..userCompany
+                                    .notifications[kNotificationChannelEmail] =
+                                updatedValues,
+                        ),
+                      );
                     },
                   ),
                   BoolDropdownButton(
@@ -554,46 +597,65 @@ class _UserDetailsState extends State<UserDetails>
                     helpLabel:
                         localization.disableRecurringPaymentNotificationHelp,
                     value: user
-                        .userCompany!.notifications[kNotificationChannelEmail]!
+                        .userCompany!
+                        .notifications[kNotificationChannelEmail]!
                         .contains(kNotificationsDisableRecurringPayment),
                     onChanged: (value) {
-                      final values = user.userCompany!
+                      final values = user
+                          .userCompany!
                           .notifications[kNotificationChannelEmail]!;
                       BuiltList<String> updatedValues;
                       if (value == true) {
-                        updatedValues = values.rebuild((b) =>
-                            b..add(kNotificationsDisableRecurringPayment));
+                        updatedValues = values.rebuild(
+                          (b) => b..add(kNotificationsDisableRecurringPayment),
+                        );
                       } else {
-                        updatedValues = values.rebuild((b) =>
-                            b..remove(kNotificationsDisableRecurringPayment));
+                        updatedValues = values.rebuild(
+                          (b) =>
+                              b..remove(kNotificationsDisableRecurringPayment),
+                        );
                       }
 
-                      widget.viewModel.onChanged(user.rebuild((b) => b
-                        ..userCompany.notifications[kNotificationChannelEmail] =
-                            updatedValues));
+                      widget.viewModel.onChanged(
+                        user.rebuild(
+                          (b) => b
+                            ..userCompany
+                                    .notifications[kNotificationChannelEmail] =
+                                updatedValues,
+                        ),
+                      );
                     },
                   ),
                   BoolDropdownButton(
                     label: localization.eInvoiceReceivedNotification,
                     helpLabel: localization.eInvoiceReceivedNotificationHelp,
                     value: user
-                        .userCompany!.notifications[kNotificationChannelEmail]!
+                        .userCompany!
+                        .notifications[kNotificationChannelEmail]!
                         .contains(kNotificationsEInvoiceReceived),
                     onChanged: (value) {
-                      final values = user.userCompany!
+                      final values = user
+                          .userCompany!
                           .notifications[kNotificationChannelEmail]!;
                       BuiltList<String> updatedValues;
                       if (value == true) {
                         updatedValues = values.rebuild(
-                            (b) => b..add(kNotificationsEInvoiceReceived));
+                          (b) => b..add(kNotificationsEInvoiceReceived),
+                        );
                       } else {
                         updatedValues = values.rebuild(
-                            (b) => b..remove(kNotificationsEInvoiceReceived));
+                          (b) => b..remove(kNotificationsEInvoiceReceived),
+                        );
                       }
 
-                      widget.viewModel.onChanged(user.rebuild((b) => b
-                        ..userCompany.notifications[kNotificationChannelEmail] =
-                            updatedValues));
+                      widget.viewModel.onChanged(
+                        user.rebuild(
+                          (b) => b
+                            ..userCompany
+                                    .notifications[kNotificationChannelEmail] =
+                                updatedValues,
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -601,12 +663,18 @@ class _UserDetailsState extends State<UserDetails>
               NotificationSettings(
                 user: user,
                 onChanged: (channel, options) {
-                  viewModel.onChanged(user.rebuild((b) => b
-                    ..userCompany.notifications[channel] = BuiltList(options)));
+                  viewModel.onChanged(
+                    user.rebuild(
+                      (b) => b
+                        ..userCompany.notifications[channel] = BuiltList(
+                          options,
+                        ),
+                    ),
+                  );
                 },
               ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -631,8 +699,9 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   bool _isLoading = true;
   final _webClient = WebClient();
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_twoFactor');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_twoFactor',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   @override
@@ -642,18 +711,23 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
 
-    _webClient.get(url, credentials.token).then((dynamic data) {
-      final response =
-          serializers.deserializeWith(UserTwoFactorResponse.serializer, data);
-      setState(() {
-        _isLoading = false;
-        _qrCode = response!.data.qrCode;
-        _secret = response.data.secret;
-      });
-    }).catchError((dynamic error) {
-      Navigator.of(navigatorKey.currentContext!).pop();
-      showErrorDialog(message: error);
-    });
+    _webClient
+        .get(url, credentials.token)
+        .then((dynamic data) {
+          final response = serializers.deserializeWith(
+            UserTwoFactorResponse.serializer,
+            data,
+          );
+          setState(() {
+            _isLoading = false;
+            _qrCode = response!.data.qrCode;
+            _secret = response.data.secret;
+          });
+        })
+        .catchError((dynamic error) {
+          Navigator.of(navigatorKey.currentContext!).pop();
+          showErrorDialog(message: error);
+        });
   }
 
   @override
@@ -679,22 +753,29 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     setState(() => _isLoading = true);
 
     _webClient
-        .post(url, credentials.token,
-            data: json.encode({
-              'secret': _secret,
-              'one_time_password': _oneTimePassword,
-            }))
+        .post(
+          url,
+          credentials.token,
+          data: json.encode({
+            'secret': _secret,
+            'one_time_password': _oneTimePassword,
+          }),
+        )
         .then((dynamic data) {
-      setState(() => _isLoading = false);
-      showToast(
-          AppLocalization.of(navigatorKey.currentContext!)!.enabledTwoFactor);
-      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-      store.dispatch(RefreshData());
-      Navigator.of(navigatorKey.currentContext!).pop();
-    }).catchError((Object error) {
-      setState(() => _isLoading = false);
-      showErrorDialog(message: '$error');
-    });
+          setState(() => _isLoading = false);
+          showToast(
+            AppLocalization.of(navigatorKey.currentContext!)!.enabledTwoFactor,
+          );
+          final store = StoreProvider.of<AppState>(
+            navigatorKey.currentContext!,
+          );
+          store.dispatch(RefreshData());
+          Navigator.of(navigatorKey.currentContext!).pop();
+        })
+        .catchError((Object error) {
+          setState(() => _isLoading = false);
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -749,8 +830,11 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                           width: 100,
                           child: TextButton(
                             onPressed: () {
-                              launchUrl(Uri.parse(
-                                  'https://github.com/antonioribeiro/google2fa#google-authenticator-apps'));
+                              launchUrl(
+                                Uri.parse(
+                                  'https://github.com/antonioribeiro/google2fa#google-authenticator-apps',
+                                ),
+                              );
                             },
                             child: Text(localzation.learnMore),
                           ),
@@ -791,17 +875,13 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(
-              localzation.cancel.toUpperCase(),
-            ),
+            child: Text(localzation.cancel.toUpperCase()),
           ),
           TextButton(
             onPressed: () => _onSavePressed(),
-            child: Text(
-              localzation.save.toUpperCase(),
-            ),
+            child: Text(localzation.save.toUpperCase()),
           ),
-        ]
+        ],
       ],
     );
   }

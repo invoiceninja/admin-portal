@@ -37,9 +37,9 @@ class UserDetailsScreen extends StatelessWidget {
       builder: (context, viewModel) {
         final state = viewModel.state;
         return UserDetails(
-            key: ValueKey(
-                state.settingsUIState.updatedAt + state.user.updatedAt),
-            viewModel: viewModel);
+          key: ValueKey(state.settingsUIState.updatedAt + state.user.updatedAt),
+          viewModel: viewModel,
+        );
       },
     );
   }
@@ -103,192 +103,222 @@ class UserDetailsVM {
       },
       onDisconnectMicrosoftEmailPressed: (context) {
         confirmCallback(
-            context: context,
-            callback: (_) {
-              passwordCallback(
-                  context: context,
-                  callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        AppLocalization.of(context)!.disconnectedEmail);
-                    store.dispatch(
-                      DisconnectOAuthMailerRequest(
-                          user: state.user,
-                          completer: completer,
-                          password: password,
-                          idToken: idToken),
-                    );
-                  });
-            });
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                final completer = snackBarCompleter<Null>(
+                  AppLocalization.of(context)!.disconnectedEmail,
+                );
+                store.dispatch(
+                  DisconnectOAuthMailerRequest(
+                    user: state.user,
+                    completer: completer,
+                    password: password,
+                    idToken: idToken,
+                  ),
+                );
+              },
+            );
+          },
+        );
       },
       onDisconnectGmailPressed: (context) {
         confirmCallback(
-            context: context,
-            callback: (_) {
-              passwordCallback(
-                  context: context,
-                  callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        AppLocalization.of(context)!.disconnectedGmail);
-                    store.dispatch(
-                      DisconnectOAuthMailerRequest(
-                          user: state.user,
-                          completer: completer,
-                          password: password,
-                          idToken: idToken),
-                    );
-                  });
-            });
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                final completer = snackBarCompleter<Null>(
+                  AppLocalization.of(context)!.disconnectedGmail,
+                );
+                store.dispatch(
+                  DisconnectOAuthMailerRequest(
+                    user: state.user,
+                    completer: completer,
+                    password: password,
+                    idToken: idToken,
+                  ),
+                );
+              },
+            );
+          },
+        );
       },
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.disabledTwoFactor);
+          AppLocalization.of(context)!.disabledTwoFactor,
+        );
 
         confirmCallback(
-            context: context,
-            callback: (_) {
-              passwordCallback(
-                  context: context,
-                  callback: (password, idToken) {
-                    store.dispatch(
-                      DisableTwoFactorRequest(
-                        completer: completer,
-                        password: password,
-                        idToken: idToken,
-                      ),
-                    );
-                  });
-            });
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                store.dispatch(
+                  DisableTwoFactorRequest(
+                    completer: completer,
+                    password: password,
+                    idToken: idToken,
+                  ),
+                );
+              },
+            );
+          },
+        );
       },
       onDisconnectGooglePressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
+            message: AppLocalization.of(context)!.pleaseFirstSetAPassword,
+          );
           return;
         }
 
         confirmCallback(
-            context: context,
-            callback: (_) {
-              passwordCallback(
-                  context: context,
-                  skipOAuth: true,
-                  callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        AppLocalization.of(context)!.disconnectedGoogle);
-                    completer.future.then<Null>((_) {
-                      GoogleOAuth.disconnect();
-                    });
-                    store.dispatch(
-                      DisconnecOAuthUserRequest(
-                        user: state.user,
-                        password: password,
-                        idToken: idToken,
-                        completer: completer,
-                      ),
-                    );
-                  });
-            });
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              skipOAuth: true,
+              callback: (password, idToken) {
+                final completer = snackBarCompleter<Null>(
+                  AppLocalization.of(context)!.disconnectedGoogle,
+                );
+                completer.future.then<Null>((_) {
+                  GoogleOAuth.disconnect();
+                });
+                store.dispatch(
+                  DisconnecOAuthUserRequest(
+                    user: state.user,
+                    password: password,
+                    idToken: idToken,
+                    completer: completer,
+                  ),
+                );
+              },
+            );
+          },
+        );
       },
       onConnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.connectedGoogle);
+          AppLocalization.of(context)!.connectedGoogle,
+        );
 
         passwordCallback(
-            context: context,
-            callback: (password, idToken) async {
-              try {
-                final signedIn =
-                    await GoogleOAuth.signUp((idToken, accessToken) {
-                  if (accessToken.isEmpty) {
-                    GoogleOAuth.signOut();
-                    showErrorDialog(
-                        message: AppLocalization.of(context)!
-                            .anErrorOccurredTryAgain);
-                  } else {
-                    store.dispatch(
-                      ConnecOAuthUserRequest(
-                        provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-                        password: password,
-                        idToken: idToken,
-                        accessToken: accessToken,
-                        completer: completer,
-                      ),
-                    );
-                  }
-                });
-                if (!signedIn) {
+          context: context,
+          callback: (password, idToken) async {
+            try {
+              final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
+                if (accessToken.isEmpty) {
+                  GoogleOAuth.signOut();
                   showErrorDialog(
-                      message: AppLocalization.of(navigatorKey.currentContext!)!
-                          .anErrorOccurredTryAgain);
+                    message: AppLocalization.of(
+                      context,
+                    )!.anErrorOccurredTryAgain,
+                  );
+                } else {
+                  store.dispatch(
+                    ConnecOAuthUserRequest(
+                      provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                      password: password,
+                      idToken: idToken,
+                      accessToken: accessToken,
+                      completer: completer,
+                    ),
+                  );
                 }
-              } catch (error) {
-                showErrorDialog(message: '$error');
+              });
+              if (!signedIn) {
+                showErrorDialog(
+                  message: AppLocalization.of(
+                    navigatorKey.currentContext!,
+                  )!.anErrorOccurredTryAgain,
+                );
               }
-            });
+            } catch (error) {
+              showErrorDialog(message: '$error');
+            }
+          },
+        );
       },
       onDisconnectMicrosoftPressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
+            message: AppLocalization.of(context)!.pleaseFirstSetAPassword,
+          );
           return;
         }
 
         confirmCallback(
-            context: context,
-            skip: true,
-            callback: (_) {
-              passwordCallback(
-                  context: context,
-                  callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        AppLocalization.of(context)!.disconnectedMicrosoft);
-                    store.dispatch(
-                      DisconnecOAuthUserRequest(
-                        user: state.user,
-                        password: password,
-                        idToken: idToken,
-                        completer: completer,
-                      ),
-                    );
-                  });
-            });
+          context: context,
+          skip: true,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                final completer = snackBarCompleter<Null>(
+                  AppLocalization.of(context)!.disconnectedMicrosoft,
+                );
+                store.dispatch(
+                  DisconnecOAuthUserRequest(
+                    user: state.user,
+                    password: password,
+                    idToken: idToken,
+                    completer: completer,
+                  ),
+                );
+              },
+            );
+          },
+        );
       },
       onDisconnectApplePressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
+            message: AppLocalization.of(context)!.pleaseFirstSetAPassword,
+          );
           return;
         }
 
         confirmCallback(
-            context: context,
-            callback: (_) {
-              passwordCallback(
-                  context: context,
-                  skipOAuth: true,
-                  callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        AppLocalization.of(context)!.disconnectedApple);
-                    store.dispatch(
-                      DisconnecOAuthUserRequest(
-                        user: state.user,
-                        password: password,
-                        idToken: idToken,
-                        completer: completer,
-                      ),
-                    );
-                  });
-            });
+          context: context,
+          callback: (_) {
+            passwordCallback(
+              context: context,
+              skipOAuth: true,
+              callback: (password, idToken) {
+                final completer = snackBarCompleter<Null>(
+                  AppLocalization.of(context)!.disconnectedApple,
+                );
+                store.dispatch(
+                  DisconnecOAuthUserRequest(
+                    user: state.user,
+                    password: password,
+                    idToken: idToken,
+                    completer: completer,
+                  ),
+                );
+              },
+            );
+          },
+        );
       },
       onConnectMicrosoftPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.connectedMicrosoft);
+          AppLocalization.of(context)!.connectedMicrosoft,
+        );
 
         passwordCallback(
-            context: context,
-            callback: (password, idToken) async {
-              try {
-                WebUtils.microsoftLogin((idToken, accessToken) {
+          context: context,
+          callback: (password, idToken) async {
+            try {
+              WebUtils.microsoftLogin(
+                (idToken, accessToken) {
                   store.dispatch(
                     ConnecOAuthUserRequest(
                       provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
@@ -298,13 +328,16 @@ class UserDetailsVM {
                       completer: completer,
                     ),
                   );
-                }, (dynamic error) {
+                },
+                (dynamic error) {
                   showErrorDialog(message: error);
-                });
-              } catch (error) {
-                showErrorDialog(message: '$error');
-              }
-            });
+                },
+              );
+            } catch (error) {
+              showErrorDialog(message: '$error');
+            }
+          },
+        );
       },
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
@@ -321,50 +354,58 @@ class UserDetailsVM {
                     newUserSettings.includeDeletedClients ||
                 origUserSettings.numberYearsActive !=
                     newUserSettings.numberYearsActive) {
-              store.dispatch(RefreshData(
-                completer: snackBarCompleter<Null>(localization.refreshComplete,
-                    shouldPop: true),
-                clearData: true,
-                includeStatic: true,
-              ));
+              store.dispatch(
+                RefreshData(
+                  completer: snackBarCompleter<Null>(
+                    localization.refreshComplete,
+                    shouldPop: true,
+                  ),
+                  clearData: true,
+                  includeStatic: true,
+                ),
+              );
 
               await showDialog<AlertDialog>(
-                  context: navigatorKey.currentContext!,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) => SimpleDialog(
-                        children: <Widget>[LoadingDialog()],
-                      ));
+                context: navigatorKey.currentContext!,
+                barrierDismissible: false,
+                builder: (BuildContext context) =>
+                    SimpleDialog(children: <Widget>[LoadingDialog()]),
+              );
             } else if (origUser.languageId != newUser.languageId) {
-              store.dispatch(RefreshData(
-                includeStatic: true,
-                completer: Completer<dynamic>()
-                  ..future.then((dynamic value) => appBuilder!.rebuild()),
-              ));
+              store.dispatch(
+                RefreshData(
+                  includeStatic: true,
+                  completer: Completer<dynamic>()
+                    ..future.then((dynamic value) => appBuilder!.rebuild()),
+                ),
+              );
             }
 
             appBuilder!.rebuild();
           });
 
           confirmCallback(
-              context: context,
-              message: localization.changingPhoneDisablesTwoFactor,
-              skip: state.user.phone ==
-                      state.uiState.settingsUIState.user.phone ||
-                  !state.user.isTwoFactorEnabled,
-              callback: (_) {
-                passwordCallback(
-                    context: context,
-                    callback: (password, idToken) {
-                      store.dispatch(
-                        SaveAuthUserRequest(
-                          completer: completer,
-                          user: store.state.uiState.settingsUIState.user,
-                          password: password,
-                          idToken: idToken,
-                        ),
-                      );
-                    });
-              });
+            context: context,
+            message: localization.changingPhoneDisablesTwoFactor,
+            skip:
+                state.user.phone == state.uiState.settingsUIState.user.phone ||
+                !state.user.isTwoFactorEnabled,
+            callback: (_) {
+              passwordCallback(
+                context: context,
+                callback: (password, idToken) {
+                  store.dispatch(
+                    SaveAuthUserRequest(
+                      completer: completer,
+                      user: store.state.uiState.settingsUIState.user,
+                      password: password,
+                      idToken: idToken,
+                    ),
+                  );
+                },
+              );
+            },
+          );
         });
       },
     );

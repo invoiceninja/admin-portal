@@ -78,32 +78,44 @@ class TransactionRuleEditVM {
           final localization = AppLocalization.of(context);
           final Completer<TransactionRuleEntity> completer =
               new Completer<TransactionRuleEntity>();
-          store.dispatch(SaveTransactionRuleRequest(
-              completer: completer, transactionRule: transactionRule));
-          return completer.future.then((savedTransactionRule) {
-            showToast(transactionRule!.isNew
-                ? localization!.createdTransactionRule
-                : localization!.updatedTransactionRule);
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                  UpdateCurrentRoute(TransactionRuleViewScreen.route));
-              if (transactionRule.isNew) {
-                Navigator.of(navigatorKey.currentContext!)
-                    .pushReplacementNamed(TransactionRuleViewScreen.route);
-              } else {
-                Navigator.of(navigatorKey.currentContext!)
-                    .pop(savedTransactionRule);
-              }
-            } else {
-              viewEntity(entity: savedTransactionRule, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          store.dispatch(
+            SaveTransactionRuleRequest(
+              completer: completer,
+              transactionRule: transactionRule,
+            ),
+          );
+          return completer.future
+              .then((savedTransactionRule) {
+                showToast(
+                  transactionRule!.isNew
+                      ? localization!.createdTransactionRule
+                      : localization!.updatedTransactionRule,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(TransactionRuleViewScreen.route),
+                  );
+                  if (transactionRule.isNew) {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pushReplacementNamed(TransactionRuleViewScreen.route);
+                  } else {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pop(savedTransactionRule);
+                  }
+                } else {
+                  viewEntity(entity: savedTransactionRule, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

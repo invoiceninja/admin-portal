@@ -48,10 +48,7 @@ abstract class IndustryEntity extends Object
     with SelectableEntity
     implements Built<IndustryEntity, IndustryEntityBuilder> {
   factory IndustryEntity() {
-    return _$IndustryEntity._(
-      id: '',
-      name: '',
-    );
+    return _$IndustryEntity._(id: '', name: '');
   }
   IndustryEntity._();
 

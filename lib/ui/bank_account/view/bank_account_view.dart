@@ -56,8 +56,9 @@ class _BankAccountViewState extends State<BankAccountView> {
                 child: AppButton(
                   label: localization.reconnect.toUpperCase(),
                   onPressed: () {
-                    handleBankAccountAction(
-                        context, [bankAccount], EntityAction.reconnect);
+                    handleBankAccountAction(context, [
+                      bankAccount,
+                    ], EntityAction.reconnect);
                   },
                   iconData: getEntityActionIcon(EntityAction.reconnect),
                 ),
@@ -71,8 +72,9 @@ class _BankAccountViewState extends State<BankAccountView> {
             entityType: EntityType.transaction,
             title: localization.transactions,
             subtitle: memoizedTransactionStatsForBankAccount(
-                    bankAccount.id, state.transactionState.map)
-                .present(localization.active, localization.archived),
+              bankAccount.id,
+              state.transactionState.map,
+            ).present(localization.active, localization.archived),
           ),
           FieldGrid({
             localization.type: toTitleCase(bankAccount.type),

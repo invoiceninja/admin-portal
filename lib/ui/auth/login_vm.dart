@@ -42,9 +42,7 @@ class LoginScreen extends StatelessWidget {
       body: StoreConnector<AppState, LoginVM>(
         converter: LoginVM.fromStore,
         builder: (context, viewModel) {
-          return LoginView(
-            viewModel: viewModel,
-          );
+          return LoginView(viewModel: viewModel);
         },
       ),
     );
@@ -80,7 +78,8 @@ class LoginVM {
     required String url,
     required String secret,
     required String oneTimePassword,
-  }) onLoginPressed;
+  })
+  onLoginPressed;
 
   final Function(
     BuildContext,
@@ -88,54 +87,77 @@ class LoginVM {
     required String email,
     required String url,
     required String secret,
-  }) onRecoverPressed;
+  })
+  onRecoverPressed;
 
   final Function(
     BuildContext,
     Completer<Null> completer, {
     required String email,
     required String password,
-  }) onSignUpPressed;
+  })
+  onSignUpPressed;
 
   final Function(
     BuildContext,
     Completer<Null> completer, {
     required String token,
-  }) onTokenLoginPressed;
+  })
+  onTokenLoginPressed;
 
-  final Function(BuildContext, Completer<Null> completer,
-      {String url, String secret, String oneTimePassword}) onGoogleLoginPressed;
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
+    String url,
+    String secret,
+    String oneTimePassword,
+  })
+  onGoogleLoginPressed;
   final Function(BuildContext, Completer<Null> completer, String url)
-      onGoogleSignUpPressed;
+  onGoogleSignUpPressed;
 
-  final Function(BuildContext, Completer<Null> completer,
-      {String url,
-      String secret,
-      String oneTimePassword}) onMicrosoftLoginPressed;
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
+    String url,
+    String secret,
+    String oneTimePassword,
+  })
+  onMicrosoftLoginPressed;
   final Function(BuildContext, Completer<Null> completer, String url)
-      onMicrosoftSignUpPressed;
+  onMicrosoftSignUpPressed;
 
-  final Function(BuildContext, Completer<Null> completer,
-      {String url, String secret, String oneTimePassword}) onAppleLoginPressed;
+  final Function(
+    BuildContext,
+    Completer<Null> completer, {
+    String url,
+    String secret,
+    String oneTimePassword,
+  })
+  onAppleLoginPressed;
   final Function(BuildContext, Completer<Null> completer, String url)
-      onAppleSignUpPressed;
+  onAppleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
     Null _handleLogin({required BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
-      final moduleLayout =
-          layout == AppLayout.desktop ? ModuleLayout.table : ModuleLayout.list;
-      store.dispatch(UpdateUserPreferences(
-        appLayout: layout,
-        moduleLayout: isSignUp ? moduleLayout : null,
-      ));
+      final moduleLayout = layout == AppLayout.desktop
+          ? ModuleLayout.table
+          : ModuleLayout.list;
+      store.dispatch(
+        UpdateUserPreferences(
+          appLayout: layout,
+          moduleLayout: isSignUp ? moduleLayout : null,
+        ),
+      );
       AppBuilder.of(context)!.rebuild();
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (layout == AppLayout.mobile) {
           if (isSignUp) {
             store.dispatch(
-                UpdateUserPreferences(moduleLayout: ModuleLayout.list));
+              UpdateUserPreferences(moduleLayout: ModuleLayout.list),
+            );
           }
           if (store.state.userCompany.canViewDashboard) {
             store.dispatch(ViewDashboard());
@@ -164,260 +186,321 @@ class LoginVM {
       state: store.state,
       isLoading: store.state.isLoading,
       authState: store.state.authState,
-      onGoogleLoginPressed: (
-        BuildContext context,
-        Completer<Null> completer, {
-        String url = '',
-        String secret = '',
-        String oneTimePassword = '',
-      }) async {
-        try {
-          await GoogleOAuth.signOut();
-          final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
-            if (accessToken.isEmpty) {
-              GoogleOAuth.signOut();
-              completer.completeError(
-                  AppLocalization.of(context)!.anErrorOccurredTryAgain);
-            } else {
-              store.dispatch(OAuthLoginRequest(
+      onGoogleLoginPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            String url = '',
+            String secret = '',
+            String oneTimePassword = '',
+          }) async {
+            try {
+              await GoogleOAuth.signOut();
+              final signedIn = await GoogleOAuth.signIn((idToken, accessToken) {
+                if (accessToken.isEmpty) {
+                  GoogleOAuth.signOut();
+                  completer.completeError(
+                    AppLocalization.of(context)!.anErrorOccurredTryAgain,
+                  );
+                } else {
+                  store.dispatch(
+                    OAuthLoginRequest(
+                      completer: completer,
+                      idToken: idToken,
+                      accessToken: accessToken,
+                      url: _formatApiUrl(url),
+                      secret: secret.trim(),
+                      platform: getPlatform(context),
+                      provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                      oneTimePassword: oneTimePassword,
+                    ),
+                  );
+                  completer.future.then<Null>(
+                    (_) => _handleLogin(context: navigatorKey.currentContext!),
+                  );
+                }
+              });
+              if (!signedIn) {
+                completer.completeError(
+                  AppLocalization.of(
+                    navigatorKey.currentContext!,
+                  )!.anErrorOccurredTryAgain,
+                );
+              }
+            } catch (error) {
+              completer.completeError(error);
+              print('## onGoogleLoginPressed: $error');
+            }
+          },
+      onGoogleSignUpPressed:
+          (BuildContext context, Completer<Null> completer, String url) async {
+            try {
+              await GoogleOAuth.signOut();
+              final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
+                if (accessToken.isEmpty) {
+                  GoogleOAuth.signOut();
+                  completer.completeError(
+                    AppLocalization.of(context)!.anErrorOccurredTryAgain,
+                  );
+                } else {
+                  store.dispatch(
+                    OAuthSignUpRequest(
+                      url: url,
+                      completer: completer,
+                      idToken: idToken,
+                      accessToken: accessToken,
+                      provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
+                    ),
+                  );
+                  completer.future.then<Null>(
+                    (_) => _handleLogin(
+                      context: navigatorKey.currentContext!,
+                      isSignUp: true,
+                    ),
+                  );
+                }
+              });
+              if (!signedIn) {
+                completer.completeError(
+                  AppLocalization.of(
+                    navigatorKey.currentContext!,
+                  )!.anErrorOccurredTryAgain,
+                );
+              }
+            } catch (error) {
+              completer.completeError(error);
+              print('## onGoogleSignUpPressed: $error');
+            }
+          },
+      onMicrosoftLoginPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            String url = '',
+            String secret = '',
+            String oneTimePassword = '',
+          }) async {
+            try {
+              WebUtils.microsoftLogin(
+                (idToken, accessToken) {
+                  store.dispatch(
+                    OAuthLoginRequest(
+                      completer: completer,
+                      idToken: idToken,
+                      accessToken: accessToken,
+                      url: _formatApiUrl(url),
+                      secret: secret.trim(),
+                      platform: getPlatform(context),
+                      provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+                      oneTimePassword: oneTimePassword,
+                    ),
+                  );
+                  completer.future.then<Null>(
+                    (_) => _handleLogin(context: navigatorKey.currentContext!),
+                  );
+                },
+                (dynamic error) {
+                  completer.completeError(error);
+                },
+              );
+            } catch (error) {
+              completer.completeError(error);
+              print('## onMicrosoftLoginPressed: $error');
+            }
+          },
+      onMicrosoftSignUpPressed:
+          (BuildContext context, Completer<Null> completer, String url) async {
+            try {
+              WebUtils.microsoftLogin(
+                (idToken, accessToken) {
+                  store.dispatch(
+                    OAuthSignUpRequest(
+                      url: url,
+                      completer: completer,
+                      idToken: idToken,
+                      provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
+                      accessToken: accessToken,
+                    ),
+                  );
+                  completer.future.then<Null>(
+                    (_) => _handleLogin(
+                      context: navigatorKey.currentContext!,
+                      isSignUp: true,
+                    ),
+                  );
+                },
+                (dynamic error) {
+                  completer.completeError(error);
+                },
+              );
+            } catch (error) {
+              completer.completeError(error);
+              print('## onMicrosoftSignUpPressed: $error');
+            }
+          },
+      onAppleLoginPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            String url = '',
+            String secret = '',
+            String oneTimePassword = '',
+          }) async {
+            try {
+              final credentials = await SignInWithApple.getAppleIDCredential(
+                scopes: [
+                  AppleIDAuthorizationScopes.email,
+                  AppleIDAuthorizationScopes.fullName,
+                ],
+                webAuthenticationOptions: WebAuthenticationOptions(
+                  clientId: kAppleOAuthClientId,
+                  redirectUri: Uri.parse(kAppleOAuthRedirectUrl),
+                ),
+              );
+
+              store.dispatch(
+                OAuthLoginRequest(
+                  completer: completer,
+                  url: _formatApiUrl(url),
+                  secret: secret.trim(),
+                  platform: getPlatform(navigatorKey.currentContext!),
+                  provider: UserEntity.OAUTH_PROVIDER_APPLE,
+                  oneTimePassword: oneTimePassword,
+                  email: credentials.email,
+                  authCode: credentials.authorizationCode,
+                  idToken: credentials.identityToken,
+                ),
+              );
+              completer.future.then<Null>(
+                (_) => _handleLogin(context: navigatorKey.currentContext!),
+              );
+            } catch (error) {
+              completer.completeError(error);
+              print('## onAppleLoginPressed: $error');
+            }
+          },
+      onAppleSignUpPressed:
+          (BuildContext context, Completer<Null> completer, String url) async {
+            try {
+              final credentials = await SignInWithApple.getAppleIDCredential(
+                scopes: [
+                  AppleIDAuthorizationScopes.email,
+                  AppleIDAuthorizationScopes.fullName,
+                ],
+                webAuthenticationOptions: WebAuthenticationOptions(
+                  clientId: kAppleOAuthClientId,
+                  redirectUri: Uri.parse(kAppleOAuthRedirectUrl),
+                ),
+              );
+
+              store.dispatch(
+                OAuthSignUpRequest(
+                  url: url,
+                  completer: completer,
+                  provider: UserEntity.OAUTH_PROVIDER_APPLE,
+                  idToken: credentials.identityToken,
+                  firstName: credentials.givenName,
+                  lastName: credentials.familyName,
+                  email: credentials.email,
+                ),
+              );
+              completer.future.then<Null>(
+                (_) => _handleLogin(
+                  context: navigatorKey.currentContext!,
+                  isSignUp: true,
+                ),
+              );
+            } catch (error) {
+              completer.completeError(error);
+              print('## onAppleSignUpPressed: $error');
+            }
+          },
+      onSignUpPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            required String email,
+            required String password,
+          }) async {
+            if (store.state.isLoading) {
+              return;
+            }
+
+            store.dispatch(
+              UserSignUpRequest(
                 completer: completer,
-                idToken: idToken,
-                accessToken: accessToken,
+                email: email.trim(),
+                password: password.trim(),
+              ),
+            );
+            completer.future.then<Null>(
+              (_) => _handleLogin(
+                context: navigatorKey.currentContext!,
+                isSignUp: true,
+              ),
+            );
+          },
+      onRecoverPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            required String email,
+            required String url,
+            required String secret,
+          }) async {
+            if (store.state.isLoading) {
+              return;
+            }
+
+            store.dispatch(
+              RecoverPasswordRequest(
+                completer: completer,
+                email: email.trim(),
+                url: _formatApiUrl(url),
+                secret: secret.trim(),
+              ),
+            );
+          },
+      onLoginPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            required String email,
+            required String password,
+            required String url,
+            required String secret,
+            required String oneTimePassword,
+          }) async {
+            if (store.state.isLoading) {
+              return;
+            }
+
+            store.dispatch(
+              UserLoginRequest(
+                completer: completer,
+                email: email.trim(),
+                password: password.trim(),
                 url: _formatApiUrl(url),
                 secret: secret.trim(),
                 platform: getPlatform(context),
-                provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-                oneTimePassword: oneTimePassword,
-              ));
-              completer.future.then<Null>(
-                  (_) => _handleLogin(context: navigatorKey.currentContext!));
-            }
-          });
-          if (!signedIn) {
-            completer.completeError(
-                AppLocalization.of(navigatorKey.currentContext!)!
-                    .anErrorOccurredTryAgain);
-          }
-        } catch (error) {
-          completer.completeError(error);
-          print('## onGoogleLoginPressed: $error');
-        }
-      },
-      onGoogleSignUpPressed:
-          (BuildContext context, Completer<Null> completer, String url) async {
-        try {
-          await GoogleOAuth.signOut();
-          final signedIn = await GoogleOAuth.signUp((idToken, accessToken) {
-            if (accessToken.isEmpty) {
-              GoogleOAuth.signOut();
-              completer.completeError(
-                  AppLocalization.of(context)!.anErrorOccurredTryAgain);
-            } else {
-              store.dispatch(OAuthSignUpRequest(
-                url: url,
-                completer: completer,
-                idToken: idToken,
-                accessToken: accessToken,
-                provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
-              ));
-              completer.future.then<Null>((_) => _handleLogin(
-                  context: navigatorKey.currentContext!, isSignUp: true));
-            }
-          });
-          if (!signedIn) {
-            completer.completeError(
-                AppLocalization.of(navigatorKey.currentContext!)!
-                    .anErrorOccurredTryAgain);
-          }
-        } catch (error) {
-          completer.completeError(error);
-          print('## onGoogleSignUpPressed: $error');
-        }
-      },
-      onMicrosoftLoginPressed: (
-        BuildContext context,
-        Completer<Null> completer, {
-        String url = '',
-        String secret = '',
-        String oneTimePassword = '',
-      }) async {
-        try {
-          WebUtils.microsoftLogin((idToken, accessToken) {
-            store.dispatch(OAuthLoginRequest(
-              completer: completer,
-              idToken: idToken,
-              accessToken: accessToken,
-              url: _formatApiUrl(url),
-              secret: secret.trim(),
-              platform: getPlatform(context),
-              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
-              oneTimePassword: oneTimePassword,
-            ));
+                oneTimePassword: oneTimePassword.trim(),
+              ),
+            );
             completer.future.then<Null>(
-                (_) => _handleLogin(context: navigatorKey.currentContext!));
-          }, (dynamic error) {
-            completer.completeError(error);
-          });
-        } catch (error) {
-          completer.completeError(error);
-          print('## onMicrosoftLoginPressed: $error');
-        }
-      },
-      onMicrosoftSignUpPressed:
-          (BuildContext context, Completer<Null> completer, String url) async {
-        try {
-          WebUtils.microsoftLogin((idToken, accessToken) {
-            store.dispatch(OAuthSignUpRequest(
-              url: url,
-              completer: completer,
-              idToken: idToken,
-              provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
-              accessToken: accessToken,
-            ));
-            completer.future.then<Null>((_) => _handleLogin(
-                context: navigatorKey.currentContext!, isSignUp: true));
-          }, (dynamic error) {
-            completer.completeError(error);
-          });
-        } catch (error) {
-          completer.completeError(error);
-          print('## onMicrosoftSignUpPressed: $error');
-        }
-      },
-      onAppleLoginPressed: (
-        BuildContext context,
-        Completer<Null> completer, {
-        String url = '',
-        String secret = '',
-        String oneTimePassword = '',
-      }) async {
-        try {
-          final credentials = await SignInWithApple.getAppleIDCredential(
-            scopes: [
-              AppleIDAuthorizationScopes.email,
-              AppleIDAuthorizationScopes.fullName,
-            ],
-            webAuthenticationOptions: WebAuthenticationOptions(
-              clientId: kAppleOAuthClientId,
-              redirectUri: Uri.parse(kAppleOAuthRedirectUrl),
-            ),
-          );
-
-          store.dispatch(OAuthLoginRequest(
-            completer: completer,
-            url: _formatApiUrl(url),
-            secret: secret.trim(),
-            platform: getPlatform(navigatorKey.currentContext!),
-            provider: UserEntity.OAUTH_PROVIDER_APPLE,
-            oneTimePassword: oneTimePassword,
-            email: credentials.email,
-            authCode: credentials.authorizationCode,
-            idToken: credentials.identityToken,
-          ));
-          completer.future.then<Null>(
-              (_) => _handleLogin(context: navigatorKey.currentContext!));
-        } catch (error) {
-          completer.completeError(error);
-          print('## onAppleLoginPressed: $error');
-        }
-      },
-      onAppleSignUpPressed:
-          (BuildContext context, Completer<Null> completer, String url) async {
-        try {
-          final credentials = await SignInWithApple.getAppleIDCredential(
-            scopes: [
-              AppleIDAuthorizationScopes.email,
-              AppleIDAuthorizationScopes.fullName,
-            ],
-            webAuthenticationOptions: WebAuthenticationOptions(
-              clientId: kAppleOAuthClientId,
-              redirectUri: Uri.parse(kAppleOAuthRedirectUrl),
-            ),
-          );
-
-          store.dispatch(OAuthSignUpRequest(
-            url: url,
-            completer: completer,
-            provider: UserEntity.OAUTH_PROVIDER_APPLE,
-            idToken: credentials.identityToken,
-            firstName: credentials.givenName,
-            lastName: credentials.familyName,
-            email: credentials.email,
-          ));
-          completer.future.then<Null>((_) => _handleLogin(
-              context: navigatorKey.currentContext!, isSignUp: true));
-        } catch (error) {
-          completer.completeError(error);
-          print('## onAppleSignUpPressed: $error');
-        }
-      },
-      onSignUpPressed: (
-        BuildContext context,
-        Completer<Null> completer, {
-        required String email,
-        required String password,
-      }) async {
-        if (store.state.isLoading) {
-          return;
-        }
-
-        store.dispatch(UserSignUpRequest(
-          completer: completer,
-          email: email.trim(),
-          password: password.trim(),
-        ));
-        completer.future.then<Null>((_) => _handleLogin(
-            context: navigatorKey.currentContext!, isSignUp: true));
-      },
-      onRecoverPressed: (
-        BuildContext context,
-        Completer<Null> completer, {
-        required String email,
-        required String url,
-        required String secret,
-      }) async {
-        if (store.state.isLoading) {
-          return;
-        }
-
-        store.dispatch(RecoverPasswordRequest(
-          completer: completer,
-          email: email.trim(),
-          url: _formatApiUrl(url),
-          secret: secret.trim(),
-        ));
-      },
-      onLoginPressed: (
-        BuildContext context,
-        Completer<Null> completer, {
-        required String email,
-        required String password,
-        required String url,
-        required String secret,
-        required String oneTimePassword,
-      }) async {
-        if (store.state.isLoading) {
-          return;
-        }
-
-        store.dispatch(UserLoginRequest(
-          completer: completer,
-          email: email.trim(),
-          password: password.trim(),
-          url: _formatApiUrl(url),
-          secret: secret.trim(),
-          platform: getPlatform(context),
-          oneTimePassword: oneTimePassword.trim(),
-        ));
-        completer.future.then<Null>(
-            (_) => _handleLogin(context: navigatorKey.currentContext!));
-      },
-      onTokenLoginPressed: (BuildContext context, Completer<Null> completer,
-          {required String token}) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(kSharedPrefToken, TokenEntity.obscureToken(token));
-        prefs.setString(kSharedPrefUrl, kAppProductionUrl);
-      },
+              (_) => _handleLogin(context: navigatorKey.currentContext!),
+            );
+          },
+      onTokenLoginPressed:
+          (
+            BuildContext context,
+            Completer<Null> completer, {
+            required String token,
+          }) async {
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            prefs.setString(kSharedPrefToken, TokenEntity.obscureToken(token));
+            prefs.setString(kSharedPrefUrl, kAppProductionUrl);
+          },
     );
   }
 }

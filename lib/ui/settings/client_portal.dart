@@ -35,10 +35,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientPortal extends StatefulWidget {
-  const ClientPortal({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientPortal({Key? key, required this.viewModel}) : super(key: key);
 
   final ClientPortalVM viewModel;
 
@@ -48,8 +45,9 @@ class ClientPortal extends StatefulWidget {
 
 class _ClientPortalState extends State<ClientPortal>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_clientPortal');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_clientPortal',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController? _controller;
 
@@ -57,8 +55,9 @@ class _ClientPortalState extends State<ClientPortal>
   bool _isSubdomainUnique = true;
   bool _isCheckingSubdomain = false;
 
-  final _subdomainDebouncer =
-      SimpleDebouncer(milliseconds: kMillisecondsToDebounceSave);
+  final _subdomainDebouncer = SimpleDebouncer(
+    milliseconds: kMillisecondsToDebounceSave,
+  );
   final _debouncer = Debouncer();
 
   final _subdomainController = TextEditingController();
@@ -82,9 +81,10 @@ class _ClientPortalState extends State<ClientPortal>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this,
-        length: settingsUIState.isFiltered ? 4 : 5,
-        initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: settingsUIState.isFiltered ? 4 : 5,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -115,22 +115,24 @@ class _ClientPortalState extends State<ClientPortal>
       setState(() => _isCheckingSubdomain = true);
 
       _webClient
-          .post(url, credentials.token,
-              data: jsonEncode(
-                {'subdomain': subdomain},
-              ))
+          .post(
+            url,
+            credentials.token,
+            data: jsonEncode({'subdomain': subdomain}),
+          )
           .then((dynamic data) {
-        setState(() {
-          _isSubdomainUnique = true;
-          _isCheckingSubdomain = false;
-          _onChanged();
-        });
-      }).catchError((Object error) {
-        setState(() {
-          _isSubdomainUnique = false;
-          _isCheckingSubdomain = false;
-        });
-      });
+            setState(() {
+              _isSubdomainUnique = true;
+              _isCheckingSubdomain = false;
+              _onChanged();
+            });
+          })
+          .catchError((Object error) {
+            setState(() {
+              _isSubdomainUnique = false;
+              _isCheckingSubdomain = false;
+            });
+          });
     });
   }
 
@@ -163,8 +165,9 @@ class _ClientPortalState extends State<ClientPortal>
       _customFooterController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final company = widget.viewModel.company;
     final settings = widget.viewModel.settings;
@@ -183,8 +186,9 @@ class _ClientPortalState extends State<ClientPortal>
     _customCssController.text = settings.clientPortalCustomCss ?? '';
     _customJavaScriptController.text = settings.clientPortalCustomJs ?? '';
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -194,11 +198,11 @@ class _ClientPortalState extends State<ClientPortal>
       final portalDomain = _portalDomainController.text.trim();
       final subdomain = _subdomainController.text.trim();
       final customMessageDashboard = _customMessageDashboard.text.trim();
-      final customMessageUnpaidInvoice =
-          _customMessageUnpaidInvoice.text.trim();
+      final customMessageUnpaidInvoice = _customMessageUnpaidInvoice.text
+          .trim();
       final customMessagePaidInvoice = _customMessagePaidInvoice.text.trim();
-      final customMessageUnapprovedQuote =
-          _customMessageUnapprovedQuote.text.trim();
+      final customMessageUnapprovedQuote = _customMessageUnapprovedQuote.text
+          .trim();
       final clientPortalTerms = _termsController.text.trim();
       final clientPortalPrivacy = _privacyController.text.trim();
       final clientPortalCustomJs = _customJavaScriptController.text.trim();
@@ -209,50 +213,57 @@ class _ClientPortalState extends State<ClientPortal>
       final viewModel = widget.viewModel;
       final isFiltered = viewModel.state.settingsUIState.isFiltered;
 
-      final company = widget.viewModel.company.rebuild((b) => b
-        ..portalDomain =
-            isFiltered && portalDomain.isEmpty ? null : portalDomain
-        ..subdomain = isFiltered && subdomain.isEmpty ? null : subdomain);
+      final company = widget.viewModel.company.rebuild(
+        (b) => b
+          ..portalDomain = isFiltered && portalDomain.isEmpty
+              ? null
+              : portalDomain
+          ..subdomain = isFiltered && subdomain.isEmpty ? null : subdomain,
+      );
 
       if (company != widget.viewModel.company) {
         widget.viewModel.onCompanyChanged(company);
       }
 
-      final settings = widget.viewModel.settings.rebuild((b) => b
-        ..customMessageDashboard = isFiltered && customMessageDashboard.isEmpty
-            ? null
-            : customMessageDashboard
-        ..customMessageUnpaidInvoice =
-            isFiltered && customMessageUnpaidInvoice.isEmpty
-                ? null
-                : customMessageUnpaidInvoice
-        ..customMessagePaidInvoice =
-            isFiltered && customMessagePaidInvoice.isEmpty
-                ? null
-                : customMessagePaidInvoice
-        ..customMessageUnapprovedQuote =
-            isFiltered && customMessageUnapprovedQuote.isEmpty
-                ? null
-                : customMessageUnapprovedQuote
-        ..clientPortalTerms =
-            isFiltered && clientPortalTerms.isEmpty ? null : clientPortalTerms
-        ..clientPortalPrivacy = isFiltered && clientPortalPrivacy.isEmpty
-            ? null
-            : clientPortalPrivacy
-        ..clientPortalCustomJs = isFiltered && clientPortalCustomJs.isEmpty
-            ? null
-            : clientPortalCustomJs
-        ..clientPortalCustomCss = isFiltered && clientPortalCustomCss.isEmpty
-            ? null
-            : clientPortalCustomCss
-        ..clientPortalCustomHeader =
-            isFiltered && clientPortalCustomHeader.isEmpty
-                ? null
-                : clientPortalCustomHeader
-        ..clientPortalCustomFooter =
-            isFiltered && clientPortalCustomFooter.isEmpty
-                ? null
-                : clientPortalCustomFooter);
+      final settings = widget.viewModel.settings.rebuild(
+        (b) => b
+          ..customMessageDashboard =
+              isFiltered && customMessageDashboard.isEmpty
+              ? null
+              : customMessageDashboard
+          ..customMessageUnpaidInvoice =
+              isFiltered && customMessageUnpaidInvoice.isEmpty
+              ? null
+              : customMessageUnpaidInvoice
+          ..customMessagePaidInvoice =
+              isFiltered && customMessagePaidInvoice.isEmpty
+              ? null
+              : customMessagePaidInvoice
+          ..customMessageUnapprovedQuote =
+              isFiltered && customMessageUnapprovedQuote.isEmpty
+              ? null
+              : customMessageUnapprovedQuote
+          ..clientPortalTerms = isFiltered && clientPortalTerms.isEmpty
+              ? null
+              : clientPortalTerms
+          ..clientPortalPrivacy = isFiltered && clientPortalPrivacy.isEmpty
+              ? null
+              : clientPortalPrivacy
+          ..clientPortalCustomJs = isFiltered && clientPortalCustomJs.isEmpty
+              ? null
+              : clientPortalCustomJs
+          ..clientPortalCustomCss = isFiltered && clientPortalCustomCss.isEmpty
+              ? null
+              : clientPortalCustomCss
+          ..clientPortalCustomHeader =
+              isFiltered && clientPortalCustomHeader.isEmpty
+              ? null
+              : clientPortalCustomHeader
+          ..clientPortalCustomFooter =
+              isFiltered && clientPortalCustomFooter.isEmpty
+              ? null
+              : clientPortalCustomFooter,
+      );
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
       }
@@ -287,22 +298,12 @@ class _ClientPortalState extends State<ClientPortal>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.settings,
-          ),
+          Tab(text: localization.settings),
           if (!state.settingsUIState.isFiltered)
-            Tab(
-              text: localization.registration,
-            ),
-          Tab(
-            text: localization.authorization,
-          ),
-          Tab(
-            text: localization.messages,
-          ),
-          Tab(
-            text: localization.customize,
-          ),
+            Tab(text: localization.registration),
+          Tab(text: localization.authorization),
+          Tab(text: localization.messages),
+          Tab(text: localization.customize),
         ],
       ),
       body: AppTabForm(
@@ -321,8 +322,11 @@ class _ClientPortalState extends State<ClientPortal>
                         labelText: localization.portalMode,
                         value: viewModel.company.portalMode,
                         onChanged: (dynamic value) =>
-                            viewModel.onCompanyChanged(viewModel.company
-                                .rebuild((b) => b..portalMode = value)),
+                            viewModel.onCompanyChanged(
+                              viewModel.company.rebuild(
+                                (b) => b..portalMode = value,
+                              ),
+                            ),
                         items: [
                           DropdownMenuItem(
                             child: Text(localization.subdomain),
@@ -357,11 +361,13 @@ class _ClientPortalState extends State<ClientPortal>
 
                           return null;
                         },
-                        suffixIcon: Icon(_isCheckingSubdomain
-                            ? Icons.pending_outlined
-                            : _isSubdomainUnique
-                                ? Icons.check_circle_outline
-                                : Icons.error_outline),
+                        suffixIcon: Icon(
+                          _isCheckingSubdomain
+                              ? Icons.pending_outlined
+                              : _isSubdomainUnique
+                              ? Icons.check_circle_outline
+                              : Icons.error_outline,
+                        ),
                         onChanged: (value) => _validateSubdomain(),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
@@ -372,7 +378,8 @@ class _ClientPortalState extends State<ClientPortal>
                     ] else ...[
                       DecoratedFormField(
                         enabled: state.isEnterprisePlan,
-                        label: company.portalMode == kClientPortalModeDomain ||
+                        label:
+                            company.portalMode == kClientPortalModeDomain ||
                                 state.isSelfHosted
                             ? localization.domainUrl
                             : localization.iFrameUrl,
@@ -383,9 +390,9 @@ class _ClientPortalState extends State<ClientPortal>
                         keyboardType: TextInputType.url,
                         validator: (val) =>
                             (val.isEmpty || val.trim().isEmpty) &&
-                                    state.isHosted
-                                ? localization.pleaseEnterAValue
-                                : null,
+                                state.isHosted
+                            ? localization.pleaseEnterAValue
+                            : null,
                         onSavePressed: _onSavePressed,
                       ),
                       SizedBox(height: 16),
@@ -406,7 +413,7 @@ class _ClientPortalState extends State<ClientPortal>
                         else
                           SizedBox()
                       else
-                        Text(localization.requiresAnEnterprisePlan)
+                        Text(localization.requiresAnEnterprisePlan),
                     ],
                     SizedBox(height: 16),
                     ListTile(
@@ -419,8 +426,12 @@ class _ClientPortalState extends State<ClientPortal>
                       trailing: Icon(Icons.content_copy),
                       onTap: () {
                         Clipboard.setData(ClipboardData(text: loginUrl));
-                        showToast(localization.copiedToClipboard
-                            .replaceFirst(':value ', loginUrl));
+                        showToast(
+                          localization.copiedToClipboard.replaceFirst(
+                            ':value ',
+                            loginUrl,
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -432,67 +443,85 @@ class _ClientPortalState extends State<ClientPortal>
                     value: settings.enablePortal,
                     iconData: MdiIcons.cloud,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..enablePortal = value)),
+                      settings.rebuild((b) => b..enablePortal = value),
+                    ),
                   ),
                   BoolDropdownButton(
                     label: localization.dashboard,
                     value: settings.enablePortalDashboard,
                     iconData: getEntityIcon(EntityType.dashboard),
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..enablePortalDashboard = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enablePortalDashboard = value),
+                    ),
                   ),
                   BoolDropdownButton(
                     label: localization.mobileVersion,
                     helpLabel: localization.showPdfhtmlMobileHelp,
                     value: settings.showPdfhtmlOnMobile ?? true,
                     iconData: Icons.mobile_friendly,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..showPdfhtmlOnMobile = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showPdfhtmlOnMobile = value),
+                    ),
                   ),
                   BoolDropdownButton(
-                      label: localization.clientDocumentUpload,
-                      helpLabel: localization.documentUploadHelp,
-                      value: settings.enableClientPortalUploads,
-                      iconData: MdiIcons.upload,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..enableClientPortalUploads = value))),
+                    label: localization.clientDocumentUpload,
+                    helpLabel: localization.documentUploadHelp,
+                    value: settings.enableClientPortalUploads,
+                    iconData: MdiIcons.upload,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b..enableClientPortalUploads = value,
+                      ),
+                    ),
+                  ),
                   if (company.isModuleEnabled(EntityType.vendor))
                     BoolDropdownButton(
-                        label: localization.vendorDocumentUpload,
-                        helpLabel: localization.vendorDocumentUploadHelp,
-                        value: settings.enableVendorPortalUploads,
-                        iconData: MdiIcons.upload,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..enableVendorPortalUploads = value))),
+                      label: localization.vendorDocumentUpload,
+                      helpLabel: localization.vendorDocumentUploadHelp,
+                      value: settings.enableVendorPortalUploads,
+                      iconData: MdiIcons.upload,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild(
+                          (b) => b..enableVendorPortalUploads = value,
+                        ),
+                      ),
+                    ),
                   if (company.isModuleEnabled(EntityType.purchaseOrder) &&
                       company.isModuleEnabled(EntityType.quote))
                     BoolDropdownButton(
-                        label: localization.acceptPurchaseOrderNumber,
-                        helpLabel: localization.acceptPurchaseOrderNumberHelp,
-                        value: settings.acceptPurchaseOrderNumber,
-                        iconData: Icons.numbers,
-                        onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..acceptPurchaseOrderNumber = value))),
-                  BoolDropdownButton(
-                      label: localization.enableClientProfileUpdate,
-                      helpLabel: localization.enableClientProfileUpdateHelp,
-                      value: settings.enableClientProfileUpdate,
-                      iconData: Icons.edit_square,
+                      label: localization.acceptPurchaseOrderNumber,
+                      helpLabel: localization.acceptPurchaseOrderNumberHelp,
+                      value: settings.acceptPurchaseOrderNumber,
+                      iconData: Icons.numbers,
                       onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..enableClientProfileUpdate = value))),
+                        settings.rebuild(
+                          (b) => b..acceptPurchaseOrderNumber = value,
+                        ),
+                      ),
+                    ),
                   BoolDropdownButton(
-                      label: localization.preferenceProductNotesForHtmlView,
-                      helpLabel:
-                          localization.preferenceProductNotesForHtmlViewHelp,
-                      value: settings.preferenceProductNotesForHtmlView,
-                      iconData: Icons.mobile_friendly,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) =>
-                              b..preferenceProductNotesForHtmlView = value))),
+                    label: localization.enableClientProfileUpdate,
+                    helpLabel: localization.enableClientProfileUpdateHelp,
+                    value: settings.enableClientProfileUpdate,
+                    iconData: Icons.edit_square,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b..enableClientProfileUpdate = value,
+                      ),
+                    ),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.preferenceProductNotesForHtmlView,
+                    helpLabel:
+                        localization.preferenceProductNotesForHtmlViewHelp,
+                    value: settings.preferenceProductNotesForHtmlView,
+                    iconData: Icons.mobile_friendly,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b..preferenceProductNotesForHtmlView = value,
+                      ),
+                    ),
+                  ),
                   /*
                   if (!state.settingsUIState.isFiltered)
                     BoolDropdownButton(
@@ -517,9 +546,14 @@ class _ClientPortalState extends State<ClientPortal>
                       trailing: Icon(Icons.content_copy),
                       onTap: () {
                         Clipboard.setData(
-                            ClipboardData(text: company.companyKey));
-                        showToast(localization.copiedToClipboard
-                            .replaceFirst(':value ', company.companyKey));
+                          ClipboardData(text: company.companyKey),
+                        );
+                        showToast(
+                          localization.copiedToClipboard.replaceFirst(
+                            ':value ',
+                            company.companyKey,
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -542,7 +576,7 @@ class _ClientPortalState extends State<ClientPortal>
                     keyboardType: TextInputType.multiline,
                   ),
                 ],
-              )
+              ),
             ],
           ),
           if (!state.settingsUIState.isFiltered)
@@ -556,7 +590,8 @@ class _ClientPortalState extends State<ClientPortal>
                       value: company.clientCanRegister,
                       iconData: MdiIcons.login,
                       onChanged: (value) => viewModel.onCompanyChanged(
-                          company.rebuild((b) => b..clientCanRegister = value)),
+                        company.rebuild((b) => b..clientCanRegister = value),
+                      ),
                     ),
                     if (state.company.clientCanRegister) ...[
                       SizedBox(height: 16),
@@ -570,9 +605,14 @@ class _ClientPortalState extends State<ClientPortal>
                         trailing: Icon(Icons.content_copy),
                         onTap: () {
                           Clipboard.setData(
-                              ClipboardData(text: registrationUrl));
-                          showToast(localization.copiedToClipboard
-                              .replaceFirst(':value ', registrationUrl));
+                            ClipboardData(text: registrationUrl),
+                          );
+                          showToast(
+                            localization.copiedToClipboard.replaceFirst(
+                              ':value ',
+                              registrationUrl,
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -583,28 +623,33 @@ class _ClientPortalState extends State<ClientPortal>
                   children: company.clientRegistrationFields.map((field) {
                     return Row(
                       children: [
-                        Expanded(
-                          child: Text(localization.lookup(field.key)),
-                        ),
+                        Expanded(child: Text(localization.lookup(field.key))),
                         Expanded(
                           child: AppDropdownButton<String>(
                             value: field.setting,
                             onChanged: (dynamic value) {
                               final index = company.clientRegistrationFields
                                   .indexOf(field);
-                              viewModel.onCompanyChanged(company.rebuild((b) =>
-                                  b
-                                    ..clientRegistrationFields[index] =
-                                        field.rebuild((b) => b
-                                          ..required = value ==
-                                              RegistrationFieldEntity
-                                                  .SETTING_REQUIRED
-                                          ..visible = value ==
-                                                  RegistrationFieldEntity
-                                                      .SETTING_REQUIRED ||
-                                              value ==
-                                                  RegistrationFieldEntity
-                                                      .SETTING_OPTIONAL)));
+                              viewModel.onCompanyChanged(
+                                company.rebuild(
+                                  (b) => b
+                                    ..clientRegistrationFields[index] = field
+                                        .rebuild(
+                                          (b) => b
+                                            ..required =
+                                                value ==
+                                                RegistrationFieldEntity
+                                                    .SETTING_REQUIRED
+                                            ..visible =
+                                                value ==
+                                                    RegistrationFieldEntity
+                                                        .SETTING_REQUIRED ||
+                                                value ==
+                                                    RegistrationFieldEntity
+                                                        .SETTING_OPTIONAL,
+                                        ),
+                                ),
+                              );
                             },
                             items: [
                               DropdownMenuItem(
@@ -637,8 +682,9 @@ class _ClientPortalState extends State<ClientPortal>
                     helpLabel: localization.enablePortalPasswordHelp,
                     value: settings.enablePortalPassword,
                     iconData: MdiIcons.shield,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..enablePortalPassword = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enablePortalPassword = value),
+                    ),
                   ),
                 ],
               ),
@@ -649,16 +695,20 @@ class _ClientPortalState extends State<ClientPortal>
                     helpLabel: localization.showAcceptInvoiceTermsHelp,
                     value: settings.showAcceptInvoiceTerms,
                     iconData: MdiIcons.checkboxOutline,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..showAcceptInvoiceTerms = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b..showAcceptInvoiceTerms = value,
+                      ),
+                    ),
                   ),
                   BoolDropdownButton(
                     label: localization.showAcceptQuoteTerms,
                     helpLabel: localization.showAcceptQuoteTermsHelp,
                     value: settings.showAcceptQuoteTerms,
                     iconData: MdiIcons.checkboxOutline,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..showAcceptQuoteTerms = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..showAcceptQuoteTerms = value),
+                    ),
                   ),
                 ],
               ),
@@ -670,8 +720,11 @@ class _ClientPortalState extends State<ClientPortal>
                     helpLabel: localization.requireInvoiceSignatureHelp,
                     value: settings.requireInvoiceSignature,
                     iconData: MdiIcons.signature,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..requireInvoiceSignature = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b..requireInvoiceSignature = value,
+                      ),
+                    ),
                   ),
                   if (company.isModuleEnabled(EntityType.quote))
                     BoolDropdownButton(
@@ -679,8 +732,11 @@ class _ClientPortalState extends State<ClientPortal>
                       helpLabel: localization.requireInvoiceSignatureHelp,
                       value: settings.requireQuoteSignature,
                       iconData: MdiIcons.signature,
-                      onChanged: (value) => viewModel.onSettingsChanged(settings
-                          .rebuild((b) => b..requireQuoteSignature = value)),
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild(
+                          (b) => b..requireQuoteSignature = value,
+                        ),
+                      ),
                     ),
                   if (company.isModuleEnabled(EntityType.purchaseOrder))
                     BoolDropdownButton(
@@ -689,8 +745,10 @@ class _ClientPortalState extends State<ClientPortal>
                       value: settings.requirePurchaseOrderSignature,
                       iconData: MdiIcons.signature,
                       onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..requirePurchaseOrderSignature = value)),
+                        settings.rebuild(
+                          (b) => b..requirePurchaseOrderSignature = value,
+                        ),
+                      ),
                     ),
                   BoolDropdownButton(
                     label: localization.signatureOnPdf,
@@ -698,7 +756,8 @@ class _ClientPortalState extends State<ClientPortal>
                     value: settings.signatureOnPdf,
                     iconData: getEntityIcon(EntityType.invoice),
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..signatureOnPdf = value)),
+                      settings.rebuild((b) => b..signatureOnPdf = value),
+                    ),
                   ),
                 ],
               ),
@@ -770,7 +829,7 @@ class _ClientPortalState extends State<ClientPortal>
                       keyboardType: TextInputType.multiline,
                     ),
                 ],
-              )
+              ),
             ],
           ),
         ],

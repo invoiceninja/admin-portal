@@ -60,22 +60,37 @@ class ProductPresenter extends EntityPresenter {
       case ProductFields.cost:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(product!.cost, context,
+          child: Text(
+            formatNumber(
+              product!.cost,
+              context,
               formatNumberType: FormatNumberType.money,
-              roundToPrecision: false)!),
+              roundToPrecision: false,
+            )!,
+          ),
         );
       case ProductFields.price:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(product!.price, context,
+          child: Text(
+            formatNumber(
+              product!.price,
+              context,
               formatNumberType: FormatNumberType.money,
-              roundToPrecision: false)!),
+              roundToPrecision: false,
+            )!,
+          ),
         );
       case ProductFields.quantity:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(product!.quantity, context,
-              formatNumberType: FormatNumberType.double)!),
+          child: Text(
+            formatNumber(
+              product!.quantity,
+              context,
+              formatNumberType: FormatNumberType.double,
+            )!,
+          ),
         );
       case ProductFields.customValue1:
         return Text(presentCustomField(context, product!.customValue1)!);
@@ -94,28 +109,53 @@ class ProductPresenter extends EntityPresenter {
       case ProductFields.taxName3:
         return Text(product!.taxName3);
       case ProductFields.taxRate1:
-        return Text(formatNumber(product!.taxRate1, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            product!.taxRate1,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case ProductFields.taxRate2:
-        return Text(formatNumber(product!.taxRate2, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            product!.taxRate2,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case ProductFields.taxRate3:
-        return Text(formatNumber(product!.taxRate3, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            product!.taxRate3,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case ProductFields.stockQuantity:
-        return Text(formatNumber(product!.stockQuantity.toDouble(), context,
-            formatNumberType: FormatNumberType.int)!);
+        return Text(
+          formatNumber(
+            product!.stockQuantity.toDouble(),
+            context,
+            formatNumberType: FormatNumberType.int,
+          )!,
+        );
       case ProductFields.taxCategory:
         return Text(
-            localization!.lookup(kTaxCategories[product!.taxCategoryId]));
+          localization!.lookup(kTaxCategories[product!.taxCategoryId]),
+        );
       case ProductFields.notificationThreshold:
         final store = StoreProvider.of<AppState>(context);
-        return Text(formatNumber(
+        return Text(
+          formatNumber(
             productNotificationThreshold(
-                    product: product!, company: store.state.company)
-                .toDouble(),
+              product: product!,
+              company: store.state.company,
+            ).toDouble(),
             context,
-            formatNumberType: FormatNumberType.int)!);
+            formatNumberType: FormatNumberType.int,
+          )!,
+        );
     }
 
     return super.getField(field: field, context: context);

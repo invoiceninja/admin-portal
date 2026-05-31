@@ -67,12 +67,14 @@ class VendorViewVM {
 
   factory VendorViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final vendor = state.vendorState.map[state.vendorUIState.selectedId] ??
+    final vendor =
+        state.vendorState.map[state.vendorUIState.selectedId] ??
         VendorEntity(id: state.vendorUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadVendor(completer: completer, vendorId: vendor.id));
       return completer.future;
     }
@@ -85,43 +87,62 @@ class VendorViewVM {
       isDirty: vendor.isNew,
       vendor: vendor,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityPressed: (BuildContext context, EntityType entityType,
-          [longPress = false]) {
-        switch (entityType) {
-          case EntityType.expense:
-            if (longPress && vendor.isActive) {
-              createEntity(entity: ExpenseEntity(state: state, vendor: vendor));
-            } else {
-              viewEntitiesByType(
-                  entityType: EntityType.expense, filterEntity: vendor);
+      onEntityPressed:
+          (BuildContext context, EntityType entityType, [longPress = false]) {
+            switch (entityType) {
+              case EntityType.expense:
+                if (longPress && vendor.isActive) {
+                  createEntity(
+                    entity: ExpenseEntity(state: state, vendor: vendor),
+                  );
+                } else {
+                  viewEntitiesByType(
+                    entityType: EntityType.expense,
+                    filterEntity: vendor,
+                  );
+                }
+                break;
             }
-            break;
-        }
-      },
+          },
       onAddExpensePressed: (context) {
-        createEntity(entity: ExpenseEntity(state: state, vendor: vendor));
+        createEntity(
+          entity: ExpenseEntity(state: state, vendor: vendor),
+        );
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([vendor], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveVendorDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFile,
-            vendor: vendor,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveVendorDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                vendor: vendor,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

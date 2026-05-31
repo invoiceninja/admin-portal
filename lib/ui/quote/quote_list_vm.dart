@@ -34,23 +34,21 @@ class QuoteListBuilder extends StatelessWidget {
       converter: QuoteListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultiselect,
-            entityType: EntityType.quote,
-            presenter: QuotePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.invoiceList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final invoiceId = viewModel.invoiceList[index];
-              final invoice = viewModel.invoiceMap[invoiceId]!;
+          onClearMultiselect: viewModel.onClearMultiselect,
+          entityType: EntityType.quote,
+          presenter: QuotePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.invoiceList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final invoiceId = viewModel.invoiceList[index];
+            final invoice = viewModel.invoiceMap[invoiceId]!;
 
-              return QuoteListItem(
-                filter: viewModel.filter,
-                quote: invoice,
-              );
-            });
+            return QuoteListItem(filter: viewModel.filter, quote: invoice);
+          },
+        );
       },
     );
   }
@@ -66,32 +64,33 @@ class QuoteListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-        onEntityAction,
+    onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-          state: state,
-          invoiceList: invoiceList,
-          invoiceMap: invoiceMap,
-          clientMap: clientMap,
-          filter: filter,
-          isLoading: isLoading,
-          onRefreshed: onRefreshed,
-          tableColumns: tableColumns,
-          entityType: entityType,
-          onSortColumn: onSortColumn,
-          onClearMultiselect: onClearMultiselect,
-        );
+         state: state,
+         invoiceList: invoiceList,
+         invoiceMap: invoiceMap,
+         clientMap: clientMap,
+         filter: filter,
+         isLoading: isLoading,
+         onRefreshed: onRefreshed,
+         tableColumns: tableColumns,
+         entityType: entityType,
+         onSortColumn: onSortColumn,
+         onClearMultiselect: onClearMultiselect,
+       );
 
   static QuoteListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -101,24 +100,28 @@ class QuoteListVM extends EntityListVM {
     return QuoteListVM(
       state: state,
       invoiceList: memoizedFilteredQuoteList(
-          state.getUISelection(EntityType.quote),
-          state.quoteState.map,
-          state.quoteState.list,
-          state.clientState.map,
-          state.vendorState.map,
-          state.quoteListState,
-          state.userState.map),
+        state.getUISelection(EntityType.quote),
+        state.quoteState.map,
+        state.quoteState.list,
+        state.clientState.map,
+        state.vendorState.map,
+        state.quoteListState,
+        state.userState.map,
+      ),
       invoiceMap: state.quoteState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.quoteListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction: (BuildContext context, List<BaseEntity> quotes,
-              EntityAction action) =>
-          handleQuoteAction(context, quotes, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> quotes,
+            EntityAction action,
+          ) => handleQuoteAction(context, quotes, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.quote) ??
-              QuotePresenter.getDefaultTableFields(state.userCompany),
+          QuotePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortQuotes(field)),
       onClearMultiselect: () => store.dispatch(ClearQuoteMultiselect()),
       entityType: EntityType.quote,

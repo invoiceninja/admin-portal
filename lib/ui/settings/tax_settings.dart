@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxSettings extends StatefulWidget {
-  const TaxSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaxSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final TaxSettingsVM viewModel;
 
@@ -34,8 +31,9 @@ class TaxSettings extends StatefulWidget {
 }
 
 class _TaxSettingsState extends State<TaxSettings> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_taxSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_taxSettings',
+  );
   FocusScopeNode? _focusNode;
   final Map<String, bool> _showDetails = {
     kTaxRegionUnitedStates: false,
@@ -95,20 +93,23 @@ class _TaxSettingsState extends State<TaxSettings> {
                 NumberOfRatesSelector(
                   label: localization.invoiceTaxRates,
                   numberOfRates: company.numberOfInvoiceTaxRates,
-                  onChanged: (value) => viewModel.onCompanyChanged(company
-                      .rebuild((b) => b..numberOfInvoiceTaxRates = value)),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..numberOfInvoiceTaxRates = value),
+                  ),
                 ),
                 NumberOfRatesSelector(
                   label: localization.invoiceItemTaxRates,
                   numberOfRates: company.numberOfItemTaxRates,
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..numberOfItemTaxRates = value)),
+                    company.rebuild((b) => b..numberOfItemTaxRates = value),
+                  ),
                 ),
                 NumberOfRatesSelector(
                   label: localization.expenseTaxRates,
                   numberOfRates: company.numberOfExpenseTaxRates,
-                  onChanged: (value) => viewModel.onCompanyChanged(company
-                      .rebuild((b) => b..numberOfExpenseTaxRates = value)),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..numberOfExpenseTaxRates = value),
+                  ),
                 ),
                 SizedBox(height: 16),
                 BoolDropdownButton(
@@ -116,7 +117,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                   label: localization.inclusiveTaxes,
                   value: settings.enableInclusiveTaxes,
                   onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..enableInclusiveTaxes = value)),
+                    settings.rebuild((b) => b..enableInclusiveTaxes = value),
+                  ),
                   helpLabel:
                       '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
                 ),
@@ -127,30 +129,39 @@ class _TaxSettingsState extends State<TaxSettings> {
               children: <Widget>[
                 if (company.enableFirstInvoiceTaxRate)
                   TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    onSelected: (taxRate) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
                           ..defaultTaxName1 = taxRate.name
-                          ..defaultTaxRate1 = taxRate.rate)),
+                          ..defaultTaxRate1 = taxRate.rate,
+                      ),
+                    ),
                     labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName1,
                     initialTaxRate: settings.defaultTaxRate1,
                   ),
                 if (company.enableSecondInvoiceTaxRate)
                   TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    onSelected: (taxRate) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
                           ..defaultTaxName2 = taxRate.name
-                          ..defaultTaxRate2 = taxRate.rate)),
+                          ..defaultTaxRate2 = taxRate.rate,
+                      ),
+                    ),
                     labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName2,
                     initialTaxRate: settings.defaultTaxRate2,
                   ),
                 if (company.enableThirdInvoiceTaxRate)
                   TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
+                    onSelected: (taxRate) => viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b
                           ..defaultTaxName3 = taxRate.name
-                          ..defaultTaxRate3 = taxRate.rate)),
+                          ..defaultTaxRate3 = taxRate.rate,
+                      ),
+                    ),
                     labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName3,
                     initialTaxRate: settings.defaultTaxRate3,
@@ -175,7 +186,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                   label: localization.calculateTaxes,
                   value: company.calculateTaxes,
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..calculateTaxes = value)),
+                    company.rebuild((b) => b..calculateTaxes = value),
+                  ),
                   helpLabel: localization.calculateTaxesHelp,
                 ),
                 if (state.isSelfHosted &&
@@ -199,19 +211,28 @@ class _TaxSettingsState extends State<TaxSettings> {
                 */
                   SizedBox(height: 16),
                   AppDropdownButton<String>(
-                      labelText: localization.sellerSubregion,
-                      value: taxConfig.sellerSubregion,
-                      onChanged: (dynamic value) {
-                        viewModel.onCompanyChanged(company.rebuild(
-                            (b) => b..taxConfig.sellerSubregion = value));
-                      },
-                      items: subregions
-                          .map((code) => DropdownMenuItem(
-                              child: Text(region == kTaxRegionUnitedStates
+                    labelText: localization.sellerSubregion,
+                    value: taxConfig.sellerSubregion,
+                    onChanged: (dynamic value) {
+                      viewModel.onCompanyChanged(
+                        company.rebuild(
+                          (b) => b..taxConfig.sellerSubregion = value,
+                        ),
+                      );
+                    },
+                    items: subregions
+                        .map(
+                          (code) => DropdownMenuItem(
+                            child: Text(
+                              region == kTaxRegionUnitedStates
                                   ? code
-                                  : (countryMap[code]?.name ?? code)),
-                              value: code))
-                          .toList()),
+                                  : (countryMap[code]?.name ?? code),
+                            ),
+                            value: code,
+                          ),
+                        )
+                        .toList(),
+                  ),
                   SizedBox(height: 12),
                   ...taxConfig.regions.keys.map((region) {
                     if (!_showDetails.containsKey(region)) {
@@ -219,23 +240,28 @@ class _TaxSettingsState extends State<TaxSettings> {
                     }
 
                     final taxDataRegion = taxConfig.regions[region]!;
-                    return Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child:
-                                    Text(countryMap[region]?.name ?? region)),
-                            Flexible(
-                              child: AppDropdownButton<bool>(
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(countryMap[region]?.name ?? region),
+                              ),
+                              Flexible(
+                                child: AppDropdownButton<bool>(
                                   value: taxDataRegion.taxAll,
                                   onChanged: (dynamic value) {
-                                    viewModel.onCompanyChanged(company.rebuild(
+                                    viewModel.onCompanyChanged(
+                                      company.rebuild(
                                         (b) => b
                                           ..taxConfig.regions[region] =
                                               taxDataRegion.rebuild(
-                                                  (b) => b..taxAll = value)));
+                                                (b) => b..taxAll = value,
+                                              ),
+                                      ),
+                                    );
                                   },
                                   items: [
                                     DropdownMenuItem<bool>(
@@ -250,89 +276,113 @@ class _TaxSettingsState extends State<TaxSettings> {
                                         dense: true,
                                         title: Text(localization.taxSelected),
                                         subtitle: Text(
-                                            '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element]!.applyTax).length} ${localization.selected}'),
+                                          '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element]!.applyTax).length} ${localization.selected}',
+                                        ),
                                       ),
                                       value: false,
                                     ),
-                                  ]),
-                            ),
-                            TextButton(
+                                  ],
+                                ),
+                              ),
+                              TextButton(
                                 onPressed: () {
                                   setState(() {
                                     _showDetails[region] =
                                         !_showDetails[region]!;
                                   });
                                 },
-                                child: Text(_showDetails[region]!
-                                    ? localization.hide
-                                    : localization.show))
-                          ],
-                        ),
-                      ),
-                      if (_showDetails[region]!) ...[
-                        SizedBox(height: 8),
-                        ...taxDataRegion.subregions.keys.map((subregion) {
-                          final taxDataSubregion =
-                              taxDataRegion.subregions[subregion]!;
-                          return Row(
-                            children: [
-                              Expanded(
-                                child: CheckboxListTile(
-                                  title: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(region ==
-                                                kTaxRegionUnitedStates
-                                            ? subregion
-                                            : (countryMap[subregion]?.name ??
-                                                subregion)),
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        '${taxDataSubregion.taxName}: ${formatNumber(taxDataSubregion.taxRate, context, formatNumberType: FormatNumberType.percent)! + (taxDataSubregion.reducedTaxRate != 0 ? ' • ' + formatNumber(taxDataSubregion.reducedTaxRate, context, formatNumberType: FormatNumberType.percent)! : '')}',
-                                      ))
-                                    ],
-                                  ),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  value: taxDataRegion.taxAll ||
-                                      taxDataSubregion.applyTax,
-                                  onChanged: taxDataRegion.taxAll
-                                      ? null
-                                      : (value) {
-                                          viewModel.onCompanyChanged(company.rebuild((b) => b
-                                            ..taxConfig.replace(taxConfig.rebuild((b) => b
-                                              ..regions[region] =
-                                                  taxDataRegion.rebuild((b) => b
-                                                    ..subregions[subregion] =
-                                                        taxDataSubregion.rebuild(
-                                                            (b) => b
-                                                              ..applyTax = value))))));
-                                        },
+                                child: Text(
+                                  _showDetails[region]!
+                                      ? localization.hide
+                                      : localization.show,
                                 ),
                               ),
-                              TextButton(
+                            ],
+                          ),
+                        ),
+                        if (_showDetails[region]!) ...[
+                          SizedBox(height: 8),
+                          ...taxDataRegion.subregions.keys.map((subregion) {
+                            final taxDataSubregion =
+                                taxDataRegion.subregions[subregion]!;
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: CheckboxListTile(
+                                    title: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            region == kTaxRegionUnitedStates
+                                                ? subregion
+                                                : (countryMap[subregion]
+                                                          ?.name ??
+                                                      subregion),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            '${taxDataSubregion.taxName}: ${formatNumber(taxDataSubregion.taxRate, context, formatNumberType: FormatNumberType.percent)! + (taxDataSubregion.reducedTaxRate != 0 ? ' • ' + formatNumber(taxDataSubregion.reducedTaxRate, context, formatNumberType: FormatNumberType.percent)! : '')}',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    value:
+                                        taxDataRegion.taxAll ||
+                                        taxDataSubregion.applyTax,
+                                    onChanged: taxDataRegion.taxAll
+                                        ? null
+                                        : (value) {
+                                            viewModel.onCompanyChanged(
+                                              company.rebuild(
+                                                (b) => b
+                                                  ..taxConfig.replace(
+                                                    taxConfig.rebuild(
+                                                      (b) => b
+                                                        ..regions[region] = taxDataRegion.rebuild(
+                                                          (b) => b
+                                                            ..subregions[subregion] =
+                                                                taxDataSubregion
+                                                                    .rebuild(
+                                                                      (b) => b
+                                                                        ..applyTax =
+                                                                            value,
+                                                                    ),
+                                                        ),
+                                                    ),
+                                                  ),
+                                              ),
+                                            );
+                                          },
+                                  ),
+                                ),
+                                TextButton(
                                   onPressed: () {
                                     showDialog<void>(
-                                        context: context,
-                                        builder: (context) =>
-                                            _EditSubregionDialog(
-                                              viewModel: viewModel,
-                                              subregionConfig: taxDataSubregion,
-                                              region: region,
-                                              subregion: subregion,
-                                            ));
+                                      context: context,
+                                      builder: (context) =>
+                                          _EditSubregionDialog(
+                                            viewModel: viewModel,
+                                            subregionConfig: taxDataSubregion,
+                                            region: region,
+                                            subregion: subregion,
+                                          ),
+                                    );
                                   },
-                                  child: Text(localization.edit))
-                            ],
-                          );
-                        }).toList(),
+                                  child: Text(localization.edit),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ],
                       ],
-                    ]);
+                    );
                   }).toList(),
-                ]
+                ],
               ],
-            )
+            ),
         ],
       ),
     );
@@ -360,22 +410,10 @@ class NumberOfRatesSelector extends StatelessWidget {
       onChanged: (dynamic value) =>
           onChanged(value == null || value.isEmpty ? null : int.parse(value)),
       items: [
-        DropdownMenuItem(
-          child: Text(localization.disabled),
-          value: '0',
-        ),
-        DropdownMenuItem(
-          child: Text(localization.oneTaxRate),
-          value: '1',
-        ),
-        DropdownMenuItem(
-          child: Text(localization.twoTaxRates),
-          value: '2',
-        ),
-        DropdownMenuItem(
-          child: Text(localization.threeTaxRates),
-          value: '3',
-        ),
+        DropdownMenuItem(child: Text(localization.disabled), value: '0'),
+        DropdownMenuItem(child: Text(localization.oneTaxRate), value: '1'),
+        DropdownMenuItem(child: Text(localization.twoTaxRates), value: '2'),
+        DropdownMenuItem(child: Text(localization.threeTaxRates), value: '3'),
       ],
     );
   }
@@ -422,13 +460,26 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
     final taxConfigRegion = taxConfig.regions[widget.region]!;
     final taxConfigSubregion = taxConfigRegion.subregions[widget.subregion];
 
-    viewModel.onCompanyChanged(company.rebuild((b) => b
-      ..taxConfig.replace(taxConfig.rebuild((b) => b
-        ..regions[widget.region] = taxConfigRegion.rebuild((b) => b
-          ..subregions[widget.subregion] = taxConfigSubregion!.rebuild((b) => b
-            ..taxName = _taxName
-            ..taxRate = _taxRate
-            ..reducedTaxRate = _reducedTaxRate))))));
+    viewModel.onCompanyChanged(
+      company.rebuild(
+        (b) => b
+          ..taxConfig.replace(
+            taxConfig.rebuild(
+              (b) => b
+                ..regions[widget.region] = taxConfigRegion.rebuild(
+                  (b) => b
+                    ..subregions[widget.subregion] = taxConfigSubregion!
+                        .rebuild(
+                          (b) => b
+                            ..taxName = _taxName
+                            ..taxRate = _taxRate
+                            ..reducedTaxRate = _reducedTaxRate,
+                        ),
+                ),
+            ),
+          ),
+      ),
+    );
 
     Navigator.of(context).pop();
   }
@@ -451,33 +502,40 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
         ),
       ],
       content: SingleChildScrollView(
-          child: Column(
-        children: [
-          DecoratedFormField(
-            label: localization.taxName,
-            keyboardType: TextInputType.text,
-            initialValue: subregionData.taxName,
-            onChanged: (value) => _taxName = value.trim(),
-            onSavePressed: (context) => _onDone(),
-          ),
-          DecoratedFormField(
-            label: localization.taxRate,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            initialValue: formatNumber(subregionData.taxRate, context,
-                formatNumberType: FormatNumberType.inputAmount),
-            onChanged: (value) => _taxRate = parseDouble(value),
-            onSavePressed: (context) => _onDone(),
-          ),
-          DecoratedFormField(
-            label: localization.reducedRate,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            initialValue: formatNumber(subregionData.reducedTaxRate, context,
-                formatNumberType: FormatNumberType.inputAmount),
-            onChanged: (value) => _reducedTaxRate = parseDouble(value),
-            onSavePressed: (context) => _onDone(),
-          ),
-        ],
-      )),
+        child: Column(
+          children: [
+            DecoratedFormField(
+              label: localization.taxName,
+              keyboardType: TextInputType.text,
+              initialValue: subregionData.taxName,
+              onChanged: (value) => _taxName = value.trim(),
+              onSavePressed: (context) => _onDone(),
+            ),
+            DecoratedFormField(
+              label: localization.taxRate,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              initialValue: formatNumber(
+                subregionData.taxRate,
+                context,
+                formatNumberType: FormatNumberType.inputAmount,
+              ),
+              onChanged: (value) => _taxRate = parseDouble(value),
+              onSavePressed: (context) => _onDone(),
+            ),
+            DecoratedFormField(
+              label: localization.reducedRate,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              initialValue: formatNumber(
+                subregionData.reducedTaxRate,
+                context,
+                formatNumberType: FormatNumberType.inputAmount,
+              ),
+              onChanged: (value) => _reducedTaxRate = parseDouble(value),
+              onSavePressed: (context) => _onDone(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

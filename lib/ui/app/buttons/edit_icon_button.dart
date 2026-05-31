@@ -9,10 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EditIconButton extends StatelessWidget {
-  const EditIconButton({
-    this.onPressed,
-    this.isVisible,
-  });
+  const EditIconButton({this.onPressed, this.isVisible});
 
   final bool? isVisible;
   final Function? onPressed;

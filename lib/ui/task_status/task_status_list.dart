@@ -13,10 +13,7 @@ import 'package:invoiceninja_flutter/ui/task_status/task_status_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusList extends StatefulWidget {
-  const TaskStatusList({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaskStatusList({Key? key, required this.viewModel}) : super(key: key);
 
   final TaskStatusListVM viewModel;
 
@@ -54,7 +51,8 @@ class _TaskStatusListState extends State<TaskStatusList> {
 
     if (viewModel.taskStatusList.isEmpty) {
       return Center(
-          child: HelpText(AppLocalization.of(context)!.noRecordsFound));
+        child: HelpText(AppLocalization.of(context)!.noRecordsFound),
+      );
     }
 
     return Stack(
@@ -83,17 +81,18 @@ class _TaskStatusListState extends State<TaskStatusList> {
               children: viewModel.taskStatusList.map((taskStatusId) {
                 final taskStatus = viewModel.taskStatusMap[taskStatusId];
                 return TaskStatusListItem(
-                    key: ValueKey('__task_status_$taskStatusId'),
-                    user: state.userCompany.user,
-                    filter: viewModel.filter,
-                    taskStatus: taskStatus,
-                    /*
+                  key: ValueKey('__task_status_$taskStatusId'),
+                  user: state.userCompany.user,
+                  filter: viewModel.filter,
+                  taskStatus: taskStatus,
+                  /*
                   onRemovePressed: widget.viewModel.state.settingsUIState.isFiltered
                       ? () => widget.viewModel.onRemovePressed(companyGatewayId)
                       : null,
                       */
-                    isChecked: isInMultiselect &&
-                        listUIState.isSelected(taskStatus!.id));
+                  isChecked:
+                      isInMultiselect && listUIState.isSelected(taskStatus!.id),
+                );
               }).toList(),
             ),
           ),

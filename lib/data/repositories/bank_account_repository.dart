@@ -8,16 +8,18 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 
 class BankAccountRepository {
-  const BankAccountRepository({
-    this.webClient = const WebClient(),
-  });
+  const BankAccountRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<BankAccountEntity> loadItem(
-      Credentials credentials, String? entityId) async {
+    Credentials credentials,
+    String? entityId,
+  ) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/bank_integrations/$entityId', credentials.token);
+      '${credentials.url}/bank_integrations/$entityId',
+      credentials.token,
+    );
 
     final BankAccountItemResponse bankAccountResponse = serializers
         .deserializeWith(BankAccountItemResponse.serializer, response)!;
@@ -36,15 +38,22 @@ class BankAccountRepository {
   }
 
   Future<List<BankAccountEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action,
+  ) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/bank_integrations/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({'ids': ids, 'action': action.toApiParam()}),
+    );
 
     final BankAccountListResponse bankAccountResponse = serializers
         .deserializeWith(BankAccountListResponse.serializer, response)!;
@@ -53,19 +62,28 @@ class BankAccountRepository {
   }
 
   Future<BankAccountEntity> saveData(
-      Credentials credentials, BankAccountEntity bankAccount) async {
-    final data =
-        serializers.serializeWith(BankAccountEntity.serializer, bankAccount);
+    Credentials credentials,
+    BankAccountEntity bankAccount,
+  ) async {
+    final data = serializers.serializeWith(
+      BankAccountEntity.serializer,
+      bankAccount,
+    );
     dynamic response;
 
     if (bankAccount.isNew) {
       response = await webClient.post(
-          credentials.url + '/bank_integrations', credentials.token,
-          data: json.encode(data));
+        credentials.url + '/bank_integrations',
+        credentials.token,
+        data: json.encode(data),
+      );
     } else {
       final url = '${credentials.url}/bank_integrations/${bankAccount.id}';
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     }
 
     final BankAccountItemResponse bankAccountResponse = serializers

@@ -57,55 +57,68 @@ class ClientPortalVM {
     final state = store.state;
 
     return ClientPortalVM(
-        state: state,
-        settings: state.uiState.settingsUIState.settings,
-        company: state.uiState.settingsUIState.company,
-        onSettingsChanged: (settings) =>
-            store.dispatch(UpdateSettings(settings: settings)),
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onSavePressed: (context) {
-          if (!state.isProPlan && !state.isTrial) {
-            return;
-          }
+      state: state,
+      settings: state.uiState.settingsUIState.settings,
+      company: state.uiState.settingsUIState.company,
+      onSettingsChanged: (settings) =>
+          store.dispatch(UpdateSettings(settings: settings)),
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onSavePressed: (context) {
+        if (!state.isProPlan && !state.isTrial) {
+          return;
+        }
 
-          Debouncer.runOnComplete(
-            () {
-              final settingsUIState = store.state.uiState.settingsUIState;
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
 
-              switch (settingsUIState.entityType) {
-                case EntityType.company:
-                  final completer = snackBarCompleter<Null>(
-                      AppLocalization.of(context)!.savedSettings);
+          switch (settingsUIState.entityType) {
+            case EntityType.company:
+              final completer = snackBarCompleter<Null>(
+                AppLocalization.of(context)!.savedSettings,
+              );
 
-                  final oldSubdomain = state.company.subdomain;
-                  final newSubdomain = settingsUIState.company.subdomain;
-                  if (oldSubdomain != newSubdomain) {
-                    completer.future.then<Null>((_) {
-                      showRefreshDataDialog(
-                          context: navigatorKey.currentContext!);
-                    });
-                  }
-
-                  store.dispatch(SaveCompanyRequest(
-                      completer: completer, company: settingsUIState.company));
-                  break;
-                case EntityType.group:
-                  final completer = snackBarCompleter<GroupEntity>(
-                      AppLocalization.of(context)!.savedSettings);
-                  store.dispatch(SaveGroupRequest(
-                      completer: completer, group: settingsUIState.group));
-                  break;
-                case EntityType.client:
-                  final completer = snackBarCompleter<ClientEntity>(
-                      AppLocalization.of(context)!.savedSettings);
-                  store.dispatch(SaveClientRequest(
-                      completer: completer, client: settingsUIState.client));
-                  break;
+              final oldSubdomain = state.company.subdomain;
+              final newSubdomain = settingsUIState.company.subdomain;
+              if (oldSubdomain != newSubdomain) {
+                completer.future.then<Null>((_) {
+                  showRefreshDataDialog(context: navigatorKey.currentContext!);
+                });
               }
-            },
-          );
+
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
+              break;
+            case EntityType.group:
+              final completer = snackBarCompleter<GroupEntity>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
+              break;
+            case EntityType.client:
+              final completer = snackBarCompleter<ClientEntity>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
+              break;
+          }
         });
+      },
+    );
   }
 
   final AppState state;

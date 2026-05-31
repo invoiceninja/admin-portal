@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewHistory extends StatefulWidget {
   const InvoiceViewHistory({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
 
@@ -47,12 +47,14 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
     final activityList = invoice.activities
         .where((activity) => (activity.history?.id ?? '').isNotEmpty)
-        .where((activity) => ![
-              kActivityViewInvoice,
-              kActivityViewQuote,
-              kActivityViewCredit,
-              kActivityViewPurchaseOrder,
-            ].contains(activity.activityTypeId))
+        .where(
+          (activity) => ![
+            kActivityViewInvoice,
+            kActivityViewQuote,
+            kActivityViewCredit,
+            kActivityViewPurchaseOrder,
+          ].contains(activity.activityTypeId),
+        )
         .toList();
     activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
@@ -94,14 +96,18 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
                 ' • ' +
                 personName,
           ),
-          subtitle: Text(formatDate(
-                convertTimestampToDateString(activity.createdAt),
-                context,
-                showTime: true,
-              ) +
-              ' • ' +
-              timeago.format(convertTimestampToDate(activity.createdAt),
-                  locale: localeSelector(state, twoLetter: true))),
+          subtitle: Text(
+            formatDate(
+                  convertTimestampToDateString(activity.createdAt),
+                  context,
+                  showTime: true,
+                ) +
+                ' • ' +
+                timeago.format(
+                  convertTimestampToDate(activity.createdAt),
+                  locale: localeSelector(state, twoLetter: true),
+                ),
+          ),
           trailing: activityId.isNotEmpty ? Icon(Icons.chevron_right) : null,
           onTap: activityId.isNotEmpty
               ? () => viewModel.onViewPdf!(context, invoice, history.activityId)

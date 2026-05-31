@@ -35,9 +35,7 @@ class TaxRateField extends StatelessWidget {
             keyboardType: TextInputType.text,
           ),
         ),
-        SizedBox(
-          width: kTableColumnGap,
-        ),
+        SizedBox(width: kTableColumnGap),
         Expanded(
           child: DecoratedFormField(
             label: localization.taxAmount,
@@ -46,8 +44,10 @@ class TaxRateField extends StatelessWidget {
               context,
               formatNumberType: FormatNumberType.inputMoney,
             ),
-            keyboardType:
-                TextInputType.numberWithOptions(decimal: true, signed: true),
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: true,
+              signed: true,
+            ),
             onChanged: (value) => onAmountChanged(parseDouble(value)),
             //textAlign: TextAlign.end,
           ),

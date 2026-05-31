@@ -46,8 +46,9 @@ class BoolDropdownButton extends StatelessWidget {
       return SwitchListTile(
         title: Text(label ?? ''),
         value: value ?? false,
-        secondary:
-            iconData != null && isDesktop(context) ? Icon(iconData) : null,
+        secondary: iconData != null && isDesktop(context)
+            ? Icon(iconData)
+            : null,
         onChanged: (value) => onChanged(value),
         activeThumbColor: Theme.of(context).colorScheme.secondary,
         subtitle: helpLabel != null ? Text(helpLabel!) : null,
@@ -62,18 +63,9 @@ class BoolDropdownButton extends StatelessWidget {
               isDense: true,
               onChanged: (value) => onChanged(value),
               items: [
-                DropdownMenuItem(
-                  child: Text(''),
-                  value: null,
-                ),
-                DropdownMenuItem(
-                  child: Text(falseLabel),
-                  value: false,
-                ),
-                DropdownMenuItem(
-                  child: Text(trueLabel),
-                  value: true,
-                ),
+                DropdownMenuItem(child: Text(''), value: null),
+                DropdownMenuItem(child: Text(falseLabel), value: false),
+                DropdownMenuItem(child: Text(trueLabel), value: true),
               ],
             ),
           )
@@ -89,14 +81,17 @@ class BoolDropdownButton extends StatelessWidget {
                     onTap: () => onChanged(false),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                          minWidth: minWidth ?? 130, minHeight: 36),
+                        minWidth: minWidth ?? 130,
+                        minHeight: 36,
+                      ),
                       child: Row(
                         children: [
                           IgnorePointer(
                             child: Radio<bool>(
                               value: false,
-                              activeColor:
-                                  Theme.of(context).colorScheme.secondary,
+                              activeColor: Theme.of(
+                                context,
+                              ).colorScheme.secondary,
                             ),
                           ),
                           Text(falseLabel),
@@ -109,14 +104,17 @@ class BoolDropdownButton extends StatelessWidget {
                     onTap: () => onChanged(true),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                          minWidth: minWidth ?? 120, minHeight: 36),
+                        minWidth: minWidth ?? 120,
+                        minHeight: 36,
+                      ),
                       child: Row(
                         children: [
                           IgnorePointer(
                             child: Radio<bool>(
                               value: true,
-                              activeColor:
-                                  Theme.of(context).colorScheme.secondary,
+                              activeColor: Theme.of(
+                                context,
+                              ).colorScheme.secondary,
                             ),
                           ),
                           Text(trueLabel),
@@ -135,11 +133,12 @@ class BoolDropdownButton extends StatelessWidget {
     }
 
     return InputDecorator(
-        decoration: InputDecoration(
-          border: _showBlank ? null : InputBorder.none,
-          labelText: label,
-        ),
-        isEmpty: '${value ?? ''}'.isEmpty,
-        child: widget);
+      decoration: InputDecoration(
+        border: _showBlank ? null : InputBorder.none,
+        labelText: label,
+      ),
+      isEmpty: '${value ?? ''}'.isEmpty,
+      child: widget,
+    );
   }
 }

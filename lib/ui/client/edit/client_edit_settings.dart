@@ -16,10 +16,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditSettings extends StatefulWidget {
-  const ClientEditSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientEditSettings({Key? key, required this.viewModel})
+    : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -35,20 +33,22 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _taskRateController,
-    ];
+    _controllers = [_taskRateController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final client = widget.viewModel.client;
     _taskRateController.text = formatNumber(
-        client.settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+      client.settings.defaultTaskRate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -65,9 +65,13 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..settings.defaultTaskRate =
-          parseDouble(_taskRateController.text, zeroIsNull: true));
+    final client = viewModel.client.rebuild(
+      (b) => b
+        ..settings.defaultTaskRate = parseDouble(
+          _taskRateController.text,
+          zeroIsNull: true,
+        ),
+    );
     if (client != viewModel.client) {
       _debouncer.run(() {
         viewModel.onChanged(client);
@@ -99,59 +103,81 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
           labelText: localization.currency,
           entityId: client.currencyId,
-          onSelected: (SelectableEntity? currency) => viewModel.onChanged(client
-              .rebuild((b) => b..settings.currencyId = currency?.id ?? '')),
+          onSelected: (SelectableEntity? currency) => viewModel.onChanged(
+            client.rebuild((b) => b..settings.currencyId = currency?.id ?? ''),
+          ),
         ),
         EntityDropdown(
           entityType: EntityType.language,
           entityList: memoizedLanguageList(viewModel.staticState.languageMap),
           labelText: localization.language,
           entityId: client.languageId,
-          onSelected: (SelectableEntity? language) => viewModel.onChanged(client
-              .rebuild((b) => b..settings.languageId = language?.id ?? '')),
+          onSelected: (SelectableEntity? language) => viewModel.onChanged(
+            client.rebuild((b) => b..settings.languageId = language?.id ?? ''),
+          ),
         ),
         if (company.isModuleEnabled(EntityType.invoice))
           AppDropdownButton<String>(
             showBlank: true,
             labelText: localization.invoicePaymentTerms,
-            items: memoizedDropdownPaymentTermList(
-                    state.paymentTermState.map, state.paymentTermState.list)
-                .map((paymentTermId) {
-              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
-              return DropdownMenuItem<String>(
-                child: Text(paymentTerm.numDays == 0
-                    ? localization.dueOnReceipt
-                    : paymentTerm.name),
-                value: paymentTerm.numDays.toString(),
-              );
-            }).toList(),
+            items:
+                memoizedDropdownPaymentTermList(
+                  state.paymentTermState.map,
+                  state.paymentTermState.list,
+                ).map((paymentTermId) {
+                  final paymentTerm =
+                      state.paymentTermState.map[paymentTermId]!;
+                  return DropdownMenuItem<String>(
+                    child: Text(
+                      paymentTerm.numDays == 0
+                          ? localization.dueOnReceipt
+                          : paymentTerm.name,
+                    ),
+                    value: paymentTerm.numDays.toString(),
+                  );
+                }).toList(),
             value: '${client.settings.defaultPaymentTerms}',
             onChanged: (dynamic numDays) {
-              viewModel.onChanged(client.rebuild((b) => b
-                ..settings.defaultPaymentTerms =
-                    numDays == null ? null : '$numDays'));
+              viewModel.onChanged(
+                client.rebuild(
+                  (b) => b
+                    ..settings.defaultPaymentTerms = numDays == null
+                        ? null
+                        : '$numDays',
+                ),
+              );
             },
           ),
         if (company.isModuleEnabled(EntityType.quote))
           AppDropdownButton<String>(
             showBlank: true,
             labelText: localization.quoteValidUntil,
-            items: memoizedDropdownPaymentTermList(
-                    state.paymentTermState.map, state.paymentTermState.list)
-                .map((paymentTermId) {
-              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
-              return DropdownMenuItem<String>(
-                child: Text(paymentTerm.numDays == 0
-                    ? localization.dueOnReceipt
-                    : paymentTerm.name),
-                value: paymentTerm.numDays.toString(),
-              );
-            }).toList(),
+            items:
+                memoizedDropdownPaymentTermList(
+                  state.paymentTermState.map,
+                  state.paymentTermState.list,
+                ).map((paymentTermId) {
+                  final paymentTerm =
+                      state.paymentTermState.map[paymentTermId]!;
+                  return DropdownMenuItem<String>(
+                    child: Text(
+                      paymentTerm.numDays == 0
+                          ? localization.dueOnReceipt
+                          : paymentTerm.name,
+                    ),
+                    value: paymentTerm.numDays.toString(),
+                  );
+                }).toList(),
             value: '${client.settings.defaultValidUntil}',
             onChanged: (dynamic numDays) {
-              viewModel.onChanged(client.rebuild((b) => b
-                ..settings.defaultValidUntil =
-                    numDays == null ? null : '$numDays'));
+              viewModel.onChanged(
+                client.rebuild(
+                  (b) => b
+                    ..settings.defaultValidUntil = numDays == null
+                        ? null
+                        : '$numDays',
+                ),
+              );
             },
           ),
         if (company.isModuleEnabled(EntityType.invoice)) ...[
@@ -182,21 +208,24 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               isMoney: true,
               label: localization.taskRate,
               onSavePressed: viewModel.onSavePressed,
-              keyboardType:
-                  TextInputType.numberWithOptions(decimal: true, signed: true),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: true,
+                signed: true,
+              ),
             ),
           AppDropdownButton(
             value: client.sizeId,
             labelText: localization.size,
             items: memoizedSizeList(state.staticState.sizeMap)
-                .map((sizeId) => DropdownMenuItem(
-                      child: Text(state.staticState.sizeMap[sizeId]!.name),
-                      value: sizeId,
-                    ))
+                .map(
+                  (sizeId) => DropdownMenuItem(
+                    child: Text(state.staticState.sizeMap[sizeId]!.name),
+                    value: sizeId,
+                  ),
+                )
                 .toList(),
-            onChanged: (dynamic sizeId) => viewModel.onChanged(
-              client.rebuild((b) => b..sizeId = sizeId),
-            ),
+            onChanged: (dynamic sizeId) =>
+                viewModel.onChanged(client.rebuild((b) => b..sizeId = sizeId)),
             showBlank: true,
           ),
           EntityDropdown(
@@ -205,7 +234,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             labelText: localization.industry,
             entityId: client.industryId,
             onSelected: (SelectableEntity? industry) => viewModel.onChanged(
-                client.rebuild((b) => b..industryId = industry?.id ?? '')),
+              client.rebuild((b) => b..industryId = industry?.id ?? ''),
+            ),
           ),
         ],
       ],

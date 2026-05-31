@@ -48,9 +48,11 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<VendorState> get serializer => _$vendorStateSerializer;
@@ -61,8 +63,10 @@ abstract class VendorUIState extends Object
     implements Built<VendorUIState, VendorUIStateBuilder> {
   factory VendorUIState(PrefStateSortField? sortField) {
     return _$VendorUIState._(
-      listUIState: ListUIState(sortField?.field ?? VendorFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? VendorFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
       selectedId: '',

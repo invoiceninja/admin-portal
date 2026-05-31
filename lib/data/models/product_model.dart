@@ -118,11 +118,13 @@ abstract class ProductEntity extends Object
   @memoized
   int get hashCode;
 
-  ProductEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..documents.clear()
-    ..isChanged = false
-    ..isDeleted = false);
+  ProductEntity get clone => rebuild(
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..documents.clear()
+      ..isChanged = false
+      ..isDeleted = false,
+  );
 
   @override
   EntityType get entityType {
@@ -213,9 +215,9 @@ abstract class ProductEntity extends Object
 
     switch (sortField) {
       case ProductFields.productKey:
-        response = productA!.productKey
-            .toLowerCase()
-            .compareTo(productB!.productKey.toLowerCase());
+        response = productA!.productKey.toLowerCase().compareTo(
+          productB!.productKey.toLowerCase(),
+        );
         break;
       case ProductFields.price:
         response = productA!.price.compareTo(productB!.price);
@@ -236,53 +238,55 @@ abstract class ProductEntity extends Object
         response = productA!.archivedAt.compareTo(productB!.archivedAt);
         break;
       case ProductFields.description:
-        response = productA!.notes
-            .toLowerCase()
-            .compareTo(productB!.notes.toLowerCase());
+        response = productA!.notes.toLowerCase().compareTo(
+          productB!.notes.toLowerCase(),
+        );
         break;
       case EntityFields.assignedTo:
         final userA = userMap![productA!.assignedUserId] ?? UserEntity();
         final userB = userMap[productB!.assignedUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.createdBy:
         final userA = userMap![productA!.createdUserId] ?? UserEntity();
         final userB = userMap[productB!.createdUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.state:
         final stateA = EntityState.valueOf(productA!.entityState);
         final stateB = EntityState.valueOf(productB!.entityState);
-        response =
-            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        response = stateA.name.toLowerCase().compareTo(
+          stateB.name.toLowerCase(),
+        );
         break;
       case ProductFields.customValue1:
-        response = productA!.customValue1
-            .toLowerCase()
-            .compareTo(productB!.customValue1.toLowerCase());
+        response = productA!.customValue1.toLowerCase().compareTo(
+          productB!.customValue1.toLowerCase(),
+        );
         break;
       case ProductFields.customValue2:
-        response = productA!.customValue2
-            .toLowerCase()
-            .compareTo(productB!.customValue2.toLowerCase());
+        response = productA!.customValue2.toLowerCase().compareTo(
+          productB!.customValue2.toLowerCase(),
+        );
         break;
       case ProductFields.customValue3:
-        response = productA!.customValue3
-            .toLowerCase()
-            .compareTo(productB!.customValue3.toLowerCase());
+        response = productA!.customValue3.toLowerCase().compareTo(
+          productB!.customValue3.toLowerCase(),
+        );
         break;
       case ProductFields.customValue4:
-        response = productA!.customValue4
-            .toLowerCase()
-            .compareTo(productB!.customValue4.toLowerCase());
+        response = productA!.customValue4.toLowerCase().compareTo(
+          productB!.customValue4.toLowerCase(),
+        );
         break;
       case ProductFields.documents:
-        response =
-            productA!.documents.length.compareTo(productB!.documents.length);
+        response = productA!.documents.length.compareTo(
+          productB!.documents.length,
+        );
         break;
       case ProductFields.stockQuantity:
         response = productA!.stockQuantity.compareTo(productB!.stockQuantity);
@@ -329,12 +333,13 @@ abstract class ProductEntity extends Object
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted!) {

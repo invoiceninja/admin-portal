@@ -45,22 +45,20 @@ class EntityHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(label!,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: textColor!.withValues(alpha: .65),
-                )),
-            SizedBox(
-              height: 8,
+            Text(
+              label!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: textColor!.withValues(alpha: .65),
+              ),
             ),
+            SizedBox(height: 8),
             FittedBox(
               child: Text(
                 (value ?? '').isEmpty ? ' ' : value!,
-                style: TextStyle(
-                  fontSize: 30,
-                ),
+                style: TextStyle(fontSize: 30),
               ),
-            )
+            ),
           ],
         ),
       );
@@ -73,22 +71,20 @@ class EntityHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(secondLabel!,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: textColor!.withValues(alpha: .65),
-                )),
-            SizedBox(
-              height: 8,
+            Text(
+              secondLabel!,
+              style: TextStyle(
+                fontSize: 16.0,
+                color: textColor!.withValues(alpha: .65),
+              ),
             ),
+            SizedBox(height: 8),
             FittedBox(
               child: Text(
                 (secondValue ?? '').isEmpty ? ' ' : secondValue!,
-                style: TextStyle(
-                  fontSize: 30,
-                ),
+                style: TextStyle(fontSize: 30),
               ),
-            )
+            ),
           ],
         ),
       );
@@ -119,10 +115,7 @@ class EntityHeader extends StatelessWidget {
                   if (statusLabel != null)
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: EntityStatusChip(
-                        entity: entity,
-                        width: null,
-                      ),
+                      child: EntityStatusChip(entity: entity, width: null),
                     ),
                   if (!entity.isActive)
                     DecoratedBox(
@@ -130,8 +123,9 @@ class EntityHeader extends StatelessWidget {
                         color: entity.isArchived
                             ? Colors.orange
                             : prefState.colorThemeModel!.colorDanger,
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(kBorderRadius)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(kBorderRadius),
+                        ),
                       ),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
@@ -140,7 +134,9 @@ class EntityHeader extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 8),
+                            vertical: 5,
+                            horizontal: 8,
+                          ),
                           child: Text(
                             entity.isArchived
                                 ? localization!.archived
@@ -151,7 +147,7 @@ class EntityHeader extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
                 ],
               ),
             ),

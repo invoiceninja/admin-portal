@@ -84,17 +84,37 @@ class RecurringExpensePresenter extends EntityPresenter {
       case RecurringExpenseFields.lastSentDate:
         return Text(formatDate(expense!.lastSentDate, context));
       case RecurringExpenseFields.netAmount:
-        return Text(formatNumber(expense!.netAmount, context,
-            currencyId: expense.currencyId)!);
+        return Text(
+          formatNumber(
+            expense!.netAmount,
+            context,
+            currencyId: expense.currencyId,
+          )!,
+        );
       case RecurringExpenseFields.amount:
-        return Text(formatNumber(expense!.grossAmount, context,
-            currencyId: expense.currencyId)!);
+        return Text(
+          formatNumber(
+            expense!.grossAmount,
+            context,
+            currencyId: expense.currencyId,
+          )!,
+        );
       case RecurringExpenseFields.convertedAmount:
-        return Text(formatNumber(expense!.convertedAmount, context,
-            currencyId: expense.invoiceCurrencyId)!);
+        return Text(
+          formatNumber(
+            expense!.convertedAmount,
+            context,
+            currencyId: expense.invoiceCurrencyId,
+          )!,
+        );
       case RecurringExpenseFields.taxAmount:
-        return Text(formatNumber(expense!.taxAmount, context,
-            currencyId: expense.currencyId)!);
+        return Text(
+          formatNumber(
+            expense!.taxAmount,
+            context,
+            currencyId: expense.currencyId,
+          )!,
+        );
       case RecurringExpenseFields.publicNotes:
         return TableTooltip(message: expense!.publicNotes);
       case RecurringExpenseFields.number:
@@ -104,22 +124,36 @@ class RecurringExpensePresenter extends EntityPresenter {
       case RecurringExpenseFields.shouldBeInvoiced:
         return Text(expense!.shouldBeInvoiced.toString());
       case RecurringExpenseFields.currencyId:
-        return Text(state.staticState.currencyMap[expense!.currencyId]
-                ?.listDisplayName ??
-            '');
+        return Text(
+          state.staticState.currencyMap[expense!.currencyId]?.listDisplayName ??
+              '',
+        );
       case RecurringExpenseFields.category:
-        return Text(state.expenseCategoryState.map[expense!.categoryId]
-                ?.listDisplayName ??
-            '');
+        return Text(
+          state
+                  .expenseCategoryState
+                  .map[expense!.categoryId]
+                  ?.listDisplayName ??
+              '',
+        );
       case RecurringExpenseFields.paymentDate:
         return Text(formatDate(expense!.paymentDate, context));
       case RecurringExpenseFields.exchangeRate:
-        return Text(formatNumber(expense!.exchangeRate, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            expense!.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case RecurringExpenseFields.invoiceCurrencyId:
-        return Text(state.staticState.currencyMap[expense!.invoiceCurrencyId]
-                ?.listDisplayName ??
-            '');
+        return Text(
+          state
+                  .staticState
+                  .currencyMap[expense!.invoiceCurrencyId]
+                  ?.listDisplayName ??
+              '',
+        );
       case RecurringExpenseFields.taxName1:
         return Text(expense!.taxName1);
       case RecurringExpenseFields.taxName2:
@@ -127,17 +161,33 @@ class RecurringExpensePresenter extends EntityPresenter {
       case RecurringExpenseFields.taxName3:
         return Text(expense!.taxName3);
       case RecurringExpenseFields.taxRate1:
-        return Text(formatNumber(expense!.taxRate1, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            expense!.taxRate1,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case RecurringExpenseFields.taxRate2:
-        return Text(formatNumber(expense!.taxRate2, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            expense!.taxRate2,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case RecurringExpenseFields.taxRate3:
-        return Text(formatNumber(expense!.taxRate3, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            expense!.taxRate3,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case RecurringExpenseFields.invoiceId:
         return Text(
-            state.invoiceState.map[expense!.invoiceId]?.listDisplayName ?? '');
+          state.invoiceState.map[expense!.invoiceId]?.listDisplayName ?? '',
+        );
       case RecurringExpenseFields.customValue1:
         return Text(presentCustomField(context, expense!.customValue1)!);
       case RecurringExpenseFields.customValue2:

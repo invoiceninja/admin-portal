@@ -32,29 +32,30 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
       converter: ExpenseCategoryListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.expenseCategory,
-            presenter: ExpenseCategoryPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.expenseCategoryList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final expenseCategoryId = viewModel.expenseCategoryList[index];
-              final expenseCategory =
-                  viewModel.expenseCategoryMap[expenseCategoryId]!;
-              final listState = state.getListState(EntityType.expenseCategory);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.expenseCategory,
+          presenter: ExpenseCategoryPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.expenseCategoryList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final expenseCategoryId = viewModel.expenseCategoryList[index];
+            final expenseCategory =
+                viewModel.expenseCategoryMap[expenseCategoryId]!;
+            final listState = state.getListState(EntityType.expenseCategory);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return ExpenseCategoryListItem(
-                filter: viewModel.filter,
-                expenseCategory: expenseCategory,
-                isChecked:
-                    isInMultiselect && listState.isSelected(expenseCategory.id),
-              );
-            });
+            return ExpenseCategoryListItem(
+              filter: viewModel.filter,
+              expenseCategory: expenseCategory,
+              isChecked:
+                  isInMultiselect && listState.isSelected(expenseCategory.id),
+            );
+          },
+        );
       },
     );
   }
@@ -81,8 +82,9 @@ class ExpenseCategoryListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -94,19 +96,25 @@ class ExpenseCategoryListVM {
       userCompany: state.userCompany,
       listState: state.expenseCategoryListState,
       expenseCategoryList: memoizedFilteredExpenseCategoryList(
-          state.getUISelection(EntityType.expenseCategory),
-          state.expenseCategoryState.map,
-          state.expenseCategoryState.list,
-          state.expenseCategoryListState),
+        state.getUISelection(EntityType.expenseCategory),
+        state.expenseCategoryState.map,
+        state.expenseCategoryState.list,
+        state.expenseCategoryListState,
+      ),
       expenseCategoryMap: state.expenseCategoryState.map,
       isLoading: state.isLoading,
       filter: state.expenseCategoryUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> expenseCategories,
-              EntityAction action) =>
-          handleExpenseCategoryAction(context, expenseCategories, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> expenseCategories,
+            EntityAction action,
+          ) => handleExpenseCategoryAction(context, expenseCategories, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.expenseCategory) ??
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
+            EntityType.expenseCategory,
+          ) ??
           ExpenseCategoryPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenseCategories(field)),
       onClearMultielsect: () =>

@@ -16,21 +16,19 @@ class ViewScheduleList implements PersistUI {
 }
 
 class ViewSchedule implements PersistUI, PersistPrefs {
-  ViewSchedule({
-    required this.scheduleId,
-    this.force = false,
-  });
+  ViewSchedule({required this.scheduleId, this.force = false});
 
   final String? scheduleId;
   final bool force;
 }
 
 class EditSchedule implements PersistUI, PersistPrefs {
-  EditSchedule(
-      {required this.schedule,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditSchedule({
+    required this.schedule,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final ScheduleEntity schedule;
   final Completer? completer;
@@ -263,7 +261,10 @@ class UpdateScheduleTab implements PersistUI {
 }
 
 void handleScheduleAction(
-    BuildContext? context, List<BaseEntity> schedules, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> schedules,
+  EntityAction? action,
+) {
   if (schedules.isEmpty) {
     return;
   }
@@ -278,18 +279,28 @@ void handleScheduleAction(
       editEntity(entity: schedule);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreSchedulesRequest(
+      store.dispatch(
+        RestoreSchedulesRequest(
           snackBarCompleter<Null>(localization!.restoredSchedule),
-          scheduleIds));
+          scheduleIds,
+        ),
+      );
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveSchedulesRequest(
+      store.dispatch(
+        ArchiveSchedulesRequest(
           snackBarCompleter<Null>(localization!.archivedSchedule),
-          scheduleIds));
+          scheduleIds,
+        ),
+      );
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteSchedulesRequest(
-          snackBarCompleter<Null>(localization!.deletedSchedule), scheduleIds));
+      store.dispatch(
+        DeleteSchedulesRequest(
+          snackBarCompleter<Null>(localization!.deletedSchedule),
+          scheduleIds,
+        ),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.scheduleListState.isInMultiselect()) {
@@ -309,9 +320,7 @@ void handleScheduleAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [schedule],
-      );
+      showEntityActionsDialog(entities: [schedule]);
       break;
     default:
       print('## ERROR: unhandled action $action in schedule_actions');

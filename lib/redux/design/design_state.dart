@@ -35,7 +35,8 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
 
   DesignEntity get cleanDesign =>
       map[list.firstWhereOrNull(
-          (id) => !map[id]!.isCustom && map[id]!.name == 'Clean')] ??
+        (id) => !map[id]!.isCustom && map[id]!.name == 'Clean',
+      )] ??
       DesignEntity();
 
   List<DesignEntity?> get customDesigns => list
@@ -50,9 +51,11 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<DesignState> get serializer => _$designStateSerializer;
@@ -63,8 +66,10 @@ abstract class DesignUIState extends Object
     implements Built<DesignUIState, DesignUIStateBuilder> {
   factory DesignUIState(PrefStateSortField? sortField) {
     return _$DesignUIState._(
-      listUIState: ListUIState(sortField?.field ?? DesignFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? DesignFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: DesignEntity(),
       selectedId: '',
       tabIndex: 0,

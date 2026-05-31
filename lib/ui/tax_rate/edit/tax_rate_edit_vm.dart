@@ -81,29 +81,35 @@ class TaxRateEditVM {
           final Completer<TaxRateEntity> completer =
               new Completer<TaxRateEntity>();
           store.dispatch(
-              SaveTaxRateRequest(completer: completer, taxRate: taxRate));
-          return completer.future.then((savedTaxRate) {
-            showToast(taxRate!.isNew
-                ? localization!.createdTaxRate
-                : localization!.updatedTaxRate);
+            SaveTaxRateRequest(completer: completer, taxRate: taxRate),
+          );
+          return completer.future
+              .then((savedTaxRate) {
+                showToast(
+                  taxRate!.isNew
+                      ? localization!.createdTaxRate
+                      : localization!.updatedTaxRate,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
-              if (taxRate.isNew) {
-                navigator!.pushReplacementNamed(TaxRateViewScreen.route);
-              } else {
-                navigator!.pop(savedTaxRate);
-              }
-            } else {
-              viewEntity(entity: savedTaxRate, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
+                  if (taxRate.isNew) {
+                    navigator!.pushReplacementNamed(TaxRateViewScreen.route);
+                  } else {
+                    navigator!.pop(savedTaxRate);
+                  }
+                } else {
+                  viewEntity(entity: savedTaxRate, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

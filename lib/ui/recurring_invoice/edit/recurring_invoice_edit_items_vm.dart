@@ -62,21 +62,23 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
     Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
     Function(int, int)? onMovedInvoiceItem,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          addLineItem: addLineItem,
-          cloneLineItem: cloneLineItem,
-          deleteLineItem: deleteLineItem,
-          invoiceItemIndex: invoiceItemIndex,
-          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-          clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
-          onChangedInvoiceItem: onChangedInvoiceItem,
-          onMovedInvoiceItem: onMovedInvoiceItem,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         addLineItem: addLineItem,
+         cloneLineItem: cloneLineItem,
+         deleteLineItem: deleteLineItem,
+         invoiceItemIndex: invoiceItemIndex,
+         onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+         clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
+         onChangedInvoiceItem: onChangedInvoiceItem,
+         onMovedInvoiceItem: onMovedInvoiceItem,
+       );
 
   factory RecurringInvoiceEditItemsVM.fromStore(
-      Store<AppState> store, bool isTasks) {
+    Store<AppState> store,
+    bool isTasks,
+  ) {
     final state = store.state;
     final company = state.company;
     final invoice = store.state.recurringInvoiceUIState.editing;
@@ -95,11 +97,16 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
       onChangedInvoiceItem: (item, index) {
         final invoice = store.state.recurringInvoiceUIState.editing!;
         if (index == invoice.lineItems.length) {
-          store.dispatch(AddRecurringInvoiceItem(
-              invoiceItem: item.rebuild((b) => b
-                ..typeId = isTasks
-                    ? InvoiceItemEntity.TYPE_TASK
-                    : InvoiceItemEntity.TYPE_STANDARD)));
+          store.dispatch(
+            AddRecurringInvoiceItem(
+              invoiceItem: item.rebuild(
+                (b) => b
+                  ..typeId = isTasks
+                      ? InvoiceItemEntity.TYPE_TASK
+                      : InvoiceItemEntity.TYPE_STANDARD,
+              ),
+            ),
+          );
         } else {
           store.dispatch(UpdateRecurringInvoiceItem(item: item, index: index));
         }

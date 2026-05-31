@@ -21,10 +21,7 @@ class ViewBankAccountList implements PersistUI {
 }
 
 class ViewBankAccount implements PersistUI, PersistPrefs {
-  ViewBankAccount({
-    required this.bankAccountId,
-    this.force = false,
-  });
+  ViewBankAccount({required this.bankAccountId, this.force = false});
 
   final String? bankAccountId;
   final bool force;
@@ -266,8 +263,11 @@ class UpdateBankAccountTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleBankAccountAction(BuildContext? context,
-    List<BaseEntity> bankAccounts, EntityAction? action) {
+void handleBankAccountAction(
+  BuildContext? context,
+  List<BaseEntity> bankAccounts,
+  EntityAction? action,
+) {
   if (bankAccounts.isEmpty) {
     return;
   }
@@ -276,32 +276,44 @@ void handleBankAccountAction(BuildContext? context,
   final state = store.state;
   final localization = AppLocalization.of(context);
   final bankAccount = bankAccounts.first as BankAccountEntity;
-  final bankAccountIds =
-      bankAccounts.map((bankAccount) => bankAccount.id).toList();
+  final bankAccountIds = bankAccounts
+      .map((bankAccount) => bankAccount.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
       editEntity(entity: bankAccount);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreBankAccountsRequest(
+      store.dispatch(
+        RestoreBankAccountsRequest(
           snackBarCompleter<Null>(localization!.restoredBankAccount),
-          bankAccountIds));
+          bankAccountIds,
+        ),
+      );
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveBankAccountsRequest(
+      store.dispatch(
+        ArchiveBankAccountsRequest(
           snackBarCompleter<Null>(localization!.archivedBankAccount),
-          bankAccountIds));
+          bankAccountIds,
+        ),
+      );
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteBankAccountsRequest(
+      store.dispatch(
+        DeleteBankAccountsRequest(
           snackBarCompleter<Null>(localization!.deletedBankAccount),
-          bankAccountIds));
+          bankAccountIds,
+        ),
+      );
       break;
     case EntityAction.newTransaction:
       createEntity(
-          entity: TransactionEntity(state: state)
-              .rebuild((b) => b..bankAccountId = bankAccount.id));
+        entity: TransactionEntity(
+          state: state,
+        ).rebuild((b) => b..bankAccountId = bankAccount.id),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.bankAccountListState.isInMultiselect()) {
@@ -327,35 +339,37 @@ void handleBankAccountAction(BuildContext? context,
 
       store.dispatch(StartSaving());
       WebClient()
-          .post(url, credentials.token,
-              data: jsonEncode({
-                'context':
-                    integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
-                        ? {'return_url': ''}
-                        : 'nordigen',
-              }))
+          .post(
+            url,
+            credentials.token,
+            data: jsonEncode({
+              'context':
+                  integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
+                  ? {'return_url': ''}
+                  : 'nordigen',
+            }),
+          )
           .then((dynamic response) {
-        store.dispatch(StopSaving());
+            store.dispatch(StopSaving());
 
-        String connectUrl = cleanApiUrl(credentials.url);
-        if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
-          connectUrl += '/yodlee/onboard/${response['hash']}';
-        } else {
-          connectUrl +=
-              '/nordigen/connect/${response['hash']}?institution_id=' +
+            String connectUrl = cleanApiUrl(credentials.url);
+            if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
+              connectUrl += '/yodlee/onboard/${response['hash']}';
+            } else {
+              connectUrl +=
+                  '/nordigen/connect/${response['hash']}?institution_id=' +
                   bankAccount.nordigenInstitutionId;
-        }
+            }
 
-        launchUrl(Uri.parse(connectUrl));
-      }).catchError((dynamic error) {
-        store.dispatch(StopSaving());
-        showErrorDialog(message: '$error');
-      });
+            launchUrl(Uri.parse(connectUrl));
+          })
+          .catchError((dynamic error) {
+            store.dispatch(StopSaving());
+            showErrorDialog(message: '$error');
+          });
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [bankAccount],
-      );
+      showEntityActionsDialog(entities: [bankAccount]);
       break;
     default:
       print('## ERROR: unhandled action $action in bank_account_actions');

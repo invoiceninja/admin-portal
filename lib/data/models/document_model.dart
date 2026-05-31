@@ -147,10 +147,12 @@ abstract class DocumentEntity extends Object
   @BuiltValueField(wireName: 'parent_type')
   EntityType? get parentType;
 
-  DocumentEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..isChanged = false
-    ..isDeleted = false);
+  DocumentEntity get clone => rebuild(
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..isChanged = false
+      ..isDeleted = false,
+  );
 
   @override
   EntityType get entityType {
@@ -194,17 +196,20 @@ abstract class DocumentEntity extends Object
     return fileName.endsWith('.txt');
   }
 
-  int compareTo(DocumentEntity? document,
-      [String? sortField, bool sortAscending = true]) {
+  int compareTo(
+    DocumentEntity? document, [
+    String? sortField,
+    bool sortAscending = true,
+  ]) {
     int response = 0;
     final DocumentEntity? documentA = sortAscending ? this : document;
     final DocumentEntity? documentB = sortAscending ? document : this;
 
     switch (sortField) {
       case DocumentFields.name:
-        response = documentA!.name
-            .toLowerCase()
-            .compareTo(documentB!.name.toLowerCase());
+        response = documentA!.name.toLowerCase().compareTo(
+          documentB!.name.toLowerCase(),
+        );
         break;
       case DocumentFields.id:
         response = documentA!.id.compareTo(documentB!.id);
@@ -231,8 +236,9 @@ abstract class DocumentEntity extends Object
         if (documentA!.parentType == documentB!.parentType) {
           response = documentA.parentId!.compareTo(documentB.parentId!);
         } else {
-          response =
-              '${documentA.parentType}'.compareTo('${documentB.parentType}');
+          response = '${documentA.parentType}'.compareTo(
+            '${documentB.parentType}',
+          );
         }
         break;
       default:
@@ -279,14 +285,7 @@ abstract class DocumentEntity extends Object
   @override
   bool matchesFilter(String? filter) {
     return matchesStrings(
-      haystacks: [
-        name,
-        type,
-        preview,
-        '$prettySize',
-        '$width',
-        '$height',
-      ],
+      haystacks: [name, type, preview, '$prettySize', '$width', '$height'],
       needle: filter,
     );
   }
@@ -294,22 +293,19 @@ abstract class DocumentEntity extends Object
   @override
   String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
-      haystacks: [
-        name,
-        type,
-        preview,
-      ],
+      haystacks: [name, type, preview],
       needle: filter,
     );
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {

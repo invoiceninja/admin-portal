@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskEdit extends StatefulWidget {
-  const TaskEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaskEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final TaskEditVM viewModel;
 
@@ -37,8 +34,9 @@ class _TaskEditState extends State<TaskEdit>
   TabController? _controller;
   int _updatedAt = 0;
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_taskEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_taskEdit',
+  );
 
   static const kDetailsScreen = 0;
   static const kTimesScreen = 1;
@@ -47,8 +45,9 @@ class _TaskEditState extends State<TaskEdit>
   void initState() {
     super.initState();
 
-    final index =
-        widget.viewModel.taskTimeIndex != null ? kTimesScreen : kDetailsScreen;
+    final index = widget.viewModel.taskTimeIndex != null
+        ? kTimesScreen
+        : kDetailsScreen;
 
     _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
@@ -101,28 +100,22 @@ class _TaskEditState extends State<TaskEdit>
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context, [EntityAction? action]) =>
           _onSavePressed(context, action),
-      actions: task.getActions(
-        userCompany: state.userCompany,
-        client: client,
-      ),
+      actions: task.getActions(userCompany: state.userCompany, client: client),
       onActionPressed: (context, action) => _onSavePressed(context, action),
       appBarBottom: TabBar(
         controller: _controller,
         //isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.times,
-          ),
+          Tab(text: localization.details),
+          Tab(text: localization.times),
         ],
       ),
       body: Form(
         key: _formKey,
         child: isFullscreen
             ? TaskEditDetailsScreen(
-                key: ValueKey('__task_${task.id}_${_updatedAt}__'))
+                key: ValueKey('__task_${task.id}_${_updatedAt}__'),
+              )
             : TabBarView(
                 key: ValueKey('__task_${task.id}_${_updatedAt}__'),
                 controller: _controller,
@@ -132,9 +125,7 @@ class _TaskEditState extends State<TaskEdit>
                 ],
               ),
       ),
-      bottomNavigationBar: _BottomBar(
-        task: task,
-      ),
+      bottomNavigationBar: _BottomBar(task: task),
       floatingActionButton: task.isInvoiced || task.isDeleted!
           ? SizedBox()
           : FloatingActionButton(
@@ -157,10 +148,7 @@ class _TaskEditState extends State<TaskEdit>
 }
 
 class _BottomBar extends StatelessWidget {
-  const _BottomBar({
-    Key? key,
-    required this.task,
-  }) : super(key: key);
+  const _BottomBar({Key? key, required this.task}) : super(key: key);
 
   final TaskEntity task;
 
@@ -193,9 +181,11 @@ class _BottomBar extends StatelessWidget {
                         store.dispatch(ToggleEditorLayout(EntityType.task)),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Icon(useSidebarEditor
-                          ? Icons.chevron_left
-                          : Icons.chevron_right),
+                      child: Icon(
+                        useSidebarEditor
+                            ? Icons.chevron_left
+                            : Icons.chevron_right,
+                      ),
                     ),
                   ),
                 ),
@@ -205,46 +195,56 @@ class _BottomBar extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 16),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: LiveText(() {
-                      var title = (isDesktop(context) && !useSidebarEditor
-                              ? (localization!.duration + ' ')
-                              : '') +
-                          formatNumber(
+                    child: LiveText(
+                      () {
+                        var title =
+                            (isDesktop(context) && !useSidebarEditor
+                                ? (localization!.duration + ' ')
+                                : '') +
+                            formatNumber(
                               task.calculateDuration().inSeconds.toDouble(),
                               context,
-                              formatNumberType: FormatNumberType.duration)!;
-
-                      final duration = task.calculateDuration();
-                      if (duration.inSeconds > 0) {
-                        title += ' • ' +
-                            formatNumber(
-                              task.calculateAmount(
-                                taskRateSelector(
-                                  company: state.company,
-                                  project:
-                                      state.projectState.get(task.projectId),
-                                  client: state.clientState.get(task.clientId),
-                                  task: task,
-                                  group: null,
-                                )!,
-                              ),
-                              context,
-                              clientId: state.clientState.get(task.clientId).id,
+                              formatNumberType: FormatNumberType.duration,
                             )!;
-                      }
 
-                      if (task.number.isNotEmpty) {
-                        return '${task.number} • $title';
-                      }
+                        final duration = task.calculateDuration();
+                        if (duration.inSeconds > 0) {
+                          title +=
+                              ' • ' +
+                              formatNumber(
+                                task.calculateAmount(
+                                  taskRateSelector(
+                                    company: state.company,
+                                    project: state.projectState.get(
+                                      task.projectId,
+                                    ),
+                                    client: state.clientState.get(
+                                      task.clientId,
+                                    ),
+                                    task: task,
+                                    group: null,
+                                  )!,
+                                ),
+                                context,
+                                clientId: state.clientState
+                                    .get(task.clientId)
+                                    .id,
+                              )!;
+                        }
 
-                      return title;
-                    },
-                        style: TextStyle(
-                          color: state.prefState.enableDarkMode
-                              ? Colors.white
-                              : Colors.black,
-                          fontSize: 20.0,
-                        )),
+                        if (task.number.isNotEmpty) {
+                          return '${task.number} • $title';
+                        }
+
+                        return title;
+                      },
+                      style: TextStyle(
+                        color: state.prefState.enableDarkMode
+                            ? Colors.white
+                            : Colors.black,
+                        fontSize: 20.0,
+                      ),
+                    ),
                   ),
                 ),
               ),

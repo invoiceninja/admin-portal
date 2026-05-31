@@ -48,9 +48,10 @@ class _VendorViewState extends State<VendorView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: state.company.isModuleEnabled(EntityType.document) ? 4 : 3,
-        initialIndex: widget.isFilter ? 0 : state.vendorUIState.tabIndex);
+      vsync: this,
+      length: state.company.isModuleEnabled(EntityType.document) ? 4 : 3,
+      initialIndex: widget.isFilter ? 0 : state.vendorUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -96,13 +97,12 @@ class _VendorViewState extends State<VendorView>
           children: [
             EntityTopFilterHeader(),
             Expanded(
-                child: AppBorder(
-              isTop: true,
-              isBottom: true,
-              child: VendorViewFullwidth(
-                viewModel: viewModel,
+              child: AppBorder(
+                isTop: true,
+                isBottom: true,
+                child: VendorViewFullwidth(viewModel: viewModel),
               ),
-            )),
+            ),
           ],
         ),
       );
@@ -115,66 +115,60 @@ class _VendorViewState extends State<VendorView>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization!.overview,
-          ),
-          Tab(
-            text: localization.details,
-          ),
+          Tab(text: localization!.overview),
+          Tab(text: localization.details),
           if (company.isModuleEnabled(EntityType.document))
             Tab(
               text: documents.isEmpty
                   ? localization.documents
                   : '${localization.documents} (${documents.length})',
             ),
-          Tab(
-            text: localization.activity,
-          ),
+          Tab(text: localization.activity),
         ],
       ),
-      body: Builder(builder: (context) {
-        return Column(
-          children: [
-            Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: <Widget>[
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: VendorOverview(
-                      viewModel: viewModel,
-                      isFilter: widget.isFilter,
-                    ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: VendorViewDetails(vendor: viewModel.vendor),
-                  ),
-                  if (company.isModuleEnabled(EntityType.document))
+      body: Builder(
+        builder: (context) {
+          return Column(
+            children: [
+              Expanded(
+                child: TabBarView(
+                  controller: _controller,
+                  children: <Widget>[
                     RefreshIndicator(
                       onRefresh: () => viewModel.onRefreshed(context),
-                      child: VendorViewDocuments(
+                      child: VendorOverview(
                         viewModel: viewModel,
+                        isFilter: widget.isFilter,
                       ),
                     ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: VendorViewActivity(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.vendor.id),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: VendorViewDetails(vendor: viewModel.vendor),
                     ),
-                  ),
-                ],
+                    if (company.isModuleEnabled(EntityType.document))
+                      RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: VendorViewDocuments(viewModel: viewModel),
+                      ),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: VendorViewActivity(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.vendor.id),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            BottomButtons(
-              entity: vendor,
-              action1: EntityAction.newExpense,
-              action2: EntityAction.archive,
-            ),
-          ],
-        );
-      }),
+              BottomButtons(
+                entity: vendor,
+                action1: EntityAction.newExpense,
+                action2: EntityAction.archive,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

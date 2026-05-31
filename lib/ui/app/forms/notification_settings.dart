@@ -16,10 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class NotificationSettings extends StatelessWidget {
-  const NotificationSettings({
-    required this.user,
-    required this.onChanged,
-  });
+  const NotificationSettings({required this.user, required this.onChanged});
 
   final UserEntity user;
   final Function(String, List<String>) onChanged;
@@ -32,12 +29,13 @@ class NotificationSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context)!;
-    final notifications = user.userCompany?.notifications ??
+    final notifications =
+        user.userCompany?.notifications ??
         BuiltMap<String, BuiltList<String>>();
     final BuiltList<String> emailNotifications =
         notifications.containsKey(kNotificationChannelEmail)
-            ? notifications[kNotificationChannelEmail]!
-            : BuiltList<String>();
+        ? notifications[kNotificationChannelEmail]!
+        : BuiltList<String>();
     final hasMultipleUsers = state.userState.list.length > 1 || user.isNew;
 
     return Column(
@@ -50,128 +48,150 @@ class NotificationSettings extends StatelessWidget {
             children: <Widget>[
               DataTable(
                 columns: [
-                  DataColumn(
-                    label: SizedBox(),
-                  ),
-                  DataColumn(
-                    label: Text(localization.email),
-                  ),
+                  DataColumn(label: SizedBox()),
+                  DataColumn(label: Text(localization.email)),
                 ],
                 rows: [
-                  DataRow(cells: [
-                    DataCell(Text(localization.allEvents)),
-                    DataCell(_NotificationSelector(
-                      value: emailNotifications.contains(kNotificationsAll)
-                          ? NOTIFY_ALL
-                          : emailNotifications.contains(kNotificationsAllUser)
+                  DataRow(
+                    cells: [
+                      DataCell(Text(localization.allEvents)),
+                      DataCell(
+                        _NotificationSelector(
+                          value: emailNotifications.contains(kNotificationsAll)
+                              ? NOTIFY_ALL
+                              : emailNotifications.contains(
+                                  kNotificationsAllUser,
+                                )
                               ? NOTIFY_OWNED
                               : null,
-                      showNoneAsCustom: true,
-                      hasMultipleUsers: hasMultipleUsers,
-                      onChanged: (value) {
-                        List<String> options = [];
-                        if (value == NOTIFY_ALL) {
-                          options = [kNotificationsAll];
-                        } else if (value == NOTIFY_OWNED) {
-                          options = [kNotificationsAllUser];
+                          showNoneAsCustom: true,
+                          hasMultipleUsers: hasMultipleUsers,
+                          onChanged: (value) {
+                            List<String> options = [];
+                            if (value == NOTIFY_ALL) {
+                              options = [kNotificationsAll];
+                            } else if (value == NOTIFY_OWNED) {
+                              options = [kNotificationsAllUser];
+                            }
+                            onChanged(kNotificationChannelEmail, options);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  ...kNotificationEvents
+                      .where((eventType) {
+                        if ([
+                              kNotificationsQuoteCreated,
+                              kNotificationsQuoteSent,
+                              kNotificationsQuoteViewed,
+                              kNotificationsQuoteApproved,
+                              kNotificationsQuoteExpired,
+                            ].contains(eventType) &&
+                            !state.company.isModuleEnabled(EntityType.quote)) {
+                          return false;
+                        } else if ([
+                              kNotificationsCreditCreated,
+                              kNotificationsCreditSent,
+                              kNotificationsCreditViewed,
+                            ].contains(eventType) &&
+                            !state.company.isModuleEnabled(EntityType.credit)) {
+                          return false;
+                        } else if ([
+                              kNotificationsPurchaseOrderCreated,
+                              kNotificationsPurchaseOrderSent,
+                              kNotificationsPurchaseOrderViewed,
+                              kNotificationsPurchaseOrderAccepted,
+                            ].contains(eventType) &&
+                            !state.company.isModuleEnabled(
+                              EntityType.purchaseOrder,
+                            )) {
+                          return false;
+                        } else if ([
+                              kNotificationsInventoryThreshold,
+                            ].contains(eventType) &&
+                            !state.company.stockNotification) {
+                          return false;
                         }
-                        onChanged(kNotificationChannelEmail, options);
-                      },
-                    ))
-                  ]),
-                  ...kNotificationEvents.where((eventType) {
-                    if ([
-                          kNotificationsQuoteCreated,
-                          kNotificationsQuoteSent,
-                          kNotificationsQuoteViewed,
-                          kNotificationsQuoteApproved,
-                          kNotificationsQuoteExpired,
-                        ].contains(eventType) &&
-                        !state.company.isModuleEnabled(EntityType.quote)) {
-                      return false;
-                    } else if ([
-                          kNotificationsCreditCreated,
-                          kNotificationsCreditSent,
-                          kNotificationsCreditViewed,
-                        ].contains(eventType) &&
-                        !state.company.isModuleEnabled(EntityType.credit)) {
-                      return false;
-                    } else if ([
-                          kNotificationsPurchaseOrderCreated,
-                          kNotificationsPurchaseOrderSent,
-                          kNotificationsPurchaseOrderViewed,
-                          kNotificationsPurchaseOrderAccepted,
-                        ].contains(eventType) &&
-                        !state.company
-                            .isModuleEnabled(EntityType.purchaseOrder)) {
-                      return false;
-                    } else if ([
-                          kNotificationsInventoryThreshold,
-                        ].contains(eventType) &&
-                        !state.company.stockNotification) {
-                      return false;
-                    }
 
-                    return true;
-                  }).map((eventType) {
-                    String value;
-                    bool isAllEnabled = false;
-                    if (emailNotifications.contains(kNotificationsAll)) {
-                      value = NOTIFY_ALL;
-                      isAllEnabled = true;
-                    } else if (emailNotifications
-                        .contains(kNotificationsAllUser)) {
-                      value = NOTIFY_OWNED;
-                      isAllEnabled = true;
-                    } else if (emailNotifications
-                        .contains('${eventType}_all')) {
-                      value = NOTIFY_ALL;
-                    } else if (emailNotifications
-                        .contains('${eventType}_user')) {
-                      value = NOTIFY_OWNED;
-                    } else {
-                      value = NOTIFY_NONE;
-                    }
-                    return DataRow(cells: [
-                      // workaround for mistake in translations
-                      DataCell(Text(eventType == kNotificationsInvoiceSent
-                          ? localization.invoiceSentNotificationLabel
-                          : localization.lookup(eventType))),
-                      DataCell(isAllEnabled
-                          ? value == NOTIFY_ALL
-                              ? IconText(
-                                  text: hasMultipleUsers
-                                      ? localization.allRecords
-                                      : localization.enabled,
-                                  icon: hasMultipleUsers
-                                      ? Icons.supervised_user_circle
-                                      : Icons.check_circle,
-                                )
-                              : IconText(
-                                  text: localization.ownedByUser,
-                                  icon: Icons.account_circle)
-                          : _NotificationSelector(
-                              value: value,
-                              hasMultipleUsers: hasMultipleUsers,
-                              onChanged: (value) {
-                                final options = emailNotifications.toList();
-                                options.remove('${eventType}_all');
-                                options.remove('${eventType}_user');
-                                if (value == NOTIFY_ALL) {
-                                  options.add('${eventType}_all');
-                                } else if (value == NOTIFY_OWNED) {
-                                  options.add('${eventType}_user');
-                                }
-                                onChanged(kNotificationChannelEmail, options);
-                              },
-                            )),
-                    ]);
-                  }).toList(),
+                        return true;
+                      })
+                      .map((eventType) {
+                        String value;
+                        bool isAllEnabled = false;
+                        if (emailNotifications.contains(kNotificationsAll)) {
+                          value = NOTIFY_ALL;
+                          isAllEnabled = true;
+                        } else if (emailNotifications.contains(
+                          kNotificationsAllUser,
+                        )) {
+                          value = NOTIFY_OWNED;
+                          isAllEnabled = true;
+                        } else if (emailNotifications.contains(
+                          '${eventType}_all',
+                        )) {
+                          value = NOTIFY_ALL;
+                        } else if (emailNotifications.contains(
+                          '${eventType}_user',
+                        )) {
+                          value = NOTIFY_OWNED;
+                        } else {
+                          value = NOTIFY_NONE;
+                        }
+                        return DataRow(
+                          cells: [
+                            // workaround for mistake in translations
+                            DataCell(
+                              Text(
+                                eventType == kNotificationsInvoiceSent
+                                    ? localization.invoiceSentNotificationLabel
+                                    : localization.lookup(eventType),
+                              ),
+                            ),
+                            DataCell(
+                              isAllEnabled
+                                  ? value == NOTIFY_ALL
+                                        ? IconText(
+                                            text: hasMultipleUsers
+                                                ? localization.allRecords
+                                                : localization.enabled,
+                                            icon: hasMultipleUsers
+                                                ? Icons.supervised_user_circle
+                                                : Icons.check_circle,
+                                          )
+                                        : IconText(
+                                            text: localization.ownedByUser,
+                                            icon: Icons.account_circle,
+                                          )
+                                  : _NotificationSelector(
+                                      value: value,
+                                      hasMultipleUsers: hasMultipleUsers,
+                                      onChanged: (value) {
+                                        final options = emailNotifications
+                                            .toList();
+                                        options.remove('${eventType}_all');
+                                        options.remove('${eventType}_user');
+                                        if (value == NOTIFY_ALL) {
+                                          options.add('${eventType}_all');
+                                        } else if (value == NOTIFY_OWNED) {
+                                          options.add('${eventType}_user');
+                                        }
+                                        onChanged(
+                                          kNotificationChannelEmail,
+                                          options,
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ],
+                        );
+                      })
+                      .toList(),
                 ],
-              )
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
@@ -218,7 +238,9 @@ class _NotificationSelector extends StatelessWidget {
           DropdownMenuItem(
             value: NotificationSettings.NOTIFY_OWNED,
             child: IconText(
-                text: localization.ownedByUser, icon: Icons.account_circle),
+              text: localization.ownedByUser,
+              icon: Icons.account_circle,
+            ),
           ),
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_NONE,
@@ -226,8 +248,8 @@ class _NotificationSelector extends StatelessWidget {
             text: showNoneAsCustom
                 ? localization.custom
                 : hasMultipleUsers
-                    ? localization.none
-                    : localization.disabled,
+                ? localization.none
+                : localization.disabled,
             icon: showNoneAsCustom
                 ? Icons.arrow_drop_down_circle
                 : Icons.do_not_disturb_alt,

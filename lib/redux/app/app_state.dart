@@ -94,19 +94,19 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isTesting: false,
       isWhiteLabeled: isWhiteLabeled,
       lastError: '',
-      authState: AuthState(
-        url: url,
-        referralCode: referralCode,
-      ),
+      authState: AuthState(url: url, referralCode: referralCode),
       staticState: StaticState(),
       userCompanyStates: BuiltList(
-          List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-              .map((index) => UserCompanyState(reportErrors))
-              .toList()),
+        List<int>.generate(
+          kMaxNumberOfCompanies,
+          (i) => i + 1,
+        ).map((index) => UserCompanyState(reportErrors)).toList(),
+      ),
       uiState: UIState(
-          currentRoute: currentRoute,
-          sortFields: prefState?.sortFields ??
-              BuiltMap<EntityType, PrefStateSortField>()),
+        currentRoute: currentRoute,
+        sortFields:
+            prefState?.sortFields ?? BuiltMap<EntityType, PrefStateSortField>(),
+      ),
       prefState: prefState ?? PrefState(),
     );
   }
@@ -158,8 +158,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       list.add(companyState.company);
     }
 
-    final companies =
-        list.where((CompanyEntity company) => company.id.isNotEmpty).toList();
+    final companies = list
+        .where((CompanyEntity company) => company.id.isNotEmpty)
+        .toList();
 
     return companies;
   }
@@ -252,8 +253,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   List<HistoryRecord> get unfilteredHistoryList =>
       prefState.companyPrefs[company.id]!.historyList.toList();
 
-  bool? shouldSelectEntity(
-      {EntityType? entityType, List<String?>? entityList}) {
+  bool? shouldSelectEntity({
+    EntityType? entityType,
+    List<String?>? entityList,
+  }) {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile ||
@@ -364,11 +367,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.timezone:
         return staticState.timezoneMap;
       case EntityType.company:
-        return BuiltMap(Map<String?, SelectableEntity?>.fromIterable(
-          companies,
-          key: (dynamic item) => item.id,
-          value: (dynamic item) => item,
-        ));
+        return BuiltMap(
+          Map<String?, SelectableEntity?>.fromIterable(
+            companies,
+            key: (dynamic item) => item.id,
+            value: (dynamic item) => item,
+          ),
+        );
       case EntityType.dashboard:
       case EntityType.reports:
       case EntityType.settings:
@@ -456,8 +461,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final entityUIState = getUIState(type)!;
 
     return SelectionState(
-      selectedId:
-          entityUIState.forceSelected == true ? entityUIState.selectedId : null,
+      selectedId: entityUIState.forceSelected == true
+          ? entityUIState.selectedId
+          : null,
       filterEntityId: uiState.filterEntityId,
       filterEntityType: uiState.filterEntityType,
     );
@@ -852,9 +858,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isSelfHosted && account.isUpdateAvailable && userCompany.isAdmin;
 
   bool get isUsingPostmark => [
-        if (isHosted) SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
-        SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
-      ].contains(company.settings.emailSendingMethod);
+    if (isHosted) SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
+    SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
+  ].contains(company.settings.emailSendingMethod);
 
   bool get isUserConfirmed {
     if (isSelfHosted) {
@@ -965,19 +971,26 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     final companyUpdated = userCompanyState.lastUpdated == 0
         ? 'Blank'
-        : timeago.format(convertTimestampToDate(
-            (userCompanyState.lastUpdated / 1000).round()));
+        : timeago.format(
+            convertTimestampToDate(
+              (userCompanyState.lastUpdated / 1000).round(),
+            ),
+          );
 
-    final staticUpdated = staticState.updatedAt == null ||
-            staticState.updatedAt == 0
+    final staticUpdated =
+        staticState.updatedAt == null || staticState.updatedAt == 0
         ? 'Blank'
         : timeago.format(
-            convertTimestampToDate((staticState.updatedAt! / 1000).round()));
+            convertTimestampToDate((staticState.updatedAt! / 1000).round()),
+          );
 
     final passwordUpdated = authState.lastEnteredPasswordAt == 0
         ? 'Blank'
-        : timeago.format(convertTimestampToDate(
-            (authState.lastEnteredPasswordAt / 1000).round()));
+        : timeago.format(
+            convertTimestampToDate(
+              (authState.lastEnteredPasswordAt / 1000).round(),
+            ),
+          );
 
     //return 'latestVersion: ${account.latestVersion}';
     //return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';

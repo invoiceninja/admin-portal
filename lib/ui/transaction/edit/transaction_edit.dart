@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 
 class TransactionEdit extends StatefulWidget {
-  const TransactionEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TransactionEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final TransactionEditVM viewModel;
 
@@ -30,8 +27,9 @@ class TransactionEdit extends StatefulWidget {
 }
 
 class _TransactionEditState extends State<TransactionEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_transactionEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_transactionEdit',
+  );
   final _debouncer = Debouncer();
 
   final _descriptionController = TextEditingController();
@@ -53,8 +51,11 @@ class _TransactionEditState extends State<TransactionEdit> {
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final transaction = widget.viewModel.transaction;
-    _amountController.text = formatNumber(transaction.amount, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _amountController.text = formatNumber(
+      transaction.amount,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _descriptionController.text = transaction.description;
     _participantController.text = transaction.participant;
     _participantNameController.text = transaction.participantName;
@@ -76,11 +77,13 @@ class _TransactionEditState extends State<TransactionEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final transaction = widget.viewModel.transaction.rebuild((b) => b
-        ..amount = parseDouble(_amountController.text.trim())
-        ..description = _descriptionController.text.trim()
-        ..participant = _participantController.text.trim()
-        ..participantName = _participantNameController.text.trim());
+      final transaction = widget.viewModel.transaction.rebuild(
+        (b) => b
+          ..amount = parseDouble(_amountController.text.trim())
+          ..description = _descriptionController.text.trim()
+          ..participant = _participantController.text.trim()
+          ..participantName = _participantNameController.text.trim(),
+      );
       if (transaction != widget.viewModel.transaction) {
         widget.viewModel.onChanged(transaction);
       }
@@ -112,41 +115,47 @@ class _TransactionEditState extends State<TransactionEdit> {
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
                     AppDropdownButton<String>(
-                        labelText: localization.type,
-                        value: transaction.baseType,
-                        onChanged: (dynamic value) {
-                          viewModel.onChanged(
-                              transaction.rebuild((b) => b..baseType = value));
-                        },
-                        items: [
-                          DropdownMenuItem(
-                            child: Text(localization.withdrawal),
-                            value: TransactionEntity.TYPE_WITHDRAWL,
-                          ),
-                          DropdownMenuItem(
-                            child: Text(localization.deposit),
-                            value: TransactionEntity.TYPE_DEPOSIT,
-                          ),
-                        ]),
+                      labelText: localization.type,
+                      value: transaction.baseType,
+                      onChanged: (dynamic value) {
+                        viewModel.onChanged(
+                          transaction.rebuild((b) => b..baseType = value),
+                        );
+                      },
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.withdrawal),
+                          value: TransactionEntity.TYPE_WITHDRAWL,
+                        ),
+                        DropdownMenuItem(
+                          child: Text(localization.deposit),
+                          value: TransactionEntity.TYPE_DEPOSIT,
+                        ),
+                      ],
+                    ),
                     DatePicker(
-                        labelText: localization.date,
-                        onSelected: (date, _) {
-                          viewModel.onChanged(
-                              transaction.rebuild((b) => b..date = date));
-                        },
-                        selectedDate: transaction.date),
+                      labelText: localization.date,
+                      onSelected: (date, _) {
+                        viewModel.onChanged(
+                          transaction.rebuild((b) => b..date = date),
+                        );
+                      },
+                      selectedDate: transaction.date,
+                    ),
                     DecoratedFormField(
                       autofocus: transaction.isNew,
                       label: localization.amount,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       controller: _amountController,
                       onSavePressed: (_) => _onSavePressed(),
                       validator: (value) =>
@@ -154,13 +163,17 @@ class _TransactionEditState extends State<TransactionEdit> {
                     ),
                     EntityDropdown(
                       entityType: EntityType.currency,
-                      entityList:
-                          memoizedCurrencyList(state.staticState.currencyMap),
+                      entityList: memoizedCurrencyList(
+                        state.staticState.currencyMap,
+                      ),
                       labelText: localization.currency,
                       entityId: transaction.currencyId,
                       onSelected: (SelectableEntity? currency) =>
-                          viewModel.onChanged(viewModel.transaction.rebuild(
-                              (b) => b..currencyId = currency?.id ?? '')),
+                          viewModel.onChanged(
+                            viewModel.transaction.rebuild(
+                              (b) => b..currencyId = currency?.id ?? '',
+                            ),
+                          ),
                     ),
                     EntityDropdown(
                       entityType: EntityType.bankAccount,
@@ -175,20 +188,25 @@ class _TransactionEditState extends State<TransactionEdit> {
                       ),
                       onSelected: (bankAccount) => viewModel.onChanged(
                         transaction.rebuild(
-                            (b) => b.bankAccountId = bankAccount?.id ?? ''),
+                          (b) => b.bankAccountId = bankAccount?.id ?? '',
+                        ),
                       ),
                       onAddPressed: (completer) =>
                           viewModel.onAddBankAccountPressed(context, completer),
                       onCreateNew: (completer, name) {
-                        store.dispatch(SaveBankAccountRequest(
-                            bankAccount: BankAccountEntity()
-                                .rebuild((b) => b..name = name),
-                            completer: completer));
+                        store.dispatch(
+                          SaveBankAccountRequest(
+                            bankAccount: BankAccountEntity().rebuild(
+                              (b) => b..name = name,
+                            ),
+                            completer: completer,
+                          ),
+                        );
                       },
                       validator: (dynamic value) =>
                           transaction.bankAccountId.isEmpty
-                              ? localization.pleaseEnterAValue
-                              : null,
+                          ? localization.pleaseEnterAValue
+                          : null,
                       overrideSuggestedAmount: (entity) => '',
                     ),
                     DecoratedFormField(
@@ -211,7 +229,9 @@ class _TransactionEditState extends State<TransactionEdit> {
                 ),
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }

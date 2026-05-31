@@ -21,9 +21,7 @@ class TaskEditTimesScreen extends StatelessWidget {
         return TaskEditTimesVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return TaskEditTimes(
-          viewModel: viewModel,
-        );
+        return TaskEditTimes(viewModel: viewModel);
       },
     );
   }

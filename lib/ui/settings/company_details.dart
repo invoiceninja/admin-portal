@@ -34,10 +34,7 @@ import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyDetails extends StatefulWidget {
-  const CompanyDetails({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const CompanyDetails({Key? key, required this.viewModel}) : super(key: key);
 
   final CompanyDetailsVM viewModel;
 
@@ -47,8 +44,9 @@ class CompanyDetails extends StatefulWidget {
 
 class _CompanyDetailsState extends State<CompanyDetails>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_companyDetails');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_companyDetails',
+  );
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController? _controller;
@@ -90,9 +88,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final settingsUIState = state.settingsUIState;
 
     _controller = TabController(
-        vsync: this,
-        length: state.settingsUIState.isFiltered ? 4 : 5,
-        initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: state.settingsUIState.isFiltered ? 4 : 5,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -132,7 +131,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     ];
 
     _controllers.forEach(
-        (dynamic controller) => controller.removeListener(_onSettingsChanged));
+      (dynamic controller) => controller.removeListener(_onSettingsChanged),
+    );
 
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
@@ -166,7 +166,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _besrIdController.text = settings.besrId ?? '';
 
     _controllers.forEach(
-        (dynamic controller) => controller.addListener(_onSettingsChanged));
+      (dynamic controller) => controller.addListener(_onSettingsChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -205,53 +206,68 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final defaultQuoteTerms = _quoteTermsController.text.trim();
     final defaultCreditFooter = _creditFooterController.text.trim();
     final defaultCreditTerms = _creditTermsController.text.trim();
-    final defaultPurchaseOrderFooter =
-        _purchaseOrderFooterController.text.trim();
+    final defaultPurchaseOrderFooter = _purchaseOrderFooterController.text
+        .trim();
     final defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim();
     final qrIban = _qrIbanController.text.trim();
     final besrId = _besrIdController.text.trim();
 
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
-    final settings = viewModel.settings.rebuild((b) => b
-      ..name = isFiltered && name.isEmpty ? null : name
-      ..idNumber = isFiltered && idNumber.isEmpty ? null : idNumber
-      ..vatNumber = isFiltered && vatNumber.isEmpty ? null : vatNumber
-      ..phone = isFiltered && phone.isEmpty ? null : phone
-      ..email = isFiltered && email.isEmpty ? null : email
-      ..website = isFiltered && website.isEmpty ? null : website
-      ..address1 = isFiltered && address1.isEmpty ? null : address1
-      ..address2 = isFiltered && address2.isEmpty ? null : address2
-      ..city = isFiltered && city.isEmpty ? null : city
-      ..state = isFiltered && state.isEmpty ? null : state
-      ..postalCode = isFiltered && postalCode.isEmpty ? null : postalCode
-      ..customValue1 = isFiltered && customValue1.isEmpty ? null : customValue1
-      ..customValue2 = isFiltered && customValue2.isEmpty ? null : customValue2
-      ..customValue3 = isFiltered && customValue3.isEmpty ? null : customValue3
-      ..customValue4 = isFiltered && customValue4.isEmpty ? null : customValue4
-      ..defaultInvoiceFooter = isFiltered && defaultInvoiceFooter.isEmpty
-          ? null
-          : defaultInvoiceFooter
-      ..defaultInvoiceTerms =
-          isFiltered && defaultInvoiceTerms.isEmpty ? null : defaultInvoiceTerms
-      ..defaultQuoteFooter =
-          isFiltered && defaultQuoteFooter.isEmpty ? null : defaultQuoteFooter
-      ..defaultQuoteTerms =
-          isFiltered && defaultQuoteTerms.isEmpty ? null : defaultQuoteTerms
-      ..defaultCreditFooter =
-          isFiltered && defaultCreditFooter.isEmpty ? null : defaultCreditFooter
-      ..defaultCreditTerms =
-          isFiltered && defaultCreditTerms.isEmpty ? null : defaultCreditTerms
-      ..defaultPurchaseOrderFooter =
-          isFiltered && defaultPurchaseOrderFooter.isEmpty
-              ? null
-              : defaultPurchaseOrderFooter
-      ..defaultPurchaseOrderTerms =
-          isFiltered && defaultPurchaseOrderTerms.isEmpty
-              ? null
-              : defaultPurchaseOrderTerms
-      ..qrIban = isFiltered && qrIban.isEmpty ? null : qrIban
-      ..besrId = isFiltered && besrId.isEmpty ? null : besrId);
+    final settings = viewModel.settings.rebuild(
+      (b) => b
+        ..name = isFiltered && name.isEmpty ? null : name
+        ..idNumber = isFiltered && idNumber.isEmpty ? null : idNumber
+        ..vatNumber = isFiltered && vatNumber.isEmpty ? null : vatNumber
+        ..phone = isFiltered && phone.isEmpty ? null : phone
+        ..email = isFiltered && email.isEmpty ? null : email
+        ..website = isFiltered && website.isEmpty ? null : website
+        ..address1 = isFiltered && address1.isEmpty ? null : address1
+        ..address2 = isFiltered && address2.isEmpty ? null : address2
+        ..city = isFiltered && city.isEmpty ? null : city
+        ..state = isFiltered && state.isEmpty ? null : state
+        ..postalCode = isFiltered && postalCode.isEmpty ? null : postalCode
+        ..customValue1 = isFiltered && customValue1.isEmpty
+            ? null
+            : customValue1
+        ..customValue2 = isFiltered && customValue2.isEmpty
+            ? null
+            : customValue2
+        ..customValue3 = isFiltered && customValue3.isEmpty
+            ? null
+            : customValue3
+        ..customValue4 = isFiltered && customValue4.isEmpty
+            ? null
+            : customValue4
+        ..defaultInvoiceFooter = isFiltered && defaultInvoiceFooter.isEmpty
+            ? null
+            : defaultInvoiceFooter
+        ..defaultInvoiceTerms = isFiltered && defaultInvoiceTerms.isEmpty
+            ? null
+            : defaultInvoiceTerms
+        ..defaultQuoteFooter = isFiltered && defaultQuoteFooter.isEmpty
+            ? null
+            : defaultQuoteFooter
+        ..defaultQuoteTerms = isFiltered && defaultQuoteTerms.isEmpty
+            ? null
+            : defaultQuoteTerms
+        ..defaultCreditFooter = isFiltered && defaultCreditFooter.isEmpty
+            ? null
+            : defaultCreditFooter
+        ..defaultCreditTerms = isFiltered && defaultCreditTerms.isEmpty
+            ? null
+            : defaultCreditTerms
+        ..defaultPurchaseOrderFooter =
+            isFiltered && defaultPurchaseOrderFooter.isEmpty
+            ? null
+            : defaultPurchaseOrderFooter
+        ..defaultPurchaseOrderTerms =
+            isFiltered && defaultPurchaseOrderTerms.isEmpty
+            ? null
+            : defaultPurchaseOrderTerms
+        ..qrIban = isFiltered && qrIban.isEmpty ? null : qrIban
+        ..besrId = isFiltered && besrId.isEmpty ? null : besrId,
+    );
     if (settings != widget.viewModel.settings) {
       _debouncer.run(() {
         widget.viewModel.onSettingsChanged(settings);
@@ -280,18 +296,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.address,
-          ),
-          Tab(
-            text: localization.logo,
-          ),
-          Tab(
-            text: localization.defaults,
-          ),
+          Tab(text: localization.details),
+          Tab(text: localization.address),
+          Tab(text: localization.logo),
+          Tab(text: localization.defaults),
           if (!state.settingsUIState.isFiltered)
             Tab(
               text: state.company.documents.isEmpty
@@ -342,13 +350,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     value: settings.classification,
                     onChanged: (dynamic value) {
                       viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..classification = value));
+                        settings.rebuild((b) => b..classification = value),
+                      );
                     },
                     items: kTaxClassifications
-                        .map((classification) => DropdownMenuItem(
-                              child: Text(localization.lookup(classification)),
-                              value: classification,
-                            ))
+                        .map(
+                          (classification) => DropdownMenuItem(
+                            child: Text(localization.lookup(classification)),
+                            value: classification,
+                          ),
+                        )
                         .toList(),
                   ),
                   DecoratedFormField(
@@ -420,11 +431,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       value: company.sizeId,
                       labelText: localization.size,
                       items: memoizedSizeList(state.staticState.sizeMap)
-                          .map((sizeId) => DropdownMenuItem(
-                                child: Text(
-                                    state.staticState.sizeMap[sizeId]!.name),
-                                value: sizeId,
-                              ))
+                          .map(
+                            (sizeId) => DropdownMenuItem(
+                              child: Text(
+                                state.staticState.sizeMap[sizeId]!.name,
+                              ),
+                              value: sizeId,
+                            ),
+                          )
                           .toList(),
                       onChanged: (dynamic sizeId) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..sizeId = sizeId),
@@ -433,15 +447,17 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     ),
                     EntityDropdown(
                       entityType: EntityType.industry,
-                      entityList:
-                          memoizedIndustryList(state.staticState.industryMap),
+                      entityList: memoizedIndustryList(
+                        state.staticState.industryMap,
+                      ),
                       labelText: localization.industry,
                       entityId: company.industryId,
                       onSelected: (SelectableEntity? industry) =>
                           viewModel.onCompanyChanged(
-                        company
-                            .rebuild((b) => b..industryId = industry?.id ?? ''),
-                      ),
+                            company.rebuild(
+                              (b) => b..industryId = industry?.id ?? '',
+                            ),
+                          ),
                     ),
                   ],
                 ),
@@ -491,16 +507,18 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     ),
                     EntityDropdown(
                       entityType: EntityType.country,
-                      entityList:
-                          memoizedCountryList(state.staticState.countryMap),
+                      entityList: memoizedCountryList(
+                        state.staticState.countryMap,
+                      ),
                       labelText: localization.country,
                       entityId: settings.countryId,
                       onSelected: (SelectableEntity? country) =>
-                          viewModel.onSettingsChanged(settings
-                              .rebuild((b) => b..countryId = country?.id)),
+                          viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..countryId = country?.id),
+                          ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -523,15 +541,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               onPressed: () {
                                 if (state.settingsUIState.isChanged) {
                                   showMessageDialog(
-                                      message:
-                                          localization.errorUnsavedChanges);
+                                    message: localization.errorUnsavedChanges,
+                                  );
                                   return;
                                 }
 
                                 confirmCallback(
-                                    context: context,
-                                    callback: (_) =>
-                                        viewModel.onDeleteLogo(context));
+                                  context: context,
+                                  callback: (_) =>
+                                      viewModel.onDeleteLogo(context),
+                                );
                               },
                             ),
                           ),
@@ -545,7 +564,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             onPressed: () async {
                               if (state.settingsUIState.isChanged) {
                                 showMessageDialog(
-                                    message: localization.errorUnsavedChanges);
+                                  message: localization.errorUnsavedChanges,
+                                );
                                 return;
                               }
 
@@ -557,33 +577,36 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               if (multipartFiles != null &&
                                   multipartFiles.isNotEmpty) {
                                 viewModel.onUploadLogo(
-                                    navigatorKey.currentContext!,
-                                    multipartFiles.first);
+                                  navigatorKey.currentContext!,
+                                  multipartFiles.first,
+                                );
                               }
                             },
                           ),
-                        )
+                        ),
                       ],
                     );
                   },
                 ),
                 if ('${settings.companyLogo ?? ''}'.isNotEmpty)
                   Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      // Fix for CORS error using 'object' subdomain
-                      child: (state.isHosted && kIsWeb)
-                          ? CachedImage(
-                              width: double.infinity,
-                              url: state.credentials.url +
-                                  '/companies/' +
-                                  company.id +
-                                  '/logo',
-                              apiToken: state.userCompany.token.token,
-                            )
-                          : CachedImage(
-                              width: double.infinity,
-                              url: company.settings.companyLogo,
-                            )),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    // Fix for CORS error using 'object' subdomain
+                    child: (state.isHosted && kIsWeb)
+                        ? CachedImage(
+                            width: double.infinity,
+                            url:
+                                state.credentials.url +
+                                '/companies/' +
+                                company.id +
+                                '/logo',
+                            apiToken: state.userCompany.token.token,
+                          )
+                        : CachedImage(
+                            width: double.infinity,
+                            url: company.settings.companyLogo,
+                          ),
+                  ),
               ],
             ),
           ),
@@ -591,40 +614,50 @@ class _CompanyDetailsState extends State<CompanyDetails>
             primary: true,
             children: <Widget>[
               if (!state.isProPlan)
-                FormCard(children: <Widget>[
-                  if (company.isModuleEnabled(EntityType.invoice))
-                    DesignPicker(
-                      label: localization.invoiceDesign,
-                      initialValue: settings.defaultInvoiceDesignId,
-                      onSelected: (value) => viewModel.onSettingsChanged(
+                FormCard(
+                  children: <Widget>[
+                    if (company.isModuleEnabled(EntityType.invoice))
+                      DesignPicker(
+                        label: localization.invoiceDesign,
+                        initialValue: settings.defaultInvoiceDesignId,
+                        onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
-                              (b) => b..defaultInvoiceDesignId = value!.id)),
-                    ),
-                  if (company.isModuleEnabled(EntityType.quote))
-                    DesignPicker(
-                      label: localization.quoteDesign,
-                      initialValue: settings.defaultQuoteDesignId,
-                      onSelected: (value) => viewModel.onSettingsChanged(
+                            (b) => b..defaultInvoiceDesignId = value!.id,
+                          ),
+                        ),
+                      ),
+                    if (company.isModuleEnabled(EntityType.quote))
+                      DesignPicker(
+                        label: localization.quoteDesign,
+                        initialValue: settings.defaultQuoteDesignId,
+                        onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
-                              (b) => b..defaultQuoteDesignId = value!.id)),
-                    ),
-                  if (company.isModuleEnabled(EntityType.credit))
-                    DesignPicker(
-                      label: localization.creditDesign,
-                      initialValue: settings.defaultCreditDesignId,
-                      onSelected: (value) => viewModel.onSettingsChanged(
+                            (b) => b..defaultQuoteDesignId = value!.id,
+                          ),
+                        ),
+                      ),
+                    if (company.isModuleEnabled(EntityType.credit))
+                      DesignPicker(
+                        label: localization.creditDesign,
+                        initialValue: settings.defaultCreditDesignId,
+                        onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
-                              (b) => b..defaultCreditDesignId = value!.id)),
-                    ),
-                  if (company.isModuleEnabled(EntityType.purchaseOrder))
-                    DesignPicker(
-                      label: localization.purchaseOrder,
-                      initialValue: settings.defaultPurchaseOrderDesignId,
-                      onSelected: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) =>
-                              b..defaultPurchaseOrderDesignId = value!.id)),
-                    ),
-                ]),
+                            (b) => b..defaultCreditDesignId = value!.id,
+                          ),
+                        ),
+                      ),
+                    if (company.isModuleEnabled(EntityType.purchaseOrder))
+                      DesignPicker(
+                        label: localization.purchaseOrder,
+                        initialValue: settings.defaultPurchaseOrderDesignId,
+                        onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                            (b) => b..defaultPurchaseOrderDesignId = value!.id,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               FormCard(
                 isLast: true,
                 children: <Widget>[
@@ -685,7 +718,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     ),
                   ],
                 ],
-              )
+              ),
             ],
           ),
           if (!state.settingsUIState.isFiltered)

@@ -13,15 +13,19 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState taskUIReducer(TaskUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(taskListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..editingTimeIndex = editingTimeReducer(state.editingTimeIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..kanbanLastUpdated =
-        kanbanLastUpdatedReducer(state.kanbanLastUpdated, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(taskListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..editingTimeIndex = editingTimeReducer(state.editingTimeIndex, action)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..kanbanLastUpdated = kanbanLastUpdatedReducer(
+        state.kanbanLastUpdated,
+        action,
+      ),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -72,13 +76,18 @@ TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveTaskSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteTaskSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.task ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.task ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewTask>((selectedId, action) => action.taskId),
-  TypedReducer<String?, AddTaskSuccess>((selectedId, action) =>
-      selectedId!.isNotEmpty || action.autoSelect ? action.task.id : ''),
+  TypedReducer<String?, AddTaskSuccess>(
+    (selectedId, action) =>
+        selectedId!.isNotEmpty || action.autoSelect ? action.task.id : '',
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortTasks>((selectedId, action) => ''),
   TypedReducer<String?, FilterTasks>((selectedId, action) => ''),
@@ -136,26 +145,35 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartTaskMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTaskMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearTaskMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewTaskList>(_viewTaskList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
   TypedReducer<ListUIState, ClearTaskStatusFilter>(
-      (state, action) => state.rebuild((b) => b..statusFilters.clear())),
+    (state, action) => state.rebuild((b) => b..statusFilters.clear()),
+  ),
 ]);
 
 ListUIState _viewTaskList(ListUIState taskListState, ViewTaskList action) {
-  return taskListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  return taskListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterTasksByCustom1(
-    ListUIState taskListState, FilterTasksByCustom1 action) {
+  ListUIState taskListState,
+  FilterTasksByCustom1 action,
+) {
   if (taskListState.custom1Filters.contains(action.value)) {
     return taskListState.rebuild((b) => b..custom1Filters.remove(action.value));
   } else {
@@ -164,7 +182,9 @@ ListUIState _filterTasksByCustom1(
 }
 
 ListUIState _filterTasksByCustom2(
-    ListUIState taskListState, FilterTasksByCustom2 action) {
+  ListUIState taskListState,
+  FilterTasksByCustom2 action,
+) {
   if (taskListState.custom2Filters.contains(action.value)) {
     return taskListState.rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
@@ -173,7 +193,9 @@ ListUIState _filterTasksByCustom2(
 }
 
 ListUIState _filterTasksByState(
-    ListUIState taskListState, FilterTasksByState action) {
+  ListUIState taskListState,
+  FilterTasksByState action,
+) {
   if (taskListState.stateFilters.contains(action.state)) {
     return taskListState.rebuild((b) => b..stateFilters.remove(action.state));
   } else {
@@ -182,7 +204,9 @@ ListUIState _filterTasksByState(
 }
 
 ListUIState _filterTasksByStatus(
-    ListUIState taskListState, FilterTasksByStatus action) {
+  ListUIState taskListState,
+  FilterTasksByStatus action,
+) {
   if (taskListState.statusFilters.contains(action.status)) {
     return taskListState.rebuild((b) => b..statusFilters.remove(action.status));
   } else {
@@ -191,17 +215,21 @@ ListUIState _filterTasksByStatus(
 }
 
 ListUIState _filterTasks(ListUIState taskListState, FilterTasks action) {
-  return taskListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : taskListState.filterClearedAt);
+  return taskListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : taskListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortTasks(ListUIState taskListState, SortTasks action) {
-  return taskListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return taskListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 TaskEntity _addTaskTime(TaskEntity? task, AddTaskTime action) {
@@ -217,22 +245,30 @@ TaskEntity _updateTaskTime(TaskEntity? task, UpdateTaskTime action) {
 }
 
 ListUIState _startListMultiselect(
-    ListUIState taskListState, StartTaskMultiselect action) {
+  ListUIState taskListState,
+  StartTaskMultiselect action,
+) {
   return taskListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState taskListState, AddToTaskMultiselect action) {
+  ListUIState taskListState,
+  AddToTaskMultiselect action,
+) {
   return taskListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState taskListState, RemoveFromTaskMultiselect action) {
+  ListUIState taskListState,
+  RemoveFromTaskMultiselect action,
+) {
   return taskListState.rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState taskListState, ClearTaskMultiselect action) {
+  ListUIState taskListState,
+  ClearTaskMultiselect action,
+) {
   return taskListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -257,18 +293,22 @@ TaskState _purgeClientSuccess(TaskState taskState, PurgeClientSuccess action) {
       .map((each) => each.id)
       .toList();
 
-  return taskState.rebuild((b) => b
-    ..map.removeWhere((p0, p1) => ids.contains(p0))
-    ..list.removeWhere((p0) => ids.contains(p0)));
+  return taskState.rebuild(
+    (b) => b
+      ..map.removeWhere((p0, p1) => ids.contains(p0))
+      ..list.removeWhere((p0) => ids.contains(p0)),
+  );
 }
 
 TaskState _sortTasksSuccess(TaskState taskState, SortTasksSuccess action) {
   return taskState.rebuild((b) {
     for (final statusId in action.taskIds!.keys) {
       for (final taskId in action.taskIds![statusId]!) {
-        b.map[taskId] = taskState.map[taskId]!.rebuild((b) => b
-          ..statusId = statusId
-          ..statusOrder = action.taskIds![statusId]!.indexOf(taskId));
+        b.map[taskId] = taskState.map[taskId]!.rebuild(
+          (b) => b
+            ..statusId = statusId
+            ..statusOrder = action.taskIds![statusId]!.indexOf(taskId),
+        );
       }
     }
   });
@@ -315,9 +355,11 @@ TaskState _restoreTaskSuccess(TaskState taskState, RestoreTaskSuccess action) {
 }
 
 TaskState _addTask(TaskState taskState, AddTaskSuccess action) {
-  return taskState.rebuild((b) => b
-    ..map[action.task.id] = action.task
-    ..list.add(action.task.id));
+  return taskState.rebuild(
+    (b) => b
+      ..map[action.task.id] = action.task
+      ..list.add(action.task.id),
+  );
 }
 
 TaskState _updateTask(TaskState taskState, SaveTaskSuccess action) {

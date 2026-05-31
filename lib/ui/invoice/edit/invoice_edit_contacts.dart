@@ -18,10 +18,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceEditContacts extends StatelessWidget {
-  const InvoiceEditContacts({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const InvoiceEditContacts({Key? key, required this.viewModel})
+    : super(key: key);
 
   final EntityEditContactsVM viewModel;
 
@@ -52,9 +50,9 @@ class InvoiceEditContacts extends StatelessWidget {
                   .compareTo(contactB.fullName.toLowerCase());
             }
             */
-            return contactA.fullName
-                .toLowerCase()
-                .compareTo(contactB.fullName.toLowerCase());
+            return contactA.fullName.toLowerCase().compareTo(
+              contactB.fullName.toLowerCase(),
+            );
           });
       }
 
@@ -89,9 +87,9 @@ class InvoiceEditContacts extends StatelessWidget {
             if (contactA.sendEmail != contactB.sendEmail) {
               return contactA.sendEmail ? 1 : -1;
             } else {
-              return contactA.fullName
-                  .toLowerCase()
-                  .compareTo(contactB.fullName.toLowerCase());
+              return contactA.fullName.toLowerCase().compareTo(
+                contactB.fullName.toLowerCase(),
+              );
             }
           });
       }
@@ -204,7 +202,8 @@ class _ContactListTileState extends State<_ContactListTile> {
               } else if (action == localization.copyLink) {
                 Clipboard.setData(ClipboardData(text: widget.invitation!.link));
                 showToast(
-                    localization.copiedToClipboard.replaceFirst(':value ', ''));
+                  localization.copiedToClipboard.replaceFirst(':value ', ''),
+                );
               }
             },
           )
@@ -247,11 +246,14 @@ class _ContactListTileState extends State<_ContactListTile> {
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
-                        localization
-                                .lookup(widget.invitation!.latestEmailStatus) +
+                        localization.lookup(
+                              widget.invitation!.latestEmailStatus,
+                            ) +
                             ' • ' +
-                            formatDate(widget.invitation!.latestEmailStatusDate,
-                                context),
+                            formatDate(
+                              widget.invitation!.latestEmailStatusDate,
+                              context,
+                            ),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -260,24 +262,27 @@ class _ContactListTileState extends State<_ContactListTile> {
                     if (state.isUsingPostmark) ...[
                       SizedBox(height: 16),
                       OutlinedButton(
-                          onPressed: () {
-                            final credentials = state.credentials;
-                            store.dispatch(StartSaving());
-                            WebClient()
-                                .post(
-                                    '${credentials.url}/reactivate_email/${widget.invitation!.messageId}',
-                                    credentials.token)
-                                .then((value) {
-                              store.dispatch(StopSaving());
-                              showToast(localization.emailReactivated);
-                              setState(() {
-                                _showEmailError = false;
+                        onPressed: () {
+                          final credentials = state.credentials;
+                          store.dispatch(StartSaving());
+                          WebClient()
+                              .post(
+                                '${credentials.url}/reactivate_email/${widget.invitation!.messageId}',
+                                credentials.token,
+                              )
+                              .then((value) {
+                                store.dispatch(StopSaving());
+                                showToast(localization.emailReactivated);
+                                setState(() {
+                                  _showEmailError = false;
+                                });
+                              })
+                              .catchError((error) {
+                                store.dispatch(StopSaving());
                               });
-                            }).catchError((error) {
-                              store.dispatch(StopSaving());
-                            });
-                          },
-                          child: Text(localization.reactivateEmail)),
+                        },
+                        child: Text(localization.reactivateEmail),
+                      ),
                     ],
                     SizedBox(height: 16),
                     Text(

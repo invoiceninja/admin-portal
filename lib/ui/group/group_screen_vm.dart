@@ -22,9 +22,7 @@ class GroupScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, GroupScreenVM>(
       converter: GroupScreenVM.fromStore,
       builder: (context, vm) {
-        return GroupSettingsScreen(
-          viewModel: vm,
-        );
+        return GroupSettingsScreen(viewModel: vm);
       },
     );
   }
@@ -49,10 +47,11 @@ class GroupScreenVM {
     return GroupScreenVM(
       groupMap: state.groupState.map,
       groupList: memoizedFilteredGroupList(
-          state.getUISelection(EntityType.group),
-          state.groupState.map,
-          state.groupState.list,
-          state.groupListState),
+        state.getUISelection(EntityType.group),
+        state.groupState.map,
+        state.groupState.list,
+        state.groupListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.groupListState.isInMultiselect(),
     );

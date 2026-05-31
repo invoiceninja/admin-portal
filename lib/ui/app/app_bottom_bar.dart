@@ -150,25 +150,31 @@ class _AppBottomBarState extends State<AppBottomBar> {
           builder: (BuildContext context, stateFilters) {
             return Container(
               color: Theme.of(context).colorScheme.surface,
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Column(
-                  children: EntityState.values.map<Widget>((state) {
-                    return CheckboxListTile(
-                      key: ValueKey('state_' +
-                          AppLocalization.of(context)!.lookup('$state')),
-                      title:
-                          Text(AppLocalization.of(context)!.lookup('$state')),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: stateFilters.contains(state),
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      dense: true,
-                      onChanged: (value) {
-                        widget.onSelectedState!(state, value);
-                      },
-                    );
-                  }).toList(),
-                ),
-              ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Column(
+                    children: EntityState.values.map<Widget>((state) {
+                      return CheckboxListTile(
+                        key: ValueKey(
+                          'state_' +
+                              AppLocalization.of(context)!.lookup('$state'),
+                        ),
+                        title: Text(
+                          AppLocalization.of(context)!.lookup('$state'),
+                        ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: stateFilters.contains(state),
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        dense: true,
+                        onChanged: (value) {
+                          widget.onSelectedState!(state, value);
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             );
           },
         );
@@ -191,24 +197,28 @@ class _AppBottomBarState extends State<AppBottomBar> {
           builder: (BuildContext context, statusFilters) {
             return Container(
               color: Theme.of(context).colorScheme.surface,
-              child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                Column(
-                  children: widget.statuses.map((status) {
-                    return CheckboxListTile(
-                      key: Key(status.toString()),
-                      title: Text(
-                          AppLocalization.of(context)!.lookup(status.name)),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: statusFilters.contains(status),
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      dense: true,
-                      onChanged: (value) {
-                        widget.onSelectedStatus!(status, value);
-                      },
-                    );
-                  }).toList(),
-                ),
-              ]),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Column(
+                    children: widget.statuses.map((status) {
+                      return CheckboxListTile(
+                        key: Key(status.toString()),
+                        title: Text(
+                          AppLocalization.of(context)!.lookup(status.name),
+                        ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: statusFilters.contains(status),
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        dense: true,
+                        onChanged: (value) {
+                          widget.onSelectedStatus!(status, value);
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             );
           },
         );
@@ -238,29 +248,32 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   widget.onSelectedSortField!(value ?? '');
                 },
                 child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: widget.sortFields.map((sortField) {
-                      final field = sortField;
-                      return InkWell(
-                        onTap: () => widget.onSelectedSortField!(sortField),
-                        child: IgnorePointer(
-                          child: RadioListTile<String>(
-                            dense: true,
-                            title: Text(
-                                AppLocalization.of(context)!.lookup(sortField)),
-                            subtitle: sortField == listUIState.sortField
-                                ? Text(listUIState.sortAscending
-                                    ? AppLocalization.of(context)!.ascending
-                                    : AppLocalization.of(context)!.descending)
-                                : null,
-                            activeColor:
-                                Theme.of(context).colorScheme.secondary,
-                            value: field,
-                            toggleable: true,
+                  mainAxisSize: MainAxisSize.min,
+                  children: widget.sortFields.map((sortField) {
+                    final field = sortField;
+                    return InkWell(
+                      onTap: () => widget.onSelectedSortField!(sortField),
+                      child: IgnorePointer(
+                        child: RadioListTile<String>(
+                          dense: true,
+                          title: Text(
+                            AppLocalization.of(context)!.lookup(sortField),
                           ),
+                          subtitle: sortField == listUIState.sortField
+                              ? Text(
+                                  listUIState.sortAscending
+                                      ? AppLocalization.of(context)!.ascending
+                                      : AppLocalization.of(context)!.descending,
+                                )
+                              : null,
+                          activeColor: Theme.of(context).colorScheme.secondary,
+                          value: field,
+                          toggleable: true,
                         ),
-                      );
-                    }).toList()),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
             );
           },
@@ -277,8 +290,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterCustom1Controller =
-          Scaffold.of(context).showBottomSheet((context) {
+      _filterCustom1Controller = Scaffold.of(context).showBottomSheet((
+        context,
+      ) {
         return CustomFieldSelector(
           customNumber: 1,
           entityType: widget.entityType,
@@ -297,8 +311,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
       if (closeBottomSheet() == kCustom2Panel) {
         return;
       }
-      _filterCustom2Controller =
-          Scaffold.of(context).showBottomSheet((context) {
+      _filterCustom2Controller = Scaffold.of(context).showBottomSheet((
+        context,
+      ) {
         return CustomFieldSelector(
           customNumber: 2,
           entityType: widget.entityType,
@@ -318,8 +333,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterCustom3Controller =
-          Scaffold.of(context).showBottomSheet((context) {
+      _filterCustom3Controller = Scaffold.of(context).showBottomSheet((
+        context,
+      ) {
         return CustomFieldSelector(
           customNumber: 3,
           entityType: widget.entityType,
@@ -339,8 +355,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterCustom4Controller =
-          Scaffold.of(context).showBottomSheet((context) {
+      _filterCustom4Controller = Scaffold.of(context).showBottomSheet((
+        context,
+      ) {
         return CustomFieldSelector(
           customNumber: 4,
           entityType: widget.entityType,
@@ -355,206 +372,229 @@ class _AppBottomBarState extends State<AppBottomBar> {
       });
     };
 
-    return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
-      final localization = AppLocalization.of(context);
-      final isList =
-          widget.entityType.isSetting || state.prefState.isModuleList;
+    return StoreBuilder(
+      builder: (BuildContext context, Store<AppState> store) {
+        final localization = AppLocalization.of(context);
+        final isList =
+            widget.entityType.isSetting || state.prefState.isModuleList;
 
-      void _onColumnsPressed() {
-        multiselectDialog(
-          context: context,
-          entityType: widget.entityType,
-          onSelected: (selected) {
-            final listUIState = store.state.getListState(widget.entityType);
-            if (!selected.contains(listUIState.sortField)) {
-              widget.onSelectedSortField!(selected.isEmpty ? '' : selected[0]);
-            }
-            final settings = state.userCompany.settings.rebuild((b) => b
-              ..tableColumns['${widget.entityType}'] =
-                  BuiltList<String>(selected));
-            final userCompany =
-                state.userCompany.rebuild((b) => b..settings.replace(settings));
-            final user =
-                state.user.rebuild((b) => b..userCompany.replace(userCompany));
-            final completer = snackBarCompleter<Null>(
-                AppLocalization.of(context)!.savedSettings);
-            store.dispatch(
-              SaveUserSettingsRequest(
-                completer: completer,
-                user: user,
-              ),
-            );
-          },
-          options: widget.tableColumns ?? [],
-          defaultSelected: widget.defaultTableColumns ?? [],
-          selected: state
-                  .userCompany.settings.tableColumns['${widget.entityType}']
-                  ?.toList() ??
-              [],
-        );
-      }
-
-      return BottomAppBar(
-        elevation: 0,
-        shape: CircularNotchedRectangle(),
-        child: SizedBox(
-          height: kTopBottomBarHeight,
-          child: AppBorder(
-            isTop: true,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(width: 4),
-                if (!widget.entityType.isSetting)
-                  IconButton(
-                    tooltip: prefState.enableTooltips
-                        ? (isList
-                            ? localization!.showTable
-                            : localization!.showList)
-                        : null,
-                    icon: Icon(isList ? Icons.table_chart : Icons.view_list),
-                    onPressed: () {
-                      store.dispatch(SwitchListTableLayout());
-                    },
+        void _onColumnsPressed() {
+          multiselectDialog(
+            context: context,
+            entityType: widget.entityType,
+            onSelected: (selected) {
+              final listUIState = store.state.getListState(widget.entityType);
+              if (!selected.contains(listUIState.sortField)) {
+                widget.onSelectedSortField!(
+                  selected.isEmpty ? '' : selected[0],
+                );
+              }
+              final settings = state.userCompany.settings.rebuild(
+                (b) => b
+                  ..tableColumns['${widget.entityType}'] = BuiltList<String>(
+                    selected,
                   ),
-                ...widget.iconButtons,
-                if (!widget.hideListOptions) ...[
-                  if (isMobile(context))
+              );
+              final userCompany = state.userCompany.rebuild(
+                (b) => b..settings.replace(settings),
+              );
+              final user = state.user.rebuild(
+                (b) => b..userCompany.replace(userCompany),
+              );
+              final completer = snackBarCompleter<Null>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveUserSettingsRequest(completer: completer, user: user),
+              );
+            },
+            options: widget.tableColumns ?? [],
+            defaultSelected: widget.defaultTableColumns ?? [],
+            selected:
+                state.userCompany.settings.tableColumns['${widget.entityType}']
+                    ?.toList() ??
+                [],
+          );
+        }
+
+        return BottomAppBar(
+          elevation: 0,
+          shape: CircularNotchedRectangle(),
+          child: SizedBox(
+            height: kTopBottomBarHeight,
+            child: AppBorder(
+              isTop: true,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SizedBox(width: 4),
+                  if (!widget.entityType.isSetting)
                     IconButton(
                       tooltip: prefState.enableTooltips
-                          ? localization!.multiselect
+                          ? (isList
+                                ? localization!.showTable
+                                : localization!.showList)
                           : null,
-                      icon: Icon(Icons.check_box),
-                      onPressed: () => widget.onCheckboxPressed(),
+                      icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+                      onPressed: () {
+                        store.dispatch(SwitchListTableLayout());
+                      },
                     ),
-                ],
-                if (isMobile(context) && widget.onSelectedState != null)
-                  IconButton(
-                    tooltip: localization!.filter,
-                    icon: Icon(Icons.filter_list),
-                    onPressed: _showFilterStateSheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasStateFilters
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                if (widget.statuses.isNotEmpty && isList)
-                  IconButton(
-                    tooltip:
-                        prefState.enableTooltips ? localization!.status : null,
-                    icon: Icon(Icons.filter),
-                    onPressed: _showFilterStatusSheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasStatusFilters
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                if (widget.customValues1.isNotEmpty)
-                  IconButton(
-                    tooltip: prefState.enableTooltips
-                        ? localization!.filteredBy.replaceFirst(
-                            ':value', widget.customValues1.join(', '))
-                        : null,
-                    icon: Icon(Icons.looks_one),
-                    onPressed: _showFilterCustom1Sheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasCustom1Filters
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                if (widget.customValues2.isNotEmpty)
-                  IconButton(
-                    tooltip: prefState.enableTooltips
-                        ? localization!.filteredBy.replaceFirst(
-                            ':value', widget.customValues2.join(', '))
-                        : null,
-                    icon: Icon(Icons.looks_two),
-                    onPressed: _showFilterCustom2Sheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasCustom2Filters
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                if (widget.customValues3.isNotEmpty)
-                  IconButton(
-                    tooltip: prefState.enableTooltips
-                        ? localization!.filteredBy.replaceFirst(
-                            ':value', widget.customValues3.join(', '))
-                        : '',
-                    icon: Icon(Icons.looks_3),
-                    onPressed: _showFilterCustom3Sheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasCustom3Filters
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                if (widget.customValues4.isNotEmpty)
-                  IconButton(
-                    tooltip: prefState.enableTooltips
-                        ? localization!.filteredBy.replaceFirst(
-                            ':value', widget.customValues4.join(', '))
-                        : '',
-                    icon: Icon(Icons.looks_4),
-                    onPressed: _showFilterCustom4Sheet,
-                    color: store.state
-                            .getListState(widget.entityType)
-                            .hasCustom4Filters
-                        ? Theme.of(context).colorScheme.secondary
-                        : null,
-                  ),
-                if (!widget.hideListOptions) ...[
-                  if (isList && widget.sortFields.isNotEmpty)
+                  ...widget.iconButtons,
+                  if (!widget.hideListOptions) ...[
+                    if (isMobile(context))
+                      IconButton(
+                        tooltip: prefState.enableTooltips
+                            ? localization!.multiselect
+                            : null,
+                        icon: Icon(Icons.check_box),
+                        onPressed: () => widget.onCheckboxPressed(),
+                      ),
+                  ],
+                  if (isMobile(context) && widget.onSelectedState != null)
                     IconButton(
-                      tooltip:
-                          prefState.enableTooltips ? localization!.sort : null,
-                      icon: Icon(Icons.sort_by_alpha),
-                      onPressed: _showSortSheet,
+                      tooltip: localization!.filter,
+                      icon: Icon(Icons.filter_list),
+                      onPressed: _showFilterStateSheet,
+                      color:
+                          store.state
+                              .getListState(widget.entityType)
+                              .hasStateFilters
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
                     ),
-                ],
-                if (!state.prefState.isMenuFloated) Spacer(),
-                if (!widget.entityType.isSetting &&
-                    !isList &&
-                    !widget.hideListOptions)
-                  if (state.prefState.isDesktop)
-                    AppTextButton(
-                      label: localization!.columns,
-                      onPressed: _onColumnsPressed,
-                    )
-                  else
+                  if (widget.statuses.isNotEmpty && isList)
                     IconButton(
-                      icon: Icon(Icons.view_week),
                       tooltip: prefState.enableTooltips
-                          ? localization!.columns
+                          ? localization!.status
                           : null,
-                      onPressed: _onColumnsPressed,
+                      icon: Icon(Icons.filter),
+                      onPressed: _showFilterStatusSheet,
+                      color:
+                          store.state
+                              .getListState(widget.entityType)
+                              .hasStatusFilters
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
                     ),
-                if (state.prefState.isDesktop)
-                  AppBorder(
-                    isLeft: true,
-                    child: Tooltip(
-                      message: prefState.enableTooltips
-                          ? localization!.refreshData
+                  if (widget.customValues1.isNotEmpty)
+                    IconButton(
+                      tooltip: prefState.enableTooltips
+                          ? localization!.filteredBy.replaceFirst(
+                              ':value',
+                              widget.customValues1.join(', '),
+                            )
+                          : null,
+                      icon: Icon(Icons.looks_one),
+                      onPressed: _showFilterCustom1Sheet,
+                      color:
+                          store.state
+                              .getListState(widget.entityType)
+                              .hasCustom1Filters
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
+                    ),
+                  if (widget.customValues2.isNotEmpty)
+                    IconButton(
+                      tooltip: prefState.enableTooltips
+                          ? localization!.filteredBy.replaceFirst(
+                              ':value',
+                              widget.customValues2.join(', '),
+                            )
+                          : null,
+                      icon: Icon(Icons.looks_two),
+                      onPressed: _showFilterCustom2Sheet,
+                      color:
+                          store.state
+                              .getListState(widget.entityType)
+                              .hasCustom2Filters
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
+                    ),
+                  if (widget.customValues3.isNotEmpty)
+                    IconButton(
+                      tooltip: prefState.enableTooltips
+                          ? localization!.filteredBy.replaceFirst(
+                              ':value',
+                              widget.customValues3.join(', '),
+                            )
                           : '',
-                      child: InkWell(
-                        onTap: () => store.dispatch(RefreshData()),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Icon(Icons.refresh),
+                      icon: Icon(Icons.looks_3),
+                      onPressed: _showFilterCustom3Sheet,
+                      color:
+                          store.state
+                              .getListState(widget.entityType)
+                              .hasCustom3Filters
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
+                    ),
+                  if (widget.customValues4.isNotEmpty)
+                    IconButton(
+                      tooltip: prefState.enableTooltips
+                          ? localization!.filteredBy.replaceFirst(
+                              ':value',
+                              widget.customValues4.join(', '),
+                            )
+                          : '',
+                      icon: Icon(Icons.looks_4),
+                      onPressed: _showFilterCustom4Sheet,
+                      color:
+                          store.state
+                              .getListState(widget.entityType)
+                              .hasCustom4Filters
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
+                    ),
+                  if (!widget.hideListOptions) ...[
+                    if (isList && widget.sortFields.isNotEmpty)
+                      IconButton(
+                        tooltip: prefState.enableTooltips
+                            ? localization!.sort
+                            : null,
+                        icon: Icon(Icons.sort_by_alpha),
+                        onPressed: _showSortSheet,
+                      ),
+                  ],
+                  if (!state.prefState.isMenuFloated) Spacer(),
+                  if (!widget.entityType.isSetting &&
+                      !isList &&
+                      !widget.hideListOptions)
+                    if (state.prefState.isDesktop)
+                      AppTextButton(
+                        label: localization!.columns,
+                        onPressed: _onColumnsPressed,
+                      )
+                    else
+                      IconButton(
+                        icon: Icon(Icons.view_week),
+                        tooltip: prefState.enableTooltips
+                            ? localization!.columns
+                            : null,
+                        onPressed: _onColumnsPressed,
+                      ),
+                  if (state.prefState.isDesktop)
+                    AppBorder(
+                      isLeft: true,
+                      child: Tooltip(
+                        message: prefState.enableTooltips
+                            ? localization!.refreshData
+                            : '',
+                        child: InkWell(
+                          onTap: () => store.dispatch(RefreshData()),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Icon(Icons.refresh),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -582,34 +622,35 @@ class CustomFieldSelector extends StatelessWidget {
       builder: (BuildContext context, customFilters) {
         return Container(
           color: Theme.of(context).colorScheme.surface,
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            Column(
-              children: [
-                ...customValues.map<Widget>((customField) {
-                  return CheckboxListTile(
-                    key: Key(customField.toString()),
-                    title: Text(customField),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Column(
+                children: [
+                  ...customValues.map<Widget>((customField) {
+                    return CheckboxListTile(
+                      key: Key(customField.toString()),
+                      title: Text(customField),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: customFilters!.contains(customField),
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      dense: true,
+                      onChanged: (value) => onSelected(customField),
+                    );
+                  }).toList(),
+                  CheckboxListTile(
+                    key: Key('_empty_'),
+                    title: Text(AppLocalization.of(context)!.empty),
                     controlAffinity: ListTileControlAffinity.leading,
-                    value: customFilters!.contains(customField),
+                    value: customFilters!.contains(''),
                     activeColor: Theme.of(context).colorScheme.secondary,
                     dense: true,
-                    onChanged: (value) => onSelected(customField),
-                  );
-                }).toList(),
-                CheckboxListTile(
-                  key: Key('_empty_'),
-                  title: Text(
-                    AppLocalization.of(context)!.empty,
+                    onChanged: (value) => onSelected(''),
                   ),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  value: customFilters!.contains(''),
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  dense: true,
-                  onChanged: (value) => onSelected(''),
-                ),
-              ],
-            ),
-          ]),
+                ],
+              ),
+            ],
+          ),
         );
       },
     );

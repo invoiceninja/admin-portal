@@ -7,10 +7,8 @@ import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks_vm.dart'
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditCardsAndBanks extends StatefulWidget {
-  const CreditCardsAndBanks({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const CreditCardsAndBanks({Key? key, required this.viewModel})
+    : super(key: key);
 
   final CreditCardsAndBanksVM viewModel;
 
@@ -50,16 +48,18 @@ class _CreditCardsAndBanksState extends State<CreditCardsAndBanks>
   void didChangeDependencies() {
     _controllers = [_nameController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     /*
     final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
       */
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }

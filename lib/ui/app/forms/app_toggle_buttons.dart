@@ -20,48 +20,54 @@ class AppToggleButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
-      double toggleWidth = (constraints.maxWidth - padding) / tabLabels!.length;
-      if (isDesktop) {
-        toggleWidth -= 46 / tabLabels!.length;
-      }
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
+        double toggleWidth =
+            (constraints.maxWidth - padding) / tabLabels!.length;
+        if (isDesktop) {
+          toggleWidth -= 46 / tabLabels!.length;
+        }
 
-      final isSelected = tabLabels!.length == 4
-          ? (selectedIndex == 0
-              ? [true, false, false, false]
-              : selectedIndex == 1
+        final isSelected = tabLabels!.length == 4
+            ? (selectedIndex == 0
+                  ? [true, false, false, false]
+                  : selectedIndex == 1
                   ? [false, true, false, false]
                   : selectedIndex == 2
-                      ? [false, false, true, false]
-                      : [false, false, false, true])
-          : tabLabels!.length == 3
-              ? (selectedIndex == 0
+                  ? [false, false, true, false]
+                  : [false, false, false, true])
+            : tabLabels!.length == 3
+            ? (selectedIndex == 0
                   ? [true, false, false]
                   : selectedIndex == 1
-                      ? [false, true, false]
-                      : [false, false, true])
-              : selectedIndex == 0
-                  ? [true, false]
-                  : [false, true];
+                  ? [false, true, false]
+                  : [false, false, true])
+            : selectedIndex == 0
+            ? [true, false]
+            : [false, true];
 
-      final children = tabLabels!
-          .map((label) => Container(
+        final children = tabLabels!
+            .map(
+              (label) => Container(
                 width: toggleWidth,
                 child: Center(
-                    child: Text(
-                  label![0].toUpperCase() + label.substring(1),
-                  maxLines: 1,
-                  overflow: TextOverflow.clip,
-                )),
-              ))
-          .toList();
+                  child: Text(
+                    label![0].toUpperCase() + label.substring(1),
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              ),
+            )
+            .toList();
 
-      return ToggleButtons(
-        children: children,
-        isSelected: isSelected,
-        onPressed: (index) => onTabChanged(index),
-      );
-    });
+        return ToggleButtons(
+          children: children,
+          isSelected: isSelected,
+          onPressed: (index) => onTabChanged(index),
+        );
+      },
+    );
   }
 }

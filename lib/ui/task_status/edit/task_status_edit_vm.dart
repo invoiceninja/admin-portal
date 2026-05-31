@@ -80,30 +80,38 @@ class TaskStatusEditVM {
           final navigator = navigatorKey.currentState;
           final Completer<TaskStatusEntity> completer =
               new Completer<TaskStatusEntity>();
-          store.dispatch(SaveTaskStatusRequest(
-              completer: completer, taskStatus: taskStatus));
-          return completer.future.then((savedTaskStatus) {
-            showToast(taskStatus!.isNew
-                ? localization!.createdTaskStatus
-                : localization!.updatedTaskStatus);
+          store.dispatch(
+            SaveTaskStatusRequest(completer: completer, taskStatus: taskStatus),
+          );
+          return completer.future
+              .then((savedTaskStatus) {
+                showToast(
+                  taskStatus!.isNew
+                      ? localization!.createdTaskStatus
+                      : localization!.updatedTaskStatus,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(TaskStatusViewScreen.route));
-              if (taskStatus.isNew) {
-                navigator!.pushReplacementNamed(TaskStatusViewScreen.route);
-              } else {
-                navigator!.pop(savedTaskStatus);
-              }
-            } else {
-              viewEntity(entity: savedTaskStatus, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(TaskStatusViewScreen.route),
+                  );
+                  if (taskStatus.isNew) {
+                    navigator!.pushReplacementNamed(TaskStatusViewScreen.route);
+                  } else {
+                    navigator!.pop(savedTaskStatus);
+                  }
+                } else {
+                  viewEntity(entity: savedTaskStatus, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

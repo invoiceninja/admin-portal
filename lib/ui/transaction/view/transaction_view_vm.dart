@@ -11,10 +11,8 @@ import 'package:invoiceninja_flutter/ui/transaction/view/transaction_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TransactionViewScreen extends StatelessWidget {
-  const TransactionViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const TransactionViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
   static const String route = '/transaction/view';
   final bool isFilter;
 
@@ -27,7 +25,8 @@ class TransactionViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return TransactionView(
           key: ValueKey(
-              vm.transactions.map((transaction) => transaction.id).join('|')),
+            vm.transactions.map((transaction) => transaction.id).join('|'),
+          ),
           viewModel: vm,
           isFilter: isFilter,
         );
@@ -64,18 +63,25 @@ class TransactionViewVM {
     }
 
     transactionIds.forEach((String transactionId) {
-      transactions.add(state.transactionState.map[transactionId] ??
-          TransactionEntity(id: transactionId));
+      transactions.add(
+        state.transactionState.map[transactionId] ??
+            TransactionEntity(id: transactionId),
+      );
     });
 
     Future<Null>? _handleRefresh(BuildContext context) {
       if (transactions.isEmpty) {
         return null;
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
-      store.dispatch(LoadTransaction(
-          completer: completer, transactionId: transactions.first.id));
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
+      store.dispatch(
+        LoadTransaction(
+          completer: completer,
+          transactionId: transactions.first.id,
+        ),
+      );
       return completer.future;
     }
 
@@ -91,35 +97,42 @@ class TransactionViewVM {
       onLinkToPayment: (context, paymentId) {
         store.dispatch(
           LinkTransactionToPaymentRequest(
-              snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.convertedTransaction),
-              transactionIds.first,
-              paymentId),
+            snackBarCompleter<Null>(
+              AppLocalization.of(context)!.convertedTransaction,
+            ),
+            transactionIds.first,
+            paymentId,
+          ),
         );
       },
       onLinkToExpense: (context, expenseId) {
         store.dispatch(
           LinkTransactionToExpenseRequest(
-              snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.convertedTransaction),
-              transactionIds.first,
-              expenseId),
+            snackBarCompleter<Null>(
+              AppLocalization.of(context)!.convertedTransaction,
+            ),
+            transactionIds.first,
+            expenseId,
+          ),
         );
       },
       onConvertToPayment: (context, invoiceIds) {
         store.dispatch(
           ConvertTransactionToPaymentRequest(
-              snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.convertedTransaction),
-              transactionIds.first,
-              invoiceIds),
+            snackBarCompleter<Null>(
+              AppLocalization.of(context)!.convertedTransaction,
+            ),
+            transactionIds.first,
+            invoiceIds,
+          ),
         );
       },
       onConvertToExpense: (context, vendorId, categoryId) {
         store.dispatch(
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
-                AppLocalization.of(context)!.convertedTransaction)
+                AppLocalization.of(context)!.convertedTransaction,
+              )
               ..future.then<Null>((_) {
                 if (state.transactionListState.isInMultiselect()) {
                   store.dispatch(ClearTransactionMultiselect());

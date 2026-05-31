@@ -42,9 +42,10 @@ class _PaymentViewState extends State<PaymentView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: widget.isFilter ? 0 : state.paymentUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: widget.isFilter ? 0 : state.paymentUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -90,9 +91,7 @@ class _PaymentViewState extends State<PaymentView>
               controller: _controller,
               isScrollable: false,
               tabs: [
-                Tab(
-                  text: localization!.overview,
-                ),
+                Tab(text: localization!.overview),
                 Tab(
                   text: documents.isEmpty
                       ? localization.documents
@@ -143,10 +142,10 @@ class _PaymentViewState extends State<PaymentView>
                     : EntityAction.sendEmail,
                 action1Enabled: state.company.enableApplyingPayments
                     ? payment.applied < payment.amount &&
-                        memoizedHasActiveUnpaidInvoices(
-                          payment.clientId,
-                          state.invoiceState.map,
-                        )
+                          memoizedHasActiveUnpaidInvoices(
+                            payment.clientId,
+                            state.invoiceState.map,
+                          )
                     : true,
                 action2: EntityAction.refundPayment,
                 action2Enabled: payment.refunded < payment.amount,

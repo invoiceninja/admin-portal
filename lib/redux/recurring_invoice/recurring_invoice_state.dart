@@ -43,16 +43,19 @@ abstract class RecurringInvoiceState
   BuiltList<String> get list;
 
   RecurringInvoiceState loadRecurringInvoices(
-      BuiltList<InvoiceEntity> clients) {
+    BuiltList<InvoiceEntity> clients,
+  ) {
     final map = Map<String, InvoiceEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<RecurringInvoiceState> get serializer =>
@@ -65,8 +68,9 @@ abstract class RecurringInvoiceUIState extends Object
   factory RecurringInvoiceUIState(PrefStateSortField? sortField) {
     return _$RecurringInvoiceUIState._(
       listUIState: ListUIState(
-          sortField?.field ?? RecurringInvoiceFields.number,
-          sortAscending: sortField?.ascending ?? false),
+        sortField?.field ?? RecurringInvoiceFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

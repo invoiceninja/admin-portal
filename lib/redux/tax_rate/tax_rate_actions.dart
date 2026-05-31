@@ -23,10 +23,7 @@ class ViewTaxRateList implements PersistUI {
 }
 
 class ViewTaxRate implements PersistUI {
-  ViewTaxRate({
-    required this.taxRateId,
-    this.force = false,
-  });
+  ViewTaxRate({required this.taxRateId, this.force = false});
 
   final String? taxRateId;
   final bool force;
@@ -215,7 +212,10 @@ class FilterTaxRatesByState implements PersistUI {
 }
 
 void handleTaxRateAction(
-    BuildContext? context, List<BaseEntity> taxRates, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> taxRates,
+  EntityAction? action,
+) {
   if (taxRates.isEmpty) {
     return;
   }
@@ -232,29 +232,32 @@ void handleTaxRateAction(
     case EntityAction.restore:
       final message = taxRateIds.length > 1
           ? localization!.restoredTaxRates
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taxRateIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.restoredTaxRate;
       store.dispatch(
-          RestoreTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
+        RestoreTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds),
+      );
       break;
     case EntityAction.archive:
       final message = taxRateIds.length > 1
           ? localization!.archivedTaxRates
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taxRateIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.archivedTaxRate;
       store.dispatch(
-          ArchiveTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
+        ArchiveTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds),
+      );
       break;
     case EntityAction.delete:
       final message = taxRateIds.length > 1
           ? localization!.deletedTaxRates
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taxRateIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.deletedTaxRate;
       store.dispatch(
-          DeleteTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
+        DeleteTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {
@@ -274,9 +277,7 @@ void handleTaxRateAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [taxRate],
-      );
+      showEntityActionsDialog(entities: [taxRate]);
       break;
   }
 }

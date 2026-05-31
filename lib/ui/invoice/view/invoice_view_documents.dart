@@ -10,9 +10,11 @@ import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 
 class InvoiceViewDocuments extends StatelessWidget {
-  const InvoiceViewDocuments(
-      {Key? key, required this.invoice, required this.viewModel})
-      : super(key: key);
+  const InvoiceViewDocuments({
+    Key? key,
+    required this.invoice,
+    required this.viewModel,
+  }) : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
   final InvoiceEntity? invoice;

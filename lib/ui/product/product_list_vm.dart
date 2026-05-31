@@ -31,27 +31,28 @@ class ProductListBuilder extends StatelessWidget {
       converter: ProductListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.product,
-            presenter: ProductPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.productList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final productId = viewModel.productList[index];
-              final product = viewModel.productMap[productId];
-              final listState = state.getListState(EntityType.product);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.product,
+          presenter: ProductPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.productList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final productId = viewModel.productList[index];
+            final product = viewModel.productMap[productId];
+            final listState = state.getListState(EntityType.product);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return ProductListItem(
-                filter: viewModel.filter,
-                product: product as ProductEntity,
-                isChecked: isInMultiselect && listState.isSelected(product.id),
-              );
-            });
+            return ProductListItem(
+              filter: viewModel.filter,
+              product: product as ProductEntity,
+              isChecked: isInMultiselect && listState.isSelected(product.id),
+            );
+          },
+        );
       },
     );
   }
@@ -75,8 +76,9 @@ class ProductListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -86,18 +88,19 @@ class ProductListVM {
     return ProductListVM(
       state: state,
       productList: memoizedFilteredProductList(
-          state.getUISelection(EntityType.product),
-          state.productState.map,
-          state.productState.list,
-          state.productListState,
-          state.userState.map),
+        state.getUISelection(EntityType.product),
+        state.productState.map,
+        state.productState.list,
+        state.productListState,
+        state.userState.map,
+      ),
       productMap: state.productState.map,
       isLoading: state.isLoading,
       filter: state.productUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.product) ??
-              ProductPresenter.getDefaultTableFields(state.userCompany),
+          ProductPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
       onClearMultielsect: () => store.dispatch(ClearProductMultiselect()),
     );

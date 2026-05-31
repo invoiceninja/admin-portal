@@ -11,9 +11,7 @@ class DesignPresenter extends EntityPresenter {
   }
 
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
-    return [
-      ...getDefaultTableFields(userCompany),
-    ];
+    return [...getDefaultTableFields(userCompany)];
   }
 
   @override

@@ -20,10 +20,7 @@ import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteScreen extends StatelessWidget {
-  const QuoteScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const QuoteScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/quote';
 
@@ -111,14 +108,22 @@ class QuoteScreen extends StatelessWidget {
         tableColumns: QuotePresenter.getAllTableFields(userCompany),
         defaultTableColumns: QuotePresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) => store.dispatch(SortQuotes(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.invoice3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.invoice4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.invoice1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.invoice2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.invoice3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.invoice4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterQuotesByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -148,19 +153,19 @@ class QuoteScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.quote)
           ? FloatingActionButton(
               heroTag: 'quote_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.quote);
+                  context: context,
+                  entityType: EntityType.quote,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newQuote,
             )
           : null,

@@ -65,7 +65,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     widget.onItemsSelected!([
       InvoiceItemEntity(
         typeId: _tabController.index == 1 ? InvoiceItemEntity.TYPE_TASK : null,
-      )
+      ),
     ]);
     Navigator.pop(context);
   }
@@ -93,10 +93,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         items.add(convertTaskToInvoiceItem(task: task, context: context));
       } else if (entity.entityType == EntityType.expense) {
         final expense = entity as ExpenseEntity;
-        items.add(convertExpenseToInvoiceItem(
-          expense: expense,
-          context: context,
-        ));
+        items.add(
+          convertExpenseToInvoiceItem(expense: expense, context: context),
+        );
       }
     });
 
@@ -119,9 +118,11 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   }
 
   void _updateClientId() {
-    final selected = _selected.firstWhereOrNull((entity) =>
-        entity is BelongsToClient &&
-        (((entity as BelongsToClient).clientId ?? '').isNotEmpty));
+    final selected = _selected.firstWhereOrNull(
+      (entity) =>
+          entity is BelongsToClient &&
+          (((entity as BelongsToClient).clientId ?? '').isNotEmpty),
+    );
 
     if (selected != null) {
       _filterClientId = (selected as BelongsToClient).clientId;
@@ -135,43 +136,48 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
-    final showTabBar = widget.showTasksAndExpenses &&
+    final showTabBar =
+        widget.showTasksAndExpenses &&
         (company.isModuleEnabled(EntityType.task) ||
             company.isModuleEnabled(EntityType.expense));
 
-    final products =
-        memoizedProductList(state.productState.map).where((entityId) {
+    final products = memoizedProductList(state.productState.map).where((
+      entityId,
+    ) {
       final entity = state.productState.map[entityId]!;
       return entity.isActive && entity.matchesFilter(_filter);
     }).toList();
 
-    final tasks = memoizedTaskList(
-      state.taskState.map,
-      _filterClientId,
-      state.userState.map,
-      state.clientState.map,
-      state.projectState.map,
-    ).where((entityId) {
-      final task = state.taskState.get(entityId!);
-      final client = state.clientState.get(task.clientId);
-      if (widget.excluded != null && widget.excluded!.contains(task)) {
-        return false;
-      }
-      return task.matchesFilter(_filter) || client.matchesNameOrEmail(_filter);
-    }).toList();
+    final tasks =
+        memoizedTaskList(
+          state.taskState.map,
+          _filterClientId,
+          state.userState.map,
+          state.clientState.map,
+          state.projectState.map,
+        ).where((entityId) {
+          final task = state.taskState.get(entityId!);
+          final client = state.clientState.get(task.clientId);
+          if (widget.excluded != null && widget.excluded!.contains(task)) {
+            return false;
+          }
+          return task.matchesFilter(_filter) ||
+              client.matchesNameOrEmail(_filter);
+        }).toList();
 
-    final expenses = memoizedClientExpenseList(
-      state.expenseState.map,
-      _filterClientId,
-    ).where((entityId) {
-      final expense = state.expenseState.get(entityId!);
-      final client = state.clientState.get(expense.clientId!);
-      if (widget.excluded != null && widget.excluded!.contains(expense)) {
-        return false;
-      }
-      return expense.matchesFilter(_filter) ||
-          client.matchesNameOrEmail(_filter);
-    }).toList();
+    final expenses =
+        memoizedClientExpenseList(
+          state.expenseState.map,
+          _filterClientId,
+        ).where((entityId) {
+          final expense = state.expenseState.get(entityId!);
+          final client = state.clientState.get(expense.clientId!);
+          if (widget.excluded != null && widget.excluded!.contains(expense)) {
+            return false;
+          }
+          return expense.matchesFilter(_filter) ||
+              client.matchesNameOrEmail(_filter);
+        }).toList();
 
     Widget _productList() {
       return ScrollableListViewBuilder(
@@ -181,7 +187,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final product = state.productState.map[entityId]!;
           return ProductListItem(
             isDismissible: false,
-            showCost: widget.invoice.isPurchaseOrder &&
+            showCost:
+                widget.invoice.isPurchaseOrder &&
                 company.enableProductCost &&
                 product.cost != 0,
             onCheckboxChanged: (checked) => _toggleEntity(product),
@@ -255,104 +262,110 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     final List<Widget> tabs = [
       Tab(
-        text: localization.products +
+        text:
+            localization.products +
             (products.isNotEmpty ? ' (${products.length})' : ''),
       ),
     ];
-    final List<Widget> tabViews = [
-      _productList(),
-    ];
+    final List<Widget> tabViews = [_productList()];
 
     if (company.isModuleEnabled(EntityType.task)) {
-      tabs.add(Tab(
-        text:
-            localization.tasks + (tasks.isNotEmpty ? ' (${tasks.length})' : ''),
-      ));
+      tabs.add(
+        Tab(
+          text:
+              localization.tasks +
+              (tasks.isNotEmpty ? ' (${tasks.length})' : ''),
+        ),
+      );
       tabViews.add(_taskList());
     }
 
     if (company.isModuleEnabled(EntityType.expense)) {
-      tabs.add(Tab(
-        text: localization.expenses +
-            (expenses.isNotEmpty ? ' (${expenses.length})' : ''),
-      ));
+      tabs.add(
+        Tab(
+          text:
+              localization.expenses +
+              (expenses.isNotEmpty ? ' (${expenses.length})' : ''),
+        ),
+      );
       tabViews.add(_expenseList());
     }
 
     return ResponsivePadding(
       child: Material(
         elevation: 4.0,
-        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                child: Icon(Icons.search),
-              ),
-              Expanded(
-                child: TextField(
-                  controller: _textController,
-                  onChanged: (value) {
-                    setState(() {
-                      _filter = value;
-                    });
-                  },
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: _selected.isEmpty
-                        ? localization.filter
-                        : localization.countSelected
-                            .replaceFirst(':count', '${_selected.length}'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Icon(Icons.search),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _textController,
+                    onChanged: (value) {
+                      setState(() {
+                        _filter = value;
+                      });
+                    },
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: _selected.isEmpty
+                          ? localization.filter
+                          : localization.countSelected.replaceFirst(
+                              ':count',
+                              '${_selected.length}',
+                            ),
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      if (_textController.text.isNotEmpty) {
-                        setState(() {
-                          _filter = _textController.text = '';
-                        });
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                  _selected.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(Icons.check),
-                          onPressed: () => _onItemsSelected(context),
-                        )
-                      : !state.prefState.isEditorFullScreen(EntityType.invoice)
-                          ? IconButton(
-                              icon: Icon(Icons.add_circle_outline),
-                              tooltip: localization.createNew,
-                              onPressed: () => _addBlankItem(company),
-                            )
-                          : SizedBox(),
-                ],
-              )
-            ],
-          ),
-          showTabBar
-              ? AppTabBar(
-                  controller: _tabController,
-                  tabs: tabs,
-                )
-              : SizedBox(),
-          Expanded(
-            child: showTabBar
-                ? TabBarView(
-                    controller: _tabController,
-                    children: tabViews,
-                  )
-                : tabViews.first,
-          ),
-        ]),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        if (_textController.text.isNotEmpty) {
+                          setState(() {
+                            _filter = _textController.text = '';
+                          });
+                        } else {
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                    _selected.isNotEmpty
+                        ? IconButton(
+                            icon: Icon(Icons.check),
+                            onPressed: () => _onItemsSelected(context),
+                          )
+                        : !state.prefState.isEditorFullScreen(
+                            EntityType.invoice,
+                          )
+                        ? IconButton(
+                            icon: Icon(Icons.add_circle_outline),
+                            tooltip: localization.createNew,
+                            onPressed: () => _addBlankItem(company),
+                          )
+                        : SizedBox(),
+                  ],
+                ),
+              ],
+            ),
+            showTabBar
+                ? AppTabBar(controller: _tabController, tabs: tabs)
+                : SizedBox(),
+            Expanded(
+              child: showTabBar
+                  ? TabBarView(controller: _tabController, children: tabViews)
+                  : tabViews.first,
+            ),
+          ],
+        ),
       ),
     );
   }

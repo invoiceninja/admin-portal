@@ -81,38 +81,54 @@ class TemplatesAndRemindersVM {
             WebClient()
                 .post(url, state.credentials.token)
                 .then((dynamic value) {
-              // Give the server a few seconds to process
-              Timer(Duration(seconds: 2), () {
-                store.dispatch(StopSaving());
-                store.dispatch(RefreshData());
-              });
-            }).catchError((dynamic error) {
-              store.dispatch(StopSaving());
-            });
+                  // Give the server a few seconds to process
+                  Timer(Duration(seconds: 2), () {
+                    store.dispatch(StopSaving());
+                    store.dispatch(RefreshData());
+                  });
+                })
+                .catchError((dynamic error) {
+                  store.dispatch(StopSaving());
+                });
           };
 
           final settingsUIState = store.state.uiState.settingsUIState;
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.savedSettings);
+                AppLocalization.of(context)!.savedSettings,
+              );
               completer.future.then<Null>((_) => callback());
-              store.dispatch(SaveCompanyRequest(
-                  completer: completer, company: settingsUIState.company));
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  AppLocalization.of(context)!.savedSettings);
+                AppLocalization.of(context)!.savedSettings,
+              );
               completer.future.then((value) => callback());
-              store.dispatch(SaveGroupRequest(
-                  completer: completer, group: settingsUIState.group));
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  AppLocalization.of(context)!.savedSettings);
+                AppLocalization.of(context)!.savedSettings,
+              );
               completer.future.then((value) => callback());
-              store.dispatch(SaveClientRequest(
-                  completer: completer, client: settingsUIState.client));
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
               break;
           }
         });

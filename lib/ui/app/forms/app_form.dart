@@ -27,11 +27,7 @@ class AppForm extends StatelessWidget {
       node: focusNode,
       child: Form(
         key: formKey,
-        child: child ??
-            ScrollableListView(
-              primary: true,
-              children: children,
-            ),
+        child: child ?? ScrollableListView(primary: true, children: children),
       ),
     );
   }

@@ -7,12 +7,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:window_manager/window_manager.dart';
 
 class LiveText extends StatefulWidget {
-  const LiveText(
-    this.value, {
-    this.style,
-    this.duration,
-    this.maxLines = 1,
-  });
+  const LiveText(this.value, {this.style, this.duration, this.maxLines = 1});
 
   final Duration? duration;
   final Function value;
@@ -29,21 +24,20 @@ class _LiveTextState extends State<LiveText> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(
-      widget.duration ?? Duration(milliseconds: 500),
-      (Timer timer) async {
-        if (isDesktopOS()) {
-          final isFocused = await windowManager.isFocused();
-          if (!isFocused) {
-            return;
-          }
+    _timer = Timer.periodic(widget.duration ?? Duration(milliseconds: 500), (
+      Timer timer,
+    ) async {
+      if (isDesktopOS()) {
+        final isFocused = await windowManager.isFocused();
+        if (!isFocused) {
+          return;
         }
+      }
 
-        if (mounted) {
-          setState(() => false);
-        }
-      },
-    );
+      if (mounted) {
+        setState(() => false);
+      }
+    });
   }
 
   @override

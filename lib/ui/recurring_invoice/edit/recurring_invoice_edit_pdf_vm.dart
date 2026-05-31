@@ -21,9 +21,7 @@ class RecurringInvoiceEditPDFScreen extends StatelessWidget {
         return RecurringInvoiceEditPDFVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditPDF(
-          viewModel: viewModel,
-        );
+        return InvoiceEditPDF(viewModel: viewModel);
       },
     );
   }
@@ -34,11 +32,7 @@ class RecurringInvoiceEditPDFVM extends EntityEditPDFVM {
     required CompanyEntity? company,
     required InvoiceEntity? invoice,
     required AppState state,
-  }) : super(
-          company: company,
-          invoice: invoice,
-          state: state,
-        );
+  }) : super(company: company, invoice: invoice, state: state);
 
   factory RecurringInvoiceEditPDFVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

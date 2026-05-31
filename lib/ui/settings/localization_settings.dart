@@ -28,10 +28,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class LocalizationSettings extends StatefulWidget {
-  const LocalizationSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const LocalizationSettings({Key? key, required this.viewModel})
+    : super(key: key);
 
   final LocalizationSettingsVM viewModel;
 
@@ -41,8 +39,9 @@ class LocalizationSettings extends StatefulWidget {
 
 class _LocalizationSettingsState extends State<LocalizationSettings>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_localizationSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_localizationSettings',
+  );
 
   bool autoValidate = false;
 
@@ -58,10 +57,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     _focusNode = FocusScopeNode();
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex:
-            settingsUIState.isFiltered ? 0 : settingsUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: settingsUIState.isFiltered ? 0 : settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -86,16 +85,18 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
   void didChangeDependencies() {
     _controllers = [_firstNameController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     /*
     final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
       */
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -110,10 +111,12 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     final settings = viewModel.settings;
     final company = viewModel.company;
     final translations = settings.translations ?? BuiltMap<String, String>();
-    final customLabels =
-        kCustomLabels.where((key) => !translations.keys.contains(key)).toList();
+    final customLabels = kCustomLabels
+        .where((key) => !translations.keys.contains(key))
+        .toList();
     customLabels.sort(
-        (a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
+      (a, b) => localization.lookup(a).compareTo(localization.lookup(b)),
+    );
 
     return EditScaffold(
       title: localization.localization,
@@ -123,12 +126,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
           : TabBar(
               controller: _controller,
               tabs: [
-                Tab(
-                  text: localization.settings,
-                ),
-                Tab(
-                  text: localization.customLabels,
-                ),
+                Tab(text: localization.settings),
+                Tab(text: localization.customLabels),
               ],
             ),
       body: AppTabForm(
@@ -143,27 +142,38 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                 children: <Widget>[
                   EntityDropdown(
                     entityType: EntityType.currency,
-                    entityList:
-                        memoizedCurrencyList(state.staticState.currencyMap),
+                    entityList: memoizedCurrencyList(
+                      state.staticState.currencyMap,
+                    ),
                     labelText: localization.currency,
                     entityId: settings.currencyId,
                     onSelected: (SelectableEntity? currency) =>
-                        viewModel.onSettingsChanged(settings
-                            .rebuild((b) => b..currencyId = currency?.id)),
+                        viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..currencyId = currency?.id),
+                        ),
                   ),
                   BoolDropdownButton(
                     value: settings.showCurrencyCode,
                     label: localization.currencyFormat,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..showCurrencyCode = value)),
-                    enabledLabel: '${localization.code}: ' +
-                        formatNumber(1000, context,
-                            showCurrencyCode: true,
-                            currencyId: settings.currencyId)!,
-                    disabledLabel: '${localization.symbol}: ' +
-                        formatNumber(1000, context,
-                            showCurrencyCode: false,
-                            currencyId: settings.currencyId)!,
+                      settings.rebuild((b) => b..showCurrencyCode = value),
+                    ),
+                    enabledLabel:
+                        '${localization.code}: ' +
+                        formatNumber(
+                          1000,
+                          context,
+                          showCurrencyCode: true,
+                          currencyId: settings.currencyId,
+                        )!,
+                    disabledLabel:
+                        '${localization.symbol}: ' +
+                        formatNumber(
+                          1000,
+                          context,
+                          showCurrencyCode: false,
+                          currencyId: settings.currencyId,
+                        )!,
                   ),
                   if (!state.isDemo)
                     LearnMoreUrl(
@@ -171,34 +181,44 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       label: localization.helpTranslate,
                       child: EntityDropdown(
                         entityType: EntityType.language,
-                        entityList:
-                            memoizedLanguageList(state.staticState.languageMap),
+                        entityList: memoizedLanguageList(
+                          state.staticState.languageMap,
+                        ),
                         labelText: localization.language,
                         entityId: settings.languageId,
                         onSelected: (SelectableEntity? language) =>
-                            viewModel.onSettingsChanged(settings
-                                .rebuild((b) => b..languageId = language?.id)),
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) => b..languageId = language?.id,
+                              ),
+                            ),
                       ),
                     ),
                   EntityDropdown(
                     entityType: EntityType.timezone,
-                    entityList:
-                        memoizedTimezoneList(state.staticState.timezoneMap),
+                    entityList: memoizedTimezoneList(
+                      state.staticState.timezoneMap,
+                    ),
                     labelText: localization.timezone,
                     entityId: settings.timezoneId,
                     onSelected: (SelectableEntity? timezone) =>
-                        viewModel.onSettingsChanged(settings
-                            .rebuild((b) => b..timezoneId = timezone?.id)),
+                        viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..timezoneId = timezone?.id),
+                        ),
                   ),
                   EntityDropdown(
                     entityType: EntityType.dateFormat,
-                    entityList:
-                        memoizedDateFormatList(state.staticState.dateFormatMap),
+                    entityList: memoizedDateFormatList(
+                      state.staticState.dateFormatMap,
+                    ),
                     labelText: localization.dateFormat,
                     entityId: settings.dateFormatId,
                     onSelected: (SelectableEntity? dateFormat) =>
-                        viewModel.onSettingsChanged(settings
-                            .rebuild((b) => b..dateFormatId = dateFormat?.id)),
+                        viewModel.onSettingsChanged(
+                          settings.rebuild(
+                            (b) => b..dateFormatId = dateFormat?.id,
+                          ),
+                        ),
                   ),
                   BoolDropdownButton(
                     iconData: MdiIcons.clock,
@@ -206,22 +226,27 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     helpLabel: localization.militaryTimeHelp,
                     value: settings.enableMilitaryTime,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..enableMilitaryTime = value)),
+                      settings.rebuild((b) => b..enableMilitaryTime = value),
+                    ),
                   ),
                   BoolDropdownButton(
                     iconData: MdiIcons.bank,
                     label: localization.rappenRounding,
                     helpLabel: localization.rappenRoundingHelp,
                     value: settings.enableRappenRounding,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..enableRappenRounding = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..enableRappenRounding = value),
+                    ),
                   ),
                   if (!state.settingsUIState.isFiltered)
                     SwitchListTile(
                       value: company.useCommaAsDecimalPlace,
                       onChanged: (value) {
-                        viewModel.onCompanyChanged(company
-                            .rebuild((b) => b..useCommaAsDecimalPlace = value));
+                        viewModel.onCompanyChanged(
+                          company.rebuild(
+                            (b) => b..useCommaAsDecimalPlace = value,
+                          ),
+                        );
                       },
                       title: Text(localization.decimalComma),
                       subtitle: Text(localization.useCommaAsDecimalPlace),
@@ -255,21 +280,25 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                 ),                
                  */
                     AppDropdownButton(
-                        labelText: localization.firstMonthOfTheYear,
-                        value: company.firstMonthOfYear,
-                        onChanged: (dynamic value) =>
-                            viewModel.onCompanyChanged(company
-                                .rebuild((b) => b..firstMonthOfYear = value)),
-                        items: kMonthsOfTheYear
-                            .map((id, month) =>
+                      labelText: localization.firstMonthOfTheYear,
+                      value: company.firstMonthOfYear,
+                      onChanged: (dynamic value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..firstMonthOfYear = value),
+                      ),
+                      items: kMonthsOfTheYear
+                          .map(
+                            (id, month) =>
                                 MapEntry<String, DropdownMenuItem<String>>(
-                                    id,
-                                    DropdownMenuItem<String>(
-                                      child: Text(localization.lookup(month)),
-                                      value: id,
-                                    )))
-                            .values
-                            .toList()),
+                                  id,
+                                  DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(month)),
+                                    value: id,
+                                  ),
+                                ),
+                          )
+                          .values
+                          .toList(),
+                    ),
                   ],
                 ),
             ],
@@ -287,15 +316,20 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           items: customLabels
-                              .map((key) => DropdownMenuItem(
-                                    child: Text(localization.lookup(key)),
-                                    value: key,
-                                  ))
+                              .map(
+                                (key) => DropdownMenuItem(
+                                  child: Text(localization.lookup(key)),
+                                  value: key,
+                                ),
+                              )
                               .toList(),
                           hint: Text(localization.selectLabel),
                           onChanged: (value) {
-                            viewModel.onSettingsChanged(settings
-                                .rebuild((b) => b..translations[value] = ''));
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) => b..translations[value] = '',
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -308,44 +342,55 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                               child: Text(localization.addCustom),
                               onPressed: () {
                                 fieldCallback(
-                                    context: context,
-                                    callback: (value) {
-                                      viewModel.onSettingsChanged(
-                                          settings.rebuild((b) =>
-                                              b..translations[value] = ''));
-                                    },
-                                    field: localization.label,
-                                    title: localization.addCustom,
-                                    secondaryActions: [
-                                      TextButton(
-                                        child: Text(
-                                            localization.labels.toUpperCase()),
-                                        onPressed: () => launchUrl(
-                                            Uri.parse(kGitHubLangUrl)),
-                                      )
-                                    ]);
+                                  context: context,
+                                  callback: (value) {
+                                    viewModel.onSettingsChanged(
+                                      settings.rebuild(
+                                        (b) => b..translations[value] = '',
+                                      ),
+                                    );
+                                  },
+                                  field: localization.label,
+                                  title: localization.addCustom,
+                                  secondaryActions: [
+                                    TextButton(
+                                      child: Text(
+                                        localization.labels.toUpperCase(),
+                                      ),
+                                      onPressed: () =>
+                                          launchUrl(Uri.parse(kGitHubLangUrl)),
+                                    ),
+                                  ],
+                                );
                               },
                             ),
                             TextButton(
                               onPressed: () async {
                                 final countryId = (await showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return _AddCompanyDialog();
-                                    }))!;
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return _AddCompanyDialog();
+                                  },
+                                ))!;
                                 if (countryId.isNotEmpty) {
-                                  final key = 'country_' +
-                                      state.staticState.countryMap[countryId]!
+                                  final key =
+                                      'country_' +
+                                      state
+                                          .staticState
+                                          .countryMap[countryId]!
                                           .name;
-                                  viewModel.onSettingsChanged(settings.rebuild(
-                                      (b) => b..translations[key] = ''));
+                                  viewModel.onSettingsChanged(
+                                    settings.rebuild(
+                                      (b) => b..translations[key] = '',
+                                    ),
+                                  );
                                 }
                               },
                               child: Text(localization.addCountry),
-                            )
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                   SizedBox(height: 16),
@@ -353,32 +398,38 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     Row(
                       children: [
                         Expanded(
-                            child: Text(
-                          key!.startsWith('country_')
-                              ? key.split('_')[1]
-                              : localization.lookup(key),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )),
+                          child: Text(
+                            key!.startsWith('country_')
+                                ? key.split('_')[1]
+                                : localization.lookup(key),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                         Expanded(
                           child: TextFormField(
                             key: ValueKey('__${key}__'),
                             initialValue: translations[key] ?? '',
                             onChanged: (value) => viewModel.onSettingsChanged(
-                                settings.rebuild((b) =>
-                                    b..translations[key] = value.trim())),
+                              settings.rebuild(
+                                (b) => b..translations[key] = value.trim(),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(width: 16),
                         IconButton(
                           icon: Icon(Icons.clear),
                           onPressed: () {
-                            viewModel.onSettingsChanged(settings
-                                .rebuild((b) => b..translations.remove(key)));
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) => b..translations.remove(key),
+                              ),
+                            );
                           },
-                        )
+                        ),
                       ],
-                    )
+                    ),
                 ],
               ),
             ],

@@ -79,21 +79,21 @@ class EntityType extends EnumClass {
   }
 
   bool get isSetting => [
-        EntityType.paymentTerm,
-        EntityType.taxRate,
-        EntityType.companyGateway,
-        EntityType.user,
-        EntityType.group,
-        EntityType.design,
-        EntityType.token,
-        EntityType.webhook,
-        EntityType.expenseCategory,
-        EntityType.taskStatus,
-        EntityType.paymentLink,
-        EntityType.bankAccount,
-        EntityType.transactionRule,
-        EntityType.schedule,
-      ].contains(this);
+    EntityType.paymentTerm,
+    EntityType.taxRate,
+    EntityType.companyGateway,
+    EntityType.user,
+    EntityType.group,
+    EntityType.design,
+    EntityType.token,
+    EntityType.webhook,
+    EntityType.expenseCategory,
+    EntityType.taskStatus,
+    EntityType.paymentLink,
+    EntityType.bankAccount,
+    EntityType.transactionRule,
+    EntityType.schedule,
+  ].contains(this);
 
   List<EntityType> get relatedTypes {
     switch (this) {
@@ -111,22 +111,13 @@ class EntityType extends EnumClass {
           EntityType.document,
         ];
       case EntityType.invoice:
-        return [
-          EntityType.payment,
-          EntityType.transaction,
-        ];
+        return [EntityType.payment, EntityType.transaction];
       case EntityType.quote:
-        return [
-          EntityType.invoice,
-        ];
+        return [EntityType.invoice];
       case EntityType.recurringInvoice:
-        return [
-          EntityType.invoice,
-        ];
+        return [EntityType.invoice];
       case EntityType.payment:
-        return [
-          EntityType.invoice,
-        ];
+        return [EntityType.invoice];
       case EntityType.project:
         return [
           EntityType.task,
@@ -159,10 +150,7 @@ class EntityType extends EnumClass {
           EntityType.recurringExpense,
         ];
       case EntityType.companyGateway:
-        return [
-          EntityType.client,
-          EntityType.payment,
-        ];
+        return [EntityType.client, EntityType.payment];
       case EntityType.vendor:
         return [
           EntityType.purchaseOrder,
@@ -172,9 +160,7 @@ class EntityType extends EnumClass {
           EntityType.document,
         ];
       case EntityType.task:
-        return [
-          EntityType.project,
-        ];
+        return [EntityType.project];
       case EntityType.expense:
         return [
           EntityType.vendor,
@@ -183,14 +169,9 @@ class EntityType extends EnumClass {
           EntityType.transaction,
         ];
       case EntityType.expenseCategory:
-        return [
-          EntityType.expense,
-          EntityType.transaction,
-        ];
+        return [EntityType.expense, EntityType.transaction];
       case EntityType.recurringExpense:
-        return [
-          EntityType.expense,
-        ];
+        return [EntityType.expense];
       case EntityType.design:
         return [
           EntityType.invoice,
@@ -199,9 +180,7 @@ class EntityType extends EnumClass {
           EntityType.recurringInvoice,
         ];
       case EntityType.bankAccount:
-        return [
-          EntityType.transaction,
-        ];
+        return [EntityType.transaction];
       case EntityType.transaction:
         return [
           EntityType.invoice,
@@ -210,9 +189,7 @@ class EntityType extends EnumClass {
           EntityType.expenseCategory,
         ];
       case EntityType.transactionRule:
-        return [
-          EntityType.transaction,
-        ];
+        return [EntityType.transaction];
       default:
         return [];
     }
@@ -267,10 +244,8 @@ class EntityType extends EnumClass {
     return toString();
   }
 
-  bool get hasFullWidthViewer => [
-        EntityType.client,
-        EntityType.vendor,
-      ].contains(this);
+  bool get hasFullWidthViewer =>
+      [EntityType.client, EntityType.vendor].contains(this);
 
   static BuiltSet<EntityType> get values => _$typeValues;
 
@@ -453,17 +428,21 @@ abstract mixin class BaseEntity implements SelectableEntity {
       ReportStringValue(entityId: id, entityType: entityType, value: value);
 
   ReportEntityTypeValue getReportEntityType() => ReportEntityTypeValue(
-      entityId: id, entityType: entityType, value: entityType);
+    entityId: id,
+    entityType: entityType,
+    value: entityType,
+  );
 
   ReportBoolValue getReportBool({bool? value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
 
   ReportAgeValue getReportAge({int? value, String? currencyId}) =>
       ReportAgeValue(
-          entityType: entityType,
-          entityId: id,
-          value: value,
-          currencyId: currencyId);
+        entityType: entityType,
+        entityId: id,
+        value: value,
+        currencyId: currencyId,
+      );
 
   ReportDurationValue getReportDuration({int? value, String? currencyId}) =>
       ReportDurationValue(
@@ -473,34 +452,32 @@ abstract mixin class BaseEntity implements SelectableEntity {
         currencyId: currencyId,
       );
 
-  ReportNumberValue getReportDouble(
-          {double? value,
-          String? currencyId,
-          double? exchangeRate,
-          FormatNumberType? formatNumberType}) =>
-      ReportNumberValue(
-          entityId: id,
-          entityType: entityType,
-          value: value,
-          currencyId: currencyId,
-          exchangeRate: exchangeRate,
-          formatNumberType: formatNumberType);
+  ReportNumberValue getReportDouble({
+    double? value,
+    String? currencyId,
+    double? exchangeRate,
+    FormatNumberType? formatNumberType,
+  }) => ReportNumberValue(
+    entityId: id,
+    entityType: entityType,
+    value: value,
+    currencyId: currencyId,
+    exchangeRate: exchangeRate,
+    formatNumberType: formatNumberType,
+  );
 
-  ReportIntValue getReportInt(
-          {int? value,
-          String? currencyId,
-          FormatNumberType? formatNumberType}) =>
-      ReportIntValue(
-        entityId: id,
-        entityType: entityType,
-        value: value,
-      );
+  ReportIntValue getReportInt({
+    int? value,
+    String? currencyId,
+    FormatNumberType? formatNumberType,
+  }) => ReportIntValue(entityId: id, entityType: entityType, value: value);
 
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool multiselect = false,
+  }) {
     if (isNew || entityType == EntityType.company) {
       return [];
     }
@@ -523,7 +500,9 @@ abstract mixin class BaseEntity implements SelectableEntity {
   }
 
   bool matchesEntityFilter(
-      EntityType? filterEntityType, String? filterEntityId) {
+    EntityType? filterEntityType,
+    String? filterEntityId,
+  ) {
     return id == filterEntityId && entityType == filterEntityType;
   }
 
@@ -781,7 +760,8 @@ abstract class ActivityEntity
       activityTypeId == kActivityComment || activityTypeId.isEmpty;
 
   EntityType? get entityType {
-    final resolveByEntityId = isComment ||
+    final resolveByEntityId =
+        isComment ||
         [
           kActivityCustomDocumentSigned,
           kActivityQuickbooksPushFailure,
@@ -968,7 +948,8 @@ abstract class ActivityEntity
       return EntityType.purchaseOrder;
     } else {
       print(
-          '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');
+        '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId',
+      );
       return null;
     }
   }
@@ -1004,22 +985,32 @@ abstract class ActivityEntity
 
     if ((recurringInvoice?.isOld ?? false) && (invoice?.isOld ?? false)) {
       activity = activity!.replaceFirst(
-          ':user', '$recurringString ${recurringInvoice!.number}');
+        ':user',
+        '$recurringString ${recurringInvoice!.number}',
+      );
     } else if ((recurringExpense?.isOld ?? false) &&
         (expense?.isOld ?? false)) {
       activity = activity!.replaceFirst(
-          ':user', '$recurringString ${recurringExpense!.number}');
+        ':user',
+        '$recurringString ${recurringExpense!.number}',
+      );
     } else {
-      activity = activity!
-          .replaceFirst(':user', user?.listDisplayName ?? systemString!);
+      activity = activity!.replaceFirst(
+        ':user',
+        user?.listDisplayName ?? systemString!,
+      );
     }
 
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.number ?? '');
     activity = activity.replaceFirst(
-        ':recurring_invoice', recurringInvoice?.number ?? '');
+      ':recurring_invoice',
+      recurringInvoice?.number ?? '',
+    );
     activity = activity.replaceFirst(
-        ':recurring_expense', recurringExpense?.number ?? '');
+      ':recurring_expense',
+      recurringExpense?.number ?? '',
+    );
     activity = activity.replaceFirst(':quote', quote?.number ?? '');
     if ([
       kActivityViewPurchaseOrder,
@@ -1032,22 +1023,28 @@ abstract class ActivityEntity
     } else {
       final name = (clientContact?.fullName ?? '').isNotEmpty
           ? clientContact!.fullName +
-              ((client?.name ?? '').isNotEmpty
-                  ? (' (' + client!.name + ')')
-                  : '')
+                ((client?.name ?? '').isNotEmpty
+                    ? (' (' + client!.name + ')')
+                    : '')
           : (client?.displayName ?? '');
       activity = activity.replaceFirst(':contact', name);
     }
     activity = activity.replaceFirst(
-        ':payment', payment?.transactionReferenceOrNumber ?? '');
+      ':payment',
+      payment?.transactionReferenceOrNumber ?? '',
+    );
     activity = activity.replaceFirst(':credit', credit?.number ?? '');
     activity = activity.replaceFirst(':task', task?.number ?? '');
     activity = activity.replaceFirst(':expense', expense?.number ?? '');
     activity = activity.replaceFirst(':vendor', vendor?.name ?? '');
-    activity =
-        activity.replaceFirst(':purchase_order', purchaseOrder?.number ?? '');
     activity = activity.replaceFirst(
-        ':recurring_expense', vendor?.name ?? ''); // TODO implement
+      ':purchase_order',
+      purchaseOrder?.number ?? '',
+    );
+    activity = activity.replaceFirst(
+      ':recurring_expense',
+      vendor?.name ?? '',
+    ); // TODO implement
     activity = activity.replaceAll('  ', ' ');
     activity = activity.replaceFirst(':notes', notes ?? '');
 

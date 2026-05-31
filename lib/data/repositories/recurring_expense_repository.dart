@@ -14,20 +14,21 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class RecurringExpenseRepository {
-  const RecurringExpenseRepository({
-    this.webClient = const WebClient(),
-  });
+  const RecurringExpenseRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<ExpenseEntity> loadItem(
-      Credentials credentials, String? entityId) async {
+    Credentials credentials,
+    String? entityId,
+  ) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/recurring_expenses/$entityId?show_dates=true',
-        credentials.token);
+      '${credentials.url}/recurring_expenses/$entityId?show_dates=true',
+      credentials.token,
+    );
 
-    final ExpenseItemResponse recurringExpenseResponse =
-        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
+    final ExpenseItemResponse recurringExpenseResponse = serializers
+        .deserializeWith(ExpenseItemResponse.serializer, response)!;
 
     return recurringExpenseResponse.data;
   }
@@ -36,34 +37,45 @@ class RecurringExpenseRepository {
     final String url = credentials.url + '/recurring_expenses?';
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ExpenseListResponse recurringExpenseResponse =
-        serializers.deserializeWith(ExpenseListResponse.serializer, response)!;
+    final ExpenseListResponse recurringExpenseResponse = serializers
+        .deserializeWith(ExpenseListResponse.serializer, response)!;
 
     return recurringExpenseResponse.data;
   }
 
   Future<List<ExpenseEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action,
+  ) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/recurring_expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({'ids': ids, 'action': action.toApiParam()}),
+    );
 
-    final ExpenseListResponse recurringExpenseResponse =
-        serializers.deserializeWith(ExpenseListResponse.serializer, response)!;
+    final ExpenseListResponse recurringExpenseResponse = serializers
+        .deserializeWith(ExpenseListResponse.serializer, response)!;
 
     return recurringExpenseResponse.data.toList();
   }
 
   Future<ExpenseEntity> saveData(
-      Credentials credentials, ExpenseEntity recurringExpense,
-      {EntityAction? action}) async {
-    final data =
-        serializers.serializeWith(ExpenseEntity.serializer, recurringExpense);
+    Credentials credentials,
+    ExpenseEntity recurringExpense, {
+    EntityAction? action,
+  }) async {
+    final data = serializers.serializeWith(
+      ExpenseEntity.serializer,
+      recurringExpense,
+    );
     dynamic response;
     String url;
 
@@ -81,37 +93,47 @@ class RecurringExpenseRepository {
     }
 
     if (recurringExpense.isNew) {
-      response =
-          await webClient.post(url, credentials.token, data: json.encode(data));
+      response = await webClient.post(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     } else {
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     }
 
-    final ExpenseItemResponse recurringExpenseResponse =
-        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
+    final ExpenseItemResponse recurringExpenseResponse = serializers
+        .deserializeWith(ExpenseItemResponse.serializer, response)!;
 
     return recurringExpenseResponse.data;
   }
 
   Future<ExpenseEntity> uploadDocument(
-      Credentials credentials,
-      BaseEntity entity,
-      List<MultipartFile> multipartFiles,
-      bool isPrivate) async {
+    Credentials credentials,
+    BaseEntity entity,
+    List<MultipartFile> multipartFiles,
+    bool isPrivate,
+  ) async {
     final fields = <String, String>{
       '_method': 'put',
       'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/recurring_expenses/${entity.id}/upload',
-        credentials.token,
-        data: fields,
-        multipartFiles: multipartFiles);
+      '${credentials.url}/recurring_expenses/${entity.id}/upload',
+      credentials.token,
+      data: fields,
+      multipartFiles: multipartFiles,
+    );
 
-    final ExpenseItemResponse expenseResponse =
-        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
+    final ExpenseItemResponse expenseResponse = serializers.deserializeWith(
+      ExpenseItemResponse.serializer,
+      response,
+    )!;
 
     return expenseResponse.data;
   }

@@ -84,17 +84,17 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          invoiceItemIndex: invoiceItemIndex,
-          origInvoice: origInvoice,
-          onSavePressed: onSavePressed,
-          onItemsAdded: onItemsAdded,
-          isSaving: isSaving,
-          onCancelPressed: onCancelPressed,
-          onUploadDocuments: onUploadDocuments,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         invoiceItemIndex: invoiceItemIndex,
+         origInvoice: origInvoice,
+         onSavePressed: onSavePressed,
+         onItemsAdded: onItemsAdded,
+         isSaving: isSaving,
+         onCancelPressed: onCancelPressed,
+         onUploadDocuments: onUploadDocuments,
+       );
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -114,10 +114,11 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           final navigator = navigatorKey.currentState;
           if (invoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(localization!.pleaseSelectAClient);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization!.pleaseSelectAClient);
+              },
+            );
             return null;
           }
 
@@ -128,20 +129,22 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
             final task = state.taskState.get(lineItem.taskId ?? '');
             if (task.clientId.isNotEmpty && task.clientId != clientId) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(localization!.errorCrossClientTasks);
-                  });
+                context: navigatorKey.currentContext!,
+                builder: (BuildContext context) {
+                  return ErrorDialog(localization!.errorCrossClientTasks);
+                },
+              );
               return null;
             }
             final expense = state.expenseState.get(lineItem.expenseId ?? '');
             if ((expense.clientId ?? '').isNotEmpty &&
                 expense.clientId != clientId) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(localization!.errorCrossClientExpenses);
-                  });
+                context: navigatorKey.currentContext!,
+                builder: (BuildContext context) {
+                  return ErrorDialog(localization!.errorCrossClientExpenses);
+                },
+              );
               return null;
             }
           }
@@ -154,62 +157,83 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           } else {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
-            store.dispatch(SaveInvoiceRequest(
-              completer: completer,
-              invoice: invoice,
-              entityAction: action,
-            ));
-            return completer.future.then((savedInvoice) {
-              showToast(invoice.isNew
-                  ? localization!.createdInvoice
-                  : localization!.updatedInvoice);
+            store.dispatch(
+              SaveInvoiceRequest(
+                completer: completer,
+                invoice: invoice,
+                entityAction: action,
+              ),
+            );
+            return completer.future
+                .then((savedInvoice) {
+                  showToast(
+                    invoice.isNew
+                        ? localization!.createdInvoice
+                        : localization!.updatedInvoice,
+                  );
 
-              if (state.prefState.isMobile) {
-                store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-                if (invoice.isNew) {
-                  navigator!.pushReplacementNamed(InvoiceViewScreen.route);
-                } else {
-                  navigator!.pop(savedInvoice);
-                }
-              } else {
-                if (!state.prefState.isPreviewVisible) {
-                  store.dispatch(TogglePreviewSidebar());
-                }
+                  if (state.prefState.isMobile) {
+                    store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+                    if (invoice.isNew) {
+                      navigator!.pushReplacementNamed(InvoiceViewScreen.route);
+                    } else {
+                      navigator!.pop(savedInvoice);
+                    }
+                  } else {
+                    if (!state.prefState.isPreviewVisible) {
+                      store.dispatch(TogglePreviewSidebar());
+                    }
 
-                viewEntity(entity: savedInvoice);
+                    viewEntity(entity: savedInvoice);
 
-                if (state.prefState.isEditorFullScreen(EntityType.invoice) &&
-                    state.prefState.editAfterSaving) {
-                  editEntity(entity: savedInvoice);
-                }
-              }
+                    if (state.prefState.isEditorFullScreen(
+                          EntityType.invoice,
+                        ) &&
+                        state.prefState.editAfterSaving) {
+                      editEntity(entity: savedInvoice);
+                    }
+                  }
 
-              if (action != null && action.isClientSide) {
-                handleEntityAction(savedInvoice, action);
-              } else if (action != null && action.requiresSecondRequest) {
-                handleEntityAction(savedInvoice, action);
-                viewEntity(entity: savedInvoice, force: true);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+                  if (action != null && action.isClientSide) {
+                    handleEntityAction(savedInvoice, action);
+                  } else if (action != null && action.requiresSecondRequest) {
+                    handleEntityAction(savedInvoice, action);
+                    viewEntity(entity: savedInvoice, force: true);
+                  }
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
           }
         });
       },
       onItemsAdded: (items, clientId, projectId) {
         if ((clientId ?? '').isNotEmpty || (projectId ?? '').isNotEmpty) {
           final client = state.clientState.get(clientId!);
-          store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
-            ..clientId = clientId
-            ..projectId = projectId
-            ..invitations.replace(BuiltList<InvitationEntity>(client
-                .emailContacts
-                .map((contact) => InvitationEntity(clientContactId: contact.id))
-                .toList())))));
+          store.dispatch(
+            UpdateInvoice(
+              invoice.rebuild(
+                (b) => b
+                  ..clientId = clientId
+                  ..projectId = projectId
+                  ..invitations.replace(
+                    BuiltList<InvitationEntity>(
+                      client.emailContacts
+                          .map(
+                            (contact) =>
+                                InvitationEntity(clientContactId: contact.id),
+                          )
+                          .toList(),
+                    ),
+                  ),
+              ),
+            ),
+          );
         }
         store.dispatch(AddInvoiceItems(items));
 
@@ -226,25 +250,38 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool? isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveInvoiceDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFiles,
-            invoice: invoice,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool? isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveInvoiceDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFiles,
+                invoice: invoice,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 }

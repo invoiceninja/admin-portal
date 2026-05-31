@@ -26,10 +26,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'bank_account_screen_vm.dart';
 
 class BankAccountScreen extends StatelessWidget {
-  const BankAccountScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const BankAccountScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsBankAccounts';
 
@@ -48,16 +46,19 @@ class BankAccountScreen extends StatelessWidget {
             title: Text(localization.selectProvider),
             actions: [
               TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(localization.close.toUpperCase()))
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(localization.close.toUpperCase()),
+              ),
             ],
             content: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text('Envestnet - Yodlee'),
-                  Text(localization.yodleeRegions,
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    localization.yodleeRegions,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -83,8 +84,10 @@ class BankAccountScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   Text('GoCardless - Nordigen'),
-                  Text(localization.nordigenRegions,
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    localization.nordigenRegions,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -126,28 +129,32 @@ class BankAccountScreen extends StatelessWidget {
 
     store.dispatch(StartSaving());
     webClient
-        .post(url, credentials.token,
-            data: jsonEncode({
-              'context':
-                  integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
-                      ? {'return_url': ''}
-                      : 'nordigen',
-            }))
+        .post(
+          url,
+          credentials.token,
+          data: jsonEncode({
+            'context':
+                integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
+                ? {'return_url': ''}
+                : 'nordigen',
+          }),
+        )
         .then((dynamic response) {
-      store.dispatch(StopSaving());
+          store.dispatch(StopSaving());
 
-      String connectUrl = cleanApiUrl(credentials.url);
-      if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
-        connectUrl += '/yodlee/onboard/${response['hash']}';
-      } else {
-        connectUrl += '/nordigen/connect/${response['hash']}';
-      }
+          String connectUrl = cleanApiUrl(credentials.url);
+          if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
+            connectUrl += '/yodlee/onboard/${response['hash']}';
+          } else {
+            connectUrl += '/nordigen/connect/${response['hash']}';
+          }
 
-      launchUrl(Uri.parse(connectUrl));
-    }).catchError((dynamic error) {
-      store.dispatch(StopSaving());
-      showErrorDialog(message: '$error');
-    });
+          launchUrl(Uri.parse(connectUrl));
+        })
+        .catchError((dynamic error) {
+          store.dispatch(StopSaving());
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -164,7 +171,8 @@ class BankAccountScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartBankAccountMultiselect()),
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.bankAccountListState.filterClearedAt}__'),
+          '__filter_${state.bankAccountListState.filterClearedAt}__',
+        ),
         entityType: EntityType.bankAccount,
         entityIds: viewModel.bankAccountList,
         filter: state.bankAccountListState.filter,
@@ -186,8 +194,12 @@ class BankAccountScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:
-                const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 10),
+            padding: const EdgeInsets.only(
+              left: 16,
+              top: 8,
+              right: 16,
+              bottom: 10,
+            ),
             child: Row(
               children: [
                 if (state.isEnterprisePlan) ...[
@@ -211,48 +223,54 @@ class BankAccountScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 8),
                       child: Center(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          HelpText(localization.upgradeToConnectBankAccount),
-                          SizedBox(height: 16),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: () =>
-                                    launchUrl(Uri.parse(kBankingURL)),
-                                child: Text(localization.learnMore),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  store.dispatch(ViewSettings(
-                                      clearFilter: true,
-                                      company: state.company,
-                                      user: state.user,
-                                      section: kSettingsAccountManagement));
-                                },
-                                child: Text(localization.upgrade),
-                              ),
-                            ],
-                          )
-                        ],
-                      )),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HelpText(localization.upgradeToConnectBankAccount),
+                            SizedBox(height: 16),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () =>
+                                      launchUrl(Uri.parse(kBankingURL)),
+                                  child: Text(localization.learnMore),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    store.dispatch(
+                                      ViewSettings(
+                                        clearFilter: true,
+                                        company: state.company,
+                                        user: state.user,
+                                        section: kSettingsAccountManagement,
+                                      ),
+                                    );
+                                  },
+                                  child: Text(localization.upgrade),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 SizedBox(width: kGutterWidth),
                 Expanded(
                   child: AppButton(
-                    label: (state.isHosted
-                            ? localization.rules
-                            : localization.manageRules)
-                        .toUpperCase(),
+                    label:
+                        (state.isHosted
+                                ? localization.rules
+                                : localization.manageRules)
+                            .toUpperCase(),
                     onPressed: () {
                       store.dispatch(
-                          ViewSettings(section: kSettingsTransactionRules));
+                        ViewSettings(section: kSettingsTransactionRules),
+                      );
                     },
                     iconData: Icons.rule_folder,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -270,8 +288,9 @@ class BankAccountScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.bankAccount,
         tableColumns: BankAccountPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            BankAccountPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: BankAccountPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortBankAccounts(value));
         },
@@ -304,11 +323,10 @@ class BankAccountScreen extends StatelessWidget {
               heroTag: 'bank_account_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () => createEntityByType(
-                  context: context, entityType: EntityType.bankAccount),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
+                context: context,
+                entityType: EntityType.bankAccount,
               ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization.newBankAccount,
             )
           : null,

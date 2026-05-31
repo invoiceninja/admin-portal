@@ -25,28 +25,29 @@ class ScheduleListBuilder extends StatelessWidget {
       converter: ScheduleListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.schedule,
-            presenter: SchedulePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.scheduleList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final scheduleId = viewModel.scheduleList[index];
-              final schedule = viewModel.scheduleMap[scheduleId]!;
-              final listState = state.getListState(EntityType.schedule);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.schedule,
+          presenter: SchedulePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.scheduleList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final scheduleId = viewModel.scheduleList[index];
+            final schedule = viewModel.scheduleMap[scheduleId]!;
+            final listState = state.getListState(EntityType.schedule);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return ScheduleListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                schedule: schedule,
-                isChecked: isInMultiselect && listState.isSelected(schedule.id),
-              );
-            });
+            return ScheduleListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              schedule: schedule,
+              isChecked: isInMultiselect && listState.isSelected(schedule.id),
+            );
+          },
+        );
       },
     );
   }
@@ -73,8 +74,9 @@ class ScheduleListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -86,20 +88,24 @@ class ScheduleListVM {
       userCompany: state.userCompany,
       listState: state.scheduleListState,
       scheduleList: memoizedFilteredScheduleList(
-          state.getUISelection(EntityType.schedule),
-          state.scheduleState.map,
-          state.scheduleState.list,
-          state.scheduleListState),
+        state.getUISelection(EntityType.schedule),
+        state.scheduleState.map,
+        state.scheduleState.list,
+        state.scheduleListState,
+      ),
       scheduleMap: state.scheduleState.map,
       isLoading: state.isLoading,
       filter: state.scheduleUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> schedules,
-              EntityAction action) =>
-          handleScheduleAction(context, schedules, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> schedules,
+            EntityAction action,
+          ) => handleScheduleAction(context, schedules, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.schedule) ??
-              SchedulePresenter.getDefaultTableFields(state.userCompany),
+          SchedulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSchedules(field)),
       onClearMultielsect: () => store.dispatch(ClearScheduleMultiselect()),
     );

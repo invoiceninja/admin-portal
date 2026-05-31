@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'expense_screen_vm.dart';
 
 class ExpenseScreen extends StatelessWidget {
-  const ExpenseScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/expense';
 
@@ -39,9 +36,11 @@ class ExpenseScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     final statuses = [
-      ExpenseStatusEntity().rebuild((b) => b
-        ..id = kExpenseStatusLogged
-        ..name = localization!.logged),
+      ExpenseStatusEntity().rebuild(
+        (b) => b
+          ..id = kExpenseStatusLogged
+          ..name = localization!.logged,
+      ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kExpenseStatusPending
@@ -95,26 +94,38 @@ class ExpenseScreen extends StatelessWidget {
         entityType: EntityType.expense,
         iconButtons: [
           IconButton(
-              icon: Icon(getEntityIcon(EntityType.settings)),
-              onPressed: () {
-                store.dispatch(ViewSettings(
+            icon: Icon(getEntityIcon(EntityType.settings)),
+            onPressed: () {
+              store.dispatch(
+                ViewSettings(
                   section: kSettingsExpenses,
                   company: state.company,
-                ));
-              })
+                ),
+              );
+            },
+          ),
         ],
         tableColumns: ExpensePresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            ExpensePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: ExpensePresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) => store.dispatch(SortExpenses(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.expense1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.expense2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.expense3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.expense4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.expense1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.expense2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.expense3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.expense4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterExpensesByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -143,19 +154,19 @@ class ExpenseScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.expense)
           ? FloatingActionButton(
               heroTag: 'expense_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.expense);
+                  context: context,
+                  entityType: EntityType.expense,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newExpense,
             )
           : null,

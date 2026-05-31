@@ -36,27 +36,34 @@ class ProjectPicker extends StatelessWidget {
     final localization = AppLocalization.of(context)!;
 
     return EntityDropdown(
-        entityType: EntityType.project,
-        labelText: localization.project,
-        onAddPressed: onAddPressed,
-        entityId: projectId,
-        entityList: memoizedDropdownProjectList(
-            state.projectState.map,
-            state.projectState.list,
-            state.clientState.map,
-            state.userState.map,
-            clientId),
-        onSelected: (entity) {
-          onChanged!(entity?.id ?? '');
-        },
-        onCreateNew: (clientId ?? '').isNotEmpty
-            ? (completer, name) {
-                store.dispatch(SaveProjectRequest(
-                    project: ProjectEntity().rebuild((b) => b
+      entityType: EntityType.project,
+      labelText: localization.project,
+      onAddPressed: onAddPressed,
+      entityId: projectId,
+      entityList: memoizedDropdownProjectList(
+        state.projectState.map,
+        state.projectState.list,
+        state.clientState.map,
+        state.userState.map,
+        clientId,
+      ),
+      onSelected: (entity) {
+        onChanged!(entity?.id ?? '');
+      },
+      onCreateNew: (clientId ?? '').isNotEmpty
+          ? (completer, name) {
+              store.dispatch(
+                SaveProjectRequest(
+                  project: ProjectEntity().rebuild(
+                    (b) => b
                       ..name = name
-                      ..clientId = clientId),
-                    completer: completer));
-              }
-            : null);
+                      ..clientId = clientId,
+                  ),
+                  completer: completer,
+                ),
+              );
+            }
+          : null,
+    );
   }
 }

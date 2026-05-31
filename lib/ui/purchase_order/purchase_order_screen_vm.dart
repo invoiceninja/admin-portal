@@ -18,9 +18,7 @@ class PurchaseOrderScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, PurchaseOrderScreenVM>(
       converter: PurchaseOrderScreenVM.fromStore,
       builder: (context, vm) {
-        return PurchaseOrderScreen(
-          viewModel: vm,
-        );
+        return PurchaseOrderScreen(viewModel: vm);
       },
     );
   }
@@ -57,9 +55,12 @@ class PurchaseOrderScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.purchaseOrderListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> purchaseOrders,
-              EntityAction action) =>
-          handlePurchaseOrderAction(context, purchaseOrders, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> purchaseOrders,
+            EntityAction action,
+          ) => handlePurchaseOrderAction(context, purchaseOrders, action),
     );
   }
 }

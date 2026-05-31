@@ -25,13 +25,15 @@ class SelectedIndicator extends StatelessWidget {
 
     return Material(
       color: isSelected!
-          ? convertHexStringToColor(enableDarkMode
-              ? (isMenu
-                  ? kDefaultDarkSelectedColorMenu
-                  : kDefaultDarkSelectedColor)
-              : (isMenu
-                  ? kDefaultLightSelectedColorMenu
-                  : kDefaultLightSelectedColor))
+          ? convertHexStringToColor(
+              enableDarkMode
+                  ? (isMenu
+                        ? kDefaultDarkSelectedColorMenu
+                        : kDefaultDarkSelectedColor)
+                  : (isMenu
+                        ? kDefaultLightSelectedColorMenu
+                        : kDefaultLightSelectedColor),
+            )
           : Theme.of(context).cardColor,
       child: child,
     );

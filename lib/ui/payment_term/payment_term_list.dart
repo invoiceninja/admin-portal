@@ -12,10 +12,7 @@ import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermList extends StatefulWidget {
-  const PaymentTermList({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PaymentTermList({Key? key, required this.viewModel}) : super(key: key);
 
   final PaymentTermListVM viewModel;
 
@@ -42,20 +39,21 @@ class _PaymentTermListState extends State<PaymentTermList> {
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
       child: ScrollableListViewBuilder(
-          separatorBuilder: (context, index) => ListDivider(),
-          itemCount: viewModel.paymentTermList.length,
-          itemBuilder: (BuildContext context, index) {
-            final paymentTermId = viewModel.paymentTermList[index];
-            final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
+        separatorBuilder: (context, index) => ListDivider(),
+        itemCount: viewModel.paymentTermList.length,
+        itemBuilder: (BuildContext context, index) {
+          final paymentTermId = viewModel.paymentTermList[index];
+          final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
 
-            return PaymentTermListItem(
-              user: viewModel.state.user,
-              filter: viewModel.filter,
-              paymentTerm: paymentTerm,
-              isChecked:
-                  isInMultiselect && listUIState.isSelected(paymentTerm.id),
-            );
-          }),
+          return PaymentTermListItem(
+            user: viewModel.state.user,
+            filter: viewModel.filter,
+            paymentTerm: paymentTerm,
+            isChecked:
+                isInMultiselect && listUIState.isSelected(paymentTerm.id),
+          );
+        },
+      ),
     );
   }
 }

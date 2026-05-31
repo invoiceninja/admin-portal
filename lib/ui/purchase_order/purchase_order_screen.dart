@@ -16,10 +16,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'purchase_order_screen_vm.dart';
 
 class PurchaseOrderScreen extends StatelessWidget {
-  const PurchaseOrderScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PurchaseOrderScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/purchase_order';
 
@@ -67,7 +65,8 @@ class PurchaseOrderScreen extends StatelessWidget {
           store.dispatch(StartPurchaseOrderMultiselect()),
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.purchaseOrderListState.filterClearedAt}__'),
+          '__filter_${state.purchaseOrderListState.filterClearedAt}__',
+        ),
         entityType: EntityType.purchaseOrder,
         entityIds: viewModel.purchaseOrderList,
         filter: state.purchaseOrderListState.filter,
@@ -93,8 +92,9 @@ class PurchaseOrderScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.purchaseOrder,
         tableColumns: PurchaseOrderPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            PurchaseOrderPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: PurchaseOrderPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortPurchaseOrders(value));
         },
@@ -118,14 +118,22 @@ class PurchaseOrderScreen extends StatelessWidget {
             store.dispatch(StartPurchaseOrderMultiselect());
           }
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.invoice3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.invoice4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.invoice1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.invoice2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.invoice3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.invoice4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterPurchaseOrdersByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -135,19 +143,19 @@ class PurchaseOrderScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterPurchaseOrdersByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.purchaseOrder)
           ? FloatingActionButton(
               heroTag: 'purchase_order_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.purchaseOrder);
+                  context: context,
+                  entityType: EntityType.purchaseOrder,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newPurchaseOrder,
             )
           : null,

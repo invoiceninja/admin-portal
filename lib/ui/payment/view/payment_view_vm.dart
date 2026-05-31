@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentViewScreen extends StatelessWidget {
-  const PaymentViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const PaymentViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
   static const String route = '/payment/view';
 
@@ -60,16 +57,15 @@ class PaymentViewVM {
 
   factory PaymentViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.paymentState.map[state.paymentUIState.selectedId] ??
+    final payment =
+        state.paymentState.map[state.paymentUIState.selectedId] ??
         PaymentEntity(id: state.paymentUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
-      store.dispatch(LoadPayment(
-        completer: completer,
-        paymentId: payment.id,
-      ));
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
+      store.dispatch(LoadPayment(completer: completer, paymentId: payment.id));
       return completer.future;
     }
 
@@ -83,26 +79,38 @@ class PaymentViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([payment], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SavePaymentDocumentRequest(
-          isPrivate: isPrivate,
-          multipartFiles: multipartFile,
-          payment: payment,
-          completer: completer,
-        ));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SavePaymentDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                payment: payment,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

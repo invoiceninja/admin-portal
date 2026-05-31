@@ -65,12 +65,14 @@ class DashboardPanels extends StatelessWidget {
 
   void _showDateOptions(BuildContext context) {
     showDialog<DashboardDateRangePicker>(
-        context: context,
-        builder: (BuildContext context) {
-          return DashboardDateRangePicker(
-              state: viewModel.dashboardUIState,
-              onSettingsChanged: viewModel.onSettingsChanged);
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return DashboardDateRangePicker(
+          state: viewModel.dashboardUIState,
+          onSettingsChanged: viewModel.onSettingsChanged,
+        );
+      },
+    );
   }
 
   Widget _header(BuildContext context) {
@@ -86,188 +88,204 @@ class DashboardPanels extends StatelessWidget {
       currencies.insert(0, kCurrencyAll);
     }
     final localization = AppLocalization.of(context);
-    final hasMultipleCurrencies =
-        memoizedHasMultipleCurrencies(company, clientMap, groupMap);
+    final hasMultipleCurrencies = memoizedHasMultipleCurrencies(
+      company,
+      clientMap,
+      groupMap,
+    );
 
     return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      final isWide = constraints.maxWidth > 500;
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final isWide = constraints.maxWidth > 500;
 
-      final groupBy = Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            items: [
-              DropdownMenuItem(
-                child: Text(localization!.day),
-                value: kReportGroupDay,
-              ),
-              DropdownMenuItem(
-                child: Text(localization.month),
-                value: kReportGroupMonth,
-              ),
-              DropdownMenuItem(
-                child: Text(localization.year),
-                value: kReportGroupYear,
-              ),
-            ],
-            onChanged: (value) {
-              viewModel.onGroupByChanged(value);
-            },
-            value: settings.groupBy,
-          ),
-        ),
-      );
-
-      final taxSettings = Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<bool>(
-            items: [
-              DropdownMenuItem(
-                child: Text(localization.gross),
-                value: true,
-              ),
-              DropdownMenuItem(
-                child: Text(localization.net),
-                value: false,
-              ),
-            ],
-            onChanged: (value) {
-              viewModel.onTaxesChanged(value);
-            },
-            value: settings.includeTaxes,
-          ),
-        ),
-      );
-
-      final dateRange = PopupMenuButton<DateRange>(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Flexible(
-                child: Text(
-                  formatDateRange(settings.startDate(company)!,
-                      settings.endDate(company)!, context),
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              SizedBox(width: 6.0),
-              Icon(Icons.arrow_drop_down),
-            ],
-          ),
-        ),
-        itemBuilder: (context) => DateRange.values
-            .where((value) => value != DateRange.allTime)
-            .map((dateRange) => PopupMenuItem(
-                  child: Text(dateRange == DateRange.custom
-                      ? '${localization.more}...'
-                      : localization.lookup(dateRange.toString())),
-                  value: dateRange,
-                ))
-            .toList(),
-        onSelected: (dateRange) {
-          final settings = DashboardSettings.fromState(state.dashboardUIState);
-          if (dateRange == DateRange.custom) {
-            WidgetsBinding.instance.addPostFrameCallback((duration) {
-              _showDateOptions(context);
-            });
-          } else {
-            settings.dateRange = dateRange;
-            viewModel.onSettingsChanged(settings);
-          }
-        },
-      );
-
-      Widget currencySettings = SizedBox();
-      if (hasMultipleCurrencies) {
-        currencySettings = Padding(
+        final groupBy = Padding(
           padding: const EdgeInsets.only(left: 16),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                  .map((currencyId) => DropdownMenuItem<String>(
-                        child: Text((currencyId == kCurrencyAll
-                            ? localization.all
-                            : viewModel.currencyMap[currencyId]?.code)!),
-                        value: currencyId,
-                      ))
-                  .toList(),
-              onChanged: (currencyId) {
-                viewModel.onCurrencyChanged(currencyId);
+              items: [
+                DropdownMenuItem(
+                  child: Text(localization!.day),
+                  value: kReportGroupDay,
+                ),
+                DropdownMenuItem(
+                  child: Text(localization.month),
+                  value: kReportGroupMonth,
+                ),
+                DropdownMenuItem(
+                  child: Text(localization.year),
+                  value: kReportGroupYear,
+                ),
+              ],
+              onChanged: (value) {
+                viewModel.onGroupByChanged(value);
               },
-              value: settings.currencyId,
+              value: settings.groupBy,
             ),
           ),
         );
-      }
 
-      void _showSettings() {
-        showDialog<AlertDialog>(
+        final taxSettings = Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<bool>(
+              items: [
+                DropdownMenuItem(child: Text(localization.gross), value: true),
+                DropdownMenuItem(child: Text(localization.net), value: false),
+              ],
+              onChanged: (value) {
+                viewModel.onTaxesChanged(value);
+              },
+              value: settings.includeTaxes,
+            ),
+          ),
+        );
+
+        final dateRange = PopupMenuButton<DateRange>(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    formatDateRange(
+                      settings.startDate(company)!,
+                      settings.endDate(company)!,
+                      context,
+                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                SizedBox(width: 6.0),
+                Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
+          itemBuilder: (context) => DateRange.values
+              .where((value) => value != DateRange.allTime)
+              .map(
+                (dateRange) => PopupMenuItem(
+                  child: Text(
+                    dateRange == DateRange.custom
+                        ? '${localization.more}...'
+                        : localization.lookup(dateRange.toString()),
+                  ),
+                  value: dateRange,
+                ),
+              )
+              .toList(),
+          onSelected: (dateRange) {
+            final settings = DashboardSettings.fromState(
+              state.dashboardUIState,
+            );
+            if (dateRange == DateRange.custom) {
+              WidgetsBinding.instance.addPostFrameCallback((duration) {
+                _showDateOptions(context);
+              });
+            } else {
+              settings.dateRange = dateRange;
+              viewModel.onSettingsChanged(settings);
+            }
+          },
+        );
+
+        Widget currencySettings = SizedBox();
+        if (hasMultipleCurrencies) {
+          currencySettings = Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                    .map(
+                      (currencyId) => DropdownMenuItem<String>(
+                        child: Text(
+                          (currencyId == kCurrencyAll
+                              ? localization.all
+                              : viewModel.currencyMap[currencyId]?.code)!,
+                        ),
+                        value: currencyId,
+                      ),
+                    )
+                    .toList(),
+                onChanged: (currencyId) {
+                  viewModel.onCurrencyChanged(currencyId);
+                },
+                value: settings.currencyId,
+              ),
+            ),
+          );
+        }
+
+        void _showSettings() {
+          showDialog<AlertDialog>(
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
-              return _DashboardSettings(
-                isWide: isWide,
-                viewModel: viewModel,
-              );
-            });
-      }
+              return _DashboardSettings(isWide: isWide, viewModel: viewModel);
+            },
+          );
+        }
 
-      return Material(
-        color: Theme.of(context).cardColor,
-        elevation: 6.0,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 8, left: 16, right: 16, bottom: 2),
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.navigate_before),
-                onPressed: () => viewModel.onOffsetChanged(1),
-                visualDensity: VisualDensity.compact,
-              ),
-              IconButton(
-                icon: Icon(Icons.navigate_next),
-                onPressed: () => viewModel.onOffsetChanged(-1),
-                visualDensity: VisualDensity.compact,
-              ),
-              SizedBox(width: 4),
-              Expanded(child: dateRange),
-              if (isWide) ...[
-                groupBy,
-                if (company.hasTaxes) taxSettings,
-                if (hasMultipleCurrencies) currencySettings,
-                SizedBox(width: 4),
-              ],
-              IconButton(
-                icon: Icon(MdiIcons.tuneVariant),
-                onPressed: () {
-                  _showSettings();
-                },
-              ),
-              if (isDesktop(context) &&
-                  !state.dashboardUIState.showSidebar) ...[
-                SizedBox(width: 4),
+        return Material(
+          color: Theme.of(context).cardColor,
+          elevation: 6.0,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 8,
+              left: 16,
+              right: 16,
+              bottom: 2,
+            ),
+            child: Row(
+              children: <Widget>[
                 IconButton(
+                  icon: Icon(Icons.navigate_before),
+                  onPressed: () => viewModel.onOffsetChanged(1),
+                  visualDensity: VisualDensity.compact,
+                ),
+                IconButton(
+                  icon: Icon(Icons.navigate_next),
+                  onPressed: () => viewModel.onOffsetChanged(-1),
+                  visualDensity: VisualDensity.compact,
+                ),
+                SizedBox(width: 4),
+                Expanded(child: dateRange),
+                if (isWide) ...[
+                  groupBy,
+                  if (company.hasTaxes) taxSettings,
+                  if (hasMultipleCurrencies) currencySettings,
+                  SizedBox(width: 4),
+                ],
+                IconButton(
+                  icon: Icon(MdiIcons.tuneVariant),
+                  onPressed: () {
+                    _showSettings();
+                  },
+                ),
+                if (isDesktop(context) &&
+                    !state.dashboardUIState.showSidebar) ...[
+                  SizedBox(width: 4),
+                  IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.view_sidebar),
-                    onPressed: () => viewModel.onShowSidebar()),
-              ]
-            ],
+                    onPressed: () => viewModel.onShowSidebar(),
+                  ),
+                ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget? _runningTasks(BuildContext context) {
     final state = viewModel.state;
 
-    final runningTasks =
-        memoizedRunningTasks(state.taskState.map, state.user.id);
+    final runningTasks = memoizedRunningTasks(
+      state.taskState.map,
+      state.user.id,
+    );
 
     if (runningTasks.isEmpty) {
       return null;
@@ -276,48 +294,48 @@ class DashboardPanels extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 24, left: 12, right: 12),
       child: Wrap(
-          spacing: 8,
-          children: runningTasks.map((task) {
-            final client = state.clientState.map[task!.clientId];
-            return Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(kBorderRadius),
-              ),
-              child: AppBorder(
-                hideBorder: !isDarkMode(context),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 180),
-                  child: Tooltip(
-                    message: task.description,
-                    child: ListTile(
-                      dense: true,
-                      title: LiveText(() {
-                        return formatDuration(task.calculateDuration());
-                      }),
-                      subtitle: Text(
-                        client != null ? client.displayName : task.number,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+        spacing: 8,
+        children: runningTasks.map((task) {
+          final client = state.clientState.map[task!.clientId];
+          return Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(kBorderRadius),
+            ),
+            child: AppBorder(
+              hideBorder: !isDarkMode(context),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 180),
+                child: Tooltip(
+                  message: task.description,
+                  child: ListTile(
+                    dense: true,
+                    title: LiveText(() {
+                      return formatDuration(task.calculateDuration());
+                    }),
+                    subtitle: Text(
+                      client != null ? client.displayName : task.number,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () => viewEntity(entity: task, filterEntity: client),
+                    onLongPress: () => editEntity(entity: task),
+                    leading: ActionMenuButton(
+                      entity: task,
+                      entityActions: task.getActions(
+                        includeEdit: true,
+                        userCompany: state.userCompany,
                       ),
-                      onTap: () =>
-                          viewEntity(entity: task, filterEntity: client),
-                      onLongPress: () => editEntity(entity: task),
-                      leading: ActionMenuButton(
-                        entity: task,
-                        entityActions: task.getActions(
-                          includeEdit: true,
-                          userCompany: state.userCompany,
-                        ),
-                        onSelected: (context, action) =>
-                            handleTaskAction(context, [task], action),
-                      ),
+                      onSelected: (context, action) =>
+                          handleTaskAction(context, [task], action),
                     ),
                   ),
                 ),
               ),
-            );
-          }).toList()),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -351,20 +369,22 @@ class DashboardPanels extends StatelessWidget {
     );
 
     final currentPaymentData = memoizedChartPayments(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.clientState.map,
-        state.paymentState.map);
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.invoiceState.map,
+      state.clientState.map,
+      state.paymentState.map,
+    );
 
     final previousPaymentData = memoizedPreviousChartPayments(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset = settings.offset + 1),
-        state.invoiceState.map,
-        state.clientState.map,
-        state.paymentState.map);
+      state.staticState.currencyMap,
+      state.company,
+      settings.rebuild((b) => b..offset = settings.offset + 1),
+      state.invoiceState.map,
+      state.clientState.map,
+      state.paymentState.map,
+    );
 
     final currentQuoteData = memoizedChartQuotes(
       state.staticState.currencyMap,
@@ -407,18 +427,20 @@ class DashboardPanels extends StatelessWidget {
     );
 
     final currentExpenseData = memoizedChartExpenses(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.expenseState.map);
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.invoiceState.map,
+      state.expenseState.map,
+    );
 
     final previousExpenseData = memoizedPreviousChartExpenses(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset = settings.offset + 1),
-        state.invoiceState.map,
-        state.expenseState.map);
+      state.staticState.currencyMap,
+      state.company,
+      settings.rebuild((b) => b..offset = settings.offset + 1),
+      state.invoiceState.map,
+      state.expenseState.map,
+    );
 
     final sections = [
       DashboardSections.messages,
@@ -453,9 +475,7 @@ class DashboardPanels extends StatelessWidget {
             itemCount: sections.length + 1,
             itemBuilder: (context, index) {
               if (index == sections.length) {
-                return SizedBox(
-                  height: 500,
-                );
+                return SizedBox(height: 500);
               }
 
               switch (sections[index]) {
@@ -473,43 +493,46 @@ class DashboardPanels extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: FormCard(
-                              child: InkWell(
-                            onTap: isMobile(context)
-                                ? () => createEntityByType(
+                            child: InkWell(
+                              onTap: isMobile(context)
+                                  ? () => createEntityByType(
                                       context: context,
                                       entityType: EntityType.companyGateway,
                                     )
-                                : null,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child:
-                                      Text(localization!.addGatewayHelpMessage),
-                                ),
-                                if (isDesktop(context))
-                                  TextButton(
+                                  : null,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      localization!.addGatewayHelpMessage,
+                                    ),
+                                  ),
+                                  if (isDesktop(context))
+                                    TextButton(
                                       onPressed: () {
                                         createEntityByType(
                                           context: context,
                                           entityType: EntityType.companyGateway,
                                         );
                                       },
-                                      child: Text(localization.addGateway)),
-                                IconButton(
+                                      child: Text(localization.addGateway),
+                                    ),
+                                  IconButton(
                                     onPressed: () {
-                                      final store =
-                                          StoreProvider.of<AppState>(context);
+                                      final store = StoreProvider.of<AppState>(
+                                        context,
+                                      );
                                       store.dispatch(
-                                          DismissGatewayWarningPermanently());
+                                        DismissGatewayWarningPermanently(),
+                                      );
                                     },
-                                    icon: Icon(
-                                      Icons.clear,
-                                      color: Colors.grey,
-                                    ))
-                              ],
+                                    icon: Icon(Icons.clear, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          )),
-                        )
+                          ),
+                        ),
                     ],
                   );
                 case DashboardSections.overview:
@@ -527,19 +550,21 @@ class DashboardPanels extends StatelessWidget {
                   );
 
                   final paymentData = memoizedChartPayments(
-                      state.staticState.currencyMap,
-                      state.company,
-                      settings,
-                      state.invoiceState.map,
-                      state.clientState.map,
-                      state.paymentState.map);
+                    state.staticState.currencyMap,
+                    state.company,
+                    settings,
+                    state.invoiceState.map,
+                    state.clientState.map,
+                    state.paymentState.map,
+                  );
 
                   final expenseData = memoizedChartExpenses(
-                      state.staticState.currencyMap,
-                      state.company,
-                      settings,
-                      state.invoiceState.map,
-                      state.expenseState.map);
+                    state.staticState.currencyMap,
+                    state.company,
+                    settings,
+                    state.invoiceState.map,
+                    state.expenseState.map,
+                  );
 
                   final textTheme = Theme.of(context).textTheme;
 
@@ -630,180 +655,221 @@ class DashboardPanels extends StatelessWidget {
                           crossAxisCount: isMobile(context)
                               ? userCompanySettings.dashboardFieldsPerRowMobile
                               : userCompanySettings
-                                  .dashboardFieldsPerRowDesktop,
+                                    .dashboardFieldsPerRowDesktop,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
-                            double value = 0;
-                            var field = dashboardField.field;
-                            if (dashboardField.isTimeFormat) {
-                              field += '_duration';
-                            }
-                            if (dashboardField.period ==
-                                DashboardUISettings.PERIOD_CURRENT) {
-                              final data = currentFieldMap[field]!;
-                              if (dashboardField.isCountCalculate) {
-                                value = data.periodCount.toDouble();
-                              } else if (dashboardField.isAverageCalculate) {
-                                value = data.periodAverage;
-                              } else {
-                                value = data.periodTotal;
-                              }
-                            } else if (dashboardField.period ==
-                                DashboardUISettings.PERIOD_PREVIOUS) {
-                              final data = previousFieldMap[field]!;
-                              if (dashboardField.isCountCalculate) {
-                                value = data.periodCount.toDouble();
-                              } else if (dashboardField.isAverageCalculate) {
-                                value = data.periodAverage;
-                              } else {
-                                value = data.periodTotal;
-                              }
-                            } else if (dashboardField.period ==
-                                DashboardUISettings.PERIOD_TOTAL) {
-                              final data = currentFieldMap[field]!;
-                              if (dashboardField.isCountCalculate) {
-                                value = data.totalCount.toDouble();
-                              } else if (dashboardField.isAverageCalculate) {
-                                value = data.totalAverage;
-                              } else {
-                                value = data.total;
-                              }
-                            }
-                            return FormCard(
-                              padding: const EdgeInsets.all(0),
-                              children: [
-                                Text(localization!.lookup(dashboardField.field),
-                                    style: textTheme.titleMedium,
-                                    textAlign: TextAlign.center),
-                                SizedBox(height: 6),
-                                Text(
-                                    dashboardField.isCountCalculate
-                                        ? formatNumber(value, context,
-                                            formatNumberType:
-                                                FormatNumberType.int)!
-                                        : dashboardField.isTimeFormat
-                                            ? formatDuration(Duration(
-                                                seconds: value.toInt()))
-                                            : formatNumber(
-                                                value,
-                                                context,
-                                                currencyId: state
-                                                    .dashboardUIState
-                                                    .settings
-                                                    .currencyId,
-                                              )!,
-                                    style: textTheme.headlineSmall,
-                                    textAlign: TextAlign.center),
-                                SizedBox(height: 6),
-                                Text(
-                                    localization.lookup(dashboardField.period) +
-                                        (dashboardField.calculate ==
-                                                DashboardUISettings
-                                                    .CALCULATE_AVERAGE
-                                            ? ' • ${localization.average}'
-                                            : ''),
-                                    style: textTheme.bodySmall,
-                                    textAlign: TextAlign.center),
-                              ],
-                            );
-                          }).toList(),
+                                double value = 0;
+                                var field = dashboardField.field;
+                                if (dashboardField.isTimeFormat) {
+                                  field += '_duration';
+                                }
+                                if (dashboardField.period ==
+                                    DashboardUISettings.PERIOD_CURRENT) {
+                                  final data = currentFieldMap[field]!;
+                                  if (dashboardField.isCountCalculate) {
+                                    value = data.periodCount.toDouble();
+                                  } else if (dashboardField
+                                      .isAverageCalculate) {
+                                    value = data.periodAverage;
+                                  } else {
+                                    value = data.periodTotal;
+                                  }
+                                } else if (dashboardField.period ==
+                                    DashboardUISettings.PERIOD_PREVIOUS) {
+                                  final data = previousFieldMap[field]!;
+                                  if (dashboardField.isCountCalculate) {
+                                    value = data.periodCount.toDouble();
+                                  } else if (dashboardField
+                                      .isAverageCalculate) {
+                                    value = data.periodAverage;
+                                  } else {
+                                    value = data.periodTotal;
+                                  }
+                                } else if (dashboardField.period ==
+                                    DashboardUISettings.PERIOD_TOTAL) {
+                                  final data = currentFieldMap[field]!;
+                                  if (dashboardField.isCountCalculate) {
+                                    value = data.totalCount.toDouble();
+                                  } else if (dashboardField
+                                      .isAverageCalculate) {
+                                    value = data.totalAverage;
+                                  } else {
+                                    value = data.total;
+                                  }
+                                }
+                                return FormCard(
+                                  padding: const EdgeInsets.all(0),
+                                  children: [
+                                    Text(
+                                      localization!.lookup(
+                                        dashboardField.field,
+                                      ),
+                                      style: textTheme.titleMedium,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 6),
+                                    Text(
+                                      dashboardField.isCountCalculate
+                                          ? formatNumber(
+                                              value,
+                                              context,
+                                              formatNumberType:
+                                                  FormatNumberType.int,
+                                            )!
+                                          : dashboardField.isTimeFormat
+                                          ? formatDuration(
+                                              Duration(seconds: value.toInt()),
+                                            )
+                                          : formatNumber(
+                                              value,
+                                              context,
+                                              currencyId: state
+                                                  .dashboardUIState
+                                                  .settings
+                                                  .currencyId,
+                                            )!,
+                                      style: textTheme.headlineSmall,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 6),
+                                    Text(
+                                      localization.lookup(
+                                            dashboardField.period,
+                                          ) +
+                                          (dashboardField.calculate ==
+                                                  DashboardUISettings
+                                                      .CALCULATE_AVERAGE
+                                              ? ' • ${localization.average}'
+                                              : ''),
+                                      style: textTheme.bodySmall,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                );
+                              })
+                              .toList(),
                         ),
                       ),
                       _OverviewPanel(
-                          viewModel: viewModel,
-                          title: localization!.overview,
-                          invoiceData: invoiceData,
-                          paymentData: paymentData,
-                          expenseData: expenseData,
-                          isLoaded: isLoaded,
-                          onDateSelected: null),
+                        viewModel: viewModel,
+                        title: localization!.overview,
+                        invoiceData: invoiceData,
+                        paymentData: paymentData,
+                        expenseData: expenseData,
+                        isLoaded: isLoaded,
+                        onDateSelected: null,
+                      ),
                     ],
                   );
                 case DashboardSections.invoices:
                   return _DashboardPanel(
-                      viewModel: viewModel,
-                      currentData: currentInvoiceData,
-                      previousData: previousInvoiceData,
-                      isLoaded:
-                          state.isLoaded || state.invoiceState.list.isNotEmpty,
-                      title: AppLocalization.of(context)!.invoices,
-                      onSelected: () => tabController!
-                          .animateTo(sidebarTabs.indexOf(EntityType.invoice)),
-                      onDateSelected: (index, date) {
-                        tabController!
-                            .animateTo(sidebarTabs.indexOf(EntityType.invoice));
-                        viewModel.onSelectionChanged(EntityType.invoice,
-                            currentInvoiceData[index].entityMap[date]);
-                      });
+                    viewModel: viewModel,
+                    currentData: currentInvoiceData,
+                    previousData: previousInvoiceData,
+                    isLoaded:
+                        state.isLoaded || state.invoiceState.list.isNotEmpty,
+                    title: AppLocalization.of(context)!.invoices,
+                    onSelected: () => tabController!.animateTo(
+                      sidebarTabs.indexOf(EntityType.invoice),
+                    ),
+                    onDateSelected: (index, date) {
+                      tabController!.animateTo(
+                        sidebarTabs.indexOf(EntityType.invoice),
+                      );
+                      viewModel.onSelectionChanged(
+                        EntityType.invoice,
+                        currentInvoiceData[index].entityMap[date],
+                      );
+                    },
+                  );
                 case DashboardSections.payments:
                   return _DashboardPanel(
-                      viewModel: viewModel,
-                      currentData: currentPaymentData,
-                      previousData: previousPaymentData,
-                      isLoaded:
-                          state.isLoaded || state.paymentState.list.isNotEmpty,
-                      title: AppLocalization.of(context)!.payments,
-                      onSelected: () => tabController!
-                          .animateTo(sidebarTabs.indexOf(EntityType.payment)),
-                      onDateSelected: (index, date) {
-                        tabController!
-                            .animateTo(sidebarTabs.indexOf(EntityType.payment));
+                    viewModel: viewModel,
+                    currentData: currentPaymentData,
+                    previousData: previousPaymentData,
+                    isLoaded:
+                        state.isLoaded || state.paymentState.list.isNotEmpty,
+                    title: AppLocalization.of(context)!.payments,
+                    onSelected: () => tabController!.animateTo(
+                      sidebarTabs.indexOf(EntityType.payment),
+                    ),
+                    onDateSelected: (index, date) {
+                      tabController!.animateTo(
+                        sidebarTabs.indexOf(EntityType.payment),
+                      );
 
-                        viewModel.onSelectionChanged(EntityType.payment,
-                            currentPaymentData[index].entityMap[date]);
-                      });
+                      viewModel.onSelectionChanged(
+                        EntityType.payment,
+                        currentPaymentData[index].entityMap[date],
+                      );
+                    },
+                  );
                 case DashboardSections.quotes:
                   return _DashboardPanel(
-                      viewModel: viewModel,
-                      currentData: currentQuoteData,
-                      previousData: previousQuoteData,
-                      isLoaded:
-                          state.isLoaded || state.quoteState.list.isNotEmpty,
-                      title: AppLocalization.of(context)!.quotes,
-                      onSelected: () => tabController!
-                          .animateTo(sidebarTabs.indexOf(EntityType.quote)),
-                      onDateSelected: (index, date) {
-                        tabController!
-                            .animateTo(sidebarTabs.indexOf(EntityType.quote));
+                    viewModel: viewModel,
+                    currentData: currentQuoteData,
+                    previousData: previousQuoteData,
+                    isLoaded:
+                        state.isLoaded || state.quoteState.list.isNotEmpty,
+                    title: AppLocalization.of(context)!.quotes,
+                    onSelected: () => tabController!.animateTo(
+                      sidebarTabs.indexOf(EntityType.quote),
+                    ),
+                    onDateSelected: (index, date) {
+                      tabController!.animateTo(
+                        sidebarTabs.indexOf(EntityType.quote),
+                      );
 
-                        viewModel.onSelectionChanged(EntityType.quote,
-                            currentQuoteData[index].entityMap[date]);
-                      });
+                      viewModel.onSelectionChanged(
+                        EntityType.quote,
+                        currentQuoteData[index].entityMap[date],
+                      );
+                    },
+                  );
                 case DashboardSections.tasks:
                   return _DashboardPanel(
-                      viewModel: viewModel,
-                      currentData: currentTaskData,
-                      previousData: previousTaskData,
-                      isLoaded:
-                          state.isLoaded || state.taskState.list.isNotEmpty,
-                      title: AppLocalization.of(context)!.tasks,
-                      onSelected: () => tabController!
-                          .animateTo(sidebarTabs.indexOf(EntityType.task)),
-                      onDateSelected: (index, date) {
-                        tabController!
-                            .animateTo(sidebarTabs.indexOf(EntityType.task));
+                    viewModel: viewModel,
+                    currentData: currentTaskData,
+                    previousData: previousTaskData,
+                    isLoaded: state.isLoaded || state.taskState.list.isNotEmpty,
+                    title: AppLocalization.of(context)!.tasks,
+                    onSelected: () => tabController!.animateTo(
+                      sidebarTabs.indexOf(EntityType.task),
+                    ),
+                    onDateSelected: (index, date) {
+                      tabController!.animateTo(
+                        sidebarTabs.indexOf(EntityType.task),
+                      );
 
-                        viewModel.onSelectionChanged(EntityType.task,
-                            currentTaskData[index].entityMap[date]);
-                      });
+                      viewModel.onSelectionChanged(
+                        EntityType.task,
+                        currentTaskData[index].entityMap[date],
+                      );
+                    },
+                  );
                 case DashboardSections.expenses:
                   return _DashboardPanel(
-                      viewModel: viewModel,
-                      currentData: currentExpenseData,
-                      previousData: previousExpenseData,
-                      isLoaded:
-                          state.isLoaded || state.expenseState.list.isNotEmpty,
-                      title: AppLocalization.of(context)!.expenses,
-                      onSelected: () => tabController!
-                          .animateTo(sidebarTabs.indexOf(EntityType.expense)),
-                      onDateSelected: (index, date) {
-                        tabController!
-                            .animateTo(sidebarTabs.indexOf(EntityType.expense));
-                        viewModel.onSelectionChanged(EntityType.expense,
-                            currentExpenseData[index].entityMap[date]);
-                      });
+                    viewModel: viewModel,
+                    currentData: currentExpenseData,
+                    previousData: previousExpenseData,
+                    isLoaded:
+                        state.isLoaded || state.expenseState.list.isNotEmpty,
+                    title: AppLocalization.of(context)!.expenses,
+                    onSelected: () => tabController!.animateTo(
+                      sidebarTabs.indexOf(EntityType.expense),
+                    ),
+                    onDateSelected: (index, date) {
+                      tabController!.animateTo(
+                        sidebarTabs.indexOf(EntityType.expense),
+                      );
+                      viewModel.onSelectionChanged(
+                        EntityType.expense,
+                        currentExpenseData[index].entityMap[date],
+                      );
+                    },
+                  );
                 case DashboardSections.runningTasks:
                   return runningTasks!;
               }
@@ -881,11 +947,14 @@ class __DashboardPanelState extends State<_DashboardPanel> {
 
           dataGroup.previousTotal = widget.previousData[index].periodTotal;
 
-          for (int i = 0;
-              i < min(currentSeries.length, previousSeries.length);
-              i++) {
-            previous.add(ChartMoneyData(
-                currentSeries[i].date, previousSeries[i].amount));
+          for (
+            int i = 0;
+            i < min(currentSeries.length, previousSeries.length);
+            i++
+          ) {
+            previous.add(
+              ChartMoneyData(currentSeries[i].date, previousSeries[i].amount),
+            );
           }
 
           dataGroup.chartSeries.add(
@@ -902,17 +971,20 @@ class __DashboardPanelState extends State<_DashboardPanel> {
           );
         }
 
-        dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-              charts.ColorUtil.fromDartColor(state.accentColor!),
-          strokeWidthPxFn: (_a, _b) => 2.5,
-          id: DashboardChart.PERIOD_CURRENT,
-          displayName:
-              settings.enableComparison ? localization!.current : widget.title,
-          data: dataGroup.rawSeries,
-        ));
+        dataGroup.chartSeries.add(
+          charts.Series<ChartMoneyData, DateTime>(
+            domainFn: (ChartMoneyData chartData, _) => chartData.date,
+            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+            colorFn: (ChartMoneyData chartData, _) =>
+                charts.ColorUtil.fromDartColor(state.accentColor!),
+            strokeWidthPxFn: (_a, _b) => 2.5,
+            id: DashboardChart.PERIOD_CURRENT,
+            displayName: settings.enableComparison
+                ? localization!.current
+                : widget.title,
+            data: dataGroup.rawSeries,
+          ),
+        );
       }
     });
 
@@ -994,57 +1066,69 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         final expenseSeries = expenseData![index].rawSeries;
         dataGroup.previousTotal = expenseData![index].periodTotal;
 
-        for (int i = 0;
-            i < min(invoiceSeries.length, expenseSeries.length);
-            i++) {
+        for (
+          int i = 0;
+          i < min(invoiceSeries.length, expenseSeries.length);
+          i++
+        ) {
           expenses.add(
-              ChartMoneyData(invoiceSeries[i].date, expenseSeries[i].amount));
+            ChartMoneyData(invoiceSeries[i].date, expenseSeries[i].amount),
+          );
         }
 
-        dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-              charts.ColorUtil.fromDartColor(Colors.grey),
-          strokeWidthPxFn: (_a, _b) => 2.5,
-          id: DashboardChart.PERIOD_EXPENSES,
-          displayName: localization!.expenses,
-          data: expenses,
-        ));
+        dataGroup.chartSeries.add(
+          charts.Series<ChartMoneyData, DateTime>(
+            domainFn: (ChartMoneyData chartData, _) => chartData.date,
+            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+            colorFn: (ChartMoneyData chartData, _) =>
+                charts.ColorUtil.fromDartColor(Colors.grey),
+            strokeWidthPxFn: (_a, _b) => 2.5,
+            id: DashboardChart.PERIOD_EXPENSES,
+            displayName: localization!.expenses,
+            data: expenses,
+          ),
+        );
       }
 
       final List<ChartMoneyData> payments = [];
       final paymentSeries = paymentData![index].rawSeries;
       dataGroup.previousTotal = paymentData![index].periodTotal;
 
-      for (int i = 0;
-          i < min(invoiceSeries.length, paymentSeries.length);
-          i++) {
+      for (
+        int i = 0;
+        i < min(invoiceSeries.length, paymentSeries.length);
+        i++
+      ) {
         payments.add(
-            ChartMoneyData(invoiceSeries[i].date, paymentSeries[i].amount));
+          ChartMoneyData(invoiceSeries[i].date, paymentSeries[i].amount),
+        );
       }
 
-      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(Colors.green),
-        strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_PAYMENTS,
-        displayName: localization!.payments,
-        data: payments,
-      ));
+      dataGroup.chartSeries.add(
+        charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.ColorUtil.fromDartColor(Colors.green),
+          strokeWidthPxFn: (_a, _b) => 2.5,
+          id: DashboardChart.PERIOD_PAYMENTS,
+          displayName: localization!.payments,
+          data: payments,
+        ),
+      );
 
-      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(state.accentColor!),
-        strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_INVOICES,
-        displayName: localization.invoices,
-        data: dataGroup.rawSeries,
-      ));
+      dataGroup.chartSeries.add(
+        charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.ColorUtil.fromDartColor(state.accentColor!),
+          strokeWidthPxFn: (_a, _b) => 2.5,
+          id: DashboardChart.PERIOD_INVOICES,
+          displayName: localization.invoices,
+          data: dataGroup.rawSeries,
+        ),
+      );
     });
 
     chart = DashboardChart(
@@ -1089,8 +1173,11 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
     final settings = state.dashboardUIState.settings;
     final userCompanySettings = state.userCompany.settings;
 
-    final hasMultipleCurrencies =
-        memoizedHasMultipleCurrencies(company, clientMap, groupMap);
+    final hasMultipleCurrencies = memoizedHasMultipleCurrencies(
+      company,
+      clientMap,
+      groupMap,
+    );
 
     final groupBy = Padding(
       padding: const EdgeInsets.only(left: 16),
@@ -1124,14 +1211,8 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<bool>(
           items: [
-            DropdownMenuItem(
-              child: Text(localization.gross),
-              value: true,
-            ),
-            DropdownMenuItem(
-              child: Text(localization.net),
-              value: false,
-            ),
+            DropdownMenuItem(child: Text(localization.gross), value: true),
+            DropdownMenuItem(child: Text(localization.net), value: false),
           ],
           onChanged: (value) {
             viewModel.onTaxesChanged(value);
@@ -1149,12 +1230,16 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton<String>(
             items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                .map((currencyId) => DropdownMenuItem<String>(
-                      child: Text((currencyId == kCurrencyAll
+                .map(
+                  (currencyId) => DropdownMenuItem<String>(
+                    child: Text(
+                      (currencyId == kCurrencyAll
                           ? localization.all
-                          : viewModel.currencyMap[currencyId]?.code)!),
-                      value: currencyId,
-                    ))
+                          : viewModel.currencyMap[currencyId]?.code)!,
+                    ),
+                    value: currencyId,
+                  ),
+                )
                 .toList(),
             onChanged: (currencyId) {
               viewModel.onCurrencyChanged(currencyId);
@@ -1174,21 +1259,21 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-            child: Text(localization.save.toUpperCase()),
-            onPressed: () {
-              final completer = snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.savedSettings);
-              final user = state.user
-                  .rebuild((b) => b..userCompany.replace(state.userCompany));
-              store.dispatch(
-                SaveUserSettingsRequest(
-                  completer: completer,
-                  user: user,
-                ),
-              );
+          child: Text(localization.save.toUpperCase()),
+          onPressed: () {
+            final completer = snackBarCompleter<Null>(
+              AppLocalization.of(context)!.savedSettings,
+            );
+            final user = state.user.rebuild(
+              (b) => b..userCompany.replace(state.userCompany),
+            );
+            store.dispatch(
+              SaveUserSettingsRequest(completer: completer, user: user),
+            );
 
-              Navigator.of(context).pop();
-            }),
+            Navigator.of(context).pop();
+          },
+        ),
       ],
       content: Container(
         width: 300,
@@ -1197,13 +1282,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (!widget.isWide) ...[
-              Row(
-                children: [
-                  Text(localization.groupBy),
-                  Spacer(),
-                  groupBy,
-                ],
-              ),
+              Row(children: [Text(localization.groupBy), Spacer(), groupBy]),
               if (hasMultipleCurrencies)
                 Row(
                   children: [
@@ -1214,11 +1293,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                 ),
               if (company.hasTaxes)
                 Row(
-                  children: [
-                    Text(localization.taxes),
-                    Spacer(),
-                    taxSettings,
-                  ],
+                  children: [Text(localization.taxes), Spacer(), taxSettings],
                 ),
               SizedBox(height: 10),
             ],
@@ -1238,10 +1313,15 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   }
 
                   final field = fields[oldIndex];
-                  store.dispatch(UpdateDashboardFields(
-                      dashboardFields: fields.rebuild((b) => b
-                        ..removeAt(oldIndex)
-                        ..insert(newIndex, field))));
+                  store.dispatch(
+                    UpdateDashboardFields(
+                      dashboardFields: fields.rebuild(
+                        (b) => b
+                          ..removeAt(oldIndex)
+                          ..insert(newIndex, field),
+                      ),
+                    ),
+                  );
                   setState(() {});
                 },
                 children: [
@@ -1249,21 +1329,27 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                       in userCompanySettings.dashboardFields)
                     ListTile(
                       key: ValueKey('__${dashboardField}__'),
-                      title: Text(localization.lookup(dashboardField.field) +
-                          (dashboardField.isTimeFormat
-                              ? ' ${localization.duration}'
-                              : '')),
+                      title: Text(
+                        localization.lookup(dashboardField.field) +
+                            (dashboardField.isTimeFormat
+                                ? ' ${localization.duration}'
+                                : ''),
+                      ),
                       subtitle: Text(
-                          localization.lookup(dashboardField.period) +
-                              ' • ' +
-                              localization.lookup(dashboardField.calculate)),
+                        localization.lookup(dashboardField.period) +
+                            ' • ' +
+                            localization.lookup(dashboardField.calculate),
+                      ),
                       leading: IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
-                          store.dispatch(UpdateDashboardFields(
+                          store.dispatch(
+                            UpdateDashboardFields(
                               dashboardFields: userCompanySettings
                                   .dashboardFields
-                                  .rebuild((b) => b..remove(dashboardField))));
+                                  .rebuild((b) => b..remove(dashboardField)),
+                            ),
+                          );
                           setState(() {});
                         },
                       ),
@@ -1275,32 +1361,43 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
               label: localization.addField.toUpperCase(),
               onPressed: () async {
                 await showDialog<void>(
-                    context: context, builder: (context) => _DashboardField());
+                  context: context,
+                  builder: (context) => _DashboardField(),
+                );
                 setState(() {});
               },
             ),
             SizedBox(height: 16),
             AppDropdownButton<int>(
-                labelText: localization.fieldsPerRow,
-                value: isMobile(context)
-                    ? userCompanySettings.dashboardFieldsPerRowMobile
-                    : userCompanySettings.dashboardFieldsPerRowDesktop,
-                onChanged: (dynamic value) {
-                  if (isMobile(context)) {
-                    store.dispatch(UpdateDashboardFieldSettingss(
-                        numberFieldsPerRowMobile: value));
-                  } else {
-                    store.dispatch(UpdateDashboardFieldSettingss(
-                        numberFieldsPerRowDesktop: value));
-                  }
-                  setState(() {});
-                },
-                items: List<int>.generate(8, (i) => i + 1)
-                    .map((value) => DropdownMenuItem<int>(
-                          child: Text('$value'),
-                          value: value,
-                        ))
-                    .toList())
+              labelText: localization.fieldsPerRow,
+              value: isMobile(context)
+                  ? userCompanySettings.dashboardFieldsPerRowMobile
+                  : userCompanySettings.dashboardFieldsPerRowDesktop,
+              onChanged: (dynamic value) {
+                if (isMobile(context)) {
+                  store.dispatch(
+                    UpdateDashboardFieldSettingss(
+                      numberFieldsPerRowMobile: value,
+                    ),
+                  );
+                } else {
+                  store.dispatch(
+                    UpdateDashboardFieldSettingss(
+                      numberFieldsPerRowDesktop: value,
+                    ),
+                  );
+                }
+                setState(() {});
+              },
+              items: List<int>.generate(8, (i) => i + 1)
+                  .map(
+                    (value) => DropdownMenuItem<int>(
+                      child: Text('$value'),
+                      value: value,
+                    ),
+                  )
+                  .toList(),
+            ),
           ],
         ),
       ),
@@ -1360,99 +1457,104 @@ class _DashboardFieldState extends State<_DashboardField> {
     fieldMap.forEach((entityType, fields) {
       fields.forEach((field) {
         if (company.isModuleEnabled(entityType)) {
-          items.add(DropdownMenuItem<String>(
-            child: Text(localization.lookup(field)),
-            value: field,
-          ));
+          items.add(
+            DropdownMenuItem<String>(
+              child: Text(localization.lookup(field)),
+              value: field,
+            ),
+          );
         }
       });
     });
 
     return AlertDialog(
       title: Text(localization.addField),
-      content: Column(mainAxisSize: MainAxisSize.min, children: [
-        AppDropdownButton(
-          labelText: localization.field,
-          value: _field,
-          onChanged: (dynamic value) {
-            setState(() {
-              _field = value;
-            });
-          },
-          items: items,
-        ),
-        AppDropdownButton(
-          labelText: localization.period,
-          value: _period,
-          onChanged: (dynamic value) {
-            setState(() {
-              _period = value;
-            });
-          },
-          items: [
-            DropdownMenuItem<String>(
-              child: Text(localization.currentPeriod),
-              value: DashboardUISettings.PERIOD_CURRENT,
-            ),
-            DropdownMenuItem<String>(
-              child: Text(localization.previousPeriod),
-              value: DashboardUISettings.PERIOD_PREVIOUS,
-            ),
-            DropdownMenuItem<String>(
-              child: Text(localization.total),
-              value: DashboardUISettings.PERIOD_TOTAL,
-            ),
-          ],
-        ),
-        AppDropdownButton(
-          labelText: localization.calculate,
-          value: _calculate,
-          onChanged: (dynamic value) {
-            setState(() {
-              _calculate = value;
-            });
-          },
-          items: [
-            DropdownMenuItem<String>(
-              child: Text(localization.sum),
-              value: DashboardUISettings.CALCULATE_SUM,
-            ),
-            DropdownMenuItem<String>(
-              child: Text(localization.average),
-              value: DashboardUISettings.CALCULATE_AVERAGE,
-            ),
-            DropdownMenuItem<String>(
-              child: Text(localization.count),
-              value: DashboardUISettings.CALCULATE_COUNT,
-            ),
-          ],
-        ),
-        if ([
-              DashboardUISettings.FIELD_PAID_TASKS,
-              DashboardUISettings.FIELD_INVOICED_TASKS,
-              DashboardUISettings.FIELD_LOGGED_TASKS,
-            ].contains(_field) &&
-            _calculate != DashboardUISettings.CALCULATE_COUNT)
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           AppDropdownButton(
-            labelText: localization.format,
-            value: _format,
+            labelText: localization.field,
+            value: _field,
             onChanged: (dynamic value) {
               setState(() {
-                _format = value;
+                _field = value;
+              });
+            },
+            items: items,
+          ),
+          AppDropdownButton(
+            labelText: localization.period,
+            value: _period,
+            onChanged: (dynamic value) {
+              setState(() {
+                _period = value;
               });
             },
             items: [
               DropdownMenuItem<String>(
-                child: Text(localization.money),
-                value: DashboardUISettings.FORMAT_MONEY,
+                child: Text(localization.currentPeriod),
+                value: DashboardUISettings.PERIOD_CURRENT,
               ),
               DropdownMenuItem<String>(
-                child: Text(localization.time),
-                value: DashboardUISettings.FORMAT_TIME,
+                child: Text(localization.previousPeriod),
+                value: DashboardUISettings.PERIOD_PREVIOUS,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.total),
+                value: DashboardUISettings.PERIOD_TOTAL,
               ),
             ],
           ),
-      ]),
+          AppDropdownButton(
+            labelText: localization.calculate,
+            value: _calculate,
+            onChanged: (dynamic value) {
+              setState(() {
+                _calculate = value;
+              });
+            },
+            items: [
+              DropdownMenuItem<String>(
+                child: Text(localization.sum),
+                value: DashboardUISettings.CALCULATE_SUM,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.average),
+                value: DashboardUISettings.CALCULATE_AVERAGE,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.count),
+                value: DashboardUISettings.CALCULATE_COUNT,
+              ),
+            ],
+          ),
+          if ([
+                DashboardUISettings.FIELD_PAID_TASKS,
+                DashboardUISettings.FIELD_INVOICED_TASKS,
+                DashboardUISettings.FIELD_LOGGED_TASKS,
+              ].contains(_field) &&
+              _calculate != DashboardUISettings.CALCULATE_COUNT)
+            AppDropdownButton(
+              labelText: localization.format,
+              value: _format,
+              onChanged: (dynamic value) {
+                setState(() {
+                  _format = value;
+                });
+              },
+              items: [
+                DropdownMenuItem<String>(
+                  child: Text(localization.money),
+                  value: DashboardUISettings.FORMAT_MONEY,
+                ),
+                DropdownMenuItem<String>(
+                  child: Text(localization.time),
+                  value: DashboardUISettings.FORMAT_TIME,
+                ),
+              ],
+            ),
+        ],
+      ),
       actions: [
         TextButton(
           onPressed: () {
@@ -1467,28 +1569,33 @@ class _DashboardFieldState extends State<_DashboardField> {
             }
 
             if (dashboardFields
-                .where((field) =>
-                    field.field == _field &&
-                    field.period == _period &&
-                    field.calculate == _field &&
-                    field.format == _format)
+                .where(
+                  (field) =>
+                      field.field == _field &&
+                      field.period == _period &&
+                      field.calculate == _field &&
+                      field.format == _format,
+                )
                 .isNotEmpty) {
               Navigator.of(context).pop();
               return;
             }
 
-            store.dispatch(UpdateDashboardFields(
+            store.dispatch(
+              UpdateDashboardFields(
                 dashboardFields: dashboardFields.rebuild(
-              (b) => b
-                ..add(
-                  DashboardField(
-                    field: _field,
-                    period: _period,
-                    calculate: _calculate,
-                    format: _format,
-                  ),
+                  (b) => b
+                    ..add(
+                      DashboardField(
+                        field: _field,
+                        period: _period,
+                        calculate: _calculate,
+                        format: _format,
+                      ),
+                    ),
                 ),
-            )));
+              ),
+            );
 
             Navigator.of(context).pop();
           },

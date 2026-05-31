@@ -21,9 +21,7 @@ class InvoiceScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, InvoiceScreenVM>(
       converter: InvoiceScreenVM.fromStore,
       builder: (context, vm) {
-        return InvoiceScreen(
-          viewModel: vm,
-        );
+        return InvoiceScreen(viewModel: vm);
       },
     );
   }

@@ -40,8 +40,9 @@ class CompanyDetailsScreen extends StatelessWidget {
       converter: CompanyDetailsVM.fromStore,
       builder: (context, viewModel) {
         return CompanyDetails(
-            key: ValueKey(viewModel.state.settingsUIState.updatedAt),
-            viewModel: viewModel);
+          key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+          viewModel: viewModel,
+        );
       },
     );
   }
@@ -76,30 +77,42 @@ class CompanyDetailsVM {
         switch (settingsUIState.entityType) {
           case EntityType.company:
             final completer = snackBarCompleter<Null>(
-                AppLocalization.of(context)!.deletedLogo);
-            store.dispatch(SaveCompanyRequest(
-              completer: completer,
-              company: settingsUIState.company
-                  .rebuild((b) => b..settings.companyLogo = null),
-            ));
+              AppLocalization.of(context)!.deletedLogo,
+            );
+            store.dispatch(
+              SaveCompanyRequest(
+                completer: completer,
+                company: settingsUIState.company.rebuild(
+                  (b) => b..settings.companyLogo = null,
+                ),
+              ),
+            );
             break;
           case EntityType.group:
             final completer = snackBarCompleter<GroupEntity>(
-                AppLocalization.of(context)!.deletedLogo);
-            store.dispatch(SaveGroupRequest(
-              completer: completer,
-              group: settingsUIState.group
-                  .rebuild((b) => b..settings.companyLogo = null),
-            ));
+              AppLocalization.of(context)!.deletedLogo,
+            );
+            store.dispatch(
+              SaveGroupRequest(
+                completer: completer,
+                group: settingsUIState.group.rebuild(
+                  (b) => b..settings.companyLogo = null,
+                ),
+              ),
+            );
             break;
           case EntityType.client:
             final completer = snackBarCompleter<ClientEntity>(
-                AppLocalization.of(context)!.deletedLogo);
-            store.dispatch(SaveClientRequest(
-              completer: completer,
-              client: settingsUIState.client
-                  .rebuild((b) => b..settings.companyLogo = null),
-            ));
+              AppLocalization.of(context)!.deletedLogo,
+            );
+            store.dispatch(
+              SaveClientRequest(
+                completer: completer,
+                client: settingsUIState.client.rebuild(
+                  (b) => b..settings.companyLogo = null,
+                ),
+              ),
+            );
             break;
         }
       },
@@ -109,56 +122,91 @@ class CompanyDetailsVM {
           if (settingsUIState.entityType == EntityType.company &&
               settingsUIState.company.settings.countryId == null) {
             showErrorDialog(
-                message: AppLocalization.of(context)!.pleaseSelectACountry);
+              message: AppLocalization.of(context)!.pleaseSelectACountry,
+            );
             return;
           }
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveCompanyRequest(
-                  completer: completer, company: settingsUIState.company));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveGroupRequest(
-                  completer: completer, group: settingsUIState.group));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveClientRequest(
-                  completer: completer, client: settingsUIState.client));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
               break;
           }
         });
       },
       onUploadLogo: (context, multipartFile) {
         final type = state.uiState.settingsUIState.entityType;
-        final completer =
-            snackBarCompleter<Null>(AppLocalization.of(context)!.uploadedLogo);
-        store.dispatch(UploadLogoRequest(
-            completer: completer, multipartFile: multipartFile, type: type));
+        final completer = snackBarCompleter<Null>(
+          AppLocalization.of(context)!.uploadedLogo,
+        );
+        store.dispatch(
+          UploadLogoRequest(
+            completer: completer,
+            multipartFile: multipartFile,
+            type: type,
+          ),
+        );
       },
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveCompanyDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFile,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveCompanyDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

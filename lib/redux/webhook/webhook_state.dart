@@ -40,9 +40,11 @@ abstract class WebhookState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<WebhookState> get serializer => _$webhookStateSerializer;
@@ -53,8 +55,10 @@ abstract class WebhookUIState extends Object
     implements Built<WebhookUIState, WebhookUIStateBuilder> {
   factory WebhookUIState(PrefStateSortField? sortField) {
     return _$WebhookUIState._(
-      listUIState: ListUIState(sortField?.field ?? WebhookFields.targetUrl,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? WebhookFields.targetUrl,
+        sortAscending: sortField?.ascending,
+      ),
       editing: WebhookEntity(),
       selectedId: '',
       tabIndex: 0,

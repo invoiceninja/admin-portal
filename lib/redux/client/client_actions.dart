@@ -30,32 +30,27 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewClientList implements PersistUI {
-  ViewClientList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewClientList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewClient implements PersistUI, PersistPrefs {
-  ViewClient({
-    required this.clientId,
-    this.force = false,
-  });
+  ViewClient({required this.clientId, this.force = false});
 
   final String? clientId;
   final bool force;
 }
 
 class EditClient implements PersistUI, PersistPrefs {
-  EditClient(
-      {required this.client,
-      this.contact,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditClient({
+    required this.client,
+    this.contact,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final ClientEntity client;
   final ClientContactEntity? contact;
@@ -159,10 +154,7 @@ class AddContact implements PersistUI {
 }
 
 class UpdateContact implements PersistUI {
-  UpdateContact({
-    required this.index,
-    required this.contact,
-  });
+  UpdateContact({required this.index, required this.contact});
 
   final int index;
   final ClientContactEntity contact;
@@ -352,8 +344,11 @@ class FilterClientsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleClientAction(BuildContext? context, List<BaseEntity> clients,
-    EntityAction? action) async {
+void handleClientAction(
+  BuildContext? context,
+  List<BaseEntity> clients,
+  EntityAction? action,
+) async {
   if (clients.isEmpty) {
     return;
   }
@@ -383,43 +378,54 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       }
       break;
     case EntityAction.settings:
-      store.dispatch(ViewSettings(
-        company: store.state.company,
-        user: store.state.user,
-        client: client,
-        section: state.prefState.isDesktop ? kSettingsLocalization : null,
-        clearFilter: true,
-      ));
+      store.dispatch(
+        ViewSettings(
+          company: store.state.company,
+          user: store.state.user,
+          client: client,
+          section: state.prefState.isDesktop ? kSettingsLocalization : null,
+          clearFilter: true,
+        ),
+      );
       break;
     case EntityAction.newTask:
       createEntity(
-          entity:
-              TaskEntity(state: state).rebuild((b) => b..clientId = client.id));
+        entity: TaskEntity(
+          state: state,
+        ).rebuild((b) => b..clientId = client.id),
+      );
       break;
     case EntityAction.newInvoice:
-      createEntity(entity: InvoiceEntity(state: state, client: client));
+      createEntity(
+        entity: InvoiceEntity(state: state, client: client),
+      );
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
-          entity: InvoiceEntity(
-              state: state,
-              client: client,
-              entityType: EntityType.recurringInvoice));
+        entity: InvoiceEntity(
+          state: state,
+          client: client,
+          entityType: EntityType.recurringInvoice,
+        ),
+      );
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-          entity: ExpenseEntity(
-              state: state,
-              client: client,
-              entityType: EntityType.recurringExpense));
+        entity: ExpenseEntity(
+          state: state,
+          client: client,
+          entityType: EntityType.recurringExpense,
+        ),
+      );
       break;
     case EntityAction.newQuote:
       createEntity(
-          entity: InvoiceEntity(
-        state: state,
-        client: client,
-        entityType: EntityType.quote,
-      ));
+        entity: InvoiceEntity(
+          state: state,
+          client: client,
+          entityType: EntityType.quote,
+        ),
+      );
       break;
     case EntityAction.newCredit:
       createEntity(
@@ -437,64 +443,75 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       break;
     case EntityAction.newPayment:
       createEntity(
-        entity: PaymentEntity(state: state, client: client)
-            .rebuild((b) => b.clientId = client.id),
+        entity: PaymentEntity(
+          state: state,
+          client: client,
+        ).rebuild((b) => b.clientId = client.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
-        entity:
-            ProjectEntity(state: state).rebuild((b) => b.clientId = client.id),
+        entity: ProjectEntity(
+          state: state,
+        ).rebuild((b) => b.clientId = client.id),
       );
       break;
     case EntityAction.restore:
       final message = clientIds.length > 1
           ? localization!.restoredClients
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', clientIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', clientIds.length.toString())
           : localization!.restoredClient;
       store.dispatch(
-          RestoreClientsRequest(snackBarCompleter<Null>(message), clientIds));
+        RestoreClientsRequest(snackBarCompleter<Null>(message), clientIds),
+      );
       break;
     case EntityAction.archive:
       final message = clientIds.length > 1
           ? localization!.archivedClients
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', clientIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', clientIds.length.toString())
           : localization!.archivedClient;
       store.dispatch(
-          ArchiveClientsRequest(snackBarCompleter<Null>(message), clientIds));
+        ArchiveClientsRequest(snackBarCompleter<Null>(message), clientIds),
+      );
       break;
     case EntityAction.delete:
       final message = clientIds.length > 1
           ? localization!.deletedClients
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', clientIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', clientIds.length.toString())
           : localization!.deletedClient;
       store.dispatch(
-          DeleteClientsRequest(snackBarCompleter<Null>(message), clientIds));
+        DeleteClientsRequest(snackBarCompleter<Null>(message), clientIds),
+      );
       break;
     case EntityAction.purge:
       confirmCallback(
-          context: context,
-          message: '${localization!.purge} - ${client.displayName}',
-          callback: (_) {
-            passwordCallback(
-                alwaysRequire: true,
-                context: context,
-                callback: (password, idToken) {
-                  store.dispatch(
-                    PurgeClientRequest(
-                        completer: snackBarCompleter<Null>(
-                            localization.purgedClient, callback: () {
-                          viewEntitiesByType(entityType: EntityType.client);
-                        }),
-                        clientId: client.id,
-                        password: password,
-                        idToken: idToken),
-                  );
-                });
-          });
+        context: context,
+        message: '${localization!.purge} - ${client.displayName}',
+        callback: (_) {
+          passwordCallback(
+            alwaysRequire: true,
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(
+                PurgeClientRequest(
+                  completer: snackBarCompleter<Null>(
+                    localization.purgedClient,
+                    callback: () {
+                      viewEntitiesByType(entityType: EntityType.client);
+                    },
+                  ),
+                  clientId: client.id,
+                  password: password,
+                  idToken: idToken,
+                ),
+              );
+            },
+          );
+        },
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.clientListState.isInMultiselect()) {
@@ -514,9 +531,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [client],
-      );
+      showEntityActionsDialog(entities: [client]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -531,9 +546,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }
@@ -541,38 +554,30 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
     case EntityAction.merge:
       showDialog<void>(
         context: context,
-        builder: (context) => _MergClientPicker(
-          client: client,
-        ),
+        builder: (context) => _MergClientPicker(client: client),
       );
       break;
     case EntityAction.assignGroup:
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => _AssignGroupDialog(
-          clients: clients,
-        ),
+        builder: (context) => _AssignGroupDialog(clients: clients),
       );
       break;
     case EntityAction.runTemplate:
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => RunTemplateDialog(
-          entityType: EntityType.client,
-          entities: clients,
-        ),
+        builder: (context) =>
+            RunTemplateDialog(entityType: EntityType.client, entities: clients),
       );
       break;
     case EntityAction.bulkUpdate:
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => BulkUpdateDialog(
-          entityType: EntityType.client,
-          entities: clients,
-        ),
+        builder: (context) =>
+            BulkUpdateDialog(entityType: EntityType.client, entities: clients),
       );
       break;
     case EntityAction.addComment:
@@ -642,9 +647,7 @@ class UpdateClientTab implements PersistUI {
 }
 
 class _AssignGroupDialog extends StatefulWidget {
-  const _AssignGroupDialog({
-    required this.clients,
-  });
+  const _AssignGroupDialog({required this.clients});
 
   final List<BaseEntity> clients;
 
@@ -669,8 +672,10 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text((_isLoading ? localization.cancel : localization.close)
-              .toUpperCase()),
+          child: Text(
+            (_isLoading ? localization.cancel : localization.close)
+                .toUpperCase(),
+          ),
         ),
         TextButton(
           onPressed: _groupId.isEmpty || _isLoading
@@ -689,18 +694,17 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
                       .then((response) async {
-                    setState(() => _isLoading = false);
-                    Navigator.of(navigatorKey.currentContext!).pop();
-                    showToast(localization.assignedGroup);
-                    store.dispatch(RefreshData());
-                  }).catchError((error) {
-                    showErrorDialog(message: error);
-                    setState(() => _isLoading = false);
-                  });
+                        setState(() => _isLoading = false);
+                        Navigator.of(navigatorKey.currentContext!).pop();
+                        showToast(localization.assignedGroup);
+                        store.dispatch(RefreshData());
+                      })
+                      .catchError((error) {
+                        showErrorDialog(message: error);
+                        setState(() => _isLoading = false);
+                      });
                 },
-          child: Text(
-            localization.submit.toUpperCase(),
-          ),
+          child: Text(localization.submit.toUpperCase()),
         ),
       ],
       content: SingleChildScrollView(
@@ -711,7 +715,7 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
               widget.clients.length == 1
                   ? localization.lookup(EntityType.client.snakeCase)
                   : localization.lookup(EntityType.client.plural) +
-                      ' (${widget.clients.length})',
+                        ' (${widget.clients.length})',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             SizedBox(height: 8),
@@ -720,18 +724,19 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
                 .toList(),
             if (_isLoading) ...[
               SizedBox(height: 32),
-              LinearProgressIndicator()
+              LinearProgressIndicator(),
             ] else ...[
               SizedBox(height: 16),
               DynamicSelector(
-                  entityType: EntityType.group,
-                  entityIds: memoizedGroupList(state.groupState.map),
-                  entityId: _groupId,
-                  onChanged: (groupId) {
-                    setState(() {
-                      _groupId = groupId;
-                    });
-                  }),
+                entityType: EntityType.group,
+                entityIds: memoizedGroupList(state.groupState.map),
+                entityId: _groupId,
+                onChanged: (groupId) {
+                  setState(() {
+                    _groupId = groupId;
+                  });
+                },
+              ),
             ],
           ],
         ),
@@ -741,10 +746,7 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
 }
 
 class _MergClientPicker extends StatefulWidget {
-  const _MergClientPicker({
-    Key? key,
-    required this.client,
-  }) : super(key: key);
+  const _MergClientPicker({Key? key, required this.client}) : super(key: key);
 
   final ClientEntity? client;
 
@@ -783,9 +785,10 @@ class __MergClientPickerState extends State<_MergClientPicker> {
         TextButton(
           onPressed: () {
             passwordCallback(
-                context: context,
-                callback: (password, idToken) {
-                  store.dispatch(MergeClientsRequest(
+              context: context,
+              callback: (password, idToken) {
+                store.dispatch(
+                  MergeClientsRequest(
                     clientId: widget.client!.id,
                     idToken: idToken,
                     password: password,
@@ -793,9 +796,11 @@ class __MergClientPickerState extends State<_MergClientPicker> {
                     completer: snackBarCompleter<Null>(
                       localization.mergedClients,
                     ),
-                  ));
-                  Navigator.of(context).pop();
-                });
+                  ),
+                );
+                Navigator.of(context).pop();
+              },
+            );
           },
           child: Text(localization.merge),
         ),

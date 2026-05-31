@@ -42,7 +42,8 @@ class BankAccountListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: bankAccount,
-      isSelected: bankAccount.id ==
+      isSelected:
+          bankAccount.id ==
           (uiState.isEditing
               ? bankAccountUIState.editing!.id
               : bankAccountUIState.selectedId),
@@ -74,18 +75,22 @@ class BankAccountListItem extends StatelessWidget {
                 ),
               ),
               if (bankAccount.isConnected)
-                Text(formatNumber(bankAccount.balance, context)!,
-                    style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  formatNumber(bankAccount.balance, context)!,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
             ],
           ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(toTitleCase(bankAccount.type) +
-                (bankAccount.disabledUpstream
-                    ? ' • ${localization!.disconnected.toUpperCase()}'
-                    : '')),
+            Text(
+              toTitleCase(bankAccount.type) +
+                  (bankAccount.disabledUpstream
+                      ? ' • ${localization!.disconnected.toUpperCase()}'
+                      : ''),
+            ),
             EntityStateLabel(bankAccount),
           ],
         ),

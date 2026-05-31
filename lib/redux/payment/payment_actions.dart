@@ -21,20 +21,14 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewPaymentList implements PersistUI {
-  ViewPaymentList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewPaymentList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewPayment implements PersistUI, PersistPrefs {
-  ViewPayment({
-    required this.paymentId,
-    this.force = false,
-  });
+  ViewPayment({required this.paymentId, this.force = false});
 
   final String? paymentId;
   final bool force;
@@ -49,8 +43,11 @@ class EditPayment implements PersistUI, PersistPrefs {
 }
 
 class ViewRefundPayment implements PersistUI, PersistPrefs {
-  ViewRefundPayment(
-      {required this.payment, this.completer, this.force = false});
+  ViewRefundPayment({
+    required this.payment,
+    this.completer,
+    this.force = false,
+  });
 
   final PaymentEntity payment;
   final Completer? completer;
@@ -133,10 +130,7 @@ class LoadPaymentsSuccess implements StopLoading {
 }
 
 class SavePaymentRequest implements StartSaving {
-  SavePaymentRequest({
-    required this.completer,
-    required this.payment,
-  });
+  SavePaymentRequest({required this.completer, required this.payment});
 
   final Completer completer;
   final PaymentEntity payment;
@@ -161,10 +155,7 @@ class SavePaymentFailure implements StopSaving {
 }
 
 class RefundPaymentRequest implements StartSaving {
-  RefundPaymentRequest({
-    required this.completer,
-    required this.payment,
-  });
+  RefundPaymentRequest({required this.completer, required this.payment});
 
   final Completer completer;
   final PaymentEntity payment;
@@ -350,8 +341,11 @@ class UpdatePaymentTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handlePaymentAction(BuildContext? context, List<BaseEntity> payments,
-    EntityAction? action) async {
+void handlePaymentAction(
+  BuildContext? context,
+  List<BaseEntity> payments,
+  EntityAction? action,
+) async {
   if (payments.isEmpty) {
     return;
   }
@@ -376,47 +370,63 @@ void handlePaymentAction(BuildContext? context, List<BaseEntity> payments,
       viewEntity(entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (payment.invoicePaymentables.length == 1) {
-          payment = payment.rebuild((b) => b
-            ..invoices.add(PaymentableEntity(
-                invoiceId: payment.invoiceId,
-                amount: payment.completedAmount)));
+          payment = payment.rebuild(
+            (b) => b
+              ..invoices.add(
+                PaymentableEntity(
+                  invoiceId: payment.invoiceId,
+                  amount: payment.completedAmount,
+                ),
+              ),
+          );
         }
-        store.dispatch(ViewRefundPayment(
-          payment: payment.rebuild((b) =>
-              b..sendEmail = company.settings.clientManualPaymentNotification),
-        ));
+        store.dispatch(
+          ViewRefundPayment(
+            payment: payment.rebuild(
+              (b) => b
+                ..sendEmail = company.settings.clientManualPaymentNotification,
+            ),
+          ),
+        );
       });
       break;
     case EntityAction.sendEmail:
-      store.dispatch(EmailPaymentRequest(
-          snackBarCompleter<Null>(localization!.emailedPayment), paymentIds));
+      store.dispatch(
+        EmailPaymentRequest(
+          snackBarCompleter<Null>(localization!.emailedPayment),
+          paymentIds,
+        ),
+      );
       break;
     case EntityAction.restore:
       final message = paymentIds.length > 1
           ? localization!.restoredPayments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentIds.length.toString())
           : localization!.restoredPayment;
       store.dispatch(
-          RestorePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
+        RestorePaymentsRequest(snackBarCompleter<Null>(message), paymentIds),
+      );
       break;
     case EntityAction.archive:
       final message = paymentIds.length > 1
           ? localization!.archivedPayments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentIds.length.toString())
           : localization!.archivedPayment;
       store.dispatch(
-          ArchivePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
+        ArchivePaymentsRequest(snackBarCompleter<Null>(message), paymentIds),
+      );
       break;
     case EntityAction.delete:
       final message = paymentIds.length > 1
           ? localization!.deletedPayments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentIds.length.toString())
           : localization!.deletedPayment;
       store.dispatch(
-          DeletePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
+        DeletePaymentsRequest(snackBarCompleter<Null>(message), paymentIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {
@@ -436,9 +446,7 @@ void handlePaymentAction(BuildContext? context, List<BaseEntity> payments,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [payment],
-      );
+      showEntityActionsDialog(entities: [payment]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -453,9 +461,7 @@ void handlePaymentAction(BuildContext? context, List<BaseEntity> payments,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }

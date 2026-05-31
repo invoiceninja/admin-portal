@@ -38,10 +38,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DesignEdit extends StatefulWidget {
-  const DesignEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const DesignEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final DesignEditVM viewModel;
 
@@ -51,8 +48,9 @@ class DesignEdit extends StatefulWidget {
 
 class _DesignEditState extends State<DesignEdit>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_designEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_designEdit',
+  );
 
   final _debouncer = Debouncer();
   final _htmlDebouncer = SimpleDebouncer();
@@ -81,7 +79,9 @@ class _DesignEditState extends State<DesignEdit>
     _htmlController.addListener(_onHtmlChanged);
     _focusNode = FocusScopeNode();
     _tabController = TabController(
-        vsync: this, length: widget.viewModel.state.prefState.isMobile ? 6 : 5);
+      vsync: this,
+      length: widget.viewModel.state.prefState.isMobile ? 6 : 5,
+    );
   }
 
   @override
@@ -133,16 +133,20 @@ class _DesignEditState extends State<DesignEdit>
   }
 
   void _onChanged({bool debounce = true}) {
-    final design = widget.viewModel.design.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..design.replace(BuiltMap<String, String>({
-        kDesignHeader: _headerController.text.trim(),
-        kDesignBody: _bodyController.text.trim(),
-        kDesignFooter: _footerController.text.trim(),
-        kDesignProducts: _productsController.text.trim(),
-        kDesignTasks: _tasksController.text.trim(),
-        kDesignIncludes: _includesController.text.trim()
-      })));
+    final design = widget.viewModel.design.rebuild(
+      (b) => b
+        ..name = _nameController.text.trim()
+        ..design.replace(
+          BuiltMap<String, String>({
+            kDesignHeader: _headerController.text.trim(),
+            kDesignBody: _bodyController.text.trim(),
+            kDesignFooter: _footerController.text.trim(),
+            kDesignProducts: _productsController.text.trim(),
+            kDesignTasks: _tasksController.text.trim(),
+            kDesignIncludes: _includesController.text.trim(),
+          }),
+        ),
+    );
 
     if (design != widget.viewModel.design) {
       if (debounce) {
@@ -191,26 +195,27 @@ class _DesignEditState extends State<DesignEdit>
     });
 
     loadDesign(
-        context: context,
-        design: design,
-        isDraftMode: _isDraftMode,
-        isPurchaseOrder: false,
-        onComplete: (response) async {
-          setState(() {
-            _isLoading = false;
+      context: context,
+      design: design,
+      isDraftMode: _isDraftMode,
+      isPurchaseOrder: false,
+      onComplete: (response) async {
+        setState(() {
+          _isLoading = false;
 
-            if (response != null) {
-              if (_isDraftMode) {
-                _htmlController.text = response.body;
-                _html = response.body;
-                _pdfBytes = null;
-              } else {
-                _pdfBytes = response.bodyBytes;
-                _html = '';
-              }
+          if (response != null) {
+            if (_isDraftMode) {
+              _htmlController.text = response.body;
+              _html = response.body;
+              _pdfBytes = null;
+            } else {
+              _pdfBytes = response.bodyBytes;
+              _html = '';
             }
-          });
+          }
         });
+      },
+    );
   }
 
   void _setDraftMode(bool isDraftMode) {
@@ -228,134 +233,128 @@ class _DesignEditState extends State<DesignEdit>
     final design = viewModel.design;
 
     return EditScaffold(
-        entity: design,
-        isFullscreen: true,
-        title:
-            design.isNew ? localization!.newDesign : localization!.editDesign,
-        onCancelPressed: (context) => viewModel.onCancelPressed(context),
-        appBarBottom: isMobile(context)
-            ? TabBar(
-                //key: ValueKey(state.settingsUIState.updatedAt),
-                controller: _tabController,
-                isScrollable: true,
-                tabs: [
-                  Tab(text: localization.settings),
-                  Tab(text: localization.preview),
-                  Tab(text: localization.body),
-                  Tab(text: localization.header),
-                  Tab(text: localization.footer),
-                  //Tab(text: localization.products),
-                  //Tab(text: localization.tasks),
-                  Tab(text: localization.includes),
-                ],
-              )
-            : null,
-        onSavePressed: _isLoading
-            ? null
-            : (context) {
-                final bool isValid = _formKey.currentState!.validate();
+      entity: design,
+      isFullscreen: true,
+      title: design.isNew ? localization!.newDesign : localization!.editDesign,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      appBarBottom: isMobile(context)
+          ? TabBar(
+              //key: ValueKey(state.settingsUIState.updatedAt),
+              controller: _tabController,
+              isScrollable: true,
+              tabs: [
+                Tab(text: localization.settings),
+                Tab(text: localization.preview),
+                Tab(text: localization.body),
+                Tab(text: localization.header),
+                Tab(text: localization.footer),
+                //Tab(text: localization.products),
+                //Tab(text: localization.tasks),
+                Tab(text: localization.includes),
+              ],
+            )
+          : null,
+      onSavePressed: _isLoading
+          ? null
+          : (context) {
+              final bool isValid = _formKey.currentState!.validate();
 
-                if (!isValid) {
-                  return;
-                }
+              if (!isValid) {
+                return;
+              }
 
-                viewModel.onSavePressed(context);
-              },
-        body: isMobile(context)
-            ? AppTabForm(
-                tabController: _tabController,
-                formKey: _formKey,
-                focusNode: _focusNode,
+              viewModel.onSavePressed(context);
+            },
+      body: isMobile(context)
+          ? AppTabForm(
+              tabController: _tabController,
+              formKey: _formKey,
+              focusNode: _focusNode,
+              children: <Widget>[
+                DesignSettings(
+                  viewModel: viewModel,
+                  isLoading: _isLoading,
+                  nameController: _nameController,
+                  htmlController: _htmlController,
+                  onLoadDesign: _loadDesign,
+                  draftMode: _isDraftMode,
+                  onDraftModeChanged: (value) => _setDraftMode(value),
+                ),
+                _isDraftMode
+                    ? HtmlDesignPreview(html: _html, isLoading: _isLoading)
+                    : PdfDesignPreview(
+                        pdfBytes: _pdfBytes,
+                        isLoading: _isLoading,
+                      ),
+                DesignSection(textController: _bodyController),
+                DesignSection(textController: _headerController),
+                DesignSection(textController: _footerController),
+                //DesignSection(textController: _productsController),
+                //DesignSection(textController: _tasksController),
+                DesignSection(textController: _includesController),
+              ],
+            )
+          : AppForm(
+              focusNode: _focusNode,
+              formKey: _formKey,
+              child: Row(
                 children: <Widget>[
-                    DesignSettings(
-                      viewModel: viewModel,
-                      isLoading: _isLoading,
-                      nameController: _nameController,
-                      htmlController: _htmlController,
-                      onLoadDesign: _loadDesign,
-                      draftMode: _isDraftMode,
-                      onDraftModeChanged: (value) => _setDraftMode(value),
+                  Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        AppTabBar(
+                          controller: _tabController,
+                          isScrollable: true,
+                          tabs: <Widget>[
+                            Tab(text: localization.settings),
+                            Tab(text: localization.body),
+                            Tab(text: localization.header),
+                            Tab(text: localization.footer),
+                            //Tab(text: localization.products),
+                            //Tab(text: localization.tasks),
+                            Tab(text: localization.includes),
+                          ],
+                        ),
+                        Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: <Widget>[
+                              DesignSettings(
+                                viewModel: viewModel,
+                                isLoading: _isLoading,
+                                nameController: _nameController,
+                                htmlController: _htmlController,
+                                onLoadDesign: _loadDesign,
+                                draftMode: _isDraftMode,
+                                onDraftModeChanged: (value) =>
+                                    _setDraftMode(value),
+                              ),
+                              DesignSection(textController: _bodyController),
+                              DesignSection(textController: _headerController),
+                              DesignSection(textController: _footerController),
+                              //DesignSection(textController: _productsController),
+                              //DesignSection(textController: _productsController),
+                              DesignSection(
+                                textController: _includesController,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    _isDraftMode
-                        ? HtmlDesignPreview(
-                            html: _html,
-                            isLoading: _isLoading,
-                          )
+                  ),
+                  Expanded(
+                    child: _isDraftMode
+                        ? HtmlDesignPreview(html: _html, isLoading: _isLoading)
                         : PdfDesignPreview(
                             pdfBytes: _pdfBytes,
                             isLoading: _isLoading,
                           ),
-                    DesignSection(textController: _bodyController),
-                    DesignSection(textController: _headerController),
-                    DesignSection(textController: _footerController),
-                    //DesignSection(textController: _productsController),
-                    //DesignSection(textController: _tasksController),
-                    DesignSection(textController: _includesController),
-                  ])
-            : AppForm(
-                focusNode: _focusNode,
-                formKey: _formKey,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        children: <Widget>[
-                          AppTabBar(
-                            controller: _tabController,
-                            isScrollable: true,
-                            tabs: <Widget>[
-                              Tab(text: localization.settings),
-                              Tab(text: localization.body),
-                              Tab(text: localization.header),
-                              Tab(text: localization.footer),
-                              //Tab(text: localization.products),
-                              //Tab(text: localization.tasks),
-                              Tab(text: localization.includes),
-                            ],
-                          ),
-                          Expanded(
-                            child: TabBarView(
-                              controller: _tabController,
-                              children: <Widget>[
-                                DesignSettings(
-                                  viewModel: viewModel,
-                                  isLoading: _isLoading,
-                                  nameController: _nameController,
-                                  htmlController: _htmlController,
-                                  onLoadDesign: _loadDesign,
-                                  draftMode: _isDraftMode,
-                                  onDraftModeChanged: (value) =>
-                                      _setDraftMode(value),
-                                ),
-                                DesignSection(textController: _bodyController),
-                                DesignSection(
-                                    textController: _headerController),
-                                DesignSection(
-                                    textController: _footerController),
-                                //DesignSection(textController: _productsController),
-                                //DesignSection(textController: _productsController),
-                                DesignSection(
-                                    textController: _includesController),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: _isDraftMode
-                          ? HtmlDesignPreview(
-                              html: _html,
-                              isLoading: _isLoading,
-                            )
-                          : PdfDesignPreview(
-                              pdfBytes: _pdfBytes,
-                              isLoading: _isLoading,
-                            ),
-                    ),
-                  ],
-                ),
-              ));
+                  ),
+                ],
+              ),
+            ),
+    );
   }
 }
 
@@ -375,8 +374,10 @@ class DesignSection extends StatelessWidget {
             actions: {InsertTabIntent: InsertTabAction()},
             child: Shortcuts(
               shortcuts: {
-                LogicalKeySet(LogicalKeyboardKey.tab):
-                    InsertTabIntent(4, textController),
+                LogicalKeySet(LogicalKeyboardKey.tab): InsertTabIntent(
+                  4,
+                  textController,
+                ),
               },
               child: TextField(
                 controller: textController,
@@ -384,12 +385,8 @@ class DesignSection extends StatelessWidget {
                 textInputAction: TextInputAction.newline,
                 minLines: 16,
                 maxLines: null,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontFeatures: [FontFeature.tabularFigures()],
-                ),
+                decoration: InputDecoration(border: InputBorder.none),
+                style: TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
                 autocorrect: false,
                 autofocus: true,
               ),
@@ -480,55 +477,63 @@ class _DesignSettingsState extends State<DesignSettings> {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                        onPressed: () =>
-                            launchUrl(Uri.parse(kTemplatesDocsUrl)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(localization.viewDocs),
-                        )),
+                      onPressed: () => launchUrl(Uri.parse(kTemplatesDocsUrl)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(localization.viewDocs),
+                      ),
+                    ),
                   ),
                   SizedBox(width: kTableColumnGap),
                   Expanded(
                     child: OutlinedButton(
-                        onPressed: () =>
-                            launchUrl(Uri.parse(kTemplatesYouTubeUrl)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(localization.watchVideo),
-                        )),
+                      onPressed: () =>
+                          launchUrl(Uri.parse(kTemplatesYouTubeUrl)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(localization.watchVideo),
+                      ),
+                    ),
                   ),
                 ],
               ),
               SizedBox(height: 10),
               ...[
-                EntityType.client,
-                EntityType.invoice,
-                EntityType.payment,
-                EntityType.quote,
-                EntityType.credit,
-                EntityType.project,
-                EntityType.task,
-                EntityType.purchaseOrder,
-              ]
+                    EntityType.client,
+                    EntityType.invoice,
+                    EntityType.payment,
+                    EntityType.quote,
+                    EntityType.credit,
+                    EntityType.project,
+                    EntityType.task,
+                    EntityType.purchaseOrder,
+                  ]
                   .where(
-                      (entityType) => state.company.isModuleEnabled(entityType))
-                  .map((entityType) => CheckboxListTile(
-                        value: entityTypes.contains(entityType.apiValue),
-                        onChanged: (value) {
-                          final entities = entityTypes;
-                          if (value == true) {
-                            entities.add(entityType.apiValue);
-                          } else {
-                            entities.remove(entityType.apiValue);
-                          }
-                          widget.viewModel.onChanged(design.rebuild((b) => b
-                            ..entities = entities
-                                .where((entity) => entity.isNotEmpty)
-                                .join(',')));
-                        },
-                        title: Text(localization.lookup(entityType.plural)),
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ))
+                    (entityType) => state.company.isModuleEnabled(entityType),
+                  )
+                  .map(
+                    (entityType) => CheckboxListTile(
+                      value: entityTypes.contains(entityType.apiValue),
+                      onChanged: (value) {
+                        final entities = entityTypes;
+                        if (value == true) {
+                          entities.add(entityType.apiValue);
+                        } else {
+                          entities.remove(entityType.apiValue);
+                        }
+                        widget.viewModel.onChanged(
+                          design.rebuild(
+                            (b) => b
+                              ..entities = entities
+                                  .where((entity) => entity.isNotEmpty)
+                                  .join(','),
+                          ),
+                        );
+                      },
+                      title: Text(localization.lookup(entityType.plural)),
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                  )
                   .toList(),
             ],
           ],
@@ -561,14 +566,20 @@ class _DesignSettingsState extends State<DesignSettings> {
                   ),
                   onPressed: () async {
                     final designStr = await showDialog<String>(
-                        context: context,
-                        builder: (context) => _DesignImportDialog());
+                      context: context,
+                      builder: (context) => _DesignImportDialog(),
+                    );
                     final viewModel = widget.viewModel;
                     final design = viewModel.design;
 
-                    widget.onLoadDesign(design.rebuild((b) => b
-                      ..design.replace(
-                          BuiltMap<String, String>(jsonDecode(designStr!)))));
+                    widget.onLoadDesign(
+                      design.rebuild(
+                        (b) => b
+                          ..design.replace(
+                            BuiltMap<String, String>(jsonDecode(designStr!)),
+                          ),
+                      ),
+                    );
                     showToast(localization.importedDesign);
                   },
                 ),
@@ -595,8 +606,12 @@ class _DesignSettingsState extends State<DesignSettings> {
                     final prettyprint = encoder.convert(designMap);
 
                     Clipboard.setData(ClipboardData(text: prettyprint));
-                    showToast(localization.copiedToClipboard
-                        .replaceFirst(':value ', ''));
+                    showToast(
+                      localization.copiedToClipboard.replaceFirst(
+                        ':value ',
+                        '',
+                      ),
+                    );
                   },
                 ),
               ),
@@ -618,8 +633,10 @@ class _DesignSettingsState extends State<DesignSettings> {
                   actions: {InsertTabIntent: InsertTabAction()},
                   child: Shortcuts(
                     shortcuts: {
-                      LogicalKeySet(LogicalKeyboardKey.tab):
-                          InsertTabIntent(4, widget.htmlController)
+                      LogicalKeySet(LogicalKeyboardKey.tab): InsertTabIntent(
+                        4,
+                        widget.htmlController,
+                      ),
                     },
                     child: TextField(
                       controller: widget.htmlController,
@@ -627,9 +644,7 @@ class _DesignSettingsState extends State<DesignSettings> {
                       textInputAction: TextInputAction.newline,
                       minLines: 16,
                       maxLines: null,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
+                      decoration: InputDecoration(border: InputBorder.none),
                       style: TextStyle(
                         fontFeatures: [FontFeature.tabularFigures()],
                       ),
@@ -647,10 +662,7 @@ class _DesignSettingsState extends State<DesignSettings> {
 }
 
 class PdfDesignPreview extends StatefulWidget {
-  const PdfDesignPreview({
-    required this.pdfBytes,
-    required this.isLoading,
-  });
+  const PdfDesignPreview({required this.pdfBytes, required this.isLoading});
 
   final Uint8List? pdfBytes;
 
@@ -714,9 +726,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 LinearProgressIndicator(),
-                Expanded(
-                  child: SizedBox(),
-                ),
+                Expanded(child: SizedBox()),
               ],
             ),
         ],
@@ -726,10 +736,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
 }
 
 class HtmlDesignPreview extends StatelessWidget {
-  const HtmlDesignPreview({
-    required this.html,
-    required this.isLoading,
-  });
+  const HtmlDesignPreview({required this.html, required this.isLoading});
 
   final String html;
   final bool isLoading;
@@ -748,9 +755,7 @@ class HtmlDesignPreview extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 LinearProgressIndicator(),
-                Expanded(
-                  child: SizedBox(),
-                ),
+                Expanded(child: SizedBox()),
               ],
             ),
         ],
@@ -773,17 +778,22 @@ class InsertTabAction extends Action {
       final oldValue = intent.textController.value;
       final newComposing = TextRange.collapsed(oldValue.composing.start);
       final newSelection = TextSelection.collapsed(
-          offset: oldValue.selection.start + intent.numSpaces);
+        offset: oldValue.selection.start + intent.numSpaces,
+      );
 
-      final newText = StringBuffer(oldValue.selection.isValid
-          ? oldValue.selection.textBefore(oldValue.text)
-          : oldValue.text);
+      final newText = StringBuffer(
+        oldValue.selection.isValid
+            ? oldValue.selection.textBefore(oldValue.text)
+            : oldValue.text,
+      );
       for (var i = 0; i < intent.numSpaces; i++) {
         newText.write(' ');
       }
-      newText.write(oldValue.selection.isValid
-          ? oldValue.selection.textAfter(oldValue.text)
-          : '');
+      newText.write(
+        oldValue.selection.isValid
+            ? oldValue.selection.textAfter(oldValue.text)
+            : '',
+      );
       intent.textController.value = intent.textController.value.copyWith(
         composing: newComposing,
         text: newText.toString(),
@@ -832,11 +842,13 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
                 kDesignBody,
                 kDesignFooter,
                 kDesignHeader,
-                kDesignIncludes
+                kDesignIncludes,
               ]) {
                 if (!map!.containsKey(field)) {
-                  throw localization.invalidDesign
-                      .replaceFirst(':value', field);
+                  throw localization.invalidDesign.replaceFirst(
+                    ':value',
+                    field,
+                  );
                 }
               }
               Navigator.of(context).pop(value);

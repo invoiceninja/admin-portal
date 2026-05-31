@@ -23,10 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteViewScreen extends StatelessWidget {
-  const QuoteViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const QuoteViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
   static const String route = '/quote/view';
 
@@ -65,31 +62,34 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext, DocumentEntity)? onViewExpense,
     Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          isSaving: isSaving,
-          isDirty: isDirty,
-          onActionSelected: onEntityAction,
-          onEditPressed: onEditPressed,
-          onPaymentsPressed: onPaymentsPressed,
-          onRefreshed: onRefreshed,
-          onUploadDocuments: onUploadDocuments,
-          onViewExpense: onViewExpense,
-          onViewPdf: onViewPdf,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         client: client,
+         isSaving: isSaving,
+         isDirty: isDirty,
+         onActionSelected: onEntityAction,
+         onEditPressed: onEditPressed,
+         onPaymentsPressed: onPaymentsPressed,
+         onRefreshed: onRefreshed,
+         onUploadDocuments: onUploadDocuments,
+         onViewExpense: onViewExpense,
+         onViewPdf: onViewPdf,
+       );
 
   factory QuoteViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final quote = state.quoteState.map[state.quoteUIState.selectedId] ??
+    final quote =
+        state.quoteState.map[state.quoteUIState.selectedId] ??
         InvoiceEntity(id: state.quoteUIState.selectedId);
-    final client = store.state.clientState.map[quote.clientId] ??
+    final client =
+        store.state.clientState.map[quote.clientId] ??
         ClientEntity(id: quote.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadQuote(completer: completer, quoteId: quote.id));
       return completer.future;
     }
@@ -103,36 +103,52 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
       client: client,
       onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
-            entity: quote,
-            subIndex: index,
-            completer: snackBarCompleter<InvoiceEntity>(
-                AppLocalization.of(context)!.updatedQuote));
+          entity: quote,
+          subIndex: index,
+          completer: snackBarCompleter<InvoiceEntity>(
+            AppLocalization.of(context)!.updatedQuote,
+          ),
+        );
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([quote], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveQuoteDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFile: multipartFiles,
-            quote: quote,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveQuoteDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFile: multipartFiles,
+                quote: quote,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
       onViewPdf: (context, quote, [activityId]) {
-        store.dispatch(ShowPdfQuote(
-            context: context, quote: quote, activityId: activityId));
+        store.dispatch(
+          ShowPdfQuote(context: context, quote: quote, activityId: activityId),
+        );
       },
     );
   }

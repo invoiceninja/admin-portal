@@ -85,28 +85,33 @@ class GroupEditVM {
           final navigator = navigatorKey.currentState;
           final Completer<GroupEntity> completer = Completer<GroupEntity>();
           store.dispatch(SaveGroupRequest(completer: completer, group: group));
-          return completer.future.then((savedGroup) {
-            showToast(group!.isNew
-                ? localization!.createdGroup
-                : localization!.updatedGroup);
+          return completer.future
+              .then((savedGroup) {
+                showToast(
+                  group!.isNew
+                      ? localization!.createdGroup
+                      : localization!.updatedGroup,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
-              if (group.isNew) {
-                navigator!.pushReplacementNamed(GroupViewScreen.route);
-              } else {
-                navigator!.pop(savedGroup);
-              }
-            } else {
-              viewEntity(entity: savedGroup, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
+                  if (group.isNew) {
+                    navigator!.pushReplacementNamed(GroupViewScreen.route);
+                  } else {
+                    navigator!.pop(savedGroup);
+                  }
+                } else {
+                  viewEntity(entity: savedGroup, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

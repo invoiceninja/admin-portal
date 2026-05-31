@@ -12,11 +12,13 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(tokenListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(tokenListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -33,14 +35,19 @@ final forceSelectedReducer = combineReducers<bool?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveTokensSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteTokensSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.token ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.token ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewToken>(
-      (String? selectedId, dynamic action) => action.tokenId),
+    (String? selectedId, dynamic action) => action.tokenId,
+  ),
   TypedReducer<String?, AddTokenSuccess>(
-      (String? selectedId, dynamic action) => action.token.id),
+    (String? selectedId, dynamic action) => action.token.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortTokens>((selectedId, action) => ''),
   TypedReducer<String?, FilterTokens>((selectedId, action) => ''),
@@ -50,11 +57,12 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterTokensByCustom3>((selectedId, action) => ''),
   TypedReducer<String?, FilterTokensByCustom4>((selectedId, action) => ''),
   TypedReducer<String?, FilterByEntity>(
-      (selectedId, action) => action.clearSelection
-          ? ''
-          : action.entityType == EntityType.token
-              ? action.entityId
-              : selectedId),
+    (selectedId, action) => action.clearSelection
+        ? ''
+        : action.entityType == EntityType.token
+        ? action.entityId
+        : selectedId,
+  ),
 ]);
 
 final editingReducer = combineReducers<TokenEntity?>([
@@ -93,44 +101,58 @@ final tokenListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartTokenMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTokenMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTokenMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearTokenMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewTokenList>(_viewTokenList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewTokenList(ListUIState tokenListState, ViewTokenList action) {
-  return tokenListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  return tokenListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterTokensByCustom1(
-    ListUIState tokenListState, FilterTokensByCustom1 action) {
+  ListUIState tokenListState,
+  FilterTokensByCustom1 action,
+) {
   if (tokenListState.custom1Filters.contains(action.value)) {
-    return tokenListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return tokenListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
     return tokenListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
 }
 
 ListUIState _filterTokensByCustom2(
-    ListUIState tokenListState, FilterTokensByCustom2 action) {
+  ListUIState tokenListState,
+  FilterTokensByCustom2 action,
+) {
   if (tokenListState.custom2Filters.contains(action.value)) {
-    return tokenListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return tokenListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
     return tokenListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
 ListUIState _filterTokensByState(
-    ListUIState tokenListState, FilterTokensByState action) {
+  ListUIState tokenListState,
+  FilterTokensByState action,
+) {
   if (tokenListState.stateFilters.contains(action.state)) {
     return tokenListState.rebuild((b) => b..stateFilters.remove(action.state));
   } else {
@@ -139,37 +161,50 @@ ListUIState _filterTokensByState(
 }
 
 ListUIState _filterTokens(ListUIState tokenListState, FilterTokens action) {
-  return tokenListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : tokenListState.filterClearedAt);
+  return tokenListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : tokenListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortTokens(ListUIState tokenListState, SortTokens action) {
-  return tokenListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return tokenListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState productListState, StartTokenMultiselect action) {
+  ListUIState productListState,
+  StartTokenMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState productListState, AddToTokenMultiselect action) {
+  ListUIState productListState,
+  AddToTokenMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState productListState, RemoveFromTokenMultiselect action) {
-  return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState productListState,
+  RemoveFromTokenMultiselect action,
+) {
+  return productListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState productListState, ClearTokenMultiselect action) {
+  ListUIState productListState,
+  ClearTokenMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -185,7 +220,9 @@ final tokensReducer = combineReducers<TokenState>([
 ]);
 
 TokenState _archiveTokenSuccess(
-    TokenState tokenState, ArchiveTokensSuccess action) {
+  TokenState tokenState,
+  ArchiveTokensSuccess action,
+) {
   return tokenState.rebuild((b) {
     for (final token in action.tokens) {
       b.map[token.id] = token;
@@ -194,7 +231,9 @@ TokenState _archiveTokenSuccess(
 }
 
 TokenState _deleteTokenSuccess(
-    TokenState tokenState, DeleteTokensSuccess action) {
+  TokenState tokenState,
+  DeleteTokensSuccess action,
+) {
   return tokenState.rebuild((b) {
     for (final token in action.tokens) {
       b.map[token.id] = token;
@@ -203,7 +242,9 @@ TokenState _deleteTokenSuccess(
 }
 
 TokenState _restoreTokenSuccess(
-    TokenState tokenState, RestoreTokensSuccess action) {
+  TokenState tokenState,
+  RestoreTokensSuccess action,
+) {
   return tokenState.rebuild((b) {
     for (final token in action.tokens) {
       b.map[token.id] = token;
@@ -212,9 +253,11 @@ TokenState _restoreTokenSuccess(
 }
 
 TokenState _addToken(TokenState tokenState, AddTokenSuccess action) {
-  return tokenState.rebuild((b) => b
-    ..map[action.token.id] = action.token
-    ..list.add(action.token.id));
+  return tokenState.rebuild(
+    (b) => b
+      ..map[action.token.id] = action.token
+      ..list.add(action.token.id),
+  );
 }
 
 TokenState _updateToken(TokenState tokenState, SaveTokenSuccess action) {

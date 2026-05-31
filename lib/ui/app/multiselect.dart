@@ -142,10 +142,12 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                     ? widget.childBuilder!(widget.selectedValues)
                     : Align(
                         child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 10)
-                                  .copyWith(right: 32),
-                          child: widget.menuItembuilder != null &&
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 10,
+                          ).copyWith(right: 32),
+                          child:
+                              widget.menuItembuilder != null &&
                                   widget.selectedValues.isNotEmpty
                               ? ClipRRect(
                                   child: SingleChildScrollView(
@@ -153,15 +155,16 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                                         const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      children: widget.selectedValues
-                                          .map((dynamic e) {
+                                      children: widget.selectedValues.map((
+                                        dynamic e,
+                                      ) {
                                         if (widget.selectedValues.indexOf(e) <
                                             widget.selectedValues.length - 1) {
                                           return Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               widget.menuItembuilder!(e),
-                                              Text(',')
+                                              Text(','),
                                             ],
                                           );
                                         }
@@ -170,13 +173,16 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                                     ),
                                   ),
                                 )
-                              : Text(widget.selectedValues.isNotEmpty
-                                  ? widget.selectedValues
-                                      .map((dynamic e) => e.toString())
-                                      .reduce((a, b) => a + ' , ' + b)
-                                  : widget.whenEmpty),
+                              : Text(
+                                  widget.selectedValues.isNotEmpty
+                                      ? widget.selectedValues
+                                            .map((dynamic e) => e.toString())
+                                            .reduce((a, b) => a + ' , ' + b)
+                                      : widget.whenEmpty,
+                                ),
                         ),
-                        alignment: Alignment.centerLeft),
+                        alignment: Alignment.centerLeft,
+                      ),
               ),
               Align(
                 alignment: Alignment.centerLeft,
@@ -200,51 +206,54 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                       : null,
                   selectedItemBuilder: (context) {
                     return widget.options!
-                        .map((dynamic e) => DropdownMenuItem<dynamic>(
-                              child: Container(),
-                            ))
+                        .map(
+                          (dynamic e) =>
+                              DropdownMenuItem<dynamic>(child: Container()),
+                        )
                         .toList();
                   },
                   items: widget.options!
-                      .map((dynamic x) => DropdownMenuItem<dynamic>(
-                            child: _theState.rebuild(() {
-                              return _SelectRow(
-                                selected: widget.selectedValues.contains(x),
-                                child: widget.menuItembuilder != null
-                                    ? widget.menuItembuilder!(x)
-                                    : Text(
-                                        x.toString(),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                onChange: (isSelected) {
-                                  if (isSelected) {
-                                    final ns = widget.selectedValues;
-                                    ns.add(x);
-                                    widget.onChanged(ns);
-                                  } else {
+                      .map(
+                        (dynamic x) => DropdownMenuItem<dynamic>(
+                          child: _theState.rebuild(() {
+                            return _SelectRow(
+                              selected: widget.selectedValues.contains(x),
+                              child: widget.menuItembuilder != null
+                                  ? widget.menuItembuilder!(x)
+                                  : Text(
+                                      x.toString(),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                              onChange: (isSelected) {
+                                if (isSelected) {
+                                  final ns = widget.selectedValues;
+                                  ns.add(x);
+                                  widget.onChanged(ns);
+                                } else {
+                                  final ns = widget.selectedValues;
+                                  ns.remove(x);
+                                  widget.onChanged(ns);
+                                }
+                              },
+                            );
+                          }),
+                          value: x,
+                          onTap: !widget.readOnly
+                              ? () {
+                                  if (widget.selectedValues.contains(x)) {
                                     final ns = widget.selectedValues;
                                     ns.remove(x);
                                     widget.onChanged(ns);
+                                  } else {
+                                    final ns = widget.selectedValues;
+                                    ns.add(x);
+                                    widget.onChanged(ns);
                                   }
-                                },
-                              );
-                            }),
-                            value: x,
-                            onTap: !widget.readOnly
-                                ? () {
-                                    if (widget.selectedValues.contains(x)) {
-                                      final ns = widget.selectedValues;
-                                      ns.remove(x);
-                                      widget.onChanged(ns);
-                                    } else {
-                                      final ns = widget.selectedValues;
-                                      ns.add(x);
-                                      widget.onChanged(ns);
-                                    }
-                                  }
-                                : null,
-                          ))
+                                }
+                              : null,
+                        ),
+                      )
                       .toList(),
                 ),
               ),

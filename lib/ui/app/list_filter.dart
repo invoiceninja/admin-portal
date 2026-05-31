@@ -66,23 +66,31 @@ class _ListFilterState extends State<ListFilter> {
     final localization = AppLocalization.of(context)!;
     final count = widget.entityIds.length;
 
-    final isDashboardOrSettings =
-        [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
+    final isDashboardOrSettings = [
+      EntityType.dashboard,
+      EntityType.settings,
+    ].contains(widget.entityType);
     final isSingle = count == 1 || isDashboardOrSettings;
 
     final key = toSnakeCase(
-        isSingle ? widget.entityType.readableValue : widget.entityType.plural);
+      isSingle ? widget.entityType.readableValue : widget.entityType.plural,
+    );
     final placeholder = localization.lookup(
-        widget.entityType == EntityType.dashboard
-            ? 'search_company'
-            : 'search_$key');
+      widget.entityType == EntityType.dashboard
+          ? 'search_company'
+          : 'search_$key',
+    );
 
     return isSingle
         ? placeholder
         : placeholder.replaceFirst(
             ':count',
-            formatNumber(count.toDouble(), context,
-                formatNumberType: FormatNumberType.int)!);
+            formatNumber(
+              count.toDouble(),
+              context,
+              formatNumberType: FormatNumberType.int,
+            )!,
+          );
   }
 
   @override
@@ -109,8 +117,10 @@ class _ListFilterState extends State<ListFilter> {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final isDashboardOrSettings =
-        [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
+    final isDashboardOrSettings = [
+      EntityType.dashboard,
+      EntityType.settings,
+    ].contains(widget.entityType);
 
     return Row(
       children: [
@@ -118,12 +128,13 @@ class _ListFilterState extends State<ListFilter> {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-                padding: const EdgeInsets.only(right: 8),
-                onPressed: () {
-                  //widget.onFilterChanged(null);
-                  store.dispatch(ToggleShowNewSettings());
-                },
-                icon: Icon(MdiIcons.newBox)),
+              padding: const EdgeInsets.only(right: 8),
+              onPressed: () {
+                //widget.onFilterChanged(null);
+                store.dispatch(ToggleShowNewSettings());
+              },
+              icon: Icon(MdiIcons.newBox),
+            ),
           ),
         Expanded(
           flex: 2,
@@ -147,131 +158,151 @@ class _ListFilterState extends State<ListFilter> {
             SizedBox(width: 8),
             Flexible(
               child: DropDownMultiSelect(
-                  onChanged: (List<dynamic> selected) {
-                    final stateFilters = state
-                        .getListState(widget.entityType)
-                        .stateFilters
-                        .toList();
-
-                    final added = selected
-                        .where((dynamic e) => !stateFilters.contains(e));
-                    final removed = stateFilters
-                        .where((dynamic e) => !selected.contains(e));
-
-                    for (var state in added) {
-                      widget.onSelectedState!(state, true);
-                    }
-                    for (var state in removed) {
-                      widget.onSelectedState!(state, false);
-                    }
-                  },
-                  options: EntityState.values.toList(),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide()),
-                    enabledBorder: state.prefState.enableDarkMode
-                        ? null
-                        : OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)),
-                    isDense: true,
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 13, horizontal: 10),
-                  ),
-                  selectedValues: state
+                onChanged: (List<dynamic> selected) {
+                  final stateFilters = state
                       .getListState(widget.entityType)
                       .stateFilters
-                      .toList(),
-                  whenEmpty: localization!.all,
-                  menuItembuilder: (dynamic value) {
-                    final state = value as EntityState;
-                    return Text(
-                      localization.lookup(state.name),
-                      overflow: TextOverflow.clip,
-                      maxLines: 1,
-                    );
-                  },
-                  childBuilder: (selected) {
-                    return Align(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            selected.isNotEmpty
-                                ? selected
-                                    .map<String?>((dynamic value) =>
-                                        localization.lookup(
-                                            (value as EntityState).name))
-                                    .join(', ')
-                                : localization.all,
-                            style: TextStyle(fontSize: 15),
-                          ),
+                      .toList();
+
+                  final added = selected.where(
+                    (dynamic e) => !stateFilters.contains(e),
+                  );
+                  final removed = stateFilters.where(
+                    (dynamic e) => !selected.contains(e),
+                  );
+
+                  for (var state in added) {
+                    widget.onSelectedState!(state, true);
+                  }
+                  for (var state in removed) {
+                    widget.onSelectedState!(state, false);
+                  }
+                },
+                options: EntityState.values.toList(),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderSide: BorderSide()),
+                  enabledBorder: state.prefState.enableDarkMode
+                      ? null
+                      : OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                        alignment: Alignment.centerLeft);
-                  }),
+                  isDense: true,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 13,
+                    horizontal: 10,
+                  ),
+                ),
+                selectedValues: state
+                    .getListState(widget.entityType)
+                    .stateFilters
+                    .toList(),
+                whenEmpty: localization!.all,
+                menuItembuilder: (dynamic value) {
+                  final state = value as EntityState;
+                  return Text(
+                    localization.lookup(state.name),
+                    overflow: TextOverflow.clip,
+                    maxLines: 1,
+                  );
+                },
+                childBuilder: (selected) {
+                  return Align(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        selected.isNotEmpty
+                            ? selected
+                                  .map<String?>(
+                                    (dynamic value) => localization.lookup(
+                                      (value as EntityState).name,
+                                    ),
+                                  )
+                                  .join(', ')
+                            : localization.all,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    alignment: Alignment.centerLeft,
+                  );
+                },
+              ),
             ),
           ],
           if (widget.statuses != null) ...[
             SizedBox(width: 8),
             Flexible(
               child: DropDownMultiSelect(
-                  onChanged: (List<dynamic> selected) {
-                    final statusFilters = state
-                        .getListState(widget.entityType)
-                        .statusFilters
-                        .toList();
-
-                    final added = selected.where((dynamic e) => !statusFilters
-                        .map((e) => e.id)
-                        .toList()
-                        .contains((e as EntityStatus).id));
-
-                    final removed = statusFilters.where((dynamic e) => !selected
-                        .map<String?>((dynamic e) => e.id)
-                        .toList()
-                        .contains((e as EntityStatus).id));
-
-                    for (var status in added) {
-                      widget.onSelectedStatus!(status, true);
-                    }
-
-                    for (var status in removed) {
-                      widget.onSelectedStatus!(status, false);
-                    }
-                  },
-                  options: widget.statuses,
-                  selectedValues: state
+                onChanged: (List<dynamic> selected) {
+                  final statusFilters = state
                       .getListState(widget.entityType)
                       .statusFilters
-                      .toList(),
-                  whenEmpty: localization!.all,
-                  menuItembuilder: (dynamic value) {
-                    final state = value as EntityStatus;
-                    return Text(localization.lookup(state.name));
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    enabledBorder: state.prefState.enableDarkMode
-                        ? null
-                        : OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)),
-                    isDense: true,
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 13, horizontal: 10),
-                  ),
-                  childBuilder: (selected) {
-                    return Align(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            selected.isNotEmpty
-                                ? selected
-                                    .map((dynamic value) =>
-                                        (value as EntityStatus).name)
-                                    .join(', ')
-                                : localization.all,
-                            style: TextStyle(fontSize: 15),
-                          ),
+                      .toList();
+
+                  final added = selected.where(
+                    (dynamic e) => !statusFilters
+                        .map((e) => e.id)
+                        .toList()
+                        .contains((e as EntityStatus).id),
+                  );
+
+                  final removed = statusFilters.where(
+                    (dynamic e) => !selected
+                        .map<String?>((dynamic e) => e.id)
+                        .toList()
+                        .contains((e as EntityStatus).id),
+                  );
+
+                  for (var status in added) {
+                    widget.onSelectedStatus!(status, true);
+                  }
+
+                  for (var status in removed) {
+                    widget.onSelectedStatus!(status, false);
+                  }
+                },
+                options: widget.statuses,
+                selectedValues: state
+                    .getListState(widget.entityType)
+                    .statusFilters
+                    .toList(),
+                whenEmpty: localization!.all,
+                menuItembuilder: (dynamic value) {
+                  final state = value as EntityStatus;
+                  return Text(localization.lookup(state.name));
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  enabledBorder: state.prefState.enableDarkMode
+                      ? null
+                      : OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
                         ),
-                        alignment: Alignment.centerLeft);
-                  }),
+                  isDense: true,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 13,
+                    horizontal: 10,
+                  ),
+                ),
+                childBuilder: (selected) {
+                  return Align(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        selected.isNotEmpty
+                            ? selected
+                                  .map(
+                                    (dynamic value) =>
+                                        (value as EntityStatus).name,
+                                  )
+                                  .join(', ')
+                            : localization.all,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    alignment: Alignment.centerLeft,
+                  );
+                },
+              ),
             ),
           ],
         ],

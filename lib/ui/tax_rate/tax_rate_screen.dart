@@ -18,10 +18,8 @@ import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateSettingsScreen extends StatelessWidget {
-  const TaxRateSettingsScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaxRateSettingsScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTaxRates';
 
@@ -60,9 +58,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taxRate,
         onSelectedSortField: (value) => store.dispatch(SortTaxRates(value)),
-        sortFields: [
-          TaxRateFields.updatedAt,
-        ],
+        sortFields: [TaxRateFields.updatedAt],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTaxRatesByState(state));
         },
@@ -74,19 +70,19 @@ class TaxRateSettingsScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMobile &&
+      floatingActionButton:
+          state.prefState.isMobile &&
               state.userCompany.canCreate(EntityType.taxRate)
           ? FloatingActionButton(
               heroTag: 'tax_rate_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.taxRate);
+                  context: context,
+                  entityType: EntityType.taxRate,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newTaxRate,
             )
           : null,

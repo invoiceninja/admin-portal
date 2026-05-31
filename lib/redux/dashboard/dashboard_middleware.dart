@@ -16,9 +16,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 List<Middleware<AppState>> createStoreDashboardMiddleware() {
   final viewDashboard = _createViewDashboard();
 
-  return [
-    TypedMiddleware<AppState, ViewDashboard>(viewDashboard),
-  ];
+  return [TypedMiddleware<AppState, ViewDashboard>(viewDashboard)];
 }
 
 Middleware<AppState> _createViewDashboard() {
@@ -26,27 +24,30 @@ Middleware<AppState> _createViewDashboard() {
     final action = dynamicAction as ViewDashboard;
 
     checkForChanges(
-        store: store,
-        force: action.force,
-        callback: () {
-          final state = store.state;
-          if (state.isLoaded && !state.userCompany.canViewDashboard) {
-            store.dispatch(ViewClientList());
-          } else {
-            if (state.isStale) {
-              store.dispatch(RefreshData());
-            }
-
-            store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+      store: store,
+      force: action.force,
+      callback: () {
+        final state = store.state;
+        if (state.isLoaded && !state.userCompany.canViewDashboard) {
+          store.dispatch(ViewClientList());
+        } else {
+          if (state.isStale) {
+            store.dispatch(RefreshData());
           }
 
-          next(action);
+          store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+        }
 
-          if (store.state.prefState.isMobile &&
-              store.state.userCompany.canViewDashboard) {
-            navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                DashboardScreenBuilder.route, (Route<dynamic> route) => false);
-          }
-        });
+        next(action);
+
+        if (store.state.prefState.isMobile &&
+            store.state.userCompany.canViewDashboard) {
+          navigatorKey.currentState!.pushNamedAndRemoveUntil(
+            DashboardScreenBuilder.route,
+            (Route<dynamic> route) => false,
+          );
+        }
+      },
+    );
   };
 }

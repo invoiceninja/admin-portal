@@ -83,41 +83,49 @@ class VendorEditVM {
           final navigator = navigatorKey.currentState;
           if (!vendor.hasNameSet) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(localization!.pleaseEnterAName);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization!.pleaseEnterAName);
+              },
+            );
             return null;
           }
           final Completer<VendorEntity> completer =
               new Completer<VendorEntity>();
           store.dispatch(
-              SaveVendorRequest(completer: completer, vendor: vendor));
-          return completer.future.then((savedVendor) {
-            showToast(vendor.isNew
-                ? localization!.createdVendor
-                : localization!.updatedVendor);
+            SaveVendorRequest(completer: completer, vendor: vendor),
+          );
+          return completer.future
+              .then((savedVendor) {
+                showToast(
+                  vendor.isNew
+                      ? localization!.createdVendor
+                      : localization!.updatedVendor,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
-              if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
-                navigator!.pushReplacementNamed(VendorViewScreen.route);
-              } else {
-                navigator!.pop(savedVendor);
-              }
-            } else if (state.vendorUIState.saveCompleter == null) {
-              if (!state.prefState.isPreviewVisible) {
-                store.dispatch(TogglePreviewSidebar());
-              }
-              viewEntity(entity: savedVendor, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
+                  if (vendor.isNew &&
+                      state.vendorUIState.saveCompleter == null) {
+                    navigator!.pushReplacementNamed(VendorViewScreen.route);
+                  } else {
+                    navigator!.pop(savedVendor);
+                  }
+                } else if (state.vendorUIState.saveCompleter == null) {
+                  if (!state.prefState.isPreviewVisible) {
+                    store.dispatch(TogglePreviewSidebar());
+                  }
+                  viewEntity(entity: savedVendor, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

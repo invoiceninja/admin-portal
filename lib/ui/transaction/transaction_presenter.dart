@@ -54,8 +54,13 @@ class TransactionPresenter extends EntityPresenter {
       case TransactionFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(transaction.amount, context,
-              currencyId: transaction.currencyId)!),
+          child: Text(
+            formatNumber(
+              transaction.amount,
+              context,
+              currencyId: transaction.currencyId,
+            )!,
+          ),
         );
       case TransactionFields.deposit:
         if (!transaction.isDeposit) {
@@ -63,8 +68,13 @@ class TransactionPresenter extends EntityPresenter {
         }
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(transaction.amount, context,
-              currencyId: transaction.currencyId)!),
+          child: Text(
+            formatNumber(
+              transaction.amount,
+              context,
+              currencyId: transaction.currencyId,
+            )!,
+          ),
         );
       case TransactionFields.withdrawal:
         if (!transaction.isWithdrawal) {
@@ -72,8 +82,13 @@ class TransactionPresenter extends EntityPresenter {
         }
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(transaction.amount, context,
-              currencyId: transaction.currencyId)!),
+          child: Text(
+            formatNumber(
+              transaction.amount,
+              context,
+              currencyId: transaction.currencyId,
+            )!,
+          ),
         );
       case TransactionFields.description:
         return Text(transaction.formattedDescription);
@@ -82,14 +97,18 @@ class TransactionPresenter extends EntityPresenter {
       case TransactionFields.participant:
         return Text(transaction.participant);
       case TransactionFields.accountType:
-        final bankAccount =
-            state.bankAccountState.get(transaction.bankAccountId);
+        final bankAccount = state.bankAccountState.get(
+          transaction.bankAccountId,
+        );
         return Text(toTitleCase(bankAccount.type));
       case TransactionFields.bankAccount:
-        final bankAccount =
-            state.bankAccountState.get(transaction.bankAccountId);
+        final bankAccount = state.bankAccountState.get(
+          transaction.bankAccountId,
+        );
         return LinkTextRelatedEntity(
-            entity: bankAccount, relation: transaction);
+          entity: bankAccount,
+          relation: transaction,
+        );
       case TransactionFields.payment:
         final payment = state.paymentState.get(transaction.paymentId);
         return LinkTextRelatedEntity(entity: payment, relation: transaction);
@@ -102,11 +121,15 @@ class TransactionPresenter extends EntityPresenter {
                 .split(',')
                 .map((invoiceId) => state.invoiceState.map[invoiceId])
                 .nonNulls
-                .map((invoice) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: LinkTextRelatedEntity(
-                          entity: invoice, relation: transaction),
-                    ))
+                .map(
+                  (invoice) => Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: LinkTextRelatedEntity(
+                      entity: invoice,
+                      relation: transaction,
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         );
@@ -119,11 +142,15 @@ class TransactionPresenter extends EntityPresenter {
                 .split(',')
                 .map((expenseId) => state.expenseState.map[expenseId])
                 .nonNulls
-                .map((expense) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: LinkTextRelatedEntity(
-                          entity: expense, relation: transaction),
-                    ))
+                .map(
+                  (expense) => Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: LinkTextRelatedEntity(
+                      entity: expense,
+                      relation: transaction,
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         );

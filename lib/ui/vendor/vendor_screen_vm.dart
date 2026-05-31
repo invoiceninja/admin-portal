@@ -21,9 +21,7 @@ class VendorScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, VendorScreenVM>(
       converter: VendorScreenVM.fromStore,
       builder: (context, vm) {
-        return VendorScreen(
-          viewModel: vm,
-        );
+        return VendorScreen(viewModel: vm);
       },
     );
   }
@@ -48,12 +46,13 @@ class VendorScreenVM {
     return VendorScreenVM(
       vendorMap: state.vendorState.map,
       vendorList: memoizedFilteredVendorList(
-          state.getUISelection(EntityType.vendor),
-          state.vendorState.map,
-          state.vendorState.list,
-          state.vendorListState,
-          state.userState.map,
-          state.staticState),
+        state.getUISelection(EntityType.vendor),
+        state.vendorState.map,
+        state.vendorState.list,
+        state.vendorListState,
+        state.userState.map,
+        state.staticState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.vendorListState.isInMultiselect(),
     );

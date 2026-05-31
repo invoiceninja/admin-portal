@@ -9,10 +9,7 @@ import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.d
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermView extends StatefulWidget {
-  const PaymentTermView({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PaymentTermView({Key? key, required this.viewModel}) : super(key: key);
 
   final PaymentTermViewVM viewModel;
 

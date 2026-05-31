@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
-  const InvoiceViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const InvoiceViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
   static const String route = '/invoice/view';
 
@@ -79,38 +76,38 @@ class AbstractInvoiceViewVM {
 }
 
 class InvoiceViewVM extends AbstractInvoiceViewVM {
-  InvoiceViewVM(
-      {AppState? state,
-      CompanyEntity? company,
-      InvoiceEntity? invoice,
-      ClientEntity? client,
-      bool? isSaving,
-      bool? isDirty,
-      Function(BuildContext, EntityAction)? onEntityAction,
-      Function(BuildContext, [int])? onEditPressed,
-      Function(BuildContext, [bool])? onClientPressed,
-      Function(BuildContext, [bool])? onUserPressed,
-      Function(BuildContext, PaymentEntity, [bool])? onPaymentPressed,
-      Function(BuildContext)? onPaymentsPressed,
-      Function(BuildContext)? onRefreshed,
-      Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
-      Function(BuildContext, DocumentEntity)? onViewExpense,
-      Function(BuildContext, InvoiceEntity, [String?])? onViewPdf})
-      : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          isSaving: isSaving,
-          isDirty: isDirty,
-          onActionSelected: onEntityAction,
-          onEditPressed: onEditPressed,
-          onPaymentsPressed: onPaymentsPressed,
-          onRefreshed: onRefreshed,
-          onUploadDocuments: onUploadDocuments,
-          onViewExpense: onViewExpense,
-          onViewPdf: onViewPdf,
-        );
+  InvoiceViewVM({
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    ClientEntity? client,
+    bool? isSaving,
+    bool? isDirty,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext, [int])? onEditPressed,
+    Function(BuildContext, [bool])? onClientPressed,
+    Function(BuildContext, [bool])? onUserPressed,
+    Function(BuildContext, PaymentEntity, [bool])? onPaymentPressed,
+    Function(BuildContext)? onPaymentsPressed,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    Function(BuildContext, DocumentEntity)? onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
+  }) : super(
+         state: state,
+         company: company,
+         invoice: invoice,
+         client: client,
+         isSaving: isSaving,
+         isDirty: isDirty,
+         onActionSelected: onEntityAction,
+         onEditPressed: onEditPressed,
+         onPaymentsPressed: onPaymentsPressed,
+         onRefreshed: onRefreshed,
+         onUploadDocuments: onUploadDocuments,
+         onViewExpense: onViewExpense,
+         onViewPdf: onViewPdf,
+       );
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -118,8 +115,9 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
     final client = state.clientState.get(invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future;
     }
@@ -133,37 +131,54 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
       client: client,
       onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
-            entity: invoice,
-            subIndex: index,
-            completer: snackBarCompleter<InvoiceEntity>(
-                AppLocalization.of(context)!.updatedInvoice));
+          entity: invoice,
+          subIndex: index,
+          completer: snackBarCompleter<InvoiceEntity>(
+            AppLocalization.of(context)!.updatedInvoice,
+          ),
+        );
       },
       onRefreshed: (context) => _handleRefresh(context),
       onPaymentsPressed: (BuildContext context) {
         viewEntitiesByType(
-            entityType: EntityType.payment, filterEntity: invoice);
+          entityType: EntityType.payment,
+          filterEntity: invoice,
+        );
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([invoice], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveInvoiceDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFile,
-            invoice: invoice,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveInvoiceDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                invoice: invoice,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
       onViewExpense: (BuildContext context, DocumentEntity document) {
         /*
         viewEntityById(
@@ -172,8 +187,13 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
          */
       },
       onViewPdf: (context, invoice, [activityId]) {
-        store.dispatch(ShowPdfInvoice(
-            context: context, invoice: invoice, activityId: activityId));
+        store.dispatch(
+          ShowPdfInvoice(
+            context: context,
+            invoice: invoice,
+            activityId: activityId,
+          ),
+        );
       },
     );
   }

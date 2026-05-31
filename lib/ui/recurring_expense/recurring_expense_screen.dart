@@ -20,10 +20,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'recurring_expense_screen_vm.dart';
 
 class RecurringExpenseScreen extends StatelessWidget {
-  const RecurringExpenseScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const RecurringExpenseScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/recurring_expense';
 
@@ -71,7 +69,8 @@ class RecurringExpenseScreen extends StatelessWidget {
           store.dispatch(StartRecurringExpenseMultiselect()),
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.recurringExpenseListState.filterClearedAt}__'),
+          '__filter_${state.recurringExpenseListState.filterClearedAt}__',
+        ),
         entityType: EntityType.recurringExpense,
         entityIds: viewModel.recurringExpenseList,
         filter: state.recurringExpenseListState.filter,
@@ -97,8 +96,9 @@ class RecurringExpenseScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.recurringExpense,
         tableColumns: RecurringExpensePresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            RecurringExpensePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: RecurringExpensePresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortRecurringExpenses(value));
         },
@@ -121,14 +121,22 @@ class RecurringExpenseScreen extends StatelessWidget {
           }
         },
         statuses: statuses,
-        customValues1: company.getCustomFieldValues(CustomFieldType.expense1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.expense2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.expense3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.expense4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.expense1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.expense2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.expense3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.expense4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterRecurringExpensesByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -138,19 +146,19 @@ class RecurringExpenseScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterRecurringExpensesByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.recurringExpense)
           ? FloatingActionButton(
               heroTag: 'recurring_expense_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.recurringExpense);
+                  context: context,
+                  entityType: EntityType.recurringExpense,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newRecurringExpense,
             )
           : null,

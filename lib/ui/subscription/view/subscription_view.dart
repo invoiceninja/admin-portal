@@ -49,9 +49,10 @@ class _SubscriptionViewState extends State<SubscriptionView> {
       body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
-              entity: subscription,
-              label: localization.price,
-              value: formatNumber(subscription.price, context)),
+            entity: subscription,
+            label: localization.price,
+            value: formatNumber(subscription.price, context),
+          ),
           ListDivider(),
           ListTile(
             title: Text(localization.paymentLink),
@@ -63,8 +64,12 @@ class _SubscriptionViewState extends State<SubscriptionView> {
             trailing: Icon(Icons.content_copy),
             onTap: () {
               Clipboard.setData(ClipboardData(text: subscription.purchasePage));
-              showToast(localization.copiedToClipboard
-                  .replaceFirst(':value', subscription.purchasePage));
+              showToast(
+                localization.copiedToClipboard.replaceFirst(
+                  ':value',
+                  subscription.purchasePage,
+                ),
+              );
             },
             onLongPress: () => launchUrl(Uri.parse(subscription.purchasePage)),
           ),
@@ -88,8 +93,9 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               entityType: EntityType.invoice,
               title: localization.invoices,
               subtitle: memoizedInvoiceStatsForSubscription(
-                      subscription.id, state.invoiceState.map)
-                  .present(localization.active, localization.archived),
+                subscription.id,
+                state.invoiceState.map,
+              ).present(localization.active, localization.archived),
               hideNew: true,
             ),
           if (company.isModuleEnabled(EntityType.recurringInvoice))
@@ -99,8 +105,9 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               entityType: EntityType.recurringInvoice,
               title: localization.recurringInvoices,
               subtitle: memoizedRecurringInvoiceStatsForSubscription(
-                      subscription.id, state.recurringInvoiceState.map)
-                  .present(localization.active, localization.archived),
+                subscription.id,
+                state.recurringInvoiceState.map,
+              ).present(localization.active, localization.archived),
               hideNew: true,
             ),
         ],

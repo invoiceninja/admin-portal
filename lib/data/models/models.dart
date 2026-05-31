@@ -155,32 +155,30 @@ class EntityAction extends EnumClass {
     return toSnakeCase(super.toString());
   }
 
-  bool get applyMaxLimit => ![
-        EntityAction.bulkDownload,
-      ].contains(this);
+  bool get applyMaxLimit => ![EntityAction.bulkDownload].contains(this);
 
   bool get isServerSide => [
-        EntityAction.start,
-        EntityAction.stop,
-        EntityAction.markPaid,
-        EntityAction.markSent,
-        EntityAction.convertToInvoice,
-        EntityAction.approve,
-        EntityAction.cancelInvoice,
-        EntityAction.resume,
-        EntityAction.archive,
-        EntityAction.delete,
-        EntityAction.restore,
-        EntityAction.purge,
-        EntityAction.sendNow,
-        EntityAction.autoBill,
-      ].contains(this);
+    EntityAction.start,
+    EntityAction.stop,
+    EntityAction.markPaid,
+    EntityAction.markSent,
+    EntityAction.convertToInvoice,
+    EntityAction.approve,
+    EntityAction.cancelInvoice,
+    EntityAction.resume,
+    EntityAction.archive,
+    EntityAction.delete,
+    EntityAction.restore,
+    EntityAction.purge,
+    EntityAction.sendNow,
+    EntityAction.autoBill,
+  ].contains(this);
 
   bool get requiresSecondRequest => [
-        EntityAction.archive,
-        EntityAction.delete,
-        EntityAction.restore,
-      ].contains(this);
+    EntityAction.archive,
+    EntityAction.delete,
+    EntityAction.restore,
+  ].contains(this);
 
   bool get isClientSide => !isServerSide;
 
@@ -240,7 +238,8 @@ class EntityAction extends EnumClass {
         return EntityAction.newTransaction;
       default:
         print(
-            '## ERROR: entityType $entityType not defined in EntityAction.newEntityType');
+          '## ERROR: entityType $entityType not defined in EntityAction.newEntityType',
+        );
         return null;
     }
   }

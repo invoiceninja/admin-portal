@@ -42,9 +42,11 @@ abstract class BankAccountState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<BankAccountState> get serializer =>
@@ -56,8 +58,10 @@ abstract class BankAccountUIState extends Object
     implements Built<BankAccountUIState, BankAccountUIStateBuilder> {
   factory BankAccountUIState(PrefStateSortField? sortField) {
     return _$BankAccountUIState._(
-      listUIState: ListUIState(sortField?.field ?? BankAccountFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? BankAccountFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: BankAccountEntity(),
       selectedId: '',
       tabIndex: 0,

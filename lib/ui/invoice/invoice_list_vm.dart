@@ -33,26 +33,27 @@ class InvoiceListBuilder extends StatelessWidget {
       converter: InvoiceListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultiselect,
-            entityType: EntityType.invoice,
-            presenter: InvoicePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.invoiceList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final invoiceId = viewModel.invoiceList[index];
-              final invoice = viewModel.invoiceMap[invoiceId]!;
-              final invoiceListState = viewModel.state.invoiceListState;
+          onClearMultiselect: viewModel.onClearMultiselect,
+          entityType: EntityType.invoice,
+          presenter: InvoicePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.invoiceList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final invoiceId = viewModel.invoiceList[index];
+            final invoice = viewModel.invoiceMap[invoiceId]!;
+            final invoiceListState = viewModel.state.invoiceListState;
 
-              return InvoiceListItem(
-                filter: viewModel.filter,
-                invoice: invoice,
-                showCheckbox: invoiceListState.isInMultiselect(),
-                isChecked: invoiceListState.isSelected(invoice.id),
-              );
-            });
+            return InvoiceListItem(
+              filter: viewModel.filter,
+              invoice: invoice,
+              showCheckbox: invoiceListState.isInMultiselect(),
+              isChecked: invoiceListState.isSelected(invoice.id),
+            );
+          },
+        );
       },
     );
   }
@@ -96,32 +97,33 @@ class InvoiceListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-        onEntityAction,
+    onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-          state: state,
-          invoiceList: invoiceList,
-          invoiceMap: invoiceMap,
-          clientMap: clientMap,
-          filter: filter,
-          isLoading: isLoading,
-          onRefreshed: onRefreshed,
-          tableColumns: tableColumns,
-          entityType: entityType,
-          onSortColumn: onSortColumn,
-          onClearMultiselect: onClearMultiselect,
-        );
+         state: state,
+         invoiceList: invoiceList,
+         invoiceMap: invoiceMap,
+         clientMap: clientMap,
+         filter: filter,
+         isLoading: isLoading,
+         onRefreshed: onRefreshed,
+         tableColumns: tableColumns,
+         entityType: entityType,
+         onSortColumn: onSortColumn,
+         onClearMultiselect: onClearMultiselect,
+       );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -147,12 +149,15 @@ class InvoiceListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.invoiceListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction: (BuildContext context, List<BaseEntity> invoices,
-              EntityAction action) =>
-          handleInvoiceAction(context, invoices, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> invoices,
+            EntityAction action,
+          ) => handleInvoiceAction(context, invoices, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.invoice) ??
-              InvoicePresenter.getDefaultTableFields(state.userCompany),
+          InvoicePresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),
       onClearMultiselect: () => store.dispatch(ClearInvoiceMultiselect()),

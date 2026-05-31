@@ -48,13 +48,17 @@ class _TransactionViewState extends State<TransactionView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final transactions = viewModel.transactions;
-    final transaction =
-        transactions.isEmpty ? TransactionEntity() : transactions.first;
+    final transaction = transactions.isEmpty
+        ? TransactionEntity()
+        : transactions.first;
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
-    final hasUnconvertable = transactions
-            .where((transaction) =>
-                !transaction.isWithdrawal || transaction.isConverted)
+    final hasUnconvertable =
+        transactions
+            .where(
+              (transaction) =>
+                  !transaction.isWithdrawal || transaction.isConverted,
+            )
             .isNotEmpty &&
         transactions.length > 1;
 
@@ -75,8 +79,11 @@ class _TransactionViewState extends State<TransactionView> {
                     label: transaction.isDeposit
                         ? localization!.deposit
                         : localization!.withdrawal,
-                    value: formatNumber(transaction.amount, context,
-                        currencyId: transaction.currencyId),
+                    value: formatNumber(
+                      transaction.amount,
+                      context,
+                      currencyId: transaction.currencyId,
+                    ),
                     secondLabel: localization.date,
                     secondValue: formatDate(transaction.date, context),
                   ),
@@ -96,26 +103,32 @@ class _TransactionViewState extends State<TransactionView> {
                 ],
                 if (transaction.isConverted) ...[
                   if (transaction.formattedDescription.isNotEmpty) ...[
-                    IconMessage(transaction.formattedDescription,
-                        copyToClipboard: true),
+                    IconMessage(
+                      transaction.formattedDescription,
+                      copyToClipboard: true,
+                    ),
                     ListDivider(),
                   ],
                   EntityListTile(
-                    entity:
-                        state.bankAccountState.get(transaction.bankAccountId),
+                    entity: state.bankAccountState.get(
+                      transaction.bankAccountId,
+                    ),
                     isFilter: false,
                   ),
                   EntityListTile(
-                    entity: state.transactionRuleState
-                        .get(transaction.transactionRuleId),
+                    entity: state.transactionRuleState.get(
+                      transaction.transactionRuleId,
+                    ),
                     isFilter: false,
                   ),
                   if (transaction.isDeposit) ...[
                     ...transaction.invoiceIds
                         .split(',')
                         .map((invoiceId) => state.invoiceState.get(invoiceId))
-                        .map((invoice) =>
-                            EntityListTile(entity: invoice, isFilter: false)),
+                        .map(
+                          (invoice) =>
+                              EntityListTile(entity: invoice, isFilter: false),
+                        ),
                     EntityListTile(
                       entity: state.paymentState.get(transaction.paymentId),
                       isFilter: false,
@@ -126,8 +139,9 @@ class _TransactionViewState extends State<TransactionView> {
                       isFilter: false,
                     ),
                     EntityListTile(
-                      entity: state.expenseCategoryState
-                          .get(transaction.categoryId),
+                      entity: state.expenseCategoryState.get(
+                        transaction.categoryId,
+                      ),
                       isFilter: false,
                     ),
                     for (final expenseId in transaction.expenseId.split(','))
@@ -135,20 +149,12 @@ class _TransactionViewState extends State<TransactionView> {
                         entity: state.expenseState.get(expenseId),
                         isFilter: false,
                       ),
-                  ]
+                  ],
                 ] else ...[
                   if (transaction.isDeposit)
-                    Expanded(
-                      child: _MatchDeposits(
-                        viewModel: viewModel,
-                      ),
-                    )
+                    Expanded(child: _MatchDeposits(viewModel: viewModel))
                   else
-                    Expanded(
-                      child: _MatchWithdrawals(
-                        viewModel: viewModel,
-                      ),
-                    ),
+                    Expanded(child: _MatchWithdrawals(viewModel: viewModel)),
                 ],
               ],
       ),
@@ -363,10 +369,15 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       totalSelected[currencyId] =
           totalSelected[currencyId]! + invoice.balanceOrAmount;
     });
-    final totalSelectedString = totalSelected.keys.map((currencyId) {
-      return formatNumber(totalSelected[currencyId], context,
-          currencyId: currencyId);
-    }).join(' | ');
+    final totalSelectedString = totalSelected.keys
+        .map((currencyId) {
+          return formatNumber(
+            totalSelected[currencyId],
+            context,
+            currencyId: currencyId,
+          );
+        })
+        .join(' | ');
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -396,7 +407,11 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 22, top: 12, right: 10, bottom: 12),
+                    left: 22,
+                    top: 12,
+                    right: 10,
+                    bottom: 12,
+                  ),
                   child: SearchText(
                     filterController: _paymentFilterController,
                     focusNode: _focusNode,
@@ -411,8 +426,10 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                         updatePaymentList();
                       });
                     },
-                    placeholder:
-                        localization.searchPayments.replaceFirst(':count ', ''),
+                    placeholder: localization.searchPayments.replaceFirst(
+                      ':count ',
+                      '',
+                    ),
                   ),
                 ),
               ),
@@ -422,8 +439,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 },
                 color: _showFilter || isFiltered ? state.accentColor : null,
                 icon: Icon(Icons.filter_alt),
-                tooltip:
-                    state.prefState.enableTooltips ? localization.filter : '',
+                tooltip: state.prefState.enableTooltips
+                    ? localization.filter
+                    : '',
               ),
               SizedBox(width: 8),
             ],
@@ -434,7 +452,11 @@ class _MatchDepositsState extends State<_MatchDeposits> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 22, top: 12, right: 10, bottom: 12),
+                    left: 22,
+                    top: 12,
+                    right: 10,
+                    bottom: 12,
+                  ),
                   child: SearchText(
                     filterController: _invoiceFilterController,
                     focusNode: _focusNode,
@@ -449,8 +471,10 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                         updateInvoiceList();
                       });
                     },
-                    placeholder:
-                        localization.searchInvoices.replaceFirst(':count ', ''),
+                    placeholder: localization.searchInvoices.replaceFirst(
+                      ':count ',
+                      '',
+                    ),
                   ),
                 ),
               ),
@@ -460,8 +484,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 },
                 color: _showFilter || isFiltered ? state.accentColor : null,
                 icon: Icon(Icons.filter_alt),
-                tooltip:
-                    state.prefState.enableTooltips ? localization.filter : '',
+                tooltip: state.prefState.enableTooltips
+                    ? localization.filter
+                    : '',
               ),
               SizedBox(width: 8),
             ],
@@ -474,68 +499,74 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             children: [
               Expanded(
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: Column(
                     children: [
                       Row(
                         children: [
                           Expanded(
-                              child: DecoratedFormField(
-                            label: localization.minAmount,
-                            onChanged: (value) {
-                              setState(() {
-                                _minAmount = value;
-                                updateInvoiceList();
-                              });
-                            },
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
-                          )),
-                          SizedBox(
-                            width: kTableColumnGap,
+                            child: DecoratedFormField(
+                              label: localization.minAmount,
+                              onChanged: (value) {
+                                setState(() {
+                                  _minAmount = value;
+                                  updateInvoiceList();
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
+                            ),
                           ),
+                          SizedBox(width: kTableColumnGap),
                           Expanded(
-                              child: DecoratedFormField(
-                            label: localization.maxAmount,
-                            onChanged: (value) {
-                              setState(() {
-                                _maxAmount = value;
-                                updateInvoiceList();
-                              });
-                            },
-                            keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
-                          )),
+                            child: DecoratedFormField(
+                              label: localization.maxAmount,
+                              onChanged: (value) {
+                                setState(() {
+                                  _maxAmount = value;
+                                  updateInvoiceList();
+                                });
+                              },
+                              keyboardType: TextInputType.numberWithOptions(
+                                decimal: true,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                      Row(children: [
-                        Expanded(
-                          child: DatePicker(
-                            labelText: localization.startDate,
-                            onSelected: (date, _) {
-                              setState(() {
-                                _startDate = date;
-                                updateInvoiceList();
-                              });
-                            },
-                            selectedDate: _startDate,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: DatePicker(
+                              labelText: localization.startDate,
+                              onSelected: (date, _) {
+                                setState(() {
+                                  _startDate = date;
+                                  updateInvoiceList();
+                                });
+                              },
+                              selectedDate: _startDate,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: kTableColumnGap),
-                        Expanded(
-                          child: DatePicker(
-                            labelText: localization.endDate,
-                            onSelected: (date, _) {
-                              setState(() {
-                                _endDate = date;
-                                updateInvoiceList();
-                              });
-                            },
-                            selectedDate: _endDate,
+                          SizedBox(width: kTableColumnGap),
+                          Expanded(
+                            child: DatePicker(
+                              labelText: localization.endDate,
+                              onSelected: (date, _) {
+                                setState(() {
+                                  _endDate = date;
+                                  updateInvoiceList();
+                                });
+                              },
+                              selectedDate: _endDate,
+                            ),
                           ),
-                        ),
-                      ]),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -614,53 +645,47 @@ class _MatchDepositsState extends State<_MatchDeposits> {
         ],
         ListDivider(),
         Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            bottom: 18,
-            right: 20,
-          ),
+          padding: const EdgeInsets.only(left: 20, bottom: 18, right: 20),
           child: _matchExisting
               ? AppButton(
                   label: localization.linkPayment,
                   onPressed:
                       _selectedPayment == null || viewModel.state.isSaving
-                          ? null
-                          : () {
-                              final viewModel = widget.viewModel;
-                              viewModel.onLinkToPayment(
-                                context,
-                                _selectedPayment!.id,
-                              );
-                            },
+                      ? null
+                      : () {
+                          final viewModel = widget.viewModel;
+                          viewModel.onLinkToPayment(
+                            context,
+                            _selectedPayment!.id,
+                          );
+                        },
                   iconData: Icons.link,
                 )
               : AppButton(
                   label: localization.createPayment,
                   onPressed:
                       _selectedInvoices.isEmpty || viewModel.state.isSaving
-                          ? null
-                          : () {
-                              final viewModel = widget.viewModel;
-                              viewModel.onConvertToPayment(
-                                context,
-                                _selectedInvoices
-                                    .map((invoice) => invoice.id)
-                                    .toList(),
-                              );
-                            },
+                      ? null
+                      : () {
+                          final viewModel = widget.viewModel;
+                          viewModel.onConvertToPayment(
+                            context,
+                            _selectedInvoices
+                                .map((invoice) => invoice.id)
+                                .toList(),
+                          );
+                        },
                   iconData: Icons.add,
                 ),
-        )
+        ),
       ],
     );
   }
 }
 
 class _MatchWithdrawals extends StatefulWidget {
-  const _MatchWithdrawals({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const _MatchWithdrawals({Key? key, required this.viewModel})
+    : super(key: key);
 
   final TransactionViewVM viewModel;
 
@@ -711,11 +736,13 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     if (transactions.isNotEmpty) {
       final transaction = transactions.first;
       if ((transaction.pendingCategoryId ?? '').isNotEmpty) {
-        _selectedCategory =
-            state.expenseCategoryState.get(transaction.pendingCategoryId!);
+        _selectedCategory = state.expenseCategoryState.get(
+          transaction.pendingCategoryId!,
+        );
       } else if (transaction.categoryId.isNotEmpty) {
-        _selectedCategory =
-            state.expenseCategoryState.get(transaction.categoryId);
+        _selectedCategory = state.expenseCategoryState.get(
+          transaction.categoryId,
+        );
       }
 
       if ((transaction.pendingVendorId ?? '').isNotEmpty) {
@@ -756,9 +783,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _categories.sort((categoryA, categoryB) {
-      return categoryA!.name
-          .toLowerCase()
-          .compareTo(categoryB!.name.toLowerCase());
+      return categoryA!.name.toLowerCase().compareTo(
+        categoryB!.name.toLowerCase(),
+      );
     });
   }
 
@@ -882,8 +909,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final transactions = viewModel.transactions;
-    final transaction =
-        transactions.isNotEmpty ? transactions.first : TransactionEntity();
+    final transaction = transactions.isNotEmpty
+        ? transactions.first
+        : TransactionEntity();
 
     final totalSelected = <String, double>{};
     _selectedExpenses.forEach((expense) {
@@ -893,10 +921,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       totalSelected[expense.currencyId] =
           totalSelected[expense.currencyId]! + expense.grossAmount;
     });
-    final totalSelectedString = totalSelected.keys.map((currencyId) {
-      return formatNumber(totalSelected[currencyId], context,
-          currencyId: currencyId);
-    }).join(' | ');
+    final totalSelectedString = totalSelected.keys
+        .map((currencyId) {
+          return formatNumber(
+            totalSelected[currencyId],
+            context,
+            currencyId: currencyId,
+          );
+        })
+        .join(' | ');
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -926,7 +959,11 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 22, top: 12, right: 10, bottom: 12),
+                    left: 22,
+                    top: 12,
+                    right: 10,
+                    bottom: 12,
+                  ),
                   child: SearchText(
                     filterController: _expenseFilterController,
                     focusNode: _expenseFocusNode,
@@ -941,8 +978,10 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                         updateExpenseList();
                       });
                     },
-                    placeholder: localization!.searchExpenses
-                        .replaceFirst(':count ', ''),
+                    placeholder: localization!.searchExpenses.replaceFirst(
+                      ':count ',
+                      '',
+                    ),
                   ),
                 ),
               ),
@@ -952,8 +991,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 },
                 color: _showFilter || isFiltered ? state.accentColor : null,
                 icon: Icon(Icons.filter_alt),
-                tooltip:
-                    state.prefState.enableTooltips ? localization.filter : '',
+                tooltip: state.prefState.enableTooltips
+                    ? localization.filter
+                    : '',
               ),
               SizedBox(width: 8),
             ],
@@ -966,68 +1006,74 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 4,
+                    ),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Expanded(
-                                child: DecoratedFormField(
-                              label: localization.minAmount,
-                              onChanged: (value) {
-                                setState(() {
-                                  _minAmount = value;
-                                  updateExpenseList();
-                                });
-                              },
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true),
-                            )),
-                            SizedBox(
-                              width: kTableColumnGap,
+                              child: DecoratedFormField(
+                                label: localization.minAmount,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _minAmount = value;
+                                    updateExpenseList();
+                                  });
+                                },
+                                keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true,
+                                ),
+                              ),
                             ),
+                            SizedBox(width: kTableColumnGap),
                             Expanded(
-                                child: DecoratedFormField(
-                              label: localization.maxAmount,
-                              onChanged: (value) {
-                                setState(() {
-                                  _maxAmount = value;
-                                  updateExpenseList();
-                                });
-                              },
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true),
-                            )),
+                              child: DecoratedFormField(
+                                label: localization.maxAmount,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _maxAmount = value;
+                                    updateExpenseList();
+                                  });
+                                },
+                                keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                        Row(children: [
-                          Expanded(
-                            child: DatePicker(
-                              labelText: localization.startDate,
-                              onSelected: (date, _) {
-                                setState(() {
-                                  _startDate = date;
-                                  updateExpenseList();
-                                });
-                              },
-                              selectedDate: _startDate,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: DatePicker(
+                                labelText: localization.startDate,
+                                onSelected: (date, _) {
+                                  setState(() {
+                                    _startDate = date;
+                                    updateExpenseList();
+                                  });
+                                },
+                                selectedDate: _startDate,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: kTableColumnGap),
-                          Expanded(
-                            child: DatePicker(
-                              labelText: localization.endDate,
-                              onSelected: (date, _) {
-                                setState(() {
-                                  _endDate = date;
-                                  updateExpenseList();
-                                });
-                              },
-                              selectedDate: _endDate,
+                            SizedBox(width: kTableColumnGap),
+                            Expanded(
+                              child: DatePicker(
+                                labelText: localization.endDate,
+                                onSelected: (date, _) {
+                                  setState(() {
+                                    _endDate = date;
+                                    updateExpenseList();
+                                  });
+                                },
+                                selectedDate: _endDate,
+                              ),
                             ),
-                          ),
-                        ]),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -1058,11 +1104,16 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                         _selectedExpenses.add(expense);
                       }
                       updateExpenseList();
-                      store.dispatch(SaveTransactionSuccess(transaction.rebuild(
-                          (b) => b
-                            ..pendingExpenseId = _selectedExpenses
-                                .map((expense) => expense.id)
-                                .join(','))));
+                      store.dispatch(
+                        SaveTransactionSuccess(
+                          transaction.rebuild(
+                            (b) => b
+                              ..pendingExpenseId = _selectedExpenses
+                                  .map((expense) => expense.id)
+                                  .join(','),
+                          ),
+                        ),
+                      );
                     }),
                   );
                 },
@@ -1078,43 +1129,59 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 22, top: 12, right: 10, bottom: 12),
+                          left: 22,
+                          top: 12,
+                          right: 10,
+                          bottom: 12,
+                        ),
                         child: SearchText(
-                            filterController: _vendorFilterController,
-                            focusNode: _vendorFocusNode,
-                            onChanged: (value) {
-                              setState(() {
-                                updateVendorList();
-                              });
-                            },
-                            onCleared: () {
-                              setState(() {
-                                _vendorFilterController!.text = '';
-                                updateVendorList();
-                              });
-                            },
-                            placeholder: localization!.searchVendors
-                                .replaceFirst(':count ', '')),
+                          filterController: _vendorFilterController,
+                          focusNode: _vendorFocusNode,
+                          onChanged: (value) {
+                            setState(() {
+                              updateVendorList();
+                            });
+                          },
+                          onCleared: () {
+                            setState(() {
+                              _vendorFilterController!.text = '';
+                              updateVendorList();
+                            });
+                          },
+                          placeholder: localization!.searchVendors.replaceFirst(
+                            ':count ',
+                            '',
+                          ),
+                        ),
                       ),
                     ),
                     IconButton(
                       onPressed: () {
                         final completer = snackBarCompleter<VendorEntity>(
-                            localization.createdVendor);
+                          localization.createdVendor,
+                        );
                         createEntity(
-                            entity: VendorEntity(state: viewModel.state),
-                            force: true,
-                            completer: completer,
-                            cancelCompleter: Completer<Null>()
-                              ..future.then<Null>((_) {
-                                store.dispatch(UpdateCurrentRoute(
-                                    TransactionScreen.route));
-                              }));
+                          entity: VendorEntity(state: viewModel.state),
+                          force: true,
+                          completer: completer,
+                          cancelCompleter: Completer<Null>()
+                            ..future.then<Null>((_) {
+                              store.dispatch(
+                                UpdateCurrentRoute(TransactionScreen.route),
+                              );
+                            }),
+                        );
                         completer.future.then((SelectableEntity vendor) {
-                          store.dispatch(SaveTransactionSuccess(transaction
-                              .rebuild((b) => b..pendingVendorId = vendor.id)));
                           store.dispatch(
-                              UpdateCurrentRoute(TransactionScreen.route));
+                            SaveTransactionSuccess(
+                              transaction.rebuild(
+                                (b) => b..pendingVendorId = vendor.id,
+                              ),
+                            ),
+                          );
+                          store.dispatch(
+                            UpdateCurrentRoute(TransactionScreen.route),
+                          );
                         });
                       },
                       icon: Icon(Icons.add),
@@ -1144,9 +1211,14 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               _selectedVendor = vendor;
                             }
                             updateVendorList();
-                            store.dispatch(SaveTransactionSuccess(
-                                transaction.rebuild((b) =>
-                                    b..pendingVendorId = _selectedVendor?.id)));
+                            store.dispatch(
+                              SaveTransactionSuccess(
+                                transaction.rebuild(
+                                  (b) =>
+                                      b..pendingVendorId = _selectedVendor?.id,
+                                ),
+                              ),
+                            );
                           }),
                         );
                       },
@@ -1159,46 +1231,58 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 22, top: 12, right: 10, bottom: 12),
+                          left: 22,
+                          top: 12,
+                          right: 10,
+                          bottom: 12,
+                        ),
                         child: SearchText(
-                            filterController: _categoryFilterController,
-                            focusNode: _categoryFocusNode,
-                            onChanged: (value) {
-                              setState(() {
-                                updateCategoryList();
-                              });
-                            },
-                            onCleared: () {
-                              setState(() {
-                                _categoryFilterController!.text = '';
-                                updateCategoryList();
-                              });
-                            },
-                            placeholder: localization.searchCategories
-                                .replaceFirst(':count ', '')),
+                          filterController: _categoryFilterController,
+                          focusNode: _categoryFocusNode,
+                          onChanged: (value) {
+                            setState(() {
+                              updateCategoryList();
+                            });
+                          },
+                          onCleared: () {
+                            setState(() {
+                              _categoryFilterController!.text = '';
+                              updateCategoryList();
+                            });
+                          },
+                          placeholder: localization.searchCategories
+                              .replaceFirst(':count ', ''),
+                        ),
                       ),
                     ),
                     IconButton(
                       onPressed: () {
                         final completer =
                             snackBarCompleter<ExpenseCategoryEntity>(
-                                localization.createdExpenseCategory);
+                              localization.createdExpenseCategory,
+                            );
                         createEntity(
-                            entity:
-                                ExpenseCategoryEntity(state: viewModel.state),
-                            force: true,
-                            completer: completer,
-                            cancelCompleter: Completer<Null>()
-                              ..future.then<Null>((_) {
-                                store.dispatch(UpdateCurrentRoute(
-                                    TransactionScreen.route));
-                              }));
+                          entity: ExpenseCategoryEntity(state: viewModel.state),
+                          force: true,
+                          completer: completer,
+                          cancelCompleter: Completer<Null>()
+                            ..future.then<Null>((_) {
+                              store.dispatch(
+                                UpdateCurrentRoute(TransactionScreen.route),
+                              );
+                            }),
+                        );
                         completer.future.then((SelectableEntity category) {
-                          store.dispatch(SaveTransactionSuccess(
-                              transaction.rebuild(
-                                  (b) => b..pendingCategoryId = category.id)));
                           store.dispatch(
-                              UpdateCurrentRoute(TransactionScreen.route));
+                            SaveTransactionSuccess(
+                              transaction.rebuild(
+                                (b) => b..pendingCategoryId = category.id,
+                              ),
+                            ),
+                          );
+                          store.dispatch(
+                            UpdateCurrentRoute(TransactionScreen.route),
+                          );
                         });
                       },
                       icon: Icon(Icons.add),
@@ -1228,10 +1312,14 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               _selectedCategory = category;
                             }
                             updateCategoryList();
-                            store.dispatch(SaveTransactionSuccess(
-                                transaction.rebuild((b) => b
-                                  ..pendingCategoryId =
-                                      _selectedCategory?.id)));
+                            store.dispatch(
+                              SaveTransactionSuccess(
+                                transaction.rebuild(
+                                  (b) => b
+                                    ..pendingCategoryId = _selectedCategory?.id,
+                                ),
+                              ),
+                            );
                           }),
                         );
                       },
@@ -1242,7 +1330,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     _selectedCategory == null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
                     child: Text(
                       '${localization.defaultCategory}: ${transaction.category}',
                       textAlign: TextAlign.center,
@@ -1263,11 +1353,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           ),
         ListDivider(),
         Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            bottom: 16,
-            right: 20,
-          ),
+          padding: const EdgeInsets.only(left: 20, bottom: 16, right: 20),
           child: _matchExisting
               ? AppButton(
                   label: _selectedExpenses.length > 1
@@ -1275,21 +1361,22 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       : localization.linkExpense,
                   onPressed:
                       _selectedExpenses.isEmpty || viewModel.state.isSaving
-                          ? null
-                          : () {
-                              final viewModel = widget.viewModel;
-                              viewModel.onLinkToExpense(
-                                context,
-                                _selectedExpenses
-                                    .map((expense) => expense.id)
-                                    .join(','),
-                              );
-                            },
+                      ? null
+                      : () {
+                          final viewModel = widget.viewModel;
+                          viewModel.onLinkToExpense(
+                            context,
+                            _selectedExpenses
+                                .map((expense) => expense.id)
+                                .join(','),
+                          );
+                        },
                   iconData: Icons.link,
                 )
               : AppButton(
                   label: localization.createExpense,
-                  onPressed: viewModel.state.isSaving ||
+                  onPressed:
+                      viewModel.state.isSaving ||
                           (_selectedVendor == null && _selectedCategory == null)
                       ? null
                       : () {
@@ -1302,7 +1389,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                         },
                   iconData: Icons.add,
                 ),
-        )
+        ),
       ],
     );
   }

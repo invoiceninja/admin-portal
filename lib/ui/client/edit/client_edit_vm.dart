@@ -35,9 +35,7 @@ class ClientEditScreen extends StatelessWidget {
         return ClientEditVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ClientEdit(
-          viewModel: vm,
-        );
+        return ClientEdit(viewModel: vm);
       },
     );
   }
@@ -63,82 +61,102 @@ class ClientEditVM {
     final client = state.clientUIState.editing!;
 
     return ClientEditVM(
-        state: state,
-        company: state.company,
-        client: client,
-        origClient: state.clientState.map[client.id],
-        staticState: state.staticState,
-        isSaving: state.isSaving,
-        onChanged: (ClientEntity client) =>
-            store.dispatch(UpdateClient(client)),
-        copyBillingAddress: () =>
-            store.dispatch(UpdateClient(client.rebuild((b) => b
+      state: state,
+      company: state.company,
+      client: client,
+      origClient: state.clientState.map[client.id],
+      staticState: state.staticState,
+      isSaving: state.isSaving,
+      onChanged: (ClientEntity client) => store.dispatch(UpdateClient(client)),
+      copyBillingAddress: () => store.dispatch(
+        UpdateClient(
+          client.rebuild(
+            (b) => b
               ..shippingAddress1 = client.address1
               ..shippingAddress2 = client.address2
               ..shippingCity = client.city
               ..shippingState = client.state
               ..shippingPostalCode = client.postalCode
-              ..shippingCountryId = client.countryId))),
-        copyShippingAddress: () =>
-            store.dispatch(UpdateClient(client.rebuild((b) => b
+              ..shippingCountryId = client.countryId,
+          ),
+        ),
+      ),
+      copyShippingAddress: () => store.dispatch(
+        UpdateClient(
+          client.rebuild(
+            (b) => b
               ..address1 = client.shippingAddress1
               ..address2 = client.shippingAddress2
               ..city = client.shippingCity
               ..state = client.shippingState
               ..postalCode = client.shippingPostalCode
-              ..countryId = client.shippingCountryId))),
-        onCancelPressed: (BuildContext context) {
-          createEntity(entity: ClientEntity(), force: true);
-          if (state.clientUIState.cancelCompleter != null) {
-            state.clientUIState.cancelCompleter!.complete();
-          } else {
-            store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+              ..countryId = client.shippingCountryId,
+          ),
+        ),
+      ),
+      onCancelPressed: (BuildContext context) {
+        createEntity(entity: ClientEntity(), force: true);
+        if (state.clientUIState.cancelCompleter != null) {
+          state.clientUIState.cancelCompleter!.complete();
+        } else {
+          store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        }
+      },
+      onSavePressed: (BuildContext context) {
+        Debouncer.runOnComplete(() {
+          final client = store.state.clientUIState.editing!;
+          if (!client.hasNameSet) {
+            showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(
+                  AppLocalization.of(
+                    navigatorKey.currentContext!,
+                  )!.pleaseEnterAClientOrContactName,
+                );
+              },
+            );
+            return null;
           }
-        },
-        onSavePressed: (BuildContext context) {
-          Debouncer.runOnComplete(() {
-            final client = store.state.clientUIState.editing!;
-            if (!client.hasNameSet) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(
-                        AppLocalization.of(navigatorKey.currentContext!)!
-                            .pleaseEnterAClientOrContactName);
-                  });
-              return null;
-            }
-            final Completer<ClientEntity> completer = Completer<ClientEntity>();
-            final localization = navigatorKey.localization;
-            final navigator = navigatorKey.currentState;
-            store.dispatch(
-                SaveClientRequest(completer: completer, client: client));
-            return completer.future.then((savedClient) {
-              showToast(client.isNew
-                  ? localization!.createdClient
-                  : localization!.updatedClient);
-              if (state.prefState.isMobile) {
-                store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-                if (client.isNew && state.clientUIState.saveCompleter == null) {
-                  navigator!.pushReplacementNamed(ClientViewScreen.route);
-                } else {
-                  navigator!.pop(savedClient);
+          final Completer<ClientEntity> completer = Completer<ClientEntity>();
+          final localization = navigatorKey.localization;
+          final navigator = navigatorKey.currentState;
+          store.dispatch(
+            SaveClientRequest(completer: completer, client: client),
+          );
+          return completer.future
+              .then((savedClient) {
+                showToast(
+                  client.isNew
+                      ? localization!.createdClient
+                      : localization!.updatedClient,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
+                  if (client.isNew &&
+                      state.clientUIState.saveCompleter == null) {
+                    navigator!.pushReplacementNamed(ClientViewScreen.route);
+                  } else {
+                    navigator!.pop(savedClient);
+                  }
+                } else if (state.clientUIState.saveCompleter == null) {
+                  if (!state.prefState.isPreviewVisible) {
+                    store.dispatch(TogglePreviewSidebar());
+                  }
+                  viewEntity(entity: savedClient, force: true);
                 }
-              } else if (state.clientUIState.saveCompleter == null) {
-                if (!state.prefState.isPreviewVisible) {
-                  store.dispatch(TogglePreviewSidebar());
-                }
-                viewEntity(entity: savedClient, force: true);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
                   context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
-                  });
-            });
-          });
+                  },
+                );
+              });
         });
+      },
+    );
   }
 
   final AppState state;

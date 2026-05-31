@@ -32,27 +32,28 @@ class ExpenseListBuilder extends StatelessWidget {
       converter: ExpenseListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.expense,
-            presenter: ExpensePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.expenseList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final expenseId = viewModel.expenseList[index];
-              final expense = viewModel.expenseMap[expenseId]!;
-              final state = viewModel.state;
-              final listUIState = state.getListState(EntityType.expense);
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.expense,
+          presenter: ExpensePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.expenseList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final expenseId = viewModel.expenseList[index];
+            final expense = viewModel.expenseMap[expenseId]!;
+            final state = viewModel.state;
+            final listUIState = state.getListState(EntityType.expense);
 
-              return ExpenseListItem(
-                filter: viewModel.filter,
-                expense: expense,
-                isChecked: listUIState.isSelected(expense.id),
-                showCheckbox: listUIState.isInMultiselect(),
-              );
-            });
+            return ExpenseListItem(
+              filter: viewModel.filter,
+              expense: expense,
+              isChecked: listUIState.isSelected(expense.id),
+              showCheckbox: listUIState.isInMultiselect(),
+            );
+          },
+        );
       },
     );
   }
@@ -78,8 +79,9 @@ class ExpenseListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -91,22 +93,23 @@ class ExpenseListVM {
       user: state.user,
       listState: state.expenseListState,
       expenseList: memoizedFilteredExpenseList(
-          state.getUISelection(EntityType.expense),
-          state.expenseState.map,
-          state.clientState.map,
-          state.vendorState.map,
-          state.userState.map,
-          state.expenseListState,
-          state.invoiceState.map,
-          state.expenseCategoryState.map,
-          state.staticState),
+        state.getUISelection(EntityType.expense),
+        state.expenseState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.userState.map,
+        state.expenseListState,
+        state.invoiceState.map,
+        state.expenseCategoryState.map,
+        state.staticState,
+      ),
       expenseMap: state.expenseState.map,
       isLoading: state.isLoading,
       filter: state.expenseUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.expense) ??
-              ExpensePresenter.getDefaultTableFields(state.userCompany),
+          ExpensePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenses(field)),
       onClearMultielsect: () => store.dispatch(ClearExpenseMultiselect()),
     );

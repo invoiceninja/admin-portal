@@ -13,12 +13,14 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(expenseListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(expenseListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -45,13 +47,17 @@ final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveExpenseSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteExpenseSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.expense ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.expense ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewExpense>((selectedId, action) => action.expenseId),
   TypedReducer<String?, AddExpenseSuccess>(
-      (selectedId, action) => action.expense.id),
+    (selectedId, action) => action.expense.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortExpenses>((selectedId, action) => ''),
   TypedReducer<String?, FilterExpenses>((selectedId, action) => ''),
@@ -103,116 +109,157 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartExpenseMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToExpenseMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromExpenseMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearExpenseMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewExpenseList>(_viewExpenseList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewExpenseList(
-    ListUIState expenseListState, ViewExpenseList action) {
-  return expenseListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState expenseListState,
+  ViewExpenseList action,
+) {
+  return expenseListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterExpensesByCustom1(
-    ListUIState expenseListState, FilterExpensesByCustom1 action) {
+  ListUIState expenseListState,
+  FilterExpensesByCustom1 action,
+) {
   if (expenseListState.custom1Filters.contains(action.value)) {
-    return expenseListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return expenseListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
     return expenseListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
 }
 
 ListUIState _filterExpensesByCustom2(
-    ListUIState expenseListState, FilterExpensesByCustom2 action) {
+  ListUIState expenseListState,
+  FilterExpensesByCustom2 action,
+) {
   if (expenseListState.custom2Filters.contains(action.value)) {
-    return expenseListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return expenseListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
     return expenseListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
 ListUIState _filterExpensesByCustom3(
-    ListUIState expenseListState, FilterExpensesByCustom3 action) {
+  ListUIState expenseListState,
+  FilterExpensesByCustom3 action,
+) {
   if (expenseListState.custom3Filters.contains(action.value)) {
-    return expenseListState
-        .rebuild((b) => b..custom3Filters.remove(action.value));
+    return expenseListState.rebuild(
+      (b) => b..custom3Filters.remove(action.value),
+    );
   } else {
     return expenseListState.rebuild((b) => b..custom3Filters.add(action.value));
   }
 }
 
 ListUIState _filterExpensesByCustom4(
-    ListUIState expenseListState, FilterExpensesByCustom4 action) {
+  ListUIState expenseListState,
+  FilterExpensesByCustom4 action,
+) {
   if (expenseListState.custom4Filters.contains(action.value)) {
-    return expenseListState
-        .rebuild((b) => b..custom4Filters.remove(action.value));
+    return expenseListState.rebuild(
+      (b) => b..custom4Filters.remove(action.value),
+    );
   } else {
     return expenseListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
 ListUIState _filterExpensesByState(
-    ListUIState expenseListState, FilterExpensesByState action) {
+  ListUIState expenseListState,
+  FilterExpensesByState action,
+) {
   if (expenseListState.stateFilters.contains(action.state)) {
-    return expenseListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return expenseListState.rebuild(
+      (b) => b..stateFilters.remove(action.state),
+    );
   } else {
     return expenseListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
 ListUIState _filterExpensesByStatus(
-    ListUIState expenseListState, FilterExpensesByStatus action) {
+  ListUIState expenseListState,
+  FilterExpensesByStatus action,
+) {
   if (expenseListState.statusFilters.contains(action.status)) {
-    return expenseListState
-        .rebuild((b) => b..statusFilters.remove(action.status));
+    return expenseListState.rebuild(
+      (b) => b..statusFilters.remove(action.status),
+    );
   } else {
     return expenseListState.rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 
 ListUIState _filterExpenses(
-    ListUIState expenseListState, FilterExpenses action) {
-  return expenseListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : expenseListState.filterClearedAt);
+  ListUIState expenseListState,
+  FilterExpenses action,
+) {
+  return expenseListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : expenseListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {
-  return expenseListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return expenseListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState expenseListState, StartExpenseMultiselect action) {
+  ListUIState expenseListState,
+  StartExpenseMultiselect action,
+) {
   return expenseListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState expenseListState, AddToExpenseMultiselect action) {
+  ListUIState expenseListState,
+  AddToExpenseMultiselect action,
+) {
   return expenseListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState expenseListState, RemoveFromExpenseMultiselect action) {
-  return expenseListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState expenseListState,
+  RemoveFromExpenseMultiselect action,
+) {
+  return expenseListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState expenseListState, ClearExpenseMultiselect action) {
+  ListUIState expenseListState,
+  ClearExpenseMultiselect action,
+) {
   return expenseListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -229,19 +276,25 @@ final expensesReducer = combineReducers<ExpenseState>([
 ]);
 
 ExpenseState _purgeClientSuccess(
-    ExpenseState expenseState, PurgeClientSuccess action) {
+  ExpenseState expenseState,
+  PurgeClientSuccess action,
+) {
   final ids = expenseState.map.values
       .where((each) => each.clientId == action.clientId)
       .map((each) => each.id)
       .toList();
 
-  return expenseState.rebuild((b) => b
-    ..map.removeWhere((p0, p1) => ids.contains(p0))
-    ..list.removeWhere((p0) => ids.contains(p0)));
+  return expenseState.rebuild(
+    (b) => b
+      ..map.removeWhere((p0, p1) => ids.contains(p0))
+      ..list.removeWhere((p0) => ids.contains(p0)),
+  );
 }
 
 ExpenseState _archiveExpenseSuccess(
-    ExpenseState expenseState, ArchiveExpenseSuccess action) {
+  ExpenseState expenseState,
+  ArchiveExpenseSuccess action,
+) {
   return expenseState.rebuild((b) {
     for (final expense in action.expenses) {
       b.map[expense.id] = expense;
@@ -250,7 +303,9 @@ ExpenseState _archiveExpenseSuccess(
 }
 
 ExpenseState _deleteExpenseSuccess(
-    ExpenseState expenseState, DeleteExpenseSuccess action) {
+  ExpenseState expenseState,
+  DeleteExpenseSuccess action,
+) {
   return expenseState.rebuild((b) {
     for (final expense in action.expenses) {
       b.map[expense.id] = expense;
@@ -259,7 +314,9 @@ ExpenseState _deleteExpenseSuccess(
 }
 
 ExpenseState _restoreExpenseSuccess(
-    ExpenseState expenseState, RestoreExpenseSuccess action) {
+  ExpenseState expenseState,
+  RestoreExpenseSuccess action,
+) {
   return expenseState.rebuild((b) {
     for (final expense in action.expenses) {
       b.map[expense.id] = expense;
@@ -268,29 +325,40 @@ ExpenseState _restoreExpenseSuccess(
 }
 
 ExpenseState _addExpense(ExpenseState expenseState, AddExpenseSuccess action) {
-  return expenseState.rebuild((b) => b
-    ..map[action.expense.id] = action.expense
-    ..list.add(action.expense.id));
+  return expenseState.rebuild(
+    (b) => b
+      ..map[action.expense.id] = action.expense
+      ..list.add(action.expense.id),
+  );
 }
 
 ExpenseState _updateExpense(
-    ExpenseState expenseState, SaveExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  ExpenseState expenseState,
+  SaveExpenseSuccess action,
+) {
+  return expenseState.rebuild(
+    (b) => b..map[action.expense.id] = action.expense,
+  );
 }
 
 ExpenseState _setLoadedExpense(
-    ExpenseState expenseState, LoadExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  ExpenseState expenseState,
+  LoadExpenseSuccess action,
+) {
+  return expenseState.rebuild(
+    (b) => b..map[action.expense.id] = action.expense,
+  );
 }
 
 ExpenseState _setLoadedExpenses(
-        ExpenseState expenseState, LoadExpensesSuccess action) =>
-    expenseState.loadExpenses(action.expenses);
+  ExpenseState expenseState,
+  LoadExpensesSuccess action,
+) => expenseState.loadExpenses(action.expenses);
 
 ExpenseState _setLoadedCompany(
-    ExpenseState expenseState, LoadCompanySuccess action) {
+  ExpenseState expenseState,
+  LoadCompanySuccess action,
+) {
   final company = action.userCompany.company;
   return expenseState.loadExpenses(company.expenses);
 }

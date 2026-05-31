@@ -20,9 +20,7 @@ class InvoiceEditPDFScreen extends StatelessWidget {
         return InvoiceEditPDFVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditPDF(
-          viewModel: viewModel,
-        );
+        return InvoiceEditPDF(viewModel: viewModel);
       },
     );
   }
@@ -45,11 +43,7 @@ class InvoiceEditPDFVM extends EntityEditPDFVM {
     required CompanyEntity? company,
     required InvoiceEntity? invoice,
     required AppState state,
-  }) : super(
-          company: company,
-          invoice: invoice,
-          state: state,
-        );
+  }) : super(company: company, invoice: invoice, state: state);
 
   factory InvoiceEditPDFVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

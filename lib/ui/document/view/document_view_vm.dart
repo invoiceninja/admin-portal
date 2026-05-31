@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentViewScreen extends StatelessWidget {
-  const DocumentViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const DocumentViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
 
   static const String route = '/document/view';
@@ -33,10 +30,7 @@ class DocumentViewScreen extends StatelessWidget {
         return DocumentViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return DocumentView(
-          isFilter: isFilter,
-          viewModel: vm,
-        );
+        return DocumentView(isFilter: isFilter, viewModel: vm);
       },
     );
   }
@@ -58,13 +52,15 @@ class DocumentViewVM {
     final state = store.state;
     final document =
         state.documentState.map[state.documentUIState.selectedId] ??
-            DocumentEntity(id: state.documentUIState.selectedId);
+        DocumentEntity(id: state.documentUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(
-          LoadDocument(completer: completer, documentId: document.id));
+        LoadDocument(completer: completer, documentId: document.id),
+      );
       return completer.future;
     }
 

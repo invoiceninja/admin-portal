@@ -49,9 +49,11 @@ abstract class ExpenseState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<ExpenseState> get serializer => _$expenseStateSerializer;
@@ -62,8 +64,10 @@ abstract class ExpenseUIState extends Object
     implements Built<ExpenseUIState, ExpenseUIStateBuilder> {
   factory ExpenseUIState(PrefStateSortField? sortField) {
     return _$ExpenseUIState._(
-      listUIState: ListUIState(sortField?.field ?? ExpenseFields.number,
-          sortAscending: sortField?.ascending ?? false),
+      listUIState: ListUIState(
+        sortField?.field ?? ExpenseFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: ExpenseEntity(),
       selectedId: '',
       tabIndex: 0,

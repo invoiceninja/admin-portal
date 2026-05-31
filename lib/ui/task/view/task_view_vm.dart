@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskViewScreen extends StatelessWidget {
-  const TaskViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const TaskViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
   static const String route = '/task/view';
 
@@ -70,8 +67,9 @@ class TaskViewVM {
     final project = state.projectState.map[task.projectId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;
     }
@@ -79,21 +77,27 @@ class TaskViewVM {
     void _toggleTask(BuildContext context) {
       final Completer<TaskEntity> completer = new Completer<TaskEntity>();
       final localization = AppLocalization.of(context);
-      store
-          .dispatch(SaveTaskRequest(completer: completer, task: task.toggle()));
-      completer.future.then((savedTask) {
-        showToast(savedTask.isRunning
-            ? (savedTask.calculateDuration().inSeconds > 0
-                ? localization!.resumedTask
-                : localization!.startedTask)
-            : localization!.stoppedTask);
-      }).catchError((Object error) {
-        showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            });
-      });
+      store.dispatch(
+        SaveTaskRequest(completer: completer, task: task.toggle()),
+      );
+      completer.future
+          .then((savedTask) {
+            showToast(
+              savedTask.isRunning
+                  ? (savedTask.calculateDuration().inSeconds > 0
+                        ? localization!.resumedTask
+                        : localization!.startedTask)
+                  : localization!.stoppedTask,
+            );
+          })
+          .catchError((Object error) {
+            showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              },
+            );
+          });
     }
 
     return TaskViewVM(
@@ -108,34 +112,50 @@ class TaskViewVM {
       onFabPressed: (BuildContext context) => _toggleTask(context),
       onEditPressed: (BuildContext context, [TaskTime? taskTime]) {
         editEntity(
-            entity: task,
-            subIndex:
-                taskTime != null ? task.getTaskTimes().indexOf(taskTime) : 0,
-            completer: snackBarCompleter<TaskEntity>(
-                AppLocalization.of(context)!.updatedTask));
+          entity: task,
+          subIndex: taskTime != null
+              ? task.getTaskTimes().indexOf(taskTime)
+              : 0,
+          completer: snackBarCompleter<TaskEntity>(
+            AppLocalization.of(context)!.updatedTask,
+          ),
+        );
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([task], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveTaskDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFiles,
-            task: task,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveTaskDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFiles,
+                task: task,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

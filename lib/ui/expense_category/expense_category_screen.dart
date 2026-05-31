@@ -19,10 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'expense_category_screen_vm.dart';
 
 class ExpenseCategoryScreen extends StatelessWidget {
-  const ExpenseCategoryScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseCategoryScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsExpenseCategories';
 
@@ -49,7 +47,8 @@ class ExpenseCategoryScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.expenseCategoryListState.filterClearedAt}__'),
+          '__filter_${state.expenseCategoryListState.filterClearedAt}__',
+        ),
         entityType: EntityType.expenseCategory,
         entityIds: viewModel.expenseCategoryList,
         filter: state.expenseCategoryListState.filter,
@@ -64,15 +63,13 @@ class ExpenseCategoryScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expenseCategory,
         tableColumns: ExpenseCategoryPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            ExpenseCategoryPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: ExpenseCategoryPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortExpenseCategories(value));
         },
-        sortFields: [
-          ExpenseCategoryFields.name,
-          EntityFields.updatedAt,
-        ],
+        sortFields: [ExpenseCategoryFields.name, EntityFields.updatedAt],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterExpenseCategoriesByState(state));
         },
@@ -92,19 +89,19 @@ class ExpenseCategoryScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterExpenseCategoriesByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.expenseCategory)
           ? FloatingActionButton(
               heroTag: 'expense_category_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.expenseCategory);
+                  context: context,
+                  entityType: EntityType.expenseCategory,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newExpenseCategory,
             )
           : null,

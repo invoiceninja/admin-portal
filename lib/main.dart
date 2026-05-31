@@ -117,8 +117,9 @@ void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
-  HttpOverrides.global =
-      MyHttpOverrides(prefs.getString(kSharedPrefHostOverride) ?? '');
+  HttpOverrides.global = MyHttpOverrides(
+    prefs.getString(kSharedPrefHostOverride) ?? '',
+  );
 
   _registerErrorHandlers();
 
@@ -134,93 +135,98 @@ void main({bool isTesting = false}) async {
     await windowManager.ensureInitialized();
 
     windowManager.waitUntilReadyToShow(
-        WindowOptions(
-          center: true,
-          size: Size(
-            prefs.getDouble(kSharedPrefWidth) ?? 800,
-            prefs.getDouble(kSharedPrefHeight) ?? 600,
-          ),
-        ), () async {
-      await windowManager.show();
-      await windowManager.focus();
+      WindowOptions(
+        center: true,
+        size: Size(
+          prefs.getDouble(kSharedPrefWidth) ?? 800,
+          prefs.getDouble(kSharedPrefHeight) ?? 600,
+        ),
+      ),
+      () async {
+        await windowManager.show();
+        await windowManager.focus();
 
-      if (prefs.getBool(kSharedPrefMaximized) == true) {
-        windowManager.maximize();
-      }
-    });
+        if (prefs.getBool(kSharedPrefMaximized) == true) {
+          windowManager.maximize();
+        }
+      },
+    );
   }
 
-  final store = Store<AppState>(appReducer,
-      initialState: await _initialState(isTesting, prefs),
-      middleware: []
-        ..addAll(createStoreAuthMiddleware())
-        ..addAll(createStoreDocumentsMiddleware())
-        ..addAll(createStoreDashboardMiddleware())
-        ..addAll(createStoreProductsMiddleware())
-        ..addAll(createStoreClientsMiddleware())
-        ..addAll(createStoreInvoicesMiddleware())
-        ..addAll(createStoreExpensesMiddleware())
-        ..addAll(createStoreVendorsMiddleware())
-        ..addAll(createStoreTasksMiddleware())
-        ..addAll(createStoreProjectsMiddleware())
-        ..addAll(createStorePaymentsMiddleware())
-        ..addAll(createStoreQuotesMiddleware())
-        ..addAll(createStoreSettingsMiddleware())
-        ..addAll(createStoreReportsMiddleware())
-        // STARTER: middleware - do not remove comment
-        ..addAll(createStoreSchedulesMiddleware())
-        ..addAll(createStoreTransactionRulesMiddleware())
-        ..addAll(createStoreTransactionsMiddleware())
-        ..addAll(createStoreBankAccountsMiddleware())
-        ..addAll(createStorePurchaseOrdersMiddleware())
-        ..addAll(createStoreRecurringExpensesMiddleware())
-        ..addAll(createStoreSubscriptionsMiddleware())
-        ..addAll(createStoreTaskStatusesMiddleware())
-        ..addAll(createStoreExpenseCategoriesMiddleware())
-        ..addAll(createStoreRecurringInvoicesMiddleware())
-        ..addAll(createStoreWebhooksMiddleware())
-        ..addAll(createStoreTokensMiddleware())
-        ..addAll(createStorePaymentTermsMiddleware())
-        ..addAll(createStoreDesignsMiddleware())
-        ..addAll(createStoreCreditsMiddleware())
-        ..addAll(createStoreUsersMiddleware())
-        ..addAll(createStoreTaxRatesMiddleware())
-        ..addAll(createStoreCompanyGatewaysMiddleware())
-        ..addAll(createStoreGroupsMiddleware())
-        ..addAll(createStorePersistenceMiddleware())
-        ..addAll(isTesting || kReleaseMode || !Config.DEBUG_EVENTS
+  final store = Store<AppState>(
+    appReducer,
+    initialState: await _initialState(isTesting, prefs),
+    middleware: []
+      ..addAll(createStoreAuthMiddleware())
+      ..addAll(createStoreDocumentsMiddleware())
+      ..addAll(createStoreDashboardMiddleware())
+      ..addAll(createStoreProductsMiddleware())
+      ..addAll(createStoreClientsMiddleware())
+      ..addAll(createStoreInvoicesMiddleware())
+      ..addAll(createStoreExpensesMiddleware())
+      ..addAll(createStoreVendorsMiddleware())
+      ..addAll(createStoreTasksMiddleware())
+      ..addAll(createStoreProjectsMiddleware())
+      ..addAll(createStorePaymentsMiddleware())
+      ..addAll(createStoreQuotesMiddleware())
+      ..addAll(createStoreSettingsMiddleware())
+      ..addAll(createStoreReportsMiddleware())
+      // STARTER: middleware - do not remove comment
+      ..addAll(createStoreSchedulesMiddleware())
+      ..addAll(createStoreTransactionRulesMiddleware())
+      ..addAll(createStoreTransactionsMiddleware())
+      ..addAll(createStoreBankAccountsMiddleware())
+      ..addAll(createStorePurchaseOrdersMiddleware())
+      ..addAll(createStoreRecurringExpensesMiddleware())
+      ..addAll(createStoreSubscriptionsMiddleware())
+      ..addAll(createStoreTaskStatusesMiddleware())
+      ..addAll(createStoreExpenseCategoriesMiddleware())
+      ..addAll(createStoreRecurringInvoicesMiddleware())
+      ..addAll(createStoreWebhooksMiddleware())
+      ..addAll(createStoreTokensMiddleware())
+      ..addAll(createStorePaymentTermsMiddleware())
+      ..addAll(createStoreDesignsMiddleware())
+      ..addAll(createStoreCreditsMiddleware())
+      ..addAll(createStoreUsersMiddleware())
+      ..addAll(createStoreTaxRatesMiddleware())
+      ..addAll(createStoreCompanyGatewaysMiddleware())
+      ..addAll(createStoreGroupsMiddleware())
+      ..addAll(createStorePersistenceMiddleware())
+      ..addAll(
+        isTesting || kReleaseMode || !Config.DEBUG_EVENTS
             ? []
             : [
                 LoggingMiddleware<dynamic>.printer(
                   formatter: LoggingMiddleware.multiLineFormatter,
                 ),
-              ]));
+              ],
+      ),
+  );
 
   if (!kReleaseMode) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
-    await SentryFlutter.init(
-      (options) {
-        options.dsn = Config.SENTRY_DNS;
-        options.release = const String.fromEnvironment('SENTRY_RELEASE',
-            defaultValue: kClientVersion);
-        options.dist = kClientVersion;
-        options.beforeSend = (SentryEvent event, Hint hint) {
-          final state = store.state;
-          final account = state.account;
-          final reportErrors = account.reportErrors;
+    await SentryFlutter.init((options) {
+      options.dsn = Config.SENTRY_DNS;
+      options.release = const String.fromEnvironment(
+        'SENTRY_RELEASE',
+        defaultValue: kClientVersion,
+      );
+      options.dist = kClientVersion;
+      options.beforeSend = (SentryEvent event, Hint hint) {
+        final state = store.state;
+        final account = state.account;
+        final reportErrors = account.reportErrors;
 
-          if (!reportErrors) {
-            return null;
-          }
+        if (!reportErrors) {
+          return null;
+        }
 
-          event.environment = '${store.state.environment}'.split('.').last;
+        event.environment = '${store.state.environment}'.split('.').last;
 
-          return event;
-        };
-      },
-      appRunner: () => runApp(InvoiceNinjaApp(store: store)),
-    );
+        return event;
+      };
+    }, appRunner: () => runApp(InvoiceNinjaApp(store: store)));
   }
 
   /*
@@ -248,15 +254,19 @@ Future<AppState> _initialState(bool isTesting, SharedPreferences prefs) async {
   if (prefString != null) {
     try {
       prefState = serializers.deserializeWith(
-          PrefState.serializer, json.decode(prefString));
+        PrefState.serializer,
+        json.decode(prefString),
+      );
     } catch (e) {
       print('## Error: Failed to load prefs: $e');
     }
   }
 
-  prefState = prefState!.rebuild((b) => b
-    ..enableDarkModeSystem =
-        PlatformDispatcher.instance.platformBrightness == Brightness.dark);
+  prefState = prefState!.rebuild(
+    (b) => b
+      ..enableDarkModeSystem =
+          PlatformDispatcher.instance.platformBrightness == Brightness.dark,
+  );
 
   String? browserRoute;
   if (kIsWeb && prefState.isDesktop) {
@@ -264,9 +274,11 @@ Future<AppState> _initialState(bool isTesting, SharedPreferences prefs) async {
     if (browserRoute!.isNotEmpty && browserRoute.length > 4) {
       if (browserRoute == '/kanban') {
         browserRoute = '/task';
-        prefState = prefState.rebuild((b) => b
-          ..showKanban = true
-          ..useSidebarEditor[EntityType.task] = true);
+        prefState = prefState.rebuild(
+          (b) => b
+            ..showKanban = true
+            ..useSidebarEditor[EntityType.task] = true,
+        );
       }
     } else {
       browserRoute = null;

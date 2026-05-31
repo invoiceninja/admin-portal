@@ -36,18 +36,13 @@ class _WebWebView extends StatelessWidget {
     final encodedHtml =
         'data:text/html;charset=utf-8,' + Uri.encodeComponent(html!);
     WebUtils.registerWebView(encodedHtml);
-    return AbsorbPointer(
-      child: HtmlElementView(viewType: encodedHtml),
-    );
+    return AbsorbPointer(child: HtmlElementView(viewType: encodedHtml));
   }
 }
 
 class _MobileWebView extends StatefulWidget {
-  const _MobileWebView({
-    Key? key,
-    required this.html,
-    required this.width,
-  }) : super(key: key);
+  const _MobileWebView({Key? key, required this.html, required this.width})
+    : super(key: key);
 
   final String? html;
   final double width;
@@ -73,7 +68,8 @@ class _MobileWebViewState extends State<_MobileWebView>
 
     if ((widget.html ?? '').isNotEmpty) {
       _webViewController.loadHtmlString(
-          widget.html!.replaceFirst('width="570"', 'width="${widget.width}"'));
+        widget.html!.replaceFirst('width="570"', 'width="${widget.width}"'),
+      );
     }
   }
 
@@ -83,7 +79,8 @@ class _MobileWebViewState extends State<_MobileWebView>
 
     if (widget.html != oldWidget.html) {
       _webViewController.loadHtmlString(
-          widget.html!.replaceFirst('width="570"', 'width="${widget.width}"'));
+        widget.html!.replaceFirst('width="570"', 'width="${widget.width}"'),
+      );
     }
   }
 
@@ -91,8 +88,6 @@ class _MobileWebViewState extends State<_MobileWebView>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return WebViewWidget(
-      controller: _webViewController,
-    );
+    return WebViewWidget(controller: _webViewController);
   }
 }

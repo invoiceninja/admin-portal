@@ -18,29 +18,25 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewPaymentTermList implements PersistUI {
-  ViewPaymentTermList({
-    this.force = false,
-  });
+  ViewPaymentTermList({this.force = false});
 
   final bool force;
 }
 
 class ViewPaymentTerm implements PersistUI, PersistPrefs {
-  ViewPaymentTerm({
-    required this.paymentTermId,
-    this.force = false,
-  });
+  ViewPaymentTerm({required this.paymentTermId, this.force = false});
 
   final String? paymentTermId;
   final bool force;
 }
 
 class EditPaymentTerm implements PersistUI, PersistPrefs {
-  EditPaymentTerm(
-      {required this.paymentTerm,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditPaymentTerm({
+    required this.paymentTerm,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final PaymentTermEntity paymentTerm;
   final Completer? completer;
@@ -246,8 +242,11 @@ class FilterPaymentTermsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handlePaymentTermAction(BuildContext? context,
-    List<BaseEntity> paymentTerms, EntityAction? action) {
+void handlePaymentTermAction(
+  BuildContext? context,
+  List<BaseEntity> paymentTerms,
+  EntityAction? action,
+) {
   if (paymentTerms.isEmpty) {
     return;
   }
@@ -257,8 +256,9 @@ void handlePaymentTermAction(BuildContext? context,
   //final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final paymentTerm = paymentTerms.first as PaymentTermEntity;
-  final paymentTermIds =
-      paymentTerms.map((paymentTerm) => paymentTerm.id).toList();
+  final paymentTermIds = paymentTerms
+      .map((paymentTerm) => paymentTerm.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -267,29 +267,41 @@ void handlePaymentTermAction(BuildContext? context,
     case EntityAction.restore:
       final message = paymentTermIds.length > 1
           ? localization!.restoredPaymentTerms
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentTermIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.restoredPaymentTerm;
-      store.dispatch(RestorePaymentTermsRequest(
-          snackBarCompleter<Null>(message), paymentTermIds));
+      store.dispatch(
+        RestorePaymentTermsRequest(
+          snackBarCompleter<Null>(message),
+          paymentTermIds,
+        ),
+      );
       break;
     case EntityAction.archive:
       final message = paymentTermIds.length > 1
           ? localization!.archivedPaymentTerms
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentTermIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.archivedPaymentTerm;
-      store.dispatch(ArchivePaymentTermsRequest(
-          snackBarCompleter<Null>(message), paymentTermIds));
+      store.dispatch(
+        ArchivePaymentTermsRequest(
+          snackBarCompleter<Null>(message),
+          paymentTermIds,
+        ),
+      );
       break;
     case EntityAction.delete:
       final message = paymentTermIds.length > 1
           ? localization!.deletedPaymentTerms
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentTermIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.deletedPaymentTerm;
-      store.dispatch(DeletePaymentTermsRequest(
-          snackBarCompleter<Null>(message), paymentTermIds));
+      store.dispatch(
+        DeletePaymentTermsRequest(
+          snackBarCompleter<Null>(message),
+          paymentTermIds,
+        ),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentTermListState.isInMultiselect()) {
@@ -309,9 +321,7 @@ void handlePaymentTermAction(BuildContext? context,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [paymentTerm],
-      );
+      showEntityActionsDialog(entities: [paymentTerm]);
       break;
   }
 }

@@ -31,13 +31,13 @@ class DiscountField extends StatelessWidget {
           child: DecoratedFormField(
             label: label ?? localization.discount,
             controller: controller,
-            keyboardType:
-                TextInputType.numberWithOptions(decimal: true, signed: true),
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: true,
+              signed: true,
+            ),
           ),
         ),
-        const SizedBox(
-          width: 10.0,
-        ),
+        const SizedBox(width: 10.0),
         DropdownButtonHideUnderline(
           child: DropdownButton<bool>(
             value: isAmountDiscount,
@@ -45,21 +45,17 @@ class DiscountField extends StatelessWidget {
               DropdownMenuItem<bool>(
                 child: Text(
                   localization.percent,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(fontSize: 14),
                 ),
                 value: false,
               ),
               DropdownMenuItem<bool>(
                 child: Text(
                   localization.amount,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(fontSize: 14),
                 ),
                 value: true,
-              )
+              ),
             ],
             onChanged: onTypeChanged,
           ),

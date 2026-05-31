@@ -21,10 +21,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryViewScreen extends StatelessWidget {
-  const ExpenseCategoryViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const ExpenseCategoryViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsExpenseCategoryView';
   final bool isFilter;
@@ -36,10 +34,7 @@ class ExpenseCategoryViewScreen extends StatelessWidget {
         return ExpenseCategoryViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ExpenseCategoryView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return ExpenseCategoryView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -60,15 +55,22 @@ class ExpenseCategoryViewVM {
 
   factory ExpenseCategoryViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final expenseCategory = state.expenseCategoryState
-            .map[state.expenseCategoryUIState.selectedId] ??
+    final expenseCategory =
+        state.expenseCategoryState.map[state
+            .expenseCategoryUIState
+            .selectedId] ??
         ExpenseCategoryEntity(id: state.expenseCategoryUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
-      store.dispatch(LoadExpenseCategory(
-          completer: completer, expenseCategoryId: expenseCategory.id));
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
+      store.dispatch(
+        LoadExpenseCategory(
+          completer: completer,
+          expenseCategoryId: expenseCategory.id,
+        ),
+      );
       return completer.future;
     }
 

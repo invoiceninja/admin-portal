@@ -33,28 +33,23 @@ class AppButton extends StatelessWidget {
         backgroundColor: color ?? state.accentColor,
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(kBorderRadius)),
-        elevation: 4,
-        textStyle: TextStyle(
-          color: Colors.white,
+          borderRadius: BorderRadius.circular(kBorderRadius),
         ),
+        elevation: 4,
+        textStyle: TextStyle(color: Colors.white),
       ),
       child: iconData != null && isDesktop(context)
           ? IconText(
               icon: iconData,
               text: label,
               alignment: MainAxisAlignment.center,
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: TextStyle(color: Colors.white),
             )
           : SizedBox(
               child: Text(
                 label!,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                style: TextStyle(color: Colors.white),
               ),
               height: 24,
             ),
@@ -63,12 +58,7 @@ class AppButton extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 20),
-      child: width == null
-          ? button
-          : SizedBox(
-              width: width,
-              child: button,
-            ),
+      child: width == null ? button : SizedBox(width: width, child: button),
     );
   }
 }

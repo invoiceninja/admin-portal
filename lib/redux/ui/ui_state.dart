@@ -70,23 +70,28 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       productUIState: ProductUIState(sortFields[EntityType.product]),
       clientUIState: ClientUIState(sortFields[EntityType.client]),
       invoiceUIState: InvoiceUIState(sortFields[EntityType.invoice]),
-      subscriptionUIState:
-          SubscriptionUIState(sortFields[EntityType.paymentLink]),
+      subscriptionUIState: SubscriptionUIState(
+        sortFields[EntityType.paymentLink],
+      ),
       taskStatusUIState: TaskStatusUIState(sortFields[EntityType.taskStatus]),
-      expenseCategoryUIState:
-          ExpenseCategoryUIState(sortFields[EntityType.expenseCategory]),
-      recurringInvoiceUIState:
-          RecurringInvoiceUIState(sortFields[EntityType.recurringInvoice]),
+      expenseCategoryUIState: ExpenseCategoryUIState(
+        sortFields[EntityType.expenseCategory],
+      ),
+      recurringInvoiceUIState: RecurringInvoiceUIState(
+        sortFields[EntityType.recurringInvoice],
+      ),
       webhookUIState: WebhookUIState(sortFields[EntityType.webhook]),
       tokenUIState: TokenUIState(sortFields[EntityType.token]),
-      paymentTermUIState:
-          PaymentTermUIState(sortFields[EntityType.paymentTerm]),
+      paymentTermUIState: PaymentTermUIState(
+        sortFields[EntityType.paymentTerm],
+      ),
       designUIState: DesignUIState(sortFields[EntityType.design]),
       creditUIState: CreditUIState(sortFields[EntityType.credit]),
       userUIState: UserUIState(sortFields[EntityType.user]),
       taxRateUIState: TaxRateUIState(sortFields[EntityType.taxRate]),
-      companyGatewayUIState:
-          CompanyGatewayUIState(sortFields[EntityType.companyGateway]),
+      companyGatewayUIState: CompanyGatewayUIState(
+        sortFields[EntityType.companyGateway],
+      ),
       groupUIState: GroupUIState(sortFields[EntityType.group]),
       documentUIState: DocumentUIState(sortFields[EntityType.document]),
       expenseUIState: ExpenseUIState(sortFields[EntityType.expense]),
@@ -98,20 +103,25 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       // STARTER: constructor - do not remove comment
       scheduleUIState: ScheduleUIState(sortFields[EntityType.schedule]),
 
-      transactionRuleUIState:
-          TransactionRuleUIState(sortFields[EntityType.transactionRule]),
+      transactionRuleUIState: TransactionRuleUIState(
+        sortFields[EntityType.transactionRule],
+      ),
 
-      transactionUIState:
-          TransactionUIState(sortFields[EntityType.transaction]),
+      transactionUIState: TransactionUIState(
+        sortFields[EntityType.transaction],
+      ),
 
-      bankAccountUIState:
-          BankAccountUIState(sortFields[EntityType.bankAccount]),
+      bankAccountUIState: BankAccountUIState(
+        sortFields[EntityType.bankAccount],
+      ),
 
-      purchaseOrderUIState:
-          PurchaseOrderUIState(sortFields[EntityType.purchaseOrder]),
+      purchaseOrderUIState: PurchaseOrderUIState(
+        sortFields[EntityType.purchaseOrder],
+      ),
 
-      recurringExpenseUIState:
-          RecurringExpenseUIState(sortFields[EntityType.recurringExpense]),
+      recurringExpenseUIState: RecurringExpenseUIState(
+        sortFields[EntityType.recurringExpense],
+      ),
     );
   }
 
@@ -226,14 +236,18 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   String get mainRoute {
-    final parts =
-        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+    final parts = currentRoute
+        .split('/')
+        .where((part) => part.isNotEmpty)
+        .toList();
     return parts.isNotEmpty ? parts[0] : '';
   }
 
   String get subRoute {
-    final parts =
-        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
+    final parts = currentRoute
+        .split('/')
+        .where((part) => part.isNotEmpty)
+        .toList();
     if (parts.length == 3) {
       return '${parts[1]}/${parts[2]}';
     } else {
@@ -260,14 +274,18 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   String get previousMainRoute {
-    final parts =
-        previousRoute.split('/').where((part) => part.isNotEmpty).toList();
+    final parts = previousRoute
+        .split('/')
+        .where((part) => part.isNotEmpty)
+        .toList();
     return parts.isNotEmpty ? parts[0] : '';
   }
 
   String get previousSubRoute {
-    final parts =
-        previousRoute.split('/').where((part) => part.isNotEmpty).toList();
+    final parts = previousRoute
+        .split('/')
+        .where((part) => part.isNotEmpty)
+        .toList();
     return parts.length > 1 ? parts[1] : '';
   }
 

@@ -31,40 +31,37 @@ class ClientViewPaymentMethods extends StatelessWidget {
     final customerReferences = tokenMap.keys.toList();
 
     return ScrollableListViewBuilder(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        itemCount: customerReferences.length,
-        separatorBuilder: (context, index) => ListDivider(),
-        itemBuilder: (BuildContext context, index) {
-          final customerReference = customerReferences[index];
-          return ListTile(
-            title: Text(
-                '${localization!.gateway}  ›  ${gatewayMap[customerReference]!.label}'),
-            subtitle: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: tokenMap[customerReference]!
-                  .map((token) => TokenMeta(
-                        meta: token.meta,
-                      ))
-                  .toList(),
-            ),
-            onTap: linkMap.containsKey(customerReference)
-                ? () => launchUrl(Uri.parse(linkMap[customerReference]!))
-                : null,
-            leading: IgnorePointer(
-              child: IconButton(
-                icon: Icon(Icons.payment),
-                onPressed: () => null,
-              ),
-            ),
-            trailing: linkMap.containsKey(customerReference)
-                ? IgnorePointer(
-                    child: IconButton(
-                      icon: Icon(Icons.open_in_new),
-                      onPressed: () => null,
-                    ),
-                  )
-                : null,
-          );
-        });
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemCount: customerReferences.length,
+      separatorBuilder: (context, index) => ListDivider(),
+      itemBuilder: (BuildContext context, index) {
+        final customerReference = customerReferences[index];
+        return ListTile(
+          title: Text(
+            '${localization!.gateway}  ›  ${gatewayMap[customerReference]!.label}',
+          ),
+          subtitle: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: tokenMap[customerReference]!
+                .map((token) => TokenMeta(meta: token.meta))
+                .toList(),
+          ),
+          onTap: linkMap.containsKey(customerReference)
+              ? () => launchUrl(Uri.parse(linkMap[customerReference]!))
+              : null,
+          leading: IgnorePointer(
+            child: IconButton(icon: Icon(Icons.payment), onPressed: () => null),
+          ),
+          trailing: linkMap.containsKey(customerReference)
+              ? IgnorePointer(
+                  child: IconButton(
+                    icon: Icon(Icons.open_in_new),
+                    onPressed: () => null,
+                  ),
+                )
+              : null,
+        );
+      },
+    );
   }
 }

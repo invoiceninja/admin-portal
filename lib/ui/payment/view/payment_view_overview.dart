@@ -37,12 +37,14 @@ class _PaymentOverviewState extends State<PaymentOverview> {
     final state = viewModel.state;
     final payment = viewModel.payment;
 
-    final client = state.clientState.map[payment.clientId] ??
+    final client =
+        state.clientState.map[payment.clientId] ??
         ClientEntity(id: payment.clientId);
     final transaction = state.transactionState.get(payment.transactionId);
 
-    final companyGateway =
-        state.companyGatewayState.get(payment.companyGatewayId);
+    final companyGateway = state.companyGatewayState.get(
+      payment.companyGatewayId,
+    );
     final companyGatewayLink = GatewayEntity.getPaymentUrl(
       gatewayId: companyGateway.gatewayId,
       transactionReference: payment.transactionReference,
@@ -72,24 +74,35 @@ class _PaymentOverviewState extends State<PaymentOverview> {
       fields[PaymentFields.transactionReference] = payment.transactionReference;
     }
     if (payment.refunded != 0) {
-      fields[PaymentFields.refunded] =
-          formatNumber(payment.refunded, context, clientId: client.id);
+      fields[PaymentFields.refunded] = formatNumber(
+        payment.refunded,
+        context,
+        clientId: client.id,
+      );
     }
 
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(
           entity: payment,
-          statusColor: PaymentStatusColors(state.prefState.colorThemeModel)
-              .colors[payment.statusId],
-          statusLabel:
-              localization.lookup('payment_status_${payment.statusId}'),
+          statusColor: PaymentStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[payment.statusId],
+          statusLabel: localization.lookup(
+            'payment_status_${payment.statusId}',
+          ),
           label: localization.amount,
-          value: formatNumber(payment.amount - payment.refunded, context,
-              clientId: client.id),
+          value: formatNumber(
+            payment.amount - payment.refunded,
+            context,
+            clientId: client.id,
+          ),
           secondLabel: localization.applied,
-          secondValue:
-              formatNumber(payment.applied, context, clientId: client.id),
+          secondValue: formatNumber(
+            payment.applied,
+            context,
+            clientId: client.id,
+          ),
         ),
         ListDivider(),
         EntityListTile(
@@ -103,21 +116,33 @@ class _PaymentOverviewState extends State<PaymentOverview> {
           EntityListTile(
             isFilter: widget.isFilter,
             entity: state.invoiceState.map[paymentable.invoiceId]!,
-            subtitle: formatNumber(paymentable.amount, context,
-                    clientId: payment.clientId)! +
+            subtitle:
+                formatNumber(
+                  paymentable.amount,
+                  context,
+                  clientId: payment.clientId,
+                )! +
                 ' • ' +
-                formatDate(convertTimestampToDateString(paymentable.createdAt),
-                    context),
+                formatDate(
+                  convertTimestampToDateString(paymentable.createdAt),
+                  context,
+                ),
           ),
         for (final paymentable in payment.creditPaymentables)
           EntityListTile(
             isFilter: widget.isFilter,
             entity: state.creditState.map[paymentable.creditId]!,
-            subtitle: formatNumber(paymentable.amount, context,
-                    clientId: payment.clientId)! +
+            subtitle:
+                formatNumber(
+                  paymentable.amount,
+                  context,
+                  clientId: payment.clientId,
+                )! +
                 ' • ' +
-                formatDate(convertTimestampToDateString(paymentable.createdAt),
-                    context),
+                formatDate(
+                  convertTimestampToDateString(paymentable.createdAt),
+                  context,
+                ),
           ),
         if (payment.companyGatewayId.isNotEmpty) ...[
           ListTile(
@@ -143,18 +168,12 @@ class _PaymentOverviewState extends State<PaymentOverview> {
           ListDivider(),
         ],
         if (payment.transactionId.isNotEmpty)
-          EntityListTile(
-            isFilter: widget.isFilter,
-            entity: transaction,
-          ),
+          EntityListTile(isFilter: widget.isFilter, entity: transaction),
         payment.privateNotes.isNotEmpty
             ? Column(
                 children: <Widget>[
                   IconMessage(payment.privateNotes, copyToClipboard: true),
-                  Container(
-                    color: Theme.of(context).cardColor,
-                    height: 12.0,
-                  ),
+                  Container(color: Theme.of(context).cardColor, height: 12.0),
                 ],
               )
             : Container(),

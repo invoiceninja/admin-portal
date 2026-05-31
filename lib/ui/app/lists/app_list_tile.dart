@@ -35,9 +35,11 @@ class AppListTile extends StatelessWidget {
     }
 
     Clipboard.setData(ClipboardData(text: copyValue ?? title ?? ''));
-    showToast(AppLocalization.of(context)!
-        .copiedToClipboard
-        .replaceFirst(':value', copyValue ?? title!));
+    showToast(
+      AppLocalization.of(
+        context,
+      )!.copiedToClipboard.replaceFirst(':value', copyValue ?? title!),
+    );
   }
 
   @override
@@ -59,7 +61,7 @@ class AppListTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: buttonRow,
-                    )
+                    ),
                 ],
               )
             : null,

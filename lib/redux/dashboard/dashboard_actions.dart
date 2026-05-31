@@ -6,10 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewDashboard implements PersistUI {
-  ViewDashboard({
-    this.force = false,
-    this.filter,
-  });
+  ViewDashboard({this.force = false, this.filter});
 
   final bool force;
   final String? filter;
@@ -32,9 +29,7 @@ class UpdateDashboardSettings implements PersistUI {
 }
 
 class UpdateDashboardFields implements PersistUI {
-  UpdateDashboardFields({
-    this.dashboardFields,
-  });
+  UpdateDashboardFields({this.dashboardFields});
 
   BuiltList<DashboardField>? dashboardFields;
 }
@@ -50,10 +45,7 @@ class UpdateDashboardFieldSettingss implements PersistUI {
 }
 
 class UpdateDashboardSelection implements PersistUI {
-  UpdateDashboardSelection({
-    this.entityType,
-    this.entityIds,
-  });
+  UpdateDashboardSelection({this.entityType, this.entityIds});
 
   EntityType? entityType;
   List<String>? entityIds;

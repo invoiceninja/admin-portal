@@ -46,28 +46,29 @@ class DocumentListBuilder extends StatelessWidget {
         }
 
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.document,
-            state: viewModel.state,
-            entityList: viewModel.documentList,
-            presenter: DocumentPresenter(),
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: (context) => viewModel.onRefreshed(context, false),
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final documentId = viewModel.documentList[index];
-              final document = viewModel.documentMap[documentId]!;
-              final listState = state.getListState(EntityType.document);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.document,
+          state: viewModel.state,
+          entityList: viewModel.documentList,
+          presenter: DocumentPresenter(),
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: (context) => viewModel.onRefreshed(context, false),
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final documentId = viewModel.documentList[index];
+            final document = viewModel.documentMap[documentId]!;
+            final listState = state.getListState(EntityType.document);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return DocumentListItem(
-                userCompany: state.userCompany,
-                filter: viewModel.filter,
-                document: document,
-                isChecked: isInMultiselect && listState.isSelected(document.id),
-              );
-            });
+            return DocumentListItem(
+              userCompany: state.userCompany,
+              filter: viewModel.filter,
+              document: document,
+              isChecked: isInMultiselect && listState.isSelected(document.id),
+            );
+          },
+        );
       },
     );
   }
@@ -93,8 +94,9 @@ class DocumentListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer, clearData: clearData));
       return completer.future;
     }
@@ -113,15 +115,18 @@ class DocumentListVM {
       documentMap: state.documentState.map,
       isLoading: state.isLoading,
       filter: state.documentUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> documents,
-              EntityAction action) =>
-          handleDocumentAction(context, documents, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> documents,
+            EntityAction action,
+          ) => handleDocumentAction(context, documents, action),
       onRefreshed: (context, clearData) => _handleRefresh(context, clearData),
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
       onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.document) ??
-              DocumentPresenter.getDefaultTableFields(state.userCompany),
+          DocumentPresenter.getDefaultTableFields(state.userCompany),
     );
   }
 
@@ -134,7 +139,7 @@ class DocumentListVM {
   final bool isLoading;
   final Function(BuildContext, bool) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)
-      onEntityAction;
+  onEntityAction;
   final Function(String) onSortColumn;
   final Function onClearMultielsect;
 }

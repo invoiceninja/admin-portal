@@ -10,11 +10,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateView extends StatefulWidget {
-  const TaxRateView({
-    Key? key,
-    required this.viewModel,
-    required this.isFilter,
-  }) : super(key: key);
+  const TaxRateView({Key? key, required this.viewModel, required this.isFilter})
+    : super(key: key);
 
   final TaxRateViewVM viewModel;
   final bool isFilter;
@@ -34,16 +31,21 @@ class _TaxRateViewState extends State<TaxRateView> {
       isFilter: widget.isFilter,
       entity: taxRate,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ScrollableListView(children: [
-        EntityHeader(
-          entity: taxRate,
-          label: localization.name,
-          value: taxRate.name,
-          secondLabel: localization.rate,
-          secondValue: formatNumber(taxRate.rate, context,
-              formatNumberType: FormatNumberType.percent),
-        ),
-      ]),
+      body: ScrollableListView(
+        children: [
+          EntityHeader(
+            entity: taxRate,
+            label: localization.name,
+            value: taxRate.name,
+            secondLabel: localization.rate,
+            secondValue: formatNumber(
+              taxRate.rate,
+              context,
+              formatNumberType: FormatNumberType.percent,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

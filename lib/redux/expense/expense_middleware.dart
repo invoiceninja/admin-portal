@@ -63,8 +63,11 @@ Middleware<AppState> _editExpense() {
 }
 
 Middleware<AppState> _viewExpense() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewExpense?;
 
     next(action);
@@ -91,7 +94,9 @@ Middleware<AppState> _viewExpenseList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          ExpenseScreen.route, (Route<dynamic> route) => false);
+        ExpenseScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
@@ -105,15 +110,19 @@ Middleware<AppState> _archiveExpense(ExpenseRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.expenseIds, EntityAction.archive)
+          store.state.credentials,
+          action.expenseIds,
+          EntityAction.archive,
+        )
         .then((List<ExpenseEntity> expenses) {
-      store.dispatch(ArchiveExpenseSuccess(expenses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveExpenseFailure(prevExpenses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveExpenseSuccess(expenses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveExpenseFailure(prevExpenses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -128,15 +137,19 @@ Middleware<AppState> _deleteExpense(ExpenseRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.expenseIds, EntityAction.delete)
+          store.state.credentials,
+          action.expenseIds,
+          EntityAction.delete,
+        )
         .then((List<ExpenseEntity> expenses) {
-      store.dispatch(DeleteExpenseSuccess(expenses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteExpenseFailure(prevExpenses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteExpenseSuccess(expenses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteExpenseFailure(prevExpenses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -151,15 +164,19 @@ Middleware<AppState> _restoreExpense(ExpenseRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.expenseIds, EntityAction.restore)
+          store.state.credentials,
+          action.expenseIds,
+          EntityAction.restore,
+        )
         .then((List<ExpenseEntity> expenses) {
-      store.dispatch(RestoreExpenseSuccess(expenses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreExpenseFailure(prevExpenses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreExpenseSuccess(expenses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreExpenseFailure(prevExpenses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -171,17 +188,18 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
     repository
         .saveData(store.state.credentials, action.expense!)
         .then((ExpenseEntity expense) {
-      if (action.expense!.isNew) {
-        store.dispatch(AddExpenseSuccess(expense));
-      } else {
-        store.dispatch(SaveExpenseSuccess(expense));
-      }
-      action.completer!.complete(expense);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveExpenseFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.expense!.isNew) {
+            store.dispatch(AddExpenseSuccess(expense));
+          } else {
+            store.dispatch(SaveExpenseSuccess(expense));
+          }
+          action.completer!.complete(expense);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveExpenseFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -195,18 +213,19 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
     repository
         .loadItem(store.state.credentials, action.expenseId)
         .then((expense) {
-      store.dispatch(LoadExpenseSuccess(expense));
+          store.dispatch(LoadExpenseSuccess(expense));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadExpenseFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadExpenseFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -219,39 +238,47 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
 
     store.dispatch(LoadExpensesRequest());
     repository
-        .loadList(state.credentials, action.page, state.createdAtLimit,
-            state.filterDeletedClients)
+        .loadList(
+          state.credentials,
+          action.page,
+          state.createdAtLimit,
+          state.filterDeletedClients,
+        )
         .then((data) {
-      store.dispatch(LoadExpensesSuccess(data));
+          store.dispatch(LoadExpensesSuccess(data));
 
-      final documents = <DocumentEntity>[];
-      data.forEach((expense) {
-        expense.documents.forEach((document) {
-          documents.add(document.rebuild((b) => b
-            ..parentId = expense.id
-            ..parentType = EntityType.expense));
+          final documents = <DocumentEntity>[];
+          data.forEach((expense) {
+            expense.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = expense.id
+                    ..parentType = EntityType.expense,
+                ),
+              );
+            });
+          });
+          store.dispatch(LoadDocumentsSuccess(documents));
+
+          if (data.length == kMaxRecordsPerPage) {
+            store.dispatch(
+              LoadExpenses(completer: action.completer, page: action.page + 1),
+            );
+          } else {
+            if (action.completer != null) {
+              action.completer!.complete(null);
+            }
+            store.dispatch(LoadRecurringExpenses());
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadExpensesFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
         });
-      });
-      store.dispatch(LoadDocumentsSuccess(documents));
-
-      if (data.length == kMaxRecordsPerPage) {
-        store.dispatch(LoadExpenses(
-          completer: action.completer,
-          page: action.page + 1,
-        ));
-      } else {
-        if (action.completer != null) {
-          action.completer!.complete(null);
-        }
-        store.dispatch(LoadRecurringExpenses());
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadExpensesFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
 
     next(action);
   };
@@ -263,27 +290,32 @@ Middleware<AppState> _saveDocument(ExpenseRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-        store.state.credentials,
-        action!.expense,
-        action.multipartFiles,
-        action.isPrivate!,
-      )
+            store.state.credentials,
+            action!.expense,
+            action.multipartFiles,
+            action.isPrivate!,
+          )
           .then((expense) {
-        store.dispatch(SaveExpenseSuccess(expense));
+            store.dispatch(SaveExpenseSuccess(expense));
 
-        final documents = <DocumentEntity>[];
-        expense.documents.forEach((document) {
-          documents.add(document.rebuild((b) => b
-            ..parentId = expense.id
-            ..parentType = EntityType.expense));
-        });
-        store.dispatch(LoadDocumentsSuccess(documents));
-        action.completer.complete(documents);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveExpenseDocumentFailure(error));
-        action.completer.completeError(error);
-      });
+            final documents = <DocumentEntity>[];
+            expense.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = expense.id
+                    ..parentType = EntityType.expense,
+                ),
+              );
+            });
+            store.dispatch(LoadDocumentsSuccess(documents));
+            action.completer.complete(documents);
+          })
+          .catchError((Object error) {
+            print(error);
+            store.dispatch(SaveExpenseDocumentFailure(error));
+            action.completer.completeError(error);
+          });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveExpenseDocumentFailure(error));

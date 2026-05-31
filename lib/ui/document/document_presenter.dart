@@ -43,9 +43,13 @@ class DocumentPresenter extends EntityPresenter {
       case DocumentFields.name:
         return Text(document!.name);
       case DocumentFields.createdAt:
-        return Text(formatDate(
-            convertTimestampToDateString(entity.createdAt), context,
-            showTime: true));
+        return Text(
+          formatDate(
+            convertTimestampToDateString(entity.createdAt),
+            context,
+            showTime: true,
+          ),
+        );
       case DocumentFields.type:
         return Text(document!.type);
       case DocumentFields.size:
@@ -59,8 +63,10 @@ class DocumentPresenter extends EntityPresenter {
       case DocumentFields.hash:
         return Text(document!.hash);
       case DocumentFields.linkedTo:
-        final parentEntity =
-            state.getEntity(document!.parentType, document.parentId);
+        final parentEntity = state.getEntity(
+          document!.parentType,
+          document.parentId,
+        );
         return LinkTextRelatedEntity(entity: parentEntity, relation: document);
       case DocumentFields.isPrivate:
         return Text(document!.isPublic ? localization!.no : localization!.yes);

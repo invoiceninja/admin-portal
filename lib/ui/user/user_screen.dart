@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/ui/user/user_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserScreen extends StatelessWidget {
-  const UserScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const UserScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsUserManagement';
 
@@ -86,20 +83,19 @@ class UserScreen extends StatelessWidget {
       ),
       floatingActionButton:
           state.prefState.isMobile && userCompany.canCreate(EntityType.user)
-              ? FloatingActionButton(
-                  heroTag: 'user_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.user);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization!.newUser,
-                )
-              : null,
+          ? FloatingActionButton(
+              heroTag: 'user_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                  context: context,
+                  entityType: EntityType.user,
+                );
+              },
+              child: Icon(Icons.add, color: Colors.white),
+              tooltip: localization!.newUser,
+            )
+          : null,
     );
   }
 }

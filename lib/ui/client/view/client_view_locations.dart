@@ -61,30 +61,33 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
       return LoadingIndicator();
     }
 
-    return ScrollableListView(children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: AppButton(
+    return ScrollableListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: AppButton(
             label: localization.addLocation,
             onPressed: () {
               showDialog(
-                  context: context,
-                  builder: (_) => _LocationModal(
-                        location: LocationEntity(
-                          clientId: widget.viewModel!.client.id,
-                          countryId: state.company.settings.countryId,
-                        ),
-                      ));
-            }),
-      ),
-      SizedBox(height: 10),
-      ...locations
-          .map((location) => ListTile(
+                context: context,
+                builder: (_) => _LocationModal(
+                  location: LocationEntity(
+                    clientId: widget.viewModel!.client.id,
+                    countryId: state.company.settings.countryId,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        SizedBox(height: 10),
+        ...locations
+            .map(
+              (location) => ListTile(
                 onTap: () => showDialog(
-                    context: context,
-                    builder: (_) => _LocationModal(
-                          location: location,
-                        )),
+                  context: context,
+                  builder: (_) => _LocationModal(location: location),
+                ),
                 title: Text(location.name),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,24 +145,34 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                   onSelected: (value) {
                     if (value == localization.delete) {
                       confirmCallback(
-                          context: context,
-                          callback: (_) {
-                            final url = state.credentials.url +
-                                '/locations/${location.id}';
-                            WebClient().delete(url, state.token).then((value) {
-                              showToast(localization.deletedLocation);
-                              store.dispatch(LoadClient(
-                                  clientId: widget.viewModel!.client.id));
-                            }).catchError((error) {
-                              showErrorDialog(message: error);
-                            });
-                          });
+                        context: context,
+                        callback: (_) {
+                          final url =
+                              state.credentials.url +
+                              '/locations/${location.id}';
+                          WebClient()
+                              .delete(url, state.token)
+                              .then((value) {
+                                showToast(localization.deletedLocation);
+                                store.dispatch(
+                                  LoadClient(
+                                    clientId: widget.viewModel!.client.id,
+                                  ),
+                                );
+                              })
+                              .catchError((error) {
+                                showErrorDialog(message: error);
+                              });
+                        },
+                      );
                     }
                   },
                 ),
-              ))
-          .toList(),
-    ]);
+              ),
+            )
+            .toList(),
+      ],
+    );
   }
 }
 
@@ -184,8 +197,9 @@ class __LocationModalState extends State<_LocationModal> {
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_locationEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_locationEdit',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   late List<TextEditingController> _controllers;
@@ -244,17 +258,19 @@ class __LocationModalState extends State<_LocationModal> {
       return;
     }
 
-    final location = _location.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..address1 = _address1Controller.text.trim()
-      ..address2 = _address2Controller.text.trim()
-      ..city = _cityController.text.trim()
-      ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+    final location = _location.rebuild(
+      (b) => b
+        ..name = _nameController.text.trim()
+        ..address1 = _address1Controller.text.trim()
+        ..address2 = _address2Controller.text.trim()
+        ..city = _cityController.text.trim()
+        ..state = _stateController.text.trim()
+        ..postalCode = _postalCodeController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim(),
+    );
 
     final webClient = WebClient();
     final data = serializers.serializeWith(LocationEntity.serializer, location);
@@ -264,33 +280,35 @@ class __LocationModalState extends State<_LocationModal> {
     if (location.isNew) {
       webClient
           .post(
-        state.credentials.url + '/locations',
-        state.token,
-        data: json.encode(data),
-      )
+            state.credentials.url + '/locations',
+            state.token,
+            data: json.encode(data),
+          )
           .then((value) {
-        Navigator.of(navigatorKey.currentContext!).pop();
-        showToast(localization.addedLocation);
-        store.dispatch(LoadClient(clientId: location.clientId));
-      }).catchError((error) {
-        showErrorDialog(message: error);
-        setState(() => _isLoading = false);
-      });
+            Navigator.of(navigatorKey.currentContext!).pop();
+            showToast(localization.addedLocation);
+            store.dispatch(LoadClient(clientId: location.clientId));
+          })
+          .catchError((error) {
+            showErrorDialog(message: error);
+            setState(() => _isLoading = false);
+          });
     } else {
       await webClient
           .put(
-        state.credentials.url + '/locations/${location.id}',
-        state.token,
-        data: json.encode(data),
-      )
+            state.credentials.url + '/locations/${location.id}',
+            state.token,
+            data: json.encode(data),
+          )
           .then((value) {
-        Navigator.of(navigatorKey.currentContext!).pop();
-        showToast(localization.updatedLocation);
-        store.dispatch(LoadClient(clientId: location.clientId));
-      }).catchError((error) {
-        showErrorDialog(message: error);
-        setState(() => _isLoading = false);
-      });
+            Navigator.of(navigatorKey.currentContext!).pop();
+            showToast(localization.updatedLocation);
+            store.dispatch(LoadClient(clientId: location.clientId));
+          })
+          .catchError((error) {
+            showErrorDialog(message: error);
+            setState(() => _isLoading = false);
+          });
     }
   }
 
@@ -302,9 +320,9 @@ class __LocationModalState extends State<_LocationModal> {
     final location = _location;
 
     return AlertDialog(
-      title: Text(location.isNew
-          ? localization.addLocation
-          : localization.editLocation),
+      title: Text(
+        location.isNew ? localization.addLocation : localization.editLocation,
+      ),
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
@@ -354,8 +372,9 @@ class __LocationModalState extends State<_LocationModal> {
                 entityId: _location.countryId,
                 onSelected: (SelectableEntity? country) {
                   setState(() {
-                    _location = _location
-                        .rebuild((b) => b..countryId = country?.id ?? '');
+                    _location = _location.rebuild(
+                      (b) => b..countryId = country?.id ?? '',
+                    );
                   });
                 },
               ),
@@ -386,7 +405,7 @@ class __LocationModalState extends State<_LocationModal> {
                   _location = _location.rebuild((b) => b..isShipping = value);
                 }),
                 label: localization.isShipping,
-              )
+              ),
             ],
           ),
         ),
@@ -394,10 +413,12 @@ class __LocationModalState extends State<_LocationModal> {
       actions: _isLoading
           ? [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: LinearProgressIndicator(),
-              )
+              ),
             ]
           : [
               TextButton(

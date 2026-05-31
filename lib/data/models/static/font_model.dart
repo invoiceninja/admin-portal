@@ -15,10 +15,7 @@ abstract class FontEntity extends Object
     with SelectableEntity
     implements Built<FontEntity, FontEntityBuilder> {
   factory FontEntity({String? id, String? name}) {
-    return _$FontEntity._(
-      id: id ?? '',
-      name: name ?? '',
-    );
+    return _$FontEntity._(id: id ?? '', name: name ?? '');
   }
   FontEntity._();
 

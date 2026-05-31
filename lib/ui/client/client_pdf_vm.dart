@@ -35,10 +35,7 @@ class ClientPdfScreen extends StatelessWidget {
 }
 
 class ClientPdfVM {
-  ClientPdfVM({
-    required this.state,
-    required this.client,
-  });
+  ClientPdfVM({required this.state, required this.client});
 
   factory ClientPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -46,10 +43,7 @@ class ClientPdfVM {
     final clientId = clientUIState.selectedId!;
     final client = state.clientState.get(clientId);
 
-    return ClientPdfVM(
-      state: state,
-      client: client,
-    );
+    return ClientPdfVM(state: state, client: client);
   }
 
   final AppState state;

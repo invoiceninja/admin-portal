@@ -98,28 +98,29 @@ enum InvoiceReportFields {
   record_state,
 }
 
-var memoizedInvoiceReport = memo9((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  StaticState staticState,
-) =>
-    invoiceReport(
-      userCompany!,
-      reportsUIState,
-      invoiceMap,
-      clientMap,
-      userMap,
-      vendorMap,
-      projectMap,
-      paymentMap,
-      staticState,
-    ));
+var memoizedInvoiceReport = memo9(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    StaticState staticState,
+  ) => invoiceReport(
+    userCompany!,
+    reportsUIState,
+    invoiceMap,
+    clientMap,
+    userMap,
+    vendorMap,
+    projectMap,
+    paymentMap,
+    staticState,
+  ),
+);
 
 ReportResult invoiceReport(
   UserCompanyEntity userCompany,
@@ -152,10 +153,12 @@ ReportResult invoiceReport(
   ];
 
   if (invoiceReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(invoiceReportSettings.columns
-        .map((e) => EnumUtils.fromString(InvoiceReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      invoiceReportSettings.columns
+          .map((e) => EnumUtils.fromString(InvoiceReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -190,8 +193,9 @@ ReportResult invoiceReport(
       continue;
     }
 
-    final contact =
-        client.getContact(invoice.invitations.first.clientContactId);
+    final contact = client.getContact(
+      invoice.invitations.first.clientContactId,
+    );
 
     if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
@@ -472,8 +476,9 @@ ReportResult invoiceReport(
           value = invoice.isPaid || invoice.age < 120 ? 0.0 : invoice.balance;
           break;
         case InvoiceReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(invoice.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(invoice.entityState);
           break;
       }
 
@@ -490,20 +495,23 @@ ReportResult invoiceReport(
         row.add(invoice.getReportBool(value: value));
       } else if (column == InvoiceReportFields.age) {
         row.add(
-            invoice.getReportAge(value: value, currencyId: client.currencyId));
+          invoice.getReportAge(value: value, currencyId: client.currencyId),
+        );
       } else if (value.runtimeType == double || value.runtimeType == int) {
         String? currencyId = client.currencyId;
         if ([
           InvoiceReportFields.converted_amount,
-          InvoiceReportFields.converted_balance
+          InvoiceReportFields.converted_balance,
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(invoice.getReportDouble(
-          value: value,
-          currencyId: currencyId,
-          exchangeRate: invoice.exchangeRate,
-        ));
+        row.add(
+          invoice.getReportDouble(
+            value: value,
+            currencyId: currencyId,
+            exchangeRate: invoice.exchangeRate,
+          ),
+        );
       } else {
         row.add(invoice.getReportString(value: value));
       }
@@ -516,15 +524,23 @@ ReportResult invoiceReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      invoiceReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        InvoiceReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: InvoiceReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

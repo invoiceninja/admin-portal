@@ -77,28 +77,25 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       _isLoading = true;
     });
 
-    _loadPDF(
-      context,
-      invoice,
-      _isDeliveryNote,
-      _activityId,
-      _designId,
-    ).then((response) async {
-      setState(() {
-        _response = response;
-        _isLoading = false;
-      });
-    }).catchError((Object error) {
-      setState(() {
-        _isLoading = false;
-      });
-
-      showDialog<void>(
-          context: navigatorKey.currentContext!,
-          builder: (BuildContext context) {
-            return ErrorDialog(error);
+    _loadPDF(context, invoice, _isDeliveryNote, _activityId, _designId)
+        .then((response) async {
+          setState(() {
+            _response = response;
+            _isLoading = false;
           });
-    });
+        })
+        .catchError((Object error) {
+          setState(() {
+            _isLoading = false;
+          });
+
+          showDialog<void>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
   }
 
   @override
@@ -138,26 +135,36 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
               child: IgnorePointer(
                 ignoring: _isLoading,
                 child: AppDropdownButton<String>(
-                    value: _activityId,
-                    onChanged: (dynamic activityId) {
-                      setState(() {
-                        _activityId = activityId;
-                        loadPdf();
-                      });
-                    },
-                    items: invoice.balanceHistory
-                        .map((history) => DropdownMenuItem(
-                              child: Text(formatNumber(history.amount, context,
-                                      clientId: invoice.clientId)! +
-                                  ' • ' +
-                                  formatDate(
-                                      convertTimestampToDateString(
-                                          history.createdAt),
-                                      context,
-                                      showTime: true)),
-                              value: history.activityId,
-                            ))
-                        .toList()),
+                  value: _activityId,
+                  onChanged: (dynamic activityId) {
+                    setState(() {
+                      _activityId = activityId;
+                      loadPdf();
+                    });
+                  },
+                  items: invoice.balanceHistory
+                      .map(
+                        (history) => DropdownMenuItem(
+                          child: Text(
+                            formatNumber(
+                                  history.amount,
+                                  context,
+                                  clientId: invoice.clientId,
+                                )! +
+                                ' • ' +
+                                formatDate(
+                                  convertTimestampToDateString(
+                                    history.createdAt,
+                                  ),
+                                  context,
+                                  showTime: true,
+                                ),
+                          ),
+                          value: history.activityId,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
           );
@@ -191,9 +198,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
     final deliveryNote = Flexible(
       child: CheckboxListTile(
-        title: Text(
-          localization.deliveryNote,
-        ),
+        title: Text(localization.deliveryNote),
         value: _isDeliveryNote,
         onChanged: (value) {
           setState(() {
@@ -221,13 +226,16 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           ? AppBar(
               centerTitle: false,
               automaticallyImplyLeading: isMobile(context),
-              title:
-                  Text(EntityPresenter().initialize(invoice, context).title()!),
+              title: Text(
+                EntityPresenter().initialize(invoice, context).title()!,
+              ),
               actions: <Widget>[
                 if (showEmail)
                   TextButton(
-                    child: Text(localization.email,
-                        style: TextStyle(color: state.headerTextColor)),
+                    child: Text(
+                      localization.email,
+                      style: TextStyle(color: state.headerTextColor),
+                    ),
                     onPressed: () {
                       handleEntityAction(invoice, EntityAction.sendEmail);
                     },
@@ -239,7 +247,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     onPressed: _response == null
                         ? null
                         : () async {
-                            final fileName = (invoice.number.isEmpty
+                            final fileName =
+                                (invoice.number.isEmpty
                                     ? localization.pending
                                     : invoice.number) +
                                 '.pdf';
@@ -253,8 +262,10 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                   ),
                 if (isDesktop(context))
                   TextButton(
-                    child: Text(localization.close,
-                        style: TextStyle(color: state.headerTextColor)),
+                    child: Text(
+                      localization.close,
+                      style: TextStyle(color: state.headerTextColor),
+                    ),
                     onPressed: () {
                       viewEntity(entity: invoice);
                     },
@@ -288,9 +299,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     maxPageWidth: 800,
                     pdfFileName:
                         localization.lookup(invoice.entityType!.snakeCase) +
-                            '_' +
-                            invoice.number +
-                            '.pdf',
+                        '_' +
+                        invoice.number +
+                        '.pdf',
                   ),
           ),
         ],

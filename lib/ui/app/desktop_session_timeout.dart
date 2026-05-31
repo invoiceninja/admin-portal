@@ -36,29 +36,27 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
       return;
     }
 
-    _timer = Timer.periodic(
-      Duration(minutes: 1),
-      (Timer timer) {
-        final store = StoreProvider.of<AppState>(context);
-        final state = store.state;
-        final sessionTimeout = state.company.sessionTimeout;
+    _timer = Timer.periodic(Duration(minutes: 1), (Timer timer) {
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final sessionTimeout = state.company.sessionTimeout;
 
-        if (sessionTimeout == 0 || isMobile(context)) {
-          return;
-        }
+      if (sessionTimeout == 0 || isMobile(context)) {
+        return;
+      }
 
-        final sessionLength = DateTime.now().millisecondsSinceEpoch -
-            state.userCompanyState.lastUpdated;
+      final sessionLength =
+          DateTime.now().millisecondsSinceEpoch -
+          state.userCompanyState.lastUpdated;
 
-        if (sessionLength > sessionTimeout) {
-          store.dispatch(UserLogout());
-        } else if (sessionLength > (sessionTimeout - (1000 * 60 * 2))) {
-          setState(() {
-            _isWarned = true;
-          });
-        }
-      },
-    );
+      if (sessionLength > sessionTimeout) {
+        store.dispatch(UserLogout());
+      } else if (sessionLength > (sessionTimeout - (1000 * 60 * 2))) {
+        setState(() {
+          _isWarned = true;
+        });
+      }
+    });
   }
 
   @override
@@ -82,25 +80,27 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
               child: Row(
                 children: [
                   Expanded(
-                      child: Text(
-                    localization!.sessionAboutToExpire,
-                    style: TextStyle(color: Colors.white),
-                  )),
+                    child: Text(
+                      localization!.sessionAboutToExpire,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                   TextButton(
-                      onPressed: () {
-                        final store = StoreProvider.of<AppState>(context);
-                        final completer = Completer<Null>();
-                        completer.future.then<Null>((_) {
-                          setState(() {
-                            _isWarned = false;
-                          });
+                    onPressed: () {
+                      final store = StoreProvider.of<AppState>(context);
+                      final completer = Completer<Null>();
+                      completer.future.then<Null>((_) {
+                        setState(() {
+                          _isWarned = false;
                         });
-                        store.dispatch(RefreshData(completer: completer));
-                      },
-                      child: Text(
-                        localization.stayLoggedIn,
-                        style: TextStyle(color: Colors.white),
-                      ))
+                      });
+                      store.dispatch(RefreshData(completer: completer));
+                    },
+                    child: Text(
+                      localization.stayLoggedIn,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
             ),

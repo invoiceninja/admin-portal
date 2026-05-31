@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'credit_screen_vm.dart';
 
 class CreditScreen extends StatelessWidget {
-  const CreditScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const CreditScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/credit';
 
@@ -122,14 +119,22 @@ class CreditScreen extends StatelessWidget {
             store.dispatch(StartCreditMultiselect());
           }
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.invoice3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.invoice4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.invoice1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.invoice2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.invoice3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.invoice4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterCreditsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -139,19 +144,19 @@ class CreditScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterCreditsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.credit)
           ? FloatingActionButton(
               heroTag: 'credit_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.credit);
+                  context: context,
+                  entityType: EntityType.credit,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newCredit,
             )
           : null,

@@ -38,20 +38,20 @@ class DismissibleEntity extends StatelessWidget {
 
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final isMultiselect =
-        store.state.getListState(entity.entityType).isInMultiselect();
+    final isMultiselect = store.state
+        .getListState(entity.entityType)
+        .isInMultiselect();
 
     final widget = SelectedIndicator(
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           isSelected &&
           showMultiselect &&
           isDismissible &&
           !isMultiselect &&
           !entity.entityType!.isSetting,
       child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: 60,
-        ),
+        constraints: BoxConstraints(minHeight: 60),
         child: child,
       ),
     );

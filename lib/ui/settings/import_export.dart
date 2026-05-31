@@ -43,10 +43,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ImportExport extends StatefulWidget {
-  const ImportExport({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ImportExport({Key? key, required this.viewModel}) : super(key: key);
 
   final ImportExportVM viewModel;
 
@@ -56,8 +53,9 @@ class ImportExport extends StatefulWidget {
 
 class _ImportExportState extends State<ImportExport>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_importExport');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_importExport',
+  );
 
   TabController? _controller;
   FocusScopeNode? _focusNode;
@@ -96,58 +94,41 @@ class _ImportExportState extends State<ImportExport>
     ExportType.invoices: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
-      DATE_FIELD_PARTIAL_DUE_DATE
+      DATE_FIELD_PARTIAL_DUE_DATE,
     ],
     ExportType.quotes: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
-      DATE_FIELD_PARTIAL_DUE_DATE
+      DATE_FIELD_PARTIAL_DUE_DATE,
     ],
     ExportType.credits: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
-      DATE_FIELD_PARTIAL_DUE_DATE
+      DATE_FIELD_PARTIAL_DUE_DATE,
     ],
     ExportType.invoice_items: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
-      DATE_FIELD_PARTIAL_DUE_DATE
+      DATE_FIELD_PARTIAL_DUE_DATE,
     ],
     ExportType.quote_items: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
-      DATE_FIELD_PARTIAL_DUE_DATE
+      DATE_FIELD_PARTIAL_DUE_DATE,
     ],
     ExportType.recurring_invoices: [
       DATE_FIELD_DATE,
       DATE_FIELD_DUE_DATE,
-      DATE_FIELD_PARTIAL_DUE_DATE
+      DATE_FIELD_PARTIAL_DUE_DATE,
     ],
-    ExportType.clients: [
-      DATE_FIELD_CREATED_AT,
-    ],
-    ExportType.client_contacts: [
-      DATE_FIELD_CREATED_AT,
-    ],
-    ExportType.documents: [
-      DATE_FIELD_CREATED_AT,
-    ],
-    ExportType.products: [
-      DATE_FIELD_CREATED_AT,
-    ],
-    ExportType.tasks: [
-      DATE_FIELD_CREATED_AT,
-    ],
-    ExportType.expenses: [
-      DATE_FIELD_DATE,
-      DATE_FIELD_PAYMENT_DATE,
-    ],
-    ExportType.payments: [
-      DATE_FIELD_DATE,
-    ],
-    ExportType.profitloss: [
-      DATE_FIELD_DATE,
-    ],
+    ExportType.clients: [DATE_FIELD_CREATED_AT],
+    ExportType.client_contacts: [DATE_FIELD_CREATED_AT],
+    ExportType.documents: [DATE_FIELD_CREATED_AT],
+    ExportType.products: [DATE_FIELD_CREATED_AT],
+    ExportType.tasks: [DATE_FIELD_CREATED_AT],
+    ExportType.expenses: [DATE_FIELD_DATE, DATE_FIELD_PAYMENT_DATE],
+    ExportType.payments: [DATE_FIELD_DATE],
+    ExportType.profitloss: [DATE_FIELD_DATE],
   };
 
   @override
@@ -157,7 +138,10 @@ class _ImportExportState extends State<ImportExport>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: state.settingsUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: state.settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -188,12 +172,8 @@ class _ImportExportState extends State<ImportExport>
           controller: _controller,
           isScrollable: false,
           tabs: [
-            Tab(
-              text: localization.import,
-            ),
-            Tab(
-              text: localization.export,
-            ),
+            Tab(text: localization.import),
+            Tab(text: localization.export),
           ],
         ),
       ),
@@ -210,13 +190,9 @@ class _ImportExportState extends State<ImportExport>
                   importType: _importFormat,
                   onUploaded: (response) => {
                     if (_importFormat == ImportType.csv)
-                      {
-                        setState(() => _response = response),
-                      }
+                      {setState(() => _response = response)}
                     else
-                      {
-                        showToast(localization.startedImport),
-                      }
+                      {showToast(localization.startedImport)},
                   },
                   onImportTypeChanged: (importType) =>
                       setState(() => _importFormat = importType!),
@@ -241,27 +217,29 @@ class _ImportExportState extends State<ImportExport>
                     LinearProgressIndicator()
                   else ...[
                     InputDecorator(
-                      decoration:
-                          InputDecoration(labelText: localization.exportFormat),
+                      decoration: InputDecoration(
+                        labelText: localization.exportFormat,
+                      ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<ImportType>(
-                            isDense: true,
-                            value: _exportFormat,
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _exportFormat = value;
-                              });
-                            },
-                            items: [
-                              ImportType.csv,
-                              ImportType.json,
-                            ]
-                                .map((importType) =>
-                                    DropdownMenuItem<ImportType>(
-                                        value: importType,
-                                        child: Text(localization
-                                            .lookup('$importType'))))
-                                .toList()),
+                          isDense: true,
+                          value: _exportFormat,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              _exportFormat = value;
+                            });
+                          },
+                          items: [ImportType.csv, ImportType.json]
+                              .map(
+                                (importType) => DropdownMenuItem<ImportType>(
+                                  value: importType,
+                                  child: Text(
+                                    localization.lookup('$importType'),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
                       ),
                     ),
                     if (_exportFormat == ImportType.csv) ...[
@@ -274,10 +252,12 @@ class _ImportExportState extends State<ImportExport>
                           });
                         },
                         items: ExportType.values
-                            .map((importType) => DropdownMenuItem<ExportType>(
+                            .map(
+                              (importType) => DropdownMenuItem<ExportType>(
                                 value: importType,
-                                child:
-                                    Text(localization.lookup('$importType'))))
+                                child: Text(localization.lookup('$importType')),
+                              ),
+                            )
                             .toList(),
                       ),
                       if (DATE_FIELDS.containsKey(_exportType)) ...[
@@ -291,10 +271,14 @@ class _ImportExportState extends State<ImportExport>
                             });
                           },
                           items: DATE_FIELDS[_exportType]!
-                              .map((dateField) => DropdownMenuItem<String>(
+                              .map(
+                                (dateField) => DropdownMenuItem<String>(
                                   value: dateField,
-                                  child:
-                                      Text(localization.lookup('$dateField'))))
+                                  child: Text(
+                                    localization.lookup('$dateField'),
+                                  ),
+                                ),
+                              )
                               .toList(),
                         ),
                         if (_exportDate.isNotEmpty)
@@ -306,22 +290,20 @@ class _ImportExportState extends State<ImportExport>
                                 _exportDateRange = value;
                               });
                             },
-                            items: DATE_RANGES.map(
-                              (dateRange) {
-                                String? label = '';
-                                if (dateRange == 'last7') {
-                                  label = localization.last7Days;
-                                } else if (dateRange == 'last30') {
-                                  label = localization.last30Days;
-                                } else {
-                                  label = localization.lookup('$dateRange');
-                                }
-                                return DropdownMenuItem<String>(
-                                  value: dateRange,
-                                  child: Text(label),
-                                );
-                              },
-                            ).toList(),
+                            items: DATE_RANGES.map((dateRange) {
+                              String? label = '';
+                              if (dateRange == 'last7') {
+                                label = localization.last7Days;
+                              } else if (dateRange == 'last30') {
+                                label = localization.last30Days;
+                              } else {
+                                label = localization.lookup('$dateRange');
+                              }
+                              return DropdownMenuItem<String>(
+                                value: dateRange,
+                                child: Text(label),
+                              );
+                            }).toList(),
                           ),
                         if (_exportDateRange == 'custom') ...[
                           DatePicker(
@@ -342,7 +324,7 @@ class _ImportExportState extends State<ImportExport>
                             },
                             selectedDate: _exportEndDate,
                           ),
-                        ]
+                        ],
                       ],
                     ],
                     if (_exportFormat == ImportType.csv &&
@@ -350,14 +332,15 @@ class _ImportExportState extends State<ImportExport>
                       Padding(
                         padding: const EdgeInsets.only(top: 16),
                         child: BoolDropdownButton(
-                            iconData: getEntityIcon(EntityType.document),
-                            label: localization.attachDocuments,
-                            value: _exportDocuments,
-                            onChanged: (value) {
-                              setState(() {
-                                _exportDocuments = value == true;
-                              });
-                            }),
+                          iconData: getEntityIcon(EntityType.document),
+                          label: localization.attachDocuments,
+                          value: _exportDocuments,
+                          onChanged: (value) {
+                            setState(() {
+                              _exportDocuments = value == true;
+                            });
+                          },
+                        ),
                       ),
                     Row(
                       children: [
@@ -367,8 +350,9 @@ class _ImportExportState extends State<ImportExport>
                             label: localization.export.toUpperCase(),
                             onPressed: () {
                               final webClient = WebClient();
-                              final state =
-                                  StoreProvider.of<AppState>(context).state;
+                              final state = StoreProvider.of<AppState>(
+                                context,
+                              ).state;
                               final credentials = state.credentials;
                               String? url = credentials.url;
 
@@ -420,16 +404,21 @@ class _ImportExportState extends State<ImportExport>
                               }
 
                               webClient
-                                  .post(url, credentials.token,
-                                      data: json.encode(data))
+                                  .post(
+                                    url,
+                                    credentials.token,
+                                    data: json.encode(data),
+                                  )
                                   .then((dynamic result) {
-                                setState(() => _isExporting = false);
-                                showMessageDialog(
-                                    message: localization.exportedData);
-                              }).catchError((dynamic error) {
-                                setState(() => _isExporting = false);
-                                showErrorDialog(message: '$error');
-                              });
+                                    setState(() => _isExporting = false);
+                                    showMessageDialog(
+                                      message: localization.exportedData,
+                                    );
+                                  })
+                                  .catchError((dynamic error) {
+                                    setState(() => _isExporting = false);
+                                    showErrorDialog(message: '$error');
+                                  });
                             },
                           ),
                         ),
@@ -441,20 +430,24 @@ class _ImportExportState extends State<ImportExport>
                               iconData: Icons.schedule,
                               onPressed: () {
                                 createEntity(
-                                    entity: ScheduleEntity(ScheduleEntity
-                                            .TEMPLATE_EMAIL_REPORT)
-                                        .rebuild((b) => b
+                                  entity:
+                                      ScheduleEntity(
+                                        ScheduleEntity.TEMPLATE_EMAIL_REPORT,
+                                      ).rebuild(
+                                        (b) => b
                                           ..parameters.reportName =
-                                              _exportType.name));
+                                              _exportType.name,
+                                      ),
+                                );
                               },
                             ),
                           ),
                         ],
                       ],
-                    )
+                    ),
                   ],
                 ],
-              )
+              ),
             ],
           ),
         ],
@@ -512,22 +505,23 @@ class _FileImportState extends State<_FileImport> {
 
     webClient
         .post(
-      url,
-      credentials.token,
-      multipartFiles: _multipartFiles.values.toList(),
-      //data: {},
-    )
+          url,
+          credentials.token,
+          multipartFiles: _multipartFiles.values.toList(),
+          //data: {},
+        )
         .then((dynamic result) {
-      setState(() {
-        _isLoading = false;
-        _multipartFiles.clear();
-      });
+          setState(() {
+            _isLoading = false;
+            _multipartFiles.clear();
+          });
 
-      showToast(localization!.startedImport);
-    }).catchError((dynamic error) {
-      setState(() => _isLoading = false);
-      showErrorDialog(message: '$error');
-    });
+          showToast(localization!.startedImport);
+        })
+        .catchError((dynamic error) {
+          setState(() => _isLoading = false);
+          showErrorDialog(message: '$error');
+        });
   }
 
   void uploadFile() {
@@ -552,30 +546,33 @@ class _FileImportState extends State<_FileImport> {
 
     setState(() => _isLoading = true);
 
-    webClient.post(
-      url,
-      credentials.token,
-      multipartFiles: _multipartFiles.values.toList(),
-      data: {
-        'import_type': widget.importType.toString(),
-      },
-    ).then((dynamic result) {
-      setState(() {
-        _isLoading = false;
-        _multipartFiles.clear();
-      });
+    webClient
+        .post(
+          url,
+          credentials.token,
+          multipartFiles: _multipartFiles.values.toList(),
+          data: {'import_type': widget.importType.toString()},
+        )
+        .then((dynamic result) {
+          setState(() {
+            _isLoading = false;
+            _multipartFiles.clear();
+          });
 
-      if (widget.importType != ImportType.csv) {
-        showToast(localization!.startedImport);
-      } else {
-        final response =
-            serializers.deserializeWith(PreImportResponse.serializer, result);
-        widget.onUploaded(response);
-      }
-    }).catchError((dynamic error) {
-      setState(() => _isLoading = false);
-      showErrorDialog(message: '$error');
-    });
+          if (widget.importType != ImportType.csv) {
+            showToast(localization!.startedImport);
+          } else {
+            final response = serializers.deserializeWith(
+              PreImportResponse.serializer,
+              result,
+            );
+            widget.onUploaded(response);
+          }
+        })
+        .catchError((dynamic error) {
+          setState(() => _isLoading = false);
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -584,29 +581,32 @@ class _FileImportState extends State<_FileImport> {
 
     final List<Widget> children = [
       InputDecorator(
-        decoration: InputDecoration(
-          labelText: localization.importFormat,
-        ),
+        decoration: InputDecoration(labelText: localization.importFormat),
         child: DropdownButtonHideUnderline(
           child: DropdownButton<ImportType>(
-              isDense: true,
-              value: widget.importType,
-              onChanged: (dynamic value) => widget.onImportTypeChanged(value),
-              items: [
-                ImportType.csv,
-                ImportType.json,
-                ImportType.freshbooks,
-                ImportType.invoice2go,
-                ImportType.invoicely,
-                ImportType.waveaccounting,
-                ImportType.zoho,
-              ]
-                  .map((importType) => DropdownMenuItem<ImportType>(
-                      value: importType,
-                      child: Text(localization.lookup('$importType'))))
-                  .toList()),
+            isDense: true,
+            value: widget.importType,
+            onChanged: (dynamic value) => widget.onImportTypeChanged(value),
+            items:
+                [
+                      ImportType.csv,
+                      ImportType.json,
+                      ImportType.freshbooks,
+                      ImportType.invoice2go,
+                      ImportType.invoicely,
+                      ImportType.waveaccounting,
+                      ImportType.zoho,
+                    ]
+                    .map(
+                      (importType) => DropdownMenuItem<ImportType>(
+                        value: importType,
+                        child: Text(localization.lookup('$importType')),
+                      ),
+                    )
+                    .toList(),
+          ),
         ),
-      )
+      ),
     ];
 
     for (MapEntry<String, String> uploadPart
@@ -616,40 +616,48 @@ class _FileImportState extends State<_FileImport> {
           : null;
 
       final field = DecoratedFormField(
-          enabled: false,
-          keyboardType: TextInputType.text,
-          key: ValueKey(uploadPart.key +
-              (multipartFile != null ? multipartFile.filename! : '')),
-          label: localization.lookup(uploadPart.value),
-          initialValue: !_multipartFiles.containsKey(uploadPart.key)
-              ? localization.noFileSelected
-              : '${_multipartFiles[uploadPart.key]!.filename} • ${formatSize(_multipartFiles[uploadPart.key]!.length)}');
-
-      children.add(Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        Expanded(child: field),
-        SizedBox(width: kTableColumnGap),
-        OutlinedButton(
-          child: Text(localization.selectFile),
-          onPressed: () async {
-            final multipartFiles = await pickFiles(
-              fileIndex: widget.importType == ImportType.json
-                  ? 'files'
-                  : 'files[' + uploadPart.key + ']',
-              fileType: FileType.custom,
-              allowMultiple: false,
-              allowedExtensions: widget.importType == ImportType.json
-                  ? ['json', 'zip']
-                  : ['csv'],
-            );
-
-            if (multipartFiles != null && multipartFiles.isNotEmpty) {
-              setState(() {
-                _multipartFiles[uploadPart.key] = multipartFiles.first;
-              });
-            }
-          },
+        enabled: false,
+        keyboardType: TextInputType.text,
+        key: ValueKey(
+          uploadPart.key +
+              (multipartFile != null ? multipartFile.filename! : ''),
         ),
-      ]));
+        label: localization.lookup(uploadPart.value),
+        initialValue: !_multipartFiles.containsKey(uploadPart.key)
+            ? localization.noFileSelected
+            : '${_multipartFiles[uploadPart.key]!.filename} • ${formatSize(_multipartFiles[uploadPart.key]!.length)}',
+      );
+
+      children.add(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(child: field),
+            SizedBox(width: kTableColumnGap),
+            OutlinedButton(
+              child: Text(localization.selectFile),
+              onPressed: () async {
+                final multipartFiles = await pickFiles(
+                  fileIndex: widget.importType == ImportType.json
+                      ? 'files'
+                      : 'files[' + uploadPart.key + ']',
+                  fileType: FileType.custom,
+                  allowMultiple: false,
+                  allowedExtensions: widget.importType == ImportType.json
+                      ? ['json', 'zip']
+                      : ['csv'],
+                );
+
+                if (multipartFiles != null && multipartFiles.isNotEmpty) {
+                  setState(() {
+                    _multipartFiles[uploadPart.key] = multipartFiles.first;
+                  });
+                }
+              },
+            ),
+          ],
+        ),
+      );
     }
 
     children.add(SizedBox(height: 20));
@@ -681,19 +689,21 @@ class _FileImportState extends State<_FileImport> {
     if (_isLoading)
       children.add(LinearProgressIndicator());
     else
-      children.add(AppButton(
-        label: localization.import.toUpperCase(),
-        iconData: MdiIcons.import,
-        onPressed: _multipartFiles.isEmpty
-            ? null
-            : () {
-                if (widget.importType == ImportType.json) {
-                  uploadJsonFile();
-                } else {
-                  uploadFile();
-                }
-              },
-      ));
+      children.add(
+        AppButton(
+          label: localization.import.toUpperCase(),
+          iconData: MdiIcons.import,
+          onPressed: _multipartFiles.isEmpty
+              ? null
+              : () {
+                  if (widget.importType == ImportType.json) {
+                    uploadJsonFile();
+                  } else {
+                    uploadFile();
+                  }
+                },
+        ),
+      );
 
     return FormCard(
       isLast: true,
@@ -787,24 +797,23 @@ class __FileMapperState extends State<_FileMapper> {
         Row(
           children: [
             Expanded(
-              child: Text(_useFirstRowAsHeaders
-                  ? localization.column
-                  : localization.sample),
+              child: Text(
+                _useFirstRowAsHeaders
+                    ? localization.column
+                    : localization.sample,
+              ),
             ),
-            Expanded(
-              child: Text(localization.sample),
-            ),
-            Expanded(
-              child: Text(localization.mapTo),
-            ),
+            Expanded(child: Text(localization.sample)),
+            Expanded(child: Text(localization.mapTo)),
           ],
         ),
         SizedBox(height: 12),
         for (var i = 0; i < entry.value.fields1.length; i++)
           _FieldMapper(
             field1: entry.value.fields1[i],
-            field2:
-                entry.value.fields2.length > i ? entry.value.fields2[i] : null,
+            field2: entry.value.fields2.length > i
+                ? entry.value.fields2[i]
+                : null,
             available: entry.value.available,
             mappedTo: _mapping[entry.key]![i] ?? '',
             mapping: _mapping[entry.key],
@@ -822,32 +831,39 @@ class __FileMapperState extends State<_FileMapper> {
 
       if (widget.importType == ImportType.csv &&
           entry.key == 'bank_transaction') {
-        children.add(EntityDropdown(
-          entityType: EntityType.bankAccount,
-          entityId: _bankAccountId,
-          labelText: localization.bankAccount,
-          entityList: memoizedDropdownBankAccountList(
-            state.bankAccountState.map,
-            state.bankAccountState.list,
-            state.staticState,
-            state.userState.map,
-            _bankAccountId,
+        children.add(
+          EntityDropdown(
+            entityType: EntityType.bankAccount,
+            entityId: _bankAccountId,
+            labelText: localization.bankAccount,
+            entityList: memoizedDropdownBankAccountList(
+              state.bankAccountState.map,
+              state.bankAccountState.list,
+              state.staticState,
+              state.userState.map,
+              _bankAccountId,
+            ),
+            onSelected: (bankAccount) {
+              setState(() {
+                _bankAccountId = bankAccount?.id;
+              });
+            },
+            onCreateNew: (completer, name) {
+              store.dispatch(
+                SaveBankAccountRequest(
+                  bankAccount: BankAccountEntity().rebuild(
+                    (b) => b..name = name,
+                  ),
+                  completer: completer,
+                ),
+              );
+            },
+            validator: (dynamic value) => (_bankAccountId ?? '').isEmpty
+                ? localization.pleaseEnterAValue
+                : null,
+            overrideSuggestedAmount: (entity) => '',
           ),
-          onSelected: (bankAccount) {
-            setState(() {
-              _bankAccountId = bankAccount?.id;
-            });
-          },
-          onCreateNew: (completer, name) {
-            store.dispatch(SaveBankAccountRequest(
-                bankAccount: BankAccountEntity().rebuild((b) => b..name = name),
-                completer: completer));
-          },
-          validator: (dynamic value) => (_bankAccountId ?? '').isEmpty
-              ? localization.pleaseEnterAValue
-              : null,
-          overrideSuggestedAmount: (entity) => '',
-        ));
+        );
       }
     }
 
@@ -883,8 +899,9 @@ class __FileMapperState extends State<_FileMapper> {
 
                   for (MapEntry<String, Map<int, String>> e
                       in _mapping.entries) {
-                    convertedMapping[e.key] =
-                        new ImportRequestMapping(BuiltMap(e.value));
+                    convertedMapping[e.key] = new ImportRequestMapping(
+                      BuiltMap(e.value),
+                    );
                   }
 
                   setState(() => _isLoading = true);
@@ -898,27 +915,26 @@ class __FileMapperState extends State<_FileMapper> {
                   );
 
                   final data = serializers.serializeWith(
-                      ImportRequest.serializer, importRequest);
+                    ImportRequest.serializer,
+                    importRequest,
+                  );
 
                   webClient
-                      .post(
-                    url,
-                    credentials.token,
-                    data: json.encode(data),
-                  )
+                      .post(url, credentials.token, data: json.encode(data))
                       .then((dynamic result) {
-                    setState(() => _isLoading = false);
-                    widget.onCancelPressed();
-                    showToast(localization.startedImport);
-                  }).catchError((dynamic error) {
-                    setState(() => _isLoading = false);
-                    showErrorDialog(message: '$error');
-                  });
+                        setState(() => _isLoading = false);
+                        widget.onCancelPressed();
+                        showToast(localization.startedImport);
+                      })
+                      .catchError((dynamic error) {
+                        setState(() => _isLoading = false);
+                        showErrorDialog(message: '$error');
+                      });
                 },
               ),
             ),
           ],
-        )
+        ),
     ]);
 
     return SingleChildScrollView(
@@ -971,24 +987,24 @@ class _FieldMapper extends StatelessWidget {
         Expanded(child: Text(field1)),
         Expanded(child: Text(field2 ?? '')),
         Expanded(
-            child: DropdownButtonFormField<String>(
-          isExpanded: true,
-          initialValue: available.contains(mappedTo) ? mappedTo : null,
-          validator: (value) => (value ?? '').isNotEmpty &&
-                  mapping!.values.where((element) => element == value).length >
-                      1
-              ? localization!.duplicateColumnMapping
-              : null,
-          onChanged: (value) => onMappedToChanged(value),
-          items: [
-            DropdownMenuItem<String>(
-              child: SizedBox(),
-              value: '',
-            ),
-            ...sorted.map(
-              (field) {
-                final fieldLabel = localization!
-                    .lookup(field.split('.').last.replaceAll('_id', ''));
+          child: DropdownButtonFormField<String>(
+            isExpanded: true,
+            initialValue: available.contains(mappedTo) ? mappedTo : null,
+            validator: (value) =>
+                (value ?? '').isNotEmpty &&
+                    mapping!.values
+                            .where((element) => element == value)
+                            .length >
+                        1
+                ? localization!.duplicateColumnMapping
+                : null,
+            onChanged: (value) => onMappedToChanged(value),
+            items: [
+              DropdownMenuItem<String>(child: SizedBox(), value: ''),
+              ...sorted.map((field) {
+                final fieldLabel = localization!.lookup(
+                  field.split('.').last.replaceAll('_id', ''),
+                );
                 final fieldType = localization.lookup(field.split('.').first);
                 return DropdownMenuItem<String>(
                   child: Text(
@@ -998,10 +1014,10 @@ class _FieldMapper extends StatelessWidget {
                   ),
                   value: field,
                 );
-              },
-            ).toList(),
-          ],
-        )),
+              }).toList(),
+            ],
+          ),
+        ),
       ],
     );
   }

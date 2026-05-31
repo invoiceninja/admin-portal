@@ -22,9 +22,7 @@ class CreditScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, CreditScreenVM>(
       converter: CreditScreenVM.fromStore,
       builder: (context, vm) {
-        return CreditScreen(
-          viewModel: vm,
-        );
+        return CreditScreen(viewModel: vm);
       },
     );
   }
@@ -51,19 +49,23 @@ class CreditScreenVM {
     return CreditScreenVM(
       creditMap: state.creditState.map,
       creditList: memoizedFilteredCreditList(
-          state.getUISelection(EntityType.credit),
-          state.creditState.map,
-          state.creditState.list,
-          state.clientState.map,
-          state.vendorState.map,
-          state.paymentState.map,
-          state.creditListState,
-          state.userState.map),
+        state.getUISelection(EntityType.credit),
+        state.creditState.map,
+        state.creditState.list,
+        state.clientState.map,
+        state.vendorState.map,
+        state.paymentState.map,
+        state.creditListState,
+        state.userState.map,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.creditListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> credits,
-              EntityAction action) =>
-          handleCreditAction(context, credits, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> credits,
+            EntityAction action,
+          ) => handleCreditAction(context, credits, action),
     );
   }
 }

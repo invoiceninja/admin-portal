@@ -53,7 +53,7 @@ class ExpenseListItem extends StatelessWidget {
     final category = state.expenseCategoryState.get(expense.categoryId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (expense.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
@@ -62,9 +62,7 @@ class ExpenseListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else {
-      final parts = <String>[
-        formatDate(expense.date, context),
-      ];
+      final parts = <String>[formatDate(expense.date, context)];
       if (category.isOld) {
         parts.add(category.name);
       }
@@ -80,7 +78,8 @@ class ExpenseListItem extends StatelessWidget {
     return DismissibleEntity(
       showMultiselect: showSelected,
       isDismissible: isDismissible,
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           showSelected &&
           expense.id ==
               (uiState.isEditing
@@ -89,176 +88,195 @@ class ExpenseListItem extends StatelessWidget {
       userCompany: store.state.userCompany,
       entity: expense,
       child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return constraints.maxWidth > kTableListWidthCutoff
-            ? InkWell(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: expense),
-                onLongPress: () => onTap != null
-                    ? null
-                    : selectEntity(entity: expense, longPress: true),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 28,
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: showCheckbox
-                            ? Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: IgnorePointer(
-                                  ignoring: listUIState.isInMultiselect(),
-                                  child: Checkbox(
-                                    value: isChecked,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) =>
-                                        onCheckboxChanged!(value),
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return constraints.maxWidth > kTableListWidthCutoff
+              ? InkWell(
+                  onTap: () =>
+                      onTap != null ? onTap!() : selectEntity(entity: expense),
+                  onLongPress: () => onTap != null
+                      ? null
+                      : selectEntity(entity: expense, longPress: true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 28,
+                      top: 4,
+                      bottom: 4,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: showCheckbox
+                              ? Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: IgnorePointer(
+                                    ignoring: listUIState.isInMultiselect(),
+                                    child: Checkbox(
+                                      value: isChecked,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (value) =>
+                                          onCheckboxChanged!(value),
+                                      activeColor: Theme.of(
+                                        context,
+                                      ).colorScheme.secondary,
+                                    ),
                                   ),
+                                )
+                              : ActionMenuButton(
+                                  entityActions: expense.getActions(
+                                    userCompany: state.userCompany,
+                                    includeEdit: true,
+                                  ),
+                                  isSaving: false,
+                                  entity: expense,
+                                  onSelected: (context, action) =>
+                                      handleEntityAction(expense, action),
                                 ),
-                              )
-                            : ActionMenuButton(
-                                entityActions: expense.getActions(
-                                  userCompany: state.userCompany,
-                                  includeEdit: true,
-                                ),
-                                isSaving: false,
-                                entity: expense,
-                                onSelected: (context, action) =>
-                                    handleEntityAction(expense, action),
-                              ),
-                      ),
-                      SizedBox(
-                        width: kListNumberWidth,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              expense.number,
-                              style: textStyle,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            if (!expense.isActive) EntityStateLabel(expense)
-                          ],
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              expense.publicNotes +
-                                  (expense.documents.isNotEmpty ? '  📎' : ''),
-                              style: textStyle,
-                              maxLines: 1,
-                            ),
-                            Text(subtitle,
+                        SizedBox(
+                          width: kListNumberWidth,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                expense.number,
+                                style: textStyle,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              if (!expense.isActive) EntityStateLabel(expense),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                expense.publicNotes +
+                                    (expense.documents.isNotEmpty
+                                        ? '  📎'
+                                        : ''),
+                                style: textStyle,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withValues(alpha: kLighterOpacity),
-                                    )),
+                                      color: textColor!.withValues(
+                                        alpha: kLighterOpacity,
+                                      ),
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          formatNumber(
+                            expense.grossAmount,
+                            context,
+                            currencyId: expense.currencyId,
+                          )!,
+                          style: textStyle,
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(width: 16),
+                        EntityStatusChip(entity: expense),
+                      ],
+                    ),
+                  ),
+                )
+              : ListTile(
+                  onTap: () =>
+                      onTap != null ? onTap!() : selectEntity(entity: expense),
+                  onLongPress: () => onTap != null
+                      ? null
+                      : selectEntity(entity: expense, longPress: true),
+                  leading: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged!(value),
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                          ),
+                        )
+                      : null,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            (expense.publicNotes.isEmpty
+                                    ? expense.number
+                                    : expense.publicNotes) +
+                                (expense.documents.isNotEmpty ? '  📎' : ''),
+                            style: Theme.of(context).textTheme.titleMedium,
+                            maxLines: 1,
+                          ),
+                        ),
+                        Text(
+                          formatNumber(
+                            expense.amount,
+                            context,
+                            currencyId: expense.currencyId,
+                          )!,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  subtitle: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              filterMatch == null ? subtitle : filterMatch,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.titleSmall!
+                                  .copyWith(
+                                    color: textColor!.withValues(
+                                      alpha: kLighterOpacity,
+                                    ),
+                                  ),
+                            ),
+                            EntityStateLabel(expense),
                           ],
                         ),
                       ),
-                      SizedBox(width: 8),
                       Text(
-                        formatNumber(expense.grossAmount, context,
-                            currencyId: expense.currencyId)!,
-                        style: textStyle,
-                        textAlign: TextAlign.end,
-                      ),
-                      SizedBox(width: 16),
-                      EntityStatusChip(entity: expense),
-                    ],
-                  ),
-                ),
-              )
-            : ListTile(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: expense),
-                onLongPress: () => onTap != null
-                    ? null
-                    : selectEntity(entity: expense, longPress: true),
-                leading: showCheckbox
-                    ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
-                        child: Checkbox(
-                          value: isChecked,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged!(value),
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                        ),
-                      )
-                    : null,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          (expense.publicNotes.isEmpty
-                                  ? expense.number
-                                  : expense.publicNotes) +
-                              (expense.documents.isNotEmpty ? '  📎' : ''),
-                          style: Theme.of(context).textTheme.titleMedium,
-                          maxLines: 1,
-                        ),
-                      ),
-                      Text(
-                          formatNumber(expense.amount, context,
-                              currencyId: expense.currencyId)!,
-                          style: Theme.of(context).textTheme.titleMedium),
-                    ],
-                  ),
-                ),
-                subtitle: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(filterMatch == null ? subtitle : filterMatch,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color: textColor!
-                                        .withValues(alpha: kLighterOpacity),
-                                  )),
-                          EntityStateLabel(expense),
-                        ],
-                      ),
-                    ),
-                    Text(
                         localization!.lookup(
-                            kExpenseStatuses[expense.calculatedStatusId]),
+                          kExpenseStatuses[expense.calculatedStatusId],
+                        ),
                         style: TextStyle(
-                            color: category.color.isNotEmpty &&
-                                    category.color != '#fff'
-                                ? convertHexStringToColor(category.color)
-                                : ExpenseStatusColors(
-                                        state.prefState.colorThemeModel)
-                                    .colors[expense.calculatedStatusId])),
-                  ],
-                ),
-              );
-      }),
+                          color:
+                              category.color.isNotEmpty &&
+                                  category.color != '#fff'
+                              ? convertHexStringToColor(category.color)
+                              : ExpenseStatusColors(
+                                  state.prefState.colorThemeModel,
+                                ).colors[expense.calculatedStatusId],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+        },
+      ),
     );
   }
 }

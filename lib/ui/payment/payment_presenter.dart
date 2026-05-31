@@ -57,28 +57,37 @@ class PaymentPresenter extends EntityPresenter {
         return Text(payment!.number);
       case PaymentFields.type:
         return Text(
-            state.staticState.paymentTypeMap[payment!.typeId]?.name ?? '');
+          state.staticState.paymentTypeMap[payment!.typeId]?.name ?? '',
+        );
       case PaymentFields.invoiceNumber:
         return ConstrainedBox(
           constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
           child: Wrap(
             clipBehavior: Clip.antiAlias,
             children: payment!.invoicePaymentables
-                .map((paymentable) =>
-                    state.invoiceState.map[paymentable.invoiceId])
+                .map(
+                  (paymentable) =>
+                      state.invoiceState.map[paymentable.invoiceId],
+                )
                 .nonNulls
-                .map((invoice) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: LinkTextRelatedEntity(
-                          entity: invoice, relation: payment),
-                    ))
+                .map(
+                  (invoice) => Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: LinkTextRelatedEntity(
+                      entity: invoice,
+                      relation: payment,
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         );
       case PaymentFields.creditNumber:
         final numbers = payment!.creditPaymentables
-            .map((paymentable) =>
-                state.creditState.map[paymentable.creditId]?.number ?? '')
+            .map(
+              (paymentable) =>
+                  state.creditState.map[paymentable.creditId]?.number ?? '',
+            )
             .toList()
             .join(', ');
         return Text(numbers);
@@ -91,16 +100,26 @@ class PaymentPresenter extends EntityPresenter {
         return Text(formatDate(payment!.date, context));
       case PaymentFields.amount:
         return Align(
-            alignment: Alignment.centerRight,
-            child: Text(formatNumber(
-                payment!.amount - payment.refunded, context,
-                clientId: payment.clientId)!));
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(
+              payment!.amount - payment.refunded,
+              context,
+              clientId: payment.clientId,
+            )!,
+          ),
+        );
       case PaymentFields.convertedAmount:
         return Align(
-            alignment: Alignment.centerRight,
-            child: Text(formatNumber(
-                payment!.amount * payment.exchangeRate, context,
-                currencyId: payment.exchangeCurrencyId)!));
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(
+              payment!.amount * payment.exchangeRate,
+              context,
+              currencyId: payment.exchangeCurrencyId,
+            )!,
+          ),
+        );
       case PaymentFields.status:
         return EntityStatusChip(entity: payment, showState: true);
       case PaymentFields.customValue1:
@@ -112,20 +131,28 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.customValue4:
         return Text(presentCustomField(context, payment!.customValue4)!);
       case PaymentFields.refunded:
-        return Text(formatNumber(payment!.refunded, context,
-            clientId: payment.clientId)!);
+        return Text(
+          formatNumber(payment!.refunded, context, clientId: payment.clientId)!,
+        );
       case PaymentFields.privateNotes:
         return Text(payment!.privateNotes);
       case PaymentFields.exchangeRate:
-        return Text(formatNumber(payment!.exchangeRate, context,
-            formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          formatNumber(
+            payment!.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.percent,
+          )!,
+        );
       case PaymentFields.gateway:
-        final companyGateway =
-            state.companyGatewayState.get(payment!.companyGatewayId);
+        final companyGateway = state.companyGatewayState.get(
+          payment!.companyGatewayId,
+        );
         return Text(companyGateway.label);
       case PaymentFields.gatewayType:
         return Text(
-            localization!.lookup(kGatewayTypes[payment!.gatewayTypeId]));
+          localization!.lookup(kGatewayTypes[payment!.gatewayTypeId]),
+        );
     }
 
     return super.getField(field: field, context: context);

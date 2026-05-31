@@ -12,9 +12,9 @@ part 'payment_term_model.g.dart';
 
 abstract class PaymentTermListResponse
     implements Built<PaymentTermListResponse, PaymentTermListResponseBuilder> {
-  factory PaymentTermListResponse(
-          [void updates(PaymentTermListResponseBuilder b)]) =
-      _$PaymentTermListResponse;
+  factory PaymentTermListResponse([
+    void updates(PaymentTermListResponseBuilder b),
+  ]) = _$PaymentTermListResponse;
 
   PaymentTermListResponse._();
 
@@ -30,9 +30,9 @@ abstract class PaymentTermListResponse
 
 abstract class PaymentTermItemResponse
     implements Built<PaymentTermItemResponse, PaymentTermItemResponseBuilder> {
-  factory PaymentTermItemResponse(
-          [void updates(PaymentTermItemResponseBuilder b)]) =
-      _$PaymentTermItemResponse;
+  factory PaymentTermItemResponse([
+    void updates(PaymentTermItemResponseBuilder b),
+  ]) = _$PaymentTermItemResponse;
 
   PaymentTermItemResponse._();
 
@@ -96,18 +96,15 @@ abstract class PaymentTermEntity extends Object
   @BuiltValueField(wireName: 'num_days')
   int get numDays;
 
-  int compareTo(PaymentTermEntity paymentTerm, String sortField,
-          bool sortAscending) =>
-      numDays.compareTo(paymentTerm.numDays);
+  int compareTo(
+    PaymentTermEntity paymentTerm,
+    String sortField,
+    bool sortAscending,
+  ) => numDays.compareTo(paymentTerm.numDays);
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        '$numDays',
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: ['$numDays'], needle: filter);
   }
 
   @override

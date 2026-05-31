@@ -32,8 +32,8 @@ class PaymentTermListItem extends StatelessWidget {
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
-  static final paymentTermItemKey =
-      (int id) => Key('__payment_term_item_${id}__');
+  static final paymentTermItemKey = (int id) =>
+      Key('__payment_term_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,8 @@ class PaymentTermListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: paymentTerm,
-      isSelected: paymentTerm.id ==
+      isSelected:
+          paymentTerm.id ==
           (uiState.isEditing
               ? paymentTermUIState.editing!.id
               : paymentTermUIState.selectedId),
@@ -84,8 +85,10 @@ class PaymentTermListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(paymentTerm.listDisplayAmount, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                formatNumber(paymentTerm.listDisplayAmount, context)!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
         ),
@@ -93,11 +96,7 @@ class PaymentTermListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(paymentTerm),
           ],

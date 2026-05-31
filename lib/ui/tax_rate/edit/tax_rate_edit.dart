@@ -12,10 +12,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateEdit extends StatefulWidget {
-  const TaxRateEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaxRateEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final TaxRateEditVM viewModel;
 
@@ -24,8 +21,9 @@ class TaxRateEdit extends StatefulWidget {
 }
 
 class _TaxRateEditState extends State<TaxRateEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_taxRateEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_taxRateEdit',
+  );
 
   FocusScopeNode? _focusNode;
 
@@ -37,17 +35,17 @@ class _TaxRateEditState extends State<TaxRateEdit> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-      _rateController,
-    ];
+    _controllers = [_nameController, _rateController];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final taxRate = widget.viewModel.taxRate;
     _nameController.text = taxRate.name;
-    _rateController.text = formatNumber(taxRate.rate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _rateController.text = formatNumber(
+      taxRate.rate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -65,9 +63,11 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   }
 
   void _onChanged() {
-    final taxRate = widget.viewModel.taxRate.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..rate = parseDouble(_rateController.text));
+    final taxRate = widget.viewModel.taxRate.rebuild(
+      (b) => b
+        ..name = _nameController.text.trim()
+        ..rate = parseDouble(_rateController.text),
+    );
     if (taxRate != widget.viewModel.taxRate) {
       _debouncer.run(() {
         widget.viewModel.onChanged(taxRate);
@@ -121,7 +121,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

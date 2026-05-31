@@ -44,7 +44,8 @@ class ExpenseCategoryListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: expenseCategory,
-      isSelected: !showCheck &&
+      isSelected:
+          !showCheck &&
           expenseCategory.id ==
               (uiState.isEditing
                   ? expenseCategoryUIState.editing!.id
@@ -76,8 +77,10 @@ class ExpenseCategoryListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(expenseCategory.listDisplayAmount, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                formatNumber(expenseCategory.listDisplayAmount, context)!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
         ),
@@ -85,11 +88,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(expenseCategory),
           ],

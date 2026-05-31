@@ -90,26 +90,34 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           lineItem.isEmpty;
     }).toList();
 
-    final hasTax1 = company.enableFirstItemTaxRate ||
+    final hasTax1 =
+        company.enableFirstItemTaxRate ||
         includedLineItems.any((item) => item.taxName1.isNotEmpty);
-    final hasTax2 = company.enableSecondItemTaxRate ||
+    final hasTax2 =
+        company.enableSecondItemTaxRate ||
         includedLineItems.any((item) => item.taxName2.isNotEmpty);
-    final hasTax3 = company.enableThirdItemTaxRate ||
+    final hasTax3 =
+        company.enableThirdItemTaxRate ||
         includedLineItems.any((item) => item.taxName3.isNotEmpty);
     final hasAnyTax = hasTax1 || hasTax2 || hasTax3;
 
-    final customField1 =
-        widget.isTasks ? CustomFieldType.task1 : CustomFieldType.product1;
-    final customField2 =
-        widget.isTasks ? CustomFieldType.task2 : CustomFieldType.product2;
-    final customField3 =
-        widget.isTasks ? CustomFieldType.task3 : CustomFieldType.product3;
-    final customField4 =
-        widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
+    final customField1 = widget.isTasks
+        ? CustomFieldType.task1
+        : CustomFieldType.product1;
+    final customField2 = widget.isTasks
+        ? CustomFieldType.task2
+        : CustomFieldType.product2;
+    final customField3 = widget.isTasks
+        ? CustomFieldType.task3
+        : CustomFieldType.product3;
+    final customField4 = widget.isTasks
+        ? CustomFieldType.task4
+        : CustomFieldType.product4;
 
     List<String> pdfColumns = company.settings
         .getFieldsForSection(
-            widget.isTasks ? kPdfFieldsTaskColumns : kPdfFieldsProductColumns)
+          widget.isTasks ? kPdfFieldsTaskColumns : kPdfFieldsProductColumns,
+        )
         .map((value) => value.split('.')[1])
         .toList();
 
@@ -305,23 +313,32 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }).toList();
     final productState = state.productState;
     final productIds = memoizedDropdownProductList(
-        productState.map, productState.list, state.userState.map);
+      productState.map,
+      productState.list,
+      state.userState.map,
+    );
 
-    final customField1 =
-        widget.isTasks ? CustomFieldType.task1 : CustomFieldType.product1;
-    final customField2 =
-        widget.isTasks ? CustomFieldType.task2 : CustomFieldType.product2;
-    final customField3 =
-        widget.isTasks ? CustomFieldType.task3 : CustomFieldType.product3;
-    final customField4 =
-        widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
+    final customField1 = widget.isTasks
+        ? CustomFieldType.task1
+        : CustomFieldType.product1;
+    final customField2 = widget.isTasks
+        ? CustomFieldType.task2
+        : CustomFieldType.product2;
+    final customField3 = widget.isTasks
+        ? CustomFieldType.task3
+        : CustomFieldType.product3;
+    final customField4 = widget.isTasks
+        ? CustomFieldType.task4
+        : CustomFieldType.product4;
 
-    final tableFontColor = state.prefState
-            .activeCustomColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+    final tableFontColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_FONT_COLOR] ??
         '';
 
-    final tableHeaderColor = state.prefState.activeCustomColors[
-            PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+    final tableHeaderColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
 
     final tableHeaderColumns = <Widget>[];
@@ -354,7 +371,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       } else if (column == COLUMN_CUSTOM4) {
         label = company.getCustomFieldLabel(customField4);
       } else if ([COLUMN_TAX1, COLUMN_TAX2, COLUMN_TAX3].contains(column)) {
-        label = localization!.tax +
+        label =
+            localization!.tax +
             (invoice.usesInclusiveTaxes ? ' - ${localization.inclusive}' : '');
       } else if (column == COLUMN_TAX_CATEGORY) {
         label = localization!.taxCategory;
@@ -386,11 +404,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             : localization!.discount;
         isNumeric = true;
       }
-      tableHeaderColumns.add(TableHeader(
-        label,
-        isFirst: i == 0,
-        isNumeric: isNumeric,
-      ));
+      tableHeaderColumns.add(
+        TableHeader(label, isFirst: i == 0, isNumeric: isNumeric),
+      );
     }
 
     if (_isReordering) {
@@ -410,20 +426,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     .map((widget) => Expanded(child: widget))
                     .toList(),
                 Expanded(
-                  child: TableHeader(
-                    localization!.lineTotal,
-                    isNumeric: true,
-                  ),
+                  child: TableHeader(localization!.lineTotal, isNumeric: true),
                 ),
                 SizedBox(width: 16),
                 IconButton(
-                    color: tableFontColor.isNotEmpty
-                        ? convertHexStringToColor(tableFontColor)
-                        : null,
-                    onPressed: () {
-                      setState(() => _isReordering = false);
-                    },
-                    icon: Icon(Icons.close))
+                  color: tableFontColor.isNotEmpty
+                      ? convertHexStringToColor(tableFontColor)
+                      : null,
+                  onPressed: () {
+                    setState(() => _isReordering = false);
+                  },
+                  icon: Icon(Icons.close),
+                ),
               ],
             ),
           ),
@@ -474,8 +488,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             } else if (column == COLUMN_TAX3) {
                               return Text(item.taxName3);
                             } else if (column == COLUMN_TAX_CATEGORY) {
-                              return Text(localization
-                                  .lookup(kTaxCategories[item.taxCategoryId]));
+                              return Text(
+                                localization.lookup(
+                                  kTaxCategories[item.taxCategoryId],
+                                ),
+                              );
                             } else if (column == COLUMN_UNIT_COST) {
                               return Text(
                                 formatNumber(
@@ -529,13 +546,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               );
                             }
                           })
-                          .map((widget) => Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: kTableColumnGap),
-                                  child: widget,
+                          .map(
+                            (widget) => Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  right: kTableColumnGap,
                                 ),
-                              ))
+                                child: widget,
+                              ),
+                            ),
+                          )
                           .toList(),
                       Expanded(
                         child: Text(
@@ -557,7 +577,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       Padding(
                         padding: const EdgeInsets.all(8),
                         child: Icon(Icons.drag_handle),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -576,7 +596,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
               viewModel.onMovedInvoiceItem!(oldIndex, newIndex);
             },
-          )
+          ),
         ],
       );
     }
@@ -585,10 +605,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     lineItems.add(_emptyLineItem!);
 
     tableHeaderColumns.addAll([
-      TableHeader(
-        localization!.lineTotal,
-        isNumeric: true,
-      ),
+      TableHeader(localization!.lineTotal, isNumeric: true),
       IconButton(
         icon: Icon(Icons.swap_vert),
         color: tableFontColor.isNotEmpty
@@ -599,7 +616,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             : () {
                 setState(() => _isReordering = !_isReordering);
               },
-      )
+      ),
     ]);
 
     return FormCard(
@@ -628,219 +645,250 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     !widget.isTasks) ||
                 lineItems[index].isEmpty)
               TableRow(
-                  key: ValueKey(
-                      '__line_item_${index}_${lineItems[index].createdAt}__'),
-                  children: [
-                    ..._columns.map((column) {
-                      if (column == COLUMN_ITEM) {
-                        return Focus(
-                          onFocusChange: (hasFocus) {
-                            if (hasFocus) {
-                              _autocompleteFocusIndex = index;
-                            }
-                            _onFocusChange(hasFocus);
-                          },
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: RawAutocomplete<ProductEntity>(
-                              key: ValueKey('__line_item_${index}_name__'),
-                              textEditingController: _textEditingController,
-                              initialValue: TextEditingValue(
-                                  text: lineItems[index].productKey),
-                              optionsBuilder:
-                                  (TextEditingValue textEditingValue) {
-                                final options = productIds
-                                    .map((productId) =>
-                                        productState.map[productId])
-                                    .whereType<ProductEntity>()
-                                    .where((product) {
-                                  final filter =
-                                      textEditingValue.text.toLowerCase();
-                                  final productKey =
-                                      product.productKey.toLowerCase();
+                key: ValueKey(
+                  '__line_item_${index}_${lineItems[index].createdAt}__',
+                ),
+                children: [
+                  ..._columns.map((column) {
+                    if (column == COLUMN_ITEM) {
+                      return Focus(
+                        onFocusChange: (hasFocus) {
+                          if (hasFocus) {
+                            _autocompleteFocusIndex = index;
+                          }
+                          _onFocusChange(hasFocus);
+                        },
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: RawAutocomplete<ProductEntity>(
+                            key: ValueKey('__line_item_${index}_name__'),
+                            textEditingController: _textEditingController,
+                            initialValue: TextEditingValue(
+                              text: lineItems[index].productKey,
+                            ),
+                            optionsBuilder:
+                                (TextEditingValue textEditingValue) {
+                                  final options = productIds
+                                      .map(
+                                        (productId) =>
+                                            productState.map[productId],
+                                      )
+                                      .whereType<ProductEntity>()
+                                      .where((product) {
+                                        final filter = textEditingValue.text
+                                            .toLowerCase();
+                                        final productKey = product.productKey
+                                            .toLowerCase();
 
-                                  if (company.showProductDetails) {
-                                    return product.matchesFilter(filter);
-                                  } else {
-                                    return productKey.contains(filter);
+                                        if (company.showProductDetails) {
+                                          return product.matchesFilter(filter);
+                                        } else {
+                                          return productKey.contains(filter);
+                                        }
+                                      })
+                                      .toList();
+
+                                  if (options.length == 1 &&
+                                      options[0].productKey.toLowerCase() ==
+                                          lineItems[index].productKey
+                                              .toLowerCase()) {
+                                    return <ProductEntity>[];
                                   }
-                                }).toList();
 
-                                if (options.length == 1 &&
-                                    options[0].productKey.toLowerCase() ==
-                                        lineItems[index]
-                                            .productKey
-                                            .toLowerCase()) {
-                                  return <ProductEntity>[];
+                                  return options;
+                                },
+                            displayStringForOption: (product) =>
+                                product.productKey,
+                            onSelected: (product) {
+                              Debouncer.cancel();
+                              final item = lineItems[index];
+                              final client = state.clientState.get(
+                                invoice.clientId,
+                              );
+                              final currency = state
+                                  .staticState
+                                  .currencyMap[client.currencyId];
+
+                              double cost =
+                                  (invoice.isPurchaseOrder &&
+                                      company.enableProductCost &&
+                                      product.cost != 0)
+                                  ? product.cost
+                                  : product.price;
+                              if (company.convertProductExchangeRate &&
+                                  client.currencyId != company.currencyId) {
+                                double exchangeRate = invoice.exchangeRate;
+                                if (!company.convertRateToClient &&
+                                    exchangeRate != 0) {
+                                  exchangeRate = 1 / exchangeRate;
                                 }
+                                cost = round(
+                                  cost * exchangeRate,
+                                  currency?.precision ?? 2,
+                                );
+                              }
 
-                                return options;
-                              },
-                              displayStringForOption: (product) =>
-                                  product.productKey,
-                              onSelected: (product) {
-                                Debouncer.cancel();
-                                final item = lineItems[index];
-                                final client =
-                                    state.clientState.get(invoice.clientId);
-                                final currency = state
-                                    .staticState.currencyMap[client.currencyId];
+                              final updatedItem = company.fillProducts
+                                  ? item.rebuild(
+                                      (b) => b
+                                        ..productKey = product.productKey
+                                        ..createdAt = DateTime.now()
+                                            .microsecondsSinceEpoch
+                                        ..notes = item.isTask
+                                            ? item.notes
+                                            : product.notes
+                                        ..productCost = product.cost
+                                        ..cost = item.isTask && item.cost != 0
+                                            ? item.cost
+                                            : cost
+                                        ..quantity =
+                                            item.isTask || item.quantity != 0
+                                            ? item.quantity
+                                            : viewModel
+                                                  .state!
+                                                  .company
+                                                  .defaultQuantity
+                                            ? 1
+                                            : product.quantity
+                                        ..customValue1 = product.customValue1
+                                        ..customValue2 = product.customValue2
+                                        ..customValue3 = product.customValue3
+                                        ..customValue4 = product.customValue4
+                                        ..taxCategoryId = product.taxCategoryId
+                                        ..taxName1 =
+                                            company.numberOfItemTaxRates >= 1 &&
+                                                product.taxName1.isNotEmpty
+                                            ? product.taxName1
+                                            : item.taxName1
+                                        ..taxRate1 =
+                                            company.numberOfItemTaxRates >= 1 &&
+                                                product.taxName1.isNotEmpty
+                                            ? product.taxRate1
+                                            : item.taxRate1
+                                        ..taxName2 =
+                                            company.numberOfItemTaxRates >= 2 &&
+                                                product.taxName2.isNotEmpty
+                                            ? product.taxName2
+                                            : item.taxName2
+                                        ..taxRate2 =
+                                            company.numberOfItemTaxRates >= 2 &&
+                                                product.taxName2.isNotEmpty
+                                            ? product.taxRate2
+                                            : item.taxRate2
+                                        ..taxName3 =
+                                            company.numberOfItemTaxRates >= 3 &&
+                                                product.taxName3.isNotEmpty
+                                            ? product.taxName3
+                                            : item.taxName3
+                                        ..taxRate3 =
+                                            company.numberOfItemTaxRates >= 3 &&
+                                                product.taxName3.isNotEmpty
+                                            ? product.taxRate3
+                                            : item.taxRate3,
+                                    )
+                                  : item.rebuild(
+                                      (b) => b
+                                        ..productKey = product.productKey
+                                        ..createdAt = DateTime.now()
+                                            .microsecondsSinceEpoch,
+                                    );
 
-                                double cost = (invoice.isPurchaseOrder &&
-                                        company.enableProductCost &&
-                                        product.cost != 0)
-                                    ? product.cost
-                                    : product.price;
-                                if (company.convertProductExchangeRate &&
-                                    client.currencyId != company.currencyId) {
-                                  double exchangeRate = invoice.exchangeRate;
-                                  if (!company.convertRateToClient &&
-                                      exchangeRate != 0) {
-                                    exchangeRate = 1 / exchangeRate;
-                                  }
-                                  cost = round(cost * exchangeRate,
-                                      currency?.precision ?? 2);
-                                }
-
-                                final updatedItem = company.fillProducts
-                                    ? item.rebuild((b) => b
-                                      ..productKey = product.productKey
-                                      ..createdAt =
-                                          DateTime.now().microsecondsSinceEpoch
-                                      ..notes = item.isTask
-                                          ? item.notes
-                                          : product.notes
-                                      ..productCost = product.cost
-                                      ..cost = item.isTask && item.cost != 0
-                                          ? item.cost
-                                          : cost
-                                      ..quantity =
-                                          item.isTask || item.quantity != 0
-                                              ? item.quantity
-                                              : viewModel.state!.company
-                                                      .defaultQuantity
-                                                  ? 1
-                                                  : product.quantity
-                                      ..customValue1 = product.customValue1
-                                      ..customValue2 = product.customValue2
-                                      ..customValue3 = product.customValue3
-                                      ..customValue4 = product.customValue4
-                                      ..taxCategoryId = product.taxCategoryId
-                                      ..taxName1 =
-                                          company.numberOfItemTaxRates >= 1 &&
-                                                  product.taxName1.isNotEmpty
-                                              ? product.taxName1
-                                              : item.taxName1
-                                      ..taxRate1 =
-                                          company.numberOfItemTaxRates >= 1 &&
-                                                  product.taxName1.isNotEmpty
-                                              ? product.taxRate1
-                                              : item.taxRate1
-                                      ..taxName2 =
-                                          company.numberOfItemTaxRates >= 2 &&
-                                                  product.taxName2.isNotEmpty
-                                              ? product.taxName2
-                                              : item.taxName2
-                                      ..taxRate2 =
-                                          company.numberOfItemTaxRates >= 2 &&
-                                                  product.taxName2.isNotEmpty
-                                              ? product.taxRate2
-                                              : item.taxRate2
-                                      ..taxName3 =
-                                          company.numberOfItemTaxRates >= 3 &&
-                                                  product.taxName3.isNotEmpty
-                                              ? product.taxName3
-                                              : item.taxName3
-                                      ..taxRate3 =
-                                          company.numberOfItemTaxRates >= 3 &&
-                                                  product.taxName3.isNotEmpty
-                                              ? product.taxRate3
-                                              : item.taxRate3)
-                                    : item.rebuild((b) => b
-                                      ..productKey = product.productKey
-                                      ..createdAt = DateTime.now()
-                                          .microsecondsSinceEpoch);
-
-                                _onChanged(updatedItem, index, debounce: false);
-                                _updateTable();
-                              },
-                              fieldViewBuilder: (BuildContext context,
+                              _onChanged(updatedItem, index, debounce: false);
+                              _updateTable();
+                            },
+                            fieldViewBuilder:
+                                (
+                                  BuildContext context,
                                   TextEditingController textEditingController,
                                   FocusNode focusNode,
-                                  VoidCallback onFieldSubmitted) {
-                                return DecoratedFormField(
-                                  showClear: false,
-                                  controller: textEditingController,
-                                  keyboardType: TextInputType.text,
-                                  focusNode: focusNode,
-                                  onFieldSubmitted: (String value) {
-                                    onFieldSubmitted();
-                                  },
-                                  onChanged: (value) {
-                                    _onChanged(
+                                  VoidCallback onFieldSubmitted,
+                                ) {
+                                  return DecoratedFormField(
+                                    showClear: false,
+                                    controller: textEditingController,
+                                    keyboardType: TextInputType.text,
+                                    focusNode: focusNode,
+                                    onFieldSubmitted: (String value) {
+                                      onFieldSubmitted();
+                                    },
+                                    onChanged: (value) {
+                                      _onChanged(
                                         lineItems[index].rebuild(
-                                            (b) => b..productKey = value),
-                                        index);
-                                  },
-                                );
-                              },
-                              optionsViewBuilder: (BuildContext context,
+                                          (b) => b..productKey = value,
+                                        ),
+                                        index,
+                                      );
+                                    },
+                                  );
+                                },
+                            optionsViewBuilder:
+                                (
+                                  BuildContext context,
                                   AutocompleteOnSelected<ProductEntity>
-                                      onSelected,
-                                  Iterable<SelectableEntity> options) {
-                                final highlightedIndex =
-                                    AutocompleteHighlightedOption.of(context);
-                                return Theme(
-                                  data: theme,
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Material(
-                                      elevation: 4,
-                                      child: AppBorder(
-                                        child: Container(
-                                          color: Theme.of(context).cardColor,
-                                          width: 250,
-                                          constraints:
-                                              BoxConstraints(maxHeight: 270),
-                                          child: ScrollableListViewBuilder(
-                                            itemCount: options.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              final entity =
-                                                  options.elementAt(index);
-                                              return Container(
-                                                color: highlightedIndex == index
-                                                    ? convertHexStringToColor(state
-                                                            .prefState
-                                                            .enableDarkMode
-                                                        ? kDefaultDarkSelectedColor
-                                                        : kDefaultLightSelectedColor)
-                                                    : Theme.of(context)
-                                                        .cardColor,
-                                                child:
-                                                    EntityAutocompleteListTile(
-                                                  onTap: (entity) => onSelected(
-                                                      entity as ProductEntity),
-                                                  overrideSuggestedLabel:
-                                                      (entity) {
-                                                    var label =
-                                                        entity.listDisplayName;
-                                                    if (state.company
-                                                        .trackInventory) {
-                                                      final product = entity
-                                                          as ProductEntity;
-                                                      label +=
-                                                          ' [${product.stockQuantity}]';
-                                                    }
-                                                    return label;
-                                                  },
-                                                  overrideSuggestedAmount:
-                                                      (entity) {
-                                                    final product =
-                                                        entity as ProductEntity;
-                                                    return formatNumber(
+                                  onSelected,
+                                  Iterable<SelectableEntity> options,
+                                ) {
+                                  final highlightedIndex =
+                                      AutocompleteHighlightedOption.of(context);
+                                  return Theme(
+                                    data: theme,
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Material(
+                                        elevation: 4,
+                                        child: AppBorder(
+                                          child: Container(
+                                            color: Theme.of(context).cardColor,
+                                            width: 250,
+                                            constraints: BoxConstraints(
+                                              maxHeight: 270,
+                                            ),
+                                            child: ScrollableListViewBuilder(
+                                              itemCount: options.length,
+                                              itemBuilder: (BuildContext context, int index) {
+                                                final entity = options
+                                                    .elementAt(index);
+                                                return Container(
+                                                  color:
+                                                      highlightedIndex == index
+                                                      ? convertHexStringToColor(
+                                                          state
+                                                                  .prefState
+                                                                  .enableDarkMode
+                                                              ? kDefaultDarkSelectedColor
+                                                              : kDefaultLightSelectedColor,
+                                                        )
+                                                      : Theme.of(
+                                                          context,
+                                                        ).cardColor,
+                                                  child: EntityAutocompleteListTile(
+                                                    onTap: (entity) =>
+                                                        onSelected(
+                                                          entity
+                                                              as ProductEntity,
+                                                        ),
+                                                    overrideSuggestedLabel: (entity) {
+                                                      var label = entity
+                                                          .listDisplayName;
+                                                      if (state
+                                                          .company
+                                                          .trackInventory) {
+                                                        final product =
+                                                            entity
+                                                                as ProductEntity;
+                                                        label +=
+                                                            ' [${product.stockQuantity}]';
+                                                      }
+                                                      return label;
+                                                    },
+                                                    overrideSuggestedAmount: (entity) {
+                                                      final product =
+                                                          entity
+                                                              as ProductEntity;
+                                                      return formatNumber(
                                                         (invoice.isPurchaseOrder &&
                                                                 company
                                                                     .enableProductCost &&
@@ -848,425 +896,472 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                                     0)
                                                             ? product.cost
                                                             : product.price,
-                                                        context);
-                                                  },
-                                                  subtitle: entity
-                                                              is ProductEntity &&
-                                                          company
-                                                              .showProductDetails
-                                                      ? entity.notes
-                                                      : null,
-                                                  entity: entity,
-                                                ),
-                                              );
-                                            },
+                                                        context,
+                                                      );
+                                                    },
+                                                    subtitle:
+                                                        entity
+                                                                is ProductEntity &&
+                                                            company
+                                                                .showProductDetails
+                                                        ? entity.notes
+                                                        : null,
+                                                    entity: entity,
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
+                                  );
+                                },
                           ),
-                        );
-                      } else if (column == COLUMN_DESCRIPTION) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: GrowableFormField(
-                              key: ValueKey(
-                                  '__line_item_${index}_description__'),
-                              autofocus: _autocompleteFocusIndex == index,
-                              initialValue: lineItems[index].notes,
-                              onChanged: (value) => _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..notes = value),
-                                  index),
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_CUSTOM1) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: CustomField(
-                              field: customField1,
-                              value: lineItems[index].customValue1,
-                              hideFieldLabel: true,
-                              onChanged: (value) => _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..customValue1 = value),
-                                  index),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_CUSTOM2) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: CustomField(
-                              field: customField2,
-                              value: lineItems[index].customValue2,
-                              hideFieldLabel: true,
-                              onChanged: (value) => _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..customValue2 = value),
-                                  index),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_CUSTOM3) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: CustomField(
-                              field: customField3,
-                              value: lineItems[index].customValue3,
-                              hideFieldLabel: true,
-                              onChanged: (value) => _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..customValue3 = value),
-                                  index),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_CUSTOM4) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: CustomField(
-                              field: customField4,
-                              value: lineItems[index].customValue4,
-                              hideFieldLabel: true,
-                              onChanged: (value) => _onChanged(
-                                  lineItems[index]
-                                      .rebuild((b) => b..customValue4 = value),
-                                  index),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_TAX_CATEGORY &&
-                          !lineItems[index].hasOverrideTax) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: AppDropdownButton<String>(
-                                labelText: '',
-                                value: lineItems[index].taxCategoryId,
-                                onChanged: (dynamic value) => _onChanged(
-                                    lineItems[index].rebuild(
-                                        (b) => b..taxCategoryId = value),
-                                    index),
-                                items: kTaxCategories.keys
-                                    .map((key) => DropdownMenuItem<String>(
-                                          child: Text(localization.lookup(
-                                            kTaxCategories[key],
-                                          )),
-                                          value: key,
-                                        ))
-                                    .toList()),
-                          ),
-                        );
-                      } else if (column == COLUMN_TAX1 ||
-                          (column == COLUMN_TAX_CATEGORY &&
-                              lineItems[index].hasOverrideTax)) {
-                        Widget child = Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: TaxRateDropdown(
-                              onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName1 = taxRate.name
-                                  ..taxRate1 = taxRate.rate),
-                                index,
-                                debounce: false,
-                              ),
-                              labelText: null,
-                              initialTaxName: lineItems[index].taxName1,
-                              initialTaxRate: lineItems[index].taxRate1,
-                            ),
-                          ),
-                        );
-
-                        if (lineItems[index].hasOverrideTax) {
-                          child = Row(
-                            children: [
-                              Expanded(child: child),
-                              IconButton(
-                                  visualDensity: VisualDensity.compact,
-                                  onPressed: () => _onChanged(
-                                      lineItems[index].rebuild((b) => b
-                                        ..taxName1 = ''
-                                        ..taxRate1 = 0
-                                        ..taxCategoryId = kTaxCategoryPhysical),
-                                      index),
-                                  icon: Icon(Icons.clear))
-                            ],
-                          );
-                        }
-
-                        return child;
-                      } else if (column == COLUMN_TAX2) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: TaxRateDropdown(
-                              onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName2 = taxRate.name
-                                  ..taxRate2 = taxRate.rate),
-                                index,
-                                debounce: false,
-                              ),
-                              labelText: null,
-                              initialTaxName: lineItems[index].taxName2,
-                              initialTaxRate: lineItems[index].taxRate2,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_TAX3) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: TaxRateDropdown(
-                              onSelected: (taxRate) => _onChanged(
-                                lineItems[index].rebuild((b) => b
-                                  ..taxName3 = taxRate.name
-                                  ..taxRate3 = taxRate.rate),
-                                index,
-                                debounce: false,
-                              ),
-                              labelText: null,
-                              initialTaxName: lineItems[index].taxName3,
-                              initialTaxRate: lineItems[index].taxRate3,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_UNIT_COST) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: DecoratedFormField(
-                              key: ValueKey('__line_item_${index}_cost__'),
-                              textAlign: TextAlign.right,
-                              initialValue: formatNumber(
-                                lineItems[index].cost,
-                                context,
-                                formatNumberType: FormatNumberType.inputMoney,
-                                clientId: invoice.isPurchaseOrder
-                                    ? null
-                                    : invoice.clientId,
-                                vendorId: invoice.isPurchaseOrder
-                                    ? invoice.vendorId
-                                    : null,
-                              ),
-                              onChanged: (value) => _onChanged(
-                                lineItems[index].rebuild(
-                                    (b) => b..cost = parseDouble(value)),
-                                index,
-                                debounce: false,
-                              ),
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true, signed: true),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_QUANTITY) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: DecoratedFormField(
-                              key: ValueKey('__line_item_${index}_quantity__'),
-                              textAlign: TextAlign.right,
-                              initialValue: formatNumber(
-                                lineItems[index].quantity,
-                                context,
-                                formatNumberType: FormatNumberType.inputAmount,
-                                clientId: invoice.isPurchaseOrder
-                                    ? null
-                                    : invoice.clientId,
-                                vendorId: invoice.isPurchaseOrder
-                                    ? invoice.vendorId
-                                    : null,
-                              ),
-                              onChanged: (value) => _onChanged(
-                                lineItems[index].rebuild(
-                                    (b) => b..quantity = parseDouble(value)),
-                                index,
-                                debounce: false,
-                              ),
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true, signed: true),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else if (column == COLUMN_DISCOUNT) {
-                        return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
-                          skipTraversal: true,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: kTableColumnGap),
-                            child: DecoratedFormField(
-                              key: ValueKey('__line_item_${index}_discount__'),
-                              textAlign: TextAlign.right,
-                              initialValue: formatNumber(
-                                lineItems[index].discount,
-                                context,
-                                formatNumberType: FormatNumberType.inputAmount,
-                                clientId: invoice.isPurchaseOrder
-                                    ? null
-                                    : invoice.clientId,
-                                vendorId: invoice.isPurchaseOrder
-                                    ? invoice.vendorId
-                                    : null,
-                              ),
-                              onChanged: (value) => _onChanged(
-                                  lineItems[index].rebuild(
-                                      (b) => b..discount = parseDouble(value)),
-                                  index),
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true, signed: true),
-                              onSavePressed:
-                                  widget.entityViewModel.onSavePressed,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    }).toList(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
+                        ),
+                      );
+                    } else if (column == COLUMN_DESCRIPTION) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Text(
-                            formatNumber(
-                                  lineItems[index].total(invoice, precision),
-                                  context,
-                                  clientId: invoice.isPurchaseOrder
-                                      ? null
-                                      : invoice.clientId,
-                                  vendorId: invoice.isPurchaseOrder
-                                      ? invoice.vendorId
-                                      : null,
-                                ) ??
-                                '',
-                            style: TextStyle(color: state.greyColor),
-                            textAlign: TextAlign.right,
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
                           ),
+                          child: GrowableFormField(
+                            key: ValueKey('__line_item_${index}_description__'),
+                            autofocus: _autocompleteFocusIndex == index,
+                            initialValue: lineItems[index].notes,
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild((b) => b..notes = value),
+                              index,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_CUSTOM1) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: CustomField(
+                            field: customField1,
+                            value: lineItems[index].customValue1,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..customValue1 = value,
+                              ),
+                              index,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_CUSTOM2) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: CustomField(
+                            field: customField2,
+                            value: lineItems[index].customValue2,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..customValue2 = value,
+                              ),
+                              index,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_CUSTOM3) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: CustomField(
+                            field: customField3,
+                            value: lineItems[index].customValue3,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..customValue3 = value,
+                              ),
+                              index,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_CUSTOM4) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: CustomField(
+                            field: customField4,
+                            value: lineItems[index].customValue4,
+                            hideFieldLabel: true,
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..customValue4 = value,
+                              ),
+                              index,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_TAX_CATEGORY &&
+                        !lineItems[index].hasOverrideTax) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: AppDropdownButton<String>(
+                            labelText: '',
+                            value: lineItems[index].taxCategoryId,
+                            onChanged: (dynamic value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..taxCategoryId = value,
+                              ),
+                              index,
+                            ),
+                            items: kTaxCategories.keys
+                                .map(
+                                  (key) => DropdownMenuItem<String>(
+                                    child: Text(
+                                      localization.lookup(kTaxCategories[key]),
+                                    ),
+                                    value: key,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_TAX1 ||
+                        (column == COLUMN_TAX_CATEGORY &&
+                            lineItems[index].hasOverrideTax)) {
+                      Widget child = Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: TaxRateDropdown(
+                            onSelected: (taxRate) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b
+                                  ..taxName1 = taxRate.name
+                                  ..taxRate1 = taxRate.rate,
+                              ),
+                              index,
+                              debounce: false,
+                            ),
+                            labelText: null,
+                            initialTaxName: lineItems[index].taxName1,
+                            initialTaxRate: lineItems[index].taxRate1,
+                          ),
+                        ),
+                      );
+
+                      if (lineItems[index].hasOverrideTax) {
+                        child = Row(
+                          children: [
+                            Expanded(child: child),
+                            IconButton(
+                              visualDensity: VisualDensity.compact,
+                              onPressed: () => _onChanged(
+                                lineItems[index].rebuild(
+                                  (b) => b
+                                    ..taxName1 = ''
+                                    ..taxRate1 = 0
+                                    ..taxCategoryId = kTaxCategoryPhysical,
+                                ),
+                                index,
+                              ),
+                              icon: Icon(Icons.clear),
+                            ),
+                          ],
+                        );
+                      }
+
+                      return child;
+                    } else if (column == COLUMN_TAX2) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: TaxRateDropdown(
+                            onSelected: (taxRate) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b
+                                  ..taxName2 = taxRate.name
+                                  ..taxRate2 = taxRate.rate,
+                              ),
+                              index,
+                              debounce: false,
+                            ),
+                            labelText: null,
+                            initialTaxName: lineItems[index].taxName2,
+                            initialTaxRate: lineItems[index].taxRate2,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_TAX3) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: TaxRateDropdown(
+                            onSelected: (taxRate) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b
+                                  ..taxName3 = taxRate.name
+                                  ..taxRate3 = taxRate.rate,
+                              ),
+                              index,
+                              debounce: false,
+                            ),
+                            labelText: null,
+                            initialTaxName: lineItems[index].taxName3,
+                            initialTaxRate: lineItems[index].taxRate3,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_UNIT_COST) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: DecoratedFormField(
+                            key: ValueKey('__line_item_${index}_cost__'),
+                            textAlign: TextAlign.right,
+                            initialValue: formatNumber(
+                              lineItems[index].cost,
+                              context,
+                              formatNumberType: FormatNumberType.inputMoney,
+                              clientId: invoice.isPurchaseOrder
+                                  ? null
+                                  : invoice.clientId,
+                              vendorId: invoice.isPurchaseOrder
+                                  ? invoice.vendorId
+                                  : null,
+                            ),
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..cost = parseDouble(value),
+                              ),
+                              index,
+                              debounce: false,
+                            ),
+                            keyboardType: TextInputType.numberWithOptions(
+                              decimal: true,
+                              signed: true,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_QUANTITY) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: DecoratedFormField(
+                            key: ValueKey('__line_item_${index}_quantity__'),
+                            textAlign: TextAlign.right,
+                            initialValue: formatNumber(
+                              lineItems[index].quantity,
+                              context,
+                              formatNumberType: FormatNumberType.inputAmount,
+                              clientId: invoice.isPurchaseOrder
+                                  ? null
+                                  : invoice.clientId,
+                              vendorId: invoice.isPurchaseOrder
+                                  ? invoice.vendorId
+                                  : null,
+                            ),
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..quantity = parseDouble(value),
+                              ),
+                              index,
+                              debounce: false,
+                            ),
+                            keyboardType: TextInputType.numberWithOptions(
+                              decimal: true,
+                              signed: true,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else if (column == COLUMN_DISCOUNT) {
+                      return Focus(
+                        onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
+                        skipTraversal: true,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            right: kTableColumnGap,
+                          ),
+                          child: DecoratedFormField(
+                            key: ValueKey('__line_item_${index}_discount__'),
+                            textAlign: TextAlign.right,
+                            initialValue: formatNumber(
+                              lineItems[index].discount,
+                              context,
+                              formatNumberType: FormatNumberType.inputAmount,
+                              clientId: invoice.isPurchaseOrder
+                                  ? null
+                                  : invoice.clientId,
+                              vendorId: invoice.isPurchaseOrder
+                                  ? invoice.vendorId
+                                  : null,
+                            ),
+                            onChanged: (value) => _onChanged(
+                              lineItems[index].rebuild(
+                                (b) => b..discount = parseDouble(value),
+                              ),
+                              index,
+                            ),
+                            keyboardType: TextInputType.numberWithOptions(
+                              decimal: true,
+                              signed: true,
+                            ),
+                            onSavePressed: widget.entityViewModel.onSavePressed,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  }).toList(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: kTableColumnGap),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          formatNumber(
+                                lineItems[index].total(invoice, precision),
+                                context,
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId,
+                                vendorId: invoice.isPurchaseOrder
+                                    ? invoice.vendorId
+                                    : null,
+                              ) ??
+                              '',
+                          style: TextStyle(color: state.greyColor),
+                          textAlign: TextAlign.right,
                         ),
                       ),
                     ),
-                    PopupMenuButton<String>(
-                      icon: Icon(Icons.more_vert),
-                      enabled: !lineItems[index].isEmpty ||
-                          index < includedLineItems.length,
-                      itemBuilder: (BuildContext context) {
-                        final sectionIndex =
-                            includedLineItems.indexOf(lineItems[index]);
-                        final options = {
-                          if (!lineItems[index].isEmpty)
-                            localization.clone: Icons.control_point_duplicate,
-                          if (includedLineItems.length > 1)
-                            localization.insertBelow: MdiIcons.plus,
-                          if (widget.isTasks &&
-                              (lineItems[index].taskId ?? '').isNotEmpty)
-                            localization.viewTask: MdiIcons.chevronDoubleRight,
-                          if (sectionIndex > 0)
-                            localization.moveTop: MdiIcons.chevronDoubleUp,
-                          if (sectionIndex > 1)
-                            localization.moveUp: MdiIcons.chevronUp,
-                          if (sectionIndex < includedLineItems.length - 2)
-                            localization.moveDown: MdiIcons.chevronDown,
-                          if (sectionIndex < includedLineItems.length - 1)
-                            localization.moveBottom: MdiIcons.chevronDoubleDown,
-                          localization.remove: Icons.clear,
-                        };
+                  ),
+                  PopupMenuButton<String>(
+                    icon: Icon(Icons.more_vert),
+                    enabled:
+                        !lineItems[index].isEmpty ||
+                        index < includedLineItems.length,
+                    itemBuilder: (BuildContext context) {
+                      final sectionIndex = includedLineItems.indexOf(
+                        lineItems[index],
+                      );
+                      final options = {
+                        if (!lineItems[index].isEmpty)
+                          localization.clone: Icons.control_point_duplicate,
+                        if (includedLineItems.length > 1)
+                          localization.insertBelow: MdiIcons.plus,
+                        if (widget.isTasks &&
+                            (lineItems[index].taskId ?? '').isNotEmpty)
+                          localization.viewTask: MdiIcons.chevronDoubleRight,
+                        if (sectionIndex > 0)
+                          localization.moveTop: MdiIcons.chevronDoubleUp,
+                        if (sectionIndex > 1)
+                          localization.moveUp: MdiIcons.chevronUp,
+                        if (sectionIndex < includedLineItems.length - 2)
+                          localization.moveDown: MdiIcons.chevronDown,
+                        if (sectionIndex < includedLineItems.length - 1)
+                          localization.moveBottom: MdiIcons.chevronDoubleDown,
+                        localization.remove: Icons.clear,
+                      };
 
-                        return options.keys
-                            .map((option) => PopupMenuItem<String>(
-                                  child: IconText(
-                                    icon: options[option],
-                                    text: option,
-                                  ),
-                                  value: option,
-                                ))
-                            .toList();
-                      },
-                      onSelected: (String action) {
-                        if (action == localization.viewTask) {
-                          viewEntityById(
-                              entityId: lineItems[index].taskId,
-                              entityType: EntityType.task);
-                        } else if (action == localization.moveTop) {
-                          viewModel.onMovedInvoiceItem!(index, 0);
-                        } else if (action == localization.moveUp) {
-                          viewModel.onMovedInvoiceItem!(index, index - 1);
-                        } else if (action == localization.moveDown) {
-                          viewModel.onMovedInvoiceItem!(index, index + 1);
-                        } else if (action == localization.moveBottom) {
-                          viewModel.onMovedInvoiceItem!(
-                              index, lineItems.length - 2);
-                        } else if (action == localization.remove) {
-                          viewModel.onRemoveInvoiceItemPressed!(index);
-                        } else if (action == localization.insertBelow) {
-                          viewModel.addLineItem!(index + 1);
-                        } else if (action == localization.clone) {
-                          viewModel.cloneLineItem!(index);
-                        }
-                        _updateTable();
-                      },
-                    ),
-                  ])
+                      return options.keys
+                          .map(
+                            (option) => PopupMenuItem<String>(
+                              child: IconText(
+                                icon: options[option],
+                                text: option,
+                              ),
+                              value: option,
+                            ),
+                          )
+                          .toList();
+                    },
+                    onSelected: (String action) {
+                      if (action == localization.viewTask) {
+                        viewEntityById(
+                          entityId: lineItems[index].taskId,
+                          entityType: EntityType.task,
+                        );
+                      } else if (action == localization.moveTop) {
+                        viewModel.onMovedInvoiceItem!(index, 0);
+                      } else if (action == localization.moveUp) {
+                        viewModel.onMovedInvoiceItem!(index, index - 1);
+                      } else if (action == localization.moveDown) {
+                        viewModel.onMovedInvoiceItem!(index, index + 1);
+                      } else if (action == localization.moveBottom) {
+                        viewModel.onMovedInvoiceItem!(
+                          index,
+                          lineItems.length - 2,
+                        );
+                      } else if (action == localization.remove) {
+                        viewModel.onRemoveInvoiceItemPressed!(index);
+                      } else if (action == localization.insertBelow) {
+                        viewModel.addLineItem!(index + 1);
+                      } else if (action == localization.clone) {
+                        viewModel.cloneLineItem!(index);
+                      }
+                      _updateTable();
+                    },
+                  ),
+                ],
+              ),
         ],
       ),
     );
@@ -1274,11 +1369,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 }
 
 class TableHeader extends StatelessWidget {
-  const TableHeader(
-    this.label, {
-    this.isNumeric = false,
-    this.isFirst = false,
-  });
+  const TableHeader(this.label, {this.isNumeric = false, this.isFirst = false});
 
   final String? label;
   final bool isNumeric;
@@ -1289,11 +1380,13 @@ class TableHeader extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final tableHeaderColor = state.prefState.activeCustomColors[
-            PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+    final tableHeaderColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
-    final tableFontColor = state.prefState
-            .activeCustomColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+    final tableFontColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_FONT_COLOR] ??
         '';
 
     return Padding(
@@ -1307,9 +1400,10 @@ class TableHeader extends StatelessWidget {
         label!,
         textAlign: isNumeric ? TextAlign.right : TextAlign.left,
         style: TextStyle(
-            color: tableFontColor.isNotEmpty
-                ? convertHexStringToColor(tableFontColor)
-                : Colors.grey),
+          color: tableFontColor.isNotEmpty
+              ? convertHexStringToColor(tableFontColor)
+              : Colors.grey,
+        ),
       ),
     );
   }

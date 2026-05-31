@@ -28,10 +28,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditEInvoice extends StatelessWidget {
-  const InvoiceEditEInvoice({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const InvoiceEditEInvoice({Key? key, required this.viewModel})
+    : super(key: key);
 
   final EntityEditEInvoiceVM viewModel;
 
@@ -100,13 +98,18 @@ class _InvoiceEInvoiceFormState extends State<_InvoiceEInvoiceForm> {
     final description =
         '${_startDateController.text}|${_endDateController.text}';
     final updatedPeriod = period.rebuild((b) => b..description = description);
-    final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
-      ..invoicePeriod
-          .replace(BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod])));
-    final updatedEInvoice =
-        eInvoice.rebuild((b) => b..invoice.replace(updatedInvoice));
-    final updatedEntity =
-        invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice));
+    final updatedInvoice = eInvoiceInvoice.rebuild(
+      (b) => b
+        ..invoicePeriod.replace(
+          BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod]),
+        ),
+    );
+    final updatedEInvoice = eInvoice.rebuild(
+      (b) => b..invoice.replace(updatedInvoice),
+    );
+    final updatedEntity = invoice.rebuild(
+      (b) => b..eInvoice.replace(updatedEInvoice),
+    );
     if (updatedEntity != invoice) {
       _debouncer.run(() {
         widget.viewModel.onChanged!(updatedEntity);
@@ -114,16 +117,24 @@ class _InvoiceEInvoiceFormState extends State<_InvoiceEInvoiceForm> {
     }
   }
 
-  void _updateInvoicePeriod(EInvoiceInvoicePeriodEntity updatedPeriod,
-      EInvoiceInvoiceEntity eInvoiceInvoice, EInvoiceEntity eInvoice) {
+  void _updateInvoicePeriod(
+    EInvoiceInvoicePeriodEntity updatedPeriod,
+    EInvoiceInvoiceEntity eInvoiceInvoice,
+    EInvoiceEntity eInvoice,
+  ) {
     final invoice = widget.viewModel.invoice!;
-    final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
-      ..invoicePeriod
-          .replace(BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod])));
-    final updatedEInvoice =
-        eInvoice.rebuild((b) => b..invoice.replace(updatedInvoice));
+    final updatedInvoice = eInvoiceInvoice.rebuild(
+      (b) => b
+        ..invoicePeriod.replace(
+          BuiltList<EInvoiceInvoicePeriodEntity>([updatedPeriod]),
+        ),
+    );
+    final updatedEInvoice = eInvoice.rebuild(
+      (b) => b..invoice.replace(updatedInvoice),
+    );
     widget.viewModel.onChanged!(
-        invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+      invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice)),
+    );
   }
 
   @override
@@ -173,8 +184,9 @@ class _InvoiceEInvoiceFormState extends State<_InvoiceEInvoiceForm> {
               labelText: localization.startDate,
               selectedDate: period.startDate ?? '',
               onSelected: (date, _) {
-                final updatedPeriod =
-                    period.rebuild((b) => b..startDate = date);
+                final updatedPeriod = period.rebuild(
+                  (b) => b..startDate = date,
+                );
                 _updateInvoicePeriod(updatedPeriod, eInvoiceInvoice, eInvoice);
               },
             ),
@@ -190,15 +202,21 @@ class _InvoiceEInvoiceFormState extends State<_InvoiceEInvoiceForm> {
               labelText: localization.actualDeliveryDate,
               selectedDate: delivery.actualDeliveryDate ?? '',
               onSelected: (date, _) {
-                final updatedDelivery =
-                    delivery.rebuild((b) => b..actualDeliveryDate = date);
-                final updatedInvoice = eInvoiceInvoice.rebuild((b) => b
-                  ..delivery.replace(
-                      BuiltList<EInvoiceDeliveryEntity>([updatedDelivery])));
-                final updatedEInvoice =
-                    eInvoice.rebuild((b) => b..invoice.replace(updatedInvoice));
-                widget.viewModel.onChanged!(invoice
-                    .rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+                final updatedDelivery = delivery.rebuild(
+                  (b) => b..actualDeliveryDate = date,
+                );
+                final updatedInvoice = eInvoiceInvoice.rebuild(
+                  (b) => b
+                    ..delivery.replace(
+                      BuiltList<EInvoiceDeliveryEntity>([updatedDelivery]),
+                    ),
+                );
+                final updatedEInvoice = eInvoice.rebuild(
+                  (b) => b..invoice.replace(updatedInvoice),
+                );
+                widget.viewModel.onChanged!(
+                  invoice.rebuild((b) => b..eInvoice.replace(updatedEInvoice)),
+                );
               },
             ),
           ],
@@ -227,7 +245,8 @@ class _CreditEInvoiceForm extends StatelessWidget {
     final billingRef = creditNote.billingReference.isNotEmpty
         ? creditNote.billingReference.first
         : EInvoiceBillingReferenceEntity();
-    final docRef = billingRef.invoiceDocumentReference ??
+    final docRef =
+        billingRef.invoiceDocumentReference ??
         EInvoiceDocumentReferenceEntity();
 
     String? invoiceId;
@@ -263,40 +282,41 @@ class _CreditEInvoiceForm extends StatelessWidget {
               entityList: invoiceIds,
               onSelected: (selectedInvoice) {
                 final inv = selectedInvoice as InvoiceEntity?;
-                final updatedDocRef =
-                    EInvoiceDocumentReferenceEntity().rebuild((b) => b
-                      ..id = inv?.number ?? ''
-                      ..issueDate = inv?.date ?? '');
+                final updatedDocRef = EInvoiceDocumentReferenceEntity().rebuild(
+                  (b) => b
+                    ..id = inv?.number ?? ''
+                    ..issueDate = inv?.date ?? '',
+                );
                 final updatedBillingRef = EInvoiceBillingReferenceEntity()
-                    .rebuild((b) =>
-                        b..invoiceDocumentReference.replace(updatedDocRef));
+                    .rebuild(
+                      (b) => b..invoiceDocumentReference.replace(updatedDocRef),
+                    );
                 final updatedCreditNote = EInvoiceCreditNoteEntity().rebuild(
-                    (b) => b
-                      ..billingReference.replace(
-                          BuiltList<EInvoiceBillingReferenceEntity>(
-                              [updatedBillingRef])));
-                final updatedEInvoice = eInvoice
-                    .rebuild((b) => b..creditNote.replace(updatedCreditNote));
-                viewModel.onChanged!(credit
-                    .rebuild((b) => b..eInvoice.replace(updatedEInvoice)));
+                  (b) => b
+                    ..billingReference.replace(
+                      BuiltList<EInvoiceBillingReferenceEntity>([
+                        updatedBillingRef,
+                      ]),
+                    ),
+                );
+                final updatedEInvoice = eInvoice.rebuild(
+                  (b) => b..creditNote.replace(updatedCreditNote),
+                );
+                viewModel.onChanged!(
+                  credit.rebuild((b) => b..eInvoice.replace(updatedEInvoice)),
+                );
               },
             ),
           ],
         ),
-        _EInvoiceSendCard(
-          entityType: EntityType.credit,
-          entityId: credit.id,
-        ),
+        _EInvoiceSendCard(entityType: EntityType.credit, entityId: credit.id),
       ],
     );
   }
 }
 
 class _EInvoiceSendCard extends StatelessWidget {
-  const _EInvoiceSendCard({
-    required this.entityType,
-    required this.entityId,
-  });
+  const _EInvoiceSendCard({required this.entityType, required this.entityId});
 
   final EntityType entityType;
   final String entityId;
@@ -317,21 +337,22 @@ class _EInvoiceSendCard extends StatelessWidget {
             store.dispatch(StartSaving());
             WebClient()
                 .post(
-              url,
-              state.credentials.token,
-              data: json.encode({
-                'entity': entityType.apiValue,
-                'entity_id': entityId,
-              }),
-            )
+                  url,
+                  state.credentials.token,
+                  data: json.encode({
+                    'entity': entityType.apiValue,
+                    'entity_id': entityId,
+                  }),
+                )
                 .then((_) {
-              store.dispatch(StopSaving());
-              showToast(localization.emailedInvoice);
-              store.dispatch(RefreshData());
-            }).catchError((error) {
-              store.dispatch(StopSaving());
-              showErrorDialog(message: '$error');
-            });
+                  store.dispatch(StopSaving());
+                  showToast(localization.emailedInvoice);
+                  store.dispatch(RefreshData());
+                })
+                .catchError((error) {
+                  store.dispatch(StopSaving());
+                  showErrorDialog(message: '$error');
+                });
           },
         ),
       ],

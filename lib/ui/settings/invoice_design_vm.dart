@@ -57,125 +57,153 @@ class InvoiceDesignVM {
     final state = store.state;
 
     return InvoiceDesignVM(
-        state: state,
-        settings: state.uiState.settingsUIState.settings,
-        company: state.uiState.settingsUIState.company,
-        onSettingsChanged: (settings) {
-          store.dispatch(UpdateSettings(settings: settings));
-          final newSetting = settings.shareInvoiceQuoteColumns ?? true;
-          final oldSetting =
-              state.uiState.settingsUIState.settings.shareInvoiceQuoteColumns ??
-                  true;
-          if (newSetting != oldSetting) {
-            // Need to force update the UI to show the new tabs
-            store.dispatch(UpdatedSettingUI());
-          }
-        },
-        onSavePressed: (context, entityTypes) {
-          if (!state.isProPlan && !state.isTrial) {
-            return;
-          }
+      state: state,
+      settings: state.uiState.settingsUIState.settings,
+      company: state.uiState.settingsUIState.company,
+      onSettingsChanged: (settings) {
+        store.dispatch(UpdateSettings(settings: settings));
+        final newSetting = settings.shareInvoiceQuoteColumns ?? true;
+        final oldSetting =
+            state.uiState.settingsUIState.settings.shareInvoiceQuoteColumns ??
+            true;
+        if (newSetting != oldSetting) {
+          // Need to force update the UI to show the new tabs
+          store.dispatch(UpdatedSettingUI());
+        }
+      },
+      onSavePressed: (context, entityTypes) {
+        if (!state.isProPlan && !state.isTrial) {
+          return;
+        }
 
-          Debouncer.runOnComplete(() {
-            final settingsUIState = store.state.uiState.settingsUIState;
-            switch (settingsUIState.entityType) {
-              case EntityType.company:
-                final completer = snackBarCompleter<Null>(
-                    AppLocalization.of(context)!.savedSettings)
-                  ..future.then<Null>((_) {
-                    final webClient = WebClient();
-                    final credentials = state.credentials;
-                    final url = '${credentials.url}/designs/set/default';
-                    final settings = store.state.company.settings;
-                    entityTypes.forEach((entityType) {
-                      webClient
-                          .post(
-                        url,
-                        credentials.token,
-                        data: json.encode({
-                          'entity': entityType.snakeCase,
-                          'design_id': settings.getDesignId(entityType),
-                        }),
-                      )
-                          .then((dynamic response) {
-                        showToast(
-                            AppLocalization.of(navigatorKey.currentContext!)!
-                                .savedSettings);
-                      }).catchError((dynamic error) {
-                        showErrorDialog(message: '$error');
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          switch (settingsUIState.entityType) {
+            case EntityType.company:
+              final completer =
+                  snackBarCompleter<Null>(
+                      AppLocalization.of(context)!.savedSettings,
+                    )
+                    ..future.then<Null>((_) {
+                      final webClient = WebClient();
+                      final credentials = state.credentials;
+                      final url = '${credentials.url}/designs/set/default';
+                      final settings = store.state.company.settings;
+                      entityTypes.forEach((entityType) {
+                        webClient
+                            .post(
+                              url,
+                              credentials.token,
+                              data: json.encode({
+                                'entity': entityType.snakeCase,
+                                'design_id': settings.getDesignId(entityType),
+                              }),
+                            )
+                            .then((dynamic response) {
+                              showToast(
+                                AppLocalization.of(
+                                  navigatorKey.currentContext!,
+                                )!.savedSettings,
+                              );
+                            })
+                            .catchError((dynamic error) {
+                              showErrorDialog(message: '$error');
+                            });
                       });
                     });
-                  });
-                store.dispatch(SaveCompanyRequest(
-                    completer: completer, company: settingsUIState.company));
-                break;
-              case EntityType.group:
-                final completer = snackBarCompleter<GroupEntity>(
-                    AppLocalization.of(context)!.savedSettings)
-                  ..future.then<Null>((_) {
-                    final webClient = WebClient();
-                    final credentials = state.credentials;
-                    final url = '${credentials.url}/designs/set/default';
-                    final settings = store.state.company.settings;
-                    entityTypes.forEach((entityType) {
-                      webClient
-                          .post(
-                        url,
-                        credentials.token,
-                        data: json.encode({
-                          'entity': entityType.snakeCase,
-                          'design_id': settings.getDesignId(entityType),
-                          'settings_level': 'group_settings',
-                          'group_settings_id': settingsUIState.group.id,
-                        }),
-                      )
-                          .then((dynamic response) {
-                        showToast(
-                            AppLocalization.of(navigatorKey.currentContext!)!
-                                .savedSettings);
-                      }).catchError((dynamic error) {
-                        showErrorDialog(message: '$error');
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
+              break;
+            case EntityType.group:
+              final completer =
+                  snackBarCompleter<GroupEntity>(
+                      AppLocalization.of(context)!.savedSettings,
+                    )
+                    ..future.then<Null>((_) {
+                      final webClient = WebClient();
+                      final credentials = state.credentials;
+                      final url = '${credentials.url}/designs/set/default';
+                      final settings = store.state.company.settings;
+                      entityTypes.forEach((entityType) {
+                        webClient
+                            .post(
+                              url,
+                              credentials.token,
+                              data: json.encode({
+                                'entity': entityType.snakeCase,
+                                'design_id': settings.getDesignId(entityType),
+                                'settings_level': 'group_settings',
+                                'group_settings_id': settingsUIState.group.id,
+                              }),
+                            )
+                            .then((dynamic response) {
+                              showToast(
+                                AppLocalization.of(
+                                  navigatorKey.currentContext!,
+                                )!.savedSettings,
+                              );
+                            })
+                            .catchError((dynamic error) {
+                              showErrorDialog(message: '$error');
+                            });
                       });
                     });
-                  });
-                store.dispatch(SaveGroupRequest(
-                    completer: completer, group: settingsUIState.group));
-                break;
-              case EntityType.client:
-                final completer = snackBarCompleter<ClientEntity>(
-                    AppLocalization.of(context)!.savedSettings)
-                  ..future.then<Null>((_) {
-                    final webClient = WebClient();
-                    final credentials = state.credentials;
-                    final url = '${credentials.url}/designs/set/default';
-                    final settings = store.state.company.settings;
-                    entityTypes.forEach((entityType) {
-                      webClient
-                          .post(
-                        url,
-                        credentials.token,
-                        data: json.encode({
-                          'entity': entityType.snakeCase,
-                          'design_id': settings.getDesignId(entityType),
-                          'settings_level': 'client',
-                          'client_id': settingsUIState.client.id,
-                        }),
-                      )
-                          .then((dynamic response) {
-                        showToast(
-                            AppLocalization.of(navigatorKey.currentContext!)!
-                                .savedSettings);
-                      }).catchError((dynamic error) {
-                        showErrorDialog(message: '$error');
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
+              break;
+            case EntityType.client:
+              final completer =
+                  snackBarCompleter<ClientEntity>(
+                      AppLocalization.of(context)!.savedSettings,
+                    )
+                    ..future.then<Null>((_) {
+                      final webClient = WebClient();
+                      final credentials = state.credentials;
+                      final url = '${credentials.url}/designs/set/default';
+                      final settings = store.state.company.settings;
+                      entityTypes.forEach((entityType) {
+                        webClient
+                            .post(
+                              url,
+                              credentials.token,
+                              data: json.encode({
+                                'entity': entityType.snakeCase,
+                                'design_id': settings.getDesignId(entityType),
+                                'settings_level': 'client',
+                                'client_id': settingsUIState.client.id,
+                              }),
+                            )
+                            .then((dynamic response) {
+                              showToast(
+                                AppLocalization.of(
+                                  navigatorKey.currentContext!,
+                                )!.savedSettings,
+                              );
+                            })
+                            .catchError((dynamic error) {
+                              showErrorDialog(message: '$error');
+                            });
                       });
                     });
-                  });
-                store.dispatch(SaveClientRequest(
-                    completer: completer, client: settingsUIState.client));
-                break;
-            }
-          });
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
+              break;
+          }
         });
+      },
+    );
   }
 
   final AppState state;

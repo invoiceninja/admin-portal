@@ -33,11 +33,14 @@ List<Middleware<AppState>> createStoreTransactionRulesMiddleware([
     TypedMiddleware<AppState, LoadTransactionRule>(loadTransactionRule),
     TypedMiddleware<AppState, SaveTransactionRuleRequest>(saveTransactionRule),
     TypedMiddleware<AppState, ArchiveTransactionRulesRequest>(
-        archiveTransactionRule),
+      archiveTransactionRule,
+    ),
     TypedMiddleware<AppState, DeleteTransactionRulesRequest>(
-        deleteTransactionRule),
+      deleteTransactionRule,
+    ),
     TypedMiddleware<AppState, RestoreTransactionRulesRequest>(
-        restoreTransactionRule),
+      restoreTransactionRule,
+    ),
   ];
 }
 
@@ -56,8 +59,11 @@ Middleware<AppState> _editTransactionRule() {
 }
 
 Middleware<AppState> _viewTransactionRule() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewTransactionRule?;
 
     next(action);
@@ -84,106 +90,126 @@ Middleware<AppState> _viewTransactionRuleList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          TransactionRuleScreen.route, (Route<dynamic> route) => false);
+        TransactionRuleScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
 
 Middleware<AppState> _archiveTransactionRule(
-    TransactionRuleRepository repository) {
+  TransactionRuleRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTransactionRulesRequest;
     final prevTransactionRules = action.transactionRuleIds
         .map((id) => store.state.transactionRuleState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.transactionRuleIds,
-            EntityAction.archive)
+        .bulkAction(
+          store.state.credentials,
+          action.transactionRuleIds,
+          EntityAction.archive,
+        )
         .then((List<TransactionRuleEntity> transactionRules) {
-      store.dispatch(ArchiveTransactionRulesSuccess(transactionRules));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveTransactionRulesFailure(prevTransactionRules));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveTransactionRulesSuccess(transactionRules));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveTransactionRulesFailure(prevTransactionRules));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _deleteTransactionRule(
-    TransactionRuleRepository repository) {
+  TransactionRuleRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTransactionRulesRequest;
     final prevTransactionRules = action.transactionRuleIds
         .map((id) => store.state.transactionRuleState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.transactionRuleIds,
-            EntityAction.delete)
+        .bulkAction(
+          store.state.credentials,
+          action.transactionRuleIds,
+          EntityAction.delete,
+        )
         .then((List<TransactionRuleEntity> transactionRules) {
-      store.dispatch(DeleteTransactionRulesSuccess(transactionRules));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteTransactionRulesFailure(prevTransactionRules));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteTransactionRulesSuccess(transactionRules));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteTransactionRulesFailure(prevTransactionRules));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _restoreTransactionRule(
-    TransactionRuleRepository repository) {
+  TransactionRuleRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTransactionRulesRequest;
     final prevTransactionRules = action.transactionRuleIds
         .map((id) => store.state.transactionRuleState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.transactionRuleIds,
-            EntityAction.restore)
+        .bulkAction(
+          store.state.credentials,
+          action.transactionRuleIds,
+          EntityAction.restore,
+        )
         .then((List<TransactionRuleEntity> transactionRules) {
-      store.dispatch(RestoreTransactionRulesSuccess(transactionRules));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreTransactionRulesFailure(prevTransactionRules));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreTransactionRulesSuccess(transactionRules));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreTransactionRulesFailure(prevTransactionRules));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _saveTransactionRule(
-    TransactionRuleRepository repository) {
+  TransactionRuleRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTransactionRuleRequest;
     repository
         .saveData(store.state.credentials, action.transactionRule!)
         .then((TransactionRuleEntity transactionRule) {
-      if (action.transactionRule!.isNew) {
-        store.dispatch(AddTransactionRuleSuccess(transactionRule));
-      } else {
-        store.dispatch(SaveTransactionRuleSuccess(transactionRule));
-      }
+          if (action.transactionRule!.isNew) {
+            store.dispatch(AddTransactionRuleSuccess(transactionRule));
+          } else {
+            store.dispatch(SaveTransactionRuleSuccess(transactionRule));
+          }
 
-      action.completer!.complete(transactionRule);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveTransactionRuleFailure(error));
-      action.completer!.completeError(error);
-    });
+          action.completer!.complete(transactionRule);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveTransactionRuleFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _loadTransactionRule(
-    TransactionRuleRepository repository) {
+  TransactionRuleRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadTransactionRule;
     final AppState state = store.state;
@@ -192,43 +218,48 @@ Middleware<AppState> _loadTransactionRule(
     repository
         .loadItem(state.credentials, action.transactionRuleId)
         .then((transactionRule) {
-      store.dispatch(LoadTransactionRuleSuccess(transactionRule));
+          store.dispatch(LoadTransactionRuleSuccess(transactionRule));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTransactionRuleFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTransactionRuleFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
 }
 
 Middleware<AppState> _loadTransactionRules(
-    TransactionRuleRepository repository) {
+  TransactionRuleRepository repository,
+) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadTransactionRules?;
     final AppState state = store.state;
 
     store.dispatch(LoadTransactionRulesRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadTransactionRulesSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadTransactionRulesSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTransactionRulesFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTransactionRulesFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

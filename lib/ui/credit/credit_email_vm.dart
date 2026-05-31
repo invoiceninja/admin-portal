@@ -42,9 +42,7 @@ class CreditEmailScreen extends StatelessWidget {
         return EmailCreditVM.fromStore(store, credit);
       },
       builder: (context, viewModel) {
-        return InvoiceEmailView(
-          viewModel: viewModel,
-        );
+        return InvoiceEmailView(viewModel: viewModel);
       },
     );
   }
@@ -61,17 +59,17 @@ class EmailCreditVM extends EmailEntityVM {
     VendorEntity? vendor,
     Function? loadClient,
     Function(BuildContext, EmailTemplate, String, String, String)?
-        onSendPressed,
+    onSendPressed,
   }) : super(
-          state: state,
-          isLoading: isLoading,
-          isSaving: isSaving,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onSendPressed: onSendPressed,
-        );
+         state: state,
+         isLoading: isLoading,
+         isSaving: isSaving,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onSendPressed: onSendPressed,
+       );
 
   factory EmailCreditVM.fromStore(Store<AppState> store, InvoiceEntity credit) {
     final state = store.state;
@@ -88,21 +86,24 @@ class EmailCreditVM extends EmailEntityVM {
       },
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.emailedCredit,
-            shouldPop: isMobile(context));
+          AppLocalization.of(context)!.emailedCredit,
+          shouldPop: isMobile(context),
+        );
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {
             viewEntity(entity: credit);
           });
         }
-        store.dispatch(EmailCreditRequest(
-          completer: completer,
-          creditId: credit.id,
-          template: template,
-          subject: subject,
-          body: body,
-          ccEmail: ccEmail,
-        ));
+        store.dispatch(
+          EmailCreditRequest(
+            completer: completer,
+            creditId: credit.id,
+            template: template,
+            subject: subject,
+            body: body,
+            ccEmail: ccEmail,
+          ),
+        );
       },
     );
   }

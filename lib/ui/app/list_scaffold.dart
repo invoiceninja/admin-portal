@@ -78,8 +78,10 @@ class ListScaffold extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16, right: 14),
         child: OutlinedButton(
           style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                  state.prefState.colorThemeModel!.colorSuccess)),
+            backgroundColor: WidgetStateProperty.all(
+              state.prefState.colorThemeModel!.colorSuccess,
+            ),
+          ),
           onPressed: () {
             createEntityByType(entityType: entityType, context: context);
           },
@@ -100,7 +102,8 @@ class ListScaffold extends StatelessWidget {
     } else if (entityType == EntityType.document) {
       leadingWidth = kMinInteractiveDimension;
     } else {
-      leadingWidth = (isDesktop(context) ? 100 : 10) +
+      leadingWidth =
+          (isDesktop(context) ? 100 : 10) +
           (kMinInteractiveDimension - 4) *
               (appBarLeadingActions.length +
                   (onCheckboxPressed == null || isMobile(context) ? 1 : 2));
@@ -112,9 +115,11 @@ class ListScaffold extends StatelessWidget {
         if (isDesktop(context) && onCheckboxPressed != null)
           IconButton(
             icon: Icon(Icons.check_box),
-            tooltip:
-                prefState.enableTooltips ? localization!.multiselect : null,
-            onPressed: state.prefState.showKanban &&
+            tooltip: prefState.enableTooltips
+                ? localization!.multiselect
+                : null,
+            onPressed:
+                state.prefState.showKanban &&
                     state.uiState.mainRoute == '${EntityType.task}'
                 ? null
                 : () => onCheckboxPressed!(),
@@ -125,69 +130,76 @@ class ListScaffold extends StatelessWidget {
     );
 
     return PopScope(
-        canPop: !isSettings,
-        onPopInvokedWithResult: (_, __) {
-          if (!isSettings) {
-            store.dispatch(ViewDashboard());
-          }
-        },
-        child: FocusTraversalGroup(
-          child: Scaffold(
-            drawer: isMobile(context) || state.prefState.isMenuFloated
-                ? MenuDrawerBuilder()
-                : null,
-            endDrawer: isMobile(context) ||
-                    (state.prefState.isHistoryFloated && !isSettings)
-                ? HistoryDrawerBuilder()
-                : null,
-            appBar: AppBar(
-              centerTitle: false,
-              automaticallyImplyLeading: false,
-              leading: leading,
-              leadingWidth: leadingWidth,
-              title: Row(
-                children: [
-                  Expanded(child: appBarTitle),
-                  if (isDesktop(context) && onCancelSettingsSection != null)
-                    TextButton(
-                        onPressed: () {
-                          store.dispatch(ViewSettings(
-                            company: state.company,
-                            section: onCancelSettingsSection,
-                            tabIndex: onCancelSettingsIndex,
-                          ));
-                        },
-                        child: Text(
-                          localization!.back,
-                          style: TextStyle(color: state.headerTextColor),
-                        )),
-                ],
-              ),
-              actions: [
-                ...appBarActions ?? <Widget>[],
-                if (!isSettings &&
-                    (isMobile(context) || !state.prefState.isHistoryVisible))
-                  Builder(builder: (context) {
+      canPop: !isSettings,
+      onPopInvokedWithResult: (_, __) {
+        if (!isSettings) {
+          store.dispatch(ViewDashboard());
+        }
+      },
+      child: FocusTraversalGroup(
+        child: Scaffold(
+          drawer: isMobile(context) || state.prefState.isMenuFloated
+              ? MenuDrawerBuilder()
+              : null,
+          endDrawer:
+              isMobile(context) ||
+                  (state.prefState.isHistoryFloated && !isSettings)
+              ? HistoryDrawerBuilder()
+              : null,
+          appBar: AppBar(
+            centerTitle: false,
+            automaticallyImplyLeading: false,
+            leading: leading,
+            leadingWidth: leadingWidth,
+            title: Row(
+              children: [
+                Expanded(child: appBarTitle),
+                if (isDesktop(context) && onCancelSettingsSection != null)
+                  TextButton(
+                    onPressed: () {
+                      store.dispatch(
+                        ViewSettings(
+                          company: state.company,
+                          section: onCancelSettingsSection,
+                          tabIndex: onCancelSettingsIndex,
+                        ),
+                      );
+                    },
+                    child: Text(
+                      localization!.back,
+                      style: TextStyle(color: state.headerTextColor),
+                    ),
+                  ),
+              ],
+            ),
+            actions: [
+              ...appBarActions ?? <Widget>[],
+              if (!isSettings &&
+                  (isMobile(context) || !state.prefState.isHistoryVisible))
+                Builder(
+                  builder: (context) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: IconButton(
-                          padding: const EdgeInsets.only(right: 8),
-                          onPressed: () {
-                            if (isMobile(context) ||
-                                state.prefState.isHistoryFloated) {
-                              Scaffold.of(context).openEndDrawer();
-                            } else {
-                              store.dispatch(UpdateUserPreferences(
-                                  sidebar: AppSidebar.history));
-                            }
-                          },
-                          icon: Icon(
-                            Icons.history,
-                            color: state.headerTextColor,
-                          )),
+                        padding: const EdgeInsets.only(right: 8),
+                        onPressed: () {
+                          if (isMobile(context) ||
+                              state.prefState.isHistoryFloated) {
+                            Scaffold.of(context).openEndDrawer();
+                          } else {
+                            store.dispatch(
+                              UpdateUserPreferences(
+                                sidebar: AppSidebar.history,
+                              ),
+                            );
+                          }
+                        },
+                        icon: Icon(Icons.history, color: state.headerTextColor),
+                      ),
                     );
-                  })
-                /*
+                  },
+                ),
+              /*
                   Builder(
                     builder: (context) => IconButton(
                       padding: const EdgeInsets.only(left: 4, right: 20),
@@ -207,22 +219,18 @@ class ListScaffold extends StatelessWidget {
                     ),
                   ),
                   */
-              ],
-            ),
-            body: Container(
-              child: Column(children: [
-                Expanded(
-                  child: ClipRect(
-                    child: body,
-                  ),
-                ),
-              ]),
-            ),
-            bottomNavigationBar: bottomNavigationBar,
-            floatingActionButton: floatingActionButton,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.endDocked,
+            ],
           ),
-        ));
+          body: Container(
+            child: Column(
+              children: [Expanded(child: ClipRect(child: body))],
+            ),
+          ),
+          bottomNavigationBar: bottomNavigationBar,
+          floatingActionButton: floatingActionButton,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        ),
+      ),
+    );
   }
 }

@@ -49,9 +49,11 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<QuoteState> get serializer => _$quoteStateSerializer;
@@ -62,8 +64,10 @@ abstract class QuoteUIState extends Object
     implements Built<QuoteUIState, QuoteUIStateBuilder> {
   factory QuoteUIState(PrefStateSortField? sortField) {
     return _$QuoteUIState._(
-      listUIState: ListUIState(sortField?.field ?? QuoteFields.number,
-          sortAscending: sortField?.ascending ?? false),
+      listUIState: ListUIState(
+        sortField?.field ?? QuoteFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

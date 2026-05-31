@@ -21,9 +21,7 @@ import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SidebarScaffold extends StatelessWidget {
-  const SidebarScaffold({
-    required this.tabController,
-  });
+  const SidebarScaffold({required this.tabController});
 
   final TabController? tabController;
 
@@ -45,33 +43,22 @@ class SidebarScaffold extends StatelessWidget {
                 controller: tabController,
                 tabs: [
                   if (company.isModuleEnabled(EntityType.invoice))
-                    Tab(
-                      text: localization!.invoices,
-                    ),
+                    Tab(text: localization!.invoices),
                   if (company.isModuleEnabled(EntityType.payment))
-                    Tab(
-                      text: localization!.payments,
-                    ),
+                    Tab(text: localization!.payments),
                   if (company.isModuleEnabled(EntityType.quote))
-                    Tab(
-                      text: localization!.quotes,
-                    ),
+                    Tab(text: localization!.quotes),
                   if (company.isModuleEnabled(EntityType.task))
-                    Tab(
-                      text: localization!.tasks,
-                    ),
+                    Tab(text: localization!.tasks),
                   if (company.isModuleEnabled(EntityType.expense))
-                    Tab(
-                      text: localization!.expenses,
-                    ),
+                    Tab(text: localization!.expenses),
                 ],
               ),
             ),
             IconButton(
               icon: Icon(Icons.clear),
-              onPressed: () => store.dispatch(
-                UpdateDashboardSidebar(showSidebar: false),
-              ),
+              onPressed: () =>
+                  store.dispatch(UpdateDashboardSidebar(showSidebar: false)),
             ),
           ],
         ),
@@ -111,7 +98,8 @@ class InvoiceSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.invoice,
-      label1: localization.upcomingInvoices +
+      label1:
+          localization.upcomingInvoices +
           (upcomingInvoices.isNotEmpty ? ' (${upcomingInvoices.length})' : ''),
       list1: upcomingInvoices.isEmpty
           ? null
@@ -125,7 +113,8 @@ class InvoiceSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.pastDueInvoices +
+      label2:
+          localization.pastDueInvoices +
           (pastDueInvoices.isNotEmpty ? ' (${pastDueInvoices.length})' : ''),
       list2: pastDueInvoices.isEmpty
           ? null
@@ -150,10 +139,7 @@ class InvoiceSidebar extends StatelessWidget {
                 final invoice = state.invoiceState.map[selectedIds![index]];
                 return invoice == null
                     ? SizedBox()
-                    : InvoiceListItem(
-                        invoice: invoice,
-                        showSelected: false,
-                      );
+                    : InvoiceListItem(invoice: invoice, showSelected: false);
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
@@ -178,7 +164,8 @@ class PaymentSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.payment,
-      label1: localization.recentPayments +
+      label1:
+          localization.recentPayments +
           (recentPayments.isNotEmpty ? ' (${recentPayments.length})' : ''),
       list1: recentPayments.isEmpty
           ? null
@@ -203,10 +190,7 @@ class PaymentSidebar extends StatelessWidget {
                 final payment = state.paymentState.map[selectedIds![index]];
                 return payment == null
                     ? SizedBox()
-                    : PaymentListItem(
-                        payment: payment,
-                        showSelected: false,
-                      );
+                    : PaymentListItem(payment: payment, showSelected: false);
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
@@ -235,7 +219,8 @@ class QuoteSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.quote,
-      label1: localization.upcomingQuotes +
+      label1:
+          localization.upcomingQuotes +
           (upcomingQuotes.isNotEmpty ? ' (${upcomingQuotes.length})' : ''),
       list1: upcomingQuotes.isEmpty
           ? null
@@ -249,7 +234,8 @@ class QuoteSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.expiredQuotes +
+      label2:
+          localization.expiredQuotes +
           (expriedQuotes.isNotEmpty ? ' (${expriedQuotes.length})' : ''),
       list2: expriedQuotes.isEmpty
           ? null
@@ -274,10 +260,7 @@ class QuoteSidebar extends StatelessWidget {
                 final quote = state.quoteState.map[selectedIds![index]];
                 return quote == null
                     ? SizedBox()
-                    : QuoteListItem(
-                        quote: quote,
-                        showCheckbox: false,
-                      );
+                    : QuoteListItem(quote: quote, showCheckbox: false);
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
@@ -306,7 +289,8 @@ class TaskSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.quote,
-      label1: localization.runningTasks +
+      label1:
+          localization.runningTasks +
           (runningTasks.isNotEmpty ? ' (${runningTasks.length})' : ''),
       list1: runningTasks.isEmpty
           ? null
@@ -320,7 +304,8 @@ class TaskSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.recentTasks +
+      label2:
+          localization.recentTasks +
           (recentTasks.isNotEmpty ? ' (${recentTasks.length})' : ''),
       list2: recentTasks.isEmpty
           ? null
@@ -345,10 +330,7 @@ class TaskSidebar extends StatelessWidget {
                 final task = state.taskState.map[selectedIds![index]];
                 return task == null
                     ? SizedBox()
-                    : TaskListItem(
-                        task: task,
-                        showCheckbox: false,
-                      );
+                    : TaskListItem(task: task, showCheckbox: false);
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
@@ -397,7 +379,8 @@ class ExpenseSidbar extends StatelessWidget {
               separatorBuilder: (context, index) => ListDivider(),
             ),
             */
-      label1: localization.recentExpenses +
+      label1:
+          localization.recentExpenses +
           (recentExpenses.isNotEmpty ? ' (${recentExpenses.length})' : ''),
       list1: recentExpenses.isEmpty
           ? null
@@ -485,8 +468,10 @@ class _DashboardSidebar extends StatelessWidget {
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Container(
                 child: Text(label2!, style: textTheme.bodyMedium),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
                 width: double.infinity,
               ),
             ),
@@ -512,28 +497,33 @@ class _DashboardSidebar extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                            child: Text(label3 ?? '',
-                                style: textTheme.bodyMedium)),
+                          child: Text(
+                            label3 ?? '',
+                            style: textTheme.bodyMedium,
+                          ),
+                        ),
                         IconButton(
                           visualDensity: VisualDensity.compact,
                           icon: Icon(Icons.clear),
                           onPressed: () {
-                            store.dispatch(UpdateDashboardSelection(
-                              entityIds: null,
-                              entityType: entityType,
-                            ));
+                            store.dispatch(
+                              UpdateDashboardSelection(
+                                entityIds: null,
+                                entityType: entityType,
+                              ),
+                            );
                           },
-                        )
+                        ),
                       ],
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     width: double.infinity,
                   ),
                 ),
-                Expanded(
-                  child: ClipRRect(child: list3 ?? SizedBox()),
-                ),
+                Expanded(child: ClipRRect(child: list3 ?? SizedBox())),
               ],
             ),
           ),

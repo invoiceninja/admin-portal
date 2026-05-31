@@ -10,13 +10,16 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 
 var memoizedDropdownExpenseCategoriesList = memo2(
-    (BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-            BuiltList<String> categoryList) =>
-        dropdownExpenseCategoriesSelector(categoryMap, categoryList));
+  (
+    BuiltMap<String, ExpenseCategoryEntity> categoryMap,
+    BuiltList<String> categoryList,
+  ) => dropdownExpenseCategoriesSelector(categoryMap, categoryList),
+);
 
 List<String> dropdownExpenseCategoriesSelector(
-    BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-    BuiltList<String> categoryList) {
+  BuiltMap<String, ExpenseCategoryEntity> categoryMap,
+  BuiltList<String> categoryList,
+) {
   final list = categoryList
       .where((categoryId) => categoryMap[categoryId]!.isActive)
       .toList();
@@ -25,34 +28,42 @@ List<String> dropdownExpenseCategoriesSelector(
     final categoryA = categoryMap[categoryAId]!;
     final categoryB = categoryMap[categoryBId];
     return categoryA.compareTo(
-        expenseCategory: categoryB,
-        sortAscending: true,
-        sortField: ExpenseCategoryFields.name);
+      expenseCategory: categoryB,
+      sortAscending: true,
+      sortField: ExpenseCategoryFields.name,
+    );
   });
 
   return list;
 }
 
-var memoizedHasMultipleCurrencies = memo3((CompanyEntity? company,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, GroupEntity> groupMap) =>
-    hasMultipleCurrencies(company, clientMap, groupMap));
+var memoizedHasMultipleCurrencies = memo3(
+  (
+    CompanyEntity? company,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap,
+  ) => hasMultipleCurrencies(company, clientMap, groupMap),
+);
 
 bool hasMultipleCurrencies(
-        CompanyEntity? company,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, GroupEntity> groupMap) =>
-    memoizedGetCurrencyIds(company, clientMap, groupMap).length > 1;
+  CompanyEntity? company,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) => memoizedGetCurrencyIds(company, clientMap, groupMap).length > 1;
 
-var memoizedGetCurrencyIds = memo3((CompanyEntity? company,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, GroupEntity> groupMap) =>
-    getCurrencyIds(company!, clientMap, groupMap));
+var memoizedGetCurrencyIds = memo3(
+  (
+    CompanyEntity? company,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap,
+  ) => getCurrencyIds(company!, clientMap, groupMap),
+);
 
 List<String> getCurrencyIds(
-    CompanyEntity company,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, GroupEntity> groupMap) {
+  CompanyEntity company,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) {
   final currencyIds = <String>[company.currencyId];
   clientMap.forEach((clientId, client) {
     final group = groupMap[client.groupId];
@@ -78,46 +89,67 @@ List<String> getCurrencyIds(
   }
 }
 
-var memoizedFilteredSelector = memo2((String? filter, UserCompanyState state) =>
-    filteredSelector(filter, state));
+var memoizedFilteredSelector = memo2(
+  (String? filter, UserCompanyState state) => filteredSelector(filter, state),
+);
 
 List<BaseEntity> filteredSelector(String? filter, UserCompanyState state) {
   final List<BaseEntity> list = []
-    ..addAll(state.productState.list
-        .map((productId) => state.productState.map[productId]!)
-        .where((product) {
-      return product.matchesFilter(filter);
-    }).toList())
-    ..addAll(state.clientState.list
-        .map((clientId) => state.clientState.map[clientId]!)
-        .where((client) {
-      return client.matchesFilter(filter);
-    }).toList())
-    ..addAll(state.quoteState.list
-        .map((quoteId) => state.quoteState.map[quoteId]!)
-        .where((quote) {
-      return quote.matchesFilter(filter);
-    }).toList())
-    ..addAll(state.paymentState.list
-        .map((paymentId) => state.paymentState.map[paymentId]!)
-        .where((payment) {
-      return payment.matchesFilter(filter);
-    }).toList())
-    ..addAll(state.projectState.list
-        .map((projectId) => state.projectState.map[projectId]!)
-        .where((project) {
-      return project.matchesFilter(filter);
-    }).toList())
-    ..addAll(state.taskState.list
-        .map((taskId) => state.taskState.map[taskId]!)
-        .where((task) {
-      return task.matchesFilter(filter);
-    }).toList())
-    ..addAll(state.invoiceState.list
-        .map((invoiceId) => state.invoiceState.map[invoiceId]!)
-        .where((invoice) {
-      return invoice.matchesFilter(filter);
-    }).toList());
+    ..addAll(
+      state.productState.list
+          .map((productId) => state.productState.map[productId]!)
+          .where((product) {
+            return product.matchesFilter(filter);
+          })
+          .toList(),
+    )
+    ..addAll(
+      state.clientState.list
+          .map((clientId) => state.clientState.map[clientId]!)
+          .where((client) {
+            return client.matchesFilter(filter);
+          })
+          .toList(),
+    )
+    ..addAll(
+      state.quoteState.list
+          .map((quoteId) => state.quoteState.map[quoteId]!)
+          .where((quote) {
+            return quote.matchesFilter(filter);
+          })
+          .toList(),
+    )
+    ..addAll(
+      state.paymentState.list
+          .map((paymentId) => state.paymentState.map[paymentId]!)
+          .where((payment) {
+            return payment.matchesFilter(filter);
+          })
+          .toList(),
+    )
+    ..addAll(
+      state.projectState.list
+          .map((projectId) => state.projectState.map[projectId]!)
+          .where((project) {
+            return project.matchesFilter(filter);
+          })
+          .toList(),
+    )
+    ..addAll(
+      state.taskState.list.map((taskId) => state.taskState.map[taskId]!).where((
+        task,
+      ) {
+        return task.matchesFilter(filter);
+      }).toList(),
+    )
+    ..addAll(
+      state.invoiceState.list
+          .map((invoiceId) => state.invoiceState.map[invoiceId]!)
+          .where((invoice) {
+            return invoice.matchesFilter(filter);
+          })
+          .toList(),
+    );
 
   list.sort((BaseEntity? entityA, BaseEntity? entityB) {
     return entityA!.listDisplayName.compareTo(entityB!.listDisplayName);

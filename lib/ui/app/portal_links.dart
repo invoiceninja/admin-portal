@@ -6,10 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum PortalLinkStyle {
-  buttons,
-  dropdown,
-}
+enum PortalLinkStyle { buttons, dropdown }
 
 class PortalLinks extends StatelessWidget {
   const PortalLinks({
@@ -51,7 +48,9 @@ class PortalLinks extends StatelessWidget {
         itemBuilder: (BuildContext context) => [
           PopupMenuItem(
             child: IconText(
-                text: localization!.viewPortal, icon: Icons.open_in_new),
+              text: localization!.viewPortal,
+              icon: Icons.open_in_new,
+            ),
             value: localization.viewPortal,
           ),
           PopupMenuItem(
@@ -72,24 +71,26 @@ class PortalLinks extends StatelessWidget {
         children: [
           Expanded(
             child: OutlinedButton(
-                onPressed: viewLinkPressed,
-                child: Text(
-                  localization!.viewPortal,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                )),
+              onPressed: viewLinkPressed,
+              child: Text(
+                localization!.viewPortal,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
           SizedBox(width: 8),
           Expanded(
             child: OutlinedButton(
-                onPressed: copyLinkPressed,
-                child: Text(
-                  localization.copyLink,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                )),
+              onPressed: copyLinkPressed,
+              child: Text(
+                localization.copyLink,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
         ],
       );

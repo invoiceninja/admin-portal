@@ -44,17 +44,25 @@ enum PurchaseOrderItemReportFields {
   record_state,
 }
 
-var memoizedPurchaseOrderItemReport = memo7((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  StaticState staticState,
-) =>
-    lineItemReport(userCompany!, reportsUIState, productMap, purchaseOrderMap,
-        clientMap, vendorMap, staticState));
+var memoizedPurchaseOrderItemReport = memo7(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ProductEntity> productMap,
+    BuiltMap<String, InvoiceEntity> purchaseOrderMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    StaticState staticState,
+  ) => lineItemReport(
+    userCompany!,
+    reportsUIState,
+    productMap,
+    purchaseOrderMap,
+    clientMap,
+    vendorMap,
+    staticState,
+  ),
+);
 
 ReportResult lineItemReport(
   UserCompanyEntity userCompany,
@@ -71,8 +79,8 @@ ReportResult lineItemReport(
   final reportSettings = userCompany.settings.reportSettings;
   final lineItemReportSettings =
       reportSettings.containsKey(kReportPurchaseOrderItem)
-          ? reportSettings[kReportPurchaseOrderItem]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportPurchaseOrderItem]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     PurchaseOrderItemReportFields.purchaseOrderNumber,
@@ -83,11 +91,15 @@ ReportResult lineItemReport(
   ];
 
   if (lineItemReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(lineItemReportSettings.columns
-        .map((e) =>
-            EnumUtils.fromString(PurchaseOrderItemReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      lineItemReportSettings.columns
+          .map(
+            (e) =>
+                EnumUtils.fromString(PurchaseOrderItemReportFields.values, e),
+          )
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -136,7 +148,8 @@ ReportResult lineItemReport(
             }
             break;
           case PurchaseOrderItemReportFields.profit:
-            value = lineItem.netTotal(invoice, precision) -
+            value =
+                lineItem.netTotal(invoice, precision) -
                 (productId == null ? 0.0 : productMap[productId]!.cost);
             break;
           case PurchaseOrderItemReportFields.custom1:
@@ -158,7 +171,7 @@ ReportResult lineItemReport(
             value = invoice.usesInclusiveTaxes
                 ? lineItem.total(invoice, precision)
                 : lineItem.total(invoice, precision) +
-                    lineItem.taxAmount(invoice, precision);
+                      lineItem.taxAmount(invoice, precision);
             break;
           case PurchaseOrderItemReportFields.productKey:
             value = lineItem.productKey;
@@ -207,7 +220,7 @@ ReportResult lineItemReport(
           case PurchaseOrderItemReportFields.currency:
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
-                    '';
+                '';
             break;
           case PurchaseOrderItemReportFields.clientNumber:
             value = client.number;
@@ -216,8 +229,9 @@ ReportResult lineItemReport(
             value = client.idNumber;
             break;
           case PurchaseOrderItemReportFields.record_state:
-            value = AppLocalization.of(navigatorKey.currentContext!)!
-                .lookup(invoice.entityState);
+            value = AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!.lookup(invoice.entityState);
             break;
         }
 
@@ -233,11 +247,14 @@ ReportResult lineItemReport(
         if (value.runtimeType == bool) {
           row.add(invoice.getReportBool(value: value));
         } else if (value.runtimeType == double || value.runtimeType == int) {
-          row.add(invoice.getReportDouble(
+          row.add(
+            invoice.getReportDouble(
               value: value,
               currencyId: column == PurchaseOrderItemReportFields.quantity
                   ? null
-                  : vendor.currencyId));
+                  : vendor.currencyId,
+            ),
+          );
         } else {
           row.add(invoice.getReportString(value: value));
         }
@@ -250,19 +267,28 @@ ReportResult lineItemReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, lineItemReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      lineItemReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
     allColumns: PurchaseOrderItemReportFields.values
-        .where((field) =>
-            field != PurchaseOrderItemReportFields.discount ||
-            userCompany.company.enableProductDiscount)
+        .where(
+          (field) =>
+              field != PurchaseOrderItemReportFields.discount ||
+              userCompany.company.enableProductDiscount,
+        )
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

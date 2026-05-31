@@ -18,28 +18,35 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class QuoteRepository {
-  const QuoteRepository({
-    this.webClient = const WebClient(),
-  });
+  const QuoteRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
-      Credentials credentials, String? entityId) async {
+    Credentials credentials,
+    String? entityId,
+  ) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/quotes/$entityId?include=activities.history',
-        credentials.token);
+      '${credentials.url}/quotes/$entityId?include=activities.history',
+      credentials.token,
+    );
 
     final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[InvoiceItemResponse.serializer, response]);
+      SerializationUtils.deserializeWith,
+      <dynamic>[InvoiceItemResponse.serializer, response],
+    );
 
     return quoteResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
-      int createdAt, bool filterDeleted) async {
-    String url = credentials.url +
+  Future<BuiltList<InvoiceEntity>> loadList(
+    Credentials credentials,
+    int page,
+    int createdAt,
+    bool filterDeleted,
+  ) async {
+    String url =
+        credentials.url +
         '/quotes?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -49,33 +56,42 @@ class QuoteRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse quoteResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[InvoiceListResponse.serializer, response]);
+      SerializationUtils.deserializeWith,
+      <dynamic>[InvoiceListResponse.serializer, response],
+    );
 
     return quoteResponse.data;
   }
 
   Future<List<InvoiceEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action,
-      {EmailTemplate? template}) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action, {
+    EmailTemplate? template,
+  }) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
         credentials.url + '/quotes/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({
-          'ids': ids,
-          'action': action.toApiParam(),
-          if (template != null)
-            'email_type': (template == EmailTemplate.quote_reminder1)
-                ? 'email_quote_template_reminder1'
-                : 'email_template_$template',
-        }));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({
+        'ids': ids,
+        'action': action.toApiParam(),
+        if (template != null)
+          'email_type': (template == EmailTemplate.quote_reminder1)
+              ? 'email_quote_template_reminder1'
+              : 'email_template_$template',
+      }),
+    );
 
-    final InvoiceListResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
+    final InvoiceListResponse invoiceResponse = serializers.deserializeWith(
+      InvoiceListResponse.serializer,
+      response,
+    )!;
 
     return invoiceResponse.data.toList();
   }
@@ -112,15 +128,23 @@ class QuoteRepository {
     }
 
     if (quote.isNew) {
-      response =
-          await webClient.post(url, credentials.token, data: json.encode(data));
+      response = await webClient.post(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     } else {
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     }
 
-    final InvoiceItemResponse quoteResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse quoteResponse = serializers.deserializeWith(
+      InvoiceItemResponse.serializer,
+      response,
+    )!;
 
     return quoteResponse.data;
   }
@@ -145,31 +169,41 @@ class QuoteRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url + '/emails', credentials.token,
-        data: json.encode(data));
+      credentials.url + '/emails',
+      credentials.token,
+      data: json.encode(data),
+    );
 
-    final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+      InvoiceItemResponse.serializer,
+      response,
+    )!;
 
     return invoiceResponse.data;
   }
 
   Future<InvoiceEntity> uploadDocument(
-      Credentials credentials,
-      BaseEntity entity,
-      List<MultipartFile> multipartFiles,
-      bool isPrivate) async {
+    Credentials credentials,
+    BaseEntity entity,
+    List<MultipartFile> multipartFiles,
+    bool isPrivate,
+  ) async {
     final fields = <String, String>{
       '_method': 'put',
       'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/quotes/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: multipartFiles);
+      '${credentials.url}/quotes/${entity.id}/upload',
+      credentials.token,
+      data: fields,
+      multipartFiles: multipartFiles,
+    );
 
-    final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+      InvoiceItemResponse.serializer,
+      response,
+    )!;
 
     return invoiceResponse.data;
   }

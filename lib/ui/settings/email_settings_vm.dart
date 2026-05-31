@@ -63,9 +63,7 @@ class EmailSettingsVM {
       onSettingsChanged: (settings) {
         store.dispatch(UpdateSettings(settings: settings));
       },
-      onSavePressed: (
-        context,
-      ) {
+      onSavePressed: (context) {
         if (!state.isProPlan && !state.isTrial) {
           return;
         }
@@ -76,32 +74,46 @@ class EmailSettingsVM {
           if (settings.emailStyle == kEmailDesignCustom &&
               !settings.emailStyleCustom!.contains('\$body')) {
             showErrorDialog(
-                message: AppLocalization.of(context)!
-                    .bodyVariableMissing
-                    .replaceFirst(':body', '\$body'));
+              message: AppLocalization.of(
+                context,
+              )!.bodyVariableMissing.replaceFirst(':body', '\$body'),
+            );
             return;
           }
 
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveCompanyRequest(
-                completer: completer,
-                company: settingsUIState.company,
-              ));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveGroupRequest(
-                  completer: completer, group: settingsUIState.group));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveClientRequest(
-                  completer: completer, client: settingsUIState.client));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
               break;
           }
         });

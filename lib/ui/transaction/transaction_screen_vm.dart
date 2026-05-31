@@ -18,9 +18,7 @@ class TransactionScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, TransactionScreenVM>(
       converter: TransactionScreenVM.fromStore,
       builder: (context, vm) {
-        return TransactionScreen(
-          viewModel: vm,
-        );
+        return TransactionScreen(viewModel: vm);
       },
     );
   }
@@ -59,9 +57,12 @@ class TransactionScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.transactionListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> transactions,
-              EntityAction action) =>
-          handleTransactionAction(context, transactions, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> transactions,
+            EntityAction action,
+          ) => handleTransactionAction(context, transactions, action),
     );
   }
 }

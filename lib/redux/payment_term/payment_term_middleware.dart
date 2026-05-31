@@ -59,8 +59,11 @@ Middleware<AppState> _editPaymentTerm() {
 }
 
 Middleware<AppState> _viewPaymentTerm() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewPaymentTerm?;
 
     next(action);
@@ -87,7 +90,9 @@ Middleware<AppState> _viewPaymentTermList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          PaymentTermScreen.route, (Route<dynamic> route) => false);
+        PaymentTermScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
@@ -99,16 +104,20 @@ Middleware<AppState> _archivePaymentTerm(PaymentTermRepository repository) {
         .map((id) => store.state.paymentTermState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.paymentTermIds,
-            EntityAction.archive)
+        .bulkAction(
+          store.state.credentials,
+          action.paymentTermIds,
+          EntityAction.archive,
+        )
         .then((List<PaymentTermEntity> paymentTerms) {
-      store.dispatch(ArchivePaymentTermsSuccess(paymentTerms));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchivePaymentTermsFailure(prevPaymentTerms));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchivePaymentTermsSuccess(paymentTerms));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchivePaymentTermsFailure(prevPaymentTerms));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -122,15 +131,19 @@ Middleware<AppState> _deletePaymentTerm(PaymentTermRepository repository) {
         .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.paymentTermIds, EntityAction.delete)
+          store.state.credentials,
+          action.paymentTermIds,
+          EntityAction.delete,
+        )
         .then((List<PaymentTermEntity> paymentTerms) {
-      store.dispatch(DeletePaymentTermsSuccess(paymentTerms));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeletePaymentTermsFailure(prevPaymentTerms));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeletePaymentTermsSuccess(paymentTerms));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeletePaymentTermsFailure(prevPaymentTerms));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -143,16 +156,20 @@ Middleware<AppState> _restorePaymentTerm(PaymentTermRepository repository) {
         .map((id) => store.state.paymentTermState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.paymentTermIds,
-            EntityAction.restore)
+        .bulkAction(
+          store.state.credentials,
+          action.paymentTermIds,
+          EntityAction.restore,
+        )
         .then((List<PaymentTermEntity> paymentTerms) {
-      store.dispatch(RestorePaymentTermsSuccess(paymentTerms));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestorePaymentTermsFailure(prevPaymentTerms));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestorePaymentTermsSuccess(paymentTerms));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestorePaymentTermsFailure(prevPaymentTerms));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -164,18 +181,19 @@ Middleware<AppState> _savePaymentTerm(PaymentTermRepository repository) {
     repository
         .saveData(store.state.credentials, action.paymentTerm!)
         .then((PaymentTermEntity paymentTerm) {
-      if (action.paymentTerm!.isNew) {
-        store.dispatch(AddPaymentTermSuccess(paymentTerm));
-      } else {
-        store.dispatch(SavePaymentTermSuccess(paymentTerm));
-      }
+          if (action.paymentTerm!.isNew) {
+            store.dispatch(AddPaymentTermSuccess(paymentTerm));
+          } else {
+            store.dispatch(SavePaymentTermSuccess(paymentTerm));
+          }
 
-      action.completer!.complete(paymentTerm);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SavePaymentTermFailure(error));
-      action.completer!.completeError(error);
-    });
+          action.completer!.complete(paymentTerm);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SavePaymentTermFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -190,18 +208,19 @@ Middleware<AppState> _loadPaymentTerm(PaymentTermRepository repository) {
     repository
         .loadItem(state.credentials, action.paymentTermId)
         .then((paymentTerm) {
-      store.dispatch(LoadPaymentTermSuccess(paymentTerm));
+          store.dispatch(LoadPaymentTermSuccess(paymentTerm));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadPaymentTermFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadPaymentTermFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -213,24 +232,27 @@ Middleware<AppState> _loadPaymentTerms(PaymentTermRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadPaymentTermsRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadPaymentTermsSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadPaymentTermsSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-      /*
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+          /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadPaymentTermsFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadPaymentTermsFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

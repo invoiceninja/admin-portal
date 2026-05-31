@@ -60,30 +60,31 @@ enum ExpenseReportFields {
   is_invoiced,
 }
 
-var memoizedExpenseReport = memo10((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    expenseReport(
-      userCompany!,
-      reportsUIState,
-      expenseMap,
-      expenseCategoryMap,
-      invoiceMap,
-      clientMap,
-      vendorMap,
-      projectMap,
-      userMap,
-      staticState,
-    ));
+var memoizedExpenseReport = memo10(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => expenseReport(
+    userCompany!,
+    reportsUIState,
+    expenseMap,
+    expenseCategoryMap,
+    invoiceMap,
+    clientMap,
+    vendorMap,
+    projectMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult expenseReport(
   UserCompanyEntity userCompany,
@@ -117,10 +118,12 @@ ReportResult expenseReport(
   ];
 
   if (expenseReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(expenseReportSettings.columns
-        .map((e) => EnumUtils.fromString(ExpenseReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      expenseReportSettings.columns
+          .map((e) => EnumUtils.fromString(ExpenseReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -171,8 +174,10 @@ ReportResult expenseReport(
           value = expense.paymentDate;
           break;
         case ExpenseReportFields.payment_type:
-          value = staticState
-                  .paymentTypeMap[expense.paymentTypeId]?.listDisplayName ??
+          value =
+              staticState
+                  .paymentTypeMap[expense.paymentTypeId]
+                  ?.listDisplayName ??
               '';
           break;
         case ExpenseReportFields.tax_rate1:
@@ -282,8 +287,9 @@ ReportResult expenseReport(
           value = kExpenseStatuses[expense.calculatedStatusId];
           break;
         case ExpenseReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(expense.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(expense.entityState);
           break;
         case ExpenseReportFields.is_invoiced:
           value = expense.isInvoiced;
@@ -302,11 +308,16 @@ ReportResult expenseReport(
       if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
       } else if (column == ExpenseReportFields.converted_amount) {
-        row.add(expense.getReportDouble(
-            value: value, currencyId: expense.invoiceCurrencyId));
+        row.add(
+          expense.getReportDouble(
+            value: value,
+            currencyId: expense.invoiceCurrencyId,
+          ),
+        );
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(expense.getReportDouble(
-            value: value, currencyId: expense.currencyId));
+        row.add(
+          expense.getReportDouble(value: value, currencyId: expense.currencyId),
+        );
       } else {
         row.add(expense.getReportString(value: value));
       }
@@ -319,15 +330,23 @@ ReportResult expenseReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      expenseReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        ExpenseReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: ExpenseReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

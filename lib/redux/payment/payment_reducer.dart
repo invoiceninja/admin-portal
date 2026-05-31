@@ -13,12 +13,14 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState paymentUIReducer(PaymentUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(paymentListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(paymentListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -45,13 +47,17 @@ final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchivePaymentsSuccess>((completer, action) => ''),
   TypedReducer<String?, DeletePaymentsSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.payment ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.payment ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewPayment>((selectedId, action) => action.paymentId),
   TypedReducer<String?, AddPaymentSuccess>(
-      (selectedId, action) => action.payment.id),
+    (selectedId, action) => action.payment.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortPayments>((selectedId, action) => ''),
   TypedReducer<String?, FilterPayments>((selectedId, action) => ''),
@@ -61,14 +67,17 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterPaymentsByCustom2>((selectedId, action) => ''),
   TypedReducer<String?, FilterPaymentsByCustom3>((selectedId, action) => ''),
   TypedReducer<String?, FilterPaymentsByCustom4>((selectedId, action) => ''),
-  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
-      action.entityType == EntityType.payment ? '' : selectedId),
+  TypedReducer<String?, ClearEntitySelection>(
+    (selectedId, action) =>
+        action.entityType == EntityType.payment ? '' : selectedId,
+  ),
   TypedReducer<String?, FilterByEntity>(
-      (selectedId, action) => action.clearSelection
-          ? ''
-          : action.entityType == EntityType.payment
-              ? action.entityId
-              : selectedId),
+    (selectedId, action) => action.clearSelection
+        ? ''
+        : action.entityType == EntityType.payment
+        ? action.entityId
+        : selectedId,
+  ),
 ]);
 
 final editingReducer = combineReducers<PaymentEntity?>([
@@ -111,116 +120,157 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartPaymentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearPaymentMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewPaymentList>(_viewPaymentList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewPaymentList(
-    ListUIState paymentListState, ViewPaymentList action) {
-  return paymentListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState paymentListState,
+  ViewPaymentList action,
+) {
+  return paymentListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterPaymentsByCustom1(
-    ListUIState paymentListState, FilterPaymentsByCustom1 action) {
+  ListUIState paymentListState,
+  FilterPaymentsByCustom1 action,
+) {
   if (paymentListState.custom1Filters.contains(action.value)) {
-    return paymentListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return paymentListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
     return paymentListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
 }
 
 ListUIState _filterPaymentsByCustom2(
-    ListUIState paymentListState, FilterPaymentsByCustom2 action) {
+  ListUIState paymentListState,
+  FilterPaymentsByCustom2 action,
+) {
   if (paymentListState.custom2Filters.contains(action.value)) {
-    return paymentListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return paymentListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
     return paymentListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
 ListUIState _filterPaymentsByCustom3(
-    ListUIState paymentListState, FilterPaymentsByCustom3 action) {
+  ListUIState paymentListState,
+  FilterPaymentsByCustom3 action,
+) {
   if (paymentListState.custom3Filters.contains(action.value)) {
-    return paymentListState
-        .rebuild((b) => b..custom3Filters.remove(action.value));
+    return paymentListState.rebuild(
+      (b) => b..custom3Filters.remove(action.value),
+    );
   } else {
     return paymentListState.rebuild((b) => b..custom3Filters.add(action.value));
   }
 }
 
 ListUIState _filterPaymentsByCustom4(
-    ListUIState paymentListState, FilterPaymentsByCustom4 action) {
+  ListUIState paymentListState,
+  FilterPaymentsByCustom4 action,
+) {
   if (paymentListState.custom4Filters.contains(action.value)) {
-    return paymentListState
-        .rebuild((b) => b..custom4Filters.remove(action.value));
+    return paymentListState.rebuild(
+      (b) => b..custom4Filters.remove(action.value),
+    );
   } else {
     return paymentListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
 ListUIState _filterPaymentsByState(
-    ListUIState paymentListState, FilterPaymentsByState action) {
+  ListUIState paymentListState,
+  FilterPaymentsByState action,
+) {
   if (paymentListState.stateFilters.contains(action.state)) {
-    return paymentListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return paymentListState.rebuild(
+      (b) => b..stateFilters.remove(action.state),
+    );
   } else {
     return paymentListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
 ListUIState _filterPaymentsByStatus(
-    ListUIState paymentListState, FilterPaymentsByStatus action) {
+  ListUIState paymentListState,
+  FilterPaymentsByStatus action,
+) {
   if (paymentListState.statusFilters.contains(action.status)) {
-    return paymentListState
-        .rebuild((b) => b..statusFilters.remove(action.status));
+    return paymentListState.rebuild(
+      (b) => b..statusFilters.remove(action.status),
+    );
   } else {
     return paymentListState.rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 
 ListUIState _filterPayments(
-    ListUIState paymentListState, FilterPayments action) {
-  return paymentListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : paymentListState.filterClearedAt);
+  ListUIState paymentListState,
+  FilterPayments action,
+) {
+  return paymentListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : paymentListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortPayments(ListUIState paymentListState, SortPayments action) {
-  return paymentListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return paymentListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState paymentListState, StartPaymentMultiselect action) {
+  ListUIState paymentListState,
+  StartPaymentMultiselect action,
+) {
   return paymentListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState paymentListState, AddToPaymentMultiselect action) {
+  ListUIState paymentListState,
+  AddToPaymentMultiselect action,
+) {
   return paymentListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState paymentListState, RemoveFromPaymentMultiselect action) {
-  return paymentListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState paymentListState,
+  RemoveFromPaymentMultiselect action,
+) {
+  return paymentListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState paymentListState, ClearPaymentMultiselect action) {
+  ListUIState paymentListState,
+  ClearPaymentMultiselect action,
+) {
   return paymentListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -237,19 +287,25 @@ final paymentsReducer = combineReducers<PaymentState>([
 ]);
 
 PaymentState _purgeClientSuccess(
-    PaymentState paymentState, PurgeClientSuccess action) {
+  PaymentState paymentState,
+  PurgeClientSuccess action,
+) {
   final ids = paymentState.map.values
       .where((each) => each.clientId == action.clientId)
       .map((each) => each.id)
       .toList();
 
-  return paymentState.rebuild((b) => b
-    ..map.removeWhere((p0, p1) => ids.contains(p0))
-    ..list.removeWhere((p0) => ids.contains(p0)));
+  return paymentState.rebuild(
+    (b) => b
+      ..map.removeWhere((p0, p1) => ids.contains(p0))
+      ..list.removeWhere((p0) => ids.contains(p0)),
+  );
 }
 
 PaymentState _archivePaymentSuccess(
-    PaymentState paymentState, ArchivePaymentsSuccess action) {
+  PaymentState paymentState,
+  ArchivePaymentsSuccess action,
+) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -258,7 +314,9 @@ PaymentState _archivePaymentSuccess(
 }
 
 PaymentState _deletePaymentSuccess(
-    PaymentState paymentState, DeletePaymentsSuccess action) {
+  PaymentState paymentState,
+  DeletePaymentsSuccess action,
+) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -267,7 +325,9 @@ PaymentState _deletePaymentSuccess(
 }
 
 PaymentState _restorePaymentSuccess(
-    PaymentState paymentState, RestorePaymentsSuccess action) {
+  PaymentState paymentState,
+  RestorePaymentsSuccess action,
+) {
   return paymentState.rebuild((b) {
     for (final payment in action.payments) {
       b.map[payment.id] = payment;
@@ -276,29 +336,40 @@ PaymentState _restorePaymentSuccess(
 }
 
 PaymentState _addPayment(PaymentState paymentState, AddPaymentSuccess action) {
-  return paymentState.rebuild((b) => b
-    ..map[action.payment.id] = action.payment
-    ..list.add(action.payment.id));
+  return paymentState.rebuild(
+    (b) => b
+      ..map[action.payment.id] = action.payment
+      ..list.add(action.payment.id),
+  );
 }
 
 PaymentState _updatePayment(
-    PaymentState paymentState, SavePaymentSuccess action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  PaymentState paymentState,
+  SavePaymentSuccess action,
+) {
+  return paymentState.rebuild(
+    (b) => b..map[action.payment.id] = action.payment,
+  );
 }
 
 PaymentState _setLoadedPayment(
-    PaymentState paymentState, LoadPaymentSuccess action) {
-  return paymentState
-      .rebuild((b) => b..map[action.payment.id] = action.payment);
+  PaymentState paymentState,
+  LoadPaymentSuccess action,
+) {
+  return paymentState.rebuild(
+    (b) => b..map[action.payment.id] = action.payment,
+  );
 }
 
 PaymentState _setLoadedPayments(
-        PaymentState paymentState, LoadPaymentsSuccess action) =>
-    paymentState.loadPayments(action.payments);
+  PaymentState paymentState,
+  LoadPaymentsSuccess action,
+) => paymentState.loadPayments(action.payments);
 
 PaymentState _setLoadedCompany(
-    PaymentState paymentState, LoadCompanySuccess action) {
+  PaymentState paymentState,
+  LoadCompanySuccess action,
+) {
   final company = action.userCompany.company;
   return paymentState.loadPayments(company.payments);
 }

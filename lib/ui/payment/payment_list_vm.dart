@@ -32,27 +32,28 @@ class PaymentListBuilder extends StatelessWidget {
       converter: PaymentListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.payment,
-            presenter: PaymentPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.paymentList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final paymentId = viewModel.paymentList[index];
-              final payment = state.paymentState.map[paymentId]!;
-              final paymentListState = viewModel.state.paymentListState;
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.payment,
+          presenter: PaymentPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.paymentList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final paymentId = viewModel.paymentList[index];
+            final payment = state.paymentState.map[paymentId]!;
+            final paymentListState = viewModel.state.paymentListState;
 
-              return PaymentListItem(
-                filter: viewModel.filter,
-                payment: payment,
-                showCheckbox: paymentListState.isInMultiselect(),
-                isChecked: paymentListState.isSelected(payment.id),
-              );
-            });
+            return PaymentListItem(
+              filter: viewModel.filter,
+              payment: payment,
+              showCheckbox: paymentListState.isInMultiselect(),
+              isChecked: paymentListState.isSelected(payment.id),
+            );
+          },
+        );
       },
     );
   }
@@ -79,8 +80,9 @@ class PaymentListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -91,14 +93,15 @@ class PaymentListVM {
       state: state,
       user: state.user,
       paymentList: memoizedFilteredPaymentList(
-          state.getUISelection(EntityType.payment),
-          state.paymentState.map,
-          state.paymentState.list,
-          state.invoiceState.map,
-          state.clientState.map,
-          state.userState.map,
-          state.staticState.paymentTypeMap,
-          state.paymentListState),
+        state.getUISelection(EntityType.payment),
+        state.paymentState.map,
+        state.paymentState.list,
+        state.invoiceState.map,
+        state.clientState.map,
+        state.userState.map,
+        state.staticState.paymentTypeMap,
+        state.paymentListState,
+      ),
       paymentMap: state.paymentState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
@@ -107,7 +110,7 @@ class PaymentListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.payment) ??
-              PaymentPresenter.getDefaultTableFields(state.userCompany),
+          PaymentPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortPayments(field)),
       onClearMultielsect: () => store.dispatch(ClearPaymentMultiselect()),
     );

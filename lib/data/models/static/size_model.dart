@@ -48,10 +48,7 @@ abstract class SizeEntity extends Object
     with SelectableEntity
     implements Built<SizeEntity, SizeEntityBuilder> {
   factory SizeEntity() {
-    return _$SizeEntity._(
-      id: '',
-      name: '',
-    );
+    return _$SizeEntity._(id: '', name: '');
   }
   SizeEntity._();
 

@@ -32,28 +32,29 @@ class ProjectListBuilder extends StatelessWidget {
       converter: ProjectListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.project,
-            presenter: ProjectPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.projectList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final projectId = viewModel.projectList[index];
-              final project = viewModel.projectMap[projectId]!;
-              final listState = state.getListState(EntityType.project);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.project,
+          presenter: ProjectPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.projectList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final projectId = viewModel.projectList[index];
+            final project = viewModel.projectMap[projectId]!;
+            final listState = state.getListState(EntityType.project);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return ProjectListItem(
-                user: state.user,
-                filter: viewModel.filter,
-                project: project,
-                isChecked: isInMultiselect && listState.isSelected(project.id),
-              );
-            });
+            return ProjectListItem(
+              user: state.user,
+              filter: viewModel.filter,
+              project: project,
+              isChecked: isInMultiselect && listState.isSelected(project.id),
+            );
+          },
+        );
       },
     );
   }
@@ -79,8 +80,9 @@ class ProjectListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -105,7 +107,7 @@ class ProjectListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.project) ??
-              ProjectPresenter.getDefaultTableFields(state.userCompany),
+          ProjectPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
       onClearMultielsect: () => store.dispatch(ClearProjectMultiselect()),
     );

@@ -21,24 +21,27 @@ Completer<T> snackBarCompleter<T>(
   final Completer<T> completer = Completer<T>();
   final navigator = Navigator.of(context);
 
-  completer.future.then((_) {
-    if (shouldPop && navigator.canPop()) {
-      navigator.pop();
-    }
-    showToast(message);
-    if (callback != null) {
-      callback();
-    }
-  }).catchError((Object error) {
-    if (shouldPop && navigator.canPop()) {
-      navigator.pop();
-    }
-    showDialog<ErrorDialog>(
-        context: navigatorKey.currentContext!,
-        builder: (BuildContext context) {
-          return ErrorDialog(error);
-        });
-  });
+  completer.future
+      .then((_) {
+        if (shouldPop && navigator.canPop()) {
+          navigator.pop();
+        }
+        showToast(message);
+        if (callback != null) {
+          callback();
+        }
+      })
+      .catchError((Object error) {
+        if (shouldPop && navigator.canPop()) {
+          navigator.pop();
+        }
+        showDialog<ErrorDialog>(
+          context: navigatorKey.currentContext!,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          },
+        );
+      });
 
   return completer;
 }
@@ -46,15 +49,18 @@ Completer<T> snackBarCompleter<T>(
 Completer<Null> popCompleter(BuildContext context, dynamic result) {
   final Completer<Null> completer = Completer<Null>();
 
-  completer.future.then<Null>((_) {
-    Navigator.of(navigatorKey.currentContext!).pop<dynamic>(result);
-  }).catchError((Object error) {
-    showDialog<ErrorDialog>(
-        context: navigatorKey.currentContext!,
-        builder: (BuildContext context) {
-          return ErrorDialog(error);
-        });
-  });
+  completer.future
+      .then<Null>((_) {
+        Navigator.of(navigatorKey.currentContext!).pop<dynamic>(result);
+      })
+      .catchError((Object error) {
+        showDialog<ErrorDialog>(
+          context: navigatorKey.currentContext!,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          },
+        );
+      });
 
   return completer;
 }
@@ -64,10 +70,11 @@ Completer<Null> errorCompleter(BuildContext context) {
 
   completer.future.catchError((Object error) {
     showDialog<ErrorDialog>(
-        context: navigatorKey.currentContext!,
-        builder: (BuildContext context) {
-          return ErrorDialog(error);
-        });
+      context: navigatorKey.currentContext!,
+      builder: (BuildContext context) {
+        return ErrorDialog(error);
+      },
+    );
   });
 
   return completer;
@@ -75,9 +82,7 @@ Completer<Null> errorCompleter(BuildContext context) {
 
 // https://stackoverflow.com/a/55119208/497368
 class Debouncer {
-  Debouncer({
-    this.milliseconds = kMillisecondsToDebounceUpdate,
-  });
+  Debouncer({this.milliseconds = kMillisecondsToDebounceUpdate});
 
   final int milliseconds;
 
@@ -125,9 +130,7 @@ class Debouncer {
 }
 
 class SimpleDebouncer {
-  SimpleDebouncer({
-    this.milliseconds = kMillisecondsToDebounceWrite,
-  });
+  SimpleDebouncer({this.milliseconds = kMillisecondsToDebounceWrite});
 
   final int milliseconds;
 
@@ -145,9 +148,7 @@ class SimpleDebouncer {
 }
 
 class PersistDebouncer {
-  PersistDebouncer({
-    this.milliseconds = kMillisecondsToDebounceWrite,
-  });
+  PersistDebouncer({this.milliseconds = kMillisecondsToDebounceWrite});
 
   final int milliseconds;
 

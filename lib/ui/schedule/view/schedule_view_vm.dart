@@ -14,10 +14,7 @@ import 'package:invoiceninja_flutter/ui/schedule/view/schedule_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ScheduleViewScreen extends StatelessWidget {
-  const ScheduleViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const ScheduleViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsSchedulesView';
 
   final bool isFilter;
@@ -29,10 +26,7 @@ class ScheduleViewScreen extends StatelessWidget {
         return ScheduleViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ScheduleView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return ScheduleView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -55,14 +49,18 @@ class ScheduleViewVM {
     final state = store.state;
     final schedule =
         state.scheduleState.map[state.scheduleUIState.selectedId] ??
-            ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
-                id: state.scheduleUIState.selectedId);
+        ScheduleEntity(
+          ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+          id: state.scheduleUIState.selectedId,
+        );
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(
-          LoadSchedule(completer: completer, scheduleId: schedule.id));
+        LoadSchedule(completer: completer, scheduleId: schedule.id),
+      );
       return completer.future;
     }
 

@@ -8,14 +8,18 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownDocumentList = memo3(
-    (BuiltMap<String, DocumentEntity> documentMap,
-            BuiltList<String> documentList, String clientId) =>
-        dropdownDocumentsSelector(documentMap, documentList, clientId));
-
-List<String> dropdownDocumentsSelector(
+  (
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltList<String> documentList,
-    String clientId) {
+    String clientId,
+  ) => dropdownDocumentsSelector(documentMap, documentList, clientId),
+);
+
+List<String> dropdownDocumentsSelector(
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltList<String> documentList,
+  String clientId,
+) {
   final list = documentList.where((documentId) {
     final document = documentMap[documentId]!;
     /*
@@ -35,18 +39,19 @@ List<String> dropdownDocumentsSelector(
   return list;
 }
 
-var memoizedFilteredDocumentList = memo4((
-  SelectionState selectionState,
-  BuiltMap<String, DocumentEntity> documentMap,
-  BuiltList<String> documentList,
-  ListUIState documentListState,
-) =>
-    filteredDocumentsSelector(
-      selectionState,
-      documentMap,
-      documentList,
-      documentListState,
-    ));
+var memoizedFilteredDocumentList = memo4(
+  (
+    SelectionState selectionState,
+    BuiltMap<String, DocumentEntity> documentMap,
+    BuiltList<String> documentList,
+    ListUIState documentListState,
+  ) => filteredDocumentsSelector(
+    selectionState,
+    documentMap,
+    documentList,
+    documentListState,
+  ),
+);
 
 List<String> filteredDocumentsSelector(
   SelectionState selectionState,
@@ -82,22 +87,29 @@ List<String> filteredDocumentsSelector(
   list.sort((documentAId, documentBId) {
     final documentA = documentMap[documentAId]!;
     final documentB = documentMap[documentBId];
-    return documentA.compareTo(documentB, documentListState.sortField,
-        documentListState.sortAscending);
+    return documentA.compareTo(
+      documentB,
+      documentListState.sortField,
+      documentListState.sortAscending,
+    );
   });
 
   return list;
 }
 
 var memoizedInvoiceDocumentsSelector = memo3(
-    (BuiltMap<String, DocumentEntity> documentMap,
-            BuiltMap<String, ExpenseEntity> expenseMap, InvoiceEntity entity) =>
-        invoiceDocumentsSelector(documentMap, expenseMap, entity));
-
-List<String> invoiceDocumentsSelector(
+  (
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
-    InvoiceEntity entity) {
+    InvoiceEntity entity,
+  ) => invoiceDocumentsSelector(documentMap, expenseMap, entity),
+);
+
+List<String> invoiceDocumentsSelector(
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  InvoiceEntity entity,
+) {
   final map = <String?, List<String>>{};
   expenseMap.forEach((int, expense) {
     if (expense.invoiceDocuments) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({Key? key, this.useCard = false, this.height})
-      : super(key: key);
+    : super(key: key);
 
   final double? height;
   final bool useCard;
@@ -18,9 +18,7 @@ class LoadingIndicator extends StatelessWidget {
           width: double.infinity,
           child: Card(
             elevation: 4.0,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+            child: Center(child: CircularProgressIndicator()),
           ),
         ),
       );
@@ -29,9 +27,7 @@ class LoadingIndicator extends StatelessWidget {
     return Container(
       height: height ?? double.infinity,
       width: double.infinity,
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
+      child: Center(child: CircularProgressIndicator()),
     );
   }
 }

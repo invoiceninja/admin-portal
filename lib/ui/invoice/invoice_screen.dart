@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'invoice_screen_vm.dart';
 
 class InvoiceScreen extends StatelessWidget {
-  const InvoiceScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const InvoiceScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/invoice';
 
@@ -114,8 +111,9 @@ class InvoiceScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,
         tableColumns: InvoicePresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            InvoicePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: InvoicePresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortInvoices(value));
         },
@@ -131,14 +129,22 @@ class InvoiceScreen extends StatelessWidget {
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterInvoicesByStatus(status));
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.invoice3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.invoice4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.invoice1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.invoice2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.invoice3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.invoice4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterInvoicesByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -156,14 +162,17 @@ class InvoiceScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.invoice)
           ? FloatingActionButton(
               heroTag: 'invoice_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.invoice);
+                  context: context,
+                  entityType: EntityType.invoice,
+                );
               },
               child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newInvoice,

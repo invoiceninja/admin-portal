@@ -18,9 +18,7 @@ class SettingsScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, SettingsScreenVM>(
       converter: SettingsScreenVM.fromStore,
       builder: (context, vm) {
-        return SettingsScreen(
-          viewModel: vm,
-        );
+        return SettingsScreen(viewModel: vm);
       },
     );
   }
@@ -34,8 +32,6 @@ class SettingsScreenVM {
   static SettingsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return SettingsScreenVM(
-      state: state,
-    );
+    return SettingsScreenVM(state: state);
   }
 }

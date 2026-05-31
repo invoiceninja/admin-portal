@@ -269,8 +269,12 @@ String formatURL(String url) {
   return 'http://' + url;
 }
 
-String formatAddress(AppState appState,
-    {dynamic object, bool isShipping = false, String delimiter = '\n'}) {
+String formatAddress(
+  AppState appState, {
+  dynamic object,
+  bool isShipping = false,
+  String delimiter = '\n',
+}) {
   var str = '';
 
   final String address1 =
@@ -348,12 +352,18 @@ String formatDuration(Duration? duration, {bool showSeconds = true}) {
   }
 }
 
-DateTime convertTimeOfDayToDateTime(TimeOfDay? timeOfDay,
-    [DateTime? dateTime]) {
+DateTime convertTimeOfDayToDateTime(
+  TimeOfDay? timeOfDay, [
+  DateTime? dateTime,
+]) {
   dateTime ??= DateTime.now();
-  return DateTime(dateTime.year, dateTime.month, dateTime.day,
-          timeOfDay?.hour ?? 0, timeOfDay?.minute ?? 0)
-      .toUtc();
+  return DateTime(
+    dateTime.year,
+    dateTime.month,
+    dateTime.day,
+    timeOfDay?.hour ?? 0,
+    timeOfDay?.minute ?? 0,
+  ).toUtc();
 }
 
 TimeOfDay convertDateTimeToTimeOfDay(DateTime? dateTime) =>
@@ -363,13 +373,15 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
   final today = DateTime.now();
 
   final startDateTime = DateTime.tryParse(startDate)!.toLocal();
-  final startFormatter =
-      DateFormat(today.year == startDateTime.year ? 'MMM d' : 'MMM d, yyy');
+  final startFormatter = DateFormat(
+    today.year == startDateTime.year ? 'MMM d' : 'MMM d, yyy',
+  );
   final startDateTimeString = startFormatter.format(startDateTime);
 
   final endDateTime = DateTime.tryParse(endDate)!.toLocal();
-  final endFormatter =
-      DateFormat(today.year == endDateTime.year ? 'MMM d' : 'MMM d, yyy');
+  final endFormatter = DateFormat(
+    today.year == endDateTime.year ? 'MMM d' : 'MMM d, yyy',
+  );
   final endDateTimeString = endFormatter.format(endDateTime);
 
   return '$startDateTimeString - $endDateTimeString';
@@ -408,18 +420,23 @@ DateTime? parseTime(String value, BuildContext context) {
 
   format = showSeconds
       ? enableMilitaryTime!
-          ? 'H:mm:ss'
-          : 'h:mm:ss a'
+            ? 'H:mm:ss'
+            : 'h:mm:ss a'
       : enableMilitaryTime!
-          ? 'H:mm'
-          : 'h:mm a';
+      ? 'H:mm'
+      : 'h:mm a';
 
   final formatter = DateFormat('y-M-D ' + format, localeSelector(state));
   return formatter.parse('2000-01-01 ' + value);
 }
 
-String formatDate(String? value, BuildContext? context,
-    {bool showDate = true, bool showTime = false, bool showSeconds = true}) {
+String formatDate(
+  String? value,
+  BuildContext? context, {
+  bool showDate = true,
+  bool showTime = false,
+  bool showSeconds = true,
+}) {
   if (value == null || value.isEmpty) {
     return '';
   }
@@ -433,25 +450,26 @@ String formatDate(String? value, BuildContext? context,
     if (!showDate) {
       format = showSeconds
           ? company!.settings.enableMilitaryTime!
-              ? 'H:mm:ss'
-              : 'h:mm:ss a'
+                ? 'H:mm:ss'
+                : 'h:mm:ss a'
           : company!.settings.enableMilitaryTime!
-              ? 'H:mm'
-              : 'h:mm a';
+          ? 'H:mm'
+          : 'h:mm a';
     } else {
       final dateFormats = state.staticState.dateFormatMap;
       final dateFormatId = (company!.settings.dateFormatId ?? '').isNotEmpty
           ? company.settings.dateFormatId
           : kDefaultDateFormat;
       format = dateFormats[dateFormatId]!.format;
-      format += ' ' +
+      format +=
+          ' ' +
           (showSeconds
               ? company.settings.enableMilitaryTime!
-                  ? 'H:mm:ss'
-                  : 'h:mm:ss a'
+                    ? 'H:mm:ss'
+                    : 'h:mm:ss a'
               : company.settings.enableMilitaryTime!
-                  ? 'H:mm'
-                  : 'h:mm a');
+              ? 'H:mm'
+              : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
     final parsed = DateTime.tryParse(value.endsWith('Z') ? value : value + 'Z');
@@ -459,8 +477,9 @@ String formatDate(String? value, BuildContext? context,
   } else {
     final dateFormats = state.staticState.dateFormatMap;
     final formatter = DateFormat(
-        dateFormats[company!.settings.dateFormatId]!.format,
-        localeSelector(state));
+      dateFormats[company!.settings.dateFormatId]!.format,
+      localeSelector(state),
+    );
     final parsed = DateTime.tryParse(value);
     formattedValue = parsed == null ? '' : formatter.format(parsed);
   }
@@ -484,8 +503,11 @@ String cleanApiUrl(String? url) => (url ?? '')
     .replaceFirst(RegExp(r'/api/v1'), '')
     .replaceFirst(RegExp(r'/$'), '');
 
-String? formatCustomValue(
-    {String? value, String? field, required BuildContext context}) {
+String? formatCustomValue({
+  String? value,
+  String? field,
+  required BuildContext context,
+}) {
   final localization = AppLocalization.of(context);
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;

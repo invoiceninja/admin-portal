@@ -15,15 +15,22 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState invoiceUIReducer(InvoiceUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(invoiceListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..historyActivityId =
-        historyActivityIdReducer(state.historyActivityId, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(invoiceListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..editingItemIndex = editingItemIndexReducer(
+        state.editingItemIndex,
+        action,
+      )
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..historyActivityId = historyActivityIdReducer(
+        state.historyActivityId,
+        action,
+      ),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -54,7 +61,8 @@ final historyActivityIdReducer = combineReducers<String?>([
 final editingItemIndexReducer = combineReducers<int?>([
   TypedReducer<int?, EditInvoice>((index, action) => action.invoiceItemIndex),
   TypedReducer<int?, EditInvoiceItem>(
-      (index, action) => action.invoiceItemIndex),
+    (index, action) => action.invoiceItemIndex,
+  ),
 ]);
 
 /*
@@ -71,17 +79,23 @@ String filterInvoiceDropdownReducer(
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveInvoicesSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteInvoicesSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.invoice ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.invoice ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewInvoice>((selectedId, action) => action.invoiceId),
   TypedReducer<String?, AddInvoiceSuccess>(
-      (selectedId, action) => action.invoice.id),
+    (selectedId, action) => action.invoice.id,
+  ),
   TypedReducer<String?, ShowEmailInvoice>(
-      (selectedId, action) => action.invoice!.id),
+    (selectedId, action) => action.invoice!.id,
+  ),
   TypedReducer<String?, ShowPdfInvoice>(
-      (selectedId, action) => action.invoice!.id),
+    (selectedId, action) => action.invoice!.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortInvoices>((selectedId, action) => ''),
   TypedReducer<String?, FilterInvoices>((selectedId, action) => ''),
@@ -91,14 +105,17 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterInvoicesByCustom2>((selectedId, action) => ''),
   TypedReducer<String?, FilterInvoicesByCustom3>((selectedId, action) => ''),
   TypedReducer<String?, FilterInvoicesByCustom4>((selectedId, action) => ''),
-  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
-      action.entityType == EntityType.invoice ? '' : selectedId),
+  TypedReducer<String?, ClearEntitySelection>(
+    (selectedId, action) =>
+        action.entityType == EntityType.invoice ? '' : selectedId,
+  ),
   TypedReducer<String?, FilterByEntity>(
-      (selectedId, action) => action.clearSelection
-          ? ''
-          : action.entityType == EntityType.invoice
-              ? action.entityId
-              : selectedId),
+    (selectedId, action) => action.clearSelection
+        ? ''
+        : action.entityType == EntityType.invoice
+        ? action.entityId
+        : selectedId,
+  ),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity?>([
@@ -123,12 +140,16 @@ final editingReducer = combineReducers<InvoiceEntity?>([
   }),
   TypedReducer<InvoiceEntity?, UpdateInvoiceClient>((invoice, action) {
     final client = action.client;
-    return invoice!.rebuild((b) => b
-      ..isChanged = true
-      ..clientId = client?.id ?? ''
-      ..invitations.replace((client?.emailContacts ?? <ClientContactEntity>[])
-          .map((contact) => InvitationEntity(clientContactId: contact.id))
-          .toList()));
+    return invoice!.rebuild(
+      (b) => b
+        ..isChanged = true
+        ..clientId = client?.id ?? ''
+        ..invitations.replace(
+          (client?.emailContacts ?? <ClientContactEntity>[])
+              .map((contact) => InvitationEntity(clientContactId: contact.id))
+              .toList(),
+        ),
+    );
   }),
   TypedReducer<InvoiceEntity?, RestoreInvoicesSuccess>((invoices, action) {
     return action.invoices[0];
@@ -145,9 +166,13 @@ final editingReducer = combineReducers<InvoiceEntity?>([
   TypedReducer<InvoiceEntity?, UpdateInvoiceItem>(_updateInvoiceItem),
   TypedReducer<InvoiceEntity?, DiscardChanges>(_clearEditing),
   TypedReducer<InvoiceEntity?, AddInvoiceContact>((invoice, action) {
-    return invoice!.rebuild((b) => b
-      ..invitations.add(action.invitation ??
-          InvitationEntity(clientContactId: action.contact!.id)));
+    return invoice!.rebuild(
+      (b) => b
+        ..invitations.add(
+          action.invitation ??
+              InvitationEntity(clientContactId: action.contact!.id),
+        ),
+    );
   }),
   TypedReducer<InvoiceEntity?, RemoveInvoiceContact>((invoice, action) {
     return invoice!.rebuild((b) => b..invitations.remove(action.invitation));
@@ -159,8 +184,9 @@ InvoiceEntity _clearEditing(InvoiceEntity? invoice, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity? invoice, dynamic action) {
-  return (action.invoice as InvoiceEntity)
-      .rebuild((b) => b..idempotencyKey = BaseEntity.nextIdempotencyKey);
+  return (action.invoice as InvoiceEntity).rebuild(
+    (b) => b..idempotencyKey = BaseEntity.nextIdempotencyKey,
+  );
 }
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity? invoice, AddInvoiceItem action) {
@@ -177,7 +203,9 @@ InvoiceEntity _addInvoiceItems(InvoiceEntity? invoice, AddInvoiceItems action) {
 }
 
 InvoiceEntity? _removeInvoiceItem(
-    InvoiceEntity? invoice, DeleteInvoiceItem action) {
+  InvoiceEntity? invoice,
+  DeleteInvoiceItem action,
+) {
   if (invoice!.lineItems.length <= action.index) {
     return invoice;
   }
@@ -185,12 +213,15 @@ InvoiceEntity? _removeInvoiceItem(
 }
 
 InvoiceEntity? _updateInvoiceItem(
-    InvoiceEntity? invoice, UpdateInvoiceItem action) {
+  InvoiceEntity? invoice,
+  UpdateInvoiceItem action,
+) {
   if (invoice!.lineItems.length <= action.index) {
     return invoice;
   }
-  return invoice
-      .rebuild((b) => b..lineItems[action.index] = action.invoiceItem);
+  return invoice.rebuild(
+    (b) => b..lineItems[action.index] = action.invoiceItem,
+  );
 }
 
 final invoiceListReducer = combineReducers<ListUIState>([
@@ -205,116 +236,157 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartInvoiceMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToInvoiceMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearInvoiceMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewInvoiceList>(_viewInvoiceList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewInvoiceList(
-    ListUIState invoiceListState, ViewInvoiceList action) {
-  return invoiceListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState invoiceListState,
+  ViewInvoiceList action,
+) {
+  return invoiceListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterInvoicesByCustom1(
-    ListUIState invoiceListState, FilterInvoicesByCustom1 action) {
+  ListUIState invoiceListState,
+  FilterInvoicesByCustom1 action,
+) {
   if (invoiceListState.custom1Filters.contains(action.value)) {
-    return invoiceListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return invoiceListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
     return invoiceListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
 }
 
 ListUIState _filterInvoicesByCustom2(
-    ListUIState invoiceListState, FilterInvoicesByCustom2 action) {
+  ListUIState invoiceListState,
+  FilterInvoicesByCustom2 action,
+) {
   if (invoiceListState.custom2Filters.contains(action.value)) {
-    return invoiceListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return invoiceListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
     return invoiceListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
 ListUIState _filterInvoicesByCustom3(
-    ListUIState invoiceListState, FilterInvoicesByCustom3 action) {
+  ListUIState invoiceListState,
+  FilterInvoicesByCustom3 action,
+) {
   if (invoiceListState.custom3Filters.contains(action.value)) {
-    return invoiceListState
-        .rebuild((b) => b..custom3Filters.remove(action.value));
+    return invoiceListState.rebuild(
+      (b) => b..custom3Filters.remove(action.value),
+    );
   } else {
     return invoiceListState.rebuild((b) => b..custom3Filters.add(action.value));
   }
 }
 
 ListUIState _filterInvoicesByCustom4(
-    ListUIState invoiceListState, FilterInvoicesByCustom4 action) {
+  ListUIState invoiceListState,
+  FilterInvoicesByCustom4 action,
+) {
   if (invoiceListState.custom4Filters.contains(action.value)) {
-    return invoiceListState
-        .rebuild((b) => b..custom4Filters.remove(action.value));
+    return invoiceListState.rebuild(
+      (b) => b..custom4Filters.remove(action.value),
+    );
   } else {
     return invoiceListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
 ListUIState _filterInvoicesByState(
-    ListUIState invoiceListState, FilterInvoicesByState action) {
+  ListUIState invoiceListState,
+  FilterInvoicesByState action,
+) {
   if (invoiceListState.stateFilters.contains(action.state)) {
-    return invoiceListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return invoiceListState.rebuild(
+      (b) => b..stateFilters.remove(action.state),
+    );
   } else {
     return invoiceListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
 ListUIState _filterInvoicesByStatus(
-    ListUIState invoiceListState, FilterInvoicesByStatus action) {
+  ListUIState invoiceListState,
+  FilterInvoicesByStatus action,
+) {
   if (invoiceListState.statusFilters.contains(action.status)) {
-    return invoiceListState
-        .rebuild((b) => b..statusFilters.remove(action.status));
+    return invoiceListState.rebuild(
+      (b) => b..statusFilters.remove(action.status),
+    );
   } else {
     return invoiceListState.rebuild((b) => b..statusFilters.add(action.status));
   }
 }
 
 ListUIState _filterInvoices(
-    ListUIState invoiceListState, FilterInvoices action) {
-  return invoiceListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : invoiceListState.filterClearedAt);
+  ListUIState invoiceListState,
+  FilterInvoices action,
+) {
+  return invoiceListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : invoiceListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortInvoices(ListUIState invoiceListState, SortInvoices action) {
-  return invoiceListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return invoiceListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState invoiceListState, StartInvoiceMultiselect action) {
+  ListUIState invoiceListState,
+  StartInvoiceMultiselect action,
+) {
   return invoiceListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState invoiceListState, AddToInvoiceMultiselect action) {
+  ListUIState invoiceListState,
+  AddToInvoiceMultiselect action,
+) {
   return invoiceListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState invoiceListState, RemoveFromInvoiceMultiselect action) {
-  return invoiceListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState invoiceListState,
+  RemoveFromInvoiceMultiselect action,
+) {
+  return invoiceListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState invoiceListState, ClearInvoiceMultiselect action) {
+  ListUIState invoiceListState,
+  ClearInvoiceMultiselect action,
+) {
   return invoiceListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -335,19 +407,25 @@ final invoicesReducer = combineReducers<InvoiceState>([
 ]);
 
 InvoiceState _purgeClientSuccess(
-    InvoiceState invoiceState, PurgeClientSuccess action) {
+  InvoiceState invoiceState,
+  PurgeClientSuccess action,
+) {
   final ids = invoiceState.map.values
       .where((each) => each.clientId == action.clientId)
       .map((each) => each.id)
       .toList();
 
-  return invoiceState.rebuild((b) => b
-    ..map.removeWhere((p0, p1) => ids.contains(p0))
-    ..list.removeWhere((p0) => ids.contains(p0)));
+  return invoiceState.rebuild(
+    (b) => b
+      ..map.removeWhere((p0, p1) => ids.contains(p0))
+      ..list.removeWhere((p0) => ids.contains(p0)),
+  );
 }
 
 InvoiceState _markInvoicesSentSuccess(
-    InvoiceState invoiceState, MarkInvoicesSentSuccess action) {
+  InvoiceState invoiceState,
+  MarkInvoicesSentSuccess action,
+) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -356,7 +434,9 @@ InvoiceState _markInvoicesSentSuccess(
 }
 
 InvoiceState _markInvoicesPaidSuccess(
-    InvoiceState invoiceState, MarkInvoicesPaidSuccess action) {
+  InvoiceState invoiceState,
+  MarkInvoicesPaidSuccess action,
+) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -365,7 +445,9 @@ InvoiceState _markInvoicesPaidSuccess(
 }
 
 InvoiceState _cancelInvoicesSuccess(
-    InvoiceState invoiceState, CancelInvoicesSuccess action) {
+  InvoiceState invoiceState,
+  CancelInvoicesSuccess action,
+) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -374,7 +456,9 @@ InvoiceState _cancelInvoicesSuccess(
 }
 
 InvoiceState _archiveInvoiceSuccess(
-    InvoiceState invoiceState, ArchiveInvoicesSuccess action) {
+  InvoiceState invoiceState,
+  ArchiveInvoicesSuccess action,
+) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -383,7 +467,9 @@ InvoiceState _archiveInvoiceSuccess(
 }
 
 InvoiceState _deleteInvoiceSuccess(
-    InvoiceState invoiceState, DeleteInvoicesSuccess action) {
+  InvoiceState invoiceState,
+  DeleteInvoicesSuccess action,
+) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -392,13 +478,18 @@ InvoiceState _deleteInvoiceSuccess(
 }
 
 InvoiceState _emailInvoiceSuccess(
-    InvoiceState invoiceState, EmailInvoiceSuccess action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  InvoiceState invoiceState,
+  EmailInvoiceSuccess action,
+) {
+  return invoiceState.rebuild(
+    (b) => b..map[action.invoice.id] = action.invoice,
+  );
 }
 
 InvoiceState _restoreInvoiceSuccess(
-    InvoiceState invoiceState, RestoreInvoicesSuccess action) {
+  InvoiceState invoiceState,
+  RestoreInvoicesSuccess action,
+) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
@@ -407,25 +498,34 @@ InvoiceState _restoreInvoiceSuccess(
 }
 
 InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
-  return invoiceState.rebuild((b) => b
-    ..map[action.invoice.id] = action.invoice
-        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch)
-    ..list.add(action.invoice.id));
+  return invoiceState.rebuild(
+    (b) => b
+      ..map[action.invoice.id] = action.invoice.rebuild(
+        (b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch,
+      )
+      ..list.add(action.invoice.id),
+  );
 }
 
 InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
   final InvoiceEntity? invoice = action.invoice;
-  return invoiceState.rebuild((b) => b
-    ..map[action.invoice.id] = invoice!
-        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
+  return invoiceState.rebuild(
+    (b) => b
+      ..map[action.invoice.id] = invoice!.rebuild(
+        (b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch,
+      ),
+  );
 }
 
 InvoiceState _setLoadedInvoices(
-        InvoiceState invoiceState, LoadInvoicesSuccess action) =>
-    invoiceState.loadInvoices(action.invoices);
+  InvoiceState invoiceState,
+  LoadInvoicesSuccess action,
+) => invoiceState.loadInvoices(action.invoices);
 
 InvoiceState _setLoadedCompany(
-    InvoiceState invoiceState, LoadCompanySuccess action) {
+  InvoiceState invoiceState,
+  LoadCompanySuccess action,
+) {
   final company = action.userCompany.company;
   return invoiceState.loadInvoices(company.invoices);
 }

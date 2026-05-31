@@ -51,8 +51,10 @@ abstract class CompanyGatewayUIState extends Object
     implements Built<CompanyGatewayUIState, CompanyGatewayUIStateBuilder> {
   factory CompanyGatewayUIState(PrefStateSortField? sortField) {
     return _$CompanyGatewayUIState._(
-      listUIState: ListUIState(sortField?.field ?? CompanyGatewayFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? CompanyGatewayFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: CompanyGatewayEntity(),
       selectedId: '',
       tabIndex: 0,

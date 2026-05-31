@@ -205,8 +205,11 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       return false;
     }
 
-    if ([EntityType.product, EntityType.payment, EntityType.project]
-        .contains(entityType)) {
+    if ([
+      EntityType.product,
+      EntityType.payment,
+      EntityType.project,
+    ].contains(entityType)) {
       return false;
     }
 
@@ -256,8 +259,9 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   // ignore: unused_element
   static void _initializeBuilder(PrefStateBuilder builder) => builder
-    ..statementIncludes
-        .replace(BuiltList<String>(<String>[kStatementIncludePayments]))
+    ..statementIncludes.replace(
+      BuiltList<String>(<String>[kStatementIncludePayments]),
+    )
     ..useSidebarEditor.replace(BuiltMap<EntityType, bool>())
     ..useSidebarViewer.replace(BuiltMap<EntityType, bool>())
     ..sortFields.replace(BuiltMap<EntityType, PrefStateSortField>())
@@ -293,10 +297,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 abstract class PrefStateSortField
     implements Built<PrefStateSortField, PrefStateSortFieldBuilder> {
   factory PrefStateSortField(String field, bool ascending) {
-    return _$PrefStateSortField._(
-      field: field,
-      ascending: ascending,
-    );
+    return _$PrefStateSortField._(field: field, ascending: ascending);
   }
 
   PrefStateSortField._();
@@ -315,12 +316,8 @@ abstract class PrefStateSortField
 
 abstract class CompanyPrefState
     implements Built<CompanyPrefState, CompanyPrefStateBuilder> {
-  factory CompanyPrefState({
-    String? accentColor,
-  }) {
-    return _$CompanyPrefState._(
-      historyList: BuiltList<HistoryRecord>(),
-    );
+  factory CompanyPrefState({String? accentColor}) {
+    return _$CompanyPrefState._(historyList: BuiltList<HistoryRecord>());
   }
 
   CompanyPrefState._();

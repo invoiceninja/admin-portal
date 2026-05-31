@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dar
 
 class QuoteEditDetailsScreen extends StatelessWidget {
   const QuoteEditDetailsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -61,21 +61,21 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     BuiltMap<String, ClientEntity>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddClientPressed,
+    onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddVendorPressed,
+    onAddVendorPressed,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          onClientChanged: onClientChanged,
-          onVendorChanged: onVendorChanged,
-          clientMap: clientMap,
-          clientList: clientList,
-          onAddClientPressed: onAddClientPressed,
-          onAddVendorPressed: onAddVendorPressed,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         onClientChanged: onClientChanged,
+         onVendorChanged: onVendorChanged,
+         clientMap: clientMap,
+         clientList: clientList,
+         onAddClientPressed: onAddClientPressed,
+         onAddVendorPressed: onAddVendorPressed,
+       );
 
   factory QuoteEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -97,13 +97,14 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            entity: ClientEntity(),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
-              }));
+          entity: ClientEntity(),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
         });

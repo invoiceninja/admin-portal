@@ -28,22 +28,20 @@ class AppHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(label,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: textColor!.withValues(alpha: .65),
-              )),
-          SizedBox(
-            height: 8,
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 16.0,
+              color: textColor!.withValues(alpha: .65),
+            ),
           ),
+          SizedBox(height: 8),
           FittedBox(
             child: Text(
               (value ?? '').isEmpty ? ' ' : value!,
-              style: TextStyle(
-                fontSize: 30,
-              ),
+              style: TextStyle(fontSize: 30),
             ),
-          )
+          ),
         ],
       );
     }
@@ -53,22 +51,20 @@ class AppHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(secondLabel!,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: textColor!.withValues(alpha: .65),
-              )),
-          SizedBox(
-            height: 8,
+          Text(
+            secondLabel!,
+            style: TextStyle(
+              fontSize: 16.0,
+              color: textColor!.withValues(alpha: .65),
+            ),
           ),
+          SizedBox(height: 8),
           FittedBox(
             child: Text(
               (secondValue ?? '').isEmpty ? ' ' : secondValue!,
-              style: TextStyle(
-                fontSize: 30,
-              ),
+              style: TextStyle(fontSize: 30),
             ),
-          )
+          ),
         ],
       );
     }
@@ -88,7 +84,7 @@ class AppHeader extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: Text(message!),
-          )
+          ),
       ],
     );
   }

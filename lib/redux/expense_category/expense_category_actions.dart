@@ -17,29 +17,25 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewExpenseCategoryList implements PersistUI {
-  ViewExpenseCategoryList({
-    this.force = false,
-  });
+  ViewExpenseCategoryList({this.force = false});
 
   final bool force;
 }
 
 class ViewExpenseCategory implements PersistUI, PersistPrefs {
-  ViewExpenseCategory({
-    required this.expenseCategoryId,
-    this.force = false,
-  });
+  ViewExpenseCategory({required this.expenseCategoryId, this.force = false});
 
   final String? expenseCategoryId;
   final bool force;
 }
 
 class EditExpenseCategory implements PersistUI, PersistPrefs {
-  EditExpenseCategory(
-      {required this.expenseCategory,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditExpenseCategory({
+    required this.expenseCategory,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final ExpenseCategoryEntity expenseCategory;
   final Completer? completer;
@@ -265,8 +261,11 @@ class ClearExpenseCategoryMultiselect {
   ClearExpenseCategoryMultiselect();
 }
 
-void handleExpenseCategoryAction(BuildContext? context,
-    List<BaseEntity> expenseCategories, EntityAction? action) {
+void handleExpenseCategoryAction(
+  BuildContext? context,
+  List<BaseEntity> expenseCategories,
+  EntityAction? action,
+) {
   if (expenseCategories.isEmpty) {
     return;
   }
@@ -275,8 +274,9 @@ void handleExpenseCategoryAction(BuildContext? context,
   final state = store.state;
   final localization = AppLocalization.of(context);
   final expenseCategory = expenseCategories.first as ExpenseCategoryEntity;
-  final expenseCategoryIds =
-      expenseCategories.map((expenseCategory) => expenseCategory.id).toList();
+  final expenseCategoryIds = expenseCategories
+      .map((expenseCategory) => expenseCategory.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -285,40 +285,54 @@ void handleExpenseCategoryAction(BuildContext? context,
     case EntityAction.restore:
       final message = expenseCategoryIds.length > 1
           ? localization!.restoredExpenseCategories
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseCategoryIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseCategoryIds.length.toString())
           : localization!.restoredExpenseCategory;
-      store.dispatch(RestoreExpenseCategoriesRequest(
-          snackBarCompleter<Null>(message), expenseCategoryIds));
+      store.dispatch(
+        RestoreExpenseCategoriesRequest(
+          snackBarCompleter<Null>(message),
+          expenseCategoryIds,
+        ),
+      );
       break;
     case EntityAction.archive:
       final message = expenseCategoryIds.length > 1
           ? localization!.archivedExpenseCategories
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseCategoryIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseCategoryIds.length.toString())
           : localization!.archivedExpenseCategory;
-      store.dispatch(ArchiveExpenseCategoriesRequest(
-          snackBarCompleter<Null>(message), expenseCategoryIds));
+      store.dispatch(
+        ArchiveExpenseCategoriesRequest(
+          snackBarCompleter<Null>(message),
+          expenseCategoryIds,
+        ),
+      );
       break;
     case EntityAction.delete:
       final message = expenseCategoryIds.length > 1
           ? localization!.deletedExpenseCategories
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseCategoryIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseCategoryIds.length.toString())
           : localization!.deletedExpenseCategory;
-      store.dispatch(DeleteExpenseCategoriesRequest(
-          snackBarCompleter<Null>(message), expenseCategoryIds));
+      store.dispatch(
+        DeleteExpenseCategoriesRequest(
+          snackBarCompleter<Null>(message),
+          expenseCategoryIds,
+        ),
+      );
       break;
     case EntityAction.newExpense:
       createEntity(
-        entity: ExpenseEntity(state: state)
-            .rebuild((b) => b..categoryId = expenseCategory.id),
+        entity: ExpenseEntity(
+          state: state,
+        ).rebuild((b) => b..categoryId = expenseCategory.id),
       );
       break;
     case EntityAction.newTransaction:
       createEntity(
-        entity: TransactionEntity(state: state)
-            .rebuild((b) => b..categoryId = expenseCategory.id),
+        entity: TransactionEntity(
+          state: state,
+        ).rebuild((b) => b..categoryId = expenseCategory.id),
       );
       break;
     case EntityAction.toggleMultiselect:
@@ -331,20 +345,21 @@ void handleExpenseCategoryAction(BuildContext? context,
       }
 
       for (final expenseCategory in expenseCategories) {
-        if (!store.state.expenseCategoryListState
-            .isSelected(expenseCategory.id)) {
+        if (!store.state.expenseCategoryListState.isSelected(
+          expenseCategory.id,
+        )) {
           store.dispatch(
-              AddToExpenseCategoryMultiselect(entity: expenseCategory));
+            AddToExpenseCategoryMultiselect(entity: expenseCategory),
+          );
         } else {
           store.dispatch(
-              RemoveFromExpenseCategoryMultiselect(entity: expenseCategory));
+            RemoveFromExpenseCategoryMultiselect(entity: expenseCategory),
+          );
         }
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [expenseCategory],
-      );
+      showEntityActionsDialog(entities: [expenseCategory]);
       break;
     default:
       print('## ERROR: unhandled action $action in expense_category_actions');

@@ -34,10 +34,7 @@ class BankAccountEditScreen extends StatelessWidget {
         return BankAccountEditVM.fromStore(store);
       },
       builder: (context, vm) {
-        return BankAccountEdit(
-          viewModel: vm,
-          key: ValueKey(vm.bankAccount.id),
-        );
+        return BankAccountEdit(viewModel: vm, key: ValueKey(vm.bankAccount.id));
       },
     );
   }
@@ -82,30 +79,43 @@ class BankAccountEditVM {
           final navigator = navigatorKey.currentState;
           final Completer<BankAccountEntity> completer =
               new Completer<BankAccountEntity>();
-          store.dispatch(SaveBankAccountRequest(
-              completer: completer, bankAccount: bankAccount));
-          return completer.future.then((savedBankAccount) {
-            showToast(bankAccount!.isNew
-                ? localization!.createdBankAccount
-                : localization!.updatedBankAccount);
+          store.dispatch(
+            SaveBankAccountRequest(
+              completer: completer,
+              bankAccount: bankAccount,
+            ),
+          );
+          return completer.future
+              .then((savedBankAccount) {
+                showToast(
+                  bankAccount!.isNew
+                      ? localization!.createdBankAccount
+                      : localization!.updatedBankAccount,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(BankAccountViewScreen.route));
-              if (bankAccount.isNew) {
-                navigator!.pushReplacementNamed(BankAccountViewScreen.route);
-              } else {
-                navigator!.pop(savedBankAccount);
-              }
-            } else {
-              viewEntity(entity: savedBankAccount);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(BankAccountViewScreen.route),
+                  );
+                  if (bankAccount.isNew) {
+                    navigator!.pushReplacementNamed(
+                      BankAccountViewScreen.route,
+                    );
+                  } else {
+                    navigator!.pop(savedBankAccount);
+                  }
+                } else {
+                  viewEntity(entity: savedBankAccount);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
       onEntityAction: (BuildContext context, EntityAction action) {

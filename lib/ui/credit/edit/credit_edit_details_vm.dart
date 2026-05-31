@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class CreditEditDetailsScreen extends StatelessWidget {
   const CreditEditDetailsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -62,21 +62,21 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
     BuiltMap<String, ClientEntity>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddClientPressed,
+    onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddVendorPressed,
+    onAddVendorPressed,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          onClientChanged: onClientChanged,
-          onVendorChanged: onVendorChanged,
-          clientMap: clientMap,
-          clientList: clientList,
-          onAddClientPressed: onAddClientPressed,
-          onAddVendorPressed: onAddVendorPressed,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         onClientChanged: onClientChanged,
+         onVendorChanged: onVendorChanged,
+         clientMap: clientMap,
+         clientList: clientList,
+         onAddClientPressed: onAddClientPressed,
+         onAddVendorPressed: onAddVendorPressed,
+       );
 
   factory CreditEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -98,13 +98,14 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            entity: ClientEntity(),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
-              }));
+          entity: ClientEntity(),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
         });

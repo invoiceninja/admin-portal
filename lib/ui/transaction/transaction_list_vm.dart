@@ -25,29 +25,30 @@ class TransactionListBuilder extends StatelessWidget {
       converter: TransactionListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.transaction,
-            presenter: TransactionPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.transactionList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final transactionId = viewModel.transactionList[index];
-              final transaction = viewModel.transactionMap[transactionId]!;
-              final listState = state.getListState(EntityType.transaction);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.transaction,
+          presenter: TransactionPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.transactionList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final transactionId = viewModel.transactionList[index];
+            final transaction = viewModel.transactionMap[transactionId]!;
+            final listState = state.getListState(EntityType.transaction);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return TransactionListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                transaction: transaction,
-                isChecked:
-                    isInMultiselect && listState.isSelected(transaction.id),
-              );
-            });
+            return TransactionListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              transaction: transaction,
+              isChecked:
+                  isInMultiselect && listState.isSelected(transaction.id),
+            );
+          },
+        );
       },
     );
   }
@@ -74,8 +75,9 @@ class TransactionListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -87,25 +89,29 @@ class TransactionListVM {
       userCompany: state.userCompany,
       listState: state.transactionListState,
       transactionList: memoizedFilteredTransactionList(
-          state.getUISelection(EntityType.transaction),
-          state.transactionState.map,
-          state.transactionState.list,
-          state.invoiceState.map,
-          state.vendorState.map,
-          state.expenseState.map,
-          state.expenseCategoryState.map,
-          state.bankAccountState.map,
-          state.transactionListState),
+        state.getUISelection(EntityType.transaction),
+        state.transactionState.map,
+        state.transactionState.list,
+        state.invoiceState.map,
+        state.vendorState.map,
+        state.expenseState.map,
+        state.expenseCategoryState.map,
+        state.bankAccountState.map,
+        state.transactionListState,
+      ),
       transactionMap: state.transactionState.map,
       isLoading: state.isLoading,
       filter: state.transactionUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> transactions,
-              EntityAction action) =>
-          handleTransactionAction(context, transactions, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> transactions,
+            EntityAction action,
+          ) => handleTransactionAction(context, transactions, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.transaction) ??
-              TransactionPresenter.getDefaultTableFields(state.userCompany),
+          TransactionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactions(field)),
       onClearMultielsect: () => store.dispatch(ClearTransactionMultiselect()),
     );

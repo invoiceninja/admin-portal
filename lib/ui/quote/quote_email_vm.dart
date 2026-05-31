@@ -42,9 +42,7 @@ class QuoteEmailScreen extends StatelessWidget {
         return EmailQuoteVM.fromStore(store, quote);
       },
       builder: (context, viewModel) {
-        return InvoiceEmailView(
-          viewModel: viewModel,
-        );
+        return InvoiceEmailView(viewModel: viewModel);
       },
     );
   }
@@ -60,17 +58,17 @@ class EmailQuoteVM extends EmailEntityVM {
     required ClientEntity? client,
     required VendorEntity? vendor,
     required Function(BuildContext, EmailTemplate, String, String, String)
-        onSendPressed,
+    onSendPressed,
   }) : super(
-          state: state,
-          isLoading: isLoading,
-          isSaving: isSaving,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onSendPressed: onSendPressed,
-        );
+         state: state,
+         isLoading: isLoading,
+         isSaving: isSaving,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onSendPressed: onSendPressed,
+       );
 
   factory EmailQuoteVM.fromStore(Store<AppState> store, InvoiceEntity quote) {
     final state = store.state;
@@ -85,21 +83,24 @@ class EmailQuoteVM extends EmailEntityVM {
       vendor: state.vendorState.map[quote.vendorId],
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.emailedQuote,
-            shouldPop: isMobile(context));
+          AppLocalization.of(context)!.emailedQuote,
+          shouldPop: isMobile(context),
+        );
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {
             viewEntity(entity: quote);
           });
         }
-        store.dispatch(EmailQuoteRequest(
-          completer: completer,
-          quoteId: quote.id,
-          template: template,
-          subject: subject,
-          body: body,
-          ccEmail: ccEmail,
-        ));
+        store.dispatch(
+          EmailQuoteRequest(
+            completer: completer,
+            quoteId: quote.id,
+            template: template,
+            subject: subject,
+            body: body,
+            ccEmail: ccEmail,
+          ),
+        );
       },
     );
   }

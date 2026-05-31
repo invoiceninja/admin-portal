@@ -7,8 +7,10 @@ Future<Contact?> getDeviceContact() async {
     final permissionStatus = await Permission.contacts.request();
     if (permissionStatus == PermissionStatus.granted) {
       return await ContactsService.openDeviceContactPicker();
-    } else if ([PermissionStatus.denied, PermissionStatus.permanentlyDenied]
-        .contains(permissionStatus)) {
+    } else if ([
+      PermissionStatus.denied,
+      PermissionStatus.permanentlyDenied,
+    ].contains(permissionStatus)) {
       openAppSettings();
     }
   } catch (e) {

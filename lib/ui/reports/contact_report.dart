@@ -72,15 +72,21 @@ enum ContactReportFields {
   record_state,
 }
 
-var memoizedContactReport = memo5((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    contactReport(
-        userCompany!, reportsUIState, clientMap, userMap, staticState));
+var memoizedContactReport = memo5(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => contactReport(
+    userCompany!,
+    reportsUIState,
+    clientMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult contactReport(
   UserCompanyEntity userCompany,
@@ -110,10 +116,12 @@ ReportResult contactReport(
   ];
 
   if (clientReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(clientReportSettings.columns
-        .map((e) => EnumUtils.fromString(ContactReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      clientReportSettings.columns
+          .map((e) => EnumUtils.fromString(ContactReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -128,9 +136,11 @@ ReportResult contactReport(
       bool skip = false;
       final List<ReportElement> row = [];
 
-      final exchangeRate = getExchangeRate(staticState.currencyMap,
-          fromCurrencyId: client.currencyId,
-          toCurrencyId: userCompany.company.currencyId);
+      final exchangeRate = getExchangeRate(
+        staticState.currencyMap,
+        fromCurrencyId: client.currencyId,
+        toCurrencyId: userCompany.company.currencyId,
+      );
 
       for (var column in columns) {
         dynamic value = '';
@@ -148,12 +158,12 @@ ReportResult contactReport(
           case ContactReportFields.currency:
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
-                    '';
+                '';
             break;
           case ContactReportFields.language:
             value =
                 staticState.languageMap[client.languageId]?.listDisplayName ??
-                    '';
+                '';
             break;
           case ContactReportFields.private_notes:
             value = client.privateNotes;
@@ -164,7 +174,7 @@ ReportResult contactReport(
           case ContactReportFields.industry:
             value =
                 staticState.industryMap[client.industryId]?.listDisplayName ??
-                    '';
+                '';
             break;
           case ContactReportFields.size:
             value = staticState.sizeMap[client.sizeId]?.listDisplayName ?? '';
@@ -232,8 +242,10 @@ ReportResult contactReport(
             value = client.shippingPostalCode;
             break;
           case ContactReportFields.shipping_country:
-            value = staticState
-                    .countryMap[client.shippingCountryId]?.listDisplayName ??
+            value =
+                staticState
+                    .countryMap[client.shippingCountryId]
+                    ?.listDisplayName ??
                 '';
             break;
           case ContactReportFields.phone:
@@ -301,8 +313,9 @@ ReportResult contactReport(
             value = convertTimestampToDateString(contact.lastLogin);
             break;
           case ContactReportFields.total:
-            value =
-                contact.isPrimary ? (client.balance + client.paidToDate) : 0.0;
+            value = contact.isPrimary
+                ? (client.balance + client.paidToDate)
+                : 0.0;
             break;
           case ContactReportFields.balance:
             value = contact.isPrimary ? client.balance : 0.0;
@@ -343,8 +356,9 @@ ReportResult contactReport(
             value = convertTimestampToDateString(client.createdAt);
             break;
           case ContactReportFields.record_state:
-            value = AppLocalization.of(navigatorKey.currentContext!)!
-                .lookup(client.entityState);
+            value = AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!.lookup(client.entityState);
             break;
         }
 
@@ -369,11 +383,13 @@ ReportResult contactReport(
           ].contains(column)) {
             currencyId = userCompany.company.currencyId;
           }
-          row.add(client.getReportDouble(
-            value: value,
-            currencyId: currencyId,
-            exchangeRate: exchangeRate,
-          ));
+          row.add(
+            client.getReportDouble(
+              value: value,
+              currencyId: currencyId,
+              exchangeRate: exchangeRate,
+            ),
+          );
         } else {
           row.add(client.getReportString(value: '$value'));
         }
@@ -386,16 +402,19 @@ ReportResult contactReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) =>
+        sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!,
+  );
 
   return ReportResult(
     allColumns: ContactReportFields.values
         .map((item) => EnumUtils.parse(item))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

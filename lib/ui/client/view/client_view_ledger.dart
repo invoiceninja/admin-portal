@@ -39,8 +39,9 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
   @override
   Widget build(BuildContext context) {
     final client = widget.viewModel!.client;
-    final ledgers =
-        client.ledger.where((ledger) => ledger.adjustment != 0).toList();
+    final ledgers = client.ledger
+        .where((ledger) => ledger.adjustment != 0)
+        .toList();
 
     if (client.isStale) {
       return LoadingIndicator();
@@ -59,22 +60,19 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
           return ListTile(
             leading: Icon(getEntityIcon(EntityType.client)),
             title: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text(localization!.clientCreated)),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2),
-                    child: Text(
-                      formatNumber(
-                        0,
-                        context,
-                        clientId: client.id,
-                      )!,
-                      textAlign: TextAlign.end,
-                    ),
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(child: Text(localization!.clientCreated)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 2),
+                  child: Text(
+                    formatNumber(0, context, clientId: client.id)!,
+                    textAlign: TextAlign.end,
                   ),
-                ]),
+                ),
+              ],
+            ),
             subtitle: Text(
               formatDate(
                 convertTimestampToDateString(client.createdAt),
@@ -109,11 +107,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
               Padding(
                 padding: const EdgeInsets.only(right: 2),
                 child: Text(
-                  formatNumber(
-                    ledger.balance,
-                    context,
-                    clientId: client.id,
-                  )!,
+                  formatNumber(ledger.balance, context, clientId: client.id)!,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -139,8 +133,9 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                     color: ledger.adjustment <= 0
                         ? state.prefState.colorThemeModel!.colorSuccess
                         : state.prefState.colorThemeModel!.colorDanger,
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(kBorderRadius)),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(kBorderRadius),
+                    ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(4),

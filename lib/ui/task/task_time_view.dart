@@ -29,16 +29,25 @@ class TaskTimeListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final startDateString = formatDate(
-        taskTime!.startDate!.toIso8601String(), context,
-        showTime: true, showDate: false);
+      taskTime!.startDate!.toIso8601String(),
+      context,
+      showTime: true,
+      showDate: false,
+    );
     final endDateString = taskTime!.endDate != null
-        ? formatDate(taskTime!.endDate!.toIso8601String(), context,
-            showTime: true, showDate: false)
+        ? formatDate(
+            taskTime!.endDate!.toIso8601String(),
+            context,
+            showTime: true,
+            showDate: false,
+          )
         : AppLocalization.of(context)!.now;
 
     final state = StoreProvider.of<AppState>(context).state;
-    final title = DateFormat('EEE MMM d, yyy', localeSelector(state))
-        .format(taskTime!.startDate!.toLocal());
+    final title = DateFormat(
+      'EEE MMM d, yyy',
+      localeSelector(state),
+    ).format(taskTime!.startDate!.toLocal());
 
     var subtitle = '$startDateString - $endDateString';
     if (taskTime!.description.isNotEmpty) {
@@ -58,9 +67,7 @@ class TaskTimeListTile extends StatelessWidget {
           subtitle: Text(subtitle),
           trailing: Icon(isValid ? Icons.navigate_next : Icons.error),
         ),
-        Divider(
-          height: 1.0,
-        ),
+        Divider(height: 1.0),
       ],
     );
   }

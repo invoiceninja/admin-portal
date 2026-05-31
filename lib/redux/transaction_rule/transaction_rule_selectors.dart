@@ -6,20 +6,28 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownTransactionRuleList = memo5(
-    (BuiltMap<String, TransactionRuleEntity> transactionRuleMap,
-            BuiltList<String> transactionRuleList,
-            StaticState staticState,
-            BuiltMap<String, UserEntity> userMap,
-            String clientId) =>
-        dropdownTransactionRulesSelector(transactionRuleMap,
-            transactionRuleList, staticState, userMap, clientId));
-
-List<String> dropdownTransactionRulesSelector(
+  (
     BuiltMap<String, TransactionRuleEntity> transactionRuleMap,
     BuiltList<String> transactionRuleList,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
-    String clientId) {
+    String clientId,
+  ) => dropdownTransactionRulesSelector(
+    transactionRuleMap,
+    transactionRuleList,
+    staticState,
+    userMap,
+    clientId,
+  ),
+);
+
+List<String> dropdownTransactionRulesSelector(
+  BuiltMap<String, TransactionRuleEntity> transactionRuleMap,
+  BuiltList<String> transactionRuleList,
+  StaticState staticState,
+  BuiltMap<String, UserEntity> userMap,
+  String clientId,
+) {
   final list = transactionRuleList.where((transactionRuleId) {
     final transactionRule = transactionRuleMap[transactionRuleId]!;
     /*
@@ -34,24 +42,35 @@ List<String> dropdownTransactionRulesSelector(
     final transactionRuleA = transactionRuleMap[transactionRuleAId]!;
     final transactionRuleB = transactionRuleMap[transactionRuleBId];
     return transactionRuleA.compareTo(
-        transactionRuleB, TransactionRuleFields.name, true);
+      transactionRuleB,
+      TransactionRuleFields.name,
+      true,
+    );
   });
 
   return list;
 }
 
-var memoizedFilteredTransactionRuleList = memo4((SelectionState selectionState,
-        BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap,
-        BuiltList<String> transactionRuleList,
-        ListUIState transactionRuleListState) =>
-    filteredTransactionRulesSelector(selectionState, transactionRuleMap,
-        transactionRuleList, transactionRuleListState));
-
-List<String> filteredTransactionRulesSelector(
+var memoizedFilteredTransactionRuleList = memo4(
+  (
     SelectionState selectionState,
     BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap,
     BuiltList<String> transactionRuleList,
-    ListUIState transactionRuleListState) {
+    ListUIState transactionRuleListState,
+  ) => filteredTransactionRulesSelector(
+    selectionState,
+    transactionRuleMap,
+    transactionRuleList,
+    transactionRuleListState,
+  ),
+);
+
+List<String> filteredTransactionRulesSelector(
+  SelectionState selectionState,
+  BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap,
+  BuiltList<String> transactionRuleList,
+  ListUIState transactionRuleListState,
+) {
   final filterEntityId = selectionState.filterEntityId;
   //final filterEntityType = selectionState.filterEntityType;
 
@@ -61,8 +80,9 @@ List<String> filteredTransactionRulesSelector(
       return false;
     } else {}
 
-    if (!transactionRule!
-        .matchesStates(transactionRuleListState.stateFilters)) {
+    if (!transactionRule!.matchesStates(
+      transactionRuleListState.stateFilters,
+    )) {
       return false;
     }
 
@@ -73,17 +93,19 @@ List<String> filteredTransactionRulesSelector(
     final transactionRuleA = transactionRuleMap[transactionRuleAId]!;
     final transactionRuleB = transactionRuleMap[transactionRuleBId];
     return transactionRuleA.compareTo(
-        transactionRuleB,
-        transactionRuleListState.sortField,
-        transactionRuleListState.sortAscending);
+      transactionRuleB,
+      transactionRuleListState.sortField,
+      transactionRuleListState.sortAscending,
+    );
   });
 
   return list;
 }
 
 var memoizedTransactionStatsForTransactionRule = memo2(
-    (String userId, BuiltMap<String, TransactionEntity> transactionMap) =>
-        transactionStatsForTransactionRule(userId, transactionMap));
+  (String userId, BuiltMap<String, TransactionEntity> transactionMap) =>
+      transactionStatsForTransactionRule(userId, transactionMap),
+);
 
 EntityStats transactionStatsForTransactionRule(
   String transactionRuleId,

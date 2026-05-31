@@ -32,28 +32,29 @@ class GroupListBuilder extends StatelessWidget {
       converter: GroupListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.group,
-            //presenter: ClientPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.groupList,
-            //tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final groupId = viewModel.groupList[index];
-              final group = viewModel.groupMap[groupId]!;
-              final listState = state.getListState(EntityType.group);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.group,
+          //presenter: ClientPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.groupList,
+          //tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final groupId = viewModel.groupList[index];
+            final group = viewModel.groupMap[groupId]!;
+            final listState = state.getListState(EntityType.group);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return GroupListItem(
-                user: viewModel.userCompany!.user,
-                filter: viewModel.filter,
-                group: group,
-                isChecked: isInMultiselect && listState.isSelected(group.id),
-              );
-            });
+            return GroupListItem(
+              user: viewModel.userCompany!.user,
+              filter: viewModel.filter,
+              group: group,
+              isChecked: isInMultiselect && listState.isSelected(group.id),
+            );
+          },
+        );
       },
     );
   }
@@ -78,8 +79,9 @@ class GroupListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -91,10 +93,11 @@ class GroupListVM {
       userCompany: state.userCompany,
       listState: state.groupListState,
       groupList: memoizedFilteredGroupList(
-          state.getUISelection(EntityType.group),
-          state.groupState.map,
-          state.groupState.list,
-          state.groupListState),
+        state.getUISelection(EntityType.group),
+        state.groupState.map,
+        state.groupState.list,
+        state.groupListState,
+      ),
       groupMap: state.groupState.map,
       isLoading: state.isLoading,
       filter: state.groupUIState.listUIState.filter,

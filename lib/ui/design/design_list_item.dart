@@ -76,8 +76,10 @@ class DesignListItem extends StatelessWidget {
                 ),
               ),
               if (design.isTemplate)
-                Text(AppLocalization.of(context)!.template,
-                    style: Theme.of(context).textTheme.bodySmall),
+                Text(
+                  AppLocalization.of(context)!.template,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
             ],
           ),
         ),
@@ -85,11 +87,7 @@ class DesignListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(design),
           ],

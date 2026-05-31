@@ -42,15 +42,18 @@ void loadDesign({
   }
 
   final request = DesignPreviewRequest(design: design);
-  final data =
-      serializers.serializeWith(DesignPreviewRequest.serializer, request);
+  final data = serializers.serializeWith(
+    DesignPreviewRequest.serializer,
+    request,
+  );
 
   webClient
       .post(url, credentials.token, data: json.encode(data), rawResponse: true)
       .then((dynamic response) {
-    onComplete(response);
-  }).catchError((dynamic error) {
-    showErrorDialog(message: '$error');
-    onComplete(null);
-  });
+        onComplete(response);
+      })
+      .catchError((dynamic error) {
+        showErrorDialog(message: '$error');
+        onComplete(null);
+      });
 }

@@ -17,10 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'transaction_screen_vm.dart';
 
 class TransactionScreen extends StatelessWidget {
-  const TransactionScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TransactionScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/transaction';
 
@@ -66,7 +64,8 @@ class TransactionScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartTransactionMultiselect()),
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.transactionListState.filterClearedAt}__'),
+          '__filter_${state.transactionListState.filterClearedAt}__',
+        ),
         entityType: EntityType.transaction,
         entityIds: viewModel.transactionList,
         filter: state.transactionListState.filter,
@@ -78,7 +77,8 @@ class TransactionScreen extends StatelessWidget {
         },
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(
-              FilterTransactionsByStatus(status as TransactionStatusEntity));
+            FilterTransactionsByStatus(status as TransactionStatusEntity),
+          );
         },
         statuses: statuses,
       ),
@@ -94,17 +94,21 @@ class TransactionScreen extends StatelessWidget {
         entityType: EntityType.transaction,
         iconButtons: [
           IconButton(
-              icon: Icon(getEntityIcon(EntityType.settings)),
-              onPressed: () {
-                store.dispatch(ViewSettings(
+            icon: Icon(getEntityIcon(EntityType.settings)),
+            onPressed: () {
+              store.dispatch(
+                ViewSettings(
                   section: kSettingsBankAccounts,
                   company: state.company,
-                ));
-              })
+                ),
+              );
+            },
+          ),
         ],
         tableColumns: TransactionPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            TransactionPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: TransactionPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortTransactions(value));
         },
@@ -118,7 +122,8 @@ class TransactionScreen extends StatelessWidget {
         },
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(
-              FilterTransactionsByStatus(status as TransactionStatusEntity));
+            FilterTransactionsByStatus(status as TransactionStatusEntity),
+          );
         },
         onCheckboxPressed: () {
           if (store.state.transactionListState.isInMultiselect()) {
@@ -137,19 +142,19 @@ class TransactionScreen extends StatelessWidget {
             store.dispatch(FilterTransactionsByCustom4(value)),
         statuses: statuses,
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.transaction)
           ? FloatingActionButton(
               heroTag: 'transaction_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.transaction);
+                  context: context,
+                  entityType: EntityType.transaction,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newTransaction,
             )
           : null,

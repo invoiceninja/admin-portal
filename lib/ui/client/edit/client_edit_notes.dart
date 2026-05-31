@@ -12,10 +12,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientEditNotes extends StatefulWidget {
-  const ClientEditNotes({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientEditNotes({Key? key, required this.viewModel}) : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -32,20 +29,19 @@ class ClientEditNotesState extends State<ClientEditNotes> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _publicNotesController,
-      _privateNotesController,
-    ];
+    _controllers = [_publicNotesController, _privateNotesController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final client = widget.viewModel.client;
     _publicNotesController.text = client.publicNotes;
     _privateNotesController.text = client.privateNotes;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -62,9 +58,11 @@ class ClientEditNotesState extends State<ClientEditNotes> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text);
+    final client = viewModel.client.rebuild(
+      (b) => b
+        ..publicNotes = _publicNotesController.text
+        ..privateNotes = _privateNotesController.text,
+    );
     if (client != viewModel.client) {
       _debouncer.run(() {
         viewModel.onChanged(client);

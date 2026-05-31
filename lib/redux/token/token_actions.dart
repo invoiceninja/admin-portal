@@ -21,29 +21,25 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewTokenList implements PersistUI {
-  ViewTokenList({
-    this.force = false,
-  });
+  ViewTokenList({this.force = false});
 
   final bool force;
 }
 
 class ViewToken implements PersistUI, PersistPrefs {
-  ViewToken({
-    required this.tokenId,
-    this.force = false,
-  });
+  ViewToken({required this.tokenId, this.force = false});
 
   final String? tokenId;
   final bool force;
 }
 
 class EditToken implements PersistUI, PersistPrefs {
-  EditToken(
-      {required this.token,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditToken({
+    required this.token,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final TokenEntity token;
   final Completer? completer;
@@ -259,7 +255,10 @@ class FilterTokensByCustom4 implements PersistUI {
 }
 
 void handleTokenAction(
-    BuildContext? context, List<BaseEntity> tokens, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> tokens,
+  EntityAction? action,
+) {
   if (tokens.isEmpty) {
     return;
   }
@@ -280,29 +279,32 @@ void handleTokenAction(
     case EntityAction.restore:
       final message = tokenIds.length > 1
           ? localization!.restoredTokens
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', tokenIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', tokenIds.length.toString())
           : localization!.restoredToken;
       store.dispatch(
-          RestoreTokensRequest(snackBarCompleter<Null>(message), tokenIds));
+        RestoreTokensRequest(snackBarCompleter<Null>(message), tokenIds),
+      );
       break;
     case EntityAction.archive:
       final message = tokenIds.length > 1
           ? localization!.archivedTokens
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', tokenIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', tokenIds.length.toString())
           : localization!.archivedToken;
       store.dispatch(
-          ArchiveTokensRequest(snackBarCompleter<Null>(message), tokenIds));
+        ArchiveTokensRequest(snackBarCompleter<Null>(message), tokenIds),
+      );
       break;
     case EntityAction.delete:
       final message = tokenIds.length > 1
           ? localization!.deletedTokens
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', tokenIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', tokenIds.length.toString())
           : localization!.deletedToken;
       store.dispatch(
-          DeleteTokensRequest(snackBarCompleter<Null>(message), tokenIds));
+        DeleteTokensRequest(snackBarCompleter<Null>(message), tokenIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.tokenListState.isInMultiselect()) {
@@ -322,9 +324,7 @@ void handleTokenAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [token],
-      );
+      showEntityActionsDialog(entities: [token]);
       break;
   }
 }

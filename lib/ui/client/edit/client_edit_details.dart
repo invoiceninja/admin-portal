@@ -22,10 +22,8 @@ import 'package:invoiceninja_flutter/utils/contacts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditDetails extends StatefulWidget {
-  const ClientEditDetails({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientEditDetails({Key? key, required this.viewModel})
+    : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -46,8 +44,9 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_clientEditDetails');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_clientEditDetails',
+  );
   final _debouncer = Debouncer();
   late List<TextEditingController> _controllers;
 
@@ -67,8 +66,9 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       _custom4Controller,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final client = widget.viewModel.client;
     _numberController.text = client.number;
@@ -83,8 +83,9 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     _custom3Controller.text = client.customValue3;
     _custom4Controller.text = client.customValue4;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -101,18 +102,20 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..number = _numberController.text.trim()
-      ..name = _nameController.text.trim()
-      ..idNumber = _idNumberController.text.trim()
-      ..vatNumber = _vatNumberController.text.trim()
-      ..website = _websiteController.text.trim()
-      ..phone = _phoneController.text.trim()
-      ..routingId = _routingIdController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+    final client = viewModel.client.rebuild(
+      (b) => b
+        ..number = _numberController.text.trim()
+        ..name = _nameController.text.trim()
+        ..idNumber = _idNumberController.text.trim()
+        ..vatNumber = _vatNumberController.text.trim()
+        ..website = _websiteController.text.trim()
+        ..phone = _phoneController.text.trim()
+        ..routingId = _routingIdController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim(),
+    );
     if (client != viewModel.client) {
       _debouncer.run(() {
         viewModel.onChanged(client);
@@ -134,10 +137,12 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final viewModel = widget.viewModel;
     final client = viewModel.client;
 
-    final contactEmail =
-        contact.emails!.isNotEmpty ? contact.emails!.first : null;
-    final contactPhone =
-        contact.phones!.isNotEmpty ? contact.phones!.first : null;
+    final contactEmail = contact.emails!.isNotEmpty
+        ? contact.emails!.first
+        : null;
+    final contactPhone = contact.phones!.isNotEmpty
+        ? contact.phones!.first
+        : null;
     final contactAddress = contact.postalAddresses!.isNotEmpty
         ? contact.postalAddresses!.first
         : null;
@@ -153,19 +158,25 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       }
     });
 
-    widget.viewModel.onChanged(client.rebuild((b) => b
-      ..name = (contact.company ?? '').trim()
-      ..address1 = (contactAddress?.street ?? '').trim()
-      ..city = (contactAddress?.city ?? '').trim()
-      ..state = (contactAddress?.region ?? '').trim()
-      ..postalCode = (contactAddress?.postcode ?? '').trim()
-      ..countryId = countryId ?? ''
-      ..contacts[0] = client.contacts[0].rebuild((b) => b
-        ..firstName = (contact.givenName ?? '').trim()
-        ..lastName = (contact.familyName ?? '').trim()
-        ..email = (contactEmail?.value ?? '').trim()
-        ..phone = (contactPhone?.value ?? '').trim())
-      ..updatedAt = DateTime.now().millisecondsSinceEpoch));
+    widget.viewModel.onChanged(
+      client.rebuild(
+        (b) => b
+          ..name = (contact.company ?? '').trim()
+          ..address1 = (contactAddress?.street ?? '').trim()
+          ..city = (contactAddress?.city ?? '').trim()
+          ..state = (contactAddress?.region ?? '').trim()
+          ..postalCode = (contactAddress?.postcode ?? '').trim()
+          ..countryId = countryId ?? ''
+          ..contacts[0] = client.contacts[0].rebuild(
+            (b) => b
+              ..firstName = (contact.givenName ?? '').trim()
+              ..lastName = (contact.familyName ?? '').trim()
+              ..email = (contactEmail?.value ?? '').trim()
+              ..phone = (contactPhone?.value ?? '').trim(),
+          )
+          ..updatedAt = DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
   }
 
   @override
@@ -201,20 +212,18 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                 ? InputDecoration(
                     labelText: localization.name,
                     suffixIcon: IconButton(
-                        alignment: Alignment.bottomCenter,
-                        color: Theme.of(context).cardColor,
-                        icon: Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () async {
-                          final contact = await getDeviceContact();
-                          if (contact != null) {
-                            setState(() {
-                              _setContactControllers(contact);
-                            });
-                          }
-                        }),
+                      alignment: Alignment.bottomCenter,
+                      color: Theme.of(context).cardColor,
+                      icon: Icon(Icons.person, color: Colors.grey),
+                      onPressed: () async {
+                        final contact = await getDeviceContact();
+                        if (contact != null) {
+                          setState(() {
+                            _setContactControllers(contact);
+                          });
+                        }
+                      },
+                    ),
                   )
                 : null,
           ),
@@ -230,13 +239,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               entityType: EntityType.group,
               entityIds: memoizedGroupList(state.groupState.map),
               entityId: client.groupId,
-              onChanged: (groupId) => viewModel
-                  .onChanged(client.rebuild((b) => b..groupId = groupId)),
+              onChanged: (groupId) => viewModel.onChanged(
+                client.rebuild((b) => b..groupId = groupId),
+              ),
             ),
           UserPicker(
             userId: client.assignedUserId,
-            onChanged: (userId) => viewModel
-                .onChanged(client.rebuild((b) => b..assignedUserId = userId)),
+            onChanged: (userId) => viewModel.onChanged(
+              client.rebuild((b) => b..assignedUserId = userId),
+            ),
           ),
           DecoratedFormField(
             label: localization.idNumber,
@@ -300,13 +311,16 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               value: client.classification,
               onChanged: (dynamic value) {
                 viewModel.onChanged(
-                    client.rebuild((b) => b..classification = value));
+                  client.rebuild((b) => b..classification = value),
+                );
               },
               items: kTaxClassifications
-                  .map((classification) => DropdownMenuItem(
-                        child: Text(localization.lookup(classification)),
-                        value: classification,
-                      ))
+                  .map(
+                    (classification) => DropdownMenuItem(
+                      child: Text(localization.lookup(classification)),
+                      value: classification,
+                    ),
+                  )
                   .toList(),
             ),
             SizedBox(height: 20),
@@ -314,8 +328,9 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               title: Text(localization.isTaxExempt),
               value: client.isTaxExempt,
               onChanged: (value) {
-                viewModel
-                    .onChanged(client.rebuild((b) => b..isTaxExempt = value));
+                viewModel.onChanged(
+                  client.rebuild((b) => b..isTaxExempt = value),
+                );
               },
             ),
             if (state.company.calculateTaxes)
@@ -324,7 +339,8 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                 value: client.hasValidVatNumber,
                 onChanged: (value) {
                   viewModel.onChanged(
-                      client.rebuild((b) => b..hasValidVatNumber = value));
+                    client.rebuild((b) => b..hasValidVatNumber = value),
+                  );
                 },
               ),
           ],

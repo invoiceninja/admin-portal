@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProductList implements PersistUI {
-  ViewProductList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewProductList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
@@ -197,8 +194,11 @@ class RestoreProductsFailure implements StopSaving {
 }
 
 class SetTaxCategoryProductsRequest implements StartSaving {
-  SetTaxCategoryProductsRequest(
-      {this.completer, this.productIds, this.taxCategoryId});
+  SetTaxCategoryProductsRequest({
+    this.completer,
+    this.productIds,
+    this.taxCategoryId,
+  });
 
   final Completer? completer;
   final List<String>? productIds;
@@ -266,7 +266,10 @@ class FilterProductDropdown {
 }
 
 void handleProductAction(
-    BuildContext? context, List<BaseEntity> products, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> products,
+  EntityAction? action,
+) {
   if (products.isEmpty) {
     return;
   }
@@ -315,8 +318,10 @@ void handleProductAction(
       );
       break;
     case EntityAction.newPurchaseOrder:
-      final invoice =
-          InvoiceEntity(state: state, entityType: EntityType.purchaseOrder);
+      final invoice = InvoiceEntity(
+        state: state,
+        entityType: EntityType.purchaseOrder,
+      );
       createEntity(
         entity: invoice.rebuild(
           (b) => b
@@ -342,29 +347,32 @@ void handleProductAction(
     case EntityAction.restore:
       final message = productIds.length > 1
           ? localization!.restoredProducts
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', productIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', productIds.length.toString())
           : localization!.restoredProduct;
       store.dispatch(
-          RestoreProductsRequest(snackBarCompleter<Null>(message), productIds));
+        RestoreProductsRequest(snackBarCompleter<Null>(message), productIds),
+      );
       break;
     case EntityAction.archive:
       final message = productIds.length > 1
           ? localization!.archivedProducts
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', productIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', productIds.length.toString())
           : localization!.archivedProduct;
       store.dispatch(
-          ArchiveProductsRequest(snackBarCompleter<Null>(message), productIds));
+        ArchiveProductsRequest(snackBarCompleter<Null>(message), productIds),
+      );
       break;
     case EntityAction.delete:
       final message = productIds.length > 1
           ? localization!.deletedProducts
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', productIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', productIds.length.toString())
           : localization!.deletedProduct;
       store.dispatch(
-          DeleteProductsRequest(snackBarCompleter<Null>(message), productIds));
+        DeleteProductsRequest(snackBarCompleter<Null>(message), productIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {
@@ -384,9 +392,7 @@ void handleProductAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [product],
-      );
+      showEntityActionsDialog(entities: [product]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -401,37 +407,40 @@ void handleProductAction(
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }
       break;
     case EntityAction.setTaxCategory:
       showDialog<void>(
-          context: context,
-          builder: (context) {
-            return SimpleDialog(
-              title: Text(localization!.setTaxCategory),
-              children: kTaxCategories.keys.map((taxCategoryId) {
-                final taxCategory = kTaxCategories[taxCategoryId];
-                return SimpleDialogOption(
-                  child: Text(localization.lookup(taxCategory)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    store.dispatch(SetTaxCategoryProductsRequest(
-                        productIds: productIds,
-                        taxCategoryId: taxCategoryId,
-                        completer: snackBarCompleter<Null>(
-                            productIds.length == 1
-                                ? localization.updatedTaxCategory
-                                : localization.updatedTaxCategories)));
-                  },
-                );
-              }).toList(),
-            );
-          });
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            title: Text(localization!.setTaxCategory),
+            children: kTaxCategories.keys.map((taxCategoryId) {
+              final taxCategory = kTaxCategories[taxCategoryId];
+              return SimpleDialogOption(
+                child: Text(localization.lookup(taxCategory)),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  store.dispatch(
+                    SetTaxCategoryProductsRequest(
+                      productIds: productIds,
+                      taxCategoryId: taxCategoryId,
+                      completer: snackBarCompleter<Null>(
+                        productIds.length == 1
+                            ? localization.updatedTaxCategory
+                            : localization.updatedTaxCategories,
+                      ),
+                    ),
+                  );
+                },
+              );
+            }).toList(),
+          );
+        },
+      );
       break;
     default:
       print('## ERROR: unhandled action $action in product_actions');

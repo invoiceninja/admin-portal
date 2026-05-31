@@ -62,23 +62,20 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
     Function(int, int)? onMovedInvoiceItem,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          addLineItem: addLineItem,
-          cloneLineItem: cloneLineItem,
-          deleteLineItem: deleteLineItem,
-          invoiceItemIndex: invoiceItemIndex,
-          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-          clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
-          onChangedInvoiceItem: onChangedInvoiceItem,
-          onMovedInvoiceItem: onMovedInvoiceItem,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         addLineItem: addLineItem,
+         cloneLineItem: cloneLineItem,
+         deleteLineItem: deleteLineItem,
+         invoiceItemIndex: invoiceItemIndex,
+         onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+         clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
+         onChangedInvoiceItem: onChangedInvoiceItem,
+         onMovedInvoiceItem: onMovedInvoiceItem,
+       );
 
-  factory QuoteEditItemsVM.fromStore(
-    Store<AppState> store,
-    bool isTasks,
-  ) {
+  factory QuoteEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     final state = store.state;
     final company = state.company;
     final quote = store.state.quoteUIState.editing;
@@ -97,34 +94,31 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
       onChangedInvoiceItem: (quoteItem, index) {
         final quote = store.state.quoteUIState.editing!;
         if (index == quote.lineItems.length) {
-          store.dispatch(AddQuoteItem(
-              quoteItem: quoteItem.rebuild((b) => b
-                ..typeId = isTasks
-                    ? InvoiceItemEntity.TYPE_TASK
-                    : InvoiceItemEntity.TYPE_STANDARD)));
+          store.dispatch(
+            AddQuoteItem(
+              quoteItem: quoteItem.rebuild(
+                (b) => b
+                  ..typeId = isTasks
+                      ? InvoiceItemEntity.TYPE_TASK
+                      : InvoiceItemEntity.TYPE_STANDARD,
+              ),
+            ),
+          );
         } else {
           store.dispatch(UpdateQuoteItem(quoteItem: quoteItem, index: index));
         }
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
-        store.dispatch(
-          MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
-        );
+        store.dispatch(MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex));
       },
       addLineItem: ([int? index]) {
         store.dispatch(
-          AddQuoteItem(
-            index: index,
-            quoteItem: InvoiceItemEntity(),
-          ),
+          AddQuoteItem(index: index, quoteItem: InvoiceItemEntity()),
         );
       },
       cloneLineItem: (int? index) {
         store.dispatch(
-          AddQuoteItem(
-            index: index,
-            quoteItem: quote!.lineItems[index!].clone,
-          ),
+          AddQuoteItem(index: index, quoteItem: quote!.lineItems[index!].clone),
         );
       },
     );

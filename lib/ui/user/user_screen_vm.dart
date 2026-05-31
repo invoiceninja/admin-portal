@@ -21,9 +21,7 @@ class UserScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, UserScreenVM>(
       converter: UserScreenVM.fromStore,
       builder: (context, vm) {
-        return UserScreen(
-          viewModel: vm,
-        );
+        return UserScreen(viewModel: vm);
       },
     );
   }
@@ -48,11 +46,12 @@ class UserScreenVM {
     return UserScreenVM(
       userMap: state.userState.map,
       userList: memoizedFilteredUserList(
-          state.getUISelection(EntityType.user),
-          state.userState.map,
-          state.userState.list,
-          state.userListState,
-          state.user.id),
+        state.getUISelection(EntityType.user),
+        state.userState.map,
+        state.userState.list,
+        state.userListState,
+        state.user.id,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.userListState.isInMultiselect(),
     );

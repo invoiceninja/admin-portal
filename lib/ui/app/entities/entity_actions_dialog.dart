@@ -41,10 +41,11 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-Future<void> showEntityActionsDialog(
-    {required List<BaseEntity> entities,
-    Completer? completer,
-    bool multiselect = false}) async {
+Future<void> showEntityActionsDialog({
+  required List<BaseEntity> entities,
+  Completer? completer,
+  bool multiselect = false,
+}) async {
   final mainContext = navigatorKey.currentContext;
   final state = StoreProvider.of<AppState>(navigatorKey.currentContext!).state;
   final actions = <Widget>[];
@@ -53,35 +54,39 @@ Future<void> showEntityActionsDialog(
       ? state.clientState.get((first as BelongsToClient).clientId!)
       : null;
 
-  actions.addAll(first
-      .getActions(
-    userCompany: state.userCompany,
-    includeEdit: true,
-    client: client,
-    multiselect: multiselect,
-  )
-      .map((entityAction) {
-    if (entityAction == null) {
-      return Divider();
-    } else {
-      return EntityActionListTile(
-        entities: entities,
-        action: entityAction,
-        mainContext: mainContext,
-        completer: completer,
-      );
-    }
-  }).toList());
+  actions.addAll(
+    first
+        .getActions(
+          userCompany: state.userCompany,
+          includeEdit: true,
+          client: client,
+          multiselect: multiselect,
+        )
+        .map((entityAction) {
+          if (entityAction == null) {
+            return Divider();
+          } else {
+            return EntityActionListTile(
+              entities: entities,
+              action: entityAction,
+              mainContext: mainContext,
+              completer: completer,
+            );
+          }
+        })
+        .toList(),
+  );
 
   if (actions.isEmpty) {
     return;
   }
 
   showDialog<String>(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext dialogContext) {
-        return SimpleDialog(children: actions);
-      });
+    context: navigatorKey.currentContext!,
+    builder: (BuildContext dialogContext) {
+      return SimpleDialog(children: actions);
+    },
+  );
 }
 
 class EntityActionListTile extends StatelessWidget {

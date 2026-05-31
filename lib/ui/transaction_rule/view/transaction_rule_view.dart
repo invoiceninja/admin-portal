@@ -37,7 +37,9 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
     final textStyle = TextStyle(color: textColor.withValues(alpha: .65));
 
     final transactionStats = memoizedTransactionStatsForTransactionRule(
-        transactionRule.id, state.transactionState.map);
+      transactionRule.id,
+      state.transactionState.map,
+    );
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -49,8 +51,11 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
           EntityHeader(
             entity: transactionRule,
             label: localization.total,
-            value: formatNumber(transactionStats.total, context,
-                currencyId: transactionStats.currencyId),
+            value: formatNumber(
+              transactionStats.total,
+              context,
+              currencyId: transactionStats.currencyId,
+            ),
             secondLabel: localization.count,
             secondValue:
                 '${transactionStats.countActive! + transactionStats.countArchived!}',
@@ -63,53 +68,43 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
             localization.autoConvert: transactionRule.autoConvert
                 ? localization.enabled
                 : localization.disabled,
-            localization.vendor:
-                state.vendorState.get(transactionRule.vendorId).name,
-            localization.category:
-                state.expenseCategoryState.get(transactionRule.categoryId).name,
+            localization.vendor: state.vendorState
+                .get(transactionRule.vendorId)
+                .name,
+            localization.category: state.expenseCategoryState
+                .get(transactionRule.categoryId)
+                .name,
           }),
           if (transactionRule.rules.isNotEmpty) ...[
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, top: 20, right: 20, bottom: 4),
+                left: 20,
+                top: 20,
+                right: 20,
+                bottom: 4,
+              ),
               child: Row(
                 children: [
+                  Expanded(child: Text(localization.field, style: textStyle)),
                   Expanded(
-                      child: Text(
-                    localization.field,
-                    style: textStyle,
-                  )),
-                  Expanded(
-                    child: Text(
-                      localization.operator,
-                      style: textStyle,
-                    ),
+                    child: Text(localization.operator, style: textStyle),
                   ),
-                  Expanded(
-                    child: Text(
-                      localization.value,
-                      style: textStyle,
-                    ),
-                  ),
+                  Expanded(child: Text(localization.value, style: textStyle)),
                 ],
               ),
             ),
             SizedBox(height: 4),
             for (var rule in transactionRule.rules)
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 20,
+                ),
                 child: Row(
                   children: [
-                    Expanded(
-                      child: Text(localization.lookup(rule.searchKey)),
-                    ),
-                    Expanded(
-                      child: Text(localization.lookup(rule.operator)),
-                    ),
-                    Expanded(
-                      child: Text(rule.value),
-                    ),
+                    Expanded(child: Text(localization.lookup(rule.searchKey))),
+                    Expanded(child: Text(localization.lookup(rule.operator))),
+                    Expanded(child: Text(rule.value)),
                   ],
                 ),
               ),
@@ -122,7 +117,9 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
             entityType: EntityType.transaction,
             title: localization.transactions,
             subtitle: transactionStats.present(
-                localization.active, localization.archived),
+              localization.active,
+              localization.archived,
+            ),
             hideNew: true,
           ),
         ],

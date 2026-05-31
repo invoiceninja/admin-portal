@@ -28,10 +28,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskScreen extends StatelessWidget {
-  const TaskScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaskScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/task';
 
@@ -45,21 +42,31 @@ class TaskScreen extends StatelessWidget {
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context)!;
     final statuses = [
-      TaskStatusEntity().rebuild((b) => b
-        ..id = kTaskStatusLogged
-        ..name = localization.logged),
-      TaskStatusEntity().rebuild((b) => b
-        ..id = kTaskStatusRunning
-        ..name = localization.running),
+      TaskStatusEntity().rebuild(
+        (b) => b
+          ..id = kTaskStatusLogged
+          ..name = localization.logged,
+      ),
+      TaskStatusEntity().rebuild(
+        (b) => b
+          ..id = kTaskStatusRunning
+          ..name = localization.running,
+      ),
       if (!state.prefState.showKanban)
-        TaskStatusEntity().rebuild((b) => b
-          ..id = kTaskStatusInvoiced
-          ..name = localization.invoiced),
+        TaskStatusEntity().rebuild(
+          (b) => b
+            ..id = kTaskStatusInvoiced
+            ..name = localization.invoiced,
+        ),
       for (var statusId in memoizedSortedActiveTaskStatusIds(
-          state.taskStatusState.list, state.taskStatusState.map))
-        TaskStatusEntity().rebuild((b) => b
-          ..id = statusId
-          ..name = state.taskStatusState.map[statusId]!.name),
+        state.taskStatusState.list,
+        state.taskStatusState.map,
+      ))
+        TaskStatusEntity().rebuild(
+          (b) => b
+            ..id = statusId
+            ..name = state.taskStatusState.map[statusId]!.name,
+        ),
     ];
 
     return ListScaffold(
@@ -91,7 +98,8 @@ class TaskScreen extends StatelessWidget {
       appBarLeadingActions: [
         IconButton(
           icon: Icon(
-              state.prefState.showKanban ? Icons.view_list : MdiIcons.trello),
+            state.prefState.showKanban ? Icons.view_list : MdiIcons.trello,
+          ),
           onPressed: () {
             if (isDesktop(context) && !state.prefState.showKanban) {
               store.dispatch(ViewTask(taskId: ''));
@@ -100,72 +108,74 @@ class TaskScreen extends StatelessWidget {
               UpdateUserPreferences(showKanban: !state.prefState.showKanban),
             );
           },
-        )
-      ],
-      body: Column(children: [
-        // TODO once Firefox is supported
-        if (!state.prefState.hideTaskExtensionBanner &&
-            isDesktop(context) &&
-            (!kIsWeb || isChrome()))
-          ColoredBox(
-            color: Colors.orange,
-            child: Row(
-              children: [
-                SizedBox(width: 16),
-                Expanded(
-                  child: IconText(
-                    text: localization.taskExtensionBanner,
-                    icon: MdiIcons.googleChrome,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    launchUrl(Uri.parse(kTaskExtensionYouTubeUrl));
-                  },
-                  child: Text(
-                    localization.watchVideo,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    launchUrl(Uri.parse(kTaskExtensionUrl));
-                  },
-                  child: Text(
-                    localization.viewExtension,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                IconButton(
-                  tooltip: localization.dismiss,
-                  onPressed: () {
-                    store.dispatch(DismissTaskExtensionBanner());
-                  },
-                  icon: Icon(Icons.clear),
-                  color: Colors.white,
-                ),
-                SizedBox(width: 12),
-              ],
-            ),
-          ),
-        Expanded(
-          child: state.prefState.showKanban
-              ? KanbanViewBuilder()
-              : TaskListBuilder(),
         ),
-      ]),
+      ],
+      body: Column(
+        children: [
+          // TODO once Firefox is supported
+          if (!state.prefState.hideTaskExtensionBanner &&
+              isDesktop(context) &&
+              (!kIsWeb || isChrome()))
+            ColoredBox(
+              color: Colors.orange,
+              child: Row(
+                children: [
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: IconText(
+                      text: localization.taskExtensionBanner,
+                      icon: MdiIcons.googleChrome,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      launchUrl(Uri.parse(kTaskExtensionYouTubeUrl));
+                    },
+                    child: Text(
+                      localization.watchVideo,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      launchUrl(Uri.parse(kTaskExtensionUrl));
+                    },
+                    child: Text(
+                      localization.viewExtension,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: localization.dismiss,
+                    onPressed: () {
+                      store.dispatch(DismissTaskExtensionBanner());
+                    },
+                    icon: Icon(Icons.clear),
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 12),
+                ],
+              ),
+            ),
+          Expanded(
+            child: state.prefState.showKanban
+                ? KanbanViewBuilder()
+                : TaskListBuilder(),
+          ),
+        ],
+      ),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
         iconButtons: [
           IconButton(
-              icon: Icon(getEntityIcon(EntityType.settings)),
-              onPressed: () {
-                store.dispatch(ViewSettings(
-                  section: kSettingsTasks,
-                  company: state.company,
-                ));
-              })
+            icon: Icon(getEntityIcon(EntityType.settings)),
+            onPressed: () {
+              store.dispatch(
+                ViewSettings(section: kSettingsTasks, company: state.company),
+              );
+            },
+          ),
         ],
         hideListOptions: state.prefState.showKanban,
         tableColumns: TaskPresenter.getAllTableFields(userCompany),
@@ -174,14 +184,22 @@ class TaskScreen extends StatelessWidget {
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterTasksByStatus(status));
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.task1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.task2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.task3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.task4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.task1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.task2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.task3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.task4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterTasksByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -207,19 +225,19 @@ class TaskScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.task)
           ? FloatingActionButton(
               heroTag: 'task_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.task);
+                  context: context,
+                  entityType: EntityType.task,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization.newTask,
             )
           : null,

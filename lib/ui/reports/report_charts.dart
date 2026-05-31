@@ -30,23 +30,28 @@ class ReportCharts extends StatelessWidget {
         : charts.MaterialPalette.black;
 
     final numericAxis = charts.NumericAxisSpec(
-        renderSpec: charts.GridlineRendererSpec(
-            labelStyle: charts.TextStyleSpec(color: color),
-            lineStyle: charts.LineStyleSpec(color: color)));
+      renderSpec: charts.GridlineRendererSpec(
+        labelStyle: charts.TextStyleSpec(color: color),
+        lineStyle: charts.LineStyleSpec(color: color),
+      ),
+    );
 
     final ordinalAxis = charts.OrdinalAxisSpec(
-        renderSpec: charts.GridlineRendererSpec(
-      lineStyle:
-          charts.LineStyleSpec(color: charts.MaterialPalette.transparent),
-      labelStyle: charts.TextStyleSpec(fontSize: 10, color: color),
-      labelRotation: 45,
-    ));
+      renderSpec: charts.GridlineRendererSpec(
+        lineStyle: charts.LineStyleSpec(
+          color: charts.MaterialPalette.transparent,
+        ),
+        labelStyle: charts.TextStyleSpec(fontSize: 10, color: color),
+        labelRotation: 45,
+      ),
+    );
 
     final dateTimeAxis = charts.DateTimeAxisSpec(
-        renderSpec: charts.SmallTickRendererSpec(
-      labelStyle: charts.TextStyleSpec(color: color),
-      lineStyle: charts.LineStyleSpec(color: color),
-    ));
+      renderSpec: charts.SmallTickRendererSpec(
+        labelStyle: charts.TextStyleSpec(color: color),
+        lineStyle: charts.LineStyleSpec(color: color),
+      ),
+    );
 
     Widget? child;
     final columnType = getReportColumnType(reportState.group, context);
@@ -60,21 +65,21 @@ class ReportCharts extends StatelessWidget {
         child = charts.BarChart(
           [
             charts.Series<dynamic, String>(
-                id: 'chart',
-                colorFn: (dynamic _, __) =>
-                    charts.ColorUtil.fromDartColor(state.accentColor!),
-                domainFn: (dynamic item, _) =>
-                    columnType == ReportColumnType.age
-                        ? localization!.lookup(item['name'])
-                        : item['name']!,
-                measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.groupTotals.rows!.map((key) {
-                  return {
-                    'name': key,
-                    'value':
-                        viewModel.groupTotals.totals![key]![reportState.chart]!
-                  };
-                }).toList())
+              id: 'chart',
+              colorFn: (dynamic _, __) =>
+                  charts.ColorUtil.fromDartColor(state.accentColor!),
+              domainFn: (dynamic item, _) => columnType == ReportColumnType.age
+                  ? localization!.lookup(item['name'])
+                  : item['name']!,
+              measureFn: (dynamic item, _) => item['value'],
+              data: viewModel.groupTotals.rows!.map((key) {
+                return {
+                  'name': key,
+                  'value':
+                      viewModel.groupTotals.totals![key]![reportState.chart]!,
+                };
+              }).toList(),
+            ),
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
@@ -90,18 +95,19 @@ class ReportCharts extends StatelessWidget {
         child = charts.TimeSeriesChart(
           [
             charts.Series<dynamic, DateTime>(
-                id: 'chart',
-                colorFn: (dynamic _, __) =>
-                    charts.ColorUtil.fromDartColor(state.accentColor!),
-                domainFn: (dynamic item, _) => DateTime.parse(item['name']),
-                measureFn: (dynamic item, _) => item['value'],
-                data: keys.map((key) {
-                  return {
-                    'name': key,
-                    'value':
-                        viewModel.groupTotals.totals![key]![reportState.chart]
-                  };
-                }).toList())
+              id: 'chart',
+              colorFn: (dynamic _, __) =>
+                  charts.ColorUtil.fromDartColor(state.accentColor!),
+              domainFn: (dynamic item, _) => DateTime.parse(item['name']),
+              measureFn: (dynamic item, _) => item['value'],
+              data: keys.map((key) {
+                return {
+                  'name': key,
+                  'value':
+                      viewModel.groupTotals.totals![key]![reportState.chart],
+                };
+              }).toList(),
+            ),
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
@@ -118,12 +124,7 @@ class ReportCharts extends StatelessWidget {
     }
 
     return FormCard(
-      child: ClipRect(
-        child: SizedBox(
-          height: 200,
-          child: child,
-        ),
-      ),
+      child: ClipRect(child: SizedBox(height: 200, child: child)),
     );
   }
 }

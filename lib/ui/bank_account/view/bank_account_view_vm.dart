@@ -14,10 +14,8 @@ import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view.dart
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class BankAccountViewScreen extends StatelessWidget {
-  const BankAccountViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const BankAccountViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsBankAccountsView';
 
@@ -30,10 +28,7 @@ class BankAccountViewScreen extends StatelessWidget {
         return BankAccountViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return BankAccountView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return BankAccountView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -56,13 +51,15 @@ class BankAccountViewVM {
     final state = store.state;
     final bankAccount =
         state.bankAccountState.map[state.bankAccountUIState.selectedId] ??
-            BankAccountEntity(id: state.bankAccountUIState.selectedId);
+        BankAccountEntity(id: state.bankAccountUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(
-          LoadBankAccount(completer: completer, bankAccountId: bankAccount.id));
+        LoadBankAccount(completer: completer, bankAccountId: bankAccount.id),
+      );
       return completer.future;
     }
 

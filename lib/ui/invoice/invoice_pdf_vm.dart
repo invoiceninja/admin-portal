@@ -47,15 +47,8 @@ abstract class EntityPdfVM {
 }
 
 class InvoicePdfVM extends EntityPdfVM {
-  InvoicePdfVM({
-    AppState? state,
-    InvoiceEntity? invoice,
-    String? activityId,
-  }) : super(
-          state: state,
-          invoice: invoice,
-          activityId: activityId,
-        );
+  InvoicePdfVM({AppState? state, InvoiceEntity? invoice, String? activityId})
+    : super(state: state, invoice: invoice, activityId: activityId);
 
   factory InvoicePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;

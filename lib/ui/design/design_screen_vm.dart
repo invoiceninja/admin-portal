@@ -22,9 +22,7 @@ class DesignScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, DesignScreenVM>(
       converter: DesignScreenVM.fromStore,
       builder: (context, vm) {
-        return DesignScreen(
-          viewModel: vm,
-        );
+        return DesignScreen(viewModel: vm);
       },
     );
   }
@@ -51,12 +49,18 @@ class DesignScreenVM {
     return DesignScreenVM(
       designMap: state.designState.map,
       designList: memoizedFilteredDesignList(
-          state.designState.map, state.designState.list, state.designListState),
+        state.designState.map,
+        state.designState.list,
+        state.designListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.designListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> designs,
-              EntityAction action) =>
-          handleDesignAction(context, designs, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> designs,
+            EntityAction action,
+          ) => handleDesignAction(context, designs, action),
     );
   }
 }

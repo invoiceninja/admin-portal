@@ -71,9 +71,7 @@ class ReportsScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ReportsScreenVM>(
       converter: ReportsScreenVM.fromStore,
       builder: (context, vm) {
-        return ReportsScreen(
-          viewModel: vm,
-        );
+        return ReportsScreen(viewModel: vm);
       },
     );
   }
@@ -102,7 +100,7 @@ class ReportsScreenVM {
   final Function(BuildContext) onExportPressed;
   final Function(BuildContext) onSchedulePressed;
   final Function(BuildContext, BuiltMap<String?, String?>)
-      onReportFiltersChanged;
+  onReportFiltersChanged;
   final Function(String?, bool) onReportSorted;
   final Function(int, bool) onReportTotalsSorted;
   final Function({
@@ -113,7 +111,8 @@ class ReportsScreenVM {
     String? selectedGroup,
     String? subgroup,
     String? chart,
-  }) onSettingsChanged;
+  })
+  onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -412,168 +411,185 @@ class ReportsScreenVM {
     );
 
     return ReportsScreenVM(
-        state: state,
-        reportResult: reportResult,
-        reportState: state.uiState.reportsUIState,
-        groupTotals: groupTotals,
-        onReportSorted: (column, ascending) {
-          store.dispatch(UpdateReportSettings(
+      state: state,
+      reportResult: reportResult,
+      reportState: state.uiState.reportsUIState,
+      groupTotals: groupTotals,
+      onReportSorted: (column, ascending) {
+        store.dispatch(
+          UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
             sortColumn: column,
-          ));
-        },
-        onReportTotalsSorted: (index, ascending) {
-          store.dispatch(UpdateReportSettings(
+          ),
+        );
+      },
+      onReportTotalsSorted: (index, ascending) {
+        store.dispatch(
+          UpdateReportSettings(
             report: state.uiState.reportsUIState.report,
             sortTotalsIndex: index,
-          ));
-        },
-        onReportFiltersChanged: (context, filterMap) {
-          store.dispatch(UpdateReportSettings(
+          ),
+        );
+      },
+      onReportFiltersChanged: (context, filterMap) {
+        store.dispatch(
+          UpdateReportSettings(
             report: report,
             filters: filterMap,
             selectedGroup: '',
-          ));
-        },
-        onReportColumnsChanged: (context, columns) {
-          final settings = state.userCompany.settings.rebuild((b) => b
+          ),
+        );
+      },
+      onReportColumnsChanged: (context, columns) {
+        final settings = state.userCompany.settings.rebuild(
+          (b) => b
             ..reportSettings[state.uiState.reportsUIState.report] =
                 reportSettings!.rebuild(
-                    (b) => b..columns.replace(BuiltList<String>(columns))));
-          final userCompany =
-              state.userCompany.rebuild((b) => b..settings.replace(settings));
-          final user =
-              state.user.rebuild((b) => b..userCompany.replace(userCompany));
-          final completer = snackBarCompleter<Null>(
-              AppLocalization.of(context)!.savedSettings);
-          store.dispatch(
-            SaveUserSettingsRequest(
-              completer: completer,
-              user: user,
-            ),
-          );
-        },
-        onSettingsChanged: ({
-          String? report,
-          String? group,
-          String? selectedGroup,
-          String? subgroup,
-          String? chart,
-          String? customStartDate,
-          String? customEndDate,
-        }) {
-          Timer(Duration(milliseconds: 100), () {
-            final reportState = state.uiState.reportsUIState;
-            store.dispatch(UpdateReportSettings(
-              report: report ?? reportState.report,
-              group: group,
-              selectedGroup: selectedGroup,
-              subgroup: subgroup,
-              chart: chart,
-              customStartDate: customStartDate,
-              customEndDate: customEndDate,
-            ));
+                  (b) => b..columns.replace(BuiltList<String>(columns)),
+                ),
+        );
+        final userCompany = state.userCompany.rebuild(
+          (b) => b..settings.replace(settings),
+        );
+        final user = state.user.rebuild(
+          (b) => b..userCompany.replace(userCompany),
+        );
+        final completer = snackBarCompleter<Null>(
+          AppLocalization.of(context)!.savedSettings,
+        );
+        store.dispatch(
+          SaveUserSettingsRequest(completer: completer, user: user),
+        );
+      },
+      onSettingsChanged:
+          ({
+            String? report,
+            String? group,
+            String? selectedGroup,
+            String? subgroup,
+            String? chart,
+            String? customStartDate,
+            String? customEndDate,
+          }) {
+            Timer(Duration(milliseconds: 100), () {
+              final reportState = state.uiState.reportsUIState;
+              store.dispatch(
+                UpdateReportSettings(
+                  report: report ?? reportState.report,
+                  group: group,
+                  selectedGroup: selectedGroup,
+                  subgroup: subgroup,
+                  chart: chart,
+                  customStartDate: customStartDate,
+                  customEndDate: customEndDate,
+                ),
+              );
+            });
+          },
+      onSchedulePressed: (context) async {
+        createEntity(
+          entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_REPORT).rebuild(
+            (b) => b
+              ..parameters.reportName =
+                  kReportMap[report]?.name ?? ExportType.invoices.name,
+          ),
+        );
+      },
+      onExportPressed: (context) async {
+        final localization = AppLocalization.of(context);
+        final reportState = state.uiState.reportsUIState;
+        String csvData = '';
+
+        if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
+          reportResult!.columns.forEach((column) {
+            final value = localization!.lookup(column);
+            csvData += '"$value",';
           });
-        },
-        onSchedulePressed: (context) async {
-          createEntity(
-              entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_REPORT)
-                  .rebuild((b) => b
-                    ..parameters.reportName =
-                        kReportMap[report]?.name ?? ExportType.invoices.name));
-        },
-        onExportPressed: (context) async {
-          final localization = AppLocalization.of(context);
-          final reportState = state.uiState.reportsUIState;
-          String csvData = '';
-
-          if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
-            reportResult!.columns.forEach((column) {
-              final value = localization!.lookup(column);
+          csvData = csvData.substring(0, csvData.length - 1);
+          reportResult.data.forEach((row) {
+            csvData += '\n';
+            for (var i = 0; i < row.length; i++) {
+              final column = reportResult!.columns[i];
+              final value = row[i]
+                  .renderText(context, column)!
+                  .trim()
+                  .replaceAll('"', '""');
               csvData += '"$value",';
-            });
+            }
             csvData = csvData.substring(0, csvData.length - 1);
-            reportResult.data.forEach((row) {
-              csvData += '\n';
-              for (var i = 0; i < row.length; i++) {
-                final column = reportResult!.columns[i];
-                final value = row[i]
-                    .renderText(context, column)!
-                    .trim()
-                    .replaceAll('"', '""');
-                csvData += '"$value",';
-              }
-              csvData = csvData.substring(0, csvData.length - 1);
-            });
-          } else {
-            final columns = reportResult!.columns
-                .where((column) =>
+          });
+        } else {
+          final columns = reportResult!.columns
+              .where(
+                (column) =>
                     getReportColumnType(column, context) ==
-                    ReportColumnType.number)
-                .toList();
-            columns
-                .sort((String? str1, String? str2) => str1!.compareTo(str2!));
+                    ReportColumnType.number,
+              )
+              .toList();
+          columns.sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
-            csvData += localization!.lookup(reportState.group) +
-                ',' +
-                localization.count;
+          csvData +=
+              localization!.lookup(reportState.group) +
+              ',' +
+              localization.count;
+
+          columns.forEach((column) {
+            csvData += ',' + localization.lookup(column);
+          });
+
+          csvData += '\n';
+
+          groupTotals.rows!.forEach((group) {
+            final row = groupTotals.totals![group]!;
+            csvData +=
+                '"${group!.trim().replaceAll('"', '""')}",${row['count']!.toInt()}';
 
             columns.forEach((column) {
-              csvData += ',' + localization.lookup(column);
+              final value = row[column].toString().trim().replaceAll('"', '""');
+              csvData += ',"$value"';
             });
 
             csvData += '\n';
+          });
+        }
 
-            groupTotals.rows!.forEach((group) {
-              final row = groupTotals.totals![group]!;
-              csvData +=
-                  '"${group!.trim().replaceAll('"', '""')}",${row['count']!.toInt()}';
+        final date = convertDateTimeToSqlDate();
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        final filename =
+            '${state.uiState.reportsUIState.report}_report_${date}_$timestamp.csv';
 
-              columns.forEach((column) {
-                final value =
-                    row[column].toString().trim().replaceAll('"', '""');
-                csvData += ',"$value"';
-              });
+        if (!kReleaseMode) {
+          print('## DATA: $csvData');
+        }
 
-              csvData += '\n';
-            });
+        if (kIsWeb) {
+          WebUtils.downloadTextFile(filename, csvData);
+        } else {
+          final directory = await getAppDownloadDirectory();
+
+          if (directory == null) {
+            return;
           }
 
-          final date = convertDateTimeToSqlDate();
-          final timestamp = DateTime.now().millisecondsSinceEpoch;
-          final filename =
-              '${state.uiState.reportsUIState.report}_report_${date}_$timestamp.csv';
+          final filePath = directory + file.Platform.pathSeparator + filename;
+          final csvFile = file.File(filePath);
 
-          if (!kReleaseMode) {
-            print('## DATA: $csvData');
-          }
+          // Add UTF-8 BOM to prevent encoding issues
+          final bom = utf8.encode('\uFEFF');
+          await csvFile.writeAsBytes([...bom, ...utf8.encode(csvData)]);
 
-          if (kIsWeb) {
-            WebUtils.downloadTextFile(filename, csvData);
+          if (isDesktopOS()) {
+            showToast(
+              localization!.fileSavedInPath.replaceFirst(':path', directory),
+            );
           } else {
-            final directory = await getAppDownloadDirectory();
-
-            if (directory == null) {
-              return;
-            }
-
-            final filePath = directory + file.Platform.pathSeparator + filename;
-            final csvFile = file.File(filePath);
-
-            // Add UTF-8 BOM to prevent encoding issues
-            final bom = utf8.encode('\uFEFF');
-            await csvFile.writeAsBytes([...bom, ...utf8.encode(csvData)]);
-
-            if (isDesktopOS()) {
-              showToast(localization!.fileSavedInPath
-                  .replaceFirst(':path', directory));
-            } else {
-              await SharePlus.instance.share(ShareParams(
-                files: [XFile(filePath)],
-              ));
-            }
+            await SharePlus.instance.share(
+              ShareParams(files: [XFile(filePath)]),
+            );
           }
-        });
+        }
+      },
+    );
   }
 }
 
@@ -584,20 +600,21 @@ class GroupTotals {
   final List<String?>? rows;
 }
 
-var memoizeedGroupTotals = memo5((
-  ReportResult? reportResult,
-  ReportsUIState reportUIState,
-  ReportSettingsEntity? reportSettings,
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-) =>
-    calculateReportTotals(
-      reportResult: reportResult!,
-      reportState: reportUIState,
-      reportSettings: reportSettings,
-      currencyMap: currencyMap,
-      company: company,
-    ));
+var memoizeedGroupTotals = memo5(
+  (
+    ReportResult? reportResult,
+    ReportsUIState reportUIState,
+    ReportSettingsEntity? reportSettings,
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+  ) => calculateReportTotals(
+    reportResult: reportResult!,
+    reportState: reportUIState,
+    reportSettings: reportSettings,
+    currencyMap: currencyMap,
+    company: company,
+  ),
+);
 
 GroupTotals calculateReportTotals({
   required ReportResult reportResult,
@@ -697,8 +714,11 @@ GroupTotals calculateReportTotals({
         }
       } else if (reportState.subgroup == kReportGroupWeek) {
         final date = DateTime.parse(group);
-        final dateWeek =
-            DateTime(date.year, date.month, date.day - date.weekday % 7);
+        final dateWeek = DateTime(
+          date.year,
+          date.month,
+          date.day - date.weekday % 7,
+        );
         group = convertDateTimeToSqlDate(dateWeek);
       }
     }
@@ -724,7 +744,8 @@ GroupTotals calculateReportTotals({
 
         if (cell is ReportNumberValue && cell.currencyId != null) {
           totals[group]!['${column}_currency_id'] = parseDouble(
-              shouldConverCurrencies ? company!.currencyId : cell.currencyId);
+            shouldConverCurrencies ? company!.currencyId : cell.currencyId,
+          );
         }
 
         if (cell is ReportNumberValue &&
@@ -733,9 +754,11 @@ GroupTotals calculateReportTotals({
             shouldConverCurrencies) {
           double cellValue = cell.value!;
           final toCurrency = currencyMap![company.currencyId]!;
-          final rate = getExchangeRate(currencyMap,
-              fromCurrencyId: cell.currencyId,
-              toCurrencyId: company.currencyId);
+          final rate = getExchangeRate(
+            currencyMap,
+            fromCurrencyId: cell.currencyId,
+            toCurrencyId: company.currencyId,
+          );
           cellValue = round(cellValue * rate, toCurrency.precision);
           totals[group]![column] = totals[group]![column]! + cellValue;
         } else {

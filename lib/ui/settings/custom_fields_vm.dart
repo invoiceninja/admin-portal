@@ -50,39 +50,55 @@ class CustomFieldsVM {
     final state = store.state;
 
     return CustomFieldsVM(
-        state: state,
-        company: state.uiState.settingsUIState.company,
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onSavePressed: (context) {
-          if (!state.isProPlan && !state.isTrial) {
-            return;
-          }
+      state: state,
+      company: state.uiState.settingsUIState.company,
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onSavePressed: (context) {
+        if (!state.isProPlan && !state.isTrial) {
+          return;
+        }
 
-          Debouncer.runOnComplete(() {
-            final settingsUIState = store.state.uiState.settingsUIState;
-            switch (settingsUIState.entityType) {
-              case EntityType.company:
-                final completer = snackBarCompleter<Null>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveCompanyRequest(
-                    completer: completer, company: settingsUIState.company));
-                break;
-              case EntityType.group:
-                final completer = snackBarCompleter<GroupEntity>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveGroupRequest(
-                    completer: completer, group: settingsUIState.group));
-                break;
-              case EntityType.client:
-                final completer = snackBarCompleter<ClientEntity>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveClientRequest(
-                    completer: completer, client: settingsUIState.client));
-                break;
-            }
-          });
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          switch (settingsUIState.entityType) {
+            case EntityType.company:
+              final completer = snackBarCompleter<Null>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
+              break;
+            case EntityType.group:
+              final completer = snackBarCompleter<GroupEntity>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
+              break;
+            case EntityType.client:
+              final completer = snackBarCompleter<ClientEntity>(
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
+              break;
+          }
         });
+      },
+    );
   }
 
   final AppState state;

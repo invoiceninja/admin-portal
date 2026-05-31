@@ -23,10 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'task_status_screen_vm.dart';
 
 class TaskStatusScreen extends StatelessWidget {
-  const TaskStatusScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaskStatusScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTaskStatuses';
 
@@ -45,8 +42,9 @@ class TaskStatusScreen extends StatelessWidget {
       onHamburgerLongPress: () => store.dispatch(StartTaskStatusMultiselect()),
       onCancelSettingsSection: kSettingsTasks,
       appBarTitle: ListFilter(
-        key:
-            ValueKey('__filter_${state.taskStatusListState.filterClearedAt}__'),
+        key: ValueKey(
+          '__filter_${state.taskStatusListState.filterClearedAt}__',
+        ),
         entityType: EntityType.taskStatus,
         entityIds: viewModel.taskStatusList,
         filter: state.taskStatusListState.filter,
@@ -71,7 +69,8 @@ class TaskStatusScreen extends StatelessWidget {
             onPressed: () async {
               final taskStatusIds = listUIState.selectedIds!
                   .map<TaskStatusEntity>(
-                      (taskStatusId) => viewModel.taskStatusMap[taskStatusId]!)
+                    (taskStatusId) => viewModel.taskStatusMap[taskStatusId]!,
+                  )
                   .toList();
 
               await showEntityActionsDialog(
@@ -79,7 +78,8 @@ class TaskStatusScreen extends StatelessWidget {
                 multiselect: true,
                 completer: Completer<Null>()
                   ..future.then<Null>(
-                      (_) => store.dispatch(ClearTaskStatusMultiselect())),
+                    (_) => store.dispatch(ClearTaskStatusMultiselect()),
+                  ),
               );
             },
             label: localization!.actions,
@@ -89,8 +89,9 @@ class TaskStatusScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taskStatus,
         tableColumns: TaskStatusPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            TaskStatusPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: TaskStatusPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortTaskStatuses(value));
         },
@@ -114,19 +115,19 @@ class TaskStatusScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTaskStatusesByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.taskStatus)
           ? FloatingActionButton(
               heroTag: 'task_status_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.taskStatus);
+                  context: context,
+                  entityType: EntityType.taskStatus,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newTaskStatus,
             )
           : null,

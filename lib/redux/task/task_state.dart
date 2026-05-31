@@ -48,9 +48,11 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<TaskState> get serializer => _$taskStateSerializer;
@@ -61,8 +63,10 @@ abstract class TaskUIState extends Object
     implements Built<TaskUIState, TaskUIStateBuilder> {
   factory TaskUIState(PrefStateSortField? sortField) {
     return _$TaskUIState._(
-      listUIState: ListUIState(sortField?.field ?? TaskFields.number,
-          sortAscending: sortField?.ascending ?? false),
+      listUIState: ListUIState(
+        sortField?.field ?? TaskFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: TaskEntity(),
       selectedId: '',
       tabIndex: 0,

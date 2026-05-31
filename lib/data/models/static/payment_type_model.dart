@@ -10,9 +10,9 @@ part 'payment_type_model.g.dart';
 
 abstract class PaymentTypeListResponse
     implements Built<PaymentTypeListResponse, PaymentTypeListResponseBuilder> {
-  factory PaymentTypeListResponse(
-          [void updates(PaymentTypeListResponseBuilder b)]) =
-      _$PaymentTypeListResponse;
+  factory PaymentTypeListResponse([
+    void updates(PaymentTypeListResponseBuilder b),
+  ]) = _$PaymentTypeListResponse;
   PaymentTypeListResponse._();
 
   @override
@@ -27,9 +27,9 @@ abstract class PaymentTypeListResponse
 
 abstract class PaymentTypeItemResponse
     implements Built<PaymentTypeItemResponse, PaymentTypeItemResponseBuilder> {
-  factory PaymentTypeItemResponse(
-          [void updates(PaymentTypeItemResponseBuilder b)]) =
-      _$PaymentTypeItemResponse;
+  factory PaymentTypeItemResponse([
+    void updates(PaymentTypeItemResponseBuilder b),
+  ]) = _$PaymentTypeItemResponse;
   PaymentTypeItemResponse._();
 
   @override
@@ -51,10 +51,7 @@ abstract class PaymentTypeEntity extends Object
     with SelectableEntity
     implements Built<PaymentTypeEntity, PaymentTypeEntityBuilder> {
   factory PaymentTypeEntity() {
-    return _$PaymentTypeEntity._(
-      id: '',
-      name: '',
-    );
+    return _$PaymentTypeEntity._(id: '', name: '');
   }
   PaymentTypeEntity._();
 

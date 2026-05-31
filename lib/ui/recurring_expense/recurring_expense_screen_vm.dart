@@ -22,9 +22,7 @@ class RecurringExpenseScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, RecurringExpenseScreenVM>(
       converter: RecurringExpenseScreenVM.fromStore,
       builder: (context, vm) {
-        return RecurringExpenseScreen(
-          viewModel: vm,
-        );
+        return RecurringExpenseScreen(viewModel: vm);
       },
     );
   }
@@ -51,20 +49,24 @@ class RecurringExpenseScreenVM {
     return RecurringExpenseScreenVM(
       recurringExpenseMap: state.recurringExpenseState.map,
       recurringExpenseList: memoizedFilteredRecurringExpenseList(
-          state.getUISelection(EntityType.recurringExpense),
-          state.recurringExpenseState.map,
-          state.clientState.map,
-          state.vendorState.map,
-          state.userState.map,
-          state.recurringExpenseListState,
-          state.invoiceState.map,
-          state.expenseCategoryState.map,
-          state.staticState),
+        state.getUISelection(EntityType.recurringExpense),
+        state.recurringExpenseState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.userState.map,
+        state.recurringExpenseListState,
+        state.invoiceState.map,
+        state.expenseCategoryState.map,
+        state.staticState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.recurringExpenseListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> recurringExpenses,
-              EntityAction action) =>
-          handleRecurringExpenseAction(context, recurringExpenses, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringExpenses,
+            EntityAction action,
+          ) => handleRecurringExpenseAction(context, recurringExpenses, action),
     );
   }
 }

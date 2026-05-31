@@ -22,31 +22,26 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewProjectList implements PersistUI {
-  ViewProjectList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewProjectList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewProject implements PersistUI, PersistPrefs {
-  ViewProject({
-    required this.projectId,
-    this.force = false,
-  });
+  ViewProject({required this.projectId, this.force = false});
 
   final String? projectId;
   final bool force;
 }
 
 class EditProject implements PersistUI, PersistPrefs {
-  EditProject(
-      {required this.project,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditProject({
+    required this.project,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final ProjectEntity project;
   final Completer? completer;
@@ -252,8 +247,11 @@ class FilterProjectsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
-    EntityAction? action) async {
+void handleProjectAction(
+  BuildContext? context,
+  List<BaseEntity> projects,
+  EntityAction? action,
+) async {
   if (projects.isEmpty) {
     return;
   }
@@ -271,20 +269,29 @@ void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
       break;
     case EntityAction.newTask:
       createEntity(
-          entity: TaskEntity(state: state).rebuild((b) => b
+        entity: TaskEntity(state: state).rebuild(
+          (b) => b
             ..projectId = project.id
-            ..clientId = project.clientId));
+            ..clientId = project.clientId,
+        ),
+      );
       break;
     case EntityAction.newInvoice:
       createEntity(
-          entity: InvoiceEntity(state: state, client: client)
-              .rebuild((b) => b..projectId = project.id));
+        entity: InvoiceEntity(
+          state: state,
+          client: client,
+        ).rebuild((b) => b..projectId = project.id),
+      );
       break;
     case EntityAction.newQuote:
       createEntity(
-          entity: InvoiceEntity(
-                  state: state, client: client, entityType: EntityType.quote)
-              .rebuild((b) => b..projectId = project.id));
+        entity: InvoiceEntity(
+          state: state,
+          client: client,
+          entityType: EntityType.quote,
+        ).rebuild((b) => b..projectId = project.id),
+      );
       break;
     case EntityAction.invoiceProject:
       String lastClientId = '';
@@ -305,18 +312,28 @@ void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
 
       final items = <InvoiceItemEntity>[];
       projects.forEach((project) {
-        items.addAll(convertProjectToInvoiceItem(
-            project: project as ProjectEntity?, context: context));
+        items.addAll(
+          convertProjectToInvoiceItem(
+            project: project as ProjectEntity?,
+            context: context,
+          ),
+        );
       });
       createEntity(
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
+        entity: InvoiceEntity(state: state, client: client).rebuild(
+          (b) => b
             ..lineItems.addAll(items)
-            ..projectId = project.id));
+            ..projectId = project.id,
+        ),
+      );
       break;
     case EntityAction.newExpense:
       createEntity(
-          entity: ExpenseEntity(state: state, client: client)
-              .rebuild((b) => b..projectId = project.id));
+        entity: ExpenseEntity(
+          state: state,
+          client: client,
+        ).rebuild((b) => b..projectId = project.id),
+      );
       break;
     case EntityAction.clone:
       createEntity(entity: project.clone);
@@ -324,29 +341,32 @@ void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
     case EntityAction.restore:
       final message = projectIds.length > 1
           ? localization!.restoredProjects
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', projectIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', projectIds.length.toString())
           : localization!.restoredProject;
       store.dispatch(
-          RestoreProjectRequest(snackBarCompleter<Null>(message), projectIds));
+        RestoreProjectRequest(snackBarCompleter<Null>(message), projectIds),
+      );
       break;
     case EntityAction.archive:
       final message = projectIds.length > 1
           ? localization!.archivedProjects
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', projectIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', projectIds.length.toString())
           : localization!.archivedProject;
       store.dispatch(
-          ArchiveProjectRequest(snackBarCompleter<Null>(message), projectIds));
+        ArchiveProjectRequest(snackBarCompleter<Null>(message), projectIds),
+      );
       break;
     case EntityAction.delete:
       final message = projectIds.length > 1
           ? localization!.deletedProjects
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', projectIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', projectIds.length.toString())
           : localization!.deletedProject;
       store.dispatch(
-          DeleteProjectRequest(snackBarCompleter<Null>(message), projectIds));
+        DeleteProjectRequest(snackBarCompleter<Null>(message), projectIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.projectListState.isInMultiselect()) {
@@ -366,9 +386,7 @@ void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [project],
-      );
+      showEntityActionsDialog(entities: [project]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -383,9 +401,7 @@ void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }

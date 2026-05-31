@@ -43,14 +43,15 @@ class RecurringInvoiceListItem extends StatelessWidget {
     final localization = AppLocalization.of(context)!;
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
 
-    final statusLabel = localization
-        .lookup(kRecurringInvoiceStatuses[invoice.calculatedStatusId]);
-    final statusColor =
-        RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
-            .colors[invoice.calculatedStatusId];
+    final statusLabel = localization.lookup(
+      kRecurringInvoiceStatuses[invoice.calculatedStatusId],
+    );
+    final statusColor = RecurringInvoiceStatusColors(
+      state.prefState.colorThemeModel,
+    ).colors[invoice.calculatedStatusId];
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
@@ -63,22 +64,21 @@ class RecurringInvoiceListItem extends StatelessWidget {
     subtitle += localization.lookup(kFrequencies[invoice.frequencyId]);
 
     return DismissibleEntity(
-        isSelected: isDesktop(context) &&
-            invoice.id ==
-                (uiState.isEditing
-                    ? invoiceUIState.editing!.id
-                    : invoiceUIState.selectedId),
-        showMultiselect: showCheckbox,
-        userCompany: state.userCompany,
-        entity: invoice,
-        child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
+      isSelected:
+          isDesktop(context) &&
+          invoice.id ==
+              (uiState.isEditing
+                  ? invoiceUIState.editing!.id
+                  : invoiceUIState.selectedId),
+      showMultiselect: showCheckbox,
+      userCompany: state.userCompany,
+      entity: invoice,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: () => selectEntity(
-                    entity: invoice,
-                    forceView: !showCheckbox,
-                  ),
+                  onTap: () =>
+                      selectEntity(entity: invoice, forceView: !showCheckbox),
                   onLongPress: () =>
                       selectEntity(entity: invoice, longPress: true),
                   child: Padding(
@@ -91,31 +91,32 @@ class RecurringInvoiceListItem extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                            padding: const EdgeInsets.only(right: 16),
-                            child: isInMultiselect
-                                ? IgnorePointer(
-                                    ignoring: listUIState.isInMultiselect(),
-                                    child: Checkbox(
-                                      value: isChecked,
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      onChanged: (value) => null,
-                                      activeColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                    ),
-                                  )
-                                : ActionMenuButton(
-                                    entityActions: invoice.getActions(
-                                      userCompany: state.userCompany,
-                                      client: client,
-                                      includeEdit: true,
-                                    ),
-                                    isSaving: false,
-                                    entity: invoice,
-                                    onSelected: (context, action) =>
-                                        handleEntityAction(invoice, action),
-                                  )),
+                          padding: const EdgeInsets.only(right: 16),
+                          child: isInMultiselect
+                              ? IgnorePointer(
+                                  ignoring: listUIState.isInMultiselect(),
+                                  child: Checkbox(
+                                    value: isChecked,
+                                    materialTapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    onChanged: (value) => null,
+                                    activeColor: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
+                                  ),
+                                )
+                              : ActionMenuButton(
+                                  entityActions: invoice.getActions(
+                                    userCompany: state.userCompany,
+                                    client: client,
+                                    includeEdit: true,
+                                  ),
+                                  isSaving: false,
+                                  entity: invoice,
+                                  onSelected: (context, action) =>
+                                      handleEntityAction(invoice, action),
+                                ),
+                        ),
                         SizedBox(
                           width: kListNumberWidth,
                           child: Column(
@@ -128,7 +129,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                 style: textStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              if (!invoice.isActive) EntityStateLabel(invoice)
+                              if (!invoice.isActive) EntityStateLabel(invoice),
                             ],
                           ),
                         ),
@@ -138,21 +139,21 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                  client.displayName +
-                                      (invoice.documents.isNotEmpty
-                                          ? '  📎'
-                                          : ''),
-                                  style: textStyle),
+                                client.displayName +
+                                    (invoice.documents.isNotEmpty
+                                        ? '  📎'
+                                        : ''),
+                                style: textStyle,
+                              ),
                               Text(
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withValues(alpha: kLighterOpacity),
+                                      color: textColor!.withValues(
+                                        alpha: kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],
@@ -160,13 +161,16 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          formatNumber(invoice.amount, context,
-                              clientId: client.id)!,
+                          formatNumber(
+                            invoice.amount,
+                            context,
+                            clientId: client.id,
+                          )!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
                         SizedBox(width: 25),
-                        EntityStatusChip(entity: invoice)
+                        EntityStatusChip(entity: invoice),
                       ],
                     ),
                   ),
@@ -184,8 +188,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
                             onChanged: (value) => null,
-                            activeColor:
-                                Theme.of(context).colorScheme.secondary,
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
                           ),
                         )
                       : null,
@@ -202,9 +207,13 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 4),
                         Text(
-                            formatNumber(invoice.amount, context,
-                                clientId: invoice.clientId)!,
-                            style: Theme.of(context).textTheme.titleMedium),
+                          formatNumber(
+                            invoice.amount,
+                            context,
+                            clientId: invoice.clientId,
+                          )!,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ],
                     ),
                   ),
@@ -223,7 +232,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                                 ? ' • '
                                                 : '') +
                                             formatDate(
-                                                invoice.nextSendDate, context) +
+                                              invoice.nextSendDate,
+                                              context,
+                                            ) +
                                             (invoice.documents.isNotEmpty
                                                 ? '  📎'
                                                 : ''))
@@ -235,17 +246,20 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                           ),
-                          Text(statusLabel,
-                              style: TextStyle(
-                                color:
-                                    !invoice.isSent ? textColor : statusColor,
-                              )),
+                          Text(
+                            statusLabel,
+                            style: TextStyle(
+                              color: !invoice.isSent ? textColor : statusColor,
+                            ),
+                          ),
                         ],
                       ),
                       EntityStateLabel(invoice),
                     ],
                   ),
                 );
-        }));
+        },
+      ),
+    );
   }
 }

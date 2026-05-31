@@ -243,9 +243,9 @@ abstract class WebhookEntity extends Object
 
     switch (sortField) {
       case WebhookFields.targetUrl:
-        response = webhookA!.targetUrl
-            .toLowerCase()
-            .compareTo(webhookB!.targetUrl.toLowerCase());
+        response = webhookA!.targetUrl.toLowerCase().compareTo(
+          webhookB!.targetUrl.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by webhook.$sortField is not implemented');
@@ -257,31 +257,22 @@ abstract class WebhookEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        targetUrl,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [targetUrl], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [
-        targetUrl,
-      ],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [targetUrl], needle: filter);
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {

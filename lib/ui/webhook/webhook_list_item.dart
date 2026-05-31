@@ -51,7 +51,8 @@ class WebhookListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: webhook,
-      isSelected: webhook.id ==
+      isSelected:
+          webhook.id ==
           (uiState.isEditing
               ? webhookUIState.editing!.id
               : webhookUIState.selectedId),
@@ -81,8 +82,10 @@ class WebhookListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(webhook.listDisplayAmount, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                formatNumber(webhook.listDisplayAmount, context)!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
         ),
@@ -91,11 +94,7 @@ class WebhookListItem extends StatelessWidget {
           children: <Widget>[
             Text(localization.lookup(webhook.eventType)),
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(webhook),
           ],

@@ -71,7 +71,8 @@ class CreditPresenter extends EntityPresenter {
         return EntityStatusChip(entity: credit, showState: true);
       case CreditFields.number:
         return Text(
-            credit.number.isEmpty ? localization!.pending : credit.number);
+          credit.number.isEmpty ? localization!.pending : credit.number,
+        );
       case CreditFields.client:
         return LinkTextRelatedEntity(entity: client, relation: credit);
       case CreditFields.date:
@@ -84,14 +85,21 @@ class CreditPresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(
-              formatNumber(credit.amount, context, clientId: credit.clientId)!),
+            formatNumber(credit.amount, context, clientId: credit.clientId)!,
+          ),
         );
       case CreditFields.remaining:
       case CreditFields.balance:
         return Align(
-            alignment: Alignment.centerRight,
-            child: Text(formatNumber(credit.balanceOrAmount, context,
-                clientId: credit.clientId)!));
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(
+              credit.balanceOrAmount,
+              context,
+              clientId: credit.clientId,
+            )!,
+          ),
+        );
       case CreditFields.customValue1:
         return Text(presentCustomField(context, credit.customValue1)!);
       case CreditFields.customValue2:
@@ -105,22 +113,36 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.privateNotes:
         return TableTooltip(message: credit.privateNotes);
       case CreditFields.discount:
-        return Text(credit.isAmountDiscount
-            ? formatNumber(credit.discount, context,
-                formatNumberType: FormatNumberType.money,
-                clientId: credit.clientId)!
-            : formatNumber(credit.discount, context,
-                formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          credit.isAmountDiscount
+              ? formatNumber(
+                  credit.discount,
+                  context,
+                  formatNumberType: FormatNumberType.money,
+                  clientId: credit.clientId,
+                )!
+              : formatNumber(
+                  credit.discount,
+                  context,
+                  formatNumberType: FormatNumberType.percent,
+                )!,
+        );
       case CreditFields.poNumber:
         return Text(credit.poNumber);
       case CreditFields.documents:
         return Text('${credit.documents.length}');
       case CreditFields.taxAmount:
-        return Text(formatNumber(credit.taxAmount, context,
-            clientId: credit.clientId)!);
+        return Text(
+          formatNumber(credit.taxAmount, context, clientId: credit.clientId)!,
+        );
       case CreditFields.exchangeRate:
-        return Text(formatNumber(credit.exchangeRate, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            credit.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case CreditFields.isViewed:
         return Text(credit.isViewed ? localization!.yes : localization!.no);
       case CreditFields.project:
@@ -140,7 +162,9 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.contactName:
       case CreditFields.contactEmail:
         final contact = creditContactSelector(
-            credit, state.clientState.get(credit.clientId));
+          credit,
+          state.clientState.get(credit.clientId),
+        );
         if (contact == null) {
           return SizedBox();
         }

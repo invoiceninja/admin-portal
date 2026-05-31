@@ -98,7 +98,7 @@ class _ReviewAppState extends State<ReviewApp> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

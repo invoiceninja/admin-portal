@@ -58,17 +58,17 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          invoiceItemIndex: invoiceItemIndex,
-          origInvoice: origInvoice,
-          onSavePressed: onSavePressed,
-          onItemsAdded: onItemsAdded,
-          isSaving: isSaving,
-          onCancelPressed: onCancelPressed,
-          onUploadDocuments: onUploadDocuments,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         invoiceItemIndex: invoiceItemIndex,
+         origInvoice: origInvoice,
+         onSavePressed: onSavePressed,
+         onItemsAdded: onItemsAdded,
+         isSaving: isSaving,
+         onCancelPressed: onCancelPressed,
+         onUploadDocuments: onUploadDocuments,
+       );
 
   factory RecurringInvoiceEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -89,10 +89,11 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
 
           if (recurringInvoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(localization!.pleaseSelectAClient);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization!.pleaseSelectAClient);
+              },
+            );
             return null;
           }
           if (recurringInvoice.isOld &&
@@ -103,57 +104,70 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           } else {
             final Completer<InvoiceEntity> completer =
                 Completer<InvoiceEntity>();
-            store.dispatch(SaveRecurringInvoiceRequest(
+            store.dispatch(
+              SaveRecurringInvoiceRequest(
                 completer: completer,
                 recurringInvoice: recurringInvoice,
-                action: action));
-            return completer.future.then((savedRecurringInvoice) {
-              showToast(recurringInvoice.isNew
-                  ? localization!.createdRecurringInvoice
-                  : localization!.updatedRecurringInvoice);
+                action: action,
+              ),
+            );
+            return completer.future
+                .then((savedRecurringInvoice) {
+                  showToast(
+                    recurringInvoice.isNew
+                        ? localization!.createdRecurringInvoice
+                        : localization!.updatedRecurringInvoice,
+                  );
 
-              if (state.prefState.isMobile) {
-                store.dispatch(
-                    UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
-                if (recurringInvoice.isNew) {
-                  navigator!
-                      .pushReplacementNamed(RecurringInvoiceViewScreen.route);
-                } else {
-                  navigator!.pop(savedRecurringInvoice);
-                }
-              } else {
-                if (!state.prefState.isPreviewVisible) {
-                  store.dispatch(TogglePreviewSidebar());
-                }
+                  if (state.prefState.isMobile) {
+                    store.dispatch(
+                      UpdateCurrentRoute(RecurringInvoiceViewScreen.route),
+                    );
+                    if (recurringInvoice.isNew) {
+                      navigator!.pushReplacementNamed(
+                        RecurringInvoiceViewScreen.route,
+                      );
+                    } else {
+                      navigator!.pop(savedRecurringInvoice);
+                    }
+                  } else {
+                    if (!state.prefState.isPreviewVisible) {
+                      store.dispatch(TogglePreviewSidebar());
+                    }
 
-                viewEntity(entity: savedRecurringInvoice);
+                    viewEntity(entity: savedRecurringInvoice);
 
-                if (state.prefState.isEditorFullScreen(EntityType.invoice) &&
-                    state.prefState.editAfterSaving) {
-                  editEntity(entity: savedRecurringInvoice);
-                }
-              }
+                    if (state.prefState.isEditorFullScreen(
+                          EntityType.invoice,
+                        ) &&
+                        state.prefState.editAfterSaving) {
+                      editEntity(entity: savedRecurringInvoice);
+                    }
+                  }
 
-              if (action != null && action.isClientSide) {
-                handleEntityAction(savedRecurringInvoice, action);
-              } else if (action != null && action.requiresSecondRequest) {
-                handleEntityAction(savedRecurringInvoice, action);
-                viewEntity(entity: savedRecurringInvoice, force: true);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+                  if (action != null && action.isClientSide) {
+                    handleEntityAction(savedRecurringInvoice, action);
+                  } else if (action != null && action.requiresSecondRequest) {
+                    handleEntityAction(savedRecurringInvoice, action);
+                    viewEntity(entity: savedRecurringInvoice, force: true);
+                  }
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
           }
         });
       },
       onItemsAdded: (items, clientId, projectId) {
         if (items.length == 1) {
           store.dispatch(
-              EditRecurringInvoiceItem(recurringInvoice.lineItems.length));
+            EditRecurringInvoiceItem(recurringInvoice.lineItems.length),
+          );
         }
         store.dispatch(AddRecurringInvoiceItems(items));
       },
@@ -165,25 +179,38 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveRecurringInvoiceDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFile,
-            invoice: recurringInvoice,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveRecurringInvoiceDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                invoice: recurringInvoice,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 }

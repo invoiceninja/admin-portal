@@ -20,29 +20,25 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewWebhookList implements PersistUI {
-  ViewWebhookList({
-    this.force = false,
-  });
+  ViewWebhookList({this.force = false});
 
   final bool force;
 }
 
 class ViewWebhook implements PersistUI, PersistPrefs {
-  ViewWebhook({
-    required this.webhookId,
-    this.force = false,
-  });
+  ViewWebhook({required this.webhookId, this.force = false});
 
   final String? webhookId;
   final bool force;
 }
 
 class EditWebhook implements PersistUI, PersistPrefs {
-  EditWebhook(
-      {required this.webhook,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditWebhook({
+    required this.webhook,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final WebhookEntity webhook;
   final Completer? completer;
@@ -249,7 +245,10 @@ class FilterWebhooksByCustom4 implements PersistUI {
 }
 
 void handleWebhookAction(
-    BuildContext? context, List<BaseEntity> webhooks, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> webhooks,
+  EntityAction? action,
+) {
   if (webhooks.isEmpty) {
     return;
   }
@@ -270,29 +269,32 @@ void handleWebhookAction(
     case EntityAction.restore:
       final message = webhookIds.length > 1
           ? localization!.restoredWebhooks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', webhookIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', webhookIds.length.toString())
           : localization!.restoredWebhook;
       store.dispatch(
-          RestoreWebhooksRequest(snackBarCompleter<Null>(message), webhookIds));
+        RestoreWebhooksRequest(snackBarCompleter<Null>(message), webhookIds),
+      );
       break;
     case EntityAction.archive:
       final message = webhookIds.length > 1
           ? localization!.archivedWebhooks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', webhookIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', webhookIds.length.toString())
           : localization!.archivedWebhook;
       store.dispatch(
-          ArchiveWebhooksRequest(snackBarCompleter<Null>(message), webhookIds));
+        ArchiveWebhooksRequest(snackBarCompleter<Null>(message), webhookIds),
+      );
       break;
     case EntityAction.delete:
       final message = webhookIds.length > 1
           ? localization!.deletedWebhooks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', webhookIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', webhookIds.length.toString())
           : localization!.deletedWebhook;
       store.dispatch(
-          DeleteWebhooksRequest(snackBarCompleter<Null>(message), webhookIds));
+        DeleteWebhooksRequest(snackBarCompleter<Null>(message), webhookIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.webhookListState.isInMultiselect()) {
@@ -312,9 +314,7 @@ void handleWebhookAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [webhook],
-      );
+      showEntityActionsDialog(entities: [webhook]);
       break;
   }
 }

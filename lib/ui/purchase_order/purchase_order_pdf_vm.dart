@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class PurchaseOrderPdfScreen extends StatelessWidget {
   const PurchaseOrderPdfScreen({Key? key, this.showAppBar = true})
-      : super(key: key);
+    : super(key: key);
 
   final bool showAppBar;
 
@@ -41,11 +41,7 @@ class PurchaseOrderPdfVM extends EntityPdfVM {
     AppState? state,
     InvoiceEntity? invoice,
     String? activityId,
-  }) : super(
-          state: state,
-          invoice: invoice,
-          activityId: activityId,
-        );
+  }) : super(state: state, invoice: invoice, activityId: activityId);
 
   factory PurchaseOrderPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;

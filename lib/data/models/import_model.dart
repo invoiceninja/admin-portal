@@ -33,8 +33,10 @@ abstract class PreImportResponse
 
 abstract class PreImportResponseEntityDetails
     implements
-        Built<PreImportResponseEntityDetails,
-            PreImportResponseEntityDetailsBuilder> {
+        Built<
+          PreImportResponseEntityDetails,
+          PreImportResponseEntityDetailsBuilder
+        > {
   factory PreImportResponseEntityDetails() {
     return _$PreImportResponseEntityDetails._(
       available: BuiltList<String>(),
@@ -139,9 +141,7 @@ class ImportType extends EnumClass {
   Map<String, String> get uploadParts {
     switch (this) {
       case ImportType.json:
-        return {
-          'json': 'json',
-        };
+        return {'json': 'json'};
       case ImportType.csv:
         return {
           EntityType.client.apiValue: 'clients',
@@ -172,9 +172,7 @@ class ImportType extends EnumClass {
           EntityType.invoice.toString(): 'invoices',
         };
       case ImportType.invoice2go:
-        return {
-          EntityType.invoice.toString(): 'invoices',
-        };
+        return {EntityType.invoice.toString(): 'invoices'};
       default:
         return {};
     }
@@ -214,20 +212,20 @@ class ExportType extends EnumClass {
   static const ExportType user_sales = _$user_sales;
 
   bool get hasDocuments => [
-        clients,
-        credits,
-        expenses,
-        invoices,
-        invoice_items,
-        purchase_orders,
-        purchase_order_items,
-        quotes,
-        quote_items,
-        payments,
-        products,
-        tasks,
-        vendors,
-      ].contains(this);
+    clients,
+    credits,
+    expenses,
+    invoices,
+    invoice_items,
+    purchase_orders,
+    purchase_order_items,
+    quotes,
+    quote_items,
+    payments,
+    products,
+    tasks,
+    vendors,
+  ].contains(this);
 
   static BuiltSet<ExportType> get values => _$exportValues;
 

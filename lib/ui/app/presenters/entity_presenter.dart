@@ -12,10 +12,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityPresenter {
-  EntityPresenter initialize(
-    BaseEntity entity,
-    BuildContext context,
-  ) {
+  EntityPresenter initialize(BaseEntity entity, BuildContext context) {
     this.entity = entity;
     this.context = context;
 
@@ -72,27 +69,41 @@ class EntityPresenter {
 
     switch (field) {
       case EntityFields.createdAt:
-        return Text(formatDate(
-            convertTimestampToDateString(entity.createdAt), context,
-            showTime: true));
+        return Text(
+          formatDate(
+            convertTimestampToDateString(entity.createdAt),
+            context,
+            showTime: true,
+          ),
+        );
       case EntityFields.updatedAt:
-        return Text(entity.updatedAt == 0
-            ? ''
-            : formatDate(
-                convertTimestampToDateString(entity.updatedAt), context,
-                showTime: true));
+        return Text(
+          entity.updatedAt == 0
+              ? ''
+              : formatDate(
+                  convertTimestampToDateString(entity.updatedAt),
+                  context,
+                  showTime: true,
+                ),
+        );
       case EntityFields.archivedAt:
-        return Text(entity.archivedAt == 0
-            ? ''
-            : formatDate(
-                convertTimestampToDateString(entity.archivedAt), context,
-                showTime: true));
+        return Text(
+          entity.archivedAt == 0
+              ? ''
+              : formatDate(
+                  convertTimestampToDateString(entity.archivedAt),
+                  context,
+                  showTime: true,
+                ),
+        );
       case EntityFields.state:
-        return Text(entity.isActive
-            ? localization!.active
-            : entity.isArchived
-                ? localization!.archived
-                : localization!.deleted);
+        return Text(
+          entity.isActive
+              ? localization!.active
+              : entity.isArchived
+              ? localization!.archived
+              : localization!.deleted,
+        );
       case EntityFields.createdBy:
         final user = state.userState.get(entity.createdUserId!);
         return LinkTextRelatedEntity(entity: user, relation: entity);
@@ -106,16 +117,10 @@ class EntityPresenter {
     return Text('Error: $field not found');
   }
 
-  static bool isFieldLocalized(String? field) => [
-        'status',
-      ].contains(field);
+  static bool isFieldLocalized(String? field) => ['status'].contains(field);
 
   static bool isFieldAmount(String? field) {
-    return [
-      'quantity',
-      'stock_quantity',
-      'documents',
-    ].contains(field);
+    return ['quantity', 'stock_quantity', 'documents'].contains(field);
   }
 
   static bool isFieldNumeric(String field) {
@@ -188,9 +193,7 @@ class EntityPresenter {
 }
 
 class TableTooltip extends StatelessWidget {
-  const TableTooltip({
-    required this.message,
-  });
+  const TableTooltip({required this.message});
 
   final String message;
 
@@ -198,11 +201,7 @@ class TableTooltip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       message: message,
-      child: Text(
-        message,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-      ),
+      child: Text(message, overflow: TextOverflow.ellipsis, maxLines: 2),
     );
   }
 }

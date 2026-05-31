@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts.dart'
 
 class InvoiceEditContactsScreen extends StatelessWidget {
   const InvoiceEditContactsScreen({Key? key, required this.entityType})
-      : super(key: key);
+    : super(key: key);
 
   final EntityType? entityType;
 
@@ -28,9 +28,7 @@ class InvoiceEditContactsScreen extends StatelessWidget {
         return InvoiceEditContactsVM.fromStore(store, entityType);
       },
       builder: (context, viewModel) {
-        return InvoiceEditContacts(
-          viewModel: viewModel,
-        );
+        return InvoiceEditContacts(viewModel: viewModel);
       },
     );
   }
@@ -69,18 +67,20 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
     required Function(VendorContactEntity) onAddVendorContact,
     required Function(InvitationEntity) onRemoveContact,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onAddClientContact: onAddClientContact,
-          onAddVendorContact: onAddVendorContact,
-          onRemoveContact: onRemoveContact,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onAddClientContact: onAddClientContact,
+         onAddVendorContact: onAddVendorContact,
+         onRemoveContact: onRemoveContact,
+       );
 
   factory InvoiceEditContactsVM.fromStore(
-      Store<AppState> store, EntityType? entityType) {
+    Store<AppState> store,
+    EntityType? entityType,
+  ) {
     final AppState state = store.state;
 
     BaseEntity? entity;
@@ -96,7 +96,8 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       entity = state.purchaseOrderUIState.editing;
     } else {
       print(
-          'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
+        'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm',
+      );
     }
 
     return InvoiceEditContactsVM(
@@ -116,19 +117,27 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
 
         if (entity.entityType == EntityType.quote) {
           store.dispatch(
-              AddQuoteContact(contact: contact, invitation: invitation));
+            AddQuoteContact(contact: contact, invitation: invitation),
+          );
         } else if (entity.entityType == EntityType.credit) {
           store.dispatch(
-              AddCreditContact(contact: contact, invitation: invitation));
+            AddCreditContact(contact: contact, invitation: invitation),
+          );
         } else if (entity.entityType == EntityType.recurringInvoice) {
-          store.dispatch(AddRecurringInvoiceContact(
-              contact: contact, invitation: invitation));
+          store.dispatch(
+            AddRecurringInvoiceContact(
+              contact: contact,
+              invitation: invitation,
+            ),
+          );
         } else if (entity.entityType == EntityType.invoice) {
           store.dispatch(
-              AddInvoiceContact(contact: contact, invitation: invitation));
+            AddInvoiceContact(contact: contact, invitation: invitation),
+          );
         } else {
           print(
-              'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
+            'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm',
+          );
         }
       },
       onAddVendorContact: (VendorContactEntity contact) {
@@ -141,11 +150,13 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
         }
 
         if (entity.entityType == EntityType.purchaseOrder) {
-          store.dispatch(AddPurchaseOrderContact(
-              contact: contact, invitation: invitation));
+          store.dispatch(
+            AddPurchaseOrderContact(contact: contact, invitation: invitation),
+          );
         } else {
           print(
-              'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
+            'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm',
+          );
         }
       },
       onRemoveContact: (InvitationEntity invitation) {
@@ -161,7 +172,8 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
           store.dispatch(RemovePurchaseOrderContact(invitation: invitation));
         } else {
           print(
-              'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
+            'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm',
+          );
         }
       },
     );

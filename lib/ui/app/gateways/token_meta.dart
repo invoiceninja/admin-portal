@@ -28,12 +28,7 @@ class TokenMeta extends StatelessWidget {
           height: 16,
         ),
         SizedBox(width: 8),
-        Flexible(
-          child: Text(
-            cardDetails,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
+        Flexible(child: Text(cardDetails, overflow: TextOverflow.ellipsis)),
       ],
     );
   }

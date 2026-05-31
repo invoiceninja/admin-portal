@@ -62,7 +62,7 @@ class ClientPresenter extends EntityPresenter {
       if (userCompany.company.calculateTaxes) ...[
         ClientFields.isTaxExempt,
         ClientFields.classification,
-      ]
+      ],
     ];
   }
 
@@ -100,40 +100,54 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.postalCode:
         return Text(client!.postalCode);
       case ClientFields.lastLoginAt:
-        return Text(client!.lastLogin == 0
-            ? ''
-            : formatDate(
-                convertTimestampToDateString(client.lastLogin), context));
+        return Text(
+          client!.lastLogin == 0
+              ? ''
+              : formatDate(
+                  convertTimestampToDateString(client.lastLogin),
+                  context,
+                ),
+        );
       case ClientFields.balance:
         return Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-                formatNumber(client!.balance, context, clientId: client.id)!));
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(client!.balance, context, clientId: client.id)!,
+          ),
+        );
       case ClientFields.creditBalance:
         return Align(
-            alignment: Alignment.centerRight,
-            child: Text(formatNumber(client!.creditBalance, context,
-                clientId: client.id)!));
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(client!.creditBalance, context, clientId: client.id)!,
+          ),
+        );
       case ClientFields.paymentBalance:
         return Align(
-            alignment: Alignment.centerRight,
-            child: Text(formatNumber(client!.paymentBalance, context,
-                clientId: client.id)!));
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(client!.paymentBalance, context, clientId: client.id)!,
+          ),
+        );
       case ClientFields.paidToDate:
         return Align(
           alignment: Alignment.centerRight,
           child: Text(
-              formatNumber(client!.paidToDate, context, clientId: client.id)!),
+            formatNumber(client!.paidToDate, context, clientId: client.id)!,
+          ),
         );
       case ClientFields.country:
         return Text(
-            state.staticState.countryMap[client!.countryId]?.name ?? '');
+          state.staticState.countryMap[client!.countryId]?.name ?? '',
+        );
       case ClientFields.language:
         return Text(
-            state.staticState.languageMap[client!.languageId]?.name ?? '');
+          state.staticState.languageMap[client!.languageId]?.name ?? '',
+        );
       case ClientFields.currency:
         return Text(
-            state.staticState.currencyMap[client!.currencyId]?.name ?? '');
+          state.staticState.currencyMap[client!.currencyId]?.name ?? '',
+        );
       case ClientFields.vatNumber:
         return Text(client!.vatNumber);
       case ClientFields.state:
@@ -166,8 +180,9 @@ class ClientPresenter extends EntityPresenter {
         final group = state.groupState.get(client!.groupId);
         return LinkTextRelatedEntity(entity: group, relation: client);
       case ClientFields.contacts:
-        final contacts =
-            client!.contacts.map((contact) => contact.fullName).join('\n');
+        final contacts = client!.contacts
+            .map((contact) => contact.fullName)
+            .join('\n');
         return TableTooltip(message: contacts);
       case ClientFields.classification:
         return Text(localization!.lookup(client!.classification));

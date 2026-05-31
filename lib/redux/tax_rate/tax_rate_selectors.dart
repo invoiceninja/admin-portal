@@ -8,14 +8,18 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownTaxRateList = memo3(
-    (BuiltMap<String, TaxRateEntity> taxRateMap, BuiltList<String> taxRateList,
-            String clientId) =>
-        dropdownTaxRatesSelector(taxRateMap, taxRateList, clientId));
-
-List<String> dropdownTaxRatesSelector(
+  (
     BuiltMap<String, TaxRateEntity> taxRateMap,
     BuiltList<String> taxRateList,
-    String clientId) {
+    String clientId,
+  ) => dropdownTaxRatesSelector(taxRateMap, taxRateList, clientId),
+);
+
+List<String> dropdownTaxRatesSelector(
+  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltList<String> taxRateList,
+  String clientId,
+) {
   final list = taxRateList.where((taxRateId) {
     final taxRate = taxRateMap[taxRateId]!;
     /*
@@ -35,18 +39,26 @@ List<String> dropdownTaxRatesSelector(
   return list;
 }
 
-var memoizedFilteredTaxRateList = memo4((SelectionState selectionState,
-        BuiltMap<String?, TaxRateEntity?> taxRateMap,
-        BuiltList<String> taxRateList,
-        ListUIState taxRateListState) =>
-    filteredTaxRatesSelector(
-        selectionState, taxRateMap, taxRateList, taxRateListState));
-
-List<String> filteredTaxRatesSelector(
+var memoizedFilteredTaxRateList = memo4(
+  (
     SelectionState selectionState,
     BuiltMap<String?, TaxRateEntity?> taxRateMap,
     BuiltList<String> taxRateList,
-    ListUIState taxRateListState) {
+    ListUIState taxRateListState,
+  ) => filteredTaxRatesSelector(
+    selectionState,
+    taxRateMap,
+    taxRateList,
+    taxRateListState,
+  ),
+);
+
+List<String> filteredTaxRatesSelector(
+  SelectionState selectionState,
+  BuiltMap<String?, TaxRateEntity?> taxRateMap,
+  BuiltList<String> taxRateList,
+  ListUIState taxRateListState,
+) {
   final list = taxRateList.where((taxRateId) {
     final taxRate = taxRateMap[taxRateId]!;
 
@@ -64,7 +76,10 @@ List<String> filteredTaxRatesSelector(
     final taxRateA = taxRateMap[taxRateAId]!;
     final taxRateB = taxRateMap[taxRateBId];
     return taxRateA.compareTo(
-        taxRateB, taxRateListState.sortField, taxRateListState.sortAscending);
+      taxRateB,
+      taxRateListState.sortField,
+      taxRateListState.sortAscending,
+    );
   });
 
   return list;

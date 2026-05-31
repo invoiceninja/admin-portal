@@ -85,25 +85,36 @@ class TaskPresenter extends EntityPresenter {
         return Text(task.number.toString());
       case TaskFields.invoice:
         return Text(
-            state.invoiceState.map[task.invoiceId]?.listDisplayName ?? '');
+          state.invoiceState.map[task.invoiceId]?.listDisplayName ?? '',
+        );
       case TaskFields.date:
         final taskTimes = task.getTaskTimes();
         final taskTime = taskTimes.isEmpty ? null : taskTimes.first;
-        return Text(taskTime == null
-            ? ''
-            : formatDate(taskTime.startDate!.toIso8601String(), context));
+        return Text(
+          taskTime == null
+              ? ''
+              : formatDate(taskTime.startDate!.toIso8601String(), context),
+        );
       case TaskFields.timeLog:
         final notes = <String>[];
         task
             .getTaskTimes()
             .where((time) => time.startDate != null && time.endDate != null)
             .forEach((time) {
-          final start = formatDate(time.startDate!.toIso8601String(), context,
-              showTime: true, showDate: true);
-          final end = formatDate(time.endDate!.toIso8601String(), context,
-              showTime: true, showDate: false);
-          notes.add('$start - $end');
-        });
+              final start = formatDate(
+                time.startDate!.toIso8601String(),
+                context,
+                showTime: true,
+                showDate: true,
+              );
+              final end = formatDate(
+                time.endDate!.toIso8601String(),
+                context,
+                showTime: true,
+                showDate: false,
+              );
+              notes.add('$start - $end');
+            });
         return Text(notes.join('\n'));
       case TaskFields.isRunning:
         return Text(task.isRunning ? localization!.yes : localization!.no);
@@ -120,19 +131,21 @@ class TaskPresenter extends EntityPresenter {
       case TaskFields.documents:
         return Text('${task.documents.length}');
       case TaskFields.amount:
-        return Text(formatNumber(
-          task.calculateAmount(
-            taskRateSelector(
-              company: state.company,
-              project: state.projectState.map[task.projectId],
-              client: state.clientState.map[task.clientId],
-              task: task,
-              group: state.groupState.map[client.groupId],
-            )!,
-          ),
-          context,
-          clientId: client.id,
-        )!);
+        return Text(
+          formatNumber(
+            task.calculateAmount(
+              taskRateSelector(
+                company: state.company,
+                project: state.projectState.map[task.projectId],
+                client: state.clientState.map[task.clientId],
+                task: task,
+                group: state.groupState.map[client.groupId],
+              )!,
+            ),
+            context,
+            clientId: client.id,
+          )!,
+        );
     }
 
     return super.getField(field: field, context: context);

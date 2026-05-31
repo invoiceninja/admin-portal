@@ -47,8 +47,9 @@ abstract class UserItemResponse
 
 abstract class UserTwoFactorResponse
     implements Built<UserTwoFactorResponse, UserTwoFactorResponseBuilder> {
-  factory UserTwoFactorResponse(
-      [void updates(UserTwoFactorResponseBuilder b)]) = _$UserTwoFactorResponse;
+  factory UserTwoFactorResponse([
+    void updates(UserTwoFactorResponseBuilder b),
+  ]) = _$UserTwoFactorResponse;
 
   UserTwoFactorResponse._();
 
@@ -83,9 +84,9 @@ abstract class UserTwoFactorData
 
 abstract class UserCompanyItemResponse
     implements Built<UserCompanyItemResponse, UserCompanyItemResponseBuilder> {
-  factory UserCompanyItemResponse(
-          [void updates(UserCompanyItemResponseBuilder b)]) =
-      _$UserCompanyItemResponse;
+  factory UserCompanyItemResponse([
+    void updates(UserCompanyItemResponseBuilder b),
+  ]) = _$UserCompanyItemResponse;
 
   UserCompanyItemResponse._();
 
@@ -114,8 +115,11 @@ class UserFields {
 abstract class UserEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity(
-      {String? id, AppState? state, UserCompanyEntity? userCompany}) {
+  factory UserEntity({
+    String? id,
+    AppState? state,
+    UserCompanyEntity? userCompany,
+  }) {
     return _$UserEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -243,14 +247,14 @@ abstract class UserEntity extends Object
 
     switch (sortField) {
       case UserFields.lastName:
-        response = userA!.lastName
-            .toLowerCase()
-            .compareTo(userB!.lastName.toLowerCase());
+        response = userA!.lastName.toLowerCase().compareTo(
+          userB!.lastName.toLowerCase(),
+        );
         break;
       case UserFields.firstName:
-        response = userA!.firstName
-            .toLowerCase()
-            .compareTo(userB!.firstName.toLowerCase());
+        response = userA!.firstName.toLowerCase().compareTo(
+          userB!.firstName.toLowerCase(),
+        );
         break;
       case UserFields.email:
         response = userA!.email.compareTo(userB!.email);
@@ -298,12 +302,13 @@ abstract class UserEntity extends Object
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {

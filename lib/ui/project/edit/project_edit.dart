@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectEdit extends StatefulWidget {
-  const ProjectEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ProjectEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final ProjectEditVM viewModel;
 
@@ -31,8 +28,9 @@ class ProjectEdit extends StatefulWidget {
 }
 
 class _ProjectEditState extends State<ProjectEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_projectEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_projectEdit',
+  );
   final _debouncer = Debouncer();
 
   final _numberController = TextEditingController();
@@ -71,10 +69,16 @@ class _ProjectEditState extends State<ProjectEdit> {
     _numberController.text = project.number;
     _nameController.text = project.name;
     _dueDateController.text = project.dueDate;
-    _hoursController.text = formatNumber(project.budgetedHours, context,
-        formatNumberType: FormatNumberType.inputAmount)!;
-    _taskRateController.text = formatNumber(project.taskRate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _hoursController.text = formatNumber(
+      project.budgetedHours,
+      context,
+      formatNumberType: FormatNumberType.inputAmount,
+    )!;
+    _taskRateController.text = formatNumber(
+      project.taskRate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _privateNotesController.text = project.privateNotes;
     _publicNotesController.text = project.publicNotes;
     _custom1Controller.text = project.customValue1;
@@ -98,17 +102,19 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onChanged() {
-    final project = widget.viewModel.project.rebuild((b) => b
-      ..number = _numberController.text.trim()
-      ..name = _nameController.text.trim()
-      ..budgetedHours = parseDouble(_hoursController.text)
-      ..taskRate = parseDouble(_taskRateController.text)
-      ..publicNotes = _publicNotesController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim());
+    final project = widget.viewModel.project.rebuild(
+      (b) => b
+        ..number = _numberController.text.trim()
+        ..name = _nameController.text.trim()
+        ..budgetedHours = parseDouble(_hoursController.text)
+        ..taskRate = parseDouble(_taskRateController.text)
+        ..publicNotes = _publicNotesController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim(),
+    );
     if (project != widget.viewModel.project) {
       _debouncer.run(() {
         widget.viewModel.onChanged(project);
@@ -135,124 +141,138 @@ class _ProjectEditState extends State<ProjectEdit> {
 
     return EditScaffold(
       entity: project,
-      title:
-          project.isNew ? localization!.newProject : localization!.editProject,
+      title: project.isNew
+          ? localization!.newProject
+          : localization!.editProject,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(
         key: _formKey,
-        child: Builder(builder: (BuildContext context) {
-          return ScrollableListView(
-            key: ValueKey('__project_${project.id}_${project.updatedAt}__'),
-            children: <Widget>[
-              FormCard(
-                isLast: true,
-                children: <Widget>[
-                  DecoratedFormField(
-                    controller: _nameController,
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseEnterAName
-                        : null,
-                    keyboardType: TextInputType.text,
-                    autofocus: true,
-                    label: localization.projectName,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  project.isNew
-                      ? EntityDropdown(
-                          entityType: EntityType.client,
-                          labelText: localization.client,
-                          entityId: project.clientId,
-                          entityList: memoizedDropdownClientList(
+        child: Builder(
+          builder: (BuildContext context) {
+            return ScrollableListView(
+              key: ValueKey('__project_${project.id}_${project.updatedAt}__'),
+              children: <Widget>[
+                FormCard(
+                  isLast: true,
+                  children: <Widget>[
+                    DecoratedFormField(
+                      controller: _nameController,
+                      validator: (String val) => val.trim().isEmpty
+                          ? localization.pleaseEnterAName
+                          : null,
+                      keyboardType: TextInputType.text,
+                      autofocus: true,
+                      label: localization.projectName,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    project.isNew
+                        ? EntityDropdown(
+                            entityType: EntityType.client,
+                            labelText: localization.client,
+                            entityId: project.clientId,
+                            entityList: memoizedDropdownClientList(
                               state.clientState.map,
                               state.clientState.list,
                               state.userState.map,
-                              state.staticState),
-                          validator: (String? val) => (val ?? '').trim().isEmpty
-                              ? localization.pleaseSelectAClient
-                              : null,
-                          onSelected: (client) {
-                            viewModel.onChanged(project.rebuild(
-                                (b) => b..clientId = client?.id ?? ''));
-                          },
-                          onAddPressed: (completer) {
-                            viewModel.onAddClientPressed(context, completer);
-                          },
-                        )
-                      : DecoratedFormField(
-                          controller: _numberController,
-                          label: localization.projectNumber,
-                          keyboardType: TextInputType.text,
-                          onSavePressed: _onSavePressed,
-                        ),
-                  UserPicker(
-                    userId: project.assignedUserId,
-                    onChanged: (userId) => viewModel.onChanged(
-                        project.rebuild((b) => b..assignedUserId = userId)),
-                  ),
-                  DatePicker(
-                    labelText: localization.dueDate,
-                    selectedDate: project.dueDate,
-                    onSelected: (date, _) {
-                      viewModel
-                          .onChanged(project.rebuild((b) => b..dueDate = date));
-                    },
-                  ),
-                  DecoratedFormField(
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
-                    controller: _hoursController,
-                    label: localization.budgetedHours,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  DecoratedFormField(
-                    keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
-                    controller: _taskRateController,
-                    label: localization.taskRate,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  CustomField(
-                    controller: _custom1Controller,
-                    field: CustomFieldType.project1,
-                    value: project.customValue1,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  CustomField(
-                    controller: _custom2Controller,
-                    field: CustomFieldType.project2,
-                    value: project.customValue2,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  CustomField(
-                    controller: _custom3Controller,
-                    field: CustomFieldType.project3,
-                    value: project.customValue3,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  CustomField(
-                    controller: _custom4Controller,
-                    field: CustomFieldType.project4,
-                    value: project.customValue4,
-                    onSavePressed: _onSavePressed,
-                  ),
-                  DecoratedFormField(
-                    maxLines: 4,
-                    controller: _publicNotesController,
-                    keyboardType: TextInputType.multiline,
-                    label: localization.publicNotes,
-                  ),
-                  DecoratedFormField(
-                    maxLines: 4,
-                    controller: _privateNotesController,
-                    keyboardType: TextInputType.multiline,
-                    label: localization.privateNotes,
-                  ),
-                ],
-              ),
-            ],
-          );
-        }),
+                              state.staticState,
+                            ),
+                            validator: (String? val) =>
+                                (val ?? '').trim().isEmpty
+                                ? localization.pleaseSelectAClient
+                                : null,
+                            onSelected: (client) {
+                              viewModel.onChanged(
+                                project.rebuild(
+                                  (b) => b..clientId = client?.id ?? '',
+                                ),
+                              );
+                            },
+                            onAddPressed: (completer) {
+                              viewModel.onAddClientPressed(context, completer);
+                            },
+                          )
+                        : DecoratedFormField(
+                            controller: _numberController,
+                            label: localization.projectNumber,
+                            keyboardType: TextInputType.text,
+                            onSavePressed: _onSavePressed,
+                          ),
+                    UserPicker(
+                      userId: project.assignedUserId,
+                      onChanged: (userId) => viewModel.onChanged(
+                        project.rebuild((b) => b..assignedUserId = userId),
+                      ),
+                    ),
+                    DatePicker(
+                      labelText: localization.dueDate,
+                      selectedDate: project.dueDate,
+                      onSelected: (date, _) {
+                        viewModel.onChanged(
+                          project.rebuild((b) => b..dueDate = date),
+                        );
+                      },
+                    ),
+                    DecoratedFormField(
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                        signed: true,
+                      ),
+                      controller: _hoursController,
+                      label: localization.budgetedHours,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    DecoratedFormField(
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                        signed: true,
+                      ),
+                      controller: _taskRateController,
+                      label: localization.taskRate,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    CustomField(
+                      controller: _custom1Controller,
+                      field: CustomFieldType.project1,
+                      value: project.customValue1,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    CustomField(
+                      controller: _custom2Controller,
+                      field: CustomFieldType.project2,
+                      value: project.customValue2,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    CustomField(
+                      controller: _custom3Controller,
+                      field: CustomFieldType.project3,
+                      value: project.customValue3,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    CustomField(
+                      controller: _custom4Controller,
+                      field: CustomFieldType.project4,
+                      value: project.customValue4,
+                      onSavePressed: _onSavePressed,
+                    ),
+                    DecoratedFormField(
+                      maxLines: 4,
+                      controller: _publicNotesController,
+                      keyboardType: TextInputType.multiline,
+                      label: localization.publicNotes,
+                    ),
+                    DecoratedFormField(
+                      maxLines: 4,
+                      controller: _privateNotesController,
+                      keyboardType: TextInputType.multiline,
+                      label: localization.privateNotes,
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -18,96 +18,120 @@ abstract class SettingsEntity
     SettingsEntity? clientSettings,
   }) {
     return _$SettingsEntity._(
-      defaultInvoiceDesignId: clientSettings?.defaultInvoiceDesignId ??
+      defaultInvoiceDesignId:
+          clientSettings?.defaultInvoiceDesignId ??
           groupSettings?.defaultInvoiceDesignId ??
           companySettings?.defaultInvoiceDesignId,
-      defaultQuoteDesignId: clientSettings?.defaultQuoteDesignId ??
+      defaultQuoteDesignId:
+          clientSettings?.defaultQuoteDesignId ??
           groupSettings?.defaultQuoteDesignId ??
           companySettings?.defaultQuoteDesignId,
-      defaultCreditDesignId: clientSettings?.defaultCreditDesignId ??
+      defaultCreditDesignId:
+          clientSettings?.defaultCreditDesignId ??
           groupSettings?.defaultCreditDesignId ??
           companySettings?.defaultCreditDesignId,
       defaultPurchaseOrderDesignId:
           clientSettings?.defaultPurchaseOrderDesignId ??
-              groupSettings?.defaultPurchaseOrderDesignId ??
-              companySettings?.defaultPurchaseOrderDesignId,
-      defaultStatementDesignId: clientSettings?.defaultStatementDesignId ??
+          groupSettings?.defaultPurchaseOrderDesignId ??
+          companySettings?.defaultPurchaseOrderDesignId,
+      defaultStatementDesignId:
+          clientSettings?.defaultStatementDesignId ??
           groupSettings?.defaultStatementDesignId ??
           companySettings?.defaultStatementDesignId,
       defaultDeliveryNoteDesignId:
           clientSettings?.defaultDeliveryNoteDesignId ??
-              groupSettings?.defaultDeliveryNoteDesignId ??
-              companySettings?.defaultDeliveryNoteDesignId,
+          groupSettings?.defaultDeliveryNoteDesignId ??
+          companySettings?.defaultDeliveryNoteDesignId,
       defaultPaymentReceiptDesignId:
           clientSettings?.defaultPaymentReceiptDesignId ??
-              groupSettings?.defaultPaymentReceiptDesignId ??
-              companySettings?.defaultPaymentReceiptDesignId,
+          groupSettings?.defaultPaymentReceiptDesignId ??
+          companySettings?.defaultPaymentReceiptDesignId,
       defaultPaymentRefundDesignId:
           clientSettings?.defaultPaymentRefundDesignId ??
-              groupSettings?.defaultPaymentRefundDesignId ??
-              companySettings?.defaultPaymentRefundDesignId,
-      defaultInvoiceTerms: clientSettings?.defaultInvoiceTerms ??
+          groupSettings?.defaultPaymentRefundDesignId ??
+          companySettings?.defaultPaymentRefundDesignId,
+      defaultInvoiceTerms:
+          clientSettings?.defaultInvoiceTerms ??
           groupSettings?.defaultInvoiceTerms ??
           companySettings?.defaultInvoiceTerms,
-      defaultInvoiceFooter: clientSettings?.defaultInvoiceFooter ??
+      defaultInvoiceFooter:
+          clientSettings?.defaultInvoiceFooter ??
           groupSettings?.defaultInvoiceFooter ??
           companySettings?.defaultInvoiceFooter,
-      defaultQuoteTerms: clientSettings?.defaultQuoteTerms ??
+      defaultQuoteTerms:
+          clientSettings?.defaultQuoteTerms ??
           groupSettings?.defaultQuoteTerms ??
           companySettings?.defaultQuoteTerms,
-      defaultQuoteFooter: clientSettings?.defaultQuoteFooter ??
+      defaultQuoteFooter:
+          clientSettings?.defaultQuoteFooter ??
           groupSettings?.defaultQuoteFooter ??
           companySettings?.defaultQuoteFooter,
-      defaultCreditTerms: clientSettings?.defaultCreditTerms ??
+      defaultCreditTerms:
+          clientSettings?.defaultCreditTerms ??
           groupSettings?.defaultCreditTerms ??
           companySettings?.defaultCreditTerms,
-      defaultCreditFooter: clientSettings?.defaultCreditFooter ??
+      defaultCreditFooter:
+          clientSettings?.defaultCreditFooter ??
           groupSettings?.defaultCreditFooter ??
           companySettings?.defaultCreditFooter,
-      lockInvoices: clientSettings?.lockInvoices ??
+      lockInvoices:
+          clientSettings?.lockInvoices ??
           groupSettings?.lockInvoices ??
           companySettings?.lockInvoices,
-      emailSubjectCustom1: clientSettings?.emailSubjectCustom1 ??
+      emailSubjectCustom1:
+          clientSettings?.emailSubjectCustom1 ??
           groupSettings?.emailSubjectCustom1 ??
           companySettings?.emailSubjectCustom1,
-      emailSubjectCustom2: clientSettings?.emailSubjectCustom2 ??
+      emailSubjectCustom2:
+          clientSettings?.emailSubjectCustom2 ??
           groupSettings?.emailSubjectCustom2 ??
           companySettings?.emailSubjectCustom2,
-      emailSubjectCustom3: clientSettings?.emailSubjectCustom3 ??
+      emailSubjectCustom3:
+          clientSettings?.emailSubjectCustom3 ??
           groupSettings?.emailSubjectCustom3 ??
           companySettings?.emailSubjectCustom3,
-      defaultPaymentTerms: clientSettings?.defaultPaymentTerms ??
+      defaultPaymentTerms:
+          clientSettings?.defaultPaymentTerms ??
           groupSettings?.defaultPaymentTerms ??
           companySettings?.defaultPaymentTerms,
-      defaultValidUntil: clientSettings?.defaultValidUntil ??
+      defaultValidUntil:
+          clientSettings?.defaultValidUntil ??
           groupSettings?.defaultValidUntil ??
           companySettings?.defaultValidUntil,
-      defaultTaxRate1: clientSettings?.defaultTaxRate1 ??
+      defaultTaxRate1:
+          clientSettings?.defaultTaxRate1 ??
           groupSettings?.defaultTaxRate1 ??
           companySettings?.defaultTaxRate1,
-      defaultTaxName1: clientSettings?.defaultTaxName1 ??
+      defaultTaxName1:
+          clientSettings?.defaultTaxName1 ??
           groupSettings?.defaultTaxName1 ??
           companySettings?.defaultTaxName1,
-      defaultTaxRate2: clientSettings?.defaultTaxRate2 ??
+      defaultTaxRate2:
+          clientSettings?.defaultTaxRate2 ??
           groupSettings?.defaultTaxRate2 ??
           companySettings?.defaultTaxRate2,
-      defaultTaxName2: clientSettings?.defaultTaxName2 ??
+      defaultTaxName2:
+          clientSettings?.defaultTaxName2 ??
           groupSettings?.defaultTaxName2 ??
           companySettings?.defaultTaxName2,
-      defaultTaxRate3: clientSettings?.defaultTaxRate3 ??
+      defaultTaxRate3:
+          clientSettings?.defaultTaxRate3 ??
           groupSettings?.defaultTaxRate3 ??
           companySettings?.defaultTaxRate3,
-      defaultTaxName3: clientSettings?.defaultTaxName3 ??
+      defaultTaxName3:
+          clientSettings?.defaultTaxName3 ??
           groupSettings?.defaultTaxName3 ??
           companySettings?.defaultTaxName3,
       clientManualPaymentNotification:
           clientSettings?.clientManualPaymentNotification ??
-              groupSettings?.clientManualPaymentNotification ??
-              companySettings?.clientManualPaymentNotification,
-      defaultPaymentTypeId: clientSettings?.defaultPaymentTypeId ??
+          groupSettings?.clientManualPaymentNotification ??
+          companySettings?.clientManualPaymentNotification,
+      defaultPaymentTypeId:
+          clientSettings?.defaultPaymentTypeId ??
           groupSettings?.defaultPaymentTypeId ??
           companySettings?.defaultPaymentTypeId,
-      autoBillStandardInvoices: clientSettings?.autoBillStandardInvoices ??
+      autoBillStandardInvoices:
+          clientSettings?.autoBillStandardInvoices ??
           groupSettings?.autoBillStandardInvoices ??
           companySettings?.autoBillStandardInvoices,
     );
@@ -933,13 +957,14 @@ abstract class SettingsEntity
 
   List<String> getFieldsForSection(String section) =>
       pdfVariables != null && pdfVariables!.containsKey(section)
-          ? pdfVariables![section]!.toList()
-          : [];
+      ? pdfVariables![section]!.toList()
+      : [];
 
   SettingsEntity setFieldsForSection(String section, List<String> fields) {
     if (pdfVariables == null) {
       return rebuild(
-          (b) => b..pdfVariables.replace({section: BuiltList<String>(fields)}));
+        (b) => b..pdfVariables.replace({section: BuiltList<String>(fields)}),
+      );
     } else {
       return rebuild((b) => b..pdfVariables[section] = BuiltList(fields));
     }

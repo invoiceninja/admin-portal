@@ -48,28 +48,29 @@ enum RecurringExpenseReportFields {
   record_state,
 }
 
-var memoizedRecurringExpenseReport = memo9((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    recurringExpenseReport(
-      userCompany!,
-      reportsUIState,
-      expenseMap,
-      expenseCategoryMap,
-      invoiceMap,
-      clientMap,
-      vendorMap,
-      userMap,
-      staticState,
-    ));
+var memoizedRecurringExpenseReport = memo9(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => recurringExpenseReport(
+    userCompany!,
+    reportsUIState,
+    expenseMap,
+    expenseCategoryMap,
+    invoiceMap,
+    clientMap,
+    vendorMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult recurringExpenseReport(
   UserCompanyEntity userCompany,
@@ -90,8 +91,8 @@ ReportResult recurringExpenseReport(
   final reportSettings = userCompany.settings.reportSettings;
   final expenseReportSettings =
       reportSettings.containsKey(kReportRecurringExpense)
-          ? reportSettings[kReportRecurringExpense]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportRecurringExpense]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringExpenseReportFields.amount,
@@ -105,11 +106,14 @@ ReportResult recurringExpenseReport(
   ];
 
   if (expenseReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(expenseReportSettings.columns
-        .map(
-            (e) => EnumUtils.fromString(RecurringExpenseReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      expenseReportSettings.columns
+          .map(
+            (e) => EnumUtils.fromString(RecurringExpenseReportFields.values, e),
+          )
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -155,8 +159,10 @@ ReportResult recurringExpenseReport(
           value = expense.paymentDate;
           break;
         case RecurringExpenseReportFields.payment_type:
-          value = staticState
-                  .paymentTypeMap[expense.paymentTypeId]?.listDisplayName ??
+          value =
+              staticState
+                  .paymentTypeMap[expense.paymentTypeId]
+                  ?.listDisplayName ??
               '';
           break;
         case RecurringExpenseReportFields.tax_rate1:
@@ -228,8 +234,9 @@ ReportResult recurringExpenseReport(
               : '${expense.remainingCycles}';
           break;
         case RecurringExpenseReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(expense.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(expense.entityState);
           break;
       }
 
@@ -245,8 +252,9 @@ ReportResult recurringExpenseReport(
       if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(expense.getReportDouble(
-            value: value, currencyId: expense.currencyId));
+        row.add(
+          expense.getReportDouble(value: value, currencyId: expense.currencyId),
+        );
       } else {
         row.add(expense.getReportString(value: value));
       }
@@ -259,16 +267,23 @@ ReportResult recurringExpenseReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      expenseReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
     allColumns: RecurringExpenseReportFields.values
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

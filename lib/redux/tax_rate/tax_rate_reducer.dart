@@ -12,11 +12,13 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState taxRateUIReducer(TaxRateUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(taxRateListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(taxRateListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -29,14 +31,19 @@ final forceSelectedReducer = combineReducers<bool?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveTaxRatesSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteTaxRatesSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.taxRate ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.taxRate ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewTaxRate>(
-      (String? selectedId, action) => action.taxRateId),
+    (String? selectedId, action) => action.taxRateId,
+  ),
   TypedReducer<String?, AddTaxRateSuccess>(
-      (String? selectedId, action) => action.taxRate.id),
+    (String? selectedId, action) => action.taxRate.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortTaxRates>((selectedId, action) => ''),
   TypedReducer<String?, FilterTaxRates>((selectedId, action) => ''),
@@ -77,66 +84,92 @@ final taxRateListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartTaxRateMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTaxRateMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTaxRateMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearTaxRateMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewTaxRateList>(_viewTaxRateList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewTaxRateList(
-    ListUIState taxRateListState, ViewTaxRateList action) {
-  return taxRateListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState taxRateListState,
+  ViewTaxRateList action,
+) {
+  return taxRateListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterTaxRatesByState(
-    ListUIState taxRateListState, FilterTaxRatesByState action) {
+  ListUIState taxRateListState,
+  FilterTaxRatesByState action,
+) {
   if (taxRateListState.stateFilters.contains(action.state)) {
-    return taxRateListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return taxRateListState.rebuild(
+      (b) => b..stateFilters.remove(action.state),
+    );
   } else {
     return taxRateListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
 ListUIState _filterTaxRates(
-    ListUIState taxRateListState, FilterTaxRates action) {
-  return taxRateListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : taxRateListState.filterClearedAt);
+  ListUIState taxRateListState,
+  FilterTaxRates action,
+) {
+  return taxRateListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : taxRateListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortTaxRates(ListUIState taxRateListState, SortTaxRates action) {
-  return taxRateListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return taxRateListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState taxRateListState, StartTaxRateMultiselect action) {
+  ListUIState taxRateListState,
+  StartTaxRateMultiselect action,
+) {
   return taxRateListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState taxRateListState, AddToTaxRateMultiselect action) {
+  ListUIState taxRateListState,
+  AddToTaxRateMultiselect action,
+) {
   return taxRateListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState taxRateListState, RemoveFromTaxRateMultiselect action) {
-  return taxRateListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState taxRateListState,
+  RemoveFromTaxRateMultiselect action,
+) {
+  return taxRateListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState taxRateListState, ClearTaxRateMultiselect action) {
+  ListUIState taxRateListState,
+  ClearTaxRateMultiselect action,
+) {
   return taxRateListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -152,7 +185,9 @@ final taxRatesReducer = combineReducers<TaxRateState>([
 ]);
 
 TaxRateState _archiveTaxRateSuccess(
-    TaxRateState taxRateState, ArchiveTaxRatesSuccess action) {
+  TaxRateState taxRateState,
+  ArchiveTaxRatesSuccess action,
+) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;
@@ -161,7 +196,9 @@ TaxRateState _archiveTaxRateSuccess(
 }
 
 TaxRateState _deleteTaxRateSuccess(
-    TaxRateState taxRateState, DeleteTaxRatesSuccess action) {
+  TaxRateState taxRateState,
+  DeleteTaxRatesSuccess action,
+) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;
@@ -170,7 +207,9 @@ TaxRateState _deleteTaxRateSuccess(
 }
 
 TaxRateState _restoreTaxRateSuccess(
-    TaxRateState taxRateState, RestoreTaxRatesSuccess action) {
+  TaxRateState taxRateState,
+  RestoreTaxRatesSuccess action,
+) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;
@@ -179,43 +218,63 @@ TaxRateState _restoreTaxRateSuccess(
 }
 
 TaxRateState _addTaxRate(TaxRateState taxRateState, AddTaxRateSuccess action) {
-  return taxRateState.rebuild((b) => b
-    ..map[action.taxRate.id] = action.taxRate
-    ..list.add(action.taxRate.id));
+  return taxRateState.rebuild(
+    (b) => b
+      ..map[action.taxRate.id] = action.taxRate
+      ..list.add(action.taxRate.id),
+  );
 }
 
 TaxRateState _updateTaxRate(
-    TaxRateState taxRateState, SaveTaxRateSuccess action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  TaxRateState taxRateState,
+  SaveTaxRateSuccess action,
+) {
+  return taxRateState.rebuild(
+    (b) => b..map[action.taxRate.id] = action.taxRate,
+  );
 }
 
 TaxRateState _setLoadedTaxRate(
-    TaxRateState taxRateState, LoadTaxRateSuccess action) {
-  return taxRateState
-      .rebuild((b) => b..map[action.taxRate.id] = action.taxRate);
+  TaxRateState taxRateState,
+  LoadTaxRateSuccess action,
+) {
+  return taxRateState.rebuild(
+    (b) => b..map[action.taxRate.id] = action.taxRate,
+  );
 }
 
 TaxRateState _setLoadedTaxRates(
-    TaxRateState taxRateState, LoadTaxRatesSuccess action) {
-  final state = taxRateState.rebuild((b) => b
-    ..map.addAll(Map.fromIterable(
-      action.taxRates,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+  TaxRateState taxRateState,
+  LoadTaxRatesSuccess action,
+) {
+  final state = taxRateState.rebuild(
+    (b) => b
+      ..map.addAll(
+        Map.fromIterable(
+          action.taxRates,
+          key: (dynamic item) => item.id,
+          value: (dynamic item) => item,
+        ),
+      ),
+  );
 
   return state.rebuild((b) => b..list.replace(state.map.keys));
 }
 
 TaxRateState _setLoadedCompany(
-    TaxRateState taxRateState, LoadCompanySuccess action) {
-  final state = taxRateState.rebuild((b) => b
-    ..map.addAll(Map.fromIterable(
-      action.userCompany.company.taxRates,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
+  TaxRateState taxRateState,
+  LoadCompanySuccess action,
+) {
+  final state = taxRateState.rebuild(
+    (b) => b
+      ..map.addAll(
+        Map.fromIterable(
+          action.userCompany.company.taxRates,
+          key: (dynamic item) => item.id,
+          value: (dynamic item) => item,
+        ),
+      ),
+  );
 
   return state.rebuild((b) => b..list.replace(state.map.keys));
 }

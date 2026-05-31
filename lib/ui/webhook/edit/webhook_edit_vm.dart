@@ -86,32 +86,35 @@ class WebhookEditVM {
           final Completer<WebhookEntity> completer =
               new Completer<WebhookEntity>();
           store.dispatch(
-              SaveWebhookRequest(completer: completer, webhook: webhook));
-          return completer.future.then((savedWebhook) {
-            showToast(webhook!.isNew
-                ? localization!.createdWebhook
-                : localization!.updatedWebhook);
+            SaveWebhookRequest(completer: completer, webhook: webhook),
+          );
+          return completer.future
+              .then((savedWebhook) {
+                showToast(
+                  webhook!.isNew
+                      ? localization!.createdWebhook
+                      : localization!.updatedWebhook,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
-              if (webhook.isNew) {
-                navigator!.pushReplacementNamed(WebhookViewScreen.route);
-              } else {
-                navigator!.pop(savedWebhook);
-              }
-            } else {
-              viewEntity(
-                entity: savedWebhook,
-                force: true,
-              );
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
+                  if (webhook.isNew) {
+                    navigator!.pushReplacementNamed(WebhookViewScreen.route);
+                  } else {
+                    navigator!.pop(savedWebhook);
+                  }
+                } else {
+                  viewEntity(entity: savedWebhook, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

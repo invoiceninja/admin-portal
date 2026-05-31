@@ -43,8 +43,10 @@ class EntityList extends StatefulWidget {
     this.presenter,
     this.tableColumns,
   }) : super(
-            key: ValueKey(
-                '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType)!.listUIState.tableHashCode}__'));
+         key: ValueKey(
+           '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType)!.listUIState.tableHashCode}__',
+         ),
+       );
 
   final AppState state;
   final EntityType entityType;
@@ -92,8 +94,9 @@ class _EntityListState extends State<EntityList> {
 
     if (widget.entityList.isNotEmpty) {
       if ((entityUIState!.selectedId ?? '').isNotEmpty) {
-        final selectedIndex =
-            widget.entityList.indexOf(entityUIState.selectedId);
+        final selectedIndex = widget.entityList.indexOf(
+          entityUIState.selectedId,
+        );
 
         if (selectedIndex >= 0) {
           _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
@@ -115,8 +118,9 @@ class _EntityListState extends State<EntityList> {
     final uiState = state.getUIState(widget.entityType)!;
     dataTableSource.editingId = uiState.editingId;
     dataTableSource.entityList = widget.entityList;
-    dataTableSource.entityMap = state.getEntityMap(widget.entityType)
-        as BuiltMap<String?, BaseEntity?>?;
+    dataTableSource.entityMap =
+        state.getEntityMap(widget.entityType)
+            as BuiltMap<String?, BaseEntity?>?;
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
@@ -141,7 +145,9 @@ class _EntityListState extends State<EntityList> {
     }
 
     final shouldSelectEntity = state.shouldSelectEntity(
-        entityType: entityType, entityList: entityList);
+      entityType: entityType,
+      entityList: entityList,
+    );
     if (shouldSelectEntity != false) {
       // null is a special case which means we need to reselect
       // the current selection to add it to the history
@@ -150,10 +156,7 @@ class _EntityListState extends State<EntityList> {
           : (entityList.isEmpty ? null : entityList.first);
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        viewEntityById(
-          entityType: entityType,
-          entityId: entityId,
-        );
+        viewEntityById(entityType: entityType, entityId: entityId);
       });
     }
 
@@ -167,21 +170,23 @@ class _EntityListState extends State<EntityList> {
                 filterEntityId: uiState.filterEntityId,
                 filterEntityType: uiState.filterEntityType,
                 onPressed: (_) => viewEntityById(
-                    entityId: state.uiState.filterEntityId,
-                    entityType: state.uiState.filterEntityType),
+                  entityId: state.uiState.filterEntityId,
+                  entityType: state.uiState.filterEntityType,
+                ),
                 onClearPressed: () => store.dispatch(ClearEntityFilter()),
               ),
             Expanded(
               child: entityList.isEmpty
                   ? HelpText(
-                      AppLocalization.of(context)!.clickPlusToCreateRecord)
+                      AppLocalization.of(context)!.clickPlusToCreateRecord,
+                    )
                   : ScrollableListViewBuilder(
                       primary: true,
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       separatorBuilder: (context, index) =>
                           (index == 0 || index == entityList.length)
-                              ? SizedBox()
-                              : ListDivider(),
+                          ? SizedBox()
+                          : ListDivider(),
                       itemCount: entityList.length + 2,
                       itemBuilder: (BuildContext context, index) {
                         if (index == 0 || index == entityList.length + 1) {
@@ -216,8 +221,7 @@ class _EntityListState extends State<EntityList> {
                           }
                         },
                       ),
-                    )*/
-              ,
+                    )*/,
             ),
           ],
         );
@@ -233,8 +237,9 @@ class _EntityListState extends State<EntityList> {
                 filterEntityType: uiState.filterEntityType,
                 onPressed: (_) {
                   viewEntityById(
-                      entityId: state.uiState.filterEntityId,
-                      entityType: state.uiState.filterEntityType);
+                    entityId: state.uiState.filterEntityId,
+                    entityType: state.uiState.filterEntityType,
+                  );
                 },
                 onClearPressed: () {
                   store.dispatch(ClearEntityFilter());
@@ -247,63 +252,72 @@ class _EntityListState extends State<EntityList> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AppPaginatedDataTable(
                     onSelectAll: (value) {
-                      final startIndex =
-                          min(_firstRowIndex, entityList.length - 1);
-                      final endIndex =
-                          min(_firstRowIndex + rowsPerPage, entityList.length);
+                      final startIndex = min(
+                        _firstRowIndex,
+                        entityList.length - 1,
+                      );
+                      final endIndex = min(
+                        _firstRowIndex + rowsPerPage,
+                        entityList.length,
+                      );
                       final entities = entityList
                           .sublist(startIndex, endIndex)
-                          .map<BaseEntity>((String? entityId) =>
-                              entityMap![entityId] as BaseEntity)
-                          .where((invoice) =>
-                              value != listUIState.isSelected(invoice.id))
+                          .map<BaseEntity>(
+                            (String? entityId) =>
+                                entityMap![entityId] as BaseEntity,
+                          )
+                          .where(
+                            (invoice) =>
+                                value != listUIState.isSelected(invoice.id),
+                          )
                           .toList();
                       handleEntitiesActions(
-                          entities, EntityAction.toggleMultiselect);
+                        entities,
+                        EntityAction.toggleMultiselect,
+                      );
                     },
                     columns: [
                       if (!isInMultiselect) DataColumn(label: SizedBox()),
                       ...widget.tableColumns!.map((field) {
-                        String? label =
-                            AppLocalization.of(context)!.lookup(field);
+                        String? label = AppLocalization.of(
+                          context,
+                        )!.lookup(field);
                         if (field.startsWith('custom')) {
                           final key = field.replaceFirst(
-                              'custom', entityType.snakeCase);
+                            'custom',
+                            entityType.snakeCase,
+                          );
                           label = state.company.getCustomFieldLabel(key);
                         }
                         return DataColumn(
-                            label: Container(
-                              child: Text(
-                                label,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            onSort: (int columnIndex, bool ascending) {
-                              widget.onSortColumn(field);
-                            });
+                          label: Container(
+                            child: Text(label, overflow: TextOverflow.ellipsis),
+                          ),
+                          onSort: (int columnIndex, bool ascending) {
+                            widget.onSortColumn(field);
+                          },
+                        );
                       }),
                     ],
                     source: dataTableSource,
-                    sortColumnIndex: widget.tableColumns!
-                            .contains(listUIState.sortField)
+                    sortColumnIndex:
+                        widget.tableColumns!.contains(listUIState.sortField)
                         ? widget.tableColumns!.indexOf(listUIState.sortField) +
-                            1
+                              1
                         : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
                     showFirstLastButtons: true,
                     onPageChanged: (row) {
                       _firstRowIndex = row;
-                      store.dispatch(UpdateLastHistory(
-                          (row / state.prefState.rowsPerPage).floor()));
+                      store.dispatch(
+                        UpdateLastHistory(
+                          (row / state.prefState.rowsPerPage).floor(),
+                        ),
+                      );
                     },
                     initialFirstRowIndex: _firstRowIndex,
-                    availableRowsPerPage: [
-                      10,
-                      25,
-                      50,
-                      100,
-                    ],
+                    availableRowsPerPage: [10, 25, 50, 100],
                     onRowsPerPageChanged: (value) {
                       store.dispatch(UpdateUserPreferences(rowsPerPage: value));
                     },
@@ -319,20 +333,22 @@ class _EntityListState extends State<EntityList> {
     final entities = listUIState.selectedIds == null
         ? <BaseEntity>[]
         : listUIState.selectedIds!
-            .map<BaseEntity>((entityId) => entityMap![entityId] as BaseEntity)
-            .toList();
+              .map<BaseEntity>((entityId) => entityMap![entityId] as BaseEntity)
+              .toList();
     final firstEntity = entities.isEmpty ? null : entities.first;
-    final actions = (firstEntity?.getActions(
-              includeEdit: false,
-              multiselect: true,
-              userCompany: state.userCompany,
-              client: (firstEntity is BelongsToClient)
-                  ? state.clientState
-                      .get((firstEntity as BelongsToClient).clientId!)
-                  : null,
-            ) ??
-            [])
-        .nonNulls;
+    final actions =
+        (firstEntity?.getActions(
+                  includeEdit: false,
+                  multiselect: true,
+                  userCompany: state.userCompany,
+                  client: (firstEntity is BelongsToClient)
+                      ? state.clientState.get(
+                          (firstEntity as BelongsToClient).clientId!,
+                        )
+                      : null,
+                ) ??
+                [])
+            .nonNulls;
 
     final column = Column(
       children: [
@@ -353,103 +369,128 @@ class _EntityListState extends State<EntityList> {
                   Checkbox(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     onChanged: (value) {
-                      final endIndex =
-                          min(entityList.length, kMaxEntitiesPerBulkAction);
+                      final endIndex = min(
+                        entityList.length,
+                        kMaxEntitiesPerBulkAction,
+                      );
                       final entities = entityList
                           .sublist(0, endIndex)
                           .map<BaseEntity>(
-                              (entityId) => entityMap![entityId] as BaseEntity)
+                            (entityId) => entityMap![entityId] as BaseEntity,
+                          )
                           .toList();
                       handleEntitiesActions(
-                          entities, EntityAction.toggleMultiselect);
+                        entities,
+                        EntityAction.toggleMultiselect,
+                      );
                     },
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    value: entityList.length ==
+                    value:
+                        entityList.length ==
                         (listUIState.selectedIds ?? <String>[]).length,
                   ),
                 if (isDesktop(context)) ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text(isList
-                        ? '($countSelected)'
-                        : localization!.countSelected
-                            .replaceFirst(':count', '$countSelected')),
+                    child: Text(
+                      isList
+                          ? '($countSelected)'
+                          : localization!.countSelected.replaceFirst(
+                              ':count',
+                              '$countSelected',
+                            ),
+                    ),
                   ),
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: OverflowView.flexible(
-                          spacing: 8,
-                          children: actions
-                              .map(
-                                (action) => OutlinedButton(
-                                  child: IconText(
-                                    icon: getEntityActionIcon(action),
-                                    text: localization!.lookup('$action'),
-                                  ),
-                                  onPressed: () {
-                                    handleEntitiesActions(entities, action);
-                                    widget.onClearMultiselect();
-                                  },
+                        spacing: 8,
+                        children: actions
+                            .map(
+                              (action) => OutlinedButton(
+                                child: IconText(
+                                  icon: getEntityActionIcon(action),
+                                  text: localization!.lookup('$action'),
                                 ),
-                              )
-                              .toList(),
-                          builder: (context, remaining) {
-                            return PopupMenuButton<EntityAction>(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      localization!.more,
-                                      style: TextStyle(
-                                          color: state.prefState.enableDarkMode
-                                              ? Colors.white
-                                              : Colors.black),
-                                    ),
-                                    SizedBox(width: 4),
-                                    Icon(Icons.arrow_drop_down,
-                                        color: state.prefState.enableDarkMode
-                                            ? Colors.white
-                                            : Colors.black),
-                                  ],
-                                ),
+                                onPressed: () {
+                                  handleEntitiesActions(entities, action);
+                                  widget.onClearMultiselect();
+                                },
                               ),
-                              onSelected: (EntityAction action) {
-                                handleEntitiesActions(entities, action);
-                                widget.onClearMultiselect();
-                              },
-                              itemBuilder: (BuildContext context) {
-                                return actions
-                                    .toList()
-                                    .sublist(actions.length - remaining)
-                                    .map((action) {
-                                  return PopupMenuItem<EntityAction>(
-                                    value: action,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(getEntityActionIcon(action),
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                        SizedBox(width: 16.0),
-                                        Text(AppLocalization.of(context)!
-                                            .lookup(action.toString())),
-                                      ],
+                            )
+                            .toList(),
+                        builder: (context, remaining) {
+                          return PopupMenuButton<EntityAction>(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    localization!.more,
+                                    style: TextStyle(
+                                      color: state.prefState.enableDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
                                     ),
-                                  );
-                                }).toList();
-                              },
-                            );
-                          }),
+                                  ),
+                                  SizedBox(width: 4),
+                                  Icon(
+                                    Icons.arrow_drop_down,
+                                    color: state.prefState.enableDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onSelected: (EntityAction action) {
+                              handleEntitiesActions(entities, action);
+                              widget.onClearMultiselect();
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return actions
+                                  .toList()
+                                  .sublist(actions.length - remaining)
+                                  .map((action) {
+                                    return PopupMenuItem<EntityAction>(
+                                      value: action,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            getEntityActionIcon(action),
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.secondary,
+                                          ),
+                                          SizedBox(width: 16.0),
+                                          Text(
+                                            AppLocalization.of(
+                                              context,
+                                            )!.lookup(action.toString()),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  })
+                                  .toList();
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  )
+                  ),
                 ] else ...[
                   SizedBox(width: 16),
                   Expanded(
-                    child: Text(localization!.countSelected
-                        .replaceFirst(':count', '$countSelected')),
+                    child: Text(
+                      localization!.countSelected.replaceFirst(
+                        ':count',
+                        '$countSelected',
+                      ),
+                    ),
                   ),
                   SaveCancelButtons(
                     isHeader: false,
@@ -461,13 +502,14 @@ class _EntityListState extends State<EntityList> {
                         entities: entities,
                         multiselect: true,
                         completer: Completer<Null>()
-                          ..future
-                              .then<Null>((_) => widget.onClearMultiselect()),
+                          ..future.then<Null>(
+                            (_) => widget.onClearMultiselect(),
+                          ),
                       );
                     },
                     onCancelPressed: (_) => widget.onClearMultiselect(),
                   ),
-                ]
+                ],
               ],
             ),
           ),

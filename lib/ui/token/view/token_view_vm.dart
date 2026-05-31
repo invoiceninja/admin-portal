@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenViewScreen extends StatelessWidget {
-  const TokenViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const TokenViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsTokenView';
   final bool isFilter;
 
@@ -35,10 +32,7 @@ class TokenViewScreen extends StatelessWidget {
         return TokenViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return TokenView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return TokenView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -59,12 +53,14 @@ class TokenViewVM {
 
   factory TokenViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final token = state.tokenState.map[state.tokenUIState.selectedId] ??
+    final token =
+        state.tokenState.map[state.tokenUIState.selectedId] ??
         TokenEntity(id: state.tokenUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadToken(completer: completer, tokenId: token.id));
       return completer.future;
     }

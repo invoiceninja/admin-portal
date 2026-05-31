@@ -11,9 +11,9 @@ part 'transaction_rule_model.g.dart';
 abstract class TransactionRuleListResponse
     implements
         Built<TransactionRuleListResponse, TransactionRuleListResponseBuilder> {
-  factory TransactionRuleListResponse(
-          [void updates(TransactionRuleListResponseBuilder b)]) =
-      _$TransactionRuleListResponse;
+  factory TransactionRuleListResponse([
+    void updates(TransactionRuleListResponseBuilder b),
+  ]) = _$TransactionRuleListResponse;
 
   TransactionRuleListResponse._();
 
@@ -30,9 +30,9 @@ abstract class TransactionRuleListResponse
 abstract class TransactionRuleItemResponse
     implements
         Built<TransactionRuleItemResponse, TransactionRuleItemResponseBuilder> {
-  factory TransactionRuleItemResponse(
-          [void updates(TransactionRuleItemResponseBuilder b)]) =
-      _$TransactionRuleItemResponse;
+  factory TransactionRuleItemResponse([
+    void updates(TransactionRuleItemResponseBuilder b),
+  ]) = _$TransactionRuleItemResponse;
 
   TransactionRuleItemResponse._();
 
@@ -102,11 +102,12 @@ abstract class TransactionRuleEntity extends Object
   EntityType get entityType => EntityType.transactionRule;
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! &&
@@ -123,8 +124,11 @@ abstract class TransactionRuleEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(TransactionRuleEntity? transactionRule, String sortField,
-      bool sortAscending) {
+  int compareTo(
+    TransactionRuleEntity? transactionRule,
+    String sortField,
+    bool sortAscending,
+  ) {
     int response = 0;
     final transactionRuleA = sortAscending ? this : transactionRule;
     final transactionRuleB = sortAscending ? transactionRule : this;
@@ -132,14 +136,15 @@ abstract class TransactionRuleEntity extends Object
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
       case TransactionRuleFields.name:
-        response = transactionRuleA!.name
-            .toLowerCase()
-            .compareTo(transactionRuleB!.name.toLowerCase());
+        response = transactionRuleA!.name.toLowerCase().compareTo(
+          transactionRuleB!.name.toLowerCase(),
+        );
         break;
 
       default:
         print(
-            '## ERROR: sort by transactionRule.$sortField is not implemented');
+          '## ERROR: sort by transactionRule.$sortField is not implemented',
+        );
         break;
     }
 
@@ -153,12 +158,7 @@ abstract class TransactionRuleEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name], needle: filter);
   }
 
   @override
@@ -186,10 +186,15 @@ abstract class TransactionRuleEntity extends Object
 
 abstract class TransactionRuleCriteriaEntity
     implements
-        Built<TransactionRuleCriteriaEntity,
-            TransactionRuleCriteriaEntityBuilder> {
-  factory TransactionRuleCriteriaEntity(
-      {String? searchKey, String? operator, String? value}) {
+        Built<
+          TransactionRuleCriteriaEntity,
+          TransactionRuleCriteriaEntityBuilder
+        > {
+  factory TransactionRuleCriteriaEntity({
+    String? searchKey,
+    String? operator,
+    String? value,
+  }) {
     return _$TransactionRuleCriteriaEntity._(
       searchKey: searchKey ?? '',
       operator: operator ?? '',
@@ -237,8 +242,8 @@ abstract class TransactionRuleCriteriaEntity
 
   // ignore: unused_element
   static void _initializeBuilder(
-          TransactionRuleCriteriaEntityBuilder builder) =>
-      builder..value = '';
+    TransactionRuleCriteriaEntityBuilder builder,
+  ) => builder..value = '';
 
   static Serializer<TransactionRuleCriteriaEntity> get serializer =>
       _$transactionRuleCriteriaEntitySerializer;

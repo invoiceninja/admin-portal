@@ -181,40 +181,40 @@ abstract class InvoiceEntity extends Object
       taxName1: client?.isTaxExempt == true
           ? ''
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-              ? settings.defaultTaxName1 ?? ''
-              : '',
+          ? settings.defaultTaxName1 ?? ''
+          : '',
       taxRate1: client?.isTaxExempt == true
           ? 0
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-              ? settings.defaultTaxRate1 ?? 0.0
-              : 0,
+          ? settings.defaultTaxRate1 ?? 0.0
+          : 0,
       taxName2: client?.isTaxExempt == true
           ? ''
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-              ? settings.defaultTaxName2 ?? ''
-              : '',
+          ? settings.defaultTaxName2 ?? ''
+          : '',
       taxRate2: client?.isTaxExempt == true
           ? 0
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-              ? settings.defaultTaxRate2 ?? 0.0
-              : 0,
+          ? settings.defaultTaxRate2 ?? 0.0
+          : 0,
       taxName3: client?.isTaxExempt == true
           ? ''
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-              ? settings.defaultTaxName3 ?? ''
-              : '',
+          ? settings.defaultTaxName3 ?? ''
+          : '',
       taxRate3: client?.isTaxExempt == true
           ? 0
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-              ? settings.defaultTaxRate3 ?? 0.0
-              : 0,
+          ? settings.defaultTaxRate3 ?? 0.0
+          : 0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
       autoBillEnabled:
           ((entityType ?? EntityType.invoice) == EntityType.invoice)
-              ? settings.autoBillStandardInvoices ?? false
-              : false,
+          ? settings.autoBillStandardInvoices ?? false
+          : false,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -235,15 +235,22 @@ abstract class InvoiceEntity extends Object
       documents: BuiltList<DocumentEntity>(),
       activities: BuiltList<ActivityEntity>(),
       invitations: client != null
-          ? BuiltList(client.emailContacts
-              .map((contact) => InvitationEntity(clientContactId: contact.id))
-              .toList())
+          ? BuiltList(
+              client.emailContacts
+                  .map(
+                    (contact) => InvitationEntity(clientContactId: contact.id),
+                  )
+                  .toList(),
+            )
           : vendor != null
-              ? BuiltList(vendor.emailContacts
-                  .map((contact) =>
-                      InvitationEntity(vendorContactId: contact.id))
-                  .toList())
-              : BuiltList(<InvitationEntity>[InvitationEntity()]),
+          ? BuiltList(
+              vendor.emailContacts
+                  .map(
+                    (contact) => InvitationEntity(vendorContactId: contact.id),
+                  )
+                  .toList(),
+            )
+          : BuiltList(<InvitationEntity>[InvitationEntity()]),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -282,16 +289,15 @@ abstract class InvoiceEntity extends Object
   InvoiceEntity moveLineItem(int oldIndex, int? newIndex) {
     final lineItem = lineItems[oldIndex];
     InvoiceEntity invoice = rebuild((b) => b..lineItems.removeAt(oldIndex));
-    invoice = invoice.rebuild((b) => b
-      ..lineItems.replace(<InvoiceItemEntity?>[
-        ...invoice.lineItems.sublist(0, newIndex),
-        lineItem,
-        ...invoice.lineItems.sublist(
-          newIndex!,
-          invoice.lineItems.length,
-        )
-      ])
-      ..isChanged = true);
+    invoice = invoice.rebuild(
+      (b) => b
+        ..lineItems.replace(<InvoiceItemEntity?>[
+          ...invoice.lineItems.sublist(0, newIndex),
+          lineItem,
+          ...invoice.lineItems.sublist(newIndex!, invoice.lineItems.length),
+        ])
+        ..isChanged = true,
+    );
     return invoice;
   }
 
@@ -331,67 +337,77 @@ abstract class InvoiceEntity extends Object
         ..dueDate = ''
         ..partialDueDate = ''
         ..documents.clear()
-        ..lineItems.replace(lineItems
-            .where((lineItem) =>
-                lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
-            .map((lineItem) => lineItem.clone)
-            .toList())
+        ..lineItems.replace(
+          lineItems
+              .where(
+                (lineItem) =>
+                    lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE,
+              )
+              .map((lineItem) => lineItem.clone)
+              .toList(),
+        )
         ..invitations.replace(
           invitations
-              .map((invitation) => InvitationEntity(
-                    clientContactId: invitation.clientContactId,
-                    vendorContactId: invitation.vendorContactId,
-                  ))
+              .map(
+                (invitation) => InvitationEntity(
+                  clientContactId: invitation.clientContactId,
+                  vendorContactId: invitation.vendorContactId,
+                ),
+              )
               .toList(),
         ),
     );
   }
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
-    final exchangeRate = getExchangeRate(state.staticState.currencyMap,
-        fromCurrencyId: state.company.currencyId,
-        toCurrencyId: client.currencyId);
+    final exchangeRate = getExchangeRate(
+      state.staticState.currencyMap,
+      fromCurrencyId: state.company.currencyId,
+      toCurrencyId: client.currencyId,
+    );
     final settings = getClientSettings(state, client);
 
-    return rebuild((b) => b
-      ..locationId = ''
-      ..exchangeRate = exchangeRate
-      ..taxName1 = client.isTaxExempt
-          ? ''
-          : state.company.numberOfInvoiceTaxRates >= 1 &&
+    return rebuild(
+      (b) => b
+        ..locationId = ''
+        ..exchangeRate = exchangeRate
+        ..taxName1 = client.isTaxExempt
+            ? ''
+            : state.company.numberOfInvoiceTaxRates >= 1 &&
                   (settings.defaultTaxName1 ?? '').isNotEmpty
-              ? settings.defaultTaxName1
-              : taxName1
-      ..taxRate1 = client.isTaxExempt
-          ? 0
-          : state.company.numberOfInvoiceTaxRates >= 1 &&
+            ? settings.defaultTaxName1
+            : taxName1
+        ..taxRate1 = client.isTaxExempt
+            ? 0
+            : state.company.numberOfInvoiceTaxRates >= 1 &&
                   (settings.defaultTaxName1 ?? '').isNotEmpty
-              ? settings.defaultTaxRate1
-              : taxRate1
-      ..taxName2 = client.isTaxExempt
-          ? ''
-          : state.company.numberOfInvoiceTaxRates >= 2 &&
+            ? settings.defaultTaxRate1
+            : taxRate1
+        ..taxName2 = client.isTaxExempt
+            ? ''
+            : state.company.numberOfInvoiceTaxRates >= 2 &&
                   (settings.defaultTaxName2 ?? '').isNotEmpty
-              ? settings.defaultTaxName2
-              : taxName2
-      ..taxRate2 = client.isTaxExempt
-          ? 0
-          : state.company.numberOfInvoiceTaxRates >= 2 &&
+            ? settings.defaultTaxName2
+            : taxName2
+        ..taxRate2 = client.isTaxExempt
+            ? 0
+            : state.company.numberOfInvoiceTaxRates >= 2 &&
                   (settings.defaultTaxName2 ?? '').isNotEmpty
-              ? settings.defaultTaxRate2
-              : taxRate2
-      ..taxName3 = client.isTaxExempt
-          ? ''
-          : state.company.numberOfInvoiceTaxRates >= 3 &&
+            ? settings.defaultTaxRate2
+            : taxRate2
+        ..taxName3 = client.isTaxExempt
+            ? ''
+            : state.company.numberOfInvoiceTaxRates >= 3 &&
                   (settings.defaultTaxName3 ?? '').isNotEmpty
-              ? settings.defaultTaxName3
-              : taxName3
-      ..taxRate3 = client.isTaxExempt
-          ? 0
-          : state.company.numberOfInvoiceTaxRates >= 3 &&
+            ? settings.defaultTaxName3
+            : taxName3
+        ..taxRate3 = client.isTaxExempt
+            ? 0
+            : state.company.numberOfInvoiceTaxRates >= 3 &&
                   (settings.defaultTaxName3 ?? '').isNotEmpty
-              ? settings.defaultTaxRate3
-              : taxRate3);
+            ? settings.defaultTaxRate3
+            : taxRate3,
+    );
   }
 
   double get amount;
@@ -612,10 +628,7 @@ abstract class InvoiceEntity extends Object
 
   bool get isApproved {
     if (isQuote &&
-        [
-          kQuoteStatusApproved,
-          kQuoteStatusConverted,
-        ].contains(statusId)) {
+        [kQuoteStatusApproved, kQuoteStatusConverted].contains(statusId)) {
       return true;
     }
 
@@ -658,25 +671,29 @@ abstract class InvoiceEntity extends Object
   int? get loadedAt;
 
   List<InvoiceHistoryEntity> get history => activities
-      .where((activity) =>
-          activity.history != null &&
-          activity.history!.id.isNotEmpty &&
-          activity.history!.createdAt > 0)
+      .where(
+        (activity) =>
+            activity.history != null &&
+            activity.history!.id.isNotEmpty &&
+            activity.history!.createdAt > 0,
+      )
       .map((activity) => activity.history)
       .whereType<InvoiceHistoryEntity>()
       .toList();
 
   List<InvoiceHistoryEntity> get balanceHistory => activities
-      .where((activity) =>
-          activity.history != null &&
-          activity.history!.id.isNotEmpty &&
-          activity.history!.createdAt > 0 &&
-          ![
-            kActivityViewInvoice,
-            kActivityViewQuote,
-            kActivityViewCredit,
-            kActivityViewPurchaseOrder,
-          ].contains(activity.activityTypeId))
+      .where(
+        (activity) =>
+            activity.history != null &&
+            activity.history!.id.isNotEmpty &&
+            activity.history!.createdAt > 0 &&
+            ![
+              kActivityViewInvoice,
+              kActivityViewQuote,
+              kActivityViewCredit,
+              kActivityViewPurchaseOrder,
+            ].contains(activity.activityTypeId),
+      )
       .map((activity) => activity.history)
       .whereType<InvoiceHistoryEntity>()
       .toList();
@@ -718,7 +735,8 @@ abstract class InvoiceEntity extends Object
     if (isPastDue) {
       final now = DateTime.now();
       final dueDate = DateTime.tryParse(
-          partialDueDate.isEmpty ? this.dueDate : partialDueDate);
+        partialDueDate.isEmpty ? this.dueDate : partialDueDate,
+      );
 
       if (dueDate != null) {
         ageInDays = now.difference(dueDate).inDays;
@@ -749,15 +767,19 @@ abstract class InvoiceEntity extends Object
     final vendorB = vendorMap[invoiceB.vendorId] ?? VendorEntity();
     switch (sortField) {
       case InvoiceFields.number:
-        var invoiceANumber =
-            invoiceA.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
-        var invoiceBNumber =
-            invoiceB.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
-        invoiceANumber = (recurringPrefix ?? '').isNotEmpty &&
+        var invoiceANumber = invoiceA.number.isEmpty
+            ? 'ZZZZZZZZZZ'
+            : invoiceA.number;
+        var invoiceBNumber = invoiceB.number.isEmpty
+            ? 'ZZZZZZZZZZ'
+            : invoiceB.number;
+        invoiceANumber =
+            (recurringPrefix ?? '').isNotEmpty &&
                 invoiceANumber.startsWith(recurringPrefix!)
             ? invoiceANumber.replaceFirst(recurringPrefix, '')
             : invoiceANumber;
-        invoiceBNumber = (recurringPrefix ?? '').isNotEmpty &&
+        invoiceBNumber =
+            (recurringPrefix ?? '').isNotEmpty &&
                 invoiceBNumber.startsWith(recurringPrefix!)
             ? invoiceBNumber.replaceFirst(recurringPrefix, '')
             : invoiceBNumber;
@@ -791,8 +813,9 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.reminder3Sent!.compareTo(invoiceB.reminder3Sent!);
         break;
       case InvoiceFields.reminderLastSent:
-        response =
-            invoiceA.reminderLastSent!.compareTo(invoiceB.reminderLastSent!);
+        response = invoiceA.reminderLastSent!.compareTo(
+          invoiceB.reminderLastSent!,
+        );
         break;
       case InvoiceFields.balance:
         response = invoiceA.balanceOrAmount.compareTo(invoiceB.balanceOrAmount);
@@ -801,21 +824,24 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.discount.compareTo(invoiceB.discount);
         break;
       case InvoiceFields.documents:
-        response =
-            invoiceA.documents.length.compareTo(invoiceB.documents.length);
+        response = invoiceA.documents.length.compareTo(
+          invoiceB.documents.length,
+        );
         break;
       case InvoiceFields.poNumber:
         response = invoiceA.poNumber.compareTo(invoiceB.poNumber);
         break;
       case InvoiceFields.status:
-        response =
-            invoiceA.calculatedStatusId.compareTo(invoiceB.calculatedStatusId);
+        response = invoiceA.calculatedStatusId.compareTo(
+          invoiceB.calculatedStatusId,
+        );
         break;
       case EntityFields.state:
         final stateA = EntityState.valueOf(invoiceA.entityState);
         final stateB = EntityState.valueOf(invoiceB.entityState);
-        response =
-            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        response = stateA.name.toLowerCase().compareTo(
+          stateB.name.toLowerCase(),
+        );
         break;
       case InvoiceFields.dueDate:
       case QuoteFields.validUntil:
@@ -824,8 +850,9 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.nextSendDate:
         if (invoiceA.nextSendDatetime.isNotEmpty &&
             invoiceB.nextSendDatetime.isNotEmpty) {
-          response =
-              invoiceA.nextSendDatetime.compareTo(invoiceB.nextSendDatetime);
+          response = invoiceA.nextSendDatetime.compareTo(
+            invoiceB.nextSendDatetime,
+          );
         } else {
           response = invoiceA.nextSendDate.compareTo(invoiceB.nextSendDate);
         }
@@ -833,46 +860,46 @@ abstract class InvoiceEntity extends Object
       case EntityFields.assignedTo:
         final userA = userMap![invoiceA.assignedUserId] ?? UserEntity();
         final userB = userMap[invoiceB.assignedUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.createdBy:
         final userA = userMap![invoiceA.createdUserId] ?? UserEntity();
         final userB = userMap[invoiceB.createdUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case InvoiceFields.publicNotes:
-        response = invoiceA.publicNotes
-            .toLowerCase()
-            .compareTo(invoiceB.publicNotes.toLowerCase());
+        response = invoiceA.publicNotes.toLowerCase().compareTo(
+          invoiceB.publicNotes.toLowerCase(),
+        );
         break;
       case InvoiceFields.privateNotes:
-        response = invoiceA.privateNotes
-            .toLowerCase()
-            .compareTo(invoiceB.privateNotes.toLowerCase());
+        response = invoiceA.privateNotes.toLowerCase().compareTo(
+          invoiceB.privateNotes.toLowerCase(),
+        );
         break;
       case InvoiceFields.customValue1:
-        response = invoiceA.customValue1
-            .toLowerCase()
-            .compareTo(invoiceB.customValue1.toLowerCase());
+        response = invoiceA.customValue1.toLowerCase().compareTo(
+          invoiceB.customValue1.toLowerCase(),
+        );
         break;
       case InvoiceFields.customValue2:
-        response = invoiceA.customValue2
-            .toLowerCase()
-            .compareTo(invoiceB.customValue2.toLowerCase());
+        response = invoiceA.customValue2.toLowerCase().compareTo(
+          invoiceB.customValue2.toLowerCase(),
+        );
         break;
       case InvoiceFields.customValue3:
-        response = invoiceA.customValue3
-            .toLowerCase()
-            .compareTo(invoiceB.customValue3.toLowerCase());
+        response = invoiceA.customValue3.toLowerCase().compareTo(
+          invoiceB.customValue3.toLowerCase(),
+        );
         break;
       case InvoiceFields.customValue4:
-        response = invoiceA.customValue4
-            .toLowerCase()
-            .compareTo(invoiceB.customValue4.toLowerCase());
+        response = invoiceA.customValue4.toLowerCase().compareTo(
+          invoiceB.customValue4.toLowerCase(),
+        );
         break;
       case InvoiceFields.client:
         response = removeDiacritics(clientA.listDisplayName)
@@ -883,8 +910,9 @@ abstract class InvoiceEntity extends Object
         response = invoiceB.isViewed ? 1 : -1;
         break;
       case RecurringInvoiceFields.remainingCycles:
-        response =
-            invoiceA.remainingCycles!.compareTo(invoiceB.remainingCycles!);
+        response = invoiceA.remainingCycles!.compareTo(
+          invoiceB.remainingCycles!,
+        );
         break;
       case RecurringInvoiceFields.frequency:
         response = invoiceA.frequencyId!.compareTo(invoiceB.frequencyId!);
@@ -911,8 +939,9 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.partialDueDate.compareTo(invoiceB.partialDueDate);
         break;
       case InvoiceFields.vendor:
-        response =
-            vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
+        response = vendorA.name.toLowerCase().compareTo(
+          vendorB.name.toLowerCase(),
+        );
         break;
       case InvoiceFields.dueDateDays:
         response = invoiceA.dueDateDays!.compareTo(invoiceB.dueDateDays!);
@@ -1002,7 +1031,7 @@ abstract class InvoiceEntity extends Object
         customValue3,
         customValue4,
         formatNumber(amount, navigatorKey.currentContext),
-        formatDate(date, navigatorKey.currentContext)
+        formatDate(date, navigatorKey.currentContext),
       ],
       needle: filter,
     );
@@ -1020,19 +1049,20 @@ abstract class InvoiceEntity extends Object
         customValue3,
         customValue4,
         formatNumber(amount, navigatorKey.currentContext),
-        formatDate(date, navigatorKey.currentContext)
+        formatDate(date, navigatorKey.currentContext),
       ],
       needle: filter,
     );
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final state = store.state;
     final actions = <EntityAction?>[];
@@ -1059,7 +1089,7 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.start);
           } else if ([
             kRecurringInvoiceStatusPending,
-            kRecurringInvoiceStatusActive
+            kRecurringInvoiceStatusActive,
           ].contains(calculatedStatusId)) {
             actions.add(EntityAction.stop);
           }
@@ -1106,7 +1136,9 @@ abstract class InvoiceEntity extends Object
 
       if (!isDeleted!) {
         if (hasDesignTemplatesForEntityType(
-            store.state.designState.map, entityType!)) {
+          store.state.designState.map,
+          entityType!,
+        )) {
           actions.add(EntityAction.runTemplate);
         }
 
@@ -1258,22 +1290,31 @@ abstract class InvoiceEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  InvoiceEntity applyTax(TaxRateEntity taxRate,
-      {bool isSecond = false, bool isThird = false}) {
+  InvoiceEntity applyTax(
+    TaxRateEntity taxRate, {
+    bool isSecond = false,
+    bool isThird = false,
+  }) {
     InvoiceEntity invoice;
 
     if (isThird) {
-      invoice = rebuild((b) => b
-        ..taxRate3 = taxRate.rate
-        ..taxName3 = taxRate.name);
+      invoice = rebuild(
+        (b) => b
+          ..taxRate3 = taxRate.rate
+          ..taxName3 = taxRate.name,
+      );
     } else if (isSecond) {
-      invoice = rebuild((b) => b
-        ..taxRate2 = taxRate.rate
-        ..taxName2 = taxRate.name);
+      invoice = rebuild(
+        (b) => b
+          ..taxRate2 = taxRate.rate
+          ..taxName2 = taxRate.name,
+      );
     } else {
-      invoice = rebuild((b) => b
-        ..taxRate1 = taxRate.rate
-        ..taxName1 = taxRate.name);
+      invoice = rebuild(
+        (b) => b
+          ..taxRate1 = taxRate.rate
+          ..taxName1 = taxRate.name,
+      );
     }
 
     return invoice;
@@ -1325,10 +1366,10 @@ abstract class InvoiceEntity extends Object
   EmailTemplate get emailTemplate => isPurchaseOrder
       ? EmailTemplate.purchase_order
       : isQuote
-          ? EmailTemplate.quote
-          : isCredit
-              ? EmailTemplate.credit
-              : EmailTemplate.invoice;
+      ? EmailTemplate.quote
+      : isCredit
+      ? EmailTemplate.credit
+      : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
@@ -1432,8 +1473,9 @@ abstract class InvoiceEntity extends Object
       return false;
     }
 
-    final date =
-        (partial != 0 && partialDueDate.isNotEmpty) ? partialDueDate : dueDate;
+    final date = (partial != 0 && partialDueDate.isNotEmpty)
+        ? partialDueDate
+        : dueDate;
 
     if (date.isEmpty || balance == 0) {
       return false;
@@ -1443,20 +1485,25 @@ abstract class InvoiceEntity extends Object
         !isRecurring &&
         isSent &&
         isUnpaid &&
-        DateTime.tryParse(date)!
-            .isBefore(DateTime.now().subtract(Duration(days: 1)));
+        DateTime.tryParse(
+          date,
+        )!.isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
   InvitationEntity? getInvitationForClientContact(
-      ClientContactEntity? contact) {
+    ClientContactEntity? contact,
+  ) {
     return invitations.firstWhereOrNull(
-        (invitation) => invitation.clientContactId == contact!.id);
+      (invitation) => invitation.clientContactId == contact!.id,
+    );
   }
 
   InvitationEntity? getInvitationForVendorContact(
-      VendorContactEntity? contact) {
+    VendorContactEntity? contact,
+  ) {
     return invitations.firstWhereOrNull(
-        (invitation) => invitation.vendorContactId == contact!.id);
+      (invitation) => invitation.vendorContactId == contact!.id,
+    );
   }
 
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
@@ -1478,7 +1525,12 @@ abstract class InvoiceEntity extends Object
           ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
       _calculateTax(
-          taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
+        taxes,
+        taxName1,
+        taxRate1,
+        invoiceTaxAmount,
+        invoicePaidAmount,
+      );
     }
 
     if (taxName2.isNotEmpty) {
@@ -1487,7 +1539,12 @@ abstract class InvoiceEntity extends Object
           ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
       _calculateTax(
-          taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
+        taxes,
+        taxName2,
+        taxRate2,
+        invoiceTaxAmount,
+        invoicePaidAmount,
+      );
     }
 
     if (taxName3.isNotEmpty) {
@@ -1496,7 +1553,12 @@ abstract class InvoiceEntity extends Object
           ? (paidToDate / amount * invoiceTaxAmount)
           : 0.0;
       _calculateTax(
-          taxes, taxName3, taxRate3, invoiceTaxAmount, invoicePaidAmount);
+        taxes,
+        taxName3,
+        taxRate3,
+        invoiceTaxAmount,
+        invoicePaidAmount,
+      );
     }
 
     for (final item in lineItems) {
@@ -1509,7 +1571,12 @@ abstract class InvoiceEntity extends Object
             : 0.0;
 
         _calculateTax(
-            taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
+          taxes,
+          item.taxName1,
+          item.taxRate1,
+          itemTaxAmount,
+          itemPaidAmount,
+        );
       }
 
       if (item.taxName2.isNotEmpty) {
@@ -1518,7 +1585,12 @@ abstract class InvoiceEntity extends Object
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
-            taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
+          taxes,
+          item.taxName2,
+          item.taxRate2,
+          itemTaxAmount,
+          itemPaidAmount,
+        );
       }
 
       if (item.taxName3.isNotEmpty) {
@@ -1527,7 +1599,12 @@ abstract class InvoiceEntity extends Object
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
-            taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);
+          taxes,
+          item.taxName3,
+          item.taxRate3,
+          itemTaxAmount,
+          itemPaidAmount,
+        );
       }
     }
 
@@ -1548,13 +1625,14 @@ abstract class InvoiceEntity extends Object
     final key = rate.toString() + ' ' + name;
 
     map.putIfAbsent(
-        key,
-        () => <String, dynamic>{
-              'name': name,
-              'rate': rate,
-              'amount': 0.0,
-              'paid': 0.0
-            });
+      key,
+      () => <String, dynamic>{
+        'name': name,
+        'rate': rate,
+        'amount': 0.0,
+        'paid': 0.0,
+      },
+    );
 
     map[key]!['amount'] += amount;
     map[key]!['paid'] += paid;
@@ -1662,8 +1740,9 @@ abstract class InvoiceItemEntity
       notes: '',
       cost: 0,
       productCost: 0,
-      quantity:
-          (company.defaultQuantity || !company.enableProductQuantity) ? 1 : 0,
+      quantity: (company.defaultQuantity || !company.enableProductQuantity)
+          ? 1
+          : 0,
       taxName1: '',
       taxRate1: 0,
       taxName2: '',
@@ -1791,9 +1870,11 @@ abstract class InvoiceItemEntity
         calculateTaxAmount(invoice.taxRate3);
   }
 
-  InvoiceItemEntity get clone => rebuild((b) => b
-    ..expenseId = ''
-    ..taskId = '');
+  InvoiceItemEntity get clone => rebuild(
+    (b) => b
+      ..expenseId = ''
+      ..taskId = '',
+  );
 
   bool get isTask => typeId == TYPE_TASK;
 
@@ -1853,22 +1934,31 @@ abstract class InvoiceItemEntity
     return parts.join(', ');
   }
 
-  InvoiceItemEntity applyTax(TaxRateEntity? taxRate,
-      {bool isSecond = false, bool isThird = false}) {
+  InvoiceItemEntity applyTax(
+    TaxRateEntity? taxRate, {
+    bool isSecond = false,
+    bool isThird = false,
+  }) {
     InvoiceItemEntity item;
 
     if (isThird) {
-      item = rebuild((b) => b
-        ..taxRate3 = taxRate!.rate
-        ..taxName3 = taxRate.name);
+      item = rebuild(
+        (b) => b
+          ..taxRate3 = taxRate!.rate
+          ..taxName3 = taxRate.name,
+      );
     } else if (isSecond) {
-      item = rebuild((b) => b
-        ..taxRate2 = taxRate!.rate
-        ..taxName2 = taxRate.name);
+      item = rebuild(
+        (b) => b
+          ..taxRate2 = taxRate!.rate
+          ..taxName2 = taxRate.name,
+      );
     } else {
-      item = rebuild((b) => b
-        ..taxRate1 = taxRate!.rate
-        ..taxName1 = taxRate.name);
+      item = rebuild(
+        (b) => b
+          ..taxRate1 = taxRate!.rate
+          ..taxName1 = taxRate.name,
+      );
     }
 
     return item;
@@ -1886,10 +1976,7 @@ abstract class InvoiceItemEntity
 abstract class InvitationEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
-  factory InvitationEntity({
-    String? clientContactId,
-    String? vendorContactId,
-  }) {
+  factory InvitationEntity({String? clientContactId, String? vendorContactId}) {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
@@ -2039,10 +2126,7 @@ abstract class InvitationEntity extends Object
 abstract class InvoiceScheduleEntity
     implements Built<InvoiceScheduleEntity, InvoiceScheduleEntityBuilder> {
   factory InvoiceScheduleEntity() {
-    return _$InvoiceScheduleEntity._(
-      sendDate: '',
-      dueDate: '',
-    );
+    return _$InvoiceScheduleEntity._(sendDate: '', dueDate: '');
   }
 
   InvoiceScheduleEntity._();

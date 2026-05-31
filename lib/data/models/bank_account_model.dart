@@ -11,9 +11,9 @@ part 'bank_account_model.g.dart';
 
 abstract class BankAccountListResponse
     implements Built<BankAccountListResponse, BankAccountListResponseBuilder> {
-  factory BankAccountListResponse(
-          [void updates(BankAccountListResponseBuilder b)]) =
-      _$BankAccountListResponse;
+  factory BankAccountListResponse([
+    void updates(BankAccountListResponseBuilder b),
+  ]) = _$BankAccountListResponse;
 
   BankAccountListResponse._();
 
@@ -29,9 +29,9 @@ abstract class BankAccountListResponse
 
 abstract class BankAccountItemResponse
     implements Built<BankAccountItemResponse, BankAccountItemResponseBuilder> {
-  factory BankAccountItemResponse(
-          [void updates(BankAccountItemResponseBuilder b)]) =
-      _$BankAccountItemResponse;
+  factory BankAccountItemResponse([
+    void updates(BankAccountItemResponseBuilder b),
+  ]) = _$BankAccountItemResponse;
 
   BankAccountItemResponse._();
 
@@ -132,11 +132,12 @@ abstract class BankAccountEntity extends Object
       disabledUpstream == true && nordigenInstitutionId.isNotEmpty;
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted!) {
@@ -159,7 +160,10 @@ abstract class BankAccountEntity extends Object
   }
 
   int compareTo(
-      BankAccountEntity? bankAccount, String sortField, bool sortAscending) {
+    BankAccountEntity? bankAccount,
+    String sortField,
+    bool sortAscending,
+  ) {
     int response = 0;
     final bankAccountA = sortAscending ? this : bankAccount;
     final bankAccountB = sortAscending ? bankAccount : this;
@@ -167,17 +171,17 @@ abstract class BankAccountEntity extends Object
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
       case BankAccountFields.name:
-        response = bankAccountA!.name
-            .toLowerCase()
-            .compareTo(bankAccountB!.name.toLowerCase());
+        response = bankAccountA!.name.toLowerCase().compareTo(
+          bankAccountB!.name.toLowerCase(),
+        );
         break;
       case BankAccountFields.balance:
         response = bankAccountA!.balance.compareTo(bankAccountB!.balance);
         break;
       case BankAccountFields.type:
-        response = bankAccountA!.type
-            .toLowerCase()
-            .compareTo(bankAccountB!.type.toLowerCase());
+        response = bankAccountA!.type.toLowerCase().compareTo(
+          bankAccountB!.type.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by bankAccount.$sortField is not implemented');
@@ -194,24 +198,12 @@ abstract class BankAccountEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        name,
-        type,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name, type], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [
-        name,
-        type,
-      ],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [name, type], needle: filter);
   }
 
   @override
@@ -223,7 +215,7 @@ abstract class BankAccountEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-// ignore: unused_element
+  // ignore: unused_element
   static void _initializeBuilder(BankAccountEntityBuilder builder) => builder
     ..fromDate = ''
     ..disabledUpstream = false

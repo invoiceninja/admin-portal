@@ -50,9 +50,9 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               _isExpanded[systemLog.id] = !isExpanded;
             });
           },
-          children: systemLogs
-              .where((systemLog) => systemLog.isVisible)
-              .map((systemLog) {
+          children: systemLogs.where((systemLog) => systemLog.isVisible).map((
+            systemLog,
+          ) {
             final client = state.clientState.get(systemLog.clientId);
             Map<String, dynamic>? logs;
             if (_isExpanded[systemLog.id] == true && systemLog.log.isNotEmpty) {
@@ -67,23 +67,28 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   leading: Icon(getActivityIcon(systemLog.categoryId)),
-                  title: Text(localization!.lookup(systemLog.category) +
-                      '  ›  ' +
-                      localization.lookup(systemLog.type)),
+                  title: Text(
+                    localization!.lookup(systemLog.category) +
+                        '  ›  ' +
+                        localization.lookup(systemLog.type),
+                  ),
                   isThreeLine: true,
-                  subtitle: Text(localization.lookup(systemLog.event) +
-                      (client.isOld ? ' • ${client.displayName}' : '') +
-                      '\n' +
-                      formatDate(
+                  subtitle: Text(
+                    localization.lookup(systemLog.event) +
+                        (client.isOld ? ' • ${client.displayName}' : '') +
+                        '\n' +
+                        formatDate(
                           convertTimestampToDateString(systemLog.createdAt),
                           context,
-                          showTime: true)),
+                          showTime: true,
+                        ),
+                  ),
                   onTap: () {
                     setState(() {
                       _isExpanded[systemLog.id] =
                           _isExpanded.containsKey(systemLog.id)
-                              ? !_isExpanded[systemLog.id]!
-                              : true;
+                          ? !_isExpanded[systemLog.id]!
+                          : true;
                     });
                   },
                 );
@@ -91,17 +96,20 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               isExpanded: _isExpanded[systemLog.id] == true,
               body: _isExpanded[systemLog.id] == true
                   ? logs == null
-                      ? Padding(
-                          child: Text(systemLog.log),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 10))
-                      : Container(
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: JsonViewer(logs),
-                          ),
-                        )
+                        ? Padding(
+                            child: Text(systemLog.log),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
+                          )
+                        : Container(
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: JsonViewer(logs),
+                            ),
+                          )
                   : SizedBox(),
             );
           }).toList(),
