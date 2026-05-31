@@ -75,6 +75,9 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
           rawResponse: true,
         )
         .then((dynamic response) {
+          if (!mounted) {
+            return;
+          }
           setState(() {
             _isLoading = false;
             _response = response;
@@ -88,6 +91,9 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
           });
         })
         .catchError((dynamic error) {
+          if (!mounted) {
+            return;
+          }
           setState(() {
             _isLoading = false;
           });

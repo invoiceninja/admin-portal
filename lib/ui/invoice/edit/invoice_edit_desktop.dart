@@ -1750,6 +1750,12 @@ class __PdfPreviewState extends State<_PdfPreview> {
   bool _pendingLoad = false;
 
   @override
+  void dispose() {
+    _pdfDebouncer.cancel();
+    super.dispose();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
@@ -1826,10 +1832,16 @@ class __PdfPreviewState extends State<_PdfPreview> {
           rawResponse: true,
         )
         .then((dynamic response) async {
+          if (!mounted) {
+            return;
+          }
           final pages = await Printing.raster(
             response.bodyBytes,
             dpi: 5,
           ).toList();
+          if (!mounted) {
+            return;
+          }
           setState(() {
             _isLoading = false;
             _response = response;
@@ -1852,6 +1864,9 @@ class __PdfPreviewState extends State<_PdfPreview> {
           });
         })
         .catchError((dynamic error) {
+          if (!mounted) {
+            return;
+          }
           setState(() {
             _isLoading = false;
           });

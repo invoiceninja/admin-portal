@@ -118,6 +118,7 @@ class _DesignEditState extends State<DesignEdit>
 
   @override
   void dispose() {
+    _htmlDebouncer.cancel();
     _focusNode!.dispose();
     _tabController!.dispose();
 

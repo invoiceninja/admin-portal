@@ -138,6 +138,7 @@ class _ClientPortalState extends State<ClientPortal>
 
   @override
   void dispose() {
+    _subdomainDebouncer.cancel();
     _focusNode.dispose();
     _controller!.removeListener(_onTabChanged);
     _controller!.dispose();
