@@ -18,6 +18,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'activity_159': 'Invoice :invoice for :client was signed',
+      'activity_160': 'Quote :quote for :client was signed',
+      'activity_161': 'Credit :credit for :client was signed',
+      'activity_162':
+          'Purchase Order :purchase_order for :vendor was signed',
+      'activity_163': 'Custom Document :document for :client was signed',
+      'activity_164': 'QuickBooks sync failed. :notes',
+      'activity_165': 'QuickBooks sync successful. :notes',
+      'activity_166': 'User :notes was purged by :user',
+      'activity_167': 'E-Invoice :invoice status updated to :notes',
       'invoice_outstanding_tasks': 'Invoice Outstanding Tasks',
       'payment_schedule': 'Payment Schedule',
       'auto_send': 'Auto Send',

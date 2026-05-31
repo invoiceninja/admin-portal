@@ -781,7 +781,14 @@ abstract class ActivityEntity
       activityTypeId == kActivityComment || activityTypeId.isEmpty;
 
   EntityType? get entityType {
-    if (isComment) {
+    final resolveByEntityId = isComment ||
+        [
+          kActivityCustomDocumentSigned,
+          kActivityQuickbooksPushFailure,
+          kActivityQuickbooksPushSuccess,
+        ].contains(activityTypeId);
+
+    if (resolveByEntityId) {
       if ((invoiceId ?? '').isNotEmpty) {
         return EntityType.invoice;
       } else if ((quoteId ?? '').isNotEmpty) {
@@ -845,6 +852,8 @@ abstract class ActivityEntity
       kActivityVerifactuInvoiceSentFailure,
       kActivityVerifactuCancellationSent,
       kActivityVerifactuCancellationSentFailure,
+      kActivityInvoiceDocumentSigned,
+      kActivityEInvoiceStatusUpdated,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([
@@ -868,6 +877,7 @@ abstract class ActivityEntity
       kActivityRefundedPayment,
       kActivityViewCredit,
       kActivityEmailCredit,
+      kActivityCreditDocumentSigned,
     ].contains(activityTypeId)) {
       return EntityType.credit;
     } else if ([
@@ -881,6 +891,7 @@ abstract class ActivityEntity
       kActivityApproveQuote,
       kActivityQuoteEmailReminder1,
       kActivityQuoteRejected,
+      kActivityQuoteDocumentSigned,
     ].contains(activityTypeId)) {
       return EntityType.quote;
     } else if ([
@@ -916,6 +927,7 @@ abstract class ActivityEntity
       kActivityArchiveUser,
       kActivityDeleteUser,
       kActivityRestoreUser,
+      kActivityPurgeUser,
     ].contains(activityTypeId)) {
       return EntityType.user;
     } else if ([
@@ -951,6 +963,7 @@ abstract class ActivityEntity
       kActivityEmailPurchaseOrder,
       kActivityViewPurchaseOrder,
       kActivityAcceptPurchaseOrder,
+      kActivityPurchaseOrderDocumentSigned,
     ].contains(activityTypeId)) {
       return EntityType.purchaseOrder;
     } else {
