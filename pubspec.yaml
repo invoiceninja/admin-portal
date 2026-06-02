@@ -106,8 +106,6 @@ dependency_overrides:
   image_cropper_platform_interface: 7.1.0
   navigation_builder: ^0.0.3
   states_rebuilder: ^6.3.0
-  win32: ^5.5.1
-  image: ^4.5.4
   super_editor:
     git:
       url: https://github.com/superlistapp/super_editor
