@@ -243,35 +243,35 @@ class _AppBottomBarState extends State<AppBottomBar> {
             return Container(
               color: Theme.of(context).colorScheme.surface,
               child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: widget.sortFields.map((sortField) {
-                    final field = sortField;
-                    return InkWell(
-                      onTap: () => widget.onSelectedSortField!(sortField),
-                      child: IgnorePointer(
-                        child: RadioListTile<String>(
-                          dense: true,
-                          title: Text(
-                            AppLocalization.of(context)!.lookup(sortField),
-                          ),
-                          subtitle: sortField == listUIState.sortField
-                              ? Text(
-                                  listUIState.sortAscending
-                                      ? AppLocalization.of(context)!.ascending
-                                      : AppLocalization.of(context)!.descending,
-                                )
-                              : null,
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          groupValue: listUIState.sortField,
-                          onChanged: (value) =>
-                              widget.onSelectedSortField!(value ?? ''),
-                          value: field,
-                          toggleable: true,
+                mainAxisSize: MainAxisSize.min,
+                children: widget.sortFields.map((sortField) {
+                  final field = sortField;
+                  return InkWell(
+                    onTap: () => widget.onSelectedSortField!(sortField),
+                    child: IgnorePointer(
+                      child: RadioListTile<String>(
+                        dense: true,
+                        title: Text(
+                          AppLocalization.of(context)!.lookup(sortField),
                         ),
+                        subtitle: sortField == listUIState.sortField
+                            ? Text(
+                                listUIState.sortAscending
+                                    ? AppLocalization.of(context)!.ascending
+                                    : AppLocalization.of(context)!.descending,
+                              )
+                            : null,
+                        activeColor: Theme.of(context).colorScheme.secondary,
+                        groupValue: listUIState.sortField,
+                        onChanged: (value) =>
+                            widget.onSelectedSortField!(value ?? ''),
+                        value: field,
+                        toggleable: true,
                       ),
-                    );
-                  }).toList(),
-                ),
+                    ),
+                  );
+                }).toList(),
+              ),
             );
           },
         );
@@ -407,8 +407,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
             },
             options: widget.tableColumns ?? [],
             defaultSelected: widget.defaultTableColumns ?? [],
-            selected:
-                state.userCompany.settings.tableColumns['${widget.entityType}']
+            selected: state
+                    .userCompany.settings.tableColumns['${widget.entityType}']
                     ?.toList() ??
                 [],
           );
@@ -429,8 +429,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     IconButton(
                       tooltip: prefState.enableTooltips
                           ? (isList
-                                ? localization!.showTable
-                                : localization!.showList)
+                              ? localization!.showTable
+                              : localization!.showList)
                           : null,
                       icon: Icon(isList ? Icons.table_chart : Icons.view_list),
                       onPressed: () {
@@ -453,8 +453,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       tooltip: localization!.filter,
                       icon: Icon(Icons.filter_list),
                       onPressed: _showFilterStateSheet,
-                      color:
-                          store.state
+                      color: store.state
                               .getListState(widget.entityType)
                               .hasStateFilters
                           ? Theme.of(context).colorScheme.secondary
@@ -467,8 +466,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : null,
                       icon: Icon(Icons.filter),
                       onPressed: _showFilterStatusSheet,
-                      color:
-                          store.state
+                      color: store.state
                               .getListState(widget.entityType)
                               .hasStatusFilters
                           ? Theme.of(context).colorScheme.secondary
@@ -484,8 +482,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : null,
                       icon: Icon(Icons.looks_one),
                       onPressed: _showFilterCustom1Sheet,
-                      color:
-                          store.state
+                      color: store.state
                               .getListState(widget.entityType)
                               .hasCustom1Filters
                           ? Theme.of(context).colorScheme.secondary
@@ -501,8 +498,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : null,
                       icon: Icon(Icons.looks_two),
                       onPressed: _showFilterCustom2Sheet,
-                      color:
-                          store.state
+                      color: store.state
                               .getListState(widget.entityType)
                               .hasCustom2Filters
                           ? Theme.of(context).colorScheme.secondary
@@ -518,8 +514,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : '',
                       icon: Icon(Icons.looks_3),
                       onPressed: _showFilterCustom3Sheet,
-                      color:
-                          store.state
+                      color: store.state
                               .getListState(widget.entityType)
                               .hasCustom3Filters
                           ? Theme.of(context).colorScheme.secondary
@@ -535,8 +530,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           : '',
                       icon: Icon(Icons.looks_4),
                       onPressed: _showFilterCustom4Sheet,
-                      color:
-                          store.state
+                      color: store.state
                               .getListState(widget.entityType)
                               .hasCustom4Filters
                           ? Theme.of(context).colorScheme.secondary

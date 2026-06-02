@@ -151,22 +151,18 @@ class ReportsScreen extends StatelessWidget {
         },
         items: reportResult.columns
             .where(
-              (column) =>
-                  getReportColumnType(column, context) !=
-                  ReportColumnType.number,
-            )
+          (column) =>
+              getReportColumnType(column, context) != ReportColumnType.number,
+        )
             .map((column) {
-              final columnTitle = state.company.getCustomFieldLabel(column);
-              return DropdownMenuItem(
-                child: Text(
-                  columnTitle.isEmpty
-                      ? localization.lookup(column)
-                      : columnTitle,
-                ),
-                value: column,
-              );
-            })
-            .toList(),
+          final columnTitle = state.company.getCustomFieldLabel(column);
+          return DropdownMenuItem(
+            child: Text(
+              columnTitle.isEmpty ? localization.lookup(column) : columnTitle,
+            ),
+            value: column,
+          );
+        }).toList(),
       ),
       if (getReportColumnType(reportsState.group, context) ==
               ReportColumnType.dateTime ||
@@ -241,8 +237,7 @@ class ReportsScreen extends StatelessWidget {
                               filterColumns.first: '',
                           }
                         : {
-                            value:
-                                reportState.filters.containsKey(value) &&
+                            value: reportState.filters.containsKey(value) &&
                                     (reportState.filters[value] ?? '')
                                         .isNotEmpty
                                 ? reportState.filters[value]!
@@ -277,9 +272,8 @@ class ReportsScreen extends StatelessWidget {
                   reportState.filters.rebuild(
                     (b) => b
                       ..addAll({
-                        dateField ?? dateColumns.first: value == null
-                            ? ''
-                            : '$value',
+                        dateField ?? dateColumns.first:
+                            value == null ? '' : '$value',
                       }),
                   ),
                 );
@@ -434,8 +428,7 @@ class ReportsScreen extends StatelessWidget {
                             : reportResult.entities!;
                         confirmCallback(
                           context: context,
-                          message:
-                              localization.lookup(action.toString()) +
+                          message: localization.lookup(action.toString()) +
                               ' • ' +
                               (entities.length == 1
                                   ? '1 ${localization.lookup(firstEntity!.entityType.toString())}'
@@ -611,7 +604,7 @@ class ReportDataTable extends StatefulWidget {
 
 class _ReportDataTableState extends State<ReportDataTable> {
   final Map<String, Map<String, TextEditingController>>
-  _textEditingControllers = {};
+      _textEditingControllers = {};
   final Map<String, Map<String, FocusNode>> _textEditingFocusNodes = {};
   late ReportDataTableSource dataTableSource;
 
@@ -705,8 +698,8 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final settings = state.userCompany.settings;
     final reportSettings =
         settings.reportSettings.containsKey(reportState.report)
-        ? settings.reportSettings[reportState.report]!
-        : ReportSettingsEntity();
+            ? settings.reportSettings[reportState.report]!
+            : ReportSettingsEntity();
     final sortedColumns = reportResult.sortedColumns(reportState);
 
     return Column(
@@ -775,8 +768,8 @@ class TotalsDataTable extends StatelessWidget {
     return mt.DataTable(
       sortColumnIndex:
           reportResult.columns.length > reportSettings.sortTotalsIndex
-          ? reportSettings.sortTotalsIndex
-          : null,
+              ? reportSettings.sortTotalsIndex
+              : null,
       sortAscending: reportSettings.sortTotalsAscending,
       columns: reportResult.totalColumns(
         context,
@@ -1158,8 +1151,8 @@ class ReportResult {
                 value: textEditingControllers[column]!.text == 'true'
                     ? true
                     : textEditingControllers[column]!.text == 'false'
-                    ? false
-                    : null,
+                        ? false
+                        : null,
                 onChanged: (dynamic value) {
                   if (value == null) {
                     textEditingControllers[column]!.text = '';
@@ -1184,8 +1177,7 @@ class ReportResult {
           else if (getReportColumnType(column, context) == ReportColumnType.age)
             DataCell(
               AppDropdownButton<String>(
-                value:
-                    textEditingControllers[column]!.text.isNotEmpty &&
+                value: textEditingControllers[column]!.text.isNotEmpty &&
                         textEditingControllers[column]!.text != 'null'
                     ? textEditingControllers[column]!.text
                     : null,
@@ -1218,14 +1210,14 @@ class ReportResult {
                 decoration: InputDecoration(
                   suffixIcon:
                       (textEditingControllers[column]?.text ?? '').isEmpty
-                      ? null
-                      : IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey),
-                          onPressed: () {
-                            textEditingControllers[column]!.text = '';
-                            onFilterChanged(column, '');
-                          },
-                        ),
+                          ? null
+                          : IconButton(
+                              icon: Icon(Icons.clear, color: Colors.grey),
+                              onPressed: () {
+                                textEditingControllers[column]!.text = '';
+                                onFilterChanged(column, '');
+                              },
+                            ),
                 ),
               ),
             )
@@ -1269,14 +1261,14 @@ class ReportResult {
                 decoration: InputDecoration(
                   suffixIcon:
                       (textEditingControllers[column]?.text ?? '').isEmpty
-                      ? null
-                      : IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey),
-                          onPressed: () {
-                            textEditingControllers[column]!.text = '';
-                            onFilterChanged(column, '');
-                          },
-                        ),
+                          ? null
+                          : IconButton(
+                              icon: Icon(Icons.clear, color: Colors.grey),
+                              onPressed: () {
+                                textEditingControllers[column]!.text = '';
+                                onFilterChanged(column, '');
+                              },
+                            ),
                 ),
               ),
             )
@@ -1313,94 +1305,89 @@ class ReportResult {
                   onFilterChanged(column, value);
                   textEditingFocusNodes[column]!.requestFocus();
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
-                    textEditingController
-                        .selection = TextSelection.fromPosition(
+                    textEditingController.selection =
+                        TextSelection.fromPosition(
                       TextPosition(offset: textEditingController.text.length),
                     );
                   });
                 },
-                fieldViewBuilder:
-                    (
-                      BuildContext context,
-                      TextEditingController textEditingController,
-                      FocusNode focusNode,
-                      VoidCallback onFieldSubmitted,
-                    ) {
-                      return DecoratedFormField(
-                        keyboardType: TextInputType.text,
-                        decoration: textEditingController.text.isEmpty
-                            ? null
-                            : InputDecoration(
-                                suffixIcon: IconButton(
-                                  icon: Icon(Icons.clear, color: Colors.grey),
-                                  onPressed: () {
-                                    textEditingControllers[column]!.text = '';
-                                    onFilterChanged(column, '');
-                                    textEditingFocusNodes[column]!.unfocus();
-                                  },
-                                ),
-                              ),
-                        controller: textEditingController,
-                        focusNode: focusNode,
-                        onFieldSubmitted: (String value) {
-                          onFieldSubmitted();
-                        },
-                      );
+                fieldViewBuilder: (
+                  BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted,
+                ) {
+                  return DecoratedFormField(
+                    keyboardType: TextInputType.text,
+                    decoration: textEditingController.text.isEmpty
+                        ? null
+                        : InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.clear, color: Colors.grey),
+                              onPressed: () {
+                                textEditingControllers[column]!.text = '';
+                                onFilterChanged(column, '');
+                                textEditingFocusNodes[column]!.unfocus();
+                              },
+                            ),
+                          ),
+                    controller: textEditingController,
+                    focusNode: focusNode,
+                    onFieldSubmitted: (String value) {
+                      onFieldSubmitted();
                     },
-                optionsViewBuilder:
-                    (
-                      BuildContext context,
-                      AutocompleteOnSelected<String> onSelected,
-                      Iterable<String> options,
-                    ) {
-                      final highlightedIndex = AutocompleteHighlightedOption.of(
-                        context,
-                      );
-                      return Theme(
-                        data: theme,
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Material(
-                            elevation: 4,
-                            child: AppBorder(
-                              child: Container(
-                                color: Theme.of(context).cardColor,
-                                width: 250,
-                                constraints: BoxConstraints(maxHeight: 270),
-                                child: ScrollableListViewBuilder(
-                                  itemCount: options.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return Container(
-                                      color: highlightedIndex == index
-                                          ? convertHexStringToColor(
-                                              store
-                                                      .state
-                                                      .prefState
-                                                      .enableDarkMode
-                                                  ? kDefaultDarkSelectedColor
-                                                  : kDefaultLightSelectedColor,
-                                            )
-                                          : Theme.of(context).cardColor,
-                                      child: ListTile(
-                                        title: Text(
-                                          options.elementAt(index),
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.titleMedium,
-                                        ),
-                                        onTap: () => onSelected(
-                                          options.elementAt(index),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
+                  );
+                },
+                optionsViewBuilder: (
+                  BuildContext context,
+                  AutocompleteOnSelected<String> onSelected,
+                  Iterable<String> options,
+                ) {
+                  final highlightedIndex = AutocompleteHighlightedOption.of(
+                    context,
+                  );
+                  return Theme(
+                    data: theme,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Material(
+                        elevation: 4,
+                        child: AppBorder(
+                          child: Container(
+                            color: Theme.of(context).cardColor,
+                            width: 250,
+                            constraints: BoxConstraints(maxHeight: 270),
+                            child: ScrollableListViewBuilder(
+                              itemCount: options.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  color: highlightedIndex == index
+                                      ? convertHexStringToColor(
+                                          store.state.prefState.enableDarkMode
+                                              ? kDefaultDarkSelectedColor
+                                              : kDefaultLightSelectedColor,
+                                        )
+                                      : Theme.of(context).cardColor,
+                                  child: ListTile(
+                                    title: Text(
+                                      options.elementAt(index),
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.titleMedium,
+                                    ),
+                                    onTap: () => onSelected(
+                                      options.elementAt(index),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
-                      );
-                    },
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
       ],
@@ -1468,9 +1455,8 @@ class ReportResult {
             formatNumberType: column.toLowerCase().contains('quantity')
                 ? FormatNumberType.double
                 : FormatNumberType.money,
-            currencyId: currencyId == null
-                ? null
-                : currencyId.round().toString(),
+            currencyId:
+                currencyId == null ? null : currencyId.round().toString(),
           );
         } else if (columnType == ReportColumnType.duration) {
           value = formatDuration(Duration(seconds: values![column]!.toInt()));
@@ -1516,8 +1502,8 @@ class ReportResult {
                   filter = filter == localization!.yes
                       ? 'true'
                       : filter == localization.no
-                      ? 'false'
-                      : '';
+                          ? 'false'
+                          : '';
                 }
                 store.dispatch(
                   UpdateReportSettings(
@@ -1547,9 +1533,10 @@ class ReportResult {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
     final localization = AppLocalization.of(context)!;
-    final sortedColumns =
-        columns.where((column) => canTotalColumn(column)).toList()
-          ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
+    final sortedColumns = columns
+        .where((column) => canTotalColumn(column))
+        .toList()
+      ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
     //for (String column in sortedColumns)
     //  print('## $column => ${getReportColumnType(column, context)}');
@@ -1588,8 +1575,8 @@ class ReportResult {
     final settings = state.userCompany.settings;
     final reportSettings =
         settings.reportSettings.containsKey(reportState.report)
-        ? settings.reportSettings[reportState.report]!
-        : ReportSettingsEntity();
+            ? settings.reportSettings[reportState.report]!
+            : ReportSettingsEntity();
 
     final Map<String, Map<String?, double>> totals = {};
 
@@ -1601,8 +1588,7 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
-        final canTotal =
-            (cell is ReportIntValue ||
+        final canTotal = (cell is ReportIntValue ||
                 cell is ReportNumberValue ||
                 cell is ReportDurationValue ||
                 cell is ReportAgeValue) &&
@@ -1702,7 +1688,7 @@ class ReportResult {
       final values = totals[currencyId]!;
       final currencyName =
           store.state.staticState.currencyMap[currencyId]?.listDisplayName ??
-          '';
+              '';
       final countValue = values['count']!.toInt().toString();
       final cells = <mt.DataCell>[
         mt.DataCell(
@@ -1888,7 +1874,7 @@ class ReportDurationValue extends ReportElement {
 
 class ReportIntValue extends ReportElement {
   ReportIntValue({this.value, EntityType? entityType, String? entityId})
-    : super(entityType: entityType, entityId: entityId);
+      : super(entityType: entityType, entityId: entityId);
 
   final int? value;
 

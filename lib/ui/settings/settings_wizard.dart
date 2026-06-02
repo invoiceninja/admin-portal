@@ -112,22 +112,21 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
       _webClient
           .post(
-            url,
-            credentials.token,
-            data: jsonEncode({'subdomain': subdomain}),
-          )
+        url,
+        credentials.token,
+        data: jsonEncode({'subdomain': subdomain}),
+      )
           .then((dynamic data) {
-            setState(() {
-              _isSubdomainUnique = true;
-              _isCheckingSubdomain = false;
-            });
-          })
-          .catchError((Object error) {
-            setState(() {
-              _isSubdomainUnique = false;
-              _isCheckingSubdomain = false;
-            });
-          });
+        setState(() {
+          _isSubdomainUnique = true;
+          _isCheckingSubdomain = false;
+        });
+      }).catchError((Object error) {
+        setState(() {
+          _isSubdomainUnique = false;
+          _isCheckingSubdomain = false;
+        });
+      });
     });
   }
 
@@ -146,39 +145,35 @@ class _SettingsWizardState extends State<SettingsWizard> {
       callback: (password, idToken) {
         final localization = AppLocalization.of(context);
         final completer = Completer<Null>();
-        completer.future
-            .then<Null>((_) {
-              final toastCompleter = snackBarCompleter<Null>(
-                localization!.savedSettings,
-              );
-              toastCompleter.future
-                  .then<Null>((_) {
-                    setState(() {
-                      _isSaving = false;
-                      _showLogo = true;
-                    });
-                  })
-                  .catchError((Object error) {
-                    setState(() {
-                      _isSaving = false;
-                    });
-                  });
-              store.dispatch(
-                SaveCompanyRequest(
-                  completer: toastCompleter,
-                  company: state.company.rebuild(
-                    (b) => b
-                      ..subdomain = _subdomainController.text.trim()
-                      ..settings.name = _nameController.text.trim()
-                      ..settings.currencyId = _currencyId
-                      ..settings.languageId = _languageId,
-                  ),
-                ),
-              );
-            })
-            .catchError((Object error) {
-              setState(() => _isSaving = false);
+        completer.future.then<Null>((_) {
+          final toastCompleter = snackBarCompleter<Null>(
+            localization!.savedSettings,
+          );
+          toastCompleter.future.then<Null>((_) {
+            setState(() {
+              _isSaving = false;
+              _showLogo = true;
             });
+          }).catchError((Object error) {
+            setState(() {
+              _isSaving = false;
+            });
+          });
+          store.dispatch(
+            SaveCompanyRequest(
+              completer: toastCompleter,
+              company: state.company.rebuild(
+                (b) => b
+                  ..subdomain = _subdomainController.text.trim()
+                  ..settings.name = _nameController.text.trim()
+                  ..settings.currencyId = _currencyId
+                  ..settings.languageId = _languageId,
+              ),
+            ),
+          );
+        }).catchError((Object error) {
+          setState(() => _isSaving = false);
+        });
 
         setState(() => _isSaving = true);
 
@@ -286,8 +281,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 darkModeType: index == 0
                     ? kBrightnessSytem
                     : index == 1
-                    ? kBrightnessLight
-                    : kBrightnessDark,
+                        ? kBrightnessLight
+                        : kBrightnessDark,
               ),
             );
             AppBuilder.of(context)!.rebuild();
@@ -315,8 +310,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
         _isCheckingSubdomain
             ? Icons.pending_outlined
             : _isSubdomainUnique
-            ? Icons.check_circle_outline
-            : Icons.error_outline,
+                ? Icons.check_circle_outline
+                : Icons.error_outline,
       ),
       onChanged: (value) => _validateSubdomain(),
       hint: localization.subdomainHelp,
@@ -343,90 +338,92 @@ class _SettingsWizardState extends State<SettingsWizard> {
             child: _isSaving
                 ? LoadingIndicator(height: 200)
                 : _showLogo
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: Text(
-                        localization.setupWizardLogo,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: isMobile(context)
-                        ? [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: Text(
-                                localization.welcomeToInvoiceNinja,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ),
-                            companyName,
-                            if (state.isHosted) subdomain,
-                            if (showNameFields) ...[firstName, lastName],
-                            language,
-                            currency,
-                            SizedBox(height: 16),
-                            darkMode,
-                            if (state.isHosted)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 32),
-                                child: Text(localization.subdomainGuide),
-                              ),
-                          ]
-                        : [
-                            Row(
-                              children: [
-                                Expanded(
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: Text(
+                            localization.setupWizardLogo,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: isMobile(context)
+                            ? [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
                                   child: Text(
                                     localization.welcomeToInvoiceNinja,
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.titleLarge,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
                                   ),
                                 ),
-                                if (state.isHosted) ...[
-                                  SizedBox(width: kTableColumnGap),
-                                  Flexible(child: darkMode),
-                                ],
-                              ],
-                            ),
-                            SizedBox(height: 16),
-                            Row(
-                              children: [
-                                Expanded(child: companyName),
-                                SizedBox(width: kTableColumnGap),
-                                Expanded(
-                                  child: state.isHosted ? subdomain : darkMode,
+                                companyName,
+                                if (state.isHosted) subdomain,
+                                if (showNameFields) ...[firstName, lastName],
+                                language,
+                                currency,
+                                SizedBox(height: 16),
+                                darkMode,
+                                if (state.isHosted)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 32),
+                                    child: Text(localization.subdomainGuide),
+                                  ),
+                              ]
+                            : [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        localization.welcomeToInvoiceNinja,
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleLarge,
+                                      ),
+                                    ),
+                                    if (state.isHosted) ...[
+                                      SizedBox(width: kTableColumnGap),
+                                      Flexible(child: darkMode),
+                                    ],
+                                  ],
                                 ),
+                                SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Expanded(child: companyName),
+                                    SizedBox(width: kTableColumnGap),
+                                    Expanded(
+                                      child:
+                                          state.isHosted ? subdomain : darkMode,
+                                    ),
+                                  ],
+                                ),
+                                if (showNameFields)
+                                  Row(
+                                    children: [
+                                      Expanded(child: firstName),
+                                      SizedBox(width: kTableColumnGap),
+                                      Expanded(child: lastName),
+                                    ],
+                                  ),
+                                Row(
+                                  children: [
+                                    Expanded(child: language),
+                                    SizedBox(width: kTableColumnGap),
+                                    Expanded(child: currency),
+                                  ],
+                                ),
+                                if (state.isHosted)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 32),
+                                    child: Text(localization.subdomainGuide),
+                                  ),
                               ],
-                            ),
-                            if (showNameFields)
-                              Row(
-                                children: [
-                                  Expanded(child: firstName),
-                                  SizedBox(width: kTableColumnGap),
-                                  Expanded(child: lastName),
-                                ],
-                              ),
-                            Row(
-                              children: [
-                                Expanded(child: language),
-                                SizedBox(width: kTableColumnGap),
-                                Expanded(child: currency),
-                              ],
-                            ),
-                            if (state.isHosted)
-                              Padding(
-                                padding: const EdgeInsets.only(top: 32),
-                                child: Text(localization.subdomainGuide),
-                              ),
-                          ],
-                  ),
+                      ),
           ),
         ),
       ),

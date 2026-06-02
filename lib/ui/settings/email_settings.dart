@@ -171,44 +171,33 @@ class _EmailSettingsState extends State<EmailSettings> {
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
     final settings = viewModel.settings.rebuild(
       (b) => b
-        ..emailFromName = isFiltered && emailFromName.isEmpty
-            ? null
-            : emailFromName
-        ..replyToEmail = isFiltered && replyToEmail.isEmpty
-            ? null
-            : replyToEmail
+        ..emailFromName =
+            isFiltered && emailFromName.isEmpty ? null : emailFromName
+        ..replyToEmail =
+            isFiltered && replyToEmail.isEmpty ? null : replyToEmail
         ..replyToName = isFiltered && replyToName.isEmpty ? null : replyToName
         ..bccEmail = isFiltered && bccEmail.isEmpty ? null : bccEmail
-        ..emailStyleCustom = isFiltered && emailStyleCustom.isEmpty
-            ? null
-            : emailStyleCustom
-        ..emailSignature = isFiltered && emailSignature.isEmpty
-            ? null
-            : emailSignature
-        ..postmarkSecret = isFiltered && postmarkSecret.isEmpty
-            ? null
-            : postmarkSecret
+        ..emailStyleCustom =
+            isFiltered && emailStyleCustom.isEmpty ? null : emailStyleCustom
+        ..emailSignature =
+            isFiltered && emailSignature.isEmpty ? null : emailSignature
+        ..postmarkSecret =
+            isFiltered && postmarkSecret.isEmpty ? null : postmarkSecret
         ..brevoSecret = isFiltered && brevoSecret.isEmpty ? null : brevoSecret
-        ..mailgunSecret = isFiltered && mailgunSecret.isEmpty
-            ? null
-            : mailgunSecret
-        ..mailgunDomain = isFiltered && mailgunDomain.isEmpty
-            ? null
-            : mailgunDomain
-        ..customSendingEmail = isFiltered && customSendingEmail.isEmpty
-            ? null
-            : customSendingEmail
-        ..sesAccessKey = isFiltered && sesAccessKey.isEmpty
-            ? null
-            : sesAccessKey
-        ..sesSecretKey = isFiltered && sesSecretKey.isEmpty
-            ? null
-            : sesSecretKey
+        ..mailgunSecret =
+            isFiltered && mailgunSecret.isEmpty ? null : mailgunSecret
+        ..mailgunDomain =
+            isFiltered && mailgunDomain.isEmpty ? null : mailgunDomain
+        ..customSendingEmail =
+            isFiltered && customSendingEmail.isEmpty ? null : customSendingEmail
+        ..sesAccessKey =
+            isFiltered && sesAccessKey.isEmpty ? null : sesAccessKey
+        ..sesSecretKey =
+            isFiltered && sesSecretKey.isEmpty ? null : sesSecretKey
         ..sesRegion = isFiltered && sesRegion.isEmpty ? null : sesRegion
         ..sesTopicArn = isFiltered && sesTopicArn.isEmpty ? null : sesTopicArn
-        ..sesFromAddress = isFiltered && sesFromAddress.isEmpty
-            ? null
-            : sesFromAddress,
+        ..sesFromAddress =
+            isFiltered && sesFromAddress.isEmpty ? null : sesFromAddress,
     );
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
@@ -250,8 +239,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     );
 
     final gmailSendingUserId = settings.gmailSendingUserId ?? '';
-    final disableSave =
-        [
+    final disableSave = [
           SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
           SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT,
         ].contains(settings.emailSendingMethod) &&
@@ -445,18 +433,17 @@ class _EmailSettingsState extends State<EmailSettings> {
                       settings.rebuild((b) => b..mailgunEndpoint = value),
                     );
                   },
-                  items:
-                      [
-                            SettingsEntity.MAILGUN_ENDPOINT_US,
-                            SettingsEntity.MAILGUN_ENDPOINT_EU,
-                          ]
-                          .map(
-                            (endpoint) => DropdownMenuItem<String>(
-                              child: Text(endpoint),
-                              value: endpoint,
-                            ),
-                          )
-                          .toList(),
+                  items: [
+                    SettingsEntity.MAILGUN_ENDPOINT_US,
+                    SettingsEntity.MAILGUN_ENDPOINT_EU,
+                  ]
+                      .map(
+                        (endpoint) => DropdownMenuItem<String>(
+                          child: Text(endpoint),
+                          value: endpoint,
+                        ),
+                      )
+                      .toList(),
                 ),
               ] else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_BREVO) ...[

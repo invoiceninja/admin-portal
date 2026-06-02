@@ -56,12 +56,12 @@ class TokenScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.tokenListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> tokens,
-            EntityAction action,
-          ) => handleTokenAction(context, tokens, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> tokens,
+        EntityAction action,
+      ) =>
+          handleTokenAction(context, tokens, action),
     );
   }
 }

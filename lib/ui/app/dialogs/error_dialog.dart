@@ -38,9 +38,8 @@ class ErrorDialog extends StatelessWidget {
     return PointerInterceptor(
       child: AlertDialog(
         title: Text(localization.error),
-        content: error != null
-            ? SelectableText(errorStr.toString())
-            : SizedBox(),
+        content:
+            error != null ? SelectableText(errorStr.toString()) : SizedBox(),
         actions: [
           if (clearErrorOnDismiss && !Config.DEMO_MODE)
             TextButton(

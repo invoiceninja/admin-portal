@@ -19,7 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceEditContacts extends StatelessWidget {
   const InvoiceEditContacts({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final EntityEditContactsVM viewModel;
 
@@ -51,8 +51,8 @@ class InvoiceEditContacts extends StatelessWidget {
             }
             */
             return contactA.fullName.toLowerCase().compareTo(
-              contactB.fullName.toLowerCase(),
-            );
+                  contactB.fullName.toLowerCase(),
+                );
           });
       }
 
@@ -88,8 +88,8 @@ class InvoiceEditContacts extends StatelessWidget {
               return contactA.sendEmail ? 1 : -1;
             } else {
               return contactA.fullName.toLowerCase().compareTo(
-                contactB.fullName.toLowerCase(),
-              );
+                    contactB.fullName.toLowerCase(),
+                  );
             }
           });
       }
@@ -267,19 +267,18 @@ class _ContactListTileState extends State<_ContactListTile> {
                           store.dispatch(StartSaving());
                           WebClient()
                               .post(
-                                '${credentials.url}/reactivate_email/${widget.invitation!.messageId}',
-                                credentials.token,
-                              )
+                            '${credentials.url}/reactivate_email/${widget.invitation!.messageId}',
+                            credentials.token,
+                          )
                               .then((value) {
-                                store.dispatch(StopSaving());
-                                showToast(localization.emailReactivated);
-                                setState(() {
-                                  _showEmailError = false;
-                                });
-                              })
-                              .catchError((error) {
-                                store.dispatch(StopSaving());
-                              });
+                            store.dispatch(StopSaving());
+                            showToast(localization.emailReactivated);
+                            setState(() {
+                              _showEmailError = false;
+                            });
+                          }).catchError((error) {
+                            store.dispatch(StopSaving());
+                          });
                         },
                         child: Text(localization.reactivateEmail),
                       ),

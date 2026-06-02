@@ -104,16 +104,16 @@ class SubscriptionListVM {
       subscriptionMap: state.subscriptionState.map,
       isLoading: state.isLoading,
       filter: state.subscriptionUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> subscriptions,
-            EntityAction action,
-          ) => handleSubscriptionAction(context, subscriptions, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> subscriptions,
+        EntityAction action,
+      ) =>
+          handleSubscriptionAction(context, subscriptions, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.paymentLink) ??
-          SubscriptionPresenter.getDefaultTableFields(state.userCompany),
+              SubscriptionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
       onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),
     );

@@ -68,52 +68,40 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'email':
-          result.email =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.email = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'url':
-          result.url =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.url = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'isInitialized':
-          result.isInitialized =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isInitialized = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'isAuthenticated':
-          result.isAuthenticated =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isAuthenticated = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'lastEnteredPasswordAt':
-          result.lastEnteredPasswordAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.lastEnteredPasswordAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'referralCode':
-          result.referralCode =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.referralCode = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -256,8 +244,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   AuthState build() => _build();
 
   _$AuthState _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$AuthState._(
           email: BuiltValueNullFieldError.checkNotNull(
             email,

@@ -12,7 +12,8 @@ var memoizedSortedActiveTaskStatusIds = memo2(
   (
     BuiltList<String> taskStatusList,
     BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
-  ) => sortedActiveTaskStatusIds(
+  ) =>
+      sortedActiveTaskStatusIds(
     taskStatusList: taskStatusList,
     taskStatusMap: taskStatusMap,
   ),
@@ -51,7 +52,8 @@ var memoizedDropdownTaskStatusList = memo4(
     BuiltList<String> taskStatusList,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
-  ) => dropdownTaskStatusesSelector(
+  ) =>
+      dropdownTaskStatusesSelector(
     taskStatusMap,
     taskStatusList,
     staticState,
@@ -89,7 +91,8 @@ var memoizedFilteredTaskStatusList = memo4(
     BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
     BuiltList<String> taskStatusList,
     ListUIState taskStatusListState,
-  ) => filteredTaskStatusesSelector(
+  ) =>
+      filteredTaskStatusesSelector(
     selectionState,
     taskStatusMap,
     taskStatusList,

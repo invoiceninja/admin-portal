@@ -565,8 +565,8 @@ Future handleQuoteAction(
     case EntityAction.approve:
       final message = quoteIds.length > 1
           ? localization!.approvedQuotes
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization!.approveQuote;
       store.dispatch(ApproveQuotes(snackBarCompleter<Null>(message), quoteIds));
       break;
@@ -727,40 +727,38 @@ Future handleQuoteAction(
       await WebClient()
           .get(quote.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
-            store.dispatch(StopLoading());
-            saveDownloadedFile(
-              response.bodyBytes,
-              quote.number + '.pdf',
-              prefix: EntityType.quote.apiValue,
-              languageId: client.languageId,
-            );
-          })
-          .catchError((error) {
-            store.dispatch(StopLoading());
-            showErrorDialog(message: error);
-          });
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          quote.number + '.pdf',
+          prefix: EntityType.quote.apiValue,
+          languageId: client.languageId,
+        );
+      }).catchError((error) {
+        store.dispatch(StopLoading());
+        showErrorDialog(message: error);
+      });
       break;
     case EntityAction.eQuote:
       store.dispatch(StartLoading());
       await WebClient()
           .get(
-            quote.invitationEQuoteDownloadLink,
-            state.token,
-            rawResponse: true,
-          )
+        quote.invitationEQuoteDownloadLink,
+        state.token,
+        rawResponse: true,
+      )
           .then((response) {
-            store.dispatch(StopLoading());
-            saveDownloadedFile(
-              response.bodyBytes,
-              quote.number + '.xml',
-              prefix: EntityType.invoice.apiValue,
-              languageId: client.languageId,
-            );
-          })
-          .catchError((error) {
-            store.dispatch(StopLoading());
-            showErrorDialog(message: error);
-          });
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          quote.number + '.xml',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
+      }).catchError((error) {
+        store.dispatch(StopLoading());
+        showErrorDialog(message: error);
+      });
       break;
     case EntityAction.bulkDownload:
       store.dispatch(
@@ -773,8 +771,8 @@ Future handleQuoteAction(
     case EntityAction.restore:
       final message = quoteIds.length > 1
           ? localization!.restoredQuotes
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization!.restoredQuote;
       store.dispatch(
         RestoreQuotesRequest(snackBarCompleter<Null>(message), quoteIds),
@@ -783,8 +781,8 @@ Future handleQuoteAction(
     case EntityAction.archive:
       final message = quoteIds.length > 1
           ? localization!.archivedQuotes
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization!.archivedQuote;
       store.dispatch(
         ArchiveQuotesRequest(snackBarCompleter<Null>(message), quoteIds),
@@ -793,8 +791,8 @@ Future handleQuoteAction(
     case EntityAction.delete:
       final message = quoteIds.length > 1
           ? localization!.deletedQuotes
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', quoteIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', quoteIds.length.toString())
           : localization!.deletedQuote;
       store.dispatch(
         DeleteQuotesRequest(snackBarCompleter<Null>(message), quoteIds),

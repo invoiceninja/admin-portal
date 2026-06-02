@@ -84,8 +84,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.bankAccount
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 
@@ -354,7 +354,8 @@ BankAccountState _setLoadedBankAccount(
 BankAccountState _setLoadedBankAccounts(
   BankAccountState bankAccountState,
   LoadBankAccountsSuccess action,
-) => bankAccountState.loadBankAccounts(action.bankAccounts);
+) =>
+    bankAccountState.loadBankAccounts(action.bankAccounts);
 
 BankAccountState _setLoadedCompany(
   BankAccountState bankAccountState,

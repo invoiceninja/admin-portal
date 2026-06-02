@@ -39,7 +39,8 @@ var memoizedDropdownQuoteList = memo7(
     String clientId,
     BuiltMap<String, UserEntity> userMap,
     List<String> excludedIds,
-  ) => dropdownQuoteSelector(
+  ) =>
+      dropdownQuoteSelector(
     quoteMap,
     clientMap,
     vendorMap,
@@ -101,7 +102,8 @@ var memoizedFilteredQuoteList = memo7(
     BuiltMap<String, VendorEntity> vendorMap,
     ListUIState quoteListState,
     BuiltMap<String, UserEntity> userMap,
-  ) => filteredQuotesSelector(
+  ) =>
+      filteredQuotesSelector(
     selectionState,
     quoteMap,
     quoteList,

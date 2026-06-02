@@ -169,8 +169,8 @@ BuiltMap<EntityType, PrefStateSortField> _resortFields(
   return value.rebuild((b) => b..[entityType] = directon);
 }
 
-Reducer<BuiltMap<EntityType, PrefStateSortField>>
-sortFieldsReducer = combineReducers([
+Reducer<BuiltMap<EntityType, PrefStateSortField>> sortFieldsReducer =
+    combineReducers([
   TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortClients>(
     (value, action) => _resortFields(value, EntityType.client, action.field),
   ),
@@ -298,8 +298,8 @@ Reducer<bool> historyVisibleReducer = combineReducers([
     return action.historyMode == AppSidebarMode.visible
         ? true
         : action.historyMode == AppSidebarMode.float
-        ? false
-        : value;
+            ? false
+            : value;
   }),
 ]);
 

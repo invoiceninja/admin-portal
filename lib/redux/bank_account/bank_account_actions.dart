@@ -276,9 +276,8 @@ void handleBankAccountAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final bankAccount = bankAccounts.first as BankAccountEntity;
-  final bankAccountIds = bankAccounts
-      .map((bankAccount) => bankAccount.id)
-      .toList();
+  final bankAccountIds =
+      bankAccounts.map((bankAccount) => bankAccount.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -340,33 +339,32 @@ void handleBankAccountAction(
       store.dispatch(StartSaving());
       WebClient()
           .post(
-            url,
-            credentials.token,
-            data: jsonEncode({
-              'context':
-                  integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
+        url,
+        credentials.token,
+        data: jsonEncode({
+          'context':
+              integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
                   ? {'return_url': ''}
                   : 'nordigen',
-            }),
-          )
+        }),
+      )
           .then((dynamic response) {
-            store.dispatch(StopSaving());
+        store.dispatch(StopSaving());
 
-            String connectUrl = cleanApiUrl(credentials.url);
-            if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
-              connectUrl += '/yodlee/onboard/${response['hash']}';
-            } else {
-              connectUrl +=
-                  '/nordigen/connect/${response['hash']}?institution_id=' +
+        String connectUrl = cleanApiUrl(credentials.url);
+        if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
+          connectUrl += '/yodlee/onboard/${response['hash']}';
+        } else {
+          connectUrl +=
+              '/nordigen/connect/${response['hash']}?institution_id=' +
                   bankAccount.nordigenInstitutionId;
-            }
+        }
 
-            launchUrl(Uri.parse(connectUrl));
-          })
-          .catchError((dynamic error) {
-            store.dispatch(StopSaving());
-            showErrorDialog(message: '$error');
-          });
+        launchUrl(Uri.parse(connectUrl));
+      }).catchError((dynamic error) {
+        store.dispatch(StopSaving());
+        showErrorDialog(message: '$error');
+      });
       break;
     case EntityAction.more:
       showEntityActionsDialog(entities: [bankAccount]);

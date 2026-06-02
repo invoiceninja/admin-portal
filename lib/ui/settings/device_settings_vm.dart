@@ -162,7 +162,8 @@ class DeviceSettingsVM {
           authenticated = await LocalAuthentication().authenticate(
             localizedReason: AppLocalization.of(
               context,
-            )!.authenticateToChangeSetting,
+            )!
+                .authenticateToChangeSetting,
             options: const AuthenticationOptions(
               biometricOnly: true,
               useErrorDialogs: true,

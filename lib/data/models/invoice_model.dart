@@ -181,40 +181,40 @@ abstract class InvoiceEntity extends Object
       taxName1: client?.isTaxExempt == true
           ? ''
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-          ? settings.defaultTaxName1 ?? ''
-          : '',
+              ? settings.defaultTaxName1 ?? ''
+              : '',
       taxRate1: client?.isTaxExempt == true
           ? 0
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 1
-          ? settings.defaultTaxRate1 ?? 0.0
-          : 0,
+              ? settings.defaultTaxRate1 ?? 0.0
+              : 0,
       taxName2: client?.isTaxExempt == true
           ? ''
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-          ? settings.defaultTaxName2 ?? ''
-          : '',
+              ? settings.defaultTaxName2 ?? ''
+              : '',
       taxRate2: client?.isTaxExempt == true
           ? 0
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 2
-          ? settings.defaultTaxRate2 ?? 0.0
-          : 0,
+              ? settings.defaultTaxRate2 ?? 0.0
+              : 0,
       taxName3: client?.isTaxExempt == true
           ? ''
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-          ? settings.defaultTaxName3 ?? ''
-          : '',
+              ? settings.defaultTaxName3 ?? ''
+              : '',
       taxRate3: client?.isTaxExempt == true
           ? 0
           : (company?.numberOfInvoiceTaxRates ?? 0) >= 3
-          ? settings.defaultTaxRate3 ?? 0.0
-          : 0,
+              ? settings.defaultTaxRate3 ?? 0.0
+              : 0,
       isAmountDiscount: false,
       partial: 0.0,
       partialDueDate: '',
       autoBillEnabled:
           ((entityType ?? EntityType.invoice) == EntityType.invoice)
-          ? settings.autoBillStandardInvoices ?? false
-          : false,
+              ? settings.autoBillStandardInvoices ?? false
+              : false,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -243,14 +243,15 @@ abstract class InvoiceEntity extends Object
                   .toList(),
             )
           : vendor != null
-          ? BuiltList(
-              vendor.emailContacts
-                  .map(
-                    (contact) => InvitationEntity(vendorContactId: contact.id),
-                  )
-                  .toList(),
-            )
-          : BuiltList(<InvitationEntity>[InvitationEntity()]),
+              ? BuiltList(
+                  vendor.emailContacts
+                      .map(
+                        (contact) =>
+                            InvitationEntity(vendorContactId: contact.id),
+                      )
+                      .toList(),
+                )
+              : BuiltList(<InvitationEntity>[InvitationEntity()]),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -374,39 +375,39 @@ abstract class InvoiceEntity extends Object
         ..taxName1 = client.isTaxExempt
             ? ''
             : state.company.numberOfInvoiceTaxRates >= 1 &&
-                  (settings.defaultTaxName1 ?? '').isNotEmpty
-            ? settings.defaultTaxName1
-            : taxName1
+                    (settings.defaultTaxName1 ?? '').isNotEmpty
+                ? settings.defaultTaxName1
+                : taxName1
         ..taxRate1 = client.isTaxExempt
             ? 0
             : state.company.numberOfInvoiceTaxRates >= 1 &&
-                  (settings.defaultTaxName1 ?? '').isNotEmpty
-            ? settings.defaultTaxRate1
-            : taxRate1
+                    (settings.defaultTaxName1 ?? '').isNotEmpty
+                ? settings.defaultTaxRate1
+                : taxRate1
         ..taxName2 = client.isTaxExempt
             ? ''
             : state.company.numberOfInvoiceTaxRates >= 2 &&
-                  (settings.defaultTaxName2 ?? '').isNotEmpty
-            ? settings.defaultTaxName2
-            : taxName2
+                    (settings.defaultTaxName2 ?? '').isNotEmpty
+                ? settings.defaultTaxName2
+                : taxName2
         ..taxRate2 = client.isTaxExempt
             ? 0
             : state.company.numberOfInvoiceTaxRates >= 2 &&
-                  (settings.defaultTaxName2 ?? '').isNotEmpty
-            ? settings.defaultTaxRate2
-            : taxRate2
+                    (settings.defaultTaxName2 ?? '').isNotEmpty
+                ? settings.defaultTaxRate2
+                : taxRate2
         ..taxName3 = client.isTaxExempt
             ? ''
             : state.company.numberOfInvoiceTaxRates >= 3 &&
-                  (settings.defaultTaxName3 ?? '').isNotEmpty
-            ? settings.defaultTaxName3
-            : taxName3
+                    (settings.defaultTaxName3 ?? '').isNotEmpty
+                ? settings.defaultTaxName3
+                : taxName3
         ..taxRate3 = client.isTaxExempt
             ? 0
             : state.company.numberOfInvoiceTaxRates >= 3 &&
-                  (settings.defaultTaxName3 ?? '').isNotEmpty
-            ? settings.defaultTaxRate3
-            : taxRate3,
+                    (settings.defaultTaxName3 ?? '').isNotEmpty
+                ? settings.defaultTaxRate3
+                : taxRate3,
     );
   }
 
@@ -767,19 +768,15 @@ abstract class InvoiceEntity extends Object
     final vendorB = vendorMap[invoiceB.vendorId] ?? VendorEntity();
     switch (sortField) {
       case InvoiceFields.number:
-        var invoiceANumber = invoiceA.number.isEmpty
-            ? 'ZZZZZZZZZZ'
-            : invoiceA.number;
-        var invoiceBNumber = invoiceB.number.isEmpty
-            ? 'ZZZZZZZZZZ'
-            : invoiceB.number;
-        invoiceANumber =
-            (recurringPrefix ?? '').isNotEmpty &&
+        var invoiceANumber =
+            invoiceA.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
+        var invoiceBNumber =
+            invoiceB.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
+        invoiceANumber = (recurringPrefix ?? '').isNotEmpty &&
                 invoiceANumber.startsWith(recurringPrefix!)
             ? invoiceANumber.replaceFirst(recurringPrefix, '')
             : invoiceANumber;
-        invoiceBNumber =
-            (recurringPrefix ?? '').isNotEmpty &&
+        invoiceBNumber = (recurringPrefix ?? '').isNotEmpty &&
                 invoiceBNumber.startsWith(recurringPrefix!)
             ? invoiceBNumber.replaceFirst(recurringPrefix, '')
             : invoiceBNumber;
@@ -840,8 +837,8 @@ abstract class InvoiceEntity extends Object
         final stateA = EntityState.valueOf(invoiceA.entityState);
         final stateB = EntityState.valueOf(invoiceB.entityState);
         response = stateA.name.toLowerCase().compareTo(
-          stateB.name.toLowerCase(),
-        );
+              stateB.name.toLowerCase(),
+            );
         break;
       case InvoiceFields.dueDate:
       case QuoteFields.validUntil:
@@ -861,45 +858,45 @@ abstract class InvoiceEntity extends Object
         final userA = userMap![invoiceA.assignedUserId] ?? UserEntity();
         final userB = userMap[invoiceB.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName.toLowerCase().compareTo(
-          userB.listDisplayName.toLowerCase(),
-        );
+              userB.listDisplayName.toLowerCase(),
+            );
         break;
       case EntityFields.createdBy:
         final userA = userMap![invoiceA.createdUserId] ?? UserEntity();
         final userB = userMap[invoiceB.createdUserId] ?? UserEntity();
         response = userA.listDisplayName.toLowerCase().compareTo(
-          userB.listDisplayName.toLowerCase(),
-        );
+              userB.listDisplayName.toLowerCase(),
+            );
         break;
       case InvoiceFields.publicNotes:
         response = invoiceA.publicNotes.toLowerCase().compareTo(
-          invoiceB.publicNotes.toLowerCase(),
-        );
+              invoiceB.publicNotes.toLowerCase(),
+            );
         break;
       case InvoiceFields.privateNotes:
         response = invoiceA.privateNotes.toLowerCase().compareTo(
-          invoiceB.privateNotes.toLowerCase(),
-        );
+              invoiceB.privateNotes.toLowerCase(),
+            );
         break;
       case InvoiceFields.customValue1:
         response = invoiceA.customValue1.toLowerCase().compareTo(
-          invoiceB.customValue1.toLowerCase(),
-        );
+              invoiceB.customValue1.toLowerCase(),
+            );
         break;
       case InvoiceFields.customValue2:
         response = invoiceA.customValue2.toLowerCase().compareTo(
-          invoiceB.customValue2.toLowerCase(),
-        );
+              invoiceB.customValue2.toLowerCase(),
+            );
         break;
       case InvoiceFields.customValue3:
         response = invoiceA.customValue3.toLowerCase().compareTo(
-          invoiceB.customValue3.toLowerCase(),
-        );
+              invoiceB.customValue3.toLowerCase(),
+            );
         break;
       case InvoiceFields.customValue4:
         response = invoiceA.customValue4.toLowerCase().compareTo(
-          invoiceB.customValue4.toLowerCase(),
-        );
+              invoiceB.customValue4.toLowerCase(),
+            );
         break;
       case InvoiceFields.client:
         response = removeDiacritics(clientA.listDisplayName)
@@ -940,8 +937,8 @@ abstract class InvoiceEntity extends Object
         break;
       case InvoiceFields.vendor:
         response = vendorA.name.toLowerCase().compareTo(
-          vendorB.name.toLowerCase(),
-        );
+              vendorB.name.toLowerCase(),
+            );
         break;
       case InvoiceFields.dueDateDays:
         response = invoiceA.dueDateDays!.compareTo(invoiceB.dueDateDays!);
@@ -1366,10 +1363,10 @@ abstract class InvoiceEntity extends Object
   EmailTemplate get emailTemplate => isPurchaseOrder
       ? EmailTemplate.purchase_order
       : isQuote
-      ? EmailTemplate.quote
-      : isCredit
-      ? EmailTemplate.credit
-      : EmailTemplate.invoice;
+          ? EmailTemplate.quote
+          : isCredit
+              ? EmailTemplate.credit
+              : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
@@ -1473,9 +1470,8 @@ abstract class InvoiceEntity extends Object
       return false;
     }
 
-    final date = (partial != 0 && partialDueDate.isNotEmpty)
-        ? partialDueDate
-        : dueDate;
+    final date =
+        (partial != 0 && partialDueDate.isNotEmpty) ? partialDueDate : dueDate;
 
     if (date.isEmpty || balance == 0) {
       return false;
@@ -1487,7 +1483,8 @@ abstract class InvoiceEntity extends Object
         isUnpaid &&
         DateTime.tryParse(
           date,
-        )!.isBefore(DateTime.now().subtract(Duration(days: 1)));
+        )!
+            .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
   InvitationEntity? getInvitationForClientContact(
@@ -1740,9 +1737,8 @@ abstract class InvoiceItemEntity
       notes: '',
       cost: 0,
       productCost: 0,
-      quantity: (company.defaultQuantity || !company.enableProductQuantity)
-          ? 1
-          : 0,
+      quantity:
+          (company.defaultQuantity || !company.enableProductQuantity) ? 1 : 0,
       taxName1: '',
       taxRate1: 0,
       taxName2: '',
@@ -1871,10 +1867,10 @@ abstract class InvoiceItemEntity
   }
 
   InvoiceItemEntity get clone => rebuild(
-    (b) => b
-      ..expenseId = ''
-      ..taskId = '',
-  );
+        (b) => b
+          ..expenseId = ''
+          ..taskId = '',
+      );
 
   bool get isTask => typeId == TYPE_TASK;
 

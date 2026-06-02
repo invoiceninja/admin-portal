@@ -73,12 +73,11 @@ class _$BankAccountStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -153,36 +152,30 @@ class _$BankAccountUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BankAccountEntity),
-                )!
-                as BankAccountEntity,
+              value,
+              specifiedType: const FullType(BankAccountEntity),
+            )! as BankAccountEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -199,7 +192,8 @@ class _$BankAccountState extends BankAccountState {
 
   factory _$BankAccountState([
     void Function(BankAccountStateBuilder)? updates,
-  ]) => (BankAccountStateBuilder()..update(updates))._build();
+  ]) =>
+      (BankAccountStateBuilder()..update(updates))._build();
 
   _$BankAccountState._({required this.map, required this.list}) : super._();
   @override
@@ -318,7 +312,8 @@ class _$BankAccountUIState extends BankAccountUIState {
 
   factory _$BankAccountUIState([
     void Function(BankAccountUIStateBuilder)? updates,
-  ]) => (BankAccountUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (BankAccountUIStateBuilder()..update(updates))._build();
 
   _$BankAccountUIState._({
     this.editing,
@@ -332,7 +327,8 @@ class _$BankAccountUIState extends BankAccountUIState {
   @override
   BankAccountUIState rebuild(
     void Function(BankAccountUIStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   BankAccountUIStateBuilder toBuilder() =>
@@ -452,8 +448,7 @@ class BankAccountUIStateBuilder
   _$BankAccountUIState _build() {
     _$BankAccountUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$BankAccountUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

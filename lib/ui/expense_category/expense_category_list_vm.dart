@@ -104,15 +104,14 @@ class ExpenseCategoryListVM {
       expenseCategoryMap: state.expenseCategoryState.map,
       isLoading: state.isLoading,
       filter: state.expenseCategoryUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> expenseCategories,
-            EntityAction action,
-          ) => handleExpenseCategoryAction(context, expenseCategories, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> expenseCategories,
+        EntityAction action,
+      ) =>
+          handleExpenseCategoryAction(context, expenseCategories, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns:
-          state.userCompany.settings.getTableColumns(
+      tableColumns: state.userCompany.settings.getTableColumns(
             EntityType.expenseCategory,
           ) ??
           ExpenseCategoryPresenter.getDefaultTableFields(state.userCompany),

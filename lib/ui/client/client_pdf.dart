@@ -84,32 +84,30 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       _isLoading = true;
     });
 
-    _loadPDF(sendEmail: sendEmail)
-        .then((response) {
-          setState(() {
-            if (sendEmail) {
-              if (response!.statusCode >= 200) {
-                showToast(localization!.emailedStatement);
-              }
-            } else {
-              _response = response;
-            }
+    _loadPDF(sendEmail: sendEmail).then((response) {
+      setState(() {
+        if (sendEmail) {
+          if (response!.statusCode >= 200) {
+            showToast(localization!.emailedStatement);
+          }
+        } else {
+          _response = response;
+        }
 
-            _isLoading = false;
-          });
-        })
-        .catchError((Object error) {
-          setState(() {
-            _isLoading = false;
-          });
+        _isLoading = false;
+      });
+    }).catchError((Object error) {
+      setState(() {
+        _isLoading = false;
+      });
 
-          showDialog<void>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        builder: (BuildContext context) {
+          return ErrorDialog(error);
+        },
+      );
+    });
   }
 
   Future<Response?> _loadPDF({
@@ -398,23 +396,22 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
                     final includes = state.prefState.statementIncludes;
                     createEntity(
-                      entity:
-                          ScheduleEntity(
-                            ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
-                          ).rebuild(
-                            (b) => b
-                              ..parameters.clients.add(client.id)
-                              ..parameters.showAgingTable = includes.contains(
-                                localization.aging,
-                              )
-                              ..parameters.showPaymentsTable = includes
-                                  .contains(localization.payments)
-                              ..parameters.showCreditsTable = includes.contains(
-                                localization.credits,
-                              )
-                              ..parameters.status = _status
-                              ..parameters.dateRange = _dateRange.snakeCase,
-                          ),
+                      entity: ScheduleEntity(
+                        ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+                      ).rebuild(
+                        (b) => b
+                          ..parameters.clients.add(client.id)
+                          ..parameters.showAgingTable = includes.contains(
+                            localization.aging,
+                          )
+                          ..parameters.showPaymentsTable =
+                              includes.contains(localization.payments)
+                          ..parameters.showCreditsTable = includes.contains(
+                            localization.credits,
+                          )
+                          ..parameters.status = _status
+                          ..parameters.dateRange = _dateRange.snakeCase,
+                      ),
                     );
                   },
                   child: Text(

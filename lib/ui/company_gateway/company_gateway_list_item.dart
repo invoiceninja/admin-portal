@@ -32,8 +32,8 @@ class CompanyGatewayListItem extends StatelessWidget {
   final Function? onRemovePressed;
   final bool isChecked;
 
-  static final companyGatewayItemKey = (int id) =>
-      Key('__company_gateway_item_${id}__');
+  static final companyGatewayItemKey =
+      (int id) => Key('__company_gateway_item_${id}__');
 
   @override
   Widget build(BuildContext context) {

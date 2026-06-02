@@ -13,7 +13,8 @@ var memoizedDropdownTokenList = memo3(
     BuiltMap<String, TokenEntity> tokenMap,
     BuiltList<String> tokenList,
     String clientId,
-  ) => dropdownTokensSelector(tokenMap, tokenList, clientId),
+  ) =>
+      dropdownTokensSelector(tokenMap, tokenList, clientId),
 );
 
 List<String> dropdownTokensSelector(
@@ -41,7 +42,8 @@ var memoizedFilteredTokenList = memo4(
     BuiltMap<String?, TokenEntity?> tokenMap,
     BuiltList<String> tokenList,
     ListUIState tokenListState,
-  ) => filteredTokensSelector(
+  ) =>
+      filteredTokensSelector(
     selectionState,
     tokenMap,
     tokenList,

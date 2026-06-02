@@ -80,8 +80,7 @@ class ScheduleScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterSchedulesByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.schedule)
           ? FloatingActionButton(
               heroTag: 'schedule_fab',

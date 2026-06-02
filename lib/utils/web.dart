@@ -142,12 +142,9 @@ class WebUtils {
     final publicClientApp = PublicClientApplication(config);
     final loginRequest = PopupRequest()..scopes = ['user.read'];
 
-    publicClientApp
-        .loginPopup(loginRequest)
-        .then((result) {
-          successCallback(result.idToken, result.accessToken);
-        })
-        .catchError(failureCallback);
+    publicClientApp.loginPopup(loginRequest).then((result) {
+      successCallback(result.idToken, result.accessToken);
+    }).catchError(failureCallback);
   }
 
   // ---------------------------------------------------------------------------

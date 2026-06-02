@@ -179,9 +179,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final state = viewModel.state!;
     final settings = getClientSettings(state, client);
     final contacts = invoice.invitations.map((invitation) {
-      final allContacts = invoice.isPurchaseOrder
-          ? vendor!.contacts
-          : client!.contacts;
+      final allContacts =
+          invoice.isPurchaseOrder ? vendor!.contacts : client!.contacts;
       final matches = allContacts.where(
         (contact) =>
             contact.id ==
@@ -211,9 +210,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           .map(
                             (contact) => invoice.isPurchaseOrder
                                 ? (contact as VendorContactEntity)
-                                      .fullNameOrEmail
+                                    .fullNameOrEmail
                                 : (contact as ClientContactEntity)
-                                      .fullNameWithEmail,
+                                    .fullNameWithEmail,
                           )
                           .join(', '),
                 ),
@@ -293,8 +292,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               padding: const EdgeInsets.only(left: 24, right: 10),
               child: DecoratedFormField(
                 controller: _ccEmailController,
-                label:
-                    localization.ccEmail +
+                label: localization.ccEmail +
                     ': ' +
                     contacts.nonNulls
                         .where(
@@ -306,7 +304,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           (contact) => invoice.isPurchaseOrder
                               ? (contact as VendorContactEntity).fullNameOrEmail
                               : (contact as ClientContactEntity)
-                                    .fullNameWithEmail,
+                                  .fullNameWithEmail,
                         )
                         .join(', '),
                 keyboardType: TextInputType.emailAddress,
@@ -333,8 +331,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             )
           : IgnorePointer(
               child: ExampleEditor(
-                value:
-                    '### $_subjectPreview\n\n\n' +
+                value: '### $_subjectPreview\n\n\n' +
                     html2md.convert(_bodyPreview),
               ),
             ),
@@ -345,8 +342,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state!;
-    final enableCustomEmail =
-        state.isSelfHosted ||
+    final enableCustomEmail = state.isSelfHosted ||
         state.isProPlan ||
         state.isTrial ||
         !state.account.accountSmsVerified;
@@ -432,9 +428,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final activities =
         ((invoice.isPurchaseOrder ? vendor : client) as HasActivities)
             .getActivities(
-              invoiceId: invoice.id,
-              typeId: kActivityEmailInvoice,
-            );
+      invoiceId: invoice.id,
+      typeId: kActivityEmailInvoice,
+    );
 
     if (activities.isEmpty) {
       return HelpText(localization!.noHistory);
@@ -512,10 +508,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           invoice!.isPurchaseOrder
                               ? PurchaseOrderPdfScreen(showAppBar: false)
                               : invoice.isCredit
-                              ? CreditPdfScreen(showAppBar: false)
-                              : invoice.isQuote
-                              ? QuotePdfScreen(showAppBar: false)
-                              : InvoicePdfScreen(showAppBar: false),
+                                  ? CreditPdfScreen(showAppBar: false)
+                                  : invoice.isQuote
+                                      ? QuotePdfScreen(showAppBar: false)
+                                      : InvoicePdfScreen(showAppBar: false),
                           _buildHistory(context),
                         ],
                       ),
@@ -569,10 +565,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             invoice!.isPurchaseOrder
                 ? PurchaseOrderPdfScreen(showAppBar: false)
                 : invoice.isCredit
-                ? CreditPdfScreen(showAppBar: false)
-                : invoice.isQuote
-                ? QuotePdfScreen(showAppBar: false)
-                : InvoicePdfScreen(showAppBar: false),
+                    ? CreditPdfScreen(showAppBar: false)
+                    : invoice.isQuote
+                        ? QuotePdfScreen(showAppBar: false)
+                        : InvoicePdfScreen(showAppBar: false),
             _buildHistory(context),
           ],
         ),

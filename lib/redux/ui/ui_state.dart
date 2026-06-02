@@ -236,18 +236,14 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   String get mainRoute {
-    final parts = currentRoute
-        .split('/')
-        .where((part) => part.isNotEmpty)
-        .toList();
+    final parts =
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.isNotEmpty ? parts[0] : '';
   }
 
   String get subRoute {
-    final parts = currentRoute
-        .split('/')
-        .where((part) => part.isNotEmpty)
-        .toList();
+    final parts =
+        currentRoute.split('/').where((part) => part.isNotEmpty).toList();
     if (parts.length == 3) {
       return '${parts[1]}/${parts[2]}';
     } else {
@@ -274,18 +270,14 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   String get previousMainRoute {
-    final parts = previousRoute
-        .split('/')
-        .where((part) => part.isNotEmpty)
-        .toList();
+    final parts =
+        previousRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.isNotEmpty ? parts[0] : '';
   }
 
   String get previousSubRoute {
-    final parts = previousRoute
-        .split('/')
-        .where((part) => part.isNotEmpty)
-        .toList();
+    final parts =
+        previousRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.length > 1 ? parts[1] : '';
   }
 

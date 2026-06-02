@@ -107,19 +107,18 @@ Middleware<AppState> _archiveTransactionRule(
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.transactionRuleIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.transactionRuleIds,
+      EntityAction.archive,
+    )
         .then((List<TransactionRuleEntity> transactionRules) {
-          store.dispatch(ArchiveTransactionRulesSuccess(transactionRules));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchiveTransactionRulesFailure(prevTransactionRules));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchiveTransactionRulesSuccess(transactionRules));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveTransactionRulesFailure(prevTransactionRules));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -135,19 +134,18 @@ Middleware<AppState> _deleteTransactionRule(
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.transactionRuleIds,
-          EntityAction.delete,
-        )
+      store.state.credentials,
+      action.transactionRuleIds,
+      EntityAction.delete,
+    )
         .then((List<TransactionRuleEntity> transactionRules) {
-          store.dispatch(DeleteTransactionRulesSuccess(transactionRules));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeleteTransactionRulesFailure(prevTransactionRules));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeleteTransactionRulesSuccess(transactionRules));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteTransactionRulesFailure(prevTransactionRules));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -163,19 +161,18 @@ Middleware<AppState> _restoreTransactionRule(
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.transactionRuleIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.transactionRuleIds,
+      EntityAction.restore,
+    )
         .then((List<TransactionRuleEntity> transactionRules) {
-          store.dispatch(RestoreTransactionRulesSuccess(transactionRules));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestoreTransactionRulesFailure(prevTransactionRules));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestoreTransactionRulesSuccess(transactionRules));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreTransactionRulesFailure(prevTransactionRules));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -189,19 +186,18 @@ Middleware<AppState> _saveTransactionRule(
     repository
         .saveData(store.state.credentials, action.transactionRule!)
         .then((TransactionRuleEntity transactionRule) {
-          if (action.transactionRule!.isNew) {
-            store.dispatch(AddTransactionRuleSuccess(transactionRule));
-          } else {
-            store.dispatch(SaveTransactionRuleSuccess(transactionRule));
-          }
+      if (action.transactionRule!.isNew) {
+        store.dispatch(AddTransactionRuleSuccess(transactionRule));
+      } else {
+        store.dispatch(SaveTransactionRuleSuccess(transactionRule));
+      }
 
-          action.completer!.complete(transactionRule);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveTransactionRuleFailure(error));
-          action.completer!.completeError(error);
-        });
+      action.completer!.complete(transactionRule);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveTransactionRuleFailure(error));
+      action.completer!.completeError(error);
+    });
 
     next(action);
   };
@@ -218,19 +214,18 @@ Middleware<AppState> _loadTransactionRule(
     repository
         .loadItem(state.credentials, action.transactionRuleId)
         .then((transactionRule) {
-          store.dispatch(LoadTransactionRuleSuccess(transactionRule));
+      store.dispatch(LoadTransactionRuleSuccess(transactionRule));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadTransactionRuleFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadTransactionRuleFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -244,22 +239,19 @@ Middleware<AppState> _loadTransactionRules(
     final AppState state = store.state;
 
     store.dispatch(LoadTransactionRulesRequest());
-    repository
-        .loadList(state.credentials)
-        .then((data) {
-          store.dispatch(LoadTransactionRulesSuccess(data));
+    repository.loadList(state.credentials).then((data) {
+      store.dispatch(LoadTransactionRulesSuccess(data));
 
-          if (action!.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadTransactionRulesFailure(error));
-          if (action!.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action!.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadTransactionRulesFailure(error));
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };

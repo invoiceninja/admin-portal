@@ -142,10 +142,10 @@ class _PaymentViewState extends State<PaymentView>
                     : EntityAction.sendEmail,
                 action1Enabled: state.company.enableApplyingPayments
                     ? payment.applied < payment.amount &&
-                          memoizedHasActiveUnpaidInvoices(
-                            payment.clientId,
-                            state.invoiceState.map,
-                          )
+                        memoizedHasActiveUnpaidInvoices(
+                          payment.clientId,
+                          state.invoiceState.map,
+                        )
                     : true,
                 action2: EntityAction.refundPayment,
                 action2Enabled: payment.refunded < payment.amount,

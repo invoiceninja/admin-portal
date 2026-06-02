@@ -153,8 +153,7 @@ class QuoteScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.quote)
           ? FloatingActionButton(
               heroTag: 'quote_fab',

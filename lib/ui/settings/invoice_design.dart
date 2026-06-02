@@ -146,9 +146,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         ..companyLogoSize = logoSize.isEmpty
             ? ''
             : logoSize +
-                  (viewModel.settings.companyLogoSize!.contains('px')
-                      ? 'px'
-                      : '%'),
+                (viewModel.settings.companyLogoSize!.contains('px')
+                    ? 'px'
+                    : '%'),
     );
     if (settings != viewModel.settings) {
       _debouncer.run(() {
@@ -245,14 +245,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               iconData: Icons.settings,
                               onPressed: () =>
                                   state.designState.customDesigns.isEmpty
-                                  ? createEntity(
-                                      entity: DesignEntity(state: state),
-                                    )
-                                  : store.dispatch(
-                                      ViewSettings(
-                                        section: kSettingsCustomDesigns,
-                                      ),
-                                    ),
+                                      ? createEntity(
+                                          entity: DesignEntity(state: state),
+                                        )
+                                      : store.dispatch(
+                                          ViewSettings(
+                                            section: kSettingsCustomDesigns,
+                                          ),
+                                        ),
                             ),
                           ),
                           if (isDesktop(context)) ...[
@@ -491,8 +491,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: settings.pageLayout,
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(
-                                settings.rebuild((b) => b..pageLayout = value),
-                              ),
+                            settings.rebuild((b) => b..pageLayout = value),
+                          ),
                           items: kPageLayouts
                               .map(
                                 (pageLayout) => DropdownMenuItem<String>(
@@ -507,8 +507,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: settings.pageSize,
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(
-                                settings.rebuild((b) => b..pageSize = value),
-                              ),
+                            settings.rebuild((b) => b..pageSize = value),
+                          ),
                           items: kPageSizes
                               .map(
                                 (pageSize) => DropdownMenuItem<String>(
@@ -525,10 +525,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               : '${settings.fontSize}',
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(
-                                settings.rebuild(
-                                  (b) => b..fontSize = int.parse(value),
-                                ),
-                              ),
+                            settings.rebuild(
+                              (b) => b..fontSize = int.parse(value),
+                            ),
+                          ),
                           items:
                               List<int>.generate(18, (index) => (index * 2) + 6)
                                   .map(
@@ -558,21 +558,21 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 labelText: '',
                                 value:
                                     (settings.companyLogoSize ?? '').contains(
-                                      'px',
-                                    )
-                                    ? localization.pixels
-                                    : localization.percent,
+                                  'px',
+                                )
+                                        ? localization.pixels
+                                        : localization.percent,
                                 onChanged: (dynamic value) =>
                                     viewModel.onSettingsChanged(
-                                      settings.rebuild(
-                                        (b) => b
-                                          ..companyLogoSize =
-                                              _logoSizeController.text +
+                                  settings.rebuild(
+                                    (b) => b
+                                      ..companyLogoSize =
+                                          _logoSizeController.text +
                                               (value == localization.pixels
                                                   ? 'px'
                                                   : '%'),
-                                      ),
-                                    ),
+                                  ),
+                                ),
                                 items: [
                                   DropdownMenuItem<String>(
                                     child: Text(localization.percent),
@@ -697,10 +697,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: settings.pageNumberingAlignment,
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(
-                                settings.rebuild(
-                                  (b) => b..pageNumberingAlignment = value,
-                                ),
-                              ),
+                            settings.rebuild(
+                              (b) => b..pageNumberingAlignment = value,
+                            ),
+                          ),
                           items: [
                             DropdownMenuItem<String>(
                               child: Text(localization.left),
@@ -1382,16 +1382,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               child: _PdfPreview(
                 state: state,
                 settings: viewModel.settings,
-                entityType:
-                    tabs[_controller!.index] == localization.vendorDetails ||
+                entityType: tabs[_controller!.index] ==
+                            localization.vendorDetails ||
                         tabs[_controller!.index] ==
                             localization.purchaseOrderDetails
                     ? EntityType.purchaseOrder
                     : tabs[_controller!.index] == localization.quoteDetails
-                    ? EntityType.quote
-                    : tabs[_controller!.index] == localization.creditDetails
-                    ? EntityType.credit
-                    : EntityType.invoice,
+                        ? EntityType.quote
+                        : tabs[_controller!.index] == localization.creditDetails
+                            ? EntityType.credit
+                            : EntityType.invoice,
               ),
             ),
         ],
@@ -1453,16 +1453,16 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
     response = await WebClient()
         .post(
-          url,
-          state.credentials.token,
-          data: jsonEncode(
-            serializers.serializeWith(PdfPreviewRequest.serializer, request),
-          ),
-          rawResponse: true,
-        )
+      url,
+      state.credentials.token,
+      data: jsonEncode(
+        serializers.serializeWith(PdfPreviewRequest.serializer, request),
+      ),
+      rawResponse: true,
+    )
         .catchError((dynamic error) {
-          print('## Error: $error');
-        });
+      print('## Error: $error');
+    });
 
     setState(() => isLoading = false);
   }

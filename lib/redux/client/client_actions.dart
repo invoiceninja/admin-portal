@@ -459,8 +459,8 @@ void handleClientAction(
     case EntityAction.restore:
       final message = clientIds.length > 1
           ? localization!.restoredClients
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', clientIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', clientIds.length.toString())
           : localization!.restoredClient;
       store.dispatch(
         RestoreClientsRequest(snackBarCompleter<Null>(message), clientIds),
@@ -469,8 +469,8 @@ void handleClientAction(
     case EntityAction.archive:
       final message = clientIds.length > 1
           ? localization!.archivedClients
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', clientIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', clientIds.length.toString())
           : localization!.archivedClient;
       store.dispatch(
         ArchiveClientsRequest(snackBarCompleter<Null>(message), clientIds),
@@ -479,8 +479,8 @@ void handleClientAction(
     case EntityAction.delete:
       final message = clientIds.length > 1
           ? localization!.deletedClients
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', clientIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', clientIds.length.toString())
           : localization!.deletedClient;
       store.dispatch(
         DeleteClientsRequest(snackBarCompleter<Null>(message), clientIds),
@@ -694,15 +694,14 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
                       .then((response) async {
-                        setState(() => _isLoading = false);
-                        Navigator.of(navigatorKey.currentContext!).pop();
-                        showToast(localization.assignedGroup);
-                        store.dispatch(RefreshData());
-                      })
-                      .catchError((error) {
-                        showErrorDialog(message: error);
-                        setState(() => _isLoading = false);
-                      });
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    showToast(localization.assignedGroup);
+                    store.dispatch(RefreshData());
+                  }).catchError((error) {
+                    showErrorDialog(message: error);
+                    setState(() => _isLoading = false);
+                  });
                 },
           child: Text(localization.submit.toUpperCase()),
         ),
@@ -715,7 +714,7 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
               widget.clients.length == 1
                   ? localization.lookup(EntityType.client.snakeCase)
                   : localization.lookup(EntityType.client.plural) +
-                        ' (${widget.clients.length})',
+                      ' (${widget.clients.length})',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             SizedBox(height: 8),

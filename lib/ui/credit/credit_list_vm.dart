@@ -73,24 +73,24 @@ class CreditListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-    onEntityAction,
+        onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-         state: state,
-         invoiceList: invoiceList,
-         invoiceMap: invoiceMap,
-         clientMap: clientMap,
-         filter: filter,
-         isLoading: isLoading,
-         onRefreshed: onRefreshed,
-         tableColumns: tableColumns,
-         entityType: entityType,
-         onSortColumn: onSortColumn,
-         onClearMultiselect: onClearMultiselect,
-       );
+          state: state,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          onRefreshed: onRefreshed,
+          tableColumns: tableColumns,
+          entityType: entityType,
+          onSortColumn: onSortColumn,
+          onClearMultiselect: onClearMultiselect,
+        );
 
   static CreditListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -123,15 +123,15 @@ class CreditListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.creditListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> credits,
-            EntityAction action,
-          ) => handleCreditAction(context, credits, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> credits,
+        EntityAction action,
+      ) =>
+          handleCreditAction(context, credits, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.credit) ??
-          CreditPresenter.getDefaultTableFields(state.userCompany),
+              CreditPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.credit,
       onSortColumn: (field) => store.dispatch(SortCredits(field)),
       onClearMultiselect: () => store.dispatch(ClearCreditMultiselect()),

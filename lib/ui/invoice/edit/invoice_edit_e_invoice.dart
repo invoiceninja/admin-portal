@@ -29,7 +29,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditEInvoice extends StatelessWidget {
   const InvoiceEditEInvoice({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final EntityEditEInvoiceVM viewModel;
 
@@ -245,8 +245,7 @@ class _CreditEInvoiceForm extends StatelessWidget {
     final billingRef = creditNote.billingReference.isNotEmpty
         ? creditNote.billingReference.first
         : EInvoiceBillingReferenceEntity();
-    final docRef =
-        billingRef.invoiceDocumentReference ??
+    final docRef = billingRef.invoiceDocumentReference ??
         EInvoiceDocumentReferenceEntity();
 
     String? invoiceId;
@@ -287,10 +286,10 @@ class _CreditEInvoiceForm extends StatelessWidget {
                     ..id = inv?.number ?? ''
                     ..issueDate = inv?.date ?? '',
                 );
-                final updatedBillingRef = EInvoiceBillingReferenceEntity()
-                    .rebuild(
-                      (b) => b..invoiceDocumentReference.replace(updatedDocRef),
-                    );
+                final updatedBillingRef =
+                    EInvoiceBillingReferenceEntity().rebuild(
+                  (b) => b..invoiceDocumentReference.replace(updatedDocRef),
+                );
                 final updatedCreditNote = EInvoiceCreditNoteEntity().rebuild(
                   (b) => b
                     ..billingReference.replace(
@@ -337,22 +336,21 @@ class _EInvoiceSendCard extends StatelessWidget {
             store.dispatch(StartSaving());
             WebClient()
                 .post(
-                  url,
-                  state.credentials.token,
-                  data: json.encode({
-                    'entity': entityType.apiValue,
-                    'entity_id': entityId,
-                  }),
-                )
+              url,
+              state.credentials.token,
+              data: json.encode({
+                'entity': entityType.apiValue,
+                'entity_id': entityId,
+              }),
+            )
                 .then((_) {
-                  store.dispatch(StopSaving());
-                  showToast(localization.emailedInvoice);
-                  store.dispatch(RefreshData());
-                })
-                .catchError((error) {
-                  store.dispatch(StopSaving());
-                  showErrorDialog(message: '$error');
-                });
+              store.dispatch(StopSaving());
+              showToast(localization.emailedInvoice);
+              store.dispatch(RefreshData());
+            }).catchError((error) {
+              store.dispatch(StopSaving());
+              showErrorDialog(message: '$error');
+            });
           },
         ),
       ],

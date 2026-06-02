@@ -140,8 +140,8 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     final startLabel = task.isRunning
         ? localization!.stop
         : task.getTaskTimes().isEmpty
-        ? localization!.start
-        : localization!.resume;
+            ? localization!.start
+            : localization!.resume;
 
     return MouseRegion(
       onHover: (event) {
@@ -298,10 +298,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           PopupMenuButton<String>(
                             itemBuilder: (BuildContext context) {
                               return [
-                                    localization.view,
-                                    localization.edit,
-                                    startLabel,
-                                  ]
+                                localization.view,
+                                localization.edit,
+                                startLabel,
+                              ]
                                   .map(
                                     (value) => PopupMenuItem<String>(
                                       child: Text(localization.lookup(value)),

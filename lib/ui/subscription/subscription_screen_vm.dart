@@ -56,12 +56,12 @@ class SubscriptionScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.subscriptionListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> subscriptions,
-            EntityAction action,
-          ) => handleSubscriptionAction(context, subscriptions, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> subscriptions,
+        EntityAction action,
+      ) =>
+          handleSubscriptionAction(context, subscriptions, action),
     );
   }
 }

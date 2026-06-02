@@ -32,7 +32,8 @@ var memoizedDropdownCreditList = memo7(
     String clientId,
     BuiltMap<String, UserEntity> userMap,
     List<String?> excludedIds,
-  ) => dropdownCreditSelector(
+  ) =>
+      dropdownCreditSelector(
     creditMap,
     clientMap,
     vendorMap,
@@ -103,7 +104,8 @@ var memoizedFilteredCreditList = memo8(
     BuiltMap<String, PaymentEntity> paymentMap,
     ListUIState creditListState,
     BuiltMap<String, UserEntity> userMap,
-  ) => filteredCreditsSelector(
+  ) =>
+      filteredCreditsSelector(
     selectionState,
     creditMap,
     creditList,

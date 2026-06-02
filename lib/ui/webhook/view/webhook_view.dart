@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookView extends StatefulWidget {
   const WebhookView({Key? key, required this.viewModel, required this.isFilter})
-    : super(key: key);
+      : super(key: key);
 
   final WebhookViewVM viewModel;
   final bool isFilter;

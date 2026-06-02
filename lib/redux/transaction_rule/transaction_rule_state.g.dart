@@ -76,12 +76,11 @@ class _$TransactionRuleStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -159,36 +158,30 @@ class _$TransactionRuleUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(TransactionRuleEntity),
-                )!
-                as TransactionRuleEntity,
+              value,
+              specifiedType: const FullType(TransactionRuleEntity),
+            )! as TransactionRuleEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -205,13 +198,15 @@ class _$TransactionRuleState extends TransactionRuleState {
 
   factory _$TransactionRuleState([
     void Function(TransactionRuleStateBuilder)? updates,
-  ]) => (TransactionRuleStateBuilder()..update(updates))._build();
+  ]) =>
+      (TransactionRuleStateBuilder()..update(updates))._build();
 
   _$TransactionRuleState._({required this.map, required this.list}) : super._();
   @override
   TransactionRuleState rebuild(
     void Function(TransactionRuleStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   TransactionRuleStateBuilder toBuilder() =>
@@ -327,7 +322,8 @@ class _$TransactionRuleUIState extends TransactionRuleUIState {
 
   factory _$TransactionRuleUIState([
     void Function(TransactionRuleUIStateBuilder)? updates,
-  ]) => (TransactionRuleUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (TransactionRuleUIStateBuilder()..update(updates))._build();
 
   _$TransactionRuleUIState._({
     this.editing,
@@ -341,7 +337,8 @@ class _$TransactionRuleUIState extends TransactionRuleUIState {
   @override
   TransactionRuleUIState rebuild(
     void Function(TransactionRuleUIStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   TransactionRuleUIStateBuilder toBuilder() =>
@@ -462,8 +459,7 @@ class TransactionRuleUIStateBuilder
   _$TransactionRuleUIState _build() {
     _$TransactionRuleUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$TransactionRuleUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

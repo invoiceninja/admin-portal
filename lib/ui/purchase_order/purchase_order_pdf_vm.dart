@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class PurchaseOrderPdfScreen extends StatelessWidget {
   const PurchaseOrderPdfScreen({Key? key, this.showAppBar = true})
-    : super(key: key);
+      : super(key: key);
 
   final bool showAppBar;
 

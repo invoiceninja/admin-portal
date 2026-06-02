@@ -274,9 +274,8 @@ void handleTaskStatusAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final taskStatus = taskStatuses.first as TaskStatusEntity;
-  final taskStatusIds = taskStatuses
-      .map((taskStatus) => taskStatus.id)
-      .toList();
+  final taskStatusIds =
+      taskStatuses.map((taskStatus) => taskStatus.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -285,8 +284,8 @@ void handleTaskStatusAction(
     case EntityAction.restore:
       final message = taskStatusIds.length > 1
           ? localization!.restoredTaskStatuses
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', taskStatusIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskStatusIds.length.toString())
           : localization!.restoredTaskStatus;
       store.dispatch(
         RestoreTaskStatusesRequest(
@@ -298,8 +297,8 @@ void handleTaskStatusAction(
     case EntityAction.archive:
       final message = taskStatusIds.length > 1
           ? localization!.archivedTaskStatuses
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', taskStatusIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskStatusIds.length.toString())
           : localization!.archivedTaskStatus;
       store.dispatch(
         ArchiveTaskStatusesRequest(
@@ -311,8 +310,8 @@ void handleTaskStatusAction(
     case EntityAction.delete:
       final message = taskStatusIds.length > 1
           ? localization!.deletedTaskStatuses
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', taskStatusIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taskStatusIds.length.toString())
           : localization!.deletedTaskStatus;
       store.dispatch(
         DeleteTaskStatusesRequest(

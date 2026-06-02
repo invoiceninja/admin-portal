@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseViewSchedule extends StatefulWidget {
   const ExpenseViewSchedule({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final AbstractExpenseViewVM viewModel;
 

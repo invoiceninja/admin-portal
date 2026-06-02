@@ -35,7 +35,8 @@ var memoizedExpenseTaxReport = memo7(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
     StaticState staticState,
-  ) => expenseTaxReport(
+  ) =>
+      expenseTaxReport(
     userCompany!,
     reportsUIState,
     expenseMap,
@@ -207,13 +208,11 @@ ReportResult expenseTaxReport(
   );
 
   return ReportResult(
-    allColumns: ExpenseTaxReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        ExpenseTaxReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }

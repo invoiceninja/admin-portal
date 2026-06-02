@@ -50,7 +50,8 @@ var memoizedTransactionReport = memo10(
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     BuiltMap<String, PaymentEntity> paymentMap,
     StaticState staticState,
-  ) => transactionReport(
+  ) =>
+      transactionReport(
     userCompany!,
     reportsUIState,
     transactionMap,
@@ -83,8 +84,8 @@ ReportResult transactionReport(
   final reportSettings = userCompany.settings.reportSettings;
   final transactionReportSettings =
       reportSettings.containsKey(kReportTransaction)
-      ? reportSettings[kReportTransaction]!
-      : ReportSettingsEntity();
+          ? reportSettings[kReportTransaction]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     TransactionReportFields.status,
@@ -184,7 +185,8 @@ ReportResult transactionReport(
         case TransactionReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(transaction.entityState);
+          )!
+              .lookup(transaction.entityState);
           break;
         case TransactionReportFields.participant_name:
           value = transaction.participantName;
@@ -234,13 +236,11 @@ ReportResult transactionReport(
   );
 
   return ReportResult(
-    allColumns: TransactionReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        TransactionReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

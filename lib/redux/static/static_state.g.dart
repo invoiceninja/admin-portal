@@ -143,9 +143,8 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'updatedAt':
-          result.updatedAt =
-              serializers.deserialize(value, specifiedType: const FullType(int))
-                  as int?;
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'currencyMap':
           result.currencyMap.replace(
@@ -520,8 +519,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   _$StaticState _build() {
     _$StaticState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$StaticState._(
             updatedAt: updatedAt,
             currencyMap: currencyMap.build(),

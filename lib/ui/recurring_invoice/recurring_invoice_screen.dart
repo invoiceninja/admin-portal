@@ -21,7 +21,7 @@ import 'recurring_invoice_screen_vm.dart';
 
 class RecurringInvoiceScreen extends StatelessWidget {
   const RecurringInvoiceScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/recurring_invoice';
 
@@ -146,8 +146,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterRecurringInvoicesByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.recurringInvoice)
           ? FloatingActionButton(
               heroTag: 'recurring_invoice_fab',

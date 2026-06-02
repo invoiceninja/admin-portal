@@ -55,12 +55,11 @@ class _$SizeListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(SizeEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(SizeEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -111,10 +110,9 @@ class _$SizeItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(SizeEntity),
-                )!
-                as SizeEntity,
+              value,
+              specifiedType: const FullType(SizeEntity),
+            )! as SizeEntity,
           );
           break;
       }
@@ -161,20 +159,16 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -189,7 +183,8 @@ class _$SizeListResponse extends SizeListResponse {
 
   factory _$SizeListResponse([
     void Function(SizeListResponseBuilder)? updates,
-  ]) => (SizeListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (SizeListResponseBuilder()..update(updates))._build();
 
   _$SizeListResponse._({required this.data}) : super._();
   @override
@@ -220,7 +215,8 @@ class _$SizeListResponse extends SizeListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'SizeListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -286,7 +282,8 @@ class _$SizeItemResponse extends SizeItemResponse {
 
   factory _$SizeItemResponse([
     void Function(SizeItemResponseBuilder)? updates,
-  ]) => (SizeItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (SizeItemResponseBuilder()..update(updates))._build();
 
   _$SizeItemResponse._({required this.data}) : super._();
   @override
@@ -317,7 +314,8 @@ class _$SizeItemResponse extends SizeItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'SizeItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -456,8 +454,7 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
   SizeEntity build() => _build();
 
   _$SizeEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$SizeEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

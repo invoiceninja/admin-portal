@@ -110,15 +110,14 @@ Middleware<AppState> _saveCompany(SettingsRepository settingsRepository) {
     settingsRepository
         .saveCompany(store.state.credentials, action.company!)
         .then((company) {
-          store.dispatch(SaveCompanySuccess(company));
-          action.completer!.complete();
-          WidgetUtils.updateData();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveCompanyFailure(error));
-          action.completer!.completeError(error);
-        });
+      store.dispatch(SaveCompanySuccess(company));
+      action.completer!.complete();
+      WidgetUtils.updateData();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveCompanyFailure(error));
+      action.completer!.completeError(error);
+    });
 
     next(action);
   };
@@ -132,19 +131,18 @@ Middleware<AppState> _saveEInvoiceCertificate(
 
     settingsRepository
         .saveEInvoiceCertificate(
-          store.state.credentials,
-          action.company,
-          action.eInvoiceCertificate,
-        )
+      store.state.credentials,
+      action.company,
+      action.eInvoiceCertificate,
+    )
         .then((company) {
-          store.dispatch(SaveEInvoiceCertificateSuccess(company));
-          action.completer.complete();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveEInvoiceCertificateFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(SaveEInvoiceCertificateSuccess(company));
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveEInvoiceCertificateFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -156,28 +154,27 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
 
     settingsRepository
         .saveAuthUser(
-          store.state.credentials,
-          action.user,
-          action.password,
-          action.idToken,
-        )
+      store.state.credentials,
+      action.user,
+      action.password,
+      action.idToken,
+    )
         .then((user) {
-          store.dispatch(SaveAuthUserSuccess(user));
-          if (action.completer != null) {
-            action.completer!.complete();
-          }
-          WidgetUtils.updateData();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveAuthUserFailure(error));
-          if ('$error'.contains('412')) {
-            store.dispatch(UserUnverifiedPassword());
-          }
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      store.dispatch(SaveAuthUserSuccess(user));
+      if (action.completer != null) {
+        action.completer!.complete();
+      }
+      WidgetUtils.updateData();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -189,28 +186,27 @@ Middleware<AppState> _connectOAuthUser(SettingsRepository settingsRepository) {
 
     settingsRepository
         .connectOAuthUser(
-          store.state.credentials,
-          action.provider,
-          action.password,
-          action.idToken,
-          action.accessToken,
-        )
+      store.state.credentials,
+      action.provider,
+      action.password,
+      action.idToken,
+      action.accessToken,
+    )
         .then((user) {
-          store.dispatch(ConnectOAuthUserSuccess(user));
-          if (action.completer != null) {
-            action.completer!.complete();
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ConnecOAuthUserFailure(error));
-          if ('$error'.contains('412')) {
-            store.dispatch(UserUnverifiedPassword());
-          }
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      store.dispatch(ConnectOAuthUserSuccess(user));
+      if (action.completer != null) {
+        action.completer!.complete();
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConnecOAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -224,23 +220,22 @@ Middleware<AppState> _disconnectOAuthUser(
 
     settingsRepository
         .disconnectOAuthUser(
-          store.state.credentials,
-          action.user!,
-          action.password,
-          action.idToken,
-        )
+      store.state.credentials,
+      action.user!,
+      action.password,
+      action.idToken,
+    )
         .then((user) {
-          store.dispatch(DisconnectOAuthUserSuccess(user));
-          action.completer.complete();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DisconnecOAuthUserFailure(error));
-          if ('$error'.contains('412')) {
-            store.dispatch(UserUnverifiedPassword());
-          }
-          action.completer.completeError(error);
-        });
+      store.dispatch(DisconnectOAuthUserSuccess(user));
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisconnecOAuthUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -254,23 +249,22 @@ Middleware<AppState> _disconnectOAuthMailer(
 
     settingsRepository
         .disconnectOAuthMailer(
-          store.state.credentials,
-          action.password,
-          action.idToken,
-          action.user!.id,
-        )
+      store.state.credentials,
+      action.password,
+      action.idToken,
+      action.user!.id,
+    )
         .then((user) {
-          store.dispatch(DisconnectOAuthMailerSuccess(user));
-          action.completer.complete();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DisconnectOAuthMailerFailure(error));
-          if ('$error'.contains('412')) {
-            store.dispatch(UserUnverifiedPassword());
-          }
-          action.completer.completeError(error);
-        });
+      store.dispatch(DisconnectOAuthMailerSuccess(user));
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisconnectOAuthMailerFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -282,27 +276,26 @@ Middleware<AppState> _connectGmailUser(SettingsRepository settingsRepository) {
 
     settingsRepository
         .connectGmailUser(
-          store.state.credentials,
-          action.password,
-          action.idToken,
-          action.serverAuthCode,
-        )
+      store.state.credentials,
+      action.password,
+      action.idToken,
+      action.serverAuthCode,
+    )
         .then((user) {
-          store.dispatch(ConnecGmailUserSuccess(user));
-          if (action.completer != null) {
-            action.completer!.complete();
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ConnecGmailUserFailure(error));
-          if ('$error'.contains('412')) {
-            store.dispatch(UserUnverifiedPassword());
-          }
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      store.dispatch(ConnecGmailUserSuccess(user));
+      if (action.completer != null) {
+        action.completer!.complete();
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConnecGmailUserFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -314,22 +307,21 @@ Middleware<AppState> _disableTwoFactor(SettingsRepository settingsRepository) {
 
     settingsRepository
         .disableTwoFactor(
-          store.state.credentials,
-          action.password,
-          action.idToken,
-        )
+      store.state.credentials,
+      action.password,
+      action.idToken,
+    )
         .then((_) {
-          store.dispatch(DisableTwoFactorSuccess());
-          action.completer.complete();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DisableTwoFactorFailure(error));
-          if ('$error'.contains('412')) {
-            store.dispatch(UserUnverifiedPassword());
-          }
-          action.completer.completeError(error);
-        });
+      store.dispatch(DisableTwoFactorSuccess());
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DisableTwoFactorFailure(error));
+      if ('$error'.contains('412')) {
+        store.dispatch(UserUnverifiedPassword());
+      }
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -342,14 +334,13 @@ Middleware<AppState> _saveSettings(SettingsRepository settingsRepository) {
     settingsRepository
         .saveUserSettings(store.state.credentials, action.user)
         .then((userCompany) {
-          store.dispatch(SaveUserSettingsSuccess(userCompany));
-          action.completer.complete();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveUserSettingsFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(SaveUserSettingsSuccess(userCompany));
+      action.completer.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveUserSettingsFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -363,31 +354,30 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     final entityId = action.type == EntityType.company
         ? state.company.id
         : action.type == EntityType.group
-        ? settingsState.group.id
-        : settingsState.client.id;
+            ? settingsState.group.id
+            : settingsState.client.id;
     settingsRepository
         .uploadLogo(
-          store.state.credentials,
-          entityId,
-          action.multipartFile,
-          action.type,
-        )
+      store.state.credentials,
+      entityId,
+      action.multipartFile,
+      action.type,
+    )
         .then((entity) {
-          if (action.type == EntityType.client) {
-            store.dispatch(SaveClientSuccess(entity as ClientEntity));
-          } else if (action.type == EntityType.group) {
-            store.dispatch(SaveGroupSuccess(entity as GroupEntity));
-          } else {
-            store.dispatch(SaveCompanySuccess(entity as CompanyEntity));
-          }
+      if (action.type == EntityType.client) {
+        store.dispatch(SaveClientSuccess(entity as ClientEntity));
+      } else if (action.type == EntityType.group) {
+        store.dispatch(SaveGroupSuccess(entity as GroupEntity));
+      } else {
+        store.dispatch(SaveCompanySuccess(entity as CompanyEntity));
+      }
 
-          action.completer!.complete();
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(UploadLogoFailure(error));
-          action.completer!.completeError(error);
-        });
+      action.completer!.complete();
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(UploadLogoFailure(error));
+      action.completer!.completeError(error);
+    });
 
     next(action);
   };
@@ -400,32 +390,31 @@ Middleware<AppState> _saveDocument(SettingsRepository repository) {
     if (state.isEnterprisePlan) {
       repository
           .uploadDocument(
-            store.state.credentials,
-            state.company,
-            action!.multipartFiles,
-            action.isPrivate,
-          )
+        store.state.credentials,
+        state.company,
+        action!.multipartFiles,
+        action.isPrivate,
+      )
           .then((company) {
-            store.dispatch(SaveCompanySuccess(company));
+        store.dispatch(SaveCompanySuccess(company));
 
-            final documents = <DocumentEntity>[];
-            company.documents.forEach((document) {
-              documents.add(
-                document.rebuild(
-                  (b) => b
-                    ..parentId = company.id
-                    ..parentType = EntityType.company,
-                ),
-              );
-            });
-            store.dispatch(LoadDocumentsSuccess(documents));
-            action.completer.complete(documents);
-          })
-          .catchError((Object error) {
-            print(error);
-            store.dispatch(SaveCompanyDocumentFailure(error));
-            action.completer.completeError(error);
-          });
+        final documents = <DocumentEntity>[];
+        company.documents.forEach((document) {
+          documents.add(
+            document.rebuild(
+              (b) => b
+                ..parentId = company.id
+                ..parentType = EntityType.company,
+            ),
+          );
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+        action.completer.complete(documents);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveCompanyDocumentFailure(error));
+        action.completer.completeError(error);
+      });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveCompanyDocumentFailure(error));

@@ -12,7 +12,8 @@ var memoizedPaymentsByInvoice = memo3(
     String invoiceId,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltList<String> paymentList,
-  ) => paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList),
+  ) =>
+      paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList),
 );
 
 List<PaymentEntity?> paymentsByInvoiceSelector(
@@ -31,7 +32,8 @@ var memoizedPaymentsByCredit = memo3(
     String invoiceId,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltList<String> paymentList,
-  ) => paymentsByCreditSelector(invoiceId, paymentMap, paymentList),
+  ) =>
+      paymentsByCreditSelector(invoiceId, paymentMap, paymentList),
 );
 
 List<PaymentEntity?> paymentsByCreditSelector(
@@ -53,7 +55,8 @@ var memoizedDropdownPaymentList = memo6(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
-  ) => dropdownPaymentsSelector(
+  ) =>
+      dropdownPaymentsSelector(
     paymentMap,
     paymentList,
     invoiceMap,
@@ -103,7 +106,8 @@ var memoizedFilteredPaymentList = memo8(
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
     ListUIState paymentListState,
-  ) => filteredPaymentsSelector(
+  ) =>
+      filteredPaymentsSelector(
     selectionState,
     paymentMap,
     paymentList,
@@ -197,7 +201,8 @@ var memoizedPaymentStatsForClient = memo3(
     String clientId,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-  ) => paymentStatsForClient(clientId, paymentMap, invoiceMap),
+  ) =>
+      paymentStatsForClient(clientId, paymentMap, invoiceMap),
 );
 
 EntityStats paymentStatsForClient(
@@ -225,7 +230,8 @@ var memoizedPaymentStatsForUser = memo3(
     String userId,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-  ) => paymentStatsForClient(userId, paymentMap, invoiceMap),
+  ) =>
+      paymentStatsForClient(userId, paymentMap, invoiceMap),
 );
 
 EntityStats paymentStatsForUser(

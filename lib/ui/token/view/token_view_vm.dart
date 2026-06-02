@@ -53,8 +53,7 @@ class TokenViewVM {
 
   factory TokenViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final token =
-        state.tokenState.map[state.tokenUIState.selectedId] ??
+    final token = state.tokenState.map[state.tokenUIState.selectedId] ??
         TokenEntity(id: state.tokenUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {

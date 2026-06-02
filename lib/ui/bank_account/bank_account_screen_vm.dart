@@ -58,12 +58,12 @@ class BankAccountScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.bankAccountListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> bankAccounts,
-            EntityAction action,
-          ) => handleBankAccountAction(context, bankAccounts, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> bankAccounts,
+        EntityAction action,
+      ) =>
+          handleBankAccountAction(context, bankAccounts, action),
       onRefreshAccounts: (context) {
         final webClient = WebClient();
         final credentials = state.credentials;
@@ -72,17 +72,14 @@ class BankAccountScreenVM {
 
         store.dispatch(StartSaving());
 
-        webClient
-            .post(url, credentials.token)
-            .then((dynamic response) {
-              store.dispatch(StopSaving());
-              store.dispatch(RefreshData());
-              showToast(localization!.refreshComplete);
-            })
-            .catchError((dynamic error) {
-              store.dispatch(StopSaving());
-              showErrorDialog(message: '$error');
-            });
+        webClient.post(url, credentials.token).then((dynamic response) {
+          store.dispatch(StopSaving());
+          store.dispatch(RefreshData());
+          showToast(localization!.refreshComplete);
+        }).catchError((dynamic error) {
+          store.dispatch(StopSaving());
+          showErrorDialog(message: '$error');
+        });
       },
     );
   }

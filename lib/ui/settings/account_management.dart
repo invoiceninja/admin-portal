@@ -40,7 +40,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AccountManagement extends StatefulWidget {
   const AccountManagement({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final AccountManagementVM viewModel;
 
@@ -376,22 +376,19 @@ class _AccountOverview extends StatelessWidget {
 
       if (state.clientState.list.isNotEmpty) {
         final count = state.clientState.list.length;
-        stats +=
-            '\n- $count ' +
+        stats += '\n- $count ' +
             (count == 1 ? localization!.client : localization!.clients);
       }
 
       if (state.productState.list.isNotEmpty) {
         final count = state.productState.list.length;
-        stats +=
-            '\n- $count ' +
+        stats += '\n- $count ' +
             (count == 1 ? localization!.product : localization!.products);
       }
 
       if (state.invoiceState.list.isNotEmpty && !state.company.isLarge) {
         final count = state.invoiceState.list.length;
-        stats +=
-            '\n- $count ' +
+        stats += '\n- $count ' +
             (count == 1 ? localization!.invoice : localization!.invoices);
       }
 
@@ -418,8 +415,8 @@ class _AccountOverview extends StatelessWidget {
           value: account.isTrial
               ? '${localization.pro} • ${localization.freeTrial}'
               : account.plan.isEmpty
-              ? localization.free
-              : localization.lookup(account.plan),
+                  ? localization.free
+                  : localization.lookup(account.plan),
           secondLabel: secondLabel,
           secondValue: secondValue,
         ),
@@ -564,25 +561,24 @@ class _AccountOverview extends StatelessWidget {
                           WebClient()
                               .post(url, credentials.token)
                               .then((dynamic response) {
-                                if (Navigator.of(
-                                  navigatorKey.currentContext!,
-                                ).canPop()) {
-                                  Navigator.of(
-                                    navigatorKey.currentContext!,
-                                  ).pop();
-                                }
-                                viewModel.onAppliedLicense();
-                              })
-                              .catchError((dynamic error) {
-                                if (Navigator.of(
-                                  navigatorKey.currentContext!,
-                                ).canPop()) {
-                                  Navigator.of(
-                                    navigatorKey.currentContext!,
-                                  ).pop();
-                                }
-                                showErrorDialog(message: '$error');
-                              });
+                            if (Navigator.of(
+                              navigatorKey.currentContext!,
+                            ).canPop()) {
+                              Navigator.of(
+                                navigatorKey.currentContext!,
+                              ).pop();
+                            }
+                            viewModel.onAppliedLicense();
+                          }).catchError((dynamic error) {
+                            if (Navigator.of(
+                              navigatorKey.currentContext!,
+                            ).canPop()) {
+                              Navigator.of(
+                                navigatorKey.currentContext!,
+                              ).pop();
+                            }
+                            showErrorDialog(message: '$error');
+                          });
                         },
                       );
                     },
@@ -717,18 +713,18 @@ class _AccountOverview extends StatelessWidget {
                               !state.user.hasPassword) {
                             final credentials =
                                 await SignInWithApple.getAppleIDCredential(
-                                  scopes: [
-                                    AppleIDAuthorizationScopes.email,
-                                    AppleIDAuthorizationScopes.fullName,
-                                  ],
-                                  webAuthenticationOptions:
-                                      WebAuthenticationOptions(
-                                        clientId: kAppleOAuthClientId,
-                                        redirectUri: Uri.parse(
-                                          kAppleOAuthRedirectUrl,
-                                        ),
-                                      ),
-                                );
+                              scopes: [
+                                AppleIDAuthorizationScopes.email,
+                                AppleIDAuthorizationScopes.fullName,
+                              ],
+                              webAuthenticationOptions:
+                                  WebAuthenticationOptions(
+                                clientId: kAppleOAuthClientId,
+                                redirectUri: Uri.parse(
+                                  kAppleOAuthRedirectUrl,
+                                ),
+                              ),
+                            );
 
                             viewModel.onCompanyDelete(
                               navigatorKey.currentContext!,

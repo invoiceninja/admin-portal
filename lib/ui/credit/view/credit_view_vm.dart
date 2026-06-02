@@ -64,28 +64,26 @@ class CreditViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext, DocumentEntity)? onViewExpense,
     Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
-         state: state,
-         company: company,
-         invoice: invoice,
-         client: client,
-         isSaving: isSaving,
-         isDirty: isDirty,
-         onActionSelected: onEntityAction,
-         onEditPressed: onEditPressed,
-         onPaymentsPressed: onPaymentsPressed,
-         onRefreshed: onRefreshed,
-         onUploadDocuments: onUploadDocuments,
-         onViewExpense: onViewExpense,
-         onViewPdf: onViewPdf,
-       );
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocuments: onUploadDocuments,
+          onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
+        );
 
   factory CreditViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final credit =
-        state.creditState.map[state.creditUIState.selectedId] ??
+    final credit = state.creditState.map[state.creditUIState.selectedId] ??
         InvoiceEntity(id: state.creditUIState.selectedId);
-    final client =
-        store.state.clientState.map[credit.clientId] ??
+    final client = store.state.clientState.map[credit.clientId] ??
         ClientEntity(id: credit.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -115,38 +113,36 @@ class CreditViewVM extends AbstractInvoiceViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([credit], action, autoPop: true),
-      onUploadDocuments:
-          (
-            BuildContext context,
-            List<MultipartFile> multipartFile,
-            bool isPrivate,
-          ) {
-            final completer = Completer<List<DocumentEntity>>();
-            store.dispatch(
-              SaveCreditDocumentRequest(
-                isPrivate: isPrivate,
-                multipartFiles: multipartFile,
-                credit: credit,
-                completer: completer,
-              ),
-            );
-            completer.future
-                .then((client) {
-                  showToast(
-                    AppLocalization.of(
-                      navigatorKey.currentContext!,
-                    )!.uploadedDocument,
-                  );
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
-          },
+      onUploadDocuments: (
+        BuildContext context,
+        List<MultipartFile> multipartFile,
+        bool isPrivate,
+      ) {
+        final completer = Completer<List<DocumentEntity>>();
+        store.dispatch(
+          SaveCreditDocumentRequest(
+            isPrivate: isPrivate,
+            multipartFiles: multipartFile,
+            credit: credit,
+            completer: completer,
+          ),
+        );
+        completer.future.then((client) {
+          showToast(
+            AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!
+                .uploadedDocument,
+          );
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
+      },
       onViewPdf: (context, credit, [activityId]) {
         store.dispatch(
           ShowPdfCredit(

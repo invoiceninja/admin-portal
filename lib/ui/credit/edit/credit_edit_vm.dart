@@ -58,17 +58,17 @@ class CreditEditVM extends AbstractInvoiceEditVM {
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
-         state: state,
-         company: company,
-         invoice: invoice,
-         invoiceItemIndex: invoiceItemIndex,
-         origInvoice: origInvoice,
-         onSavePressed: onSavePressed,
-         onItemsAdded: onItemsAdded,
-         isSaving: isSaving,
-         onCancelPressed: onCancelPressed,
-         onUploadDocuments: onUploadDocuments,
-       );
+          state: state,
+          company: company,
+          invoice: invoice,
+          invoiceItemIndex: invoiceItemIndex,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
+          onUploadDocuments: onUploadDocuments,
+        );
 
   factory CreditEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -111,49 +111,47 @@ class CreditEditVM extends AbstractInvoiceEditVM {
                 action: action,
               ),
             );
-            return completer.future
-                .then((savedCredit) {
-                  showToast(
-                    credit.isNew
-                        ? localization!.createdCredit
-                        : localization!.updatedCredit,
-                  );
+            return completer.future.then((savedCredit) {
+              showToast(
+                credit.isNew
+                    ? localization!.createdCredit
+                    : localization!.updatedCredit,
+              );
 
-                  if (state.prefState.isMobile) {
-                    store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
-                    if (credit.isNew) {
-                      navigator!.pushReplacementNamed(CreditViewScreen.route);
-                    } else {
-                      navigator!.pop(savedCredit);
-                    }
-                  } else {
-                    if (!state.prefState.isPreviewVisible) {
-                      store.dispatch(TogglePreviewSidebar());
-                    }
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
+                if (credit.isNew) {
+                  navigator!.pushReplacementNamed(CreditViewScreen.route);
+                } else {
+                  navigator!.pop(savedCredit);
+                }
+              } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
 
-                    viewEntity(entity: savedCredit);
+                viewEntity(entity: savedCredit);
 
-                    if (state.prefState.isEditorFullScreen(EntityType.credit) &&
-                        state.prefState.editAfterSaving) {
-                      editEntity(entity: savedCredit);
-                    }
-                  }
+                if (state.prefState.isEditorFullScreen(EntityType.credit) &&
+                    state.prefState.editAfterSaving) {
+                  editEntity(entity: savedCredit);
+                }
+              }
 
-                  if (action != null && action.isClientSide) {
-                    handleEntityAction(savedCredit, action);
-                  } else if (action != null && action.requiresSecondRequest) {
-                    handleEntityAction(savedCredit, action);
-                    viewEntity(entity: savedCredit, force: true);
-                  }
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
+              if (action != null && action.isClientSide) {
+                handleEntityAction(savedCredit, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedCredit, action);
+                viewEntity(entity: savedCredit, force: true);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                context: navigatorKey.currentContext!,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                },
+              );
+            });
           }
         });
       },
@@ -171,38 +169,36 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments:
-          (
-            BuildContext context,
-            List<MultipartFile> multipartFile,
-            bool? isPrivate,
-          ) {
-            final completer = Completer<List<DocumentEntity>>();
-            store.dispatch(
-              SaveCreditDocumentRequest(
-                isPrivate: isPrivate,
-                multipartFiles: multipartFile,
-                credit: credit,
-                completer: completer,
-              ),
-            );
-            completer.future
-                .then((client) {
-                  showToast(
-                    AppLocalization.of(
-                      navigatorKey.currentContext!,
-                    )!.uploadedDocument,
-                  );
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
-          },
+      onUploadDocuments: (
+        BuildContext context,
+        List<MultipartFile> multipartFile,
+        bool? isPrivate,
+      ) {
+        final completer = Completer<List<DocumentEntity>>();
+        store.dispatch(
+          SaveCreditDocumentRequest(
+            isPrivate: isPrivate,
+            multipartFiles: multipartFile,
+            credit: credit,
+            completer: completer,
+          ),
+        );
+        completer.future.then((client) {
+          showToast(
+            AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!
+                .uploadedDocument,
+          );
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
+      },
     );
   }
 }

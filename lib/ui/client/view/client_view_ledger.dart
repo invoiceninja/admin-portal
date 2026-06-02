@@ -39,9 +39,8 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
   @override
   Widget build(BuildContext context) {
     final client = widget.viewModel!.client;
-    final ledgers = client.ledger
-        .where((ledger) => ledger.adjustment != 0)
-        .toList();
+    final ledgers =
+        client.ledger.where((ledger) => ledger.adjustment != 0).toList();
 
     if (client.isStale) {
       return LoadingIndicator();

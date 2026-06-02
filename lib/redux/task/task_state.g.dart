@@ -70,12 +70,11 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -155,41 +154,34 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(TaskEntity),
-                )!
-                as TaskEntity,
+              value,
+              specifiedType: const FullType(TaskEntity),
+            )! as TaskEntity,
           );
           break;
         case 'kanbanLastUpdated':
-          result.kanbanLastUpdated =
-              serializers.deserialize(value, specifiedType: const FullType(int))
-                  as int?;
+          result.kanbanLastUpdated = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -474,8 +466,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   _$TaskUIState _build() {
     _$TaskUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$TaskUIState._(
             editing: _editing?.build(),
             editingTimeIndex: editingTimeIndex,

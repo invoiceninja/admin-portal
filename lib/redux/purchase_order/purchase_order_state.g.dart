@@ -73,12 +73,11 @@ class _$PurchaseOrderStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -156,36 +155,30 @@ class _$PurchaseOrderUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(InvoiceEntity),
-                )!
-                as InvoiceEntity,
+              value,
+              specifiedType: const FullType(InvoiceEntity),
+            )! as InvoiceEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -202,13 +195,15 @@ class _$PurchaseOrderState extends PurchaseOrderState {
 
   factory _$PurchaseOrderState([
     void Function(PurchaseOrderStateBuilder)? updates,
-  ]) => (PurchaseOrderStateBuilder()..update(updates))._build();
+  ]) =>
+      (PurchaseOrderStateBuilder()..update(updates))._build();
 
   _$PurchaseOrderState._({required this.map, required this.list}) : super._();
   @override
   PurchaseOrderState rebuild(
     void Function(PurchaseOrderStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   PurchaseOrderStateBuilder toBuilder() =>
@@ -328,7 +323,8 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
 
   factory _$PurchaseOrderUIState([
     void Function(PurchaseOrderUIStateBuilder)? updates,
-  ]) => (PurchaseOrderUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (PurchaseOrderUIStateBuilder()..update(updates))._build();
 
   _$PurchaseOrderUIState._({
     this.editing,
@@ -344,7 +340,8 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
   @override
   PurchaseOrderUIState rebuild(
     void Function(PurchaseOrderUIStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   PurchaseOrderUIStateBuilder toBuilder() =>
@@ -482,8 +479,7 @@ class PurchaseOrderUIStateBuilder
   _$PurchaseOrderUIState _build() {
     _$PurchaseOrderUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$PurchaseOrderUIState._(
             editing: _editing?.build(),
             editingItemIndex: editingItemIndex,

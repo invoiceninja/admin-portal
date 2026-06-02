@@ -144,8 +144,7 @@ class CreditScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterCreditsByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.credit)
           ? FloatingActionButton(
               heroTag: 'credit_fab',

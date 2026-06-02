@@ -192,10 +192,8 @@ class _ListFilterState extends State<ListFilter> {
                     horizontal: 10,
                   ),
                 ),
-                selectedValues: state
-                    .getListState(widget.entityType)
-                    .stateFilters
-                    .toList(),
+                selectedValues:
+                    state.getListState(widget.entityType).stateFilters.toList(),
                 whenEmpty: localization!.all,
                 menuItembuilder: (dynamic value) {
                   final state = value as EntityState;
@@ -212,12 +210,12 @@ class _ListFilterState extends State<ListFilter> {
                       child: Text(
                         selected.isNotEmpty
                             ? selected
-                                  .map<String?>(
-                                    (dynamic value) => localization.lookup(
-                                      (value as EntityState).name,
-                                    ),
-                                  )
-                                  .join(', ')
+                                .map<String?>(
+                                  (dynamic value) => localization.lookup(
+                                    (value as EntityState).name,
+                                  ),
+                                )
+                                .join(', ')
                             : localization.all,
                         style: TextStyle(fontSize: 15),
                       ),
@@ -290,11 +288,11 @@ class _ListFilterState extends State<ListFilter> {
                       child: Text(
                         selected.isNotEmpty
                             ? selected
-                                  .map(
-                                    (dynamic value) =>
-                                        (value as EntityStatus).name,
-                                  )
-                                  .join(', ')
+                                .map(
+                                  (dynamic value) =>
+                                      (value as EntityStatus).name,
+                                )
+                                .join(', ')
                             : localization.all,
                         style: TextStyle(fontSize: 15),
                       ),

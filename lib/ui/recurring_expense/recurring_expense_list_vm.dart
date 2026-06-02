@@ -109,15 +109,14 @@ class RecurringExpenseListVM {
       recurringExpenseMap: state.recurringExpenseState.map,
       isLoading: state.isLoading,
       filter: state.recurringExpenseUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> recurringExpenses,
-            EntityAction action,
-          ) => handleRecurringExpenseAction(context, recurringExpenses, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> recurringExpenses,
+        EntityAction action,
+      ) =>
+          handleRecurringExpenseAction(context, recurringExpenses, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns:
-          state.userCompany.settings.getTableColumns(
+      tableColumns: state.userCompany.settings.getTableColumns(
             EntityType.recurringExpense,
           ) ??
           RecurringExpensePresenter.getDefaultTableFields(state.userCompany),

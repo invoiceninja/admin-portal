@@ -178,31 +178,29 @@ class _PaymentSettingsState extends State<PaymentSettings>
                     ),
                     selectedItemBuilder: (settings.autoBill ?? '').isEmpty
                         ? null
-                        : (context) =>
-                              [
-                                    SettingsEntity.AUTO_BILL_ALWAYS,
-                                    SettingsEntity.AUTO_BILL_OPT_OUT,
-                                    SettingsEntity.AUTO_BILL_OPT_IN,
-                                    SettingsEntity.AUTO_BILL_OFF,
-                                  ]
-                                  .map(
-                                    (type) => Text(localization.lookup(type)),
-                                  )
-                                  .toList(),
-                    items:
-                        [
+                        : (context) => [
                               SettingsEntity.AUTO_BILL_ALWAYS,
                               SettingsEntity.AUTO_BILL_OPT_OUT,
                               SettingsEntity.AUTO_BILL_OPT_IN,
                               SettingsEntity.AUTO_BILL_OFF,
                             ]
-                            .map(
-                              (value) => DropdownMenuItem(
-                                child: AutobillDropdownMenuItem(type: value),
-                                value: value,
-                              ),
-                            )
-                            .toList(),
+                                .map(
+                                  (type) => Text(localization.lookup(type)),
+                                )
+                                .toList(),
+                    items: [
+                      SettingsEntity.AUTO_BILL_ALWAYS,
+                      SettingsEntity.AUTO_BILL_OPT_OUT,
+                      SettingsEntity.AUTO_BILL_OPT_IN,
+                      SettingsEntity.AUTO_BILL_OFF,
+                    ]
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: AutobillDropdownMenuItem(type: value),
+                            value: value,
+                          ),
+                        )
+                        .toList(),
                   ),
                   AppDropdownButton<String>(
                     labelText: localization.autoBillOn,
@@ -361,24 +359,23 @@ class _PaymentSettingsState extends State<PaymentSettings>
                       ),
                     ),
                   BoolDropdownButton(
-                    value:
-                        settings.paymentFlow ==
+                    value: settings.paymentFlow ==
                             SettingsEntity.PAYMENT_FLOW_SMOOTH
                         ? true
                         : settings.paymentFlow ==
-                              SettingsEntity.PAYMENT_FLOW_DEFAULT
-                        ? false
-                        : state.settingsUIState.isFiltered
-                        ? null
-                        : false,
+                                SettingsEntity.PAYMENT_FLOW_DEFAULT
+                            ? false
+                            : state.settingsUIState.isFiltered
+                                ? null
+                                : false,
                     onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild(
                         (b) => b
                           ..paymentFlow = value == true
                               ? SettingsEntity.PAYMENT_FLOW_SMOOTH
                               : value == false
-                              ? SettingsEntity.PAYMENT_FLOW_DEFAULT
-                              : null,
+                                  ? SettingsEntity.PAYMENT_FLOW_DEFAULT
+                                  : null,
                       ),
                     ),
                     label: localization.onePageCheckout,
@@ -409,30 +406,28 @@ class _PaymentSettingsState extends State<PaymentSettings>
                     AppDropdownButton<String>(
                       showBlank: true,
                       labelText: localization.invoicePaymentTerms,
-                      items:
-                          memoizedDropdownPaymentTermList(
-                            state.paymentTermState.map,
-                            state.paymentTermState.list,
-                          ).map((paymentTermId) {
-                            final paymentTerm =
-                                state.paymentTermState.map[paymentTermId]!;
-                            return DropdownMenuItem<String>(
-                              child: Text(
-                                paymentTerm.numDays == 0
-                                    ? localization.dueOnReceipt
-                                    : paymentTerm.name,
-                              ),
-                              value: paymentTerm.numDays.toString(),
-                            );
-                          }).toList(),
+                      items: memoizedDropdownPaymentTermList(
+                        state.paymentTermState.map,
+                        state.paymentTermState.list,
+                      ).map((paymentTermId) {
+                        final paymentTerm =
+                            state.paymentTermState.map[paymentTermId]!;
+                        return DropdownMenuItem<String>(
+                          child: Text(
+                            paymentTerm.numDays == 0
+                                ? localization.dueOnReceipt
+                                : paymentTerm.name,
+                          ),
+                          value: paymentTerm.numDays.toString(),
+                        );
+                      }).toList(),
                       value: '${settings.defaultPaymentTerms}',
                       onChanged: (dynamic numDays) {
                         viewModel.onSettingsChanged(
                           settings.rebuild(
                             (b) => b
-                              ..defaultPaymentTerms = numDays == null
-                                  ? null
-                                  : '$numDays',
+                              ..defaultPaymentTerms =
+                                  numDays == null ? null : '$numDays',
                           ),
                         );
                       },
@@ -441,30 +436,28 @@ class _PaymentSettingsState extends State<PaymentSettings>
                     AppDropdownButton<String>(
                       showBlank: true,
                       labelText: localization.quoteValidUntil,
-                      items:
-                          memoizedDropdownPaymentTermList(
-                            state.paymentTermState.map,
-                            state.paymentTermState.list,
-                          ).map((paymentTermId) {
-                            final paymentTerm =
-                                state.paymentTermState.map[paymentTermId]!;
-                            return DropdownMenuItem<String>(
-                              child: Text(
-                                paymentTerm.numDays == 0
-                                    ? localization.dueOnReceipt
-                                    : paymentTerm.name,
-                              ),
-                              value: paymentTerm.numDays.toString(),
-                            );
-                          }).toList(),
+                      items: memoizedDropdownPaymentTermList(
+                        state.paymentTermState.map,
+                        state.paymentTermState.list,
+                      ).map((paymentTermId) {
+                        final paymentTerm =
+                            state.paymentTermState.map[paymentTermId]!;
+                        return DropdownMenuItem<String>(
+                          child: Text(
+                            paymentTerm.numDays == 0
+                                ? localization.dueOnReceipt
+                                : paymentTerm.name,
+                          ),
+                          value: paymentTerm.numDays.toString(),
+                        );
+                      }).toList(),
                       value: '${settings.defaultValidUntil}',
                       onChanged: (dynamic numDays) {
                         viewModel.onSettingsChanged(
                           settings.rebuild(
                             (b) => b
-                              ..defaultValidUntil = numDays == null
-                                  ? null
-                                  : '$numDays',
+                              ..defaultValidUntil =
+                                  numDays == null ? null : '$numDays',
                           ),
                         );
                       },

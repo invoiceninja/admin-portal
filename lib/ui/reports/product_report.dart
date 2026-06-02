@@ -45,7 +45,8 @@ var memoizedProductReport = memo6(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => productReport(
+  ) =>
+      productReport(
     userCompany!,
     reportsUIState,
     productMap,
@@ -178,7 +179,8 @@ ReportResult productReport(
         case ProductReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(product.entityState);
+          )!
+              .lookup(product.entityState);
           break;
       }
 
@@ -235,13 +237,11 @@ ReportResult productReport(
   );
 
   return ReportResult(
-    allColumns: ProductReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        ProductReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

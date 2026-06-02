@@ -232,8 +232,8 @@ void handleTaxRateAction(
     case EntityAction.restore:
       final message = taxRateIds.length > 1
           ? localization!.restoredTaxRates
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', taxRateIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.restoredTaxRate;
       store.dispatch(
         RestoreTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds),
@@ -242,8 +242,8 @@ void handleTaxRateAction(
     case EntityAction.archive:
       final message = taxRateIds.length > 1
           ? localization!.archivedTaxRates
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', taxRateIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.archivedTaxRate;
       store.dispatch(
         ArchiveTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds),
@@ -252,8 +252,8 @@ void handleTaxRateAction(
     case EntityAction.delete:
       final message = taxRateIds.length > 1
           ? localization!.deletedTaxRates
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', taxRateIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.deletedTaxRate;
       store.dispatch(
         DeleteTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds),

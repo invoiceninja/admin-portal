@@ -105,8 +105,7 @@ abstract class DesignEntity extends Object
       isChanged: false,
       isFree: true,
       name: '',
-      design:
-          design ??
+      design: design ??
           BuiltMap<String, String>({
             kDesignHeader: '',
             kDesignBody: '',
@@ -146,11 +145,11 @@ abstract class DesignEntity extends Object
   String get entities;
 
   DesignEntity get clone => rebuild(
-    (b) => b
-      ..id = BaseEntity.nextId
-      ..isChanged = false
-      ..isDeleted = false,
-  );
+        (b) => b
+          ..id = BaseEntity.nextId
+          ..isChanged = false
+          ..isDeleted = false,
+      );
 
   String get displayName => name;
 

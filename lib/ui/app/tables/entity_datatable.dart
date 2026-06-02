@@ -70,9 +70,8 @@ class EntityDataTableSource extends DataTableSource {
     }
 
     Color? backgroundColor;
-    final rowColor =
-        state.prefState.activeCustomColors[PrefState
-            .THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
+    final rowColor = state.prefState.activeCustomColors[
+            PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
         '';
 
     if (isSelected && isDesktop(context)) {
@@ -100,9 +99,8 @@ class EntityDataTableSource extends DataTableSource {
           ? null
           : WidgetStateProperty.all<Color>(backgroundColor),
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
-      onSelectChanged: listState.isInMultiselect()
-          ? (value) => onTap(entity)
-          : null,
+      onSelectChanged:
+          listState.isInMultiselect() ? (value) => onTap(entity) : null,
       cells: [
         if (!listState.isInMultiselect())
           DataCell(
@@ -126,8 +124,8 @@ class EntityDataTableSource extends DataTableSource {
                     userCompany: state.userCompany,
                     includeEdit: state.prefState.tapSelectedToEdit,
                     client: entity is BelongsToClient
-                        ? state.clientState.map[(entity as BelongsToClient)
-                              .clientId]
+                        ? state.clientState
+                            .map[(entity as BelongsToClient).clientId]
                         : null,
                   ),
                   isSaving: false,

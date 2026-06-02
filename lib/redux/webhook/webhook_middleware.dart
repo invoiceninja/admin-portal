@@ -104,19 +104,18 @@ Middleware<AppState> _archiveWebhook(WebhookRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.webhookIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.webhookIds,
+      EntityAction.archive,
+    )
         .then((List<WebhookEntity> webhooks) {
-          store.dispatch(ArchiveWebhooksSuccess(webhooks));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchiveWebhooksFailure(prevWebhooks));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchiveWebhooksSuccess(webhooks));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveWebhooksFailure(prevWebhooks));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -130,19 +129,18 @@ Middleware<AppState> _deleteWebhook(WebhookRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.webhookIds,
-          EntityAction.delete,
-        )
+      store.state.credentials,
+      action.webhookIds,
+      EntityAction.delete,
+    )
         .then((List<WebhookEntity> webhooks) {
-          store.dispatch(DeleteWebhooksSuccess(webhooks));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeleteWebhooksFailure(prevWebhooks));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeleteWebhooksSuccess(webhooks));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteWebhooksFailure(prevWebhooks));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -156,19 +154,18 @@ Middleware<AppState> _restoreWebhook(WebhookRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.webhookIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.webhookIds,
+      EntityAction.restore,
+    )
         .then((List<WebhookEntity> webhooks) {
-          store.dispatch(RestoreWebhooksSuccess(webhooks));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestoreWebhooksFailure(prevWebhooks));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestoreWebhooksSuccess(webhooks));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreWebhooksFailure(prevWebhooks));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -180,19 +177,18 @@ Middleware<AppState> _saveWebhook(WebhookRepository repository) {
     repository
         .saveData(store.state.credentials, action.webhook!)
         .then((WebhookEntity webhook) {
-          if (action.webhook!.isNew) {
-            store.dispatch(AddWebhookSuccess(webhook));
-          } else {
-            store.dispatch(SaveWebhookSuccess(webhook));
-          }
+      if (action.webhook!.isNew) {
+        store.dispatch(AddWebhookSuccess(webhook));
+      } else {
+        store.dispatch(SaveWebhookSuccess(webhook));
+      }
 
-          action.completer!.complete(webhook);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveWebhookFailure(error));
-          action.completer!.completeError(error);
-        });
+      action.completer!.complete(webhook);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveWebhookFailure(error));
+      action.completer!.completeError(error);
+    });
 
     next(action);
   };
@@ -204,22 +200,19 @@ Middleware<AppState> _loadWebhook(WebhookRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadWebhookRequest());
-    repository
-        .loadItem(state.credentials, action.webhookId)
-        .then((webhook) {
-          store.dispatch(LoadWebhookSuccess(webhook));
+    repository.loadItem(state.credentials, action.webhookId).then((webhook) {
+      store.dispatch(LoadWebhookSuccess(webhook));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadWebhookFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadWebhookFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -231,27 +224,24 @@ Middleware<AppState> _loadWebhooks(WebhookRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadWebhooksRequest());
-    repository
-        .loadList(state.credentials)
-        .then((data) {
-          store.dispatch(LoadWebhooksSuccess(data));
+    repository.loadList(state.credentials).then((data) {
+      store.dispatch(LoadWebhooksSuccess(data));
 
-          if (action!.completer != null) {
-            action.completer!.complete(null);
-          }
-          /*
+      if (action!.completer != null) {
+        action.completer!.complete(null);
+      }
+      /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadWebhooksFailure(error));
-          if (action!.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadWebhooksFailure(error));
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };

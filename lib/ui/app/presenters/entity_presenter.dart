@@ -101,8 +101,8 @@ class EntityPresenter {
           entity.isActive
               ? localization!.active
               : entity.isArchived
-              ? localization!.archived
-              : localization!.deleted,
+                  ? localization!.archived
+                  : localization!.deleted,
         );
       case EntityFields.createdBy:
         final user = state.userState.get(entity.createdUserId!);

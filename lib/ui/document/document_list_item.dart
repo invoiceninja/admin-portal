@@ -53,8 +53,7 @@ class DocumentListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected:
-          isDesktop(context) &&
+      isSelected: isDesktop(context) &&
           document.id ==
               (uiState.isEditing
                   ? documentUIState.editing!.id

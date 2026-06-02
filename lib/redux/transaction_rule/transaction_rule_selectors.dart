@@ -12,7 +12,8 @@ var memoizedDropdownTransactionRuleList = memo5(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     String clientId,
-  ) => dropdownTransactionRulesSelector(
+  ) =>
+      dropdownTransactionRulesSelector(
     transactionRuleMap,
     transactionRuleList,
     staticState,
@@ -57,7 +58,8 @@ var memoizedFilteredTransactionRuleList = memo4(
     BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap,
     BuiltList<String> transactionRuleList,
     ListUIState transactionRuleListState,
-  ) => filteredTransactionRulesSelector(
+  ) =>
+      filteredTransactionRulesSelector(
     selectionState,
     transactionRuleMap,
     transactionRuleList,

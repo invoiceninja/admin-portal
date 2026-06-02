@@ -114,12 +114,10 @@ abstract class GatewayTokenEntity extends Object
     bool sortAscending,
   ) {
     const int response = 0;
-    final GatewayTokenEntity gatewayTokenA = sortAscending
-        ? this
-        : gatewayToken;
-    final GatewayTokenEntity gatewayTokenB = sortAscending
-        ? gatewayToken
-        : this;
+    final GatewayTokenEntity gatewayTokenA =
+        sortAscending ? this : gatewayToken;
+    final GatewayTokenEntity gatewayTokenB =
+        sortAscending ? gatewayToken : this;
 
     switch (sortField) {
       case GatewayTokenFields.name:
@@ -129,8 +127,8 @@ abstract class GatewayTokenEntity extends Object
 
     if (response == 0) {
       return gatewayTokenA.customerReference.toLowerCase().compareTo(
-        gatewayTokenB.customerReference.toLowerCase(),
-      );
+            gatewayTokenB.customerReference.toLowerCase(),
+          );
     } else {
       return response;
     }

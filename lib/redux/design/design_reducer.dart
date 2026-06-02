@@ -270,7 +270,8 @@ DesignState _setLoadedDesign(
 DesignState _setLoadedDesigns(
   DesignState designState,
   LoadDesignsSuccess action,
-) => designState.loadDesigns(action.designs);
+) =>
+    designState.loadDesigns(action.designs);
 
 DesignState _setLoadedCompany(
   DesignState designState,

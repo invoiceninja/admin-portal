@@ -43,7 +43,7 @@ class ProjectListItem extends StatelessWidget {
     final client = state.clientState.get(project.clientId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (project.matchesFilterValue(filter) ??
-              client.matchesFilterValue(filter))
+            client.matchesFilterValue(filter))
         : null;
     final listUIState = projectUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
@@ -53,8 +53,7 @@ class ProjectListItem extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     return DismissibleEntity(
-      isSelected:
-          isDesktop(context) &&
+      isSelected: isDesktop(context) &&
           project.id ==
               (uiState.isEditing
                   ? projectUIState.editing!.id
@@ -140,9 +139,12 @@ class ProjectListItem extends StatelessWidget {
                                 subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleSmall!
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor!.withOpacity(kLighterOpacity),
+                                      color: textColor!
+                                          .withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],

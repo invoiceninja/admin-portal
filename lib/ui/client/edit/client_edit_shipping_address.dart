@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditShippingAddress extends StatefulWidget {
   const ClientEditShippingAddress({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final ClientEditVM viewModel;
 

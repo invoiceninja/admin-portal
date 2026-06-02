@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SubscriptionViewScreen extends StatelessWidget {
   const SubscriptionViewScreen({Key? key, this.isFilter = false})
-    : super(key: key);
+      : super(key: key);
   static const String route = '/$kSettings/$kSettingsPaymentLinksView';
   final bool isFilter;
 
@@ -56,7 +56,7 @@ class SubscriptionViewVM {
     final state = store.state;
     final subscription =
         state.subscriptionState.map[state.subscriptionUIState.selectedId] ??
-        SubscriptionEntity(id: state.subscriptionUIState.selectedId);
+            SubscriptionEntity(id: state.subscriptionUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(

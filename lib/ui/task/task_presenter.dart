@@ -101,20 +101,20 @@ class TaskPresenter extends EntityPresenter {
             .getTaskTimes()
             .where((time) => time.startDate != null && time.endDate != null)
             .forEach((time) {
-              final start = formatDate(
-                time.startDate!.toIso8601String(),
-                context,
-                showTime: true,
-                showDate: true,
-              );
-              final end = formatDate(
-                time.endDate!.toIso8601String(),
-                context,
-                showTime: true,
-                showDate: false,
-              );
-              notes.add('$start - $end');
-            });
+          final start = formatDate(
+            time.startDate!.toIso8601String(),
+            context,
+            showTime: true,
+            showDate: true,
+          );
+          final end = formatDate(
+            time.endDate!.toIso8601String(),
+            context,
+            showTime: true,
+            showDate: false,
+          );
+          notes.add('$start - $end');
+        });
         return Text(notes.join('\n'));
       case TaskFields.isRunning:
         return Text(task.isRunning ? localization!.yes : localization!.no);

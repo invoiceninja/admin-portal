@@ -11,7 +11,8 @@ var memoizedDropdownPaymentTermList = memo2(
   (
     BuiltMap<String, PaymentTermEntity> paymentTermMap,
     BuiltList<String> paymentTermList,
-  ) => dropdownPaymentTermsSelector(paymentTermMap, paymentTermList),
+  ) =>
+      dropdownPaymentTermsSelector(paymentTermMap, paymentTermList),
 );
 
 List<String> dropdownPaymentTermsSelector(
@@ -46,7 +47,8 @@ var memoizedFilteredPaymentTermList = memo4(
     BuiltMap<String, PaymentTermEntity> paymentTermMap,
     BuiltList<String> paymentTermList,
     ListUIState paymentTermListState,
-  ) => filteredPaymentTermsSelector(
+  ) =>
+      filteredPaymentTermsSelector(
     selectionState,
     paymentTermMap,
     paymentTermList,

@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignView extends StatefulWidget {
   const DesignView({Key? key, required this.viewModel, required this.isFilter})
-    : super(key: key);
+      : super(key: key);
 
   final DesignViewVM viewModel;
   final bool isFilter;

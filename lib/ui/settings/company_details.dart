@@ -206,8 +206,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final defaultQuoteTerms = _quoteTermsController.text.trim();
     final defaultCreditFooter = _creditFooterController.text.trim();
     final defaultCreditTerms = _creditTermsController.text.trim();
-    final defaultPurchaseOrderFooter = _purchaseOrderFooterController.text
-        .trim();
+    final defaultPurchaseOrderFooter =
+        _purchaseOrderFooterController.text.trim();
     final defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim();
     final qrIban = _qrIbanController.text.trim();
     final besrId = _besrIdController.text.trim();
@@ -227,44 +227,37 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..city = isFiltered && city.isEmpty ? null : city
         ..state = isFiltered && state.isEmpty ? null : state
         ..postalCode = isFiltered && postalCode.isEmpty ? null : postalCode
-        ..customValue1 = isFiltered && customValue1.isEmpty
-            ? null
-            : customValue1
-        ..customValue2 = isFiltered && customValue2.isEmpty
-            ? null
-            : customValue2
-        ..customValue3 = isFiltered && customValue3.isEmpty
-            ? null
-            : customValue3
-        ..customValue4 = isFiltered && customValue4.isEmpty
-            ? null
-            : customValue4
+        ..customValue1 =
+            isFiltered && customValue1.isEmpty ? null : customValue1
+        ..customValue2 =
+            isFiltered && customValue2.isEmpty ? null : customValue2
+        ..customValue3 =
+            isFiltered && customValue3.isEmpty ? null : customValue3
+        ..customValue4 =
+            isFiltered && customValue4.isEmpty ? null : customValue4
         ..defaultInvoiceFooter = isFiltered && defaultInvoiceFooter.isEmpty
             ? null
             : defaultInvoiceFooter
         ..defaultInvoiceTerms = isFiltered && defaultInvoiceTerms.isEmpty
             ? null
             : defaultInvoiceTerms
-        ..defaultQuoteFooter = isFiltered && defaultQuoteFooter.isEmpty
-            ? null
-            : defaultQuoteFooter
-        ..defaultQuoteTerms = isFiltered && defaultQuoteTerms.isEmpty
-            ? null
-            : defaultQuoteTerms
+        ..defaultQuoteFooter =
+            isFiltered && defaultQuoteFooter.isEmpty ? null : defaultQuoteFooter
+        ..defaultQuoteTerms =
+            isFiltered && defaultQuoteTerms.isEmpty ? null : defaultQuoteTerms
         ..defaultCreditFooter = isFiltered && defaultCreditFooter.isEmpty
             ? null
             : defaultCreditFooter
-        ..defaultCreditTerms = isFiltered && defaultCreditTerms.isEmpty
-            ? null
-            : defaultCreditTerms
+        ..defaultCreditTerms =
+            isFiltered && defaultCreditTerms.isEmpty ? null : defaultCreditTerms
         ..defaultPurchaseOrderFooter =
             isFiltered && defaultPurchaseOrderFooter.isEmpty
-            ? null
-            : defaultPurchaseOrderFooter
+                ? null
+                : defaultPurchaseOrderFooter
         ..defaultPurchaseOrderTerms =
             isFiltered && defaultPurchaseOrderTerms.isEmpty
-            ? null
-            : defaultPurchaseOrderTerms
+                ? null
+                : defaultPurchaseOrderTerms
         ..qrIban = isFiltered && qrIban.isEmpty ? null : qrIban
         ..besrId = isFiltered && besrId.isEmpty ? null : besrId,
     );
@@ -454,10 +447,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       entityId: company.industryId,
                       onSelected: (SelectableEntity? industry) =>
                           viewModel.onCompanyChanged(
-                            company.rebuild(
-                              (b) => b..industryId = industry?.id ?? '',
-                            ),
-                          ),
+                        company.rebuild(
+                          (b) => b..industryId = industry?.id ?? '',
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -514,8 +507,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       entityId: settings.countryId,
                       onSelected: (SelectableEntity? country) =>
                           viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..countryId = country?.id),
-                          ),
+                        settings.rebuild((b) => b..countryId = country?.id),
+                      ),
                     ),
                   ],
                 ),
@@ -595,8 +588,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     child: (state.isHosted && kIsWeb)
                         ? CachedImage(
                             width: double.infinity,
-                            url:
-                                state.credentials.url +
+                            url: state.credentials.url +
                                 '/companies/' +
                                 company.id +
                                 '/logo',

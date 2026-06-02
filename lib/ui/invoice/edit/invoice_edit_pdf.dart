@@ -69,35 +69,33 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     webClient
         .post(
-          url,
-          credentials.token,
-          data: json.encode(data),
-          rawResponse: true,
-        )
+      url,
+      credentials.token,
+      data: json.encode(data),
+      rawResponse: true,
+    )
         .then((dynamic response) {
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            _isLoading = false;
-            _response = response;
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+        _response = response;
 
-            if (kIsWeb && state.prefState.enableNativeBrowser) {
-              _pdfString =
-                  'data:application/pdf;base64,' +
-                  base64Encode(response.bodyBytes);
-              WebUtils.registerWebView(_pdfString);
-            }
-          });
-        })
-        .catchError((dynamic error) {
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            _isLoading = false;
-          });
-        });
+        if (kIsWeb && state.prefState.enableNativeBrowser) {
+          _pdfString =
+              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+          WebUtils.registerWebView(_pdfString);
+        }
+      });
+    }).catchError((dynamic error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   @override

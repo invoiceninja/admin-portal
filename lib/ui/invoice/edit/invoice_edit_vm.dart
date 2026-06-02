@@ -84,17 +84,17 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
-         state: state,
-         company: company,
-         invoice: invoice,
-         invoiceItemIndex: invoiceItemIndex,
-         origInvoice: origInvoice,
-         onSavePressed: onSavePressed,
-         onItemsAdded: onItemsAdded,
-         isSaving: isSaving,
-         onCancelPressed: onCancelPressed,
-         onUploadDocuments: onUploadDocuments,
-       );
+          state: state,
+          company: company,
+          invoice: invoice,
+          invoiceItemIndex: invoiceItemIndex,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
+          onUploadDocuments: onUploadDocuments,
+        );
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -164,51 +164,49 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 entityAction: action,
               ),
             );
-            return completer.future
-                .then((savedInvoice) {
-                  showToast(
-                    invoice.isNew
-                        ? localization!.createdInvoice
-                        : localization!.updatedInvoice,
-                  );
+            return completer.future.then((savedInvoice) {
+              showToast(
+                invoice.isNew
+                    ? localization!.createdInvoice
+                    : localization!.updatedInvoice,
+              );
 
-                  if (state.prefState.isMobile) {
-                    store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
-                    if (invoice.isNew) {
-                      navigator!.pushReplacementNamed(InvoiceViewScreen.route);
-                    } else {
-                      navigator!.pop(savedInvoice);
-                    }
-                  } else {
-                    if (!state.prefState.isPreviewVisible) {
-                      store.dispatch(TogglePreviewSidebar());
-                    }
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
+                if (invoice.isNew) {
+                  navigator!.pushReplacementNamed(InvoiceViewScreen.route);
+                } else {
+                  navigator!.pop(savedInvoice);
+                }
+              } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
 
-                    viewEntity(entity: savedInvoice);
+                viewEntity(entity: savedInvoice);
 
-                    if (state.prefState.isEditorFullScreen(
-                          EntityType.invoice,
-                        ) &&
-                        state.prefState.editAfterSaving) {
-                      editEntity(entity: savedInvoice);
-                    }
-                  }
+                if (state.prefState.isEditorFullScreen(
+                      EntityType.invoice,
+                    ) &&
+                    state.prefState.editAfterSaving) {
+                  editEntity(entity: savedInvoice);
+                }
+              }
 
-                  if (action != null && action.isClientSide) {
-                    handleEntityAction(savedInvoice, action);
-                  } else if (action != null && action.requiresSecondRequest) {
-                    handleEntityAction(savedInvoice, action);
-                    viewEntity(entity: savedInvoice, force: true);
-                  }
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
+              if (action != null && action.isClientSide) {
+                handleEntityAction(savedInvoice, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedInvoice, action);
+                viewEntity(entity: savedInvoice, force: true);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                context: navigatorKey.currentContext!,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                },
+              );
+            });
           }
         });
       },
@@ -250,38 +248,36 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments:
-          (
-            BuildContext context,
-            List<MultipartFile> multipartFiles,
-            bool? isPrivate,
-          ) {
-            final completer = Completer<List<DocumentEntity>>();
-            store.dispatch(
-              SaveInvoiceDocumentRequest(
-                isPrivate: isPrivate,
-                multipartFiles: multipartFiles,
-                invoice: invoice,
-                completer: completer,
-              ),
-            );
-            completer.future
-                .then((client) {
-                  showToast(
-                    AppLocalization.of(
-                      navigatorKey.currentContext!,
-                    )!.uploadedDocument,
-                  );
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
-          },
+      onUploadDocuments: (
+        BuildContext context,
+        List<MultipartFile> multipartFiles,
+        bool? isPrivate,
+      ) {
+        final completer = Completer<List<DocumentEntity>>();
+        store.dispatch(
+          SaveInvoiceDocumentRequest(
+            isPrivate: isPrivate,
+            multipartFiles: multipartFiles,
+            invoice: invoice,
+            completer: completer,
+          ),
+        );
+        completer.future.then((client) {
+          showToast(
+            AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!
+                .uploadedDocument,
+          );
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
+      },
     );
   }
 }

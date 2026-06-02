@@ -61,12 +61,11 @@ class _$SubscriptionListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(SubscriptionEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(SubscriptionEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -120,10 +119,9 @@ class _$SubscriptionItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(SubscriptionEntity),
-                )!
-                as SubscriptionEntity,
+              value,
+              specifiedType: const FullType(SubscriptionEntity),
+            )! as SubscriptionEntity,
           );
           break;
       }
@@ -344,274 +342,208 @@ class _$SubscriptionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'group_id':
-          result.groupId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.groupId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'product_ids':
-          result.productIds =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.productIds = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'recurring_product_ids':
-          result.recurringProductIds =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.recurringProductIds = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'optional_product_ids':
-          result.optionalProductIds =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.optionalProductIds = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'optional_recurring_product_ids':
-          result.optionalRecurringProductIds =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.optionalRecurringProductIds = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'registration_required':
-          result.registrationRequired =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.registrationRequired = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'use_inventory_management':
-          result.useInventoryManagement =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.useInventoryManagement = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'remaining_cycles':
-          result.remainingCycles =
-              serializers.deserialize(value, specifiedType: const FullType(int))
-                  as int?;
+          result.remainingCycles = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'frequency_id':
-          result.frequencyId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.frequencyId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'auto_bill':
-          result.autoBill =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.autoBill = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'promo_code':
-          result.promoCode =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.promoCode = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'promo_discount':
-          result.promoDiscount =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.promoDiscount = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'price':
-          result.price =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.price = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'is_amount_discount':
-          result.isAmountDiscount =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isAmountDiscount = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'allow_cancellation':
-          result.allowCancellation =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.allowCancellation = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'per_seat_enabled':
-          result.perSeatEnabled =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.perSeatEnabled = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'max_seats_limit':
-          result.maxSeatsLimit =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.maxSeatsLimit = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'trial_enabled':
-          result.trialEnabled =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.trialEnabled = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'trial_duration':
-          result.trialDuration =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.trialDuration = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'allow_query_overrides':
-          result.allowQueryOverrides =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.allowQueryOverrides = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'allow_plan_changes':
-          result.allowPlanChanges =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.allowPlanChanges = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'refund_period':
-          result.refundPeriod =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.refundPeriod = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'webhook_configuration':
           result.webhookConfiguration.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(WebhookConfigurationEntity),
-                )!
-                as WebhookConfigurationEntity,
+              value,
+              specifiedType: const FullType(WebhookConfigurationEntity),
+            )! as WebhookConfigurationEntity,
           );
           break;
         case 'purchase_page':
-          result.purchasePage =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.purchasePage = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'steps':
-          result.steps =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.steps = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'isChanged':
-          result.isChanged =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isChanged = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'updated_at':
-          result.updatedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.updatedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'archived_at':
-          result.archivedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.archivedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'is_deleted':
-          result.isDeleted =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isDeleted = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'user_id':
-          result.createdUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.createdUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.assignedUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -685,28 +617,22 @@ class _$WebhookConfigurationEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'return_url':
-          result.returnUrl =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.returnUrl = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'post_purchase_url':
-          result.postPurchaseUrl =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.postPurchaseUrl = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'post_purchase_rest_method':
-          result.postPurchaseRestMethod =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.postPurchaseRestMethod = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'post_purchase_headers':
           result.postPurchaseHeaders.replace(
@@ -720,12 +646,10 @@ class _$WebhookConfigurationEntitySerializer
           );
           break;
         case 'post_purchase_body':
-          result.postPurchaseBody =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.postPurchaseBody = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -740,13 +664,15 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
 
   factory _$SubscriptionListResponse([
     void Function(SubscriptionListResponseBuilder)? updates,
-  ]) => (SubscriptionListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (SubscriptionListResponseBuilder()..update(updates))._build();
 
   _$SubscriptionListResponse._({required this.data}) : super._();
   @override
   SubscriptionListResponse rebuild(
     void Function(SubscriptionListResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionListResponseBuilder toBuilder() =>
@@ -772,7 +698,8 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'SubscriptionListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -839,13 +766,15 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
 
   factory _$SubscriptionItemResponse([
     void Function(SubscriptionItemResponseBuilder)? updates,
-  ]) => (SubscriptionItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (SubscriptionItemResponseBuilder()..update(updates))._build();
 
   _$SubscriptionItemResponse._({required this.data}) : super._();
   @override
   SubscriptionItemResponse rebuild(
     void Function(SubscriptionItemResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionItemResponseBuilder toBuilder() =>
@@ -871,7 +800,8 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'SubscriptionItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -1004,7 +934,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
 
   factory _$SubscriptionEntity([
     void Function(SubscriptionEntityBuilder)? updates,
-  ]) => (SubscriptionEntityBuilder()..update(updates))._build();
+  ]) =>
+      (SubscriptionEntityBuilder()..update(updates))._build();
 
   _$SubscriptionEntity._({
     required this.name,
@@ -1045,7 +976,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   SubscriptionEntity rebuild(
     void Function(SubscriptionEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionEntityBuilder toBuilder() =>
@@ -1291,7 +1223,8 @@ class SubscriptionEntityBuilder
       _$this._webhookConfiguration ??= WebhookConfigurationEntityBuilder();
   set webhookConfiguration(
     WebhookConfigurationEntityBuilder? webhookConfiguration,
-  ) => _$this._webhookConfiguration = webhookConfiguration;
+  ) =>
+      _$this._webhookConfiguration = webhookConfiguration;
 
   String? _purchasePage;
   String? get purchasePage => _$this._purchasePage;
@@ -1397,8 +1330,7 @@ class SubscriptionEntityBuilder
   _$SubscriptionEntity _build() {
     _$SubscriptionEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$SubscriptionEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,
@@ -1580,7 +1512,8 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
 
   factory _$WebhookConfigurationEntity([
     void Function(WebhookConfigurationEntityBuilder)? updates,
-  ]) => (WebhookConfigurationEntityBuilder()..update(updates))._build();
+  ]) =>
+      (WebhookConfigurationEntityBuilder()..update(updates))._build();
 
   _$WebhookConfigurationEntity._({
     required this.returnUrl,
@@ -1592,7 +1525,8 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
   @override
   WebhookConfigurationEntity rebuild(
     void Function(WebhookConfigurationEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   WebhookConfigurationEntityBuilder toBuilder() =>
@@ -1698,8 +1632,7 @@ class WebhookConfigurationEntityBuilder
   _$WebhookConfigurationEntity _build() {
     _$WebhookConfigurationEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$WebhookConfigurationEntity._(
             returnUrl: BuiltValueNullFieldError.checkNotNull(
               returnUrl,

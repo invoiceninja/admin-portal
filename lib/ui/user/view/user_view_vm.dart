@@ -53,8 +53,7 @@ class UserViewVM {
 
   factory UserViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user =
-        state.userState.map[state.userUIState.selectedId] ??
+    final user = state.userState.map[state.userUIState.selectedId] ??
         UserEntity(id: state.userUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {

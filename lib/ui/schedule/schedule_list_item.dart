@@ -63,8 +63,7 @@ class ScheduleListItem extends StatelessWidget {
           title += ': ' + client.displayName;
         }
 
-        subtitle +=
-            ' • ' +
+        subtitle += ' • ' +
             localization.lookup(schedule.parameters.entityType) +
             ' ' +
             entity.listDisplayName;
@@ -99,8 +98,7 @@ class ScheduleListItem extends StatelessWidget {
     } else if (schedule.template == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) {
       if (schedule.parameters.invoiceId != null &&
           schedule.parameters.invoiceId!.isNotEmpty) {
-        title +=
-            ': ' +
+        title += ': ' +
             state.invoiceState
                 .get(schedule.parameters.invoiceId!)
                 .listDisplayName;
@@ -112,8 +110,7 @@ class ScheduleListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: schedule,
-      isSelected:
-          schedule.id ==
+      isSelected: schedule.id ==
           (uiState.isEditing
               ? scheduleUIState.editing!.id
               : scheduleUIState.selectedId),

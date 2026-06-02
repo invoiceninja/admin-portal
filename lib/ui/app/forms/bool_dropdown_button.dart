@@ -46,9 +46,8 @@ class BoolDropdownButton extends StatelessWidget {
       return SwitchListTile(
         title: Text(label ?? ''),
         value: value ?? false,
-        secondary: iconData != null && isDesktop(context)
-            ? Icon(iconData)
-            : null,
+        secondary:
+            iconData != null && isDesktop(context) ? Icon(iconData) : null,
         onChanged: (value) => onChanged(value),
         activeColor: Theme.of(context).colorScheme.secondary,
         subtitle: helpLabel != null ? Text(helpLabel!) : null,
@@ -72,61 +71,61 @@ class BoolDropdownButton extends StatelessWidget {
         : Padding(
             padding: const EdgeInsets.only(top: 4),
             child: Flex(
-                direction: isDesktop(context) ? Axis.horizontal : Axis.vertical,
-                children: <Widget>[
-                  InkWell(
-                    onTap: () => onChanged(false),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minWidth: minWidth ?? 130,
-                        minHeight: 36,
-                      ),
-                      child: Row(
-                        children: [
-                          IgnorePointer(
-                            child: Radio<bool>(
-                              value: false,
-                              groupValue: value,
-                              onChanged: (_) {},
-                              activeColor: Theme.of(
-                                context,
-                              ).colorScheme.secondary,
-                            ),
+              direction: isDesktop(context) ? Axis.horizontal : Axis.vertical,
+              children: <Widget>[
+                InkWell(
+                  onTap: () => onChanged(false),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: minWidth ?? 130,
+                      minHeight: 36,
+                    ),
+                    child: Row(
+                      children: [
+                        IgnorePointer(
+                          child: Radio<bool>(
+                            value: false,
+                            groupValue: value,
+                            onChanged: (_) {},
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
                           ),
-                          Text(falseLabel),
-                          SizedBox(width: 16),
-                        ],
-                      ),
+                        ),
+                        Text(falseLabel),
+                        SizedBox(width: 16),
+                      ],
                     ),
                   ),
-                  InkWell(
-                    onTap: () => onChanged(true),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minWidth: minWidth ?? 120,
-                        minHeight: 36,
-                      ),
-                      child: Row(
-                        children: [
-                          IgnorePointer(
-                            child: Radio<bool>(
-                              value: true,
-                              groupValue: value,
-                              onChanged: (_) {},
-                              activeColor: Theme.of(
-                                context,
-                              ).colorScheme.secondary,
-                            ),
+                ),
+                InkWell(
+                  onTap: () => onChanged(true),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minWidth: minWidth ?? 120,
+                      minHeight: 36,
+                    ),
+                    child: Row(
+                      children: [
+                        IgnorePointer(
+                          child: Radio<bool>(
+                            value: true,
+                            groupValue: value,
+                            onChanged: (_) {},
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
                           ),
-                          Text(trueLabel),
-                          SizedBox(width: 16),
-                        ],
-                      ),
+                        ),
+                        Text(trueLabel),
+                        SizedBox(width: 16),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            );
+                ),
+              ],
+            ),
+          );
 
     if (label == null) {
       return widget;

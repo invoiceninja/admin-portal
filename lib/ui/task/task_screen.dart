@@ -225,8 +225,7 @@ class TaskScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.task)
           ? FloatingActionButton(
               heroTag: 'task_fab',

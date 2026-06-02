@@ -51,12 +51,12 @@ class InvoiceOverview extends StatelessWidget {
             state.paymentState.list,
           )
         : invoice.isCredit
-        ? memoizedPaymentsByCredit(
-            invoice.id,
-            state.paymentState.map,
-            state.paymentState.list,
-          )
-        : <PaymentEntity>[];
+            ? memoizedPaymentsByCredit(
+                invoice.id,
+                state.paymentState.map,
+                state.paymentState.list,
+              )
+            : <PaymentEntity>[];
 
     payments.forEach((payment) {
       payment!.invoicePaymentables.forEach((paymentable) {
@@ -105,10 +105,10 @@ class InvoiceOverview extends StatelessWidget {
         label: invoice.isPurchaseOrder
             ? localization.amount
             : invoice.isCredit
-            ? localization.creditAmount
-            : invoice.isQuote
-            ? localization.quoteAmount
-            : localization.invoiceAmount,
+                ? localization.creditAmount
+                : invoice.isQuote
+                    ? localization.quoteAmount
+                    : localization.invoiceAmount,
         value: formatNumber(
           invoice.amount,
           context,
@@ -118,17 +118,17 @@ class InvoiceOverview extends StatelessWidget {
         secondLabel: invoice.isCredit
             ? localization.creditRemaining
             : (invoice.isQuote || invoice.isRecurringInvoice)
-            ? null
-            : localization.balanceDue,
+                ? null
+                : localization.balanceDue,
         secondValue:
             [EntityType.invoice, EntityType.credit].contains(invoice.entityType)
-            ? formatNumber(
-                invoice.balanceOrAmount,
-                context,
-                clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
-                vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-              )
-            : null,
+                ? formatNumber(
+                    invoice.balanceOrAmount,
+                    context,
+                    clientId: invoice.isPurchaseOrder ? null : invoice.clientId,
+                    vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
+                  )
+                : null,
       ),
       ListDivider(),
     ];
@@ -215,29 +215,28 @@ class InvoiceOverview extends StatelessWidget {
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
             ? localization.endless
             : '${invoice.remainingCycles}',
-        RecurringInvoiceFields.autoBill:
-            localization.lookup(invoice.autoBill) +
+        RecurringInvoiceFields.autoBill: localization.lookup(invoice.autoBill) +
             ([
-                  SettingsEntity.AUTO_BILL_OPT_IN,
-                  SettingsEntity.AUTO_BILL_OPT_OUT,
-                ].contains(invoice.autoBill)
+              SettingsEntity.AUTO_BILL_OPT_IN,
+              SettingsEntity.AUTO_BILL_OPT_OUT,
+            ].contains(invoice.autoBill)
                 ? (' - ' +
-                      (invoice.autoBillEnabled
-                          ? localization.yes
-                          : localization.no))
+                    (invoice.autoBillEnabled
+                        ? localization.yes
+                        : localization.no))
                 : ''),
         InvoiceFields.dueDate: invoice.dueDateDays == 'terms'
             ? localization.paymentTerm
             : invoice.dueDateDays == 'on_receipt'
-            ? localization.dueOnReceipt
-            : invoice.dueDateDays == '1'
-            ? localization.firstDayOfTheMonth
-            : invoice.dueDateDays == '31'
-            ? localization.lastDayOfTheMonth
-            : localization.dayCount.replaceFirst(
-                ':count',
-                '${invoice.dueDateDays}',
-              ),
+                ? localization.dueOnReceipt
+                : invoice.dueDateDays == '1'
+                    ? localization.firstDayOfTheMonth
+                    : invoice.dueDateDays == '31'
+                        ? localization.lastDayOfTheMonth
+                        : localization.dayCount.replaceFirst(
+                            ':count',
+                            '${invoice.dueDateDays}',
+                          ),
       },
     };
 
@@ -336,8 +335,7 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
-    final relatedInvoice =
-        state.invoiceState.map[invoice.invoiceId] ??
+    final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
         InvoiceEntity(id: invoice.invoiceId);
     if ((invoice.invoiceId ?? '').isNotEmpty) {
       widgets.add(EntityListTile(isFilter: isFilter, entity: relatedInvoice));
@@ -364,8 +362,7 @@ class InvoiceOverview extends StatelessWidget {
           vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
         )!;
         if (paymentable.amount != payment.amount) {
-          amount +=
-              '/' +
+          amount += '/' +
               formatNumber(
                 payment.amount,
                 context,
@@ -395,8 +392,7 @@ class InvoiceOverview extends StatelessWidget {
           vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
         )!;
         if (paymentable.amount != credit.amount) {
-          amount +=
-              '/' +
+          amount += '/' +
               formatNumber(
                 credit.amount,
                 context,
@@ -462,12 +458,10 @@ class InvoiceOverview extends StatelessWidget {
                     formatNumber(
                       amount,
                       context,
-                      clientId: invoice.isPurchaseOrder
-                          ? null
-                          : invoice.clientId,
-                      vendorId: invoice.isPurchaseOrder
-                          ? invoice.vendorId
-                          : null,
+                      clientId:
+                          invoice.isPurchaseOrder ? null : invoice.clientId,
+                      vendorId:
+                          invoice.isPurchaseOrder ? invoice.vendorId : null,
                     )!,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -525,12 +519,12 @@ class InvoiceOverview extends StatelessWidget {
 
     invoice
         .calculateTaxes(
-          useInclusiveTaxes: invoice.usesInclusiveTaxes,
-          precision: precisionForInvoice(state, invoice),
-        )
+      useInclusiveTaxes: invoice.usesInclusiveTaxes,
+      precision: precisionForInvoice(state, invoice),
+    )
         .forEach((taxName, taxAmount) {
-          widgets.add(surchargeRow(taxName, taxAmount));
-        });
+      widgets.add(surchargeRow(taxName, taxAmount));
+    });
 
     if (invoice.customSurcharge1 != 0 && !company.enableCustomSurchargeTaxes1) {
       widgets.add(

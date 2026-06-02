@@ -71,12 +71,11 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -161,45 +160,38 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(VendorEntity),
-                )!
-                as VendorEntity,
+              value,
+              specifiedType: const FullType(VendorEntity),
+            )! as VendorEntity,
           );
           break;
         case 'editingContact':
           result.editingContact.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(VendorContactEntity),
-                )!
-                as VendorContactEntity,
+              value,
+              specifiedType: const FullType(VendorContactEntity),
+            )! as VendorContactEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -474,8 +466,7 @@ class VendorUIStateBuilder
   _$VendorUIState _build() {
     _$VendorUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$VendorUIState._(
             editing: _editing?.build(),
             editingContact: _editingContact?.build(),

@@ -102,8 +102,7 @@ class ProjectScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.project)
           ? FloatingActionButton(
               heroTag: 'project_fab',

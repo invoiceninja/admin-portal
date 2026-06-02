@@ -837,40 +837,38 @@ void handleInvoiceAction(
       await WebClient()
           .get(invoice.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
-            store.dispatch(StopLoading());
-            saveDownloadedFile(
-              response.bodyBytes,
-              invoice.number + '.pdf',
-              prefix: EntityType.invoice.apiValue,
-              languageId: client.languageId,
-            );
-          })
-          .catchError((error) {
-            store.dispatch(StopLoading());
-            showErrorDialog(message: error);
-          });
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          invoice.number + '.pdf',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
+      }).catchError((error) {
+        store.dispatch(StopLoading());
+        showErrorDialog(message: error);
+      });
       break;
     case EntityAction.eInvoice:
       store.dispatch(StartLoading());
       await WebClient()
           .get(
-            invoice.invitationEInvoiceDownloadLink,
-            state.token,
-            rawResponse: true,
-          )
+        invoice.invitationEInvoiceDownloadLink,
+        state.token,
+        rawResponse: true,
+      )
           .then((response) {
-            store.dispatch(StopLoading());
-            saveDownloadedFile(
-              response.bodyBytes,
-              invoice.number + '.xml',
-              prefix: EntityType.invoice.apiValue,
-              languageId: client.languageId,
-            );
-          })
-          .catchError((error) {
-            store.dispatch(StopLoading());
-            showErrorDialog(message: error);
-          });
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          invoice.number + '.xml',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
+      }).catchError((error) {
+        store.dispatch(StopLoading());
+        showErrorDialog(message: error);
+      });
       break;
     case EntityAction.bulkDownload:
       store.dispatch(
@@ -883,8 +881,8 @@ void handleInvoiceAction(
     case EntityAction.restore:
       final message = invoiceIds.length > 1
           ? localization!.restoredInvoices
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', invoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', invoiceIds.length.toString())
           : localization!.restoredInvoice;
       store.dispatch(
         RestoreInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds),
@@ -893,8 +891,8 @@ void handleInvoiceAction(
     case EntityAction.archive:
       final message = invoiceIds.length > 1
           ? localization!.archivedInvoices
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', invoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', invoiceIds.length.toString())
           : localization!.archivedInvoice;
       store.dispatch(
         ArchiveInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds),
@@ -903,8 +901,8 @@ void handleInvoiceAction(
     case EntityAction.delete:
       final message = invoiceIds.length > 1
           ? localization!.deletedInvoices
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', invoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', invoiceIds.length.toString())
           : localization!.deletedInvoice;
       store.dispatch(
         DeleteInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds),

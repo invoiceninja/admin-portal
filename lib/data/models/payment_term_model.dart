@@ -100,7 +100,8 @@ abstract class PaymentTermEntity extends Object
     PaymentTermEntity paymentTerm,
     String sortField,
     bool sortAscending,
-  ) => numDays.compareTo(paymentTerm.numDays);
+  ) =>
+      numDays.compareTo(paymentTerm.numDays);
 
   @override
   bool matchesFilter(String? filter) {

@@ -37,7 +37,7 @@ class CreditPdfScreen extends StatelessWidget {
 
 class CreditPdfVM extends EntityPdfVM {
   CreditPdfVM({AppState? state, InvoiceEntity? invoice, String? activityId})
-    : super(state: state, invoice: invoice, activityId: activityId);
+      : super(state: state, invoice: invoice, activityId: activityId);
 
   factory CreditPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;

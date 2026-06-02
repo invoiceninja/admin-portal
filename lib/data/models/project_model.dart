@@ -116,13 +116,13 @@ abstract class ProjectEntity extends Object
   int get hashCode;
 
   ProjectEntity get clone => rebuild(
-    (b) => b
-      ..id = BaseEntity.nextId
-      ..number = ''
-      ..documents.clear()
-      ..isChanged = false
-      ..isDeleted = false,
-  );
+        (b) => b
+          ..id = BaseEntity.nextId
+          ..number = ''
+          ..documents.clear()
+          ..isChanged = false
+          ..isDeleted = false,
+      );
 
   @override
   EntityType get entityType {
@@ -243,8 +243,8 @@ abstract class ProjectEntity extends Object
     switch (sortField) {
       case ProjectFields.name:
         response = projectA.name.toLowerCase().compareTo(
-          projectB.name.toLowerCase(),
-        );
+              projectB.name.toLowerCase(),
+            );
         break;
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
@@ -260,15 +260,15 @@ abstract class ProjectEntity extends Object
         final clientA = clientMap[projectA.clientId] ?? ClientEntity();
         final clientB = clientMap[projectB.clientId] ?? ClientEntity();
         response = clientA.number.toLowerCase().compareTo(
-          clientB.number.toLowerCase(),
-        );
+              clientB.number.toLowerCase(),
+            );
         break;
       case ProjectFields.clientIdNumber:
         final clientA = clientMap[projectA.clientId] ?? ClientEntity();
         final clientB = clientMap[projectB.clientId] ?? ClientEntity();
         response = clientA.idNumber.toLowerCase().compareTo(
-          clientB.idNumber.toLowerCase(),
-        );
+              clientB.idNumber.toLowerCase(),
+            );
         break;
       case ProjectFields.dueDate:
         response = projectA.dueDate.compareTo(projectB.dueDate);
@@ -289,8 +289,8 @@ abstract class ProjectEntity extends Object
         final stateA = EntityState.valueOf(projectA.entityState);
         final stateB = EntityState.valueOf(projectB.entityState);
         response = stateA.name.toLowerCase().compareTo(
-          stateB.name.toLowerCase(),
-        );
+              stateB.name.toLowerCase(),
+            );
         break;
       case EntityFields.createdAt:
         response = projectA.createdAt.compareTo(projectB.createdAt);
@@ -305,15 +305,15 @@ abstract class ProjectEntity extends Object
         final userA = userMap[projectA.assignedUserId] ?? UserEntity();
         final userB = userMap[projectB.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName.toLowerCase().compareTo(
-          userB.listDisplayName.toLowerCase(),
-        );
+              userB.listDisplayName.toLowerCase(),
+            );
         break;
       case EntityFields.createdBy:
         final userA = userMap[projectA.createdUserId] ?? UserEntity();
         final userB = userMap[projectB.createdUserId] ?? UserEntity();
         response = userA.listDisplayName.toLowerCase().compareTo(
-          userB.listDisplayName.toLowerCase(),
-        );
+              userB.listDisplayName.toLowerCase(),
+            );
         break;
       case ProjectFields.documents:
         response = projectA.documents.length.compareTo(

@@ -154,8 +154,7 @@ class ExpenseScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.expense)
           ? FloatingActionButton(
               heroTag: 'expense_fab',

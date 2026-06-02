@@ -38,7 +38,8 @@ var memoizedPaymentTaxReport = memo9(
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => paymentTaxReport(
+  ) =>
+      paymentTaxReport(
     userCompany!,
     reportsUIState,
     taxRateMap,
@@ -145,8 +146,7 @@ ReportResult paymentTaxReport(
                   value = invoice.netAmount;
                   break;
                 case TaxRateReportFields.invoice_amount:
-                  value =
-                      invoice.amount *
+                  value = invoice.amount *
                       paymentable.amount /
                       invoice.amount *
                       multiplier;
@@ -158,15 +158,13 @@ ReportResult paymentTaxReport(
                   value = taxRate;
                   break;
                 case TaxRateReportFields.tax_amount:
-                  value =
-                      (taxes[key]!['amount'] ?? 0.0) *
+                  value = (taxes[key]!['amount'] ?? 0.0) *
                       paymentable.amount /
                       invoice.amount *
                       multiplier;
                   break;
                 case TaxRateReportFields.tax_paid:
-                  value =
-                      (taxes[key]!['paid'] ?? 0.0) *
+                  value = (taxes[key]!['paid'] ?? 0.0) *
                       paymentable.amount /
                       invoice.amount *
                       multiplier;
@@ -175,8 +173,7 @@ ReportResult paymentTaxReport(
                   value = paymentable.amount * multiplier;
                   break;
                 case TaxRateReportFields.currency:
-                  value =
-                      staticState.currencyMap[client.currencyId]?.name ??
+                  value = staticState.currencyMap[client.currencyId]?.name ??
                       staticState.currencyMap[client.settings.currencyId]?.name;
                   break;
                 case TaxRateReportFields.transaction_reference:
@@ -228,13 +225,11 @@ ReportResult paymentTaxReport(
   );
 
   return ReportResult(
-    allColumns: TaxRateReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        TaxRateReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }

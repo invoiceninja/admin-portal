@@ -55,12 +55,11 @@ class _$GroupListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(GroupEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(GroupEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -111,10 +110,9 @@ class _$GroupItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(GroupEntity),
-                )!
-                as GroupEntity,
+              value,
+              specifiedType: const FullType(GroupEntity),
+            )! as GroupEntity,
           );
           break;
       }
@@ -220,96 +218,76 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'settings':
           result.settings.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(SettingsEntity),
-                )!
-                as SettingsEntity,
+              value,
+              specifiedType: const FullType(SettingsEntity),
+            )! as SettingsEntity,
           );
           break;
         case 'documents':
           result.documents.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(DocumentEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(DocumentEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
         case 'isChanged':
-          result.isChanged =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isChanged = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'updated_at':
-          result.updatedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.updatedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'archived_at':
-          result.archivedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.archivedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'is_deleted':
-          result.isDeleted =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isDeleted = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'user_id':
-          result.createdUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.createdUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.assignedUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -324,7 +302,8 @@ class _$GroupListResponse extends GroupListResponse {
 
   factory _$GroupListResponse([
     void Function(GroupListResponseBuilder)? updates,
-  ]) => (GroupListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (GroupListResponseBuilder()..update(updates))._build();
 
   _$GroupListResponse._({required this.data}) : super._();
   @override
@@ -355,7 +334,8 @@ class _$GroupListResponse extends GroupListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'GroupListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -421,7 +401,8 @@ class _$GroupItemResponse extends GroupItemResponse {
 
   factory _$GroupItemResponse([
     void Function(GroupItemResponseBuilder)? updates,
-  ]) => (GroupItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (GroupItemResponseBuilder()..update(updates))._build();
 
   _$GroupItemResponse._({required this.data}) : super._();
   @override
@@ -452,7 +433,8 @@ class _$GroupItemResponse extends GroupItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'GroupItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -704,8 +686,7 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
   _$GroupEntity _build() {
     _$GroupEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$GroupEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,

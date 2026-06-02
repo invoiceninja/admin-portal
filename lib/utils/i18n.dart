@@ -132470,7 +132470,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']!['preference_product_notes_for_html_view']!;
 
   String get preferenceProductNotesForHtmlViewHelp =>
-      _localizedValues[localeCode]!['preference_product_notes_for_html_view_help'] ??
+      _localizedValues[localeCode]![
+          'preference_product_notes_for_html_view_help'] ??
       _localizedValues['en']!['preference_product_notes_for_html_view_help']!;
 
   String get locations =>
@@ -132542,7 +132543,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']!['disable_recurring_payment_notification']!;
 
   String get disableRecurringPaymentNotificationHelp =>
-      _localizedValues[localeCode]!['disable_recurring_payment_notification_help'] ??
+      _localizedValues[localeCode]![
+          'disable_recurring_payment_notification_help'] ??
       _localizedValues['en']!['disable_recurring_payment_notification_help']!;
 
   String get rejected =>
@@ -132612,8 +132614,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
     final value =
         _localizedValues[overrideLocaleCode ?? localeCode]![lookupKey] ??
-        _localizedValues[localeCode]![lookupKey.replaceFirst('_id', '')] ??
-        '';
+            _localizedValues[localeCode]![lookupKey.replaceFirst('_id', '')] ??
+            '';
 
     if (value.isEmpty) {
       print('## ERROR: localization key not found - $key');

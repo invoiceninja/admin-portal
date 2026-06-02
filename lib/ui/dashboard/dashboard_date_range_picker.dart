@@ -148,32 +148,27 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                                     DropdownButtonHideUnderline(
                                       child:
                                           DropdownButton<DateRangeComparison>(
-                                            items: DateRangeComparison.values
-                                                .map(
-                                                  (dateRange) =>
-                                                      DropdownMenuItem<
-                                                        DateRangeComparison
-                                                      >(
-                                                        child: Text(
-                                                          localization.lookup(
-                                                            dateRange
-                                                                .toString(),
-                                                          ),
-                                                        ),
-                                                        value: dateRange,
-                                                      ),
-                                                )
-                                                .toList(),
-                                            onChanged: (dateRange) {
-                                              setState(
-                                                () =>
-                                                    _settings!
-                                                            .compareDateRange =
-                                                        dateRange,
-                                              );
-                                            },
-                                            value: _settings!.compareDateRange,
-                                          ),
+                                        items: DateRangeComparison.values
+                                            .map(
+                                              (dateRange) => DropdownMenuItem<
+                                                  DateRangeComparison>(
+                                                child: Text(
+                                                  localization.lookup(
+                                                    dateRange.toString(),
+                                                  ),
+                                                ),
+                                                value: dateRange,
+                                              ),
+                                            )
+                                            .toList(),
+                                        onChanged: (dateRange) {
+                                          setState(
+                                            () => _settings!.compareDateRange =
+                                                dateRange,
+                                          );
+                                        },
+                                        value: _settings!.compareDateRange,
+                                      ),
                                     ),
                                   ],
                                 ),

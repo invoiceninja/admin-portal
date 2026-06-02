@@ -102,8 +102,7 @@ class _DurationPickerState extends State<DurationPicker> {
         labelText: _pendingDuration != null
             ? formatDuration(_pendingDuration)
             : (widget.labelText ?? ''),
-        suffixIcon:
-            widget.allowClearing &&
+        suffixIcon: widget.allowClearing &&
                 (widget.selectedDuration != null &&
                     widget.selectedDuration!.inSeconds != 0)
             ? IconButton(

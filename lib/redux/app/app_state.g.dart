@@ -93,90 +93,75 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'isLoading':
-          result.isLoading =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isLoading = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'isSaving':
-          result.isSaving =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isSaving = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'isTesting':
-          result.isTesting =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isTesting = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'isWhiteLabeled':
-          result.isWhiteLabeled =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isWhiteLabeled = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'lastError':
-          result.lastError =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.lastError = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'authState':
           result.authState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(AuthState),
-                )!
-                as AuthState,
+              value,
+              specifiedType: const FullType(AuthState),
+            )! as AuthState,
           );
           break;
         case 'staticState':
           result.staticState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(StaticState),
-                )!
-                as StaticState,
+              value,
+              specifiedType: const FullType(StaticState),
+            )! as StaticState,
           );
           break;
         case 'prefState':
           result.prefState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(PrefState),
-                )!
-                as PrefState,
+              value,
+              specifiedType: const FullType(PrefState),
+            )! as PrefState,
           );
           break;
         case 'uiState':
           result.uiState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(UIState),
-                )!
-                as UIState,
+              value,
+              specifiedType: const FullType(UIState),
+            )! as UIState,
           );
           break;
         case 'userCompanyStates':
           result.userCompanyStates.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(UserCompanyState),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(UserCompanyState),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -350,8 +335,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _build() {
     _$AppState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$AppState._(
             isLoading: BuiltValueNullFieldError.checkNotNull(
               isLoading,

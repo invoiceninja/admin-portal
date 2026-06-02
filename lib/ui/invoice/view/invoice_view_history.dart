@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewHistory extends StatefulWidget {
   const InvoiceViewHistory({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
 

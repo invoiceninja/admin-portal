@@ -59,12 +59,11 @@ class _$IndustryListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(IndustryEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(IndustryEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -118,10 +117,9 @@ class _$IndustryItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(IndustryEntity),
-                )!
-                as IndustryEntity,
+              value,
+              specifiedType: const FullType(IndustryEntity),
+            )! as IndustryEntity,
           );
           break;
       }
@@ -169,20 +167,16 @@ class _$IndustryEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -197,13 +191,15 @@ class _$IndustryListResponse extends IndustryListResponse {
 
   factory _$IndustryListResponse([
     void Function(IndustryListResponseBuilder)? updates,
-  ]) => (IndustryListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (IndustryListResponseBuilder()..update(updates))._build();
 
   _$IndustryListResponse._({required this.data}) : super._();
   @override
   IndustryListResponse rebuild(
     void Function(IndustryListResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   IndustryListResponseBuilder toBuilder() =>
@@ -229,7 +225,8 @@ class _$IndustryListResponse extends IndustryListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'IndustryListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -295,13 +292,15 @@ class _$IndustryItemResponse extends IndustryItemResponse {
 
   factory _$IndustryItemResponse([
     void Function(IndustryItemResponseBuilder)? updates,
-  ]) => (IndustryItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (IndustryItemResponseBuilder()..update(updates))._build();
 
   _$IndustryItemResponse._({required this.data}) : super._();
   @override
   IndustryItemResponse rebuild(
     void Function(IndustryItemResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   IndustryItemResponseBuilder toBuilder() =>
@@ -327,7 +326,8 @@ class _$IndustryItemResponse extends IndustryItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'IndustryItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -467,8 +467,7 @@ class IndustryEntityBuilder
   IndustryEntity build() => _build();
 
   _$IndustryEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$IndustryEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

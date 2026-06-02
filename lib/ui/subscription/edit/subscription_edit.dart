@@ -136,8 +136,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
         ..promoDiscount = parseDouble(_promoDiscountController.text)
         ..maxSeatsLimit = parseInt(_maxSeatsLimitController.text)
         ..webhookConfiguration.returnUrl = _returnUrlController.text.trim()
-        ..webhookConfiguration.postPurchaseUrl = _postPurchaseUrlController.text
-            .trim(),
+        ..webhookConfiguration.postPurchaseUrl =
+            _postPurchaseUrlController.text.trim(),
     );
     if (subscription != widget.viewModel.subscription) {
       _debouncer.run(() {
@@ -341,8 +341,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {
-                              final parts = subscription.recurringProductIds
-                                  .split(',');
+                              final parts =
+                                  subscription.recurringProductIds.split(',');
                               parts.remove(productId);
                               viewModel.onChanged(
                                 subscription.rebuild(
@@ -404,8 +404,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {
-                              final parts = subscription.optionalProductIds
-                                  .split(',');
+                              final parts =
+                                  subscription.optionalProductIds.split(',');
                               parts.remove(productId);
                               viewModel.onChanged(
                                 subscription.rebuild(
@@ -430,8 +430,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     labelText: localization.optionalRecurringProducts,
                     onSelected: (value) {
                       if (value != null) {
-                        final parts = subscription.optionalRecurringProductIds
-                            .split(',');
+                        final parts =
+                            subscription.optionalRecurringProductIds.split(',');
                         viewModel.onChanged(
                           subscription.rebuild(
                             (b) => b
@@ -541,20 +541,19 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       SettingsEntity.AUTO_BILL_OPT_IN,
                       SettingsEntity.AUTO_BILL_OFF,
                     ].map((type) => Text(localization.lookup(type))).toList(),
-                    items:
-                        [
-                              SettingsEntity.AUTO_BILL_ALWAYS,
-                              SettingsEntity.AUTO_BILL_OPT_OUT,
-                              SettingsEntity.AUTO_BILL_OPT_IN,
-                              SettingsEntity.AUTO_BILL_OFF,
-                            ]
-                            .map(
-                              (value) => DropdownMenuItem(
-                                child: AutobillDropdownMenuItem(type: value),
-                                value: value,
-                              ),
-                            )
-                            .toList(),
+                    items: [
+                      SettingsEntity.AUTO_BILL_ALWAYS,
+                      SettingsEntity.AUTO_BILL_OPT_OUT,
+                      SettingsEntity.AUTO_BILL_OPT_IN,
+                      SettingsEntity.AUTO_BILL_OFF,
+                    ]
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: AutobillDropdownMenuItem(type: value),
+                            value: value,
+                          ),
+                        )
+                        .toList(),
                   ),
                   DecoratedFormField(
                     label: localization.promoCode,
@@ -746,8 +745,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                                   subscription.rebuild(
                                     (b) => b
                                       ..webhookConfiguration
-                                              .postPurchaseHeaders[key] =
-                                          value,
+                                          .postPurchaseHeaders[key] = value,
                                   ),
                                 );
                               },
@@ -782,7 +780,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                             viewModel.onChanged(
                               subscription.rebuild(
                                 (b) => b
-                                  ..webhookConfiguration.postPurchaseHeaders
+                                  ..webhookConfiguration
+                                      .postPurchaseHeaders
                                       .remove(key),
                               ),
                             );

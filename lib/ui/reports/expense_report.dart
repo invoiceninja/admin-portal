@@ -72,7 +72,8 @@ var memoizedExpenseReport = memo10(
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => expenseReport(
+  ) =>
+      expenseReport(
     userCompany!,
     reportsUIState,
     expenseMap,
@@ -174,10 +175,8 @@ ReportResult expenseReport(
           value = expense.paymentDate;
           break;
         case ExpenseReportFields.payment_type:
-          value =
-              staticState
-                  .paymentTypeMap[expense.paymentTypeId]
-                  ?.listDisplayName ??
+          value = staticState
+                  .paymentTypeMap[expense.paymentTypeId]?.listDisplayName ??
               '';
           break;
         case ExpenseReportFields.tax_rate1:
@@ -289,7 +288,8 @@ ReportResult expenseReport(
         case ExpenseReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(expense.entityState);
+          )!
+              .lookup(expense.entityState);
           break;
         case ExpenseReportFields.is_invoiced:
           value = expense.isInvoiced;
@@ -340,13 +340,11 @@ ReportResult expenseReport(
   );
 
   return ReportResult(
-    allColumns: ExpenseReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        ExpenseReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

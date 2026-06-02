@@ -101,12 +101,12 @@ class DesignListVM {
       designMap: state.designState.map,
       isLoading: state.isLoading,
       filter: state.designUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> designs,
-            EntityAction action,
-          ) => handleDesignAction(context, designs, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> designs,
+        EntityAction action,
+      ) =>
+          handleDesignAction(context, designs, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: DesignPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortDesigns(field)),

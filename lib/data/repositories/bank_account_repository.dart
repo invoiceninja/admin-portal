@@ -46,8 +46,7 @@ class BankAccountRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url =
-        credentials.url +
+    final url = credentials.url +
         '/bank_integrations/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,

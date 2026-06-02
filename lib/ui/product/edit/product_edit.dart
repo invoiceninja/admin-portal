@@ -109,12 +109,12 @@ class _ProductEditState extends State<ProductEdit> {
     _imageUrlController.text = product.imageUrl;
     _notificationThresholdController.text =
         product.stockNotificationThreshold == 0
-        ? ''
-        : formatNumber(
-            product.stockNotificationThreshold.toDouble(),
-            context,
-            formatNumberType: FormatNumberType.int,
-          )!;
+            ? ''
+            : formatNumber(
+                product.stockNotificationThreshold.toDouble(),
+                context,
+                formatNumberType: FormatNumberType.int,
+              )!;
 
     _controllers.forEach(
       (dynamic controller) => controller.addListener(_onChanged),
@@ -351,8 +351,7 @@ class _ProductEditState extends State<ProductEdit> {
                       DecoratedFormField(
                         keyboardType: TextInputType.number,
                         controller: _notificationThresholdController,
-                        label:
-                            localization.notificationThreshold +
+                        label: localization.notificationThreshold +
                             ((company.stockNotification &&
                                     company.stockNotificationThreshold != 0)
                                 ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'

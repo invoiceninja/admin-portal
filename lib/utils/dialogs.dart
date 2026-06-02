@@ -178,8 +178,8 @@ void confirmCallback({
                   ],
                 )
               : content == null
-              ? null
-              : Text(content),
+                  ? null
+                  : Text(content),
           actions: <Widget>[
             TextButton(
               child: Text(localization.cancel.toUpperCase()),
@@ -679,7 +679,7 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
               widget.entities.length == 1
                   ? localization.lookup(widget.entityType.snakeCase)
                   : localization.lookup(widget.entityType.plural) +
-                        ' (${widget.entities.length})',
+                      ' (${widget.entities.length})',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             SizedBox(height: 8),
@@ -702,8 +702,7 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                   });
                 },
                 items: state
-                    .staticState
-                    .bulkUpdates[widget.entityType.apiValue]!
+                    .staticState.bulkUpdates[widget.entityType.apiValue]!
                     .where((field) {
                       if (field.contains('custom_value')) {
                         return company.hasCustomField(
@@ -832,15 +831,14 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
                       .then((response) async {
-                        setState(() => _isLoading = false);
-                        Navigator.of(navigatorKey.currentContext!).pop();
-                        showToast(localization.bulkUpdated);
-                        store.dispatch(RefreshData());
-                      })
-                      .catchError((error) {
-                        showErrorDialog(message: error);
-                        setState(() => _isLoading = false);
-                      });
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    showToast(localization.bulkUpdated);
+                    store.dispatch(RefreshData());
+                  }).catchError((error) {
+                    showErrorDialog(message: error);
+                    setState(() => _isLoading = false);
+                  });
                 },
         ),
       ],
@@ -940,9 +938,8 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     final url =
                         '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
                     final data = {
-                      'ids': widget.entities
-                          .map((entity) => entity.id)
-                          .toList(),
+                      'ids':
+                          widget.entities.map((entity) => entity.id).toList(),
                       'entity': widget.entityType.apiValue,
                       'template_id': _designId,
                       'send_email': _sendEmail,
@@ -956,22 +953,21 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     WebClient()
                         .post(url, credentials.token, data: jsonEncode(data))
                         .then((response) async {
-                          //print('## RESPONSE: $response');
+                      //print('## RESPONSE: $response');
 
-                          if (_sendEmail) {
-                            setState(() => _isLoading = false);
-                            Navigator.of(navigatorKey.currentContext!).pop();
-                            showToast(localization.exportedData);
-                          } else {
-                            final jobHash = response['message'];
-                            await loadTemplate(jobHash);
-                            setState(() => _isLoading = false);
-                          }
-                        })
-                        .catchError((error) {
-                          showErrorDialog(message: error);
-                          setState(() => _isLoading = false);
-                        });
+                      if (_sendEmail) {
+                        setState(() => _isLoading = false);
+                        Navigator.of(navigatorKey.currentContext!).pop();
+                        showToast(localization.exportedData);
+                      } else {
+                        final jobHash = response['message'];
+                        await loadTemplate(jobHash);
+                        setState(() => _isLoading = false);
+                      }
+                    }).catchError((error) {
+                      showErrorDialog(message: error);
+                      setState(() => _isLoading = false);
+                    });
                   },
             child: Text(localization.start.toUpperCase()),
           ),
@@ -996,7 +992,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     widget.entities.length == 1
                         ? localization.lookup(widget.entityType.snakeCase)
                         : localization.lookup(widget.entityType.plural) +
-                              ' (${widget.entities.length})',
+                            ' (${widget.entities.length})',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 8),
@@ -1088,20 +1084,19 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
 
                         WebClient()
                             .post(
-                              url,
-                              credentials.token,
-                              data: jsonEncode(data),
-                            )
+                          url,
+                          credentials.token,
+                          data: jsonEncode(data),
+                        )
                             .then((response) async {
-                              Navigator.of(
-                                navigatorKey.currentContext!,
-                              ).pop(true);
-                              showToast(localization.addedComment);
-                            })
-                            .catchError((error) {
-                              showErrorDialog(message: error);
-                              setState(() => _isLoading = false);
-                            });
+                          Navigator.of(
+                            navigatorKey.currentContext!,
+                          ).pop(true);
+                          showToast(localization.addedComment);
+                        }).catchError((error) {
+                          showErrorDialog(message: error);
+                          setState(() => _isLoading = false);
+                        });
                       },
                 child: Text(localization.save.toUpperCase()),
               ),

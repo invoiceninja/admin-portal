@@ -123,8 +123,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           listTiles.add(
             AppListTile(
               icon: Icons.phone,
-              title:
-                  (contact.fullName.isEmpty
+              title: (contact.fullName.isEmpty
                       ? localization!.blankContact
                       : contact.fullName) +
                   '\n' +

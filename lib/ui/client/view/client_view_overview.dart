@@ -49,9 +49,8 @@ class ClientOverview extends StatelessWidget {
     final fields = <String?, String?>{};
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
     final contact = client.primaryContact;
-    final user = client.hasUser
-        ? state.userState.get(client.assignedUserId!)
-        : null;
+    final user =
+        client.hasUser ? state.userState.get(client.assignedUserId!) : null;
 
     // Group gateway tokens by the customerReference
     final tokenMap = <String, List<GatewayTokenEntity>>{};

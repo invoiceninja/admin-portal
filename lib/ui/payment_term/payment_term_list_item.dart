@@ -32,8 +32,8 @@ class PaymentTermListItem extends StatelessWidget {
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
-  static final paymentTermItemKey = (int id) =>
-      Key('__payment_term_item_${id}__');
+  static final paymentTermItemKey =
+      (int id) => Key('__payment_term_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,7 @@ class PaymentTermListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: paymentTerm,
-      isSelected:
-          paymentTerm.id ==
+      isSelected: paymentTerm.id ==
           (uiState.isEditing
               ? paymentTermUIState.editing!.id
               : paymentTermUIState.selectedId),

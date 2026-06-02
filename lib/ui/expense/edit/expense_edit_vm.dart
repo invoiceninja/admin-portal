@@ -63,9 +63,9 @@ abstract class AbstractExpenseEditVM {
   final ExpenseEntity? origExpense;
   final AppState? state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)?
-  onAddClientPressed;
+      onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)?
-  onAddVendorPressed;
+      onAddVendorPressed;
   final Function(BuildContext, List<MultipartFile>, bool)? onUploadDocument;
 }
 
@@ -80,21 +80,21 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
     bool? isSaving,
     ExpenseEntity? origExpense,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-    onAddClientPressed,
+        onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-    onAddVendorPressed,
+        onAddVendorPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocument,
   }) : super(
-         state: state,
-         expense: expense,
-         onChanged: onChanged,
-         onSavePressed: onSavePressed,
-         onCancelPressed: onCancelPressed,
-         origExpense: origExpense,
-         onAddClientPressed: onAddClientPressed,
-         onAddVendorPressed: onAddVendorPressed,
-         onUploadDocument: onUploadDocument,
-       );
+          state: state,
+          expense: expense,
+          onChanged: onChanged,
+          onSavePressed: onSavePressed,
+          onCancelPressed: onCancelPressed,
+          origExpense: origExpense,
+          onAddClientPressed: onAddClientPressed,
+          onAddVendorPressed: onAddVendorPressed,
+          onUploadDocument: onUploadDocument,
+        );
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
     final expense = store.state.expenseUIState.editing!;
@@ -158,86 +158,82 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
             store.dispatch(
               SaveExpenseRequest(completer: completer, expense: expense),
             );
-            return completer.future
-                .then((savedExpense) {
-                  showToast(
-                    expense.isNew
-                        ? localization!.createdExpense
-                        : localization!.updatedExpense,
-                  );
+            return completer.future.then((savedExpense) {
+              showToast(
+                expense.isNew
+                    ? localization!.createdExpense
+                    : localization!.updatedExpense,
+              );
 
-                  if (state.prefState.isMobile) {
-                    store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-                    if (expense.isNew) {
-                      navigator!.pushReplacementNamed(ExpenseViewScreen.route);
-                    } else {
-                      navigator!.pop(savedExpense);
-                    }
-                  } else {
-                    if (!state.prefState.isPreviewVisible) {
-                      store.dispatch(TogglePreviewSidebar());
-                    }
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
+                if (expense.isNew) {
+                  navigator!.pushReplacementNamed(ExpenseViewScreen.route);
+                } else {
+                  navigator!.pop(savedExpense);
+                }
+              } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
 
-                    viewEntity(entity: savedExpense);
+                viewEntity(entity: savedExpense);
 
-                    if (state.prefState.isEditorFullScreen(
-                          EntityType.expense,
-                        ) &&
-                        state.prefState.editAfterSaving) {
-                      editEntity(entity: savedExpense);
-                    }
-                  }
+                if (state.prefState.isEditorFullScreen(
+                      EntityType.expense,
+                    ) &&
+                    state.prefState.editAfterSaving) {
+                  editEntity(entity: savedExpense);
+                }
+              }
 
-                  if (action != null && action.isClientSide) {
-                    handleEntityAction(savedExpense, action);
-                  } else if (action != null && action.requiresSecondRequest) {
-                    handleEntityAction(savedExpense, action);
-                    viewEntity(entity: savedExpense, force: true);
-                  }
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
+              if (action != null && action.isClientSide) {
+                handleEntityAction(savedExpense, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedExpense, action);
+                viewEntity(entity: savedExpense, force: true);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                context: navigatorKey.currentContext!,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                },
+              );
+            });
           }
         });
       },
-      onUploadDocument:
-          (
-            BuildContext context,
-            List<MultipartFile> multipartFile,
-            bool? isPrivate,
-          ) {
-            final completer = Completer<List<DocumentEntity>>();
-            store.dispatch(
-              SaveExpenseDocumentRequest(
-                isPrivate: isPrivate,
-                multipartFiles: multipartFile,
-                expense: expense,
-                completer: completer,
-              ),
-            );
-            completer.future
-                .then((client) {
-                  showToast(
-                    AppLocalization.of(
-                      navigatorKey.currentContext!,
-                    )!.uploadedDocument,
-                  );
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
-          },
+      onUploadDocument: (
+        BuildContext context,
+        List<MultipartFile> multipartFile,
+        bool? isPrivate,
+      ) {
+        final completer = Completer<List<DocumentEntity>>();
+        store.dispatch(
+          SaveExpenseDocumentRequest(
+            isPrivate: isPrivate,
+            multipartFiles: multipartFile,
+            expense: expense,
+            completer: completer,
+          ),
+        );
+        completer.future.then((client) {
+          showToast(
+            AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!
+                .uploadedDocument,
+          );
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
+      },
     );
   }
 }

@@ -14,7 +14,8 @@ var memoizedDropdownVendorList = memo4(
     BuiltList<String> vendorList,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => dropdownVendorsSelector(vendorMap, vendorList, userMap, staticState),
+  ) =>
+      dropdownVendorsSelector(vendorMap, vendorList, userMap, staticState),
 );
 
 List<String> dropdownVendorsSelector(
@@ -51,7 +52,8 @@ var memoizedFilteredVendorList = memo6(
     ListUIState vendorListState,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => filteredVendorsSelector(
+  ) =>
+      filteredVendorsSelector(
     selectionState,
     vendorMap,
     vendorList,
@@ -142,7 +144,8 @@ var memoizedCalculateVendorBalance = memo4(
     String currencyId,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltList<String> expenseList,
-  ) => calculateVendorBalance(vendorId, currencyId, expenseMap, expenseList),
+  ) =>
+      calculateVendorBalance(vendorId, currencyId, expenseMap, expenseList),
 );
 
 double calculateVendorBalance(

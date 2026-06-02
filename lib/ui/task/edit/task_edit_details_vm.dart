@@ -123,9 +123,9 @@ class TaskEditDetailsVM {
   final TaskEntity? origTask;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-  onAddClientPressed;
+      onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-  onAddProjectPressed;
+      onAddProjectPressed;
   final Function(TaskTime, int) onUpdatedTaskTime;
   final Function(int) onRemoveTaskTime;
 }

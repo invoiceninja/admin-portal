@@ -55,12 +55,11 @@ class _$TokenListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(TokenEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(TokenEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -111,10 +110,9 @@ class _$TokenItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(TokenEntity),
-                )!
-                as TokenEntity,
+              value,
+              specifiedType: const FullType(TokenEntity),
+            )! as TokenEntity,
           );
           break;
       }
@@ -218,92 +216,70 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'is_system':
-          result.isSystem =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isSystem = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'token':
-          result.token =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.token = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'isChanged':
-          result.isChanged =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isChanged = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'updated_at':
-          result.updatedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.updatedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'archived_at':
-          result.archivedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.archivedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'is_deleted':
-          result.isDeleted =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isDeleted = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'user_id':
-          result.createdUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.createdUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.assignedUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -318,7 +294,8 @@ class _$TokenListResponse extends TokenListResponse {
 
   factory _$TokenListResponse([
     void Function(TokenListResponseBuilder)? updates,
-  ]) => (TokenListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (TokenListResponseBuilder()..update(updates))._build();
 
   _$TokenListResponse._({required this.data}) : super._();
   @override
@@ -349,7 +326,8 @@ class _$TokenListResponse extends TokenListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TokenListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -415,7 +393,8 @@ class _$TokenItemResponse extends TokenItemResponse {
 
   factory _$TokenItemResponse([
     void Function(TokenItemResponseBuilder)? updates,
-  ]) => (TokenItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (TokenItemResponseBuilder()..update(updates))._build();
 
   _$TokenItemResponse._({required this.data}) : super._();
   @override
@@ -446,7 +425,8 @@ class _$TokenItemResponse extends TokenItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TokenItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -691,8 +671,7 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   TokenEntity build() => _build();
 
   _$TokenEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$TokenEntity._(
           isSystem: BuiltValueNullFieldError.checkNotNull(
             isSystem,

@@ -89,18 +89,18 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
     Function(int, int)? onMovedInvoiceItem,
   }) : super(
-         state: state,
-         company: company,
-         invoice: invoice,
-         addLineItem: addLineItem,
-         cloneLineItem: cloneLineItem,
-         deleteLineItem: deleteLineItem,
-         invoiceItemIndex: invoiceItemIndex,
-         onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-         clearSelectedInvoiceItem: clearSelectedInvoiceItem,
-         onChangedInvoiceItem: onChangedInvoiceItem,
-         onMovedInvoiceItem: onMovedInvoiceItem,
-       );
+          state: state,
+          company: company,
+          invoice: invoice,
+          addLineItem: addLineItem,
+          cloneLineItem: cloneLineItem,
+          deleteLineItem: deleteLineItem,
+          invoiceItemIndex: invoiceItemIndex,
+          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+          clearSelectedInvoiceItem: clearSelectedInvoiceItem,
+          onChangedInvoiceItem: onChangedInvoiceItem,
+          onMovedInvoiceItem: onMovedInvoiceItem,
+        );
 
   factory InvoiceEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     final state = store.state;

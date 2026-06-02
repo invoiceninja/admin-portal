@@ -80,12 +80,10 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
   Widget build(BuildContext context) {
     Widget? iconButton = widget.suffixIconButton;
 
-    final hasValue =
-        (widget.initialValue ?? '').isNotEmpty ||
+    final hasValue = (widget.initialValue ?? '').isNotEmpty ||
         (widget.controller?.text ?? '').isNotEmpty;
 
-    final enterShouldSubmit =
-        isDesktop(context) &&
+    final enterShouldSubmit = isDesktop(context) &&
         widget.onSavePressed != null &&
         (widget.maxLines ?? 1) <= 1;
 
@@ -128,8 +126,8 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
         suffixIcon: icon == null ? null : icon,
         floatingLabelBehavior:
             (widget.hint ?? '').isNotEmpty && (widget.label ?? '').isEmpty
-            ? FloatingLabelBehavior.always
-            : FloatingLabelBehavior.auto,
+                ? FloatingLabelBehavior.always
+                : FloatingLabelBehavior.auto,
       );
     }
 
@@ -148,17 +146,16 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       maxLines: widget.expands ? null : widget.maxLines ?? 1,
       minLines: widget.expands ? null : widget.minLines,
       expands: widget.expands,
-      autocorrect: widget.isMoney || widget.isPercent
-          ? false
-          : widget.autocorrect,
+      autocorrect:
+          widget.isMoney || widget.isPercent ? false : widget.autocorrect,
       obscureText: widget.obscureText,
       initialValue: widget.initialValue,
       textInputAction: widget.keyboardType == TextInputType.multiline
           ? TextInputAction.newline
           // On web typing enter is clearing the value when using TextInputAction.next
           : enterShouldSubmit || kIsWeb
-          ? TextInputAction.done
-          : TextInputAction.next,
+              ? TextInputAction.done
+              : TextInputAction.next,
       textCapitalization: widget.textCapitalization,
       onChanged: (value) {
         _showClear = true;

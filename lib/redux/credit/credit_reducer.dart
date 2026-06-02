@@ -106,8 +106,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.credit
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 
@@ -471,7 +471,8 @@ CreditState _updateCredit(CreditState invoiceState, dynamic action) {
 CreditState _setLoadedCredits(
   CreditState creditState,
   LoadCreditsSuccess action,
-) => creditState.loadCredits(action.credits);
+) =>
+    creditState.loadCredits(action.credits);
 
 CreditState _setLoadedCompany(
   CreditState creditState,

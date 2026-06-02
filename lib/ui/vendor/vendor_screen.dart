@@ -100,8 +100,7 @@ class VendorScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.vendor)
           ? FloatingActionButton(
               heroTag: 'vendor_fab',

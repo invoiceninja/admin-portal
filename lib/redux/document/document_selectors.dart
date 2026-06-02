@@ -12,7 +12,8 @@ var memoizedDropdownDocumentList = memo3(
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltList<String> documentList,
     String clientId,
-  ) => dropdownDocumentsSelector(documentMap, documentList, clientId),
+  ) =>
+      dropdownDocumentsSelector(documentMap, documentList, clientId),
 );
 
 List<String> dropdownDocumentsSelector(
@@ -45,7 +46,8 @@ var memoizedFilteredDocumentList = memo4(
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltList<String> documentList,
     ListUIState documentListState,
-  ) => filteredDocumentsSelector(
+  ) =>
+      filteredDocumentsSelector(
     selectionState,
     documentMap,
     documentList,
@@ -102,7 +104,8 @@ var memoizedInvoiceDocumentsSelector = memo3(
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
     InvoiceEntity entity,
-  ) => invoiceDocumentsSelector(documentMap, expenseMap, entity),
+  ) =>
+      invoiceDocumentsSelector(documentMap, expenseMap, entity),
 );
 
 List<String> invoiceDocumentsSelector(

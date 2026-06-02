@@ -24,7 +24,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class TransactionRuleEdit extends StatefulWidget {
   const TransactionRuleEdit({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final TransactionRuleEditVM viewModel;
 
@@ -240,18 +240,14 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                   children: [
                                     IconButton(
                                       onPressed: () async {
-                                        final updatedRule =
-                                            await showDialog<
-                                              TransactionRuleCriteriaEntity
-                                            >(
-                                              context: context,
-                                              builder: (context) =>
-                                                  _RuleCriteria(
-                                                    criteria: rule,
-                                                    type: transactionRule
-                                                        .appliesTo,
-                                                  ),
-                                            );
+                                        final updatedRule = await showDialog<
+                                            TransactionRuleCriteriaEntity>(
+                                          context: context,
+                                          builder: (context) => _RuleCriteria(
+                                            criteria: rule,
+                                            type: transactionRule.appliesTo,
+                                          ),
+                                        );
                                         if (updatedRule != null) {
                                           final index = transactionRule.rules
                                               .indexOf(rule);
@@ -292,11 +288,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       onPressed: () async {
                         final rule =
                             await showDialog<TransactionRuleCriteriaEntity>(
-                              context: context,
-                              builder: (context) => _RuleCriteria(
-                                type: transactionRule.appliesTo,
-                              ),
-                            );
+                          context: context,
+                          builder: (context) => _RuleCriteria(
+                            type: transactionRule.appliesTo,
+                          ),
+                        );
 
                         if (rule != null) {
                           viewModel.onChanged(
@@ -389,7 +385,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 
 class _RuleCriteria extends StatefulWidget {
   const _RuleCriteria({Key? key, required this.type, this.criteria})
-    : super(key: key);
+      : super(key: key);
 
   final TransactionRuleCriteriaEntity? criteria;
   final String type;
@@ -449,8 +445,7 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                     _criteria = _criteria!.rebuild(
                       (b) => b
                         ..searchKey = value
-                        ..operator =
-                            (value ==
+                        ..operator = (value ==
                                     TransactionRuleCriteriaEntity
                                         .SEARCH_KEY_DESCRIPTION ||
                                 value ==
@@ -460,9 +455,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                                     TransactionRuleCriteriaEntity
                                         .SEARCH_KEY_PARTICIPANT_NAME)
                             ? TransactionRuleCriteriaEntity
-                                  .STRING_OPERATOR_CONTAINS
+                                .STRING_OPERATOR_CONTAINS
                             : TransactionRuleCriteriaEntity
-                                  .NUMBER_OPERATOR_EQUALS,
+                                .NUMBER_OPERATOR_EQUALS,
                     );
                   });
                 },
@@ -504,16 +499,15 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   _criteria = _criteria!.rebuild((b) => b..operator = value);
                 });
               },
-              items:
-                  [
-                    TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
-                    TransactionRuleCriteriaEntity
-                        .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
-                    TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
-                    TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_ID_NUMBER,
-                    TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
-                    TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_PO_NUMBER,
-                  ].contains(_criteria!.searchKey)
+              items: [
+                TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                TransactionRuleCriteriaEntity
+                    .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_ID_NUMBER,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_PO_NUMBER,
+              ].contains(_criteria!.searchKey)
                   ? [
                       DropdownMenuItem<String>(
                         child: Text(localization.contains),
@@ -604,8 +598,7 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                     _criteria = _criteria!.rebuild(
                       (b) => b
                         ..searchKey = value
-                        ..operator =
-                            (value ==
+                        ..operator = (value ==
                                     TransactionRuleCriteriaEntity
                                         .SEARCH_KEY_DESCRIPTION ||
                                 value ==
@@ -615,9 +608,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                                     TransactionRuleCriteriaEntity
                                         .SEARCH_KEY_PARTICIPANT_NAME)
                             ? TransactionRuleCriteriaEntity
-                                  .STRING_OPERATOR_CONTAINS
+                                .STRING_OPERATOR_CONTAINS
                             : TransactionRuleCriteriaEntity
-                                  .NUMBER_OPERATOR_EQUALS,
+                                .NUMBER_OPERATOR_EQUALS,
                     );
                   });
                 },

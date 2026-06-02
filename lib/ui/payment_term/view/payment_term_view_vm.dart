@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermViewScreen extends StatelessWidget {
   const PaymentTermViewScreen({Key? key, this.isFilter = false})
-    : super(key: key);
+      : super(key: key);
   final bool isFilter;
   static const String route = '/$kSettings/$kSettingsPaymentTermView';
 
@@ -57,7 +57,7 @@ class PaymentTermViewVM {
     final state = store.state;
     final paymentTerm =
         state.paymentTermState.map[state.paymentTermUIState.selectedId] ??
-        PaymentTermEntity(id: state.paymentTermUIState.selectedId);
+            PaymentTermEntity(id: state.paymentTermUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(

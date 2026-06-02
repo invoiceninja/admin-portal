@@ -366,9 +366,8 @@ void viewEntitiesByType({
             company: store.state.company,
             user: store.state.user,
             clearFilter: true,
-            section: store.state.prefState.isMobile
-                ? null
-                : kSettingsCompanyDetails,
+            section:
+                store.state.prefState.isMobile ? null : kSettingsCompanyDetails,
           );
           break;
         case EntityType.client:
@@ -480,13 +479,14 @@ void viewEntity({
   bool force = false,
   bool addToStack = false,
   BaseEntity? filterEntity,
-}) => viewEntityById(
-  entityId: entity.id,
-  entityType: entity.entityType,
-  force: force,
-  addToStack: addToStack,
-  filterEntity: filterEntity,
-);
+}) =>
+    viewEntityById(
+      entityId: entity.id,
+      entityType: entity.entityType,
+      force: force,
+      addToStack: addToStack,
+      filterEntity: filterEntity,
+    );
 
 void viewEntityById({
   required String? entityId,
@@ -1775,14 +1775,13 @@ void selectEntity({
   final state = store.state;
   final uiState = state.uiState;
   final entityUIState = state.getUIState(entity.entityType);
-  final isInMultiselect = state
-      .getListState(entity.entityType)
-      .isInMultiselect();
+  final isInMultiselect =
+      state.getListState(entity.entityType).isInMultiselect();
 
   if (longPress == true) {
     final longPressIsSelection =
         (state.prefState.longPressSelectionIsDefault) ||
-        state.prefState.moduleLayout == ModuleLayout.table;
+            state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);

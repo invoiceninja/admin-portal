@@ -37,8 +37,7 @@ class _PaymentOverviewState extends State<PaymentOverview> {
     final state = viewModel.state;
     final payment = viewModel.payment;
 
-    final client =
-        state.clientState.map[payment.clientId] ??
+    final client = state.clientState.map[payment.clientId] ??
         ClientEntity(id: payment.clientId);
     final transaction = state.transactionState.get(payment.transactionId);
 
@@ -116,8 +115,7 @@ class _PaymentOverviewState extends State<PaymentOverview> {
           EntityListTile(
             isFilter: widget.isFilter,
             entity: state.invoiceState.map[paymentable.invoiceId]!,
-            subtitle:
-                formatNumber(
+            subtitle: formatNumber(
                   paymentable.amount,
                   context,
                   clientId: payment.clientId,
@@ -132,8 +130,7 @@ class _PaymentOverviewState extends State<PaymentOverview> {
           EntityListTile(
             isFilter: widget.isFilter,
             entity: state.creditState.map[paymentable.creditId]!,
-            subtitle:
-                formatNumber(
+            subtitle: formatNumber(
                   paymentable.amount,
                   context,
                   clientId: payment.clientId,

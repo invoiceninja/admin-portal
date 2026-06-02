@@ -144,8 +144,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.purchaseOrder
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 
@@ -665,7 +665,8 @@ PurchaseOrderState _updatePurchaseOrder(
 PurchaseOrderState _setLoadedPurchaseOrders(
   PurchaseOrderState purchaseOrderState,
   LoadPurchaseOrdersSuccess action,
-) => purchaseOrderState.loadPurchaseOrders(action.purchaseOrders);
+) =>
+    purchaseOrderState.loadPurchaseOrders(action.purchaseOrders);
 
 PurchaseOrderState _setLoadedCompany(
   PurchaseOrderState purchaseOrderState,

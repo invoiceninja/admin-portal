@@ -61,12 +61,11 @@ class _$ScheduleListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(ScheduleEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(ScheduleEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -120,10 +119,9 @@ class _$ScheduleItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ScheduleEntity),
-                )!
-                as ScheduleEntity,
+              value,
+              specifiedType: const FullType(ScheduleEntity),
+            )! as ScheduleEntity,
           );
           break;
       }
@@ -246,117 +244,90 @@ class _$ScheduleEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'frequency_id':
-          result.frequencyId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.frequencyId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'next_run':
-          result.nextRun =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.nextRun = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'template':
-          result.template =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.template = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'is_paused':
-          result.isPaused =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isPaused = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'remaining_cycles':
-          result.remainingCycles =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.remainingCycles = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'parameters':
           result.parameters.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ScheduleParameters),
-                )!
-                as ScheduleParameters,
+              value,
+              specifiedType: const FullType(ScheduleParameters),
+            )! as ScheduleParameters,
           );
           break;
         case 'isChanged':
-          result.isChanged =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isChanged = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'updated_at':
-          result.updatedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.updatedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'archived_at':
-          result.archivedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.archivedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'is_deleted':
-          result.isDeleted =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isDeleted = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'user_id':
-          result.createdUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.createdUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.assignedUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -523,127 +494,98 @@ class _$ScheduleParametersSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'date_range':
-          result.dateRange =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.dateRange = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'show_payments_table':
-          result.showPaymentsTable =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.showPaymentsTable = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'show_credits_table':
-          result.showCreditsTable =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.showCreditsTable = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'show_aging_table':
-          result.showAgingTable =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.showAgingTable = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'only_clients_with_invoices':
-          result.onlyClientsWithInvoices =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.onlyClientsWithInvoices = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'status':
-          result.status =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.status = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'template':
-          result.template =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.template = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'clients':
           result.clients.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
         case 'entity':
-          result.entityType =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.entityType = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'entity_id':
-          result.entityId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.entityId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'report_name':
-          result.reportName =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.reportName = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'auto_send':
-          result.autoSend =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.autoSend = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'include_project_tasks':
-          result.includeProjectTasks =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.includeProjectTasks = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'invoice_id':
-          result.invoiceId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.invoiceId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'auto_bill':
-          result.autoBill =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.autoBill = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
       }
     }
@@ -658,13 +600,15 @@ class _$ScheduleListResponse extends ScheduleListResponse {
 
   factory _$ScheduleListResponse([
     void Function(ScheduleListResponseBuilder)? updates,
-  ]) => (ScheduleListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (ScheduleListResponseBuilder()..update(updates))._build();
 
   _$ScheduleListResponse._({required this.data}) : super._();
   @override
   ScheduleListResponse rebuild(
     void Function(ScheduleListResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   ScheduleListResponseBuilder toBuilder() =>
@@ -690,7 +634,8 @@ class _$ScheduleListResponse extends ScheduleListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'ScheduleListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -756,13 +701,15 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
 
   factory _$ScheduleItemResponse([
     void Function(ScheduleItemResponseBuilder)? updates,
-  ]) => (ScheduleItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (ScheduleItemResponseBuilder()..update(updates))._build();
 
   _$ScheduleItemResponse._({required this.data}) : super._();
   @override
   ScheduleItemResponse rebuild(
     void Function(ScheduleItemResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   ScheduleItemResponseBuilder toBuilder() =>
@@ -788,7 +735,8 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'ScheduleItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -1072,8 +1020,7 @@ class ScheduleEntityBuilder
   _$ScheduleEntity _build() {
     _$ScheduleEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$ScheduleEntity._(
             frequencyId: BuiltValueNullFieldError.checkNotNull(
               frequencyId,
@@ -1179,7 +1126,8 @@ class _$ScheduleParameters extends ScheduleParameters {
 
   factory _$ScheduleParameters([
     void Function(ScheduleParametersBuilder)? updates,
-  ]) => (ScheduleParametersBuilder()..update(updates))._build();
+  ]) =>
+      (ScheduleParametersBuilder()..update(updates))._build();
 
   _$ScheduleParameters._({
     this.dateRange,
@@ -1201,7 +1149,8 @@ class _$ScheduleParameters extends ScheduleParameters {
   @override
   ScheduleParameters rebuild(
     void Function(ScheduleParametersBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   ScheduleParametersBuilder toBuilder() =>
@@ -1384,8 +1333,7 @@ class ScheduleParametersBuilder
   _$ScheduleParameters _build() {
     _$ScheduleParameters _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$ScheduleParameters._(
             dateRange: dateRange,
             showPaymentsTable: showPaymentsTable,

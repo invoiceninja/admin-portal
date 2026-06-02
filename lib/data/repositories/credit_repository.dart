@@ -45,8 +45,7 @@ class CreditRepository {
     int createdAt,
     bool filterDeleted,
   ) async {
-    String url =
-        credentials.url +
+    String url = credentials.url +
         '/credits?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {

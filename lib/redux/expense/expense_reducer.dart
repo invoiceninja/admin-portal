@@ -353,7 +353,8 @@ ExpenseState _setLoadedExpense(
 ExpenseState _setLoadedExpenses(
   ExpenseState expenseState,
   LoadExpensesSuccess action,
-) => expenseState.loadExpenses(action.expenses);
+) =>
+    expenseState.loadExpenses(action.expenses);
 
 ExpenseState _setLoadedCompany(
   ExpenseState expenseState,

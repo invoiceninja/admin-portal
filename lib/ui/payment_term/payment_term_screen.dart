@@ -20,7 +20,7 @@ import 'payment_term_screen_vm.dart';
 
 class PaymentTermScreen extends StatelessWidget {
   const PaymentTermScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsPaymentTerms';
 
@@ -85,8 +85,7 @@ class PaymentTermScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterPaymentTermsByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMobile &&
+      floatingActionButton: state.prefState.isMobile &&
               userCompany.canCreate(EntityType.paymentTerm)
           ? FloatingActionButton(
               heroTag: 'payment_term_fab',

@@ -73,12 +73,11 @@ class _$PaymentTermStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -153,36 +152,30 @@ class _$PaymentTermUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(PaymentTermEntity),
-                )!
-                as PaymentTermEntity,
+              value,
+              specifiedType: const FullType(PaymentTermEntity),
+            )! as PaymentTermEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -199,7 +192,8 @@ class _$PaymentTermState extends PaymentTermState {
 
   factory _$PaymentTermState([
     void Function(PaymentTermStateBuilder)? updates,
-  ]) => (PaymentTermStateBuilder()..update(updates))._build();
+  ]) =>
+      (PaymentTermStateBuilder()..update(updates))._build();
 
   _$PaymentTermState._({required this.map, required this.list}) : super._();
   @override
@@ -318,7 +312,8 @@ class _$PaymentTermUIState extends PaymentTermUIState {
 
   factory _$PaymentTermUIState([
     void Function(PaymentTermUIStateBuilder)? updates,
-  ]) => (PaymentTermUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (PaymentTermUIStateBuilder()..update(updates))._build();
 
   _$PaymentTermUIState._({
     this.editing,
@@ -332,7 +327,8 @@ class _$PaymentTermUIState extends PaymentTermUIState {
   @override
   PaymentTermUIState rebuild(
     void Function(PaymentTermUIStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   PaymentTermUIStateBuilder toBuilder() =>
@@ -452,8 +448,7 @@ class PaymentTermUIStateBuilder
   _$PaymentTermUIState _build() {
     _$PaymentTermUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$PaymentTermUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

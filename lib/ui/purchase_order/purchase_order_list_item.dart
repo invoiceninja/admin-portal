@@ -50,7 +50,7 @@ class PurchaseOrderListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (purchaseOrder.matchesFilterValue(filter) ??
-              vendor!.matchesFilterValue(filter))
+            vendor!.matchesFilterValue(filter))
         : null;
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
@@ -60,8 +60,7 @@ class PurchaseOrderListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected:
-          purchaseOrder.id ==
+      isSelected: purchaseOrder.id ==
           (uiState.isEditing
               ? purchaseOrderUIState.editing!.id
               : purchaseOrderUIState.selectedId),
@@ -146,9 +145,12 @@ class PurchaseOrderListItem extends StatelessWidget {
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleSmall!
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor!.withOpacity(kLighterOpacity),
+                                      color: textColor!
+                                          .withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],
@@ -243,8 +245,8 @@ class PurchaseOrderListItem extends StatelessWidget {
                           ),
                           Text(
                             localization!.lookup(
-                              kPurchaseOrderStatuses[purchaseOrder
-                                  .calculatedStatusId],
+                              kPurchaseOrderStatuses[
+                                  purchaseOrder.calculatedStatusId],
                             ),
                             style: TextStyle(
                               color: !purchaseOrder.isSent

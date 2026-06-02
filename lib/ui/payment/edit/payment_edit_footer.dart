@@ -37,14 +37,12 @@ class PaymentEditFooter extends StatelessWidget {
       creditTotal += credit.amount;
     });
 
-    amountLabel +=
-        localization.total +
+    amountLabel += localization.total +
         ' ' +
         formatNumber(paymentTotal, context, clientId: payment.clientId)!;
 
     if (payment.credits.isNotEmpty) {
-      amountLabel +=
-          ' • ' +
+      amountLabel += ' • ' +
           localization.credit +
           ' ' +
           formatNumber(creditTotal, context, clientId: payment.clientId)!;

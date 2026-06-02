@@ -107,8 +107,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.recurringExpense
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 
@@ -460,7 +460,8 @@ RecurringExpenseState _setLoadedRecurringExpense(
 RecurringExpenseState _setLoadedRecurringExpenses(
   RecurringExpenseState recurringExpenseState,
   LoadRecurringExpensesSuccess action,
-) => recurringExpenseState.loadRecurringExpenses(action.recurringExpenses);
+) =>
+    recurringExpenseState.loadRecurringExpenses(action.recurringExpenses);
 
 RecurringExpenseState _setLoadedCompany(
   RecurringExpenseState recurringExpenseState,

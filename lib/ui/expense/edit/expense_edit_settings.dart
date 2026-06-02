@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
   const ExpenseEditSettings({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
 
@@ -306,12 +306,12 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   ),
                   initialValue:
                       expense.exchangeRate != 1 && expense.exchangeRate != 0
-                      ? formatNumber(
-                          expense.grossAmount * expense.exchangeRate,
-                          context,
-                          formatNumberType: FormatNumberType.inputMoney,
-                        )
-                      : '',
+                          ? formatNumber(
+                              expense.grossAmount * expense.exchangeRate,
+                              context,
+                              formatNumberType: FormatNumberType.inputMoney,
+                            )
+                          : '',
                   label: localization.convertedAmount,
                   keyboardType: TextInputType.numberWithOptions(
                     decimal: true,

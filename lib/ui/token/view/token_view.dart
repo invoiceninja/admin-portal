@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenView extends StatefulWidget {
   const TokenView({Key? key, required this.viewModel, required this.isFilter})
-    : super(key: key);
+      : super(key: key);
 
   final TokenViewVM viewModel;
   final bool isFilter;

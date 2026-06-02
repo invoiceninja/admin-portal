@@ -202,18 +202,16 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future
-        .then<Null>((_) {
-          setState(() {
-            _loginError = '';
-          });
-        })
-        .catchError((Object error) {
-          setState(() {
-            _buttonController.reset();
-            _loginError = error.toString();
-          });
-        });
+    completer.future.then<Null>((_) {
+      setState(() {
+        _loginError = '';
+      });
+    }).catchError((Object error) {
+      setState(() {
+        _buttonController.reset();
+        _loginError = error.toString();
+      });
+    });
 
     if (_loginType == LOGIN_TYPE_EMAIL) {
       viewModel.onSignUpPressed(
@@ -245,31 +243,29 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future
-        .then<Null>((_) {
-          setState(() {
-            _loginError = '';
-            if (_recoverPassword) {
-              _recoverPassword = false;
-              _disable2FA = false;
-              _buttonController.reset();
-              showDialog<MessageDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return MessageDialog(
-                    AppLocalization.of(context)!.recoverPasswordEmailSent,
-                  );
-                },
+    completer.future.then<Null>((_) {
+      setState(() {
+        _loginError = '';
+        if (_recoverPassword) {
+          _recoverPassword = false;
+          _disable2FA = false;
+          _buttonController.reset();
+          showDialog<MessageDialog>(
+            context: context,
+            builder: (BuildContext context) {
+              return MessageDialog(
+                AppLocalization.of(context)!.recoverPasswordEmailSent,
               );
-            }
-          });
-        })
-        .catchError((Object error) {
-          setState(() {
-            _buttonController.reset();
-            _loginError = error.toString();
-          });
-        });
+            },
+          );
+        }
+      });
+    }).catchError((Object error) {
+      setState(() {
+        _buttonController.reset();
+        _loginError = error.toString();
+      });
+    });
 
     final url = _getUrl();
 
@@ -491,8 +487,8 @@ class _LoginState extends State<LoginView> {
                                   label: localization!.email,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourEmail
-                                      : null,
+                                          ? localization.pleaseEnterYourEmail
+                                          : null,
                                   autofillHints: [AutofillHints.username],
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
@@ -517,8 +513,8 @@ class _LoginState extends State<LoginView> {
                                   label: localization!.url,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterYourUrl
-                                      : null,
+                                          ? localization.pleaseEnterYourUrl
+                                          : null,
                                   keyboardType: TextInputType.url,
                                   onSavePressed: (_) => _submitForm(),
                                 ),
@@ -552,7 +548,7 @@ class _LoginState extends State<LoginView> {
                                                 style: aboutTextStyle,
                                                 text:
                                                     localization!.iAgreeToThe +
-                                                    ' ',
+                                                        ' ',
                                               ),
                                               LinkTextSpan(
                                                 style: linkStyle,
@@ -579,8 +575,7 @@ class _LoginState extends State<LoginView> {
                                             children: <TextSpan>[
                                               TextSpan(
                                                 style: aboutTextStyle,
-                                                text:
-                                                    localization.iAgreeToThe +
+                                                text: localization.iAgreeToThe +
                                                     ' ',
                                               ),
                                               LinkTextSpan(
@@ -640,11 +635,11 @@ class _LoginState extends State<LoginView> {
                           ? Padding(
                               padding:
                                   calculateLayout(context) == AppLayout.desktop
-                                  ? const EdgeInsets.symmetric(
-                                      horizontal: 20,
-                                      vertical: 3,
-                                    )
-                                  : const EdgeInsets.all(0),
+                                      ? const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 3,
+                                        )
+                                      : const EdgeInsets.all(0),
                               child: SignInWithAppleButton(
                                 onPressed: _submitForm,
                               ),
@@ -683,20 +678,26 @@ class _LoginState extends State<LoginView> {
                                     _disable2FA
                                         ? localization!.sendCode
                                         : _recoverPassword
-                                        ? localization!.recoverPassword
-                                        : _createAccount
-                                        ? (_loginType == LOGIN_TYPE_EMAIL
-                                              ? localization!.emailSignUp
-                                              : _loginType ==
-                                                    LOGIN_TYPE_MICROSOFT
-                                              ? localization!.microsoftSignUp
-                                              : localization!.googleSignUp)
-                                        : (_loginType == LOGIN_TYPE_EMAIL
-                                              ? localization!.emailSignIn
-                                              : _loginType ==
-                                                    LOGIN_TYPE_MICROSOFT
-                                              ? localization!.microsoftSignIn
-                                              : localization!.googleSignIn),
+                                            ? localization!.recoverPassword
+                                            : _createAccount
+                                                ? (_loginType ==
+                                                        LOGIN_TYPE_EMAIL
+                                                    ? localization!.emailSignUp
+                                                    : _loginType ==
+                                                            LOGIN_TYPE_MICROSOFT
+                                                        ? localization!
+                                                            .microsoftSignUp
+                                                        : localization!
+                                                            .googleSignUp)
+                                                : (_loginType ==
+                                                        LOGIN_TYPE_EMAIL
+                                                    ? localization!.emailSignIn
+                                                    : _loginType ==
+                                                            LOGIN_TYPE_MICROSOFT
+                                                        ? localization!
+                                                            .microsoftSignIn
+                                                        : localization!
+                                                            .googleSignIn),
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.white,

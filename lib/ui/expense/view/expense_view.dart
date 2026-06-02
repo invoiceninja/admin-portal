@@ -48,8 +48,7 @@ class _ExpenseViewState extends State<ExpenseView>
 
     _controller = TabController(
       vsync: this,
-      length:
-          1 +
+      length: 1 +
           (viewModel.expense.isRecurring ? 1 : 0) +
           (company.isModuleEnabled(EntityType.document) ? 1 : 0),
       initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex,
@@ -100,28 +99,27 @@ class _ExpenseViewState extends State<ExpenseView>
       entity: expense,
       appBarBottom:
           (company.isModuleEnabled(EntityType.document) || expense.isRecurring)
-          ? TabBar(
-              controller: _controller,
-              isScrollable: isMobile(context),
-              tabs: [
-                Tab(text: localization!.overview),
-                if (company.isModuleEnabled(EntityType.document))
-                  Tab(
-                    text: expense.documents.isEmpty
-                        ? localization.documents
-                        : '${localization.documents} (${expense.documents.length})',
-                  ),
-                if (expense.isRecurring) Tab(text: localization.schedule),
-              ],
-            )
-          : null,
+              ? TabBar(
+                  controller: _controller,
+                  isScrollable: isMobile(context),
+                  tabs: [
+                    Tab(text: localization!.overview),
+                    if (company.isModuleEnabled(EntityType.document))
+                      Tab(
+                        text: expense.documents.isEmpty
+                            ? localization.documents
+                            : '${localization.documents} (${expense.documents.length})',
+                      ),
+                    if (expense.isRecurring) Tab(text: localization.schedule),
+                  ],
+                )
+              : null,
       body: Builder(
         builder: (context) {
           return Column(
             children: [
               Expanded(
-                child:
-                    (company.isModuleEnabled(EntityType.document) ||
+                child: (company.isModuleEnabled(EntityType.document) ||
                         expense.isRecurring)
                     ? TabBarView(
                         controller: _controller,
@@ -171,13 +169,13 @@ class _ExpenseViewState extends State<ExpenseView>
                 entity: expense,
                 action1: expense.isRecurring
                     ? (expense.canBeStopped
-                          ? EntityAction.stop
-                          : EntityAction.start)
+                        ? EntityAction.stop
+                        : EntityAction.start)
                     : EntityAction.invoiceExpense,
                 action1Enabled:
                     (!expense.isInvoiced && expense.shouldBeInvoiced) ||
-                    (expense.isRecurring &&
-                        (expense.canBeStarted || expense.canBeStopped)),
+                        (expense.isRecurring &&
+                            (expense.canBeStarted || expense.canBeStopped)),
                 action2: expense.isRecurring
                     ? EntityAction.cloneToRecurring
                     : EntityAction.cloneToExpense,

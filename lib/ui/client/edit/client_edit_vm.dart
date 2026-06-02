@@ -112,7 +112,8 @@ class ClientEditVM {
                 return ErrorDialog(
                   AppLocalization.of(
                     navigatorKey.currentContext!,
-                  )!.pleaseEnterAClientOrContactName,
+                  )!
+                      .pleaseEnterAClientOrContactName,
                 );
               },
             );
@@ -124,36 +125,33 @@ class ClientEditVM {
           store.dispatch(
             SaveClientRequest(completer: completer, client: client),
           );
-          return completer.future
-              .then((savedClient) {
-                showToast(
-                  client.isNew
-                      ? localization!.createdClient
-                      : localization!.updatedClient,
-                );
-                if (state.prefState.isMobile) {
-                  store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-                  if (client.isNew &&
-                      state.clientUIState.saveCompleter == null) {
-                    navigator!.pushReplacementNamed(ClientViewScreen.route);
-                  } else {
-                    navigator!.pop(savedClient);
-                  }
-                } else if (state.clientUIState.saveCompleter == null) {
-                  if (!state.prefState.isPreviewVisible) {
-                    store.dispatch(TogglePreviewSidebar());
-                  }
-                  viewEntity(entity: savedClient, force: true);
-                }
-              })
-              .catchError((Object error) {
-                showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  },
-                );
-              });
+          return completer.future.then((savedClient) {
+            showToast(
+              client.isNew
+                  ? localization!.createdClient
+                  : localization!.updatedClient,
+            );
+            if (state.prefState.isMobile) {
+              store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
+              if (client.isNew && state.clientUIState.saveCompleter == null) {
+                navigator!.pushReplacementNamed(ClientViewScreen.route);
+              } else {
+                navigator!.pop(savedClient);
+              }
+            } else if (state.clientUIState.saveCompleter == null) {
+              if (!state.prefState.isPreviewVisible) {
+                store.dispatch(TogglePreviewSidebar());
+              }
+              viewEntity(entity: savedClient, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              },
+            );
+          });
         });
       },
     );

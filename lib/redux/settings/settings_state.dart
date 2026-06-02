@@ -30,8 +30,8 @@ abstract class SettingsUIState extends Object
       entityType: client != null
           ? EntityType.client
           : group != null
-          ? EntityType.group
-          : EntityType.company,
+              ? EntityType.group
+              : EntityType.company,
       origClient: origClient ?? ClientEntity(),
       origGroup: origGroup ?? GroupEntity(),
       origCompany: origCompany ?? CompanyEntity(),

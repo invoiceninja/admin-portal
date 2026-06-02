@@ -72,12 +72,11 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -152,36 +151,30 @@ class _$DocumentUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(DocumentEntity),
-                )!
-                as DocumentEntity,
+              value,
+              specifiedType: const FullType(DocumentEntity),
+            )! as DocumentEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -445,8 +438,7 @@ class DocumentUIStateBuilder
   _$DocumentUIState _build() {
     _$DocumentUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$DocumentUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

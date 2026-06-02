@@ -129,9 +129,7 @@ class ExpensePresenter extends EntityPresenter {
         return LinkTextRelatedEntity(entity: project, relation: expense);
       case ExpenseFields.paymentType:
         return Text(
-          state
-                  .staticState
-                  .paymentTypeMap[expense.paymentTypeId]
+          state.staticState.paymentTypeMap[expense.paymentTypeId]
                   ?.listDisplayName ??
               '',
         );
@@ -147,9 +145,7 @@ class ExpensePresenter extends EntityPresenter {
         );
       case ExpenseFields.invoiceCurrency:
         return Text(
-          state
-                  .staticState
-                  .currencyMap[expense.invoiceCurrencyId]
+          state.staticState.currencyMap[expense.invoiceCurrencyId]
                   ?.listDisplayName ??
               '',
         );

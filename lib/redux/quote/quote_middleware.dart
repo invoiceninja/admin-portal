@@ -167,24 +167,22 @@ Middleware<AppState> _showPdfQuote() {
 Middleware<AppState> _archiveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveQuotesRequest;
-    final prevQuotes = action.quoteIds
-        .map((id) => store.state.quoteState.map[id])
-        .toList();
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.archive,
+    )
         .then((List<InvoiceEntity> quotes) {
-          store.dispatch(ArchiveQuotesSuccess(quotes));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchiveQuotesFailure(prevQuotes));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchiveQuotesSuccess(quotes));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveQuotesFailure(prevQuotes));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -193,25 +191,23 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
 Middleware<AppState> _deleteQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteQuotesRequest;
-    final prevQuotes = action.quoteIds
-        .map((id) => store.state.quoteState.map[id])
-        .toList();
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
 
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.delete,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.delete,
+    )
         .then((List<InvoiceEntity> quotes) {
-          store.dispatch(DeleteQuotesSuccess(quotes));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeleteQuotesFailure(prevQuotes));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeleteQuotesSuccess(quotes));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteQuotesFailure(prevQuotes));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -220,25 +216,23 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
 Middleware<AppState> _restoreQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreQuotesRequest;
-    final prevQuotes = action.quoteIds
-        .map((id) => store.state.quoteState.map[id])
-        .toList();
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
 
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.restore,
+    )
         .then((List<InvoiceEntity> quotes) {
-          store.dispatch(RestoreQuotesSuccess(quotes));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestoreQuotesFailure(prevQuotes));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestoreQuotesSuccess(quotes));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreQuotesFailure(prevQuotes));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -249,20 +243,19 @@ Middleware<AppState> _convertQuotesToInvoices(QuoteRepository repository) {
     final action = dynamicAction as ConvertQuotesToInvoices;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.convertToInvoice,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.convertToInvoice,
+    )
         .then((quotes) {
-          store.dispatch(ConvertQuotesToInvoicesSuccess(quotes: quotes));
-          store.dispatch(RefreshData());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ConvertQuotesToInvoicesFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ConvertQuotesToInvoicesSuccess(quotes: quotes));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertQuotesToInvoicesFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -273,20 +266,19 @@ Middleware<AppState> _convertQuotesToProjects(QuoteRepository repository) {
     final action = dynamicAction as ConvertQuotesToProjects;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.convertToProject,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.convertToProject,
+    )
         .then((quotes) {
-          store.dispatch(ConvertQuotesToProjectsSuccess(quotes: quotes));
-          store.dispatch(RefreshData());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ConvertQuotesToProjectsFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ConvertQuotesToProjectsSuccess(quotes: quotes));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ConvertQuotesToProjectsFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -297,20 +289,19 @@ Middleware<AppState> _approveQuote(QuoteRepository repository) {
     final action = dynamicAction as ApproveQuotes;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.approve,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.approve,
+    )
         .then((quotes) {
-          store.dispatch(ApproveQuoteSuccess(quotes: quotes));
-          store.dispatch(RefreshData());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ApproveQuoteFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ApproveQuoteSuccess(quotes: quotes));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ApproveQuoteFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -321,19 +312,18 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
     final action = dynamicAction as MarkSentQuotesRequest;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds,
-          EntityAction.markSent,
-        )
+      store.state.credentials,
+      action.quoteIds,
+      EntityAction.markSent,
+    )
         .then((quotes) {
-          store.dispatch(MarkSentQuoteSuccess(quotes));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(MarkSentQuoteFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(MarkSentQuoteSuccess(quotes));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(MarkSentQuoteFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -345,22 +335,21 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     final origQuote = store.state.quoteState.map[action.quoteId]!;
     repository
         .emailQuote(
-          store.state.credentials,
-          origQuote,
-          action.template,
-          action.subject,
-          action.body,
-          action.ccEmail,
-        )
+      store.state.credentials,
+      origQuote,
+      action.template,
+      action.subject,
+      action.body,
+      action.ccEmail,
+    )
         .then((quote) {
-          store.dispatch(EmailQuoteSuccess(quote));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(EmailQuoteFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(EmailQuoteSuccess(quote));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(EmailQuoteFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -381,21 +370,20 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
     repository
         .saveData(store.state.credentials, updatedQuote, action.action)
         .then((InvoiceEntity quote) {
-          if (action.quote.isNew) {
-            store.dispatch(AddQuoteSuccess(quote));
-          } else {
-            store.dispatch(SaveQuoteSuccess(quote));
-          }
-          if (action.action == EntityAction.convertToInvoice) {
-            store.dispatch(RefreshData());
-          }
-          action.completer.complete(quote);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveQuoteFailure(error));
-          action.completer.completeError(error);
-        });
+      if (action.quote.isNew) {
+        store.dispatch(AddQuoteSuccess(quote));
+      } else {
+        store.dispatch(SaveQuoteSuccess(quote));
+      }
+      if (action.action == EntityAction.convertToInvoice) {
+        store.dispatch(RefreshData());
+      }
+      action.completer.complete(quote);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveQuoteFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -406,22 +394,19 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
     final action = dynamicAction as LoadQuote;
 
     store.dispatch(LoadQuoteRequest());
-    repository
-        .loadItem(store.state.credentials, action.quoteId)
-        .then((quote) {
-          store.dispatch(LoadQuoteSuccess(quote));
+    repository.loadItem(store.state.credentials, action.quoteId).then((quote) {
+      store.dispatch(LoadQuoteSuccess(quote));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadQuoteFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadQuoteFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -432,19 +417,18 @@ Middleware<AppState> _downloadQuotes(QuoteRepository repository) {
     final action = dynamicAction as DownloadQuotesRequest;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.invoiceIds,
-          EntityAction.bulkDownload,
-        )
+      store.state.credentials,
+      action.invoiceIds,
+      EntityAction.bulkDownload,
+    )
         .then((invoices) {
-          store.dispatch(DownloadQuotesSuccess());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DownloadQuotesFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DownloadQuotesSuccess());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DownloadQuotesFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -456,23 +440,22 @@ Middleware<AppState> _bulkEmailQuotes(QuoteRepository repository) {
 
     repository
         .bulkAction(
-          store.state.credentials,
-          action.quoteIds!,
-          EntityAction.sendEmail,
-        )
+      store.state.credentials,
+      action.quoteIds!,
+      EntityAction.sendEmail,
+    )
         .then((List<InvoiceEntity> quotes) {
-          store.dispatch(BulkEmailQuotesSuccess(quotes));
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(BulkEmailQuotesFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      store.dispatch(BulkEmailQuotesSuccess(quotes));
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(BulkEmailQuotesFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -486,46 +469,45 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
     store.dispatch(LoadQuotesRequest());
     repository
         .loadList(
-          state.credentials,
-          action.page,
-          state.createdAtLimit,
-          state.filterDeletedClients,
-        )
+      state.credentials,
+      action.page,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
         .then((data) {
-          store.dispatch(LoadQuotesSuccess(data));
+      store.dispatch(LoadQuotesSuccess(data));
 
-          final documents = <DocumentEntity>[];
-          data.forEach((quote) {
-            quote.documents.forEach((document) {
-              documents.add(
-                document.rebuild(
-                  (b) => b
-                    ..parentId = quote.id
-                    ..parentType = EntityType.quote,
-                ),
-              );
-            });
-          });
-          store.dispatch(LoadDocumentsSuccess(documents));
-
-          if (data.length == kMaxRecordsPerPage) {
-            store.dispatch(
-              LoadQuotes(completer: action.completer, page: action.page + 1),
-            );
-          } else {
-            if (action.completer != null) {
-              action.completer!.complete(null);
-            }
-            store.dispatch(LoadCredits());
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadQuotesFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
+      final documents = <DocumentEntity>[];
+      data.forEach((quote) {
+        quote.documents.forEach((document) {
+          documents.add(
+            document.rebuild(
+              (b) => b
+                ..parentId = quote.id
+                ..parentType = EntityType.quote,
+            ),
+          );
         });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(
+          LoadQuotes(completer: action.completer, page: action.page + 1),
+        );
+      } else {
+        if (action.completer != null) {
+          action.completer!.complete(null);
+        }
+        store.dispatch(LoadCredits());
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadQuotesFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -537,32 +519,31 @@ Middleware<AppState> _saveDocument(QuoteRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-            store.state.credentials,
-            action!.quote,
-            action.multipartFile,
-            action.isPrivate!,
-          )
+        store.state.credentials,
+        action!.quote,
+        action.multipartFile,
+        action.isPrivate!,
+      )
           .then((quote) {
-            store.dispatch(SaveQuoteSuccess(quote));
+        store.dispatch(SaveQuoteSuccess(quote));
 
-            final documents = <DocumentEntity>[];
-            quote.documents.forEach((document) {
-              documents.add(
-                document.rebuild(
-                  (b) => b
-                    ..parentId = quote.id
-                    ..parentType = EntityType.quote,
-                ),
-              );
-            });
-            store.dispatch(LoadDocumentsSuccess(documents));
-            action.completer.complete(documents);
-          })
-          .catchError((Object error) {
-            print(error);
-            store.dispatch(SaveQuoteDocumentFailure(error));
-            action.completer.completeError(error);
-          });
+        final documents = <DocumentEntity>[];
+        quote.documents.forEach((document) {
+          documents.add(
+            document.rebuild(
+              (b) => b
+                ..parentId = quote.id
+                ..parentType = EntityType.quote,
+            ),
+          );
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+        action.completer.complete(documents);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveQuoteDocumentFailure(error));
+        action.completer.completeError(error);
+      });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveQuoteDocumentFailure(error));

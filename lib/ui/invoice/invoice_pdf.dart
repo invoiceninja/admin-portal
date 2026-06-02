@@ -79,23 +79,22 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
     _loadPDF(context, invoice, _isDeliveryNote, _activityId, _designId)
         .then((response) async {
-          setState(() {
-            _response = response;
-            _isLoading = false;
-          });
-        })
-        .catchError((Object error) {
-          setState(() {
-            _isLoading = false;
-          });
+      setState(() {
+        _response = response;
+        _isLoading = false;
+      });
+    }).catchError((Object error) {
+      setState(() {
+        _isLoading = false;
+      });
 
-          showDialog<void>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        builder: (BuildContext context) {
+          return ErrorDialog(error);
+        },
+      );
+    });
   }
 
   @override
@@ -247,8 +246,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     onPressed: _response == null
                         ? null
                         : () async {
-                            final fileName =
-                                (invoice.number.isEmpty
+                            final fileName = (invoice.number.isEmpty
                                     ? localization.pending
                                     : invoice.number) +
                                 '.pdf';
@@ -299,9 +297,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     maxPageWidth: 800,
                     pdfFileName:
                         localization.lookup(invoice.entityType!.snakeCase) +
-                        '_' +
-                        invoice.number +
-                        '.pdf',
+                            '_' +
+                            invoice.number +
+                            '.pdf',
                   ),
           ),
         ],

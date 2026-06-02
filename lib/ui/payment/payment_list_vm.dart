@@ -110,7 +110,7 @@ class PaymentListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.payment) ??
-          PaymentPresenter.getDefaultTableFields(state.userCompany),
+              PaymentPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortPayments(field)),
       onClearMultielsect: () => store.dispatch(ClearPaymentMultiselect()),
     );

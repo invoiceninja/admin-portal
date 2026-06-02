@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TransactionRuleViewScreen extends StatelessWidget {
   const TransactionRuleViewScreen({Key? key, this.isFilter = false})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTransactionRulesView';
 
@@ -49,10 +49,8 @@ class TransactionRuleViewVM {
 
   factory TransactionRuleViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final transactionRule =
-        state.transactionRuleState.map[state
-            .transactionRuleUIState
-            .selectedId] ??
+    final transactionRule = state.transactionRuleState
+            .map[state.transactionRuleUIState.selectedId] ??
         TransactionRuleEntity(id: state.transactionRuleUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {

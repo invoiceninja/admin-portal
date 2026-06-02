@@ -103,92 +103,70 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'geoPostalCode':
-          result.geoPostalCode =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.geoPostalCode = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'geoCity':
-          result.geoCity =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.geoCity = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'geoCounty':
-          result.geoCounty =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.geoCounty = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'geoState':
-          result.geoState =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.geoState = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'taxSales':
-          result.taxSales =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.taxSales = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'stateSalesTax':
-          result.stateSalesTax =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.stateSalesTax = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'citySalesTax':
-          result.citySalesTax =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.citySalesTax = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'cityTaxCode':
-          result.cityTaxCode =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.cityTaxCode = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'countySalesTax':
-          result.countySalesTax =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.countySalesTax = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'countyTaxCode':
-          result.countyTaxCode =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.countyTaxCode = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'districtSalesTax':
-          result.districtSalesTax =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.districtSalesTax = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
       }
     }
@@ -259,36 +237,28 @@ class _$TaxConfigEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'version':
-          result.version =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.version = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'seller_subregion':
-          result.sellerSubregion =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.sellerSubregion = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'acts_as_sender':
-          result.actsAsSender =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.actsAsSender = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'acts_as_receiver':
-          result.actsAsReceiver =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.actsAsReceiver = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'regions':
           result.regions.replace(
@@ -365,28 +335,22 @@ class _$TaxConfigRegionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'has_sales_above_threshold':
-          result.hasSalesAboveThreshold =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.hasSalesAboveThreshold = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'tax_all_subregions':
-          result.taxAll =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.taxAll = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'tax_threshold':
-          result.taxThreshold =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.taxThreshold = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'subregions':
           result.subregions.replace(
@@ -468,44 +432,34 @@ class _$TaxConfigSubregionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'apply_tax':
-          result.applyTax =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.applyTax = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'tax_rate':
-          result.taxRate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.taxRate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'tax_name':
-          result.taxName =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.taxName = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'reduced_tax_rate':
-          result.reducedTaxRate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.reducedTaxRate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'vat_number':
-          result.vatNumber =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.vatNumber = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -704,8 +658,7 @@ class TaxDataEntityBuilder
   TaxDataEntity build() => _build();
 
   _$TaxDataEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$TaxDataEntity._(
           geoPostalCode: BuiltValueNullFieldError.checkNotNull(
             geoPostalCode,
@@ -895,8 +848,7 @@ class TaxConfigEntityBuilder
   _$TaxConfigEntity _build() {
     _$TaxConfigEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$TaxConfigEntity._(
             version: BuiltValueNullFieldError.checkNotNull(
               version,
@@ -951,7 +903,8 @@ class _$TaxConfigRegionEntity extends TaxConfigRegionEntity {
 
   factory _$TaxConfigRegionEntity([
     void Function(TaxConfigRegionEntityBuilder)? updates,
-  ]) => (TaxConfigRegionEntityBuilder()..update(updates))._build();
+  ]) =>
+      (TaxConfigRegionEntityBuilder()..update(updates))._build();
 
   _$TaxConfigRegionEntity._({
     required this.hasSalesAboveThreshold,
@@ -962,7 +915,8 @@ class _$TaxConfigRegionEntity extends TaxConfigRegionEntity {
   @override
   TaxConfigRegionEntity rebuild(
     void Function(TaxConfigRegionEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   TaxConfigRegionEntityBuilder toBuilder() =>
@@ -1057,8 +1011,7 @@ class TaxConfigRegionEntityBuilder
   _$TaxConfigRegionEntity _build() {
     _$TaxConfigRegionEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$TaxConfigRegionEntity._(
             hasSalesAboveThreshold: BuiltValueNullFieldError.checkNotNull(
               hasSalesAboveThreshold,
@@ -1110,7 +1063,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
 
   factory _$TaxConfigSubregionEntity([
     void Function(TaxConfigSubregionEntityBuilder)? updates,
-  ]) => (TaxConfigSubregionEntityBuilder()..update(updates))._build();
+  ]) =>
+      (TaxConfigSubregionEntityBuilder()..update(updates))._build();
 
   _$TaxConfigSubregionEntity._({
     required this.applyTax,
@@ -1122,7 +1076,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
   @override
   TaxConfigSubregionEntity rebuild(
     void Function(TaxConfigSubregionEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   TaxConfigSubregionEntityBuilder toBuilder() =>
@@ -1222,8 +1177,7 @@ class TaxConfigSubregionEntityBuilder
   TaxConfigSubregionEntity build() => _build();
 
   _$TaxConfigSubregionEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$TaxConfigSubregionEntity._(
           applyTax: BuiltValueNullFieldError.checkNotNull(
             applyTax,

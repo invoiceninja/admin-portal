@@ -420,11 +420,11 @@ DateTime? parseTime(String value, BuildContext context) {
 
   format = showSeconds
       ? enableMilitaryTime!
-            ? 'H:mm:ss'
-            : 'h:mm:ss a'
+          ? 'H:mm:ss'
+          : 'h:mm:ss a'
       : enableMilitaryTime!
-      ? 'H:mm'
-      : 'h:mm a';
+          ? 'H:mm'
+          : 'h:mm a';
 
   final formatter = DateFormat('y-M-D ' + format, localeSelector(state));
   return formatter.parse('2000-01-01 ' + value);
@@ -450,26 +450,25 @@ String formatDate(
     if (!showDate) {
       format = showSeconds
           ? company!.settings.enableMilitaryTime!
-                ? 'H:mm:ss'
-                : 'h:mm:ss a'
+              ? 'H:mm:ss'
+              : 'h:mm:ss a'
           : company!.settings.enableMilitaryTime!
-          ? 'H:mm'
-          : 'h:mm a';
+              ? 'H:mm'
+              : 'h:mm a';
     } else {
       final dateFormats = state.staticState.dateFormatMap;
       final dateFormatId = (company!.settings.dateFormatId ?? '').isNotEmpty
           ? company.settings.dateFormatId
           : kDefaultDateFormat;
       format = dateFormats[dateFormatId]!.format;
-      format +=
-          ' ' +
+      format += ' ' +
           (showSeconds
               ? company.settings.enableMilitaryTime!
-                    ? 'H:mm:ss'
-                    : 'h:mm:ss a'
+                  ? 'H:mm:ss'
+                  : 'h:mm:ss a'
               : company.settings.enableMilitaryTime!
-              ? 'H:mm'
-              : 'h:mm a');
+                  ? 'H:mm'
+                  : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
     final parsed = DateTime.tryParse(value.endsWith('Z') ? value : value + 'Z');

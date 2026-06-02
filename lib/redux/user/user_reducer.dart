@@ -65,8 +65,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.user
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 

@@ -12,7 +12,8 @@ var memoizedDropdownScheduleList = memo5(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     String clientId,
-  ) => dropdownSchedulesSelector(
+  ) =>
+      dropdownSchedulesSelector(
     scheduleMap,
     scheduleList,
     staticState,
@@ -53,7 +54,8 @@ var memoizedFilteredScheduleList = memo4(
     BuiltMap<String, ScheduleEntity> scheduleMap,
     BuiltList<String> scheduleList,
     ListUIState scheduleListState,
-  ) => filteredSchedulesSelector(
+  ) =>
+      filteredSchedulesSelector(
     selectionState,
     scheduleMap,
     scheduleList,

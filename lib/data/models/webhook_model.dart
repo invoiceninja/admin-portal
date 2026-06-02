@@ -244,8 +244,8 @@ abstract class WebhookEntity extends Object
     switch (sortField) {
       case WebhookFields.targetUrl:
         response = webhookA!.targetUrl.toLowerCase().compareTo(
-          webhookB!.targetUrl.toLowerCase(),
-        );
+              webhookB!.targetUrl.toLowerCase(),
+            );
         break;
       default:
         print('## ERROR: sort by webhook.$sortField is not implemented');

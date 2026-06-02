@@ -37,9 +37,8 @@ class _ScheduleViewState extends State<ScheduleView> {
     BaseEntity? entity;
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
       final entityType = EntityType.valueOf(schedule.parameters.entityType!);
-      entity =
-          state.getEntityMap(entityType)![schedule.parameters.entityId]
-              as BaseEntity?;
+      entity = state.getEntityMap(entityType)![schedule.parameters.entityId]
+          as BaseEntity?;
     }
 
     return ViewScaffold(
@@ -75,8 +74,10 @@ class _ScheduleViewState extends State<ScheduleView> {
               localization.clients: parameters.clients!.isEmpty
                   ? localization.allClients
                   : parameters.clients!.length == 1
-                  ? state.clientState.get(parameters.clients!.first).displayName
-                  : '${parameters.clients!.length} ${localization.clients}',
+                      ? state.clientState
+                          .get(parameters.clients!.first)
+                          .displayName
+                      : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
               localization.showAgingTable: parameters.showAgingTable!
                   ? localization.yes
@@ -86,9 +87,9 @@ class _ScheduleViewState extends State<ScheduleView> {
                   : localization.no,
               localization.onlyClientsWithInvoices:
                   (parameters.onlyClientsWithInvoices != null &&
-                      parameters.onlyClientsWithInvoices!)
-                  ? localization.yes
-                  : localization.no,
+                          parameters.onlyClientsWithInvoices!)
+                      ? localization.yes
+                      : localization.no,
               localization.status: localization.lookup(parameters.status),
             })
           else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_REPORT)
@@ -116,16 +117,18 @@ class _ScheduleViewState extends State<ScheduleView> {
               localization.clients: parameters.clients!.isEmpty
                   ? localization.allClients
                   : parameters.clients!.length == 1
-                  ? state.clientState.get(parameters.clients!.first).displayName
-                  : '${parameters.clients!.length} ${localization.clients}',
+                      ? state.clientState
+                          .get(parameters.clients!.first)
+                          .displayName
+                      : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
               localization.autoSend: parameters.autoSend == true
                   ? localization.yes
                   : localization.no,
               localization.includeProjectTasks:
                   parameters.includeProjectTasks == true
-                  ? localization.yes
-                  : localization.no,
+                      ? localization.yes
+                      : localization.no,
             })
           else if (schedule.template ==
               ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE)
@@ -136,12 +139,11 @@ class _ScheduleViewState extends State<ScheduleView> {
               localization.remainingCycles: schedule.remainingCycles == -1
                   ? localization.endless
                   : '${schedule.remainingCycles}',
-              localization.invoice:
-                  parameters.invoiceId != null &&
+              localization.invoice: parameters.invoiceId != null &&
                       parameters.invoiceId!.isNotEmpty
                   ? state.invoiceState
-                        .get(parameters.invoiceId!)
-                        .listDisplayName
+                      .get(parameters.invoiceId!)
+                      .listDisplayName
                   : '',
               localization.autoBill: parameters.autoBill == true
                   ? localization.yes

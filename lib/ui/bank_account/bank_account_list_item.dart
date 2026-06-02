@@ -42,8 +42,7 @@ class BankAccountListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: bankAccount,
-      isSelected:
-          bankAccount.id ==
+      isSelected: bankAccount.id ==
           (uiState.isEditing
               ? bankAccountUIState.editing!.id
               : bankAccountUIState.selectedId),

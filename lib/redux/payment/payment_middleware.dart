@@ -140,19 +140,18 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.paymentIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.paymentIds,
+      EntityAction.archive,
+    )
         .then((List<PaymentEntity> payments) {
-          store.dispatch(ArchivePaymentsSuccess(payments));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchivePaymentsFailure(prevPayments));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchivePaymentsSuccess(payments));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchivePaymentsFailure(prevPayments));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -166,20 +165,19 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.paymentIds,
-          EntityAction.delete,
-        )
+      store.state.credentials,
+      action.paymentIds,
+      EntityAction.delete,
+    )
         .then((List<PaymentEntity> payments) {
-          store.dispatch(DeletePaymentsSuccess(payments));
-          store.dispatch(RefreshData());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeletePaymentsFailure(prevPayments));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeletePaymentsSuccess(payments));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeletePaymentsFailure(prevPayments));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -193,20 +191,19 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.paymentIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.paymentIds,
+      EntityAction.restore,
+    )
         .then((List<PaymentEntity> payments) {
-          store.dispatch(RestorePaymentsSuccess(payments));
-          store.dispatch(RefreshData());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestorePaymentsFailure(prevPayments));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestorePaymentsSuccess(payments));
+      store.dispatch(RefreshData());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestorePaymentsFailure(prevPayments));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -220,19 +217,18 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
     repository
         .saveData(store.state.credentials, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
-          if (action.payment.isNew) {
-            store.dispatch(AddPaymentSuccess(payment));
-          } else {
-            store.dispatch(SavePaymentSuccess(payment));
-          }
-          store.dispatch(RefreshData());
-          action.completer.complete(payment);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SavePaymentFailure(error));
-          action.completer.completeError(error);
-        });
+      if (action.payment.isNew) {
+        store.dispatch(AddPaymentSuccess(payment));
+      } else {
+        store.dispatch(SavePaymentSuccess(payment));
+      }
+      store.dispatch(RefreshData());
+      action.completer.complete(payment);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SavePaymentFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -245,16 +241,15 @@ Middleware<AppState> _refundPayment(PaymentRepository repository) {
     repository
         .refundPayment(store.state.credentials, action.payment)
         .then((PaymentEntity payment) {
-          store.dispatch(SavePaymentSuccess(payment));
-          store.dispatch(RefundPaymentSuccess(payment));
-          store.dispatch(RefreshData());
-          action.completer.complete(payment);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RefundPaymentFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(SavePaymentSuccess(payment));
+      store.dispatch(RefundPaymentSuccess(payment));
+      store.dispatch(RefreshData());
+      action.completer.complete(payment);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RefundPaymentFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -265,19 +260,18 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
     final action = dynamicAction as EmailPaymentRequest;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.paymentIds,
-          EntityAction.sendEmail,
-        )
+      store.state.credentials,
+      action.paymentIds,
+      EntityAction.sendEmail,
+    )
         .then((List<PaymentEntity> payments) {
-          store.dispatch(EmailPaymentSuccess());
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SavePaymentFailure(error));
-          action.completer.completeError(error);
-        });
+      store.dispatch(EmailPaymentSuccess());
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SavePaymentFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -291,19 +285,18 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
     repository
         .loadItem(store.state.credentials, action.paymentId)
         .then((payment) {
-          store.dispatch(LoadPaymentSuccess(payment));
+      store.dispatch(LoadPaymentSuccess(payment));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadPaymentFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadPaymentFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -317,46 +310,45 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     store.dispatch(LoadPaymentsRequest());
     repository
         .loadList(
-          state.credentials,
-          action.page,
-          state.createdAtLimit,
-          state.filterDeletedClients,
-        )
+      state.credentials,
+      action.page,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
         .then((data) {
-          store.dispatch(LoadPaymentsSuccess(data));
+      store.dispatch(LoadPaymentsSuccess(data));
 
-          final documents = <DocumentEntity>[];
-          data.forEach((product) {
-            product.documents.forEach((document) {
-              documents.add(
-                document.rebuild(
-                  (b) => b
-                    ..parentId = product.id
-                    ..parentType = EntityType.payment,
-                ),
-              );
-            });
-          });
-          store.dispatch(LoadDocumentsSuccess(documents));
-
-          if (data.length == kMaxRecordsPerPage) {
-            store.dispatch(
-              LoadPayments(completer: action.completer, page: action.page + 1),
-            );
-          } else {
-            if (action.completer != null) {
-              action.completer!.complete(null);
-            }
-            store.dispatch(LoadQuotes());
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadPaymentsFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
+      final documents = <DocumentEntity>[];
+      data.forEach((product) {
+        product.documents.forEach((document) {
+          documents.add(
+            document.rebuild(
+              (b) => b
+                ..parentId = product.id
+                ..parentType = EntityType.payment,
+            ),
+          );
         });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(
+          LoadPayments(completer: action.completer, page: action.page + 1),
+        );
+      } else {
+        if (action.completer != null) {
+          action.completer!.complete(null);
+        }
+        store.dispatch(LoadQuotes());
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadPaymentsFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -368,32 +360,31 @@ Middleware<AppState> _saveDocument(PaymentRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-            store.state.credentials,
-            action!.payment,
-            action.multipartFiles,
-            action.isPrivate,
-          )
+        store.state.credentials,
+        action!.payment,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((payment) {
-            store.dispatch(SavePaymentSuccess(payment));
+        store.dispatch(SavePaymentSuccess(payment));
 
-            final documents = <DocumentEntity>[];
-            payment.documents.forEach((document) {
-              documents.add(
-                document.rebuild(
-                  (b) => b
-                    ..parentId = payment.id
-                    ..parentType = EntityType.payment,
-                ),
-              );
-            });
-            store.dispatch(LoadDocumentsSuccess(documents));
-            action.completer.complete(documents);
-          })
-          .catchError((Object error) {
-            print(error);
-            store.dispatch(SavePaymentDocumentFailure(error));
-            action.completer.completeError(error);
-          });
+        final documents = <DocumentEntity>[];
+        payment.documents.forEach((document) {
+          documents.add(
+            document.rebuild(
+              (b) => b
+                ..parentId = payment.id
+                ..parentType = EntityType.payment,
+            ),
+          );
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+        action.completer.complete(documents);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SavePaymentDocumentFailure(error));
+        action.completer.completeError(error);
+      });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SavePaymentDocumentFailure(error));

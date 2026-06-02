@@ -130,9 +130,7 @@ class _SuperEditorDemoTextItemSelectorState
     return SuperEditorPopoverButton(
       padding: const EdgeInsets.only(left: 16.0, right: 24),
       onTap: () => _popoverController.open(),
-      child:
-          widget.id ==
-              null //
+      child: widget.id == null //
           ? const SizedBox()
           : Text(
               widget.id!.label,
@@ -149,9 +147,7 @@ class _SuperEditorDemoTextItemSelectorState
   ) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: isActive
-            ? Colors.grey.withOpacity(0.2)
-            : Colors.transparent,
+        color: isActive ? Colors.grey.withOpacity(0.2) : Colors.transparent,
       ),
       child: InkWell(
         onTap: onTap,
@@ -318,9 +314,7 @@ class _SuperEditorDemoIconItemSelectorState
   ) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: isActive
-            ? Colors.grey.withOpacity(0.2)
-            : Colors.transparent,
+        color: isActive ? Colors.grey.withOpacity(0.2) : Colors.transparent,
       ),
       child: InkWell(
         onTap: onTap,
@@ -340,9 +334,7 @@ class _SuperEditorDemoIconItemSelectorState
     return SuperEditorPopoverButton(
       onTap: () => _popoverController.open(),
       padding: const EdgeInsets.only(left: 8.0, right: 24),
-      child:
-          widget.value ==
-              null //
+      child: widget.value == null //
           ? const SizedBox()
           : Icon(widget.value!.icon),
     );

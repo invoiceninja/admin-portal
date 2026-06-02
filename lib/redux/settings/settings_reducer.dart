@@ -30,15 +30,14 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
         ..filterClearedAt = action.clearFilter
             ? DateTime.now().millisecondsSinceEpoch
             : state.filterClearedAt
-        ..showNewSettings = action.tabIndex != null
-            ? state.showNewSettings
-            : false
+        ..showNewSettings =
+            action.tabIndex != null ? state.showNewSettings : false
         ..showPdfPreview = false
         ..entityType = action.client != null
             ? EntityType.client
             : action.group != null
-            ? EntityType.group
-            : state.entityType,
+                ? EntityType.group
+                : state.entityType,
     );
   }),
   TypedReducer<SettingsUIState, UpdateCompany>((state, action) {

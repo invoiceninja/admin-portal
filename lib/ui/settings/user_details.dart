@@ -173,8 +173,7 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed:
-            state.user.isConnectedToEmail ||
+        onPressed: state.user.isConnectedToEmail ||
                 state.user.isConnectedToApple ||
                 state.user.isConnectedToMicrosoft
             ? null
@@ -228,8 +227,7 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed:
-            state.user.isConnectedToEmail ||
+        onPressed: state.user.isConnectedToEmail ||
                 state.user.isConnectedToGoogle ||
                 state.user.isConnectedToApple
             ? null
@@ -285,8 +283,8 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed:
-            state.user.isConnectedToGoogle || state.user.isConnectedToMicrosoft
+        onPressed: state.user.isConnectedToGoogle ||
+                state.user.isConnectedToMicrosoft
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -431,10 +429,10 @@ class _UserDetailsState extends State<UserDetails>
                             if (state.isHosted && !state.user.phoneVerified) {
                               final bool? phoneVerified =
                                   await showDialog<bool>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        UserSmsVerification(),
-                                  );
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    UserSmsVerification(),
+                              );
 
                               if (phoneVerified == true) {
                                 showDialog<void>(
@@ -478,22 +476,21 @@ class _UserDetailsState extends State<UserDetails>
                     entityList: memoizedLanguageList(
                       state.staticState.languageMap,
                     ),
-                    labelText:
-                        localization.language +
+                    labelText: localization.language +
                         (user.languageId.isNotEmpty
                             ? ''
                             : ' - ' +
-                                  state
-                                      .staticState
-                                      .languageMap[state.company.languageId]!
-                                      .name),
+                                state
+                                    .staticState
+                                    .languageMap[state.company.languageId]!
+                                    .name),
                     entityId: user.languageId,
                     onSelected: (SelectableEntity? language) =>
                         viewModel.onChanged(
-                          user.rebuild(
-                            (b) => b..languageId = language?.id ?? '',
-                          ),
-                        ),
+                      user.rebuild(
+                        (b) => b..languageId = language?.id ?? '',
+                      ),
+                    ),
                   ),
                   if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
@@ -564,12 +561,10 @@ class _UserDetailsState extends State<UserDetails>
                     label: localization.taskAssignedNotification,
                     helpLabel: localization.taskAssignedNotificationHelp,
                     value: user
-                        .userCompany!
-                        .notifications[kNotificationChannelEmail]!
+                        .userCompany!.notifications[kNotificationChannelEmail]!
                         .contains(kNotificationsTaskAssigned),
                     onChanged: (value) {
-                      final values = user
-                          .userCompany!
+                      final values = user.userCompany!
                           .notifications[kNotificationChannelEmail]!;
                       BuiltList<String> updatedValues;
                       if (value == true) {
@@ -597,12 +592,10 @@ class _UserDetailsState extends State<UserDetails>
                     helpLabel:
                         localization.disableRecurringPaymentNotificationHelp,
                     value: user
-                        .userCompany!
-                        .notifications[kNotificationChannelEmail]!
+                        .userCompany!.notifications[kNotificationChannelEmail]!
                         .contains(kNotificationsDisableRecurringPayment),
                     onChanged: (value) {
-                      final values = user
-                          .userCompany!
+                      final values = user.userCompany!
                           .notifications[kNotificationChannelEmail]!;
                       BuiltList<String> updatedValues;
                       if (value == true) {
@@ -630,12 +623,10 @@ class _UserDetailsState extends State<UserDetails>
                     label: localization.eInvoiceReceivedNotification,
                     helpLabel: localization.eInvoiceReceivedNotificationHelp,
                     value: user
-                        .userCompany!
-                        .notifications[kNotificationChannelEmail]!
+                        .userCompany!.notifications[kNotificationChannelEmail]!
                         .contains(kNotificationsEInvoiceReceived),
                     onChanged: (value) {
-                      final values = user
-                          .userCompany!
+                      final values = user.userCompany!
                           .notifications[kNotificationChannelEmail]!;
                       BuiltList<String> updatedValues;
                       if (value == true) {
@@ -711,23 +702,20 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     final credentials = widget.state.credentials;
     final url = '${credentials.url}/settings/enable_two_factor';
 
-    _webClient
-        .get(url, credentials.token)
-        .then((dynamic data) {
-          final response = serializers.deserializeWith(
-            UserTwoFactorResponse.serializer,
-            data,
-          );
-          setState(() {
-            _isLoading = false;
-            _qrCode = response!.data.qrCode;
-            _secret = response.data.secret;
-          });
-        })
-        .catchError((dynamic error) {
-          Navigator.of(navigatorKey.currentContext!).pop();
-          showErrorDialog(message: error);
-        });
+    _webClient.get(url, credentials.token).then((dynamic data) {
+      final response = serializers.deserializeWith(
+        UserTwoFactorResponse.serializer,
+        data,
+      );
+      setState(() {
+        _isLoading = false;
+        _qrCode = response!.data.qrCode;
+        _secret = response.data.secret;
+      });
+    }).catchError((dynamic error) {
+      Navigator.of(navigatorKey.currentContext!).pop();
+      showErrorDialog(message: error);
+    });
   }
 
   @override
@@ -754,28 +742,27 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
 
     _webClient
         .post(
-          url,
-          credentials.token,
-          data: json.encode({
-            'secret': _secret,
-            'one_time_password': _oneTimePassword,
-          }),
-        )
+      url,
+      credentials.token,
+      data: json.encode({
+        'secret': _secret,
+        'one_time_password': _oneTimePassword,
+      }),
+    )
         .then((dynamic data) {
-          setState(() => _isLoading = false);
-          showToast(
-            AppLocalization.of(navigatorKey.currentContext!)!.enabledTwoFactor,
-          );
-          final store = StoreProvider.of<AppState>(
-            navigatorKey.currentContext!,
-          );
-          store.dispatch(RefreshData());
-          Navigator.of(navigatorKey.currentContext!).pop();
-        })
-        .catchError((Object error) {
-          setState(() => _isLoading = false);
-          showErrorDialog(message: '$error');
-        });
+      setState(() => _isLoading = false);
+      showToast(
+        AppLocalization.of(navigatorKey.currentContext!)!.enabledTwoFactor,
+      );
+      final store = StoreProvider.of<AppState>(
+        navigatorKey.currentContext!,
+      );
+      store.dispatch(RefreshData());
+      Navigator.of(navigatorKey.currentContext!).pop();
+    }).catchError((Object error) {
+      setState(() => _isLoading = false);
+      showErrorDialog(message: '$error');
+    });
   }
 
   @override

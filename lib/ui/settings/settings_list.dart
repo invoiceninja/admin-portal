@@ -286,7 +286,7 @@ class _SettingsListTileState extends State<SettingsListTile> {
 
     final isSelected =
         widget.viewModel.state.uiState.containsRoute('/${widget.section}') &&
-        isDesktop(context);
+            isDesktop(context);
 
     final hoverColor = convertHexStringToColor(
       state.prefState.enableDarkMode
@@ -633,9 +633,8 @@ class SettingsSearch extends StatelessWidget {
           final fields = map[section]![tab];
           for (var field in fields) {
             final List<String> parts = field.split('#');
-            final dateAdded = parts.length == 1
-                ? ''
-                : convertSqlDateToDateTime(parts[1]);
+            final dateAdded =
+                parts.length == 1 ? '' : convertSqlDateToDateTime(parts[1]);
             sections.add('$dateAdded#${parts[0]}#$section#$tab');
           }
         }

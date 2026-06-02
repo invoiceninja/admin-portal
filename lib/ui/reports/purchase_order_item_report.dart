@@ -53,7 +53,8 @@ var memoizedPurchaseOrderItemReport = memo7(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
     StaticState staticState,
-  ) => lineItemReport(
+  ) =>
+      lineItemReport(
     userCompany!,
     reportsUIState,
     productMap,
@@ -79,8 +80,8 @@ ReportResult lineItemReport(
   final reportSettings = userCompany.settings.reportSettings;
   final lineItemReportSettings =
       reportSettings.containsKey(kReportPurchaseOrderItem)
-      ? reportSettings[kReportPurchaseOrderItem]!
-      : ReportSettingsEntity();
+          ? reportSettings[kReportPurchaseOrderItem]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     PurchaseOrderItemReportFields.purchaseOrderNumber,
@@ -148,8 +149,7 @@ ReportResult lineItemReport(
             }
             break;
           case PurchaseOrderItemReportFields.profit:
-            value =
-                lineItem.netTotal(invoice, precision) -
+            value = lineItem.netTotal(invoice, precision) -
                 (productId == null ? 0.0 : productMap[productId]!.cost);
             break;
           case PurchaseOrderItemReportFields.custom1:
@@ -171,7 +171,7 @@ ReportResult lineItemReport(
             value = invoice.usesInclusiveTaxes
                 ? lineItem.total(invoice, precision)
                 : lineItem.total(invoice, precision) +
-                      lineItem.taxAmount(invoice, precision);
+                    lineItem.taxAmount(invoice, precision);
             break;
           case PurchaseOrderItemReportFields.productKey:
             value = lineItem.productKey;
@@ -220,7 +220,7 @@ ReportResult lineItemReport(
           case PurchaseOrderItemReportFields.currency:
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
-                '';
+                    '';
             break;
           case PurchaseOrderItemReportFields.clientNumber:
             value = client.number;
@@ -231,7 +231,8 @@ ReportResult lineItemReport(
           case PurchaseOrderItemReportFields.record_state:
             value = AppLocalization.of(
               navigatorKey.currentContext!,
-            )!.lookup(invoice.entityState);
+            )!
+                .lookup(invoice.entityState);
             break;
         }
 
@@ -286,9 +287,8 @@ ReportResult lineItemReport(
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }

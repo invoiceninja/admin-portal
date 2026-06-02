@@ -44,8 +44,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: expenseCategory,
-      isSelected:
-          !showCheck &&
+      isSelected: !showCheck &&
           expenseCategory.id ==
               (uiState.isEditing
                   ? expenseCategoryUIState.editing!.id

@@ -89,7 +89,8 @@ var memoizedQuoteReport = memo7(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => quoteReport(
+  ) =>
+      quoteReport(
     userCompany!,
     reportsUIState,
     quoteMap,
@@ -367,7 +368,8 @@ ReportResult quoteReport(
         case QuoteReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(quote.entityState);
+          )!
+              .lookup(quote.entityState);
           break;
       }
 
@@ -412,13 +414,11 @@ ReportResult quoteReport(
   );
 
   return ReportResult(
-    allColumns: QuoteReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        QuoteReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

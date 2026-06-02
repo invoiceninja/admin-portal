@@ -275,9 +275,8 @@ void handleCompanyGatewayAction(
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final companyGateway = companyGateways.first;
-  final companyGatewayIds = companyGateways
-      .map((companyGateway) => companyGateway.id)
-      .toList();
+  final companyGatewayIds =
+      companyGateways.map((companyGateway) => companyGateway.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -286,8 +285,8 @@ void handleCompanyGatewayAction(
     case EntityAction.restore:
       final message = companyGatewayIds.length > 1
           ? localization!.restoredCompanyGateways
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', companyGatewayIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.restoredCompanyGateway;
       store.dispatch(
         RestoreCompanyGatewayRequest(
@@ -299,8 +298,8 @@ void handleCompanyGatewayAction(
     case EntityAction.archive:
       final message = companyGatewayIds.length > 1
           ? localization!.archivedCompanyGateways
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', companyGatewayIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.archivedCompanyGateway;
       store.dispatch(
         ArchiveCompanyGatewayRequest(
@@ -312,8 +311,8 @@ void handleCompanyGatewayAction(
     case EntityAction.delete:
       final message = companyGatewayIds.length > 1
           ? localization!.deletedCompanyGateways
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', companyGatewayIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.deletedCompanyGateway;
       store.dispatch(
         DeleteCompanyGatewayRequest(

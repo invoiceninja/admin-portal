@@ -54,8 +54,7 @@ class TaxRateViewVM {
 
   factory TaxRateViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final taxRate =
-        state.taxRateState.map[state.taxRateUIState.selectedId] ??
+    final taxRate = state.taxRateState.map[state.taxRateUIState.selectedId] ??
         TaxRateEntity(id: state.taxRateUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {

@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewContacts extends StatelessWidget {
   const InvoiceViewContacts({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
 

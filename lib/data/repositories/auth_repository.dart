@@ -147,8 +147,7 @@ class AuthRepository {
 
     if (updatedAt > 0) {
       url += '&updated_at=$updatedAt';
-      includeStatic =
-          includeStatic ||
+      includeStatic = includeStatic ||
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
               kMillisecondsToRefreshStaticData;
     } else {
@@ -265,6 +264,6 @@ class AuthRepository {
   String get _tokenName => kIsWeb
       ? 'web_client'
       : Platform.isAndroid
-      ? 'android_client'
-      : 'ios_client';
+          ? 'android_client'
+          : 'ios_client';
 }

@@ -279,9 +279,8 @@ void handleSubscriptionAction(
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final subscription = subscriptions.first as SubscriptionEntity;
-  final subscriptionIds = subscriptions
-      .map((subscription) => subscription.id)
-      .toList();
+  final subscriptionIds =
+      subscriptions.map((subscription) => subscription.id).toList();
 
   switch (action) {
     case EntityAction.edit:

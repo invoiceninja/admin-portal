@@ -48,13 +48,11 @@ class _TransactionViewState extends State<TransactionView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final transactions = viewModel.transactions;
-    final transaction = transactions.isEmpty
-        ? TransactionEntity()
-        : transactions.first;
+    final transaction =
+        transactions.isEmpty ? TransactionEntity() : transactions.first;
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
-    final hasUnconvertable =
-        transactions
+    final hasUnconvertable = transactions
             .where(
               (transaction) =>
                   !transaction.isWithdrawal || transaction.isConverted,
@@ -369,15 +367,13 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       totalSelected[currencyId] =
           totalSelected[currencyId]! + invoice.balanceOrAmount;
     });
-    final totalSelectedString = totalSelected.keys
-        .map((currencyId) {
-          return formatNumber(
-            totalSelected[currencyId],
-            context,
-            currencyId: currencyId,
-          );
-        })
-        .join(' | ');
+    final totalSelectedString = totalSelected.keys.map((currencyId) {
+      return formatNumber(
+        totalSelected[currencyId],
+        context,
+        currencyId: currencyId,
+      );
+    }).join(' | ');
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -439,9 +435,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 },
                 color: _showFilter || isFiltered ? state.accentColor : null,
                 icon: Icon(Icons.filter_alt),
-                tooltip: state.prefState.enableTooltips
-                    ? localization.filter
-                    : '',
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
               ),
               SizedBox(width: 8),
             ],
@@ -484,9 +479,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 },
                 color: _showFilter || isFiltered ? state.accentColor : null,
                 icon: Icon(Icons.filter_alt),
-                tooltip: state.prefState.enableTooltips
-                    ? localization.filter
-                    : '',
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
               ),
               SizedBox(width: 8),
             ],
@@ -651,30 +645,30 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                   label: localization.linkPayment,
                   onPressed:
                       _selectedPayment == null || viewModel.state.isSaving
-                      ? null
-                      : () {
-                          final viewModel = widget.viewModel;
-                          viewModel.onLinkToPayment(
-                            context,
-                            _selectedPayment!.id,
-                          );
-                        },
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onLinkToPayment(
+                                context,
+                                _selectedPayment!.id,
+                              );
+                            },
                   iconData: Icons.link,
                 )
               : AppButton(
                   label: localization.createPayment,
                   onPressed:
                       _selectedInvoices.isEmpty || viewModel.state.isSaving
-                      ? null
-                      : () {
-                          final viewModel = widget.viewModel;
-                          viewModel.onConvertToPayment(
-                            context,
-                            _selectedInvoices
-                                .map((invoice) => invoice.id)
-                                .toList(),
-                          );
-                        },
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onConvertToPayment(
+                                context,
+                                _selectedInvoices
+                                    .map((invoice) => invoice.id)
+                                    .toList(),
+                              );
+                            },
                   iconData: Icons.add,
                 ),
         ),
@@ -685,7 +679,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
 class _MatchWithdrawals extends StatefulWidget {
   const _MatchWithdrawals({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final TransactionViewVM viewModel;
 
@@ -784,8 +778,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     }).toList();
     _categories.sort((categoryA, categoryB) {
       return categoryA!.name.toLowerCase().compareTo(
-        categoryB!.name.toLowerCase(),
-      );
+            categoryB!.name.toLowerCase(),
+          );
     });
   }
 
@@ -909,9 +903,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final transactions = viewModel.transactions;
-    final transaction = transactions.isNotEmpty
-        ? transactions.first
-        : TransactionEntity();
+    final transaction =
+        transactions.isNotEmpty ? transactions.first : TransactionEntity();
 
     final totalSelected = <String, double>{};
     _selectedExpenses.forEach((expense) {
@@ -921,15 +914,13 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       totalSelected[expense.currencyId] =
           totalSelected[expense.currencyId]! + expense.grossAmount;
     });
-    final totalSelectedString = totalSelected.keys
-        .map((currencyId) {
-          return formatNumber(
-            totalSelected[currencyId],
-            context,
-            currencyId: currencyId,
-          );
-        })
-        .join(' | ');
+    final totalSelectedString = totalSelected.keys.map((currencyId) {
+      return formatNumber(
+        totalSelected[currencyId],
+        context,
+        currencyId: currencyId,
+      );
+    }).join(' | ');
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -991,9 +982,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 },
                 color: _showFilter || isFiltered ? state.accentColor : null,
                 icon: Icon(Icons.filter_alt),
-                tooltip: state.prefState.enableTooltips
-                    ? localization.filter
-                    : '',
+                tooltip:
+                    state.prefState.enableTooltips ? localization.filter : '',
               ),
               SizedBox(width: 8),
             ],
@@ -1259,8 +1249,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       onPressed: () {
                         final completer =
                             snackBarCompleter<ExpenseCategoryEntity>(
-                              localization.createdExpenseCategory,
-                            );
+                          localization.createdExpenseCategory,
+                        );
                         createEntity(
                           entity: ExpenseCategoryEntity(state: viewModel.state),
                           force: true,
@@ -1361,22 +1351,21 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       : localization.linkExpense,
                   onPressed:
                       _selectedExpenses.isEmpty || viewModel.state.isSaving
-                      ? null
-                      : () {
-                          final viewModel = widget.viewModel;
-                          viewModel.onLinkToExpense(
-                            context,
-                            _selectedExpenses
-                                .map((expense) => expense.id)
-                                .join(','),
-                          );
-                        },
+                          ? null
+                          : () {
+                              final viewModel = widget.viewModel;
+                              viewModel.onLinkToExpense(
+                                context,
+                                _selectedExpenses
+                                    .map((expense) => expense.id)
+                                    .join(','),
+                              );
+                            },
                   iconData: Icons.link,
                 )
               : AppButton(
                   label: localization.createExpense,
-                  onPressed:
-                      viewModel.state.isSaving ||
+                  onPressed: viewModel.state.isSaving ||
                           (_selectedVendor == null && _selectedCategory == null)
                       ? null
                       : () {

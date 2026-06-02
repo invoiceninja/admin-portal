@@ -51,8 +51,7 @@ class TaskStatusRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url =
-        credentials.url +
+    final url = credentials.url +
         '/task_statuses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,

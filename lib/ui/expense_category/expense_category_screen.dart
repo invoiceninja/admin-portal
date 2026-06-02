@@ -20,7 +20,7 @@ import 'expense_category_screen_vm.dart';
 
 class ExpenseCategoryScreen extends StatelessWidget {
   const ExpenseCategoryScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsExpenseCategories';
 
@@ -89,8 +89,7 @@ class ExpenseCategoryScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterExpenseCategoriesByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.expenseCategory)
           ? FloatingActionButton(
               heroTag: 'expense_category_fab',

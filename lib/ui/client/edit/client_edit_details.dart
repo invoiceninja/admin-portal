@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditDetails extends StatefulWidget {
   const ClientEditDetails({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -137,12 +137,10 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final viewModel = widget.viewModel;
     final client = viewModel.client;
 
-    final contactEmail = contact.emails!.isNotEmpty
-        ? contact.emails!.first
-        : null;
-    final contactPhone = contact.phones!.isNotEmpty
-        ? contact.phones!.first
-        : null;
+    final contactEmail =
+        contact.emails!.isNotEmpty ? contact.emails!.first : null;
+    final contactPhone =
+        contact.phones!.isNotEmpty ? contact.phones!.first : null;
     final contactAddress = contact.postalAddresses!.isNotEmpty
         ? contact.postalAddresses!.first
         : null;

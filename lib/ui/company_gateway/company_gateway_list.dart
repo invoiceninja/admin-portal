@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayList extends StatefulWidget {
   const CompanyGatewayList({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final CompanyGatewayListVM viewModel;
 
@@ -88,12 +88,11 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
                   user: state.userCompany.user,
                   filter: widget.viewModel.filter,
                   companyGateway: companyGateway,
-                  onRemovePressed:
-                      widget.viewModel.state.settingsUIState.isFiltered
+                  onRemovePressed: widget
+                          .viewModel.state.settingsUIState.isFiltered
                       ? () => widget.viewModel.onRemovePressed(companyGatewayId)
                       : null,
-                  isChecked:
-                      isInMultiselect &&
+                  isChecked: isInMultiselect &&
                       listUIState.isSelected(companyGateway!.id),
                 );
               }).toList(),

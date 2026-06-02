@@ -44,8 +44,7 @@ class PaymentRepository {
     int createdAt,
     bool filterDeleted,
   ) async {
-    String url =
-        credentials.url +
+    String url = credentials.url +
         '/payments?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {

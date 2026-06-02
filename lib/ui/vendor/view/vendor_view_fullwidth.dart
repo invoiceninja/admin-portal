@@ -21,7 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class VendorViewFullwidth extends StatefulWidget {
   const VendorViewFullwidth({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final VendorViewVM viewModel;
 
@@ -64,8 +64,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final billingAddress = formatAddress(state, object: vendor);
     final hasMultipleContacts = vendor.contacts.length > 1;
 
-    final showStanding =
-        !state.prefState.isPreviewVisible &&
+    final showStanding = !state.prefState.isPreviewVisible &&
         !state.uiState.isEditing &&
         state.prefState.isModuleTable;
 
@@ -138,9 +137,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 1),
                         child: Text(
-                          state
-                                  .staticState
-                                  .currencyMap[vendor.currencyId]
+                          state.staticState.currencyMap[vendor.currencyId]
                                   ?.name ??
                               '',
                           maxLines: 1,
@@ -152,9 +149,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       Padding(
                         padding: const EdgeInsets.only(bottom: 1),
                         child: Text(
-                          state
-                                  .staticState
-                                  .languageMap[vendor.languageId]
+                          state.staticState.languageMap[vendor.languageId]
                                   ?.name ??
                               '',
                           maxLines: 1,
@@ -385,9 +380,8 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     left: kMobileDialogPadding / 2,
                   ),
                   child: DefaultTabController(
-                    length: company.isModuleEnabled(EntityType.document)
-                        ? 3
-                        : 2,
+                    length:
+                        company.isModuleEnabled(EntityType.document) ? 3 : 2,
                     child: SizedBox(
                       height: minHeight,
                       child: Column(

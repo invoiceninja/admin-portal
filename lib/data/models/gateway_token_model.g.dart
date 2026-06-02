@@ -61,12 +61,11 @@ class _$GatewayTokenListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(GatewayTokenEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(GatewayTokenEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -120,10 +119,9 @@ class _$GatewayTokenItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(GatewayTokenEntity),
-                )!
-                as GatewayTokenEntity,
+              value,
+              specifiedType: const FullType(GatewayTokenEntity),
+            )! as GatewayTokenEntity,
           );
           break;
       }
@@ -246,117 +244,90 @@ class _$GatewayTokenEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'token':
-          result.token =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.token = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'gateway_customer_reference':
-          result.customerReference =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customerReference = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'company_gateway_id':
-          result.companyGatewayId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.companyGatewayId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'gateway_type_id':
-          result.gatewayTypeId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.gatewayTypeId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'is_default':
-          result.isDefault =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isDefault = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'meta':
           result.meta.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(GatewayTokenMetaEntity),
-                )!
-                as GatewayTokenMetaEntity,
+              value,
+              specifiedType: const FullType(GatewayTokenMetaEntity),
+            )! as GatewayTokenMetaEntity,
           );
           break;
         case 'isChanged':
-          result.isChanged =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isChanged = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'updated_at':
-          result.updatedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.updatedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'archived_at':
-          result.archivedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.archivedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'is_deleted':
-          result.isDeleted =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isDeleted = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'user_id':
-          result.createdUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.createdUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.assignedUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -439,41 +410,32 @@ class _$GatewayTokenMetaEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'brand':
-          result.brand =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.brand = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'last4':
-          result.last4 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.last4 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'type':
-          result.type =
-              serializers.deserialize(value, specifiedType: const FullType(int))
-                  as int?;
+          result.type = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'exp_month':
-          result.expMonth =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.expMonth = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'exp_year':
-          result.expYear =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.expYear = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
       }
     }
@@ -488,13 +450,15 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
 
   factory _$GatewayTokenListResponse([
     void Function(GatewayTokenListResponseBuilder)? updates,
-  ]) => (GatewayTokenListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (GatewayTokenListResponseBuilder()..update(updates))._build();
 
   _$GatewayTokenListResponse._({required this.data}) : super._();
   @override
   GatewayTokenListResponse rebuild(
     void Function(GatewayTokenListResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   GatewayTokenListResponseBuilder toBuilder() =>
@@ -520,7 +484,8 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'GatewayTokenListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -587,13 +552,15 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
 
   factory _$GatewayTokenItemResponse([
     void Function(GatewayTokenItemResponseBuilder)? updates,
-  ]) => (GatewayTokenItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (GatewayTokenItemResponseBuilder()..update(updates))._build();
 
   _$GatewayTokenItemResponse._({required this.data}) : super._();
   @override
   GatewayTokenItemResponse rebuild(
     void Function(GatewayTokenItemResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   GatewayTokenItemResponseBuilder toBuilder() =>
@@ -619,7 +586,8 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'GatewayTokenItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -712,7 +680,8 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
 
   factory _$GatewayTokenEntity([
     void Function(GatewayTokenEntityBuilder)? updates,
-  ]) => (GatewayTokenEntityBuilder()..update(updates))._build();
+  ]) =>
+      (GatewayTokenEntityBuilder()..update(updates))._build();
 
   _$GatewayTokenEntity._({
     required this.token,
@@ -733,7 +702,8 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   @override
   GatewayTokenEntity rebuild(
     void Function(GatewayTokenEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   GatewayTokenEntityBuilder toBuilder() =>
@@ -909,8 +879,7 @@ class GatewayTokenEntityBuilder
   _$GatewayTokenEntity _build() {
     _$GatewayTokenEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$GatewayTokenEntity._(
             token: BuiltValueNullFieldError.checkNotNull(
               token,
@@ -996,7 +965,8 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
 
   factory _$GatewayTokenMetaEntity([
     void Function(GatewayTokenMetaEntityBuilder)? updates,
-  ]) => (GatewayTokenMetaEntityBuilder()..update(updates))._build();
+  ]) =>
+      (GatewayTokenMetaEntityBuilder()..update(updates))._build();
 
   _$GatewayTokenMetaEntity._({
     this.brand,
@@ -1008,7 +978,8 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
   @override
   GatewayTokenMetaEntity rebuild(
     void Function(GatewayTokenMetaEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   GatewayTokenMetaEntityBuilder toBuilder() =>
@@ -1104,8 +1075,7 @@ class GatewayTokenMetaEntityBuilder
   GatewayTokenMetaEntity build() => _build();
 
   _$GatewayTokenMetaEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$GatewayTokenMetaEntity._(
           brand: brand,
           last4: last4,

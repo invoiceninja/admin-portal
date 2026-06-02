@@ -99,8 +99,8 @@ class _TokenEditState extends State<TokenEdit> {
                       label: localization.name,
                       validator: (value) =>
                           value.isEmpty || value.trim().isEmpty
-                          ? localization.pleaseEnterAName
-                          : null,
+                              ? localization.pleaseEnterAName
+                              : null,
                       onSavePressed: _onSavePressed,
                       keyboardType: TextInputType.text,
                     ),

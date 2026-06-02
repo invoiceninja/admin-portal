@@ -103,12 +103,12 @@ class PaymentTermListVM {
       paymentTermMap: state.paymentTermState.map,
       isLoading: state.isLoading,
       filter: state.paymentTermUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> paymentTerms,
-            EntityAction action,
-          ) => handlePaymentTermAction(context, paymentTerms, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> paymentTerms,
+        EntityAction action,
+      ) =>
+          handlePaymentTermAction(context, paymentTerms, action),
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortPaymentTerms(field)),
       onClearMultielsect: () => store.dispatch(ClearPaymentTermMultiselect()),

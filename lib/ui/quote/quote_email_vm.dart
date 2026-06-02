@@ -58,17 +58,17 @@ class EmailQuoteVM extends EmailEntityVM {
     required ClientEntity? client,
     required VendorEntity? vendor,
     required Function(BuildContext, EmailTemplate, String, String, String)
-    onSendPressed,
+        onSendPressed,
   }) : super(
-         state: state,
-         isLoading: isLoading,
-         isSaving: isSaving,
-         company: company,
-         invoice: invoice,
-         client: client,
-         vendor: vendor,
-         onSendPressed: onSendPressed,
-       );
+          state: state,
+          isLoading: isLoading,
+          isSaving: isSaving,
+          company: company,
+          invoice: invoice,
+          client: client,
+          vendor: vendor,
+          onSendPressed: onSendPressed,
+        );
 
   factory EmailQuoteVM.fromStore(Store<AppState> store, InvoiceEntity quote) {
     final state = store.state;

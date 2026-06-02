@@ -42,8 +42,7 @@ class TaskRepository {
     int createdAt,
     bool filterDeleted,
   ) async {
-    final url =
-        credentials.url +
+    final url = credentials.url +
         '/tasks?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /* Server is incorrect if client isn't set

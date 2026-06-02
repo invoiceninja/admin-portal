@@ -16,7 +16,7 @@ import 'transaction_rule_screen_vm.dart';
 
 class TransactionRuleScreen extends StatelessWidget {
   const TransactionRuleScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTransactionRules';
 
@@ -85,8 +85,7 @@ class TransactionRuleScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTransactionRulesByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.transactionRule)
           ? FloatingActionButton(
               heroTag: 'transaction_rule_fab',

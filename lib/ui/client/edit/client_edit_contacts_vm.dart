@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 
 class ClientEditContactsScreen extends StatelessWidget {
   const ClientEditContactsScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final ClientEditVM viewModel;
 

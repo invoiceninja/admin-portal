@@ -12,7 +12,8 @@ var memoizedDropdownBankAccountList = memo5(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     String? bankAccountId,
-  ) => dropdownBankAccountsSelector(
+  ) =>
+      dropdownBankAccountsSelector(
     bankAccountMap,
     bankAccountList,
     staticState,
@@ -53,7 +54,8 @@ var memoizedFilteredBankAccountList = memo4(
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     BuiltList<String> bankAccountList,
     ListUIState bankAccountListState,
-  ) => filteredBankAccountsSelector(
+  ) =>
+      filteredBankAccountsSelector(
     selectionState,
     bankAccountMap,
     bankAccountList,
@@ -99,6 +101,7 @@ List<String> filteredBankAccountsSelector(
 bool? hasBankAccountChanges(
   BankAccountEntity bankAccount,
   BuiltMap<String, BankAccountEntity> bankAccountMap,
-) => bankAccount.isNew
-    ? bankAccount.isChanged
-    : bankAccount != bankAccountMap[bankAccount.id];
+) =>
+    bankAccount.isNew
+        ? bankAccount.isChanged
+        : bankAccount != bankAccountMap[bankAccount.id];

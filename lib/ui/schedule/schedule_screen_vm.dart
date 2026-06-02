@@ -52,12 +52,12 @@ class ScheduleScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.scheduleListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> schedules,
-            EntityAction action,
-          ) => handleScheduleAction(context, schedules, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> schedules,
+        EntityAction action,
+      ) =>
+          handleScheduleAction(context, schedules, action),
     );
   }
 }

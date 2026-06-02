@@ -305,11 +305,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
               if (payment.isNew || payment.isApplying == true)
                 if (state.company.isModuleEnabled(EntityType.credit))
-                  for (
-                    var index = 0;
-                    index < creditPaymentables.length;
-                    index++
-                  )
+                  for (var index = 0;
+                      index < creditPaymentables.length;
+                      index++)
                     PaymentableEditor(
                       key: ValueKey(
                         '__credit_paymentable_${index}_${creditPaymentables[index].creditId}__',
@@ -393,8 +391,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     );
                   } else {
                     final currency = state
-                        .staticState
-                        .currencyMap[payment.exchangeCurrencyId];
+                        .staticState.currencyMap[payment.exchangeCurrencyId];
                     convertCurrency(currency);
                   }
                   setState(() {
@@ -451,15 +448,15 @@ class _PaymentEditState extends State<PaymentEdit> {
                     ),
                     initialValue:
                         payment.exchangeRate != 1 && payment.exchangeRate != 0
-                        ? formatNumber(
-                            (payment.isNew
-                                    ? paymentTotal - creditTotal
-                                    : payment.amount) *
-                                payment.exchangeRate,
-                            context,
-                            formatNumberType: FormatNumberType.inputMoney,
-                          )
-                        : '',
+                            ? formatNumber(
+                                (payment.isNew
+                                        ? paymentTotal - creditTotal
+                                        : payment.amount) *
+                                    payment.exchangeRate,
+                                context,
+                                formatNumberType: FormatNumberType.inputMoney,
+                              )
+                            : '',
                     label: localization.convertedAmount,
                     onChanged: (value) {
                       _convertedAmount = parseDouble(value);
@@ -515,8 +512,8 @@ class _PaymentEditState extends State<PaymentEdit> {
         title: viewModel.payment.isNew
             ? localization.enterPayment
             : payment.isApplying == true
-            ? localization.applyPayment
-            : localization.editPayment,
+                ? localization.applyPayment
+                : localization.editPayment,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         onSavePressed: _onSavePressed,
         body: ScrollableListView(children: [body]),
@@ -561,8 +558,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final paymentable = widget.paymentable;
-    _amountController.text =
-        formatNumber(
+    _amountController.text = formatNumber(
           paymentable.amount,
           context,
           formatNumberType: FormatNumberType.inputMoney,
@@ -713,8 +709,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 final amount = widget.limit != null
                     ? min(widget.limit!, invoice.balanceOrAmount)
                     : invoice.balanceOrAmount;
-                _amountController.text =
-                    formatNumber(
+                _amountController.text = formatNumber(
                       amount,
                       context,
                       formatNumberType: FormatNumberType.inputMoney,
@@ -751,8 +746,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               },
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
-                _amountController.text =
-                    formatNumber(
+                _amountController.text = formatNumber(
                       credit.balanceOrAmount,
                       context,
                       formatNumberType: FormatNumberType.inputMoney,

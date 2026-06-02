@@ -161,10 +161,8 @@ abstract class HealthCheckQueueResponse
 
 abstract class HealthCheckLastErrorResponse
     implements
-        Built<
-          HealthCheckLastErrorResponse,
-          HealthCheckLastErrorResponseBuilder
-        > {
+        Built<HealthCheckLastErrorResponse,
+            HealthCheckLastErrorResponseBuilder> {
   factory HealthCheckLastErrorResponse() {
     return _$HealthCheckLastErrorResponse._(lastError: '');
   }

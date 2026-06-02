@@ -56,17 +56,16 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     _webClient
         .post(url, credentials.token, data: json.encode({'phone': _phone}))
         .then((dynamic data) {
-          setState(() {
-            _isLoading = false;
-            _showCode = true;
-          });
-        })
-        .catchError((dynamic error) {
-          setState(() {
-            _isLoading = false;
-          });
-          showErrorDialog(message: error);
-        });
+      setState(() {
+        _isLoading = false;
+        _showCode = true;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(message: error);
+    });
   }
 
   void _verifyCode() {
@@ -89,21 +88,20 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     _webClient
         .post(url, credentials.token, data: json.encode({'code': _code}))
         .then((dynamic data) {
-          setState(() {
-            _isLoading = false;
-          });
-          if (navigator.canPop()) {
-            navigator.pop();
-          }
-          showToast(localization!.verifiedPhoneNumber);
-          store.dispatch(RefreshData());
-        })
-        .catchError((dynamic error) {
-          setState(() {
-            _isLoading = false;
-          });
-          showErrorDialog(message: error);
-        });
+      setState(() {
+        _isLoading = false;
+      });
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
+      showToast(localization!.verifiedPhoneNumber);
+      store.dispatch(RefreshData());
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(message: error);
+    });
   }
 
   @override
@@ -224,21 +222,20 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
 
     _webClient
         .post(
-          '$url/sms_reset',
-          credentials.token,
-          data: json.encode({'email': widget.email ?? state.user.email}),
-        )
+      '$url/sms_reset',
+      credentials.token,
+      data: json.encode({'email': widget.email ?? state.user.email}),
+    )
         .then((dynamic data) {
-          setState(() {
-            _isLoading = false;
-          });
-        })
-        .catchError((dynamic error) {
-          setState(() {
-            _isLoading = false;
-          });
-          showErrorDialog(message: error);
-        });
+      setState(() {
+        _isLoading = false;
+      });
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(message: error);
+    });
   }
 
   void _verifyCode() {
@@ -266,33 +263,32 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
 
     _webClient
         .post(
-          url,
-          credentials.token,
-          data: json.encode({
-            'code': _code,
-            'email': widget.email ?? state.user.email,
-          }),
-        )
+      url,
+      credentials.token,
+      data: json.encode({
+        'code': _code,
+        'email': widget.email ?? state.user.email,
+      }),
+    )
         .then((dynamic data) {
-          setState(() {
-            _isLoading = false;
-          });
-          if (navigator.canPop()) {
-            navigator.pop();
-          }
-          showToast(
-            widget.email == null
-                ? localization!.verifiedPhoneNumber
-                : localization!.disabledTwoFactor,
-          );
-          store.dispatch(RefreshData());
-        })
-        .catchError((dynamic error) {
-          setState(() {
-            _isLoading = false;
-          });
-          showErrorDialog(message: error);
-        });
+      setState(() {
+        _isLoading = false;
+      });
+      if (navigator.canPop()) {
+        navigator.pop();
+      }
+      showToast(
+        widget.email == null
+            ? localization!.verifiedPhoneNumber
+            : localization!.disabledTwoFactor,
+      );
+      store.dispatch(RefreshData());
+    }).catchError((dynamic error) {
+      setState(() {
+        _isLoading = false;
+      });
+      showErrorDialog(message: error);
+    });
   }
 
   @override

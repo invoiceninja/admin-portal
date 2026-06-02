@@ -519,9 +519,8 @@ void handleRecurringInvoiceAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final recurringInvoice = recurringInvoices.first as InvoiceEntity;
-  final recurringInvoiceIds = recurringInvoices
-      .map((recurringInvoice) => recurringInvoice.id)
-      .toList();
+  final recurringInvoiceIds =
+      recurringInvoices.map((recurringInvoice) => recurringInvoice.id).toList();
   final client = state.clientState.get(recurringInvoice.clientId);
 
   switch (action) {
@@ -679,8 +678,8 @@ void handleRecurringInvoiceAction(
     case EntityAction.restore:
       final message = recurringInvoiceIds.length > 1
           ? localization!.restoredRecurringInvoices
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', recurringInvoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', recurringInvoiceIds.length.toString())
           : localization!.restoredRecurringInvoice;
       store.dispatch(
         RestoreRecurringInvoicesRequest(
@@ -692,8 +691,8 @@ void handleRecurringInvoiceAction(
     case EntityAction.archive:
       final message = recurringInvoiceIds.length > 1
           ? localization!.archivedRecurringInvoices
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', recurringInvoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', recurringInvoiceIds.length.toString())
           : localization!.archivedRecurringInvoice;
       store.dispatch(
         ArchiveRecurringInvoicesRequest(
@@ -705,8 +704,8 @@ void handleRecurringInvoiceAction(
     case EntityAction.delete:
       final message = recurringInvoiceIds.length > 1
           ? localization!.deletedRecurringInvoices
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', recurringInvoiceIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', recurringInvoiceIds.length.toString())
           : localization!.deletedRecurringInvoice;
       store.dispatch(
         DeleteRecurringInvoicesRequest(

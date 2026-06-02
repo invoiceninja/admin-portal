@@ -45,8 +45,7 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
         return;
       }
 
-      final sessionLength =
-          DateTime.now().millisecondsSinceEpoch -
+      final sessionLength = DateTime.now().millisecondsSinceEpoch -
           state.userCompanyState.lastUpdated;
 
       if (sessionLength > sessionTimeout) {

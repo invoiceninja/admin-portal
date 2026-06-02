@@ -110,53 +110,51 @@ class TaskEditVM {
             store.dispatch(
               SaveTaskRequest(completer: completer, task: task, action: action),
             );
-            return completer.future
-                .then((savedTask) {
-                  showToast(
-                    task.isNew
-                        ? localization!.createdTask
-                        : localization!.updatedTask,
-                  );
+            return completer.future.then((savedTask) {
+              showToast(
+                task.isNew
+                    ? localization!.createdTask
+                    : localization!.updatedTask,
+              );
 
-                  if (origTask.statusId != savedTask.statusId) {
-                    store.dispatch(UpdateKanban());
-                  }
+              if (origTask.statusId != savedTask.statusId) {
+                store.dispatch(UpdateKanban());
+              }
 
-                  if (state.prefState.isMobile) {
-                    store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
-                    if (task.isNew) {
-                      navigator!.pushReplacementNamed(TaskViewScreen.route);
-                    } else {
-                      navigator!.pop(savedTask);
-                    }
-                  } else {
-                    if (!state.prefState.isPreviewVisible) {
-                      store.dispatch(TogglePreviewSidebar());
-                    }
+              if (state.prefState.isMobile) {
+                store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
+                if (task.isNew) {
+                  navigator!.pushReplacementNamed(TaskViewScreen.route);
+                } else {
+                  navigator!.pop(savedTask);
+                }
+              } else {
+                if (!state.prefState.isPreviewVisible) {
+                  store.dispatch(TogglePreviewSidebar());
+                }
 
-                    viewEntity(entity: savedTask);
+                viewEntity(entity: savedTask);
 
-                    if (state.prefState.isEditorFullScreen(EntityType.task) &&
-                        state.prefState.editAfterSaving) {
-                      editEntity(entity: savedTask);
-                    }
-                  }
+                if (state.prefState.isEditorFullScreen(EntityType.task) &&
+                    state.prefState.editAfterSaving) {
+                  editEntity(entity: savedTask);
+                }
+              }
 
-                  if (action != null && action.isClientSide) {
-                    handleEntityAction(savedTask, action);
-                  } else if (action != null && action.requiresSecondRequest) {
-                    handleEntityAction(savedTask, action);
-                    viewEntity(entity: savedTask, force: true);
-                  }
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
+              if (action != null && action.isClientSide) {
+                handleEntityAction(savedTask, action);
+              } else if (action != null && action.requiresSecondRequest) {
+                handleEntityAction(savedTask, action);
+                viewEntity(entity: savedTask, force: true);
+              }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                context: navigatorKey.currentContext!,
+                builder: (BuildContext context) {
+                  return ErrorDialog(error);
+                },
+              );
+            });
           }
         });
       },

@@ -27,7 +27,7 @@ import 'bank_account_screen_vm.dart';
 
 class BankAccountScreen extends StatelessWidget {
   const BankAccountScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsBankAccounts';
 
@@ -130,31 +130,29 @@ class BankAccountScreen extends StatelessWidget {
     store.dispatch(StartSaving());
     webClient
         .post(
-          url,
-          credentials.token,
-          data: jsonEncode({
-            'context':
-                integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
-                ? {'return_url': ''}
-                : 'nordigen',
-          }),
-        )
+      url,
+      credentials.token,
+      data: jsonEncode({
+        'context': integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
+            ? {'return_url': ''}
+            : 'nordigen',
+      }),
+    )
         .then((dynamic response) {
-          store.dispatch(StopSaving());
+      store.dispatch(StopSaving());
 
-          String connectUrl = cleanApiUrl(credentials.url);
-          if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
-            connectUrl += '/yodlee/onboard/${response['hash']}';
-          } else {
-            connectUrl += '/nordigen/connect/${response['hash']}';
-          }
+      String connectUrl = cleanApiUrl(credentials.url);
+      if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
+        connectUrl += '/yodlee/onboard/${response['hash']}';
+      } else {
+        connectUrl += '/nordigen/connect/${response['hash']}';
+      }
 
-          launchUrl(Uri.parse(connectUrl));
-        })
-        .catchError((dynamic error) {
-          store.dispatch(StopSaving());
-          showErrorDialog(message: '$error');
-        });
+      launchUrl(Uri.parse(connectUrl));
+    }).catchError((dynamic error) {
+      store.dispatch(StopSaving());
+      showErrorDialog(message: '$error');
+    });
   }
 
   @override
@@ -258,11 +256,10 @@ class BankAccountScreen extends StatelessWidget {
                 SizedBox(width: kGutterWidth),
                 Expanded(
                   child: AppButton(
-                    label:
-                        (state.isHosted
-                                ? localization.rules
-                                : localization.manageRules)
-                            .toUpperCase(),
+                    label: (state.isHosted
+                            ? localization.rules
+                            : localization.manageRules)
+                        .toUpperCase(),
                     onPressed: () {
                       store.dispatch(
                         ViewSettings(section: kSettingsTransactionRules),

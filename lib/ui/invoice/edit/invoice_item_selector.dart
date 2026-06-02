@@ -136,8 +136,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
-    final showTabBar =
-        widget.showTasksAndExpenses &&
+    final showTabBar = widget.showTasksAndExpenses &&
         (company.isModuleEnabled(EntityType.task) ||
             company.isModuleEnabled(EntityType.expense));
 
@@ -148,36 +147,33 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       return entity.isActive && entity.matchesFilter(_filter);
     }).toList();
 
-    final tasks =
-        memoizedTaskList(
-          state.taskState.map,
-          _filterClientId,
-          state.userState.map,
-          state.clientState.map,
-          state.projectState.map,
-        ).where((entityId) {
-          final task = state.taskState.get(entityId!);
-          final client = state.clientState.get(task.clientId);
-          if (widget.excluded != null && widget.excluded!.contains(task)) {
-            return false;
-          }
-          return task.matchesFilter(_filter) ||
-              client.matchesNameOrEmail(_filter);
-        }).toList();
+    final tasks = memoizedTaskList(
+      state.taskState.map,
+      _filterClientId,
+      state.userState.map,
+      state.clientState.map,
+      state.projectState.map,
+    ).where((entityId) {
+      final task = state.taskState.get(entityId!);
+      final client = state.clientState.get(task.clientId);
+      if (widget.excluded != null && widget.excluded!.contains(task)) {
+        return false;
+      }
+      return task.matchesFilter(_filter) || client.matchesNameOrEmail(_filter);
+    }).toList();
 
-    final expenses =
-        memoizedClientExpenseList(
-          state.expenseState.map,
-          _filterClientId,
-        ).where((entityId) {
-          final expense = state.expenseState.get(entityId!);
-          final client = state.clientState.get(expense.clientId!);
-          if (widget.excluded != null && widget.excluded!.contains(expense)) {
-            return false;
-          }
-          return expense.matchesFilter(_filter) ||
-              client.matchesNameOrEmail(_filter);
-        }).toList();
+    final expenses = memoizedClientExpenseList(
+      state.expenseState.map,
+      _filterClientId,
+    ).where((entityId) {
+      final expense = state.expenseState.get(entityId!);
+      final client = state.clientState.get(expense.clientId!);
+      if (widget.excluded != null && widget.excluded!.contains(expense)) {
+        return false;
+      }
+      return expense.matchesFilter(_filter) ||
+          client.matchesNameOrEmail(_filter);
+    }).toList();
 
     Widget _productList() {
       return ScrollableListViewBuilder(
@@ -187,8 +183,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           final product = state.productState.map[entityId]!;
           return ProductListItem(
             isDismissible: false,
-            showCost:
-                widget.invoice.isPurchaseOrder &&
+            showCost: widget.invoice.isPurchaseOrder &&
                 company.enableProductCost &&
                 product.cost != 0,
             onCheckboxChanged: (checked) => _toggleEntity(product),
@@ -262,8 +257,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     final List<Widget> tabs = [
       Tab(
-        text:
-            localization.products +
+        text: localization.products +
             (products.isNotEmpty ? ' (${products.length})' : ''),
       ),
     ];
@@ -272,8 +266,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     if (company.isModuleEnabled(EntityType.task)) {
       tabs.add(
         Tab(
-          text:
-              localization.tasks +
+          text: localization.tasks +
               (tasks.isNotEmpty ? ' (${tasks.length})' : ''),
         ),
       );
@@ -283,8 +276,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     if (company.isModuleEnabled(EntityType.expense)) {
       tabs.add(
         Tab(
-          text:
-              localization.expenses +
+          text: localization.expenses +
               (expenses.isNotEmpty ? ' (${expenses.length})' : ''),
         ),
       );
@@ -346,12 +338,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                         : !state.prefState.isEditorFullScreen(
                             EntityType.invoice,
                           )
-                        ? IconButton(
-                            icon: Icon(Icons.add_circle_outline),
-                            tooltip: localization.createNew,
-                            onPressed: () => _addBlankItem(company),
-                          )
-                        : SizedBox(),
+                            ? IconButton(
+                                icon: Icon(Icons.add_circle_outline),
+                                tooltip: localization.createNew,
+                                onPressed: () => _addBlankItem(company),
+                              )
+                            : SizedBox(),
                   ],
                 ),
               ],

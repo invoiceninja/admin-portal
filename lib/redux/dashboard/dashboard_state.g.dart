@@ -70,19 +70,16 @@ class _$DashboardUIStateSerializer
         case 'settings':
           result.settings.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(DashboardUISettings),
-                )!
-                as DashboardUISettings,
+              value,
+              specifiedType: const FullType(DashboardUISettings),
+            )! as DashboardUISettings,
           );
           break;
         case 'selectedEntityType':
-          result.selectedEntityType =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(EntityType),
-                  )!
-                  as EntityType;
+          result.selectedEntityType = serializers.deserialize(
+            value,
+            specifiedType: const FullType(EntityType),
+          )! as EntityType;
           break;
         case 'selectedEntities':
           result.selectedEntities.replace(
@@ -96,12 +93,10 @@ class _$DashboardUIStateSerializer
           );
           break;
         case 'showSidebar':
-          result.showSidebar =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.showSidebar = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
       }
     }
@@ -199,92 +194,70 @@ class _$DashboardUISettingsSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'dateRange':
-          result.dateRange =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(DateRange),
-                  )!
-                  as DateRange;
+          result.dateRange = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateRange),
+          )! as DateRange;
           break;
         case 'customStartDate':
-          result.customStartDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customStartDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'customEndDate':
-          result.customEndDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customEndDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'enableComparison':
-          result.enableComparison =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.enableComparison = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'compareDateRange':
-          result.compareDateRange =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(DateRangeComparison),
-                  )!
-                  as DateRangeComparison;
+          result.compareDateRange = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateRangeComparison),
+          )! as DateRangeComparison;
           break;
         case 'compareCustomStartDate':
-          result.compareCustomStartDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.compareCustomStartDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'compareCustomEndDate':
-          result.compareCustomEndDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.compareCustomEndDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'offset':
-          result.offset =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.offset = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'currencyId':
-          result.currencyId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.currencyId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'includeTaxes':
-          result.includeTaxes =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.includeTaxes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'groupBy':
-          result.groupBy =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.groupBy = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -305,7 +278,8 @@ class _$DashboardUIState extends DashboardUIState {
 
   factory _$DashboardUIState([
     void Function(DashboardUIStateBuilder)? updates,
-  ]) => (DashboardUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (DashboardUIStateBuilder()..update(updates))._build();
 
   _$DashboardUIState._({
     required this.settings,
@@ -375,7 +349,8 @@ class DashboardUIStateBuilder
       _$this._selectedEntities ??= MapBuilder<EntityType?, BuiltList<String>>();
   set selectedEntities(
     MapBuilder<EntityType?, BuiltList<String>>? selectedEntities,
-  ) => _$this._selectedEntities = selectedEntities;
+  ) =>
+      _$this._selectedEntities = selectedEntities;
 
   bool? _showSidebar;
   bool? get showSidebar => _$this._showSidebar;
@@ -411,8 +386,7 @@ class DashboardUIStateBuilder
   _$DashboardUIState _build() {
     _$DashboardUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$DashboardUIState._(
             settings: settings.build(),
             selectedEntityType: BuiltValueNullFieldError.checkNotNull(
@@ -475,7 +449,8 @@ class _$DashboardUISettings extends DashboardUISettings {
 
   factory _$DashboardUISettings([
     void Function(DashboardUISettingsBuilder)? updates,
-  ]) => (DashboardUISettingsBuilder()..update(updates))._build();
+  ]) =>
+      (DashboardUISettingsBuilder()..update(updates))._build();
 
   _$DashboardUISettings._({
     required this.dateRange,
@@ -493,7 +468,8 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   DashboardUISettings rebuild(
     void Function(DashboardUISettingsBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   DashboardUISettingsBuilder toBuilder() =>
@@ -645,8 +621,7 @@ class DashboardUISettingsBuilder
   DashboardUISettings build() => _build();
 
   _$DashboardUISettings _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$DashboardUISettings._(
           dateRange: BuiltValueNullFieldError.checkNotNull(
             dateRange,

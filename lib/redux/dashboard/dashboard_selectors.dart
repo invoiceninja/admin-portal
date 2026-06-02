@@ -49,7 +49,8 @@ var memoizedChartInvoices = memo5(
     DashboardUISettings settings,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) => _chartInvoices(
+  ) =>
+      _chartInvoices(
     currencyMap: currencyMap,
     company: company!,
     settings: settings,
@@ -65,7 +66,8 @@ var memoizedChartOverviewInvoices = memo5(
     DashboardUISettings settings,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) => _chartInvoices(
+  ) =>
+      _chartInvoices(
     currencyMap: currencyMap,
     company: company!,
     settings: settings,
@@ -81,7 +83,8 @@ var memoizedPreviousChartInvoices = memo5(
     DashboardUISettings settings,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) => _chartInvoices(
+  ) =>
+      _chartInvoices(
     currencyMap: currencyMap,
     company: company!,
     settings: settings,
@@ -131,12 +134,10 @@ List<ChartDataGroup> _chartInvoices({
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      double amount = settings.includeTaxes
-          ? invoice.amount
-          : invoice.netAmount;
-      double balance = settings.includeTaxes
-          ? invoice.balance
-          : invoice.netBalance;
+      double amount =
+          settings.includeTaxes ? invoice.amount : invoice.netAmount;
+      double balance =
+          settings.includeTaxes ? invoice.balance : invoice.netBalance;
 
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
@@ -227,7 +228,8 @@ var memoizedChartQuotes = memo6(
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-  ) => chartQuotes(
+  ) =>
+      chartQuotes(
     currencyMap: currencyMap,
     company: company!,
     settings: settings,
@@ -245,7 +247,8 @@ var memoizedPreviousChartQuotes = memo6(
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-  ) => chartQuotes(
+  ) =>
+      chartQuotes(
     currencyMap: currencyMap,
     company: company!,
     settings: settings,
@@ -439,7 +442,8 @@ var memoizedChartPayments = memo6(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, PaymentEntity> paymentMap,
-  ) => chartPayments(
+  ) =>
+      chartPayments(
     currencyMap,
     company!,
     settings,
@@ -457,7 +461,8 @@ var memoizedPreviousChartPayments = memo6(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, PaymentEntity> paymentMap,
-  ) => chartPayments(
+  ) =>
+      chartPayments(
     currencyMap,
     company!,
     settings,
@@ -521,12 +526,12 @@ List<ChartDataGroup> chartPayments(
         final exchangeRate = payment.hasExchangeRate
             ? payment.exchangeRate
             : invoice.hasExchangeRate
-            ? invoice.exchangeRate
-            : getExchangeRate(
-                currencyMap,
-                fromCurrencyId: client.currencyId,
-                toCurrencyId: company.currencyId,
-              );
+                ? invoice.exchangeRate
+                : getExchangeRate(
+                    currencyMap,
+                    fromCurrencyId: client.currencyId,
+                    toCurrencyId: company.currencyId,
+                  );
         completedAmount *= exchangeRate;
         refunded *= exchangeRate;
       }
@@ -610,7 +615,8 @@ var memoizedChartTasks = memo8(
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, GroupEntity> groupMap,
-  ) => chartTasks(
+  ) =>
+      chartTasks(
     currencyMap,
     company!,
     settings,
@@ -632,7 +638,8 @@ var memoizedPreviousChartTasks = memo8(
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, GroupEntity> groupMap,
-  ) => chartTasks(
+  ) =>
+      chartTasks(
     currencyMap,
     company!,
     settings,
@@ -912,9 +919,8 @@ List<ChartDataGroup> chartExpenses(
       }
     }
 
-    double amount = settings.includeTaxes
-        ? expense.grossAmount
-        : expense.netAmount;
+    double amount =
+        settings.includeTaxes ? expense.grossAmount : expense.netAmount;
 
     if (expense.isDeleted! || date.isEmpty) {
       // skip it
@@ -924,8 +930,7 @@ List<ChartDataGroup> chartExpenses(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
-        final exchangeRate =
-            expense.hasExchangeRate &&
+        final exchangeRate = expense.hasExchangeRate &&
                 expense.invoiceCurrencyId == company.currencyId
             ? expense.exchangeRate
             : getExchangeRate(
@@ -1048,7 +1053,8 @@ var memoizedChartExpenses = memo5(
     DashboardUISettings settings,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
-  ) => chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap),
+  ) =>
+      chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap),
 );
 
 var memoizedPreviousChartExpenses = memo5(
@@ -1058,7 +1064,8 @@ var memoizedPreviousChartExpenses = memo5(
     DashboardUISettings settings,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
-  ) => chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap),
+  ) =>
+      chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap),
 );
 
 var memoizedRunningTasks = memo2(

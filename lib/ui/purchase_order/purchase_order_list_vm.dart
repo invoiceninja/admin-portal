@@ -73,24 +73,24 @@ class PurchaseOrderListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-    onEntityAction,
+        onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-         state: state,
-         invoiceList: invoiceList,
-         invoiceMap: invoiceMap,
-         clientMap: clientMap,
-         filter: filter,
-         isLoading: isLoading,
-         onRefreshed: onRefreshed,
-         tableColumns: tableColumns,
-         entityType: entityType,
-         onSortColumn: onSortColumn,
-         onClearMultiselect: onClearMultiselect,
-       );
+          state: state,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          onRefreshed: onRefreshed,
+          tableColumns: tableColumns,
+          entityType: entityType,
+          onSortColumn: onSortColumn,
+          onClearMultiselect: onClearMultiselect,
+        );
 
   static PurchaseOrderListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -122,14 +122,13 @@ class PurchaseOrderListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.purchaseOrderListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> purchaseOrders,
-            EntityAction action,
-          ) => handlePurchaseOrderAction(context, purchaseOrders, action),
-      tableColumns:
-          state.userCompany.settings.getTableColumns(
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> purchaseOrders,
+        EntityAction action,
+      ) =>
+          handlePurchaseOrderAction(context, purchaseOrders, action),
+      tableColumns: state.userCompany.settings.getTableColumns(
             EntityType.purchaseOrder,
           ) ??
           PurchaseOrderPresenter.getDefaultTableFields(state.userCompany),

@@ -15,7 +15,8 @@ var memoizedDropdownExpenseCategoryList = memo5(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     String categoryId,
-  ) => dropdownExpenseCategoriesSelector(
+  ) =>
+      dropdownExpenseCategoriesSelector(
     expenseCategoryMap,
     expenseCategoryList,
     staticState,
@@ -60,7 +61,8 @@ var memoizedFilteredExpenseCategoryList = memo4(
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltList<String> expenseCategoryList,
     ListUIState expenseCategoryListState,
-  ) => filteredExpenseCategoriesSelector(
+  ) =>
+      filteredExpenseCategoriesSelector(
     selectionState,
     expenseCategoryMap,
     expenseCategoryList,
@@ -101,9 +103,9 @@ List<String> filteredExpenseCategoriesSelector(
 var memoizedCalculateExpenseCategoryAmount = memo2(
   (String categoryId, BuiltMap<String, ExpenseEntity> expenseMap) =>
       calculateExpenseCategoryAmount(
-        categoryId: categoryId,
-        expenseMap: expenseMap,
-      ),
+    categoryId: categoryId,
+    expenseMap: expenseMap,
+  ),
 );
 
 double calculateExpenseCategoryAmount({
@@ -149,7 +151,8 @@ var memoizedTransactionStatsForExpenseCategory = memo2(
   (
     String companyGatewayId,
     BuiltMap<String, TransactionEntity> transactionMap,
-  ) => transactionStatsForExpenseCategory(companyGatewayId, transactionMap),
+  ) =>
+      transactionStatsForExpenseCategory(companyGatewayId, transactionMap),
 );
 
 EntityStats transactionStatsForExpenseCategory(

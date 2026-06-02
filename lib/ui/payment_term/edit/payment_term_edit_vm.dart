@@ -87,36 +87,34 @@ class PaymentTermEditVM {
               paymentTerm: paymentTerm,
             ),
           );
-          return completer.future
-              .then((savedPaymentTerm) {
-                showToast(
-                  paymentTerm!.isNew
-                      ? localization!.createdPaymentTerm
-                      : localization!.updatedPaymentTerm,
-                );
-                if (state.prefState.isMobile) {
-                  store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
-                  if (paymentTerm.isNew) {
-                    Navigator.of(
-                      navigatorKey.currentContext!,
-                    ).pushReplacementNamed(PaymentTermScreen.route);
-                  } else {
-                    Navigator.of(
-                      navigatorKey.currentContext!,
-                    ).pop(savedPaymentTerm);
-                  }
-                } else {
-                  viewEntity(entity: savedPaymentTerm, force: true);
-                }
-              })
-              .catchError((Object error) {
-                showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  },
-                );
-              });
+          return completer.future.then((savedPaymentTerm) {
+            showToast(
+              paymentTerm!.isNew
+                  ? localization!.createdPaymentTerm
+                  : localization!.updatedPaymentTerm,
+            );
+            if (state.prefState.isMobile) {
+              store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
+              if (paymentTerm.isNew) {
+                Navigator.of(
+                  navigatorKey.currentContext!,
+                ).pushReplacementNamed(PaymentTermScreen.route);
+              } else {
+                Navigator.of(
+                  navigatorKey.currentContext!,
+                ).pop(savedPaymentTerm);
+              }
+            } else {
+              viewEntity(entity: savedPaymentTerm, force: true);
+            }
+          }).catchError((Object error) {
+            showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              },
+            );
+          });
         });
       },
     );

@@ -20,7 +20,8 @@ var memoizedDropdownRecurringExpenseList = memo9(
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     StaticState staticState,
     String clientId,
-  ) => dropdownRecurringExpensesSelector(
+  ) =>
+      dropdownRecurringExpensesSelector(
     recurringExpenseMap,
     expenseList,
     clientMap,
@@ -84,7 +85,8 @@ var memoizedFilteredRecurringExpenseList = memo9(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     StaticState staticState,
-  ) => filteredRecurringExpensesSelector(
+  ) =>
+      filteredRecurringExpensesSelector(
     selectionState,
     expenseMap,
     clientMap,

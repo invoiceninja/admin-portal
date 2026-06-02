@@ -17,7 +17,8 @@ var memoizedDropdownTransactionList = memo10(
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     String clientId,
-  ) => dropdownTransactionsSelector(
+  ) =>
+      dropdownTransactionsSelector(
     transactionMap,
     transactionList,
     staticState,
@@ -82,7 +83,8 @@ var memoizedFilteredTransactionList = memo9(
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     ListUIState transactionListState,
-  ) => filteredTransactionsSelector(
+  ) =>
+      filteredTransactionsSelector(
     selectionState,
     transactionMap,
     transactionList,

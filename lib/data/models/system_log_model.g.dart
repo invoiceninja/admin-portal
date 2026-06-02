@@ -80,76 +80,58 @@ class _$SystemLogEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'company_id':
-          result.companyId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.companyId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'user_id':
-          result.userId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.userId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'client_id':
-          result.clientId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.clientId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'event_id':
-          result.eventId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.eventId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'category_id':
-          result.categoryId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.categoryId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'type_id':
-          result.typeId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.typeId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'log':
-          result.log =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.log = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -219,46 +201,37 @@ class _$EmailHistoryEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'recipients':
-          result.recipients =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.recipients = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'subject':
-          result.subject =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.subject = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'entity':
-          result.entity =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.entity = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'entity_id':
-          result.entityId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.entityId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'events':
           result.events.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(EmailHistoryEventEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(EmailHistoryEventEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -332,52 +305,40 @@ class _$EmailHistoryEventEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'recipient':
-          result.recipient =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.recipient = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'status':
-          result.status =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.status = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'delivery_message':
-          result.deliveryMessage =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.deliveryMessage = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'server':
-          result.server =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.server = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'server_ip':
-          result.serverIp =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.serverIp = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'date':
-          result.date =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.date = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -549,8 +510,7 @@ class SystemLogEntityBuilder
   SystemLogEntity build() => _build();
 
   _$SystemLogEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$SystemLogEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
             id,
@@ -617,7 +577,8 @@ class _$EmailHistoryEntity extends EmailHistoryEntity {
 
   factory _$EmailHistoryEntity([
     void Function(EmailHistoryEntityBuilder)? updates,
-  ]) => (EmailHistoryEntityBuilder()..update(updates))._build();
+  ]) =>
+      (EmailHistoryEntityBuilder()..update(updates))._build();
 
   _$EmailHistoryEntity._({
     required this.recipients,
@@ -629,7 +590,8 @@ class _$EmailHistoryEntity extends EmailHistoryEntity {
   @override
   EmailHistoryEntity rebuild(
     void Function(EmailHistoryEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   EmailHistoryEntityBuilder toBuilder() =>
@@ -731,8 +693,7 @@ class EmailHistoryEntityBuilder
   _$EmailHistoryEntity _build() {
     _$EmailHistoryEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$EmailHistoryEntity._(
             recipients: BuiltValueNullFieldError.checkNotNull(
               recipients,
@@ -791,7 +752,8 @@ class _$EmailHistoryEventEntity extends EmailHistoryEventEntity {
 
   factory _$EmailHistoryEventEntity([
     void Function(EmailHistoryEventEntityBuilder)? updates,
-  ]) => (EmailHistoryEventEntityBuilder()..update(updates))._build();
+  ]) =>
+      (EmailHistoryEventEntityBuilder()..update(updates))._build();
 
   _$EmailHistoryEventEntity._({
     required this.recipient,
@@ -804,7 +766,8 @@ class _$EmailHistoryEventEntity extends EmailHistoryEventEntity {
   @override
   EmailHistoryEventEntity rebuild(
     void Function(EmailHistoryEventEntityBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   EmailHistoryEventEntityBuilder toBuilder() =>
@@ -912,8 +875,7 @@ class EmailHistoryEventEntityBuilder
   EmailHistoryEventEntity build() => _build();
 
   _$EmailHistoryEventEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$EmailHistoryEventEntity._(
           recipient: BuiltValueNullFieldError.checkNotNull(
             recipient,

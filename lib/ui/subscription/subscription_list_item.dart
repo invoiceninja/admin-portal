@@ -49,8 +49,7 @@ class SubscriptionListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: subscription,
-      isSelected:
-          subscription.id ==
+      isSelected: subscription.id ==
           (uiState.isEditing
               ? subscriptionUIState.editing!.id
               : subscriptionUIState.selectedId),

@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditCardsAndBanks extends StatefulWidget {
   const CreditCardsAndBanks({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final CreditCardsAndBanksVM viewModel;
 

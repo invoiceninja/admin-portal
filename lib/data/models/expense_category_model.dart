@@ -148,18 +148,16 @@ abstract class ExpenseCategoryEntity extends Object
     required bool sortAscending,
   }) {
     int response = 0;
-    final ExpenseCategoryEntity? categoryA = sortAscending
-        ? this
-        : expenseCategory;
-    final ExpenseCategoryEntity? categoryB = sortAscending
-        ? expenseCategory
-        : this;
+    final ExpenseCategoryEntity? categoryA =
+        sortAscending ? this : expenseCategory;
+    final ExpenseCategoryEntity? categoryB =
+        sortAscending ? expenseCategory : this;
 
     switch (sortField) {
       case ExpenseCategoryFields.name:
         response = categoryA!.name.toLowerCase().compareTo(
-          categoryB!.name.toLowerCase(),
-        );
+              categoryB!.name.toLowerCase(),
+            );
         break;
       default:
         print(

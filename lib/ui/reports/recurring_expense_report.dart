@@ -59,7 +59,8 @@ var memoizedRecurringExpenseReport = memo9(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => recurringExpenseReport(
+  ) =>
+      recurringExpenseReport(
     userCompany!,
     reportsUIState,
     expenseMap,
@@ -91,8 +92,8 @@ ReportResult recurringExpenseReport(
   final reportSettings = userCompany.settings.reportSettings;
   final expenseReportSettings =
       reportSettings.containsKey(kReportRecurringExpense)
-      ? reportSettings[kReportRecurringExpense]!
-      : ReportSettingsEntity();
+          ? reportSettings[kReportRecurringExpense]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringExpenseReportFields.amount,
@@ -159,10 +160,8 @@ ReportResult recurringExpenseReport(
           value = expense.paymentDate;
           break;
         case RecurringExpenseReportFields.payment_type:
-          value =
-              staticState
-                  .paymentTypeMap[expense.paymentTypeId]
-                  ?.listDisplayName ??
+          value = staticState
+                  .paymentTypeMap[expense.paymentTypeId]?.listDisplayName ??
               '';
           break;
         case RecurringExpenseReportFields.tax_rate1:
@@ -236,7 +235,8 @@ ReportResult recurringExpenseReport(
         case RecurringExpenseReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(expense.entityState);
+          )!
+              .lookup(expense.entityState);
           break;
       }
 
@@ -281,9 +281,8 @@ ReportResult recurringExpenseReport(
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

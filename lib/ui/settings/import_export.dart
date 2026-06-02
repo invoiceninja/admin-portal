@@ -405,20 +405,19 @@ class _ImportExportState extends State<ImportExport>
 
                               webClient
                                   .post(
-                                    url,
-                                    credentials.token,
-                                    data: json.encode(data),
-                                  )
+                                url,
+                                credentials.token,
+                                data: json.encode(data),
+                              )
                                   .then((dynamic result) {
-                                    setState(() => _isExporting = false);
-                                    showMessageDialog(
-                                      message: localization.exportedData,
-                                    );
-                                  })
-                                  .catchError((dynamic error) {
-                                    setState(() => _isExporting = false);
-                                    showErrorDialog(message: '$error');
-                                  });
+                                setState(() => _isExporting = false);
+                                showMessageDialog(
+                                  message: localization.exportedData,
+                                );
+                              }).catchError((dynamic error) {
+                                setState(() => _isExporting = false);
+                                showErrorDialog(message: '$error');
+                              });
                             },
                           ),
                         ),
@@ -430,14 +429,13 @@ class _ImportExportState extends State<ImportExport>
                               iconData: Icons.schedule,
                               onPressed: () {
                                 createEntity(
-                                  entity:
-                                      ScheduleEntity(
-                                        ScheduleEntity.TEMPLATE_EMAIL_REPORT,
-                                      ).rebuild(
-                                        (b) => b
-                                          ..parameters.reportName =
-                                              _exportType.name,
-                                      ),
+                                  entity: ScheduleEntity(
+                                    ScheduleEntity.TEMPLATE_EMAIL_REPORT,
+                                  ).rebuild(
+                                    (b) => b
+                                      ..parameters.reportName =
+                                          _exportType.name,
+                                  ),
                                 );
                               },
                             ),
@@ -505,23 +503,22 @@ class _FileImportState extends State<_FileImport> {
 
     webClient
         .post(
-          url,
-          credentials.token,
-          multipartFiles: _multipartFiles.values.toList(),
-          //data: {},
-        )
+      url,
+      credentials.token,
+      multipartFiles: _multipartFiles.values.toList(),
+      //data: {},
+    )
         .then((dynamic result) {
-          setState(() {
-            _isLoading = false;
-            _multipartFiles.clear();
-          });
+      setState(() {
+        _isLoading = false;
+        _multipartFiles.clear();
+      });
 
-          showToast(localization!.startedImport);
-        })
-        .catchError((dynamic error) {
-          setState(() => _isLoading = false);
-          showErrorDialog(message: '$error');
-        });
+      showToast(localization!.startedImport);
+    }).catchError((dynamic error) {
+      setState(() => _isLoading = false);
+      showErrorDialog(message: '$error');
+    });
   }
 
   void uploadFile() {
@@ -546,33 +543,30 @@ class _FileImportState extends State<_FileImport> {
 
     setState(() => _isLoading = true);
 
-    webClient
-        .post(
-          url,
-          credentials.token,
-          multipartFiles: _multipartFiles.values.toList(),
-          data: {'import_type': widget.importType.toString()},
-        )
-        .then((dynamic result) {
-          setState(() {
-            _isLoading = false;
-            _multipartFiles.clear();
-          });
+    webClient.post(
+      url,
+      credentials.token,
+      multipartFiles: _multipartFiles.values.toList(),
+      data: {'import_type': widget.importType.toString()},
+    ).then((dynamic result) {
+      setState(() {
+        _isLoading = false;
+        _multipartFiles.clear();
+      });
 
-          if (widget.importType != ImportType.csv) {
-            showToast(localization!.startedImport);
-          } else {
-            final response = serializers.deserializeWith(
-              PreImportResponse.serializer,
-              result,
-            );
-            widget.onUploaded(response);
-          }
-        })
-        .catchError((dynamic error) {
-          setState(() => _isLoading = false);
-          showErrorDialog(message: '$error');
-        });
+      if (widget.importType != ImportType.csv) {
+        showToast(localization!.startedImport);
+      } else {
+        final response = serializers.deserializeWith(
+          PreImportResponse.serializer,
+          result,
+        );
+        widget.onUploaded(response);
+      }
+    }).catchError((dynamic error) {
+      setState(() => _isLoading = false);
+      showErrorDialog(message: '$error');
+    });
   }
 
   @override
@@ -587,23 +581,22 @@ class _FileImportState extends State<_FileImport> {
             isDense: true,
             value: widget.importType,
             onChanged: (dynamic value) => widget.onImportTypeChanged(value),
-            items:
-                [
-                      ImportType.csv,
-                      ImportType.json,
-                      ImportType.freshbooks,
-                      ImportType.invoice2go,
-                      ImportType.invoicely,
-                      ImportType.waveaccounting,
-                      ImportType.zoho,
-                    ]
-                    .map(
-                      (importType) => DropdownMenuItem<ImportType>(
-                        value: importType,
-                        child: Text(localization.lookup('$importType')),
-                      ),
-                    )
-                    .toList(),
+            items: [
+              ImportType.csv,
+              ImportType.json,
+              ImportType.freshbooks,
+              ImportType.invoice2go,
+              ImportType.invoicely,
+              ImportType.waveaccounting,
+              ImportType.zoho,
+            ]
+                .map(
+                  (importType) => DropdownMenuItem<ImportType>(
+                    value: importType,
+                    child: Text(localization.lookup('$importType')),
+                  ),
+                )
+                .toList(),
           ),
         ),
       ),
@@ -811,9 +804,8 @@ class __FileMapperState extends State<_FileMapper> {
         for (var i = 0; i < entry.value.fields1.length; i++)
           _FieldMapper(
             field1: entry.value.fields1[i],
-            field2: entry.value.fields2.length > i
-                ? entry.value.fields2[i]
-                : null,
+            field2:
+                entry.value.fields2.length > i ? entry.value.fields2[i] : null,
             available: entry.value.available,
             mappedTo: _mapping[entry.key]![i] ?? '',
             mapping: _mapping[entry.key],
@@ -922,14 +914,13 @@ class __FileMapperState extends State<_FileMapper> {
                   webClient
                       .post(url, credentials.token, data: json.encode(data))
                       .then((dynamic result) {
-                        setState(() => _isLoading = false);
-                        widget.onCancelPressed();
-                        showToast(localization.startedImport);
-                      })
-                      .catchError((dynamic error) {
-                        setState(() => _isLoading = false);
-                        showErrorDialog(message: '$error');
-                      });
+                    setState(() => _isLoading = false);
+                    widget.onCancelPressed();
+                    showToast(localization.startedImport);
+                  }).catchError((dynamic error) {
+                    setState(() => _isLoading = false);
+                    showErrorDialog(message: '$error');
+                  });
                 },
               ),
             ),
@@ -990,8 +981,7 @@ class _FieldMapper extends StatelessWidget {
           child: DropdownButtonFormField<String>(
             isExpanded: true,
             value: available.contains(mappedTo) ? mappedTo : null,
-            validator: (value) =>
-                (value ?? '').isNotEmpty &&
+            validator: (value) => (value ?? '').isNotEmpty &&
                     mapping!.values
                             .where((element) => element == value)
                             .length >

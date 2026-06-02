@@ -45,9 +45,8 @@ class _TaskEditState extends State<TaskEdit>
   void initState() {
     super.initState();
 
-    final index = widget.viewModel.taskTimeIndex != null
-        ? kTimesScreen
-        : kDetailsScreen;
+    final index =
+        widget.viewModel.taskTimeIndex != null ? kTimesScreen : kDetailsScreen;
 
     _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
@@ -197,8 +196,7 @@ class _BottomBar extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: LiveText(
                       () {
-                        var title =
-                            (isDesktop(context) && !useSidebarEditor
+                        var title = (isDesktop(context) && !useSidebarEditor
                                 ? (localization!.duration + ' ')
                                 : '') +
                             formatNumber(
@@ -209,8 +207,7 @@ class _BottomBar extends StatelessWidget {
 
                         final duration = task.calculateDuration();
                         if (duration.inSeconds > 0) {
-                          title +=
-                              ' • ' +
+                          title += ' • ' +
                               formatNumber(
                                 task.calculateAmount(
                                   taskRateSelector(
@@ -226,9 +223,8 @@ class _BottomBar extends StatelessWidget {
                                   )!,
                                 ),
                                 context,
-                                clientId: state.clientState
-                                    .get(task.clientId)
-                                    .id,
+                                clientId:
+                                    state.clientState.get(task.clientId).id,
                               )!;
                         }
 

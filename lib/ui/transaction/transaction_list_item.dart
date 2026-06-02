@@ -54,8 +54,7 @@ class TransactionListItem extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     return DismissibleEntity(
-      isSelected:
-          isDesktop(context) &&
+      isSelected: isDesktop(context) &&
           transaction.id ==
               (uiState.isEditing
                   ? transactionUIState.editing!.id
@@ -120,8 +119,7 @@ class TransactionListItem extends StatelessWidget {
                                 children: [
                                   if (transaction.participant.isNotEmpty &&
                                       transaction
-                                          .participantName
-                                          .isNotEmpty) ...[
+                                          .participantName.isNotEmpty) ...[
                                     Text(
                                       transaction.participant +
                                           ' • ' +
@@ -152,7 +150,8 @@ class TransactionListItem extends StatelessWidget {
                                         .textTheme
                                         .titleSmall!
                                         .copyWith(
-                                          color: textColor!.withOpacity(kLighterOpacity),
+                                          color: textColor!
+                                              .withOpacity(kLighterOpacity),
                                         ),
                                   ),
                                 ],
@@ -251,14 +250,15 @@ class TransactionListItem extends StatelessWidget {
                                 context,
                                 currencyId: transaction.currencyId,
                               )!,
-                              style: Theme.of(context).textTheme.titleMedium!
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
                                   .copyWith(
-                                    color:
-                                        TransactionStatusColors(
-                                          state.prefState.colorThemeModel,
-                                        ).colors[transaction.isDeposit
-                                            ? kTransactionStatusDeposit
-                                            : kTransactionStatusWithdrawal],
+                                    color: TransactionStatusColors(
+                                      state.prefState.colorThemeModel,
+                                    ).colors[transaction.isDeposit
+                                        ? kTransactionStatusDeposit
+                                        : kTransactionStatusWithdrawal],
                                   ),
                             ),
                           ],

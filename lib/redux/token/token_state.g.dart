@@ -70,12 +70,11 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -149,36 +148,30 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(TokenEntity),
-                )!
-                as TokenEntity,
+              value,
+              specifiedType: const FullType(TokenEntity),
+            )! as TokenEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -440,8 +433,7 @@ class TokenUIStateBuilder
   _$TokenUIState _build() {
     _$TokenUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$TokenUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

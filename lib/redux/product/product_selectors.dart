@@ -29,8 +29,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
   ClientEntity? client,
 }) {
   if (company.fillProducts) {
-    double cost =
-        (invoice.isPurchaseOrder &&
+    double cost = (invoice.isPurchaseOrder &&
             company.enableProductCost &&
             product!.cost != 0)
         ? product.cost
@@ -77,7 +76,8 @@ var memoizedDropdownProductList = memo3(
     BuiltMap<String, ProductEntity> productMap,
     BuiltList<String> productList,
     BuiltMap<String, UserEntity> userMap,
-  ) => dropdownProductsSelector(productMap, productList, userMap),
+  ) =>
+      dropdownProductsSelector(productMap, productList, userMap),
 );
 
 List<String> dropdownProductsSelector(
@@ -114,8 +114,8 @@ List<String?> productList(BuiltMap<String, ProductEntity> productMap) {
 
   list.sort(
     (idA, idB) => productMap[idA]!.listDisplayName.compareTo(
-      productMap[idB]!.listDisplayName,
-    ),
+          productMap[idB]!.listDisplayName,
+        ),
   );
 
   return list;
@@ -128,7 +128,8 @@ var memoizedFilteredProductList = memo5(
     BuiltList<String> productList,
     ListUIState productListState,
     BuiltMap<String, UserEntity> userMap,
-  ) => filteredProductsSelector(
+  ) =>
+      filteredProductsSelector(
     selectionState,
     productMap,
     productList,

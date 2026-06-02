@@ -86,60 +86,46 @@ class _$ReportsUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'report':
-          result.report =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.report = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'group':
-          result.group =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.group = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'selectedGroup':
-          result.selectedGroup =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.selectedGroup = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'chart':
-          result.chart =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.chart = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'subgroup':
-          result.subgroup =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.subgroup = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'customStartDate':
-          result.customStartDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customStartDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'customEndDate':
-          result.customEndDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customEndDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'filters':
           result.filters.replace(
@@ -317,8 +303,7 @@ class ReportsUIStateBuilder
   _$ReportsUIState _build() {
     _$ReportsUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$ReportsUIState._(
             report: BuiltValueNullFieldError.checkNotNull(
               report,

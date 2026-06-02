@@ -248,7 +248,8 @@ abstract class CompanyGatewayEntity extends Object
     CompanyGatewayEntity? companyGateway,
     String sortField,
     bool sortAscending,
-  ) => 0;
+  ) =>
+      0;
 
   @override
   bool matchesFilter(String? filter) {

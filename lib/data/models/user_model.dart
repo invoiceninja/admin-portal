@@ -248,13 +248,13 @@ abstract class UserEntity extends Object
     switch (sortField) {
       case UserFields.lastName:
         response = userA!.lastName.toLowerCase().compareTo(
-          userB!.lastName.toLowerCase(),
-        );
+              userB!.lastName.toLowerCase(),
+            );
         break;
       case UserFields.firstName:
         response = userA!.firstName.toLowerCase().compareTo(
-          userB!.firstName.toLowerCase(),
-        );
+              userB!.firstName.toLowerCase(),
+            );
         break;
       case UserFields.email:
         response = userA!.email.compareTo(userB!.email);

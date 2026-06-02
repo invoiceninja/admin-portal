@@ -102,41 +102,41 @@ class KanbanVM {
       },
       onSaveTaskPressed:
           (completer, taskId, statusId, description, statusOrder) {
-            TaskEntity task = state.taskState.get(taskId);
+        TaskEntity task = state.taskState.get(taskId);
+        task = task.rebuild(
+          (b) => b
+            ..description = description
+            ..statusOrder = task.isNew ? statusOrder : task.statusOrder
+            ..statusId = statusId,
+        );
+        if (task.isNew) {
+          final uiState = state.uiState;
+          if (uiState.filterEntityType == EntityType.client) {
+            task = task.rebuild(
+              (b) => b..clientId = uiState.filterEntityId,
+            );
+          } else if (uiState.filterEntityType == EntityType.project) {
+            final project = state.projectState.get(uiState.filterEntityId!);
             task = task.rebuild(
               (b) => b
-                ..description = description
-                ..statusOrder = task.isNew ? statusOrder : task.statusOrder
-                ..statusId = statusId,
+                ..projectId = uiState.filterEntityId
+                ..clientId = project.clientId,
             );
-            if (task.isNew) {
-              final uiState = state.uiState;
-              if (uiState.filterEntityType == EntityType.client) {
-                task = task.rebuild(
-                  (b) => b..clientId = uiState.filterEntityId,
-                );
-              } else if (uiState.filterEntityType == EntityType.project) {
-                final project = state.projectState.get(uiState.filterEntityId!);
-                task = task.rebuild(
-                  (b) => b
-                    ..projectId = uiState.filterEntityId
-                    ..clientId = project.clientId,
-                );
-              } else if (uiState.filterEntityType == EntityType.user) {
-                task = task.rebuild(
-                  (b) => b..assignedUserId = uiState.filterEntityId,
-                );
-              }
-            }
+          } else if (uiState.filterEntityType == EntityType.user) {
+            task = task.rebuild(
+              (b) => b..assignedUserId = uiState.filterEntityId,
+            );
+          }
+        }
 
-            store.dispatch(
-              SaveTaskRequest(
-                completer: completer,
-                task: task,
-                autoSelect: false,
-              ),
-            );
-          },
+        store.dispatch(
+          SaveTaskRequest(
+            completer: completer,
+            task: task,
+            autoSelect: false,
+          ),
+        );
+      },
     );
   }
 
@@ -144,9 +144,9 @@ class KanbanVM {
   final List<String> taskList;
   final List<String> filteredTaskList;
   final Function(Completer<Null>, List<String>?, Map<String, List<String>>?)
-  onBoardChanged;
+      onBoardChanged;
   final Function(Completer<TaskEntity>, String, String, String, int)
-  onSaveTaskPressed;
+      onSaveTaskPressed;
   final Function(Completer<TaskStatusEntity>, String, String, int)
-  onSaveStatusPressed;
+      onSaveStatusPressed;
 }

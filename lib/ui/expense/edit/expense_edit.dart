@@ -78,8 +78,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final client = state.clientState.get(expense.clientId ?? '');
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
-    final footer =
-        localization.expenseTotal +
+    final footer = localization.expenseTotal +
         ': ' +
         formatNumber(
           expense.grossAmount,
@@ -92,11 +91,11 @@ class _ExpenseEditState extends State<ExpenseEdit>
       entity: expense,
       title: expense.isRecurring
           ? (expense.isNew
-                ? localization.newRecurringExpense
-                : localization.editRecurringExpense)
+              ? localization.newRecurringExpense
+              : localization.editRecurringExpense)
           : (expense.isNew
-                ? localization.newExpense
-                : localization.editExpense),
+              ? localization.newExpense
+              : localization.editExpense),
       onCancelPressed: (context) => viewModel.onCancelPressed!(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: expense.getActions(

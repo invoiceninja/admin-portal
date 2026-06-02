@@ -258,8 +258,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                                         (b) => b
                                           ..taxConfig.regions[region] =
                                               taxDataRegion.rebuild(
-                                                (b) => b..taxAll = value,
-                                              ),
+                                            (b) => b..taxAll = value,
+                                          ),
                                       ),
                                     );
                                   },
@@ -316,8 +316,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                                             region == kTaxRegionUnitedStates
                                                 ? subregion
                                                 : (countryMap[subregion]
-                                                          ?.name ??
-                                                      subregion),
+                                                        ?.name ??
+                                                    subregion),
                                           ),
                                         ),
                                         Expanded(
@@ -329,8 +329,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                                     ),
                                     controlAffinity:
                                         ListTileControlAffinity.leading,
-                                    value:
-                                        taxDataRegion.taxAll ||
+                                    value: taxDataRegion.taxAll ||
                                         taxDataSubregion.applyTax,
                                     onChanged: taxDataRegion.taxAll
                                         ? null
@@ -341,15 +340,18 @@ class _TaxSettingsState extends State<TaxSettings> {
                                                   ..taxConfig.replace(
                                                     taxConfig.rebuild(
                                                       (b) => b
-                                                        ..regions[region] = taxDataRegion.rebuild(
+                                                        ..regions[region] =
+                                                            taxDataRegion
+                                                                .rebuild(
                                                           (b) => b
-                                                            ..subregions[subregion] =
+                                                            ..subregions[
+                                                                    subregion] =
                                                                 taxDataSubregion
                                                                     .rebuild(
-                                                                      (b) => b
-                                                                        ..applyTax =
-                                                                            value,
-                                                                    ),
+                                                              (b) => b
+                                                                ..applyTax =
+                                                                    value,
+                                                            ),
                                                         ),
                                                     ),
                                                   ),
@@ -364,11 +366,11 @@ class _TaxSettingsState extends State<TaxSettings> {
                                       context: context,
                                       builder: (context) =>
                                           _EditSubregionDialog(
-                                            viewModel: viewModel,
-                                            subregionConfig: taxDataSubregion,
-                                            region: region,
-                                            subregion: subregion,
-                                          ),
+                                        viewModel: viewModel,
+                                        subregionConfig: taxDataSubregion,
+                                        region: region,
+                                        subregion: subregion,
+                                      ),
                                     );
                                   },
                                   child: Text(localization.edit),
@@ -468,13 +470,13 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
               (b) => b
                 ..regions[widget.region] = taxConfigRegion.rebuild(
                   (b) => b
-                    ..subregions[widget.subregion] = taxConfigSubregion!
-                        .rebuild(
-                          (b) => b
-                            ..taxName = _taxName
-                            ..taxRate = _taxRate
-                            ..reducedTaxRate = _reducedTaxRate,
-                        ),
+                    ..subregions[widget.subregion] =
+                        taxConfigSubregion!.rebuild(
+                      (b) => b
+                        ..taxName = _taxName
+                        ..taxRate = _taxRate
+                        ..reducedTaxRate = _reducedTaxRate,
+                    ),
                 ),
             ),
           ),

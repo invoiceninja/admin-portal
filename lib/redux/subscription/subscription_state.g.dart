@@ -73,12 +73,11 @@ class _$SubscriptionStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -156,36 +155,30 @@ class _$SubscriptionUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(SubscriptionEntity),
-                )!
-                as SubscriptionEntity,
+              value,
+              specifiedType: const FullType(SubscriptionEntity),
+            )! as SubscriptionEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -202,7 +195,8 @@ class _$SubscriptionState extends SubscriptionState {
 
   factory _$SubscriptionState([
     void Function(SubscriptionStateBuilder)? updates,
-  ]) => (SubscriptionStateBuilder()..update(updates))._build();
+  ]) =>
+      (SubscriptionStateBuilder()..update(updates))._build();
 
   _$SubscriptionState._({required this.map, required this.list}) : super._();
   @override
@@ -321,7 +315,8 @@ class _$SubscriptionUIState extends SubscriptionUIState {
 
   factory _$SubscriptionUIState([
     void Function(SubscriptionUIStateBuilder)? updates,
-  ]) => (SubscriptionUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (SubscriptionUIStateBuilder()..update(updates))._build();
 
   _$SubscriptionUIState._({
     this.editing,
@@ -335,7 +330,8 @@ class _$SubscriptionUIState extends SubscriptionUIState {
   @override
   SubscriptionUIState rebuild(
     void Function(SubscriptionUIStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionUIStateBuilder toBuilder() =>
@@ -455,8 +451,7 @@ class SubscriptionUIStateBuilder
   _$SubscriptionUIState _build() {
     _$SubscriptionUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$SubscriptionUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

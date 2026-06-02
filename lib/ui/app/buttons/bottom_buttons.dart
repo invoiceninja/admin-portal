@@ -47,8 +47,7 @@ class BottomButtons extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: InkWell(
-                onTap:
-                    action1Enabled &&
+                onTap: action1Enabled &&
                         (!entity.isDeleted! || action1 == EntityAction.viewPdf)
                     ? () {
                         handleEntityAction(entity, action1);
@@ -63,7 +62,8 @@ class BottomButtons extends StatelessWidget {
                       localization.lookup('$action1'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: textColor.withOpacity(action1Enabled && !entity.isDeleted! ? 1 : .5),
+                        color: textColor.withOpacity(
+                            action1Enabled && !entity.isDeleted! ? 1 : .5),
                       ),
                     ),
                   ],
@@ -88,9 +88,8 @@ class BottomButtons extends StatelessWidget {
                         localization.lookup('$action2'),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: textColor.withOpacity(action2Enabled && !entity.isDeleted!
-                                ? 1
-                                : .6),
+                          color: textColor.withOpacity(
+                              action2Enabled && !entity.isDeleted! ? 1 : .6),
                         ),
                       ),
                     ],

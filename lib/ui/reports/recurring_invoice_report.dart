@@ -99,7 +99,8 @@ var memoizedRecurringInvoiceReport = memo8(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, ProjectEntity> projectMap,
     StaticState staticState,
-  ) => recurringInvoiceReport(
+  ) =>
+      recurringInvoiceReport(
     userCompany!,
     reportsUIState,
     invoiceMap,
@@ -129,8 +130,8 @@ ReportResult recurringInvoiceReport(
   final reportSettings = userCompany.settings.reportSettings;
   final invoiceReportSettings =
       reportSettings.containsKey(kReportRecurringInvoice)
-      ? reportSettings[kReportRecurringInvoice]!
-      : ReportSettingsEntity();
+          ? reportSettings[kReportRecurringInvoice]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringInvoiceReportFields.number,
@@ -412,7 +413,8 @@ ReportResult recurringInvoiceReport(
         case RecurringInvoiceReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(invoice.entityState);
+          )!
+              .lookup(invoice.entityState);
           break;
       }
 
@@ -465,9 +467,8 @@ ReportResult recurringInvoiceReport(
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

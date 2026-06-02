@@ -58,8 +58,8 @@ class _TaskSettingsState extends State<TaskSettings> {
       context,
       formatNumberType: FormatNumberType.inputMoney,
     )!;
-    _taskRoundToNearestController.text = (settings.taskRoundToNearest ?? 0)
-        .toString();
+    _taskRoundToNearestController.text =
+        (settings.taskRoundToNearest ?? 0).toString();
 
     _controllers.forEach(
       (dynamic controller) => controller.addListener(_onChanged),
@@ -173,8 +173,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                         ..taskRoundToNearest = value == true
                             ? 60 * 15
                             : value == false
-                            ? 1
-                            : null,
+                                ? 1
+                                : null,
                     ),
                   ),
                 ),
@@ -191,8 +191,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                 AppDropdownButton<int>(
                   value:
                       settings.isTaskRoundingCustom || _showCustomTaskRounding
-                      ? 0
-                      : settings.taskRoundToNearest,
+                          ? 0
+                          : settings.taskRoundToNearest,
                   labelText: localization.taskRoundToNearest,
                   onChanged: (value) {
                     final updated = settings.rebuild(
@@ -369,19 +369,18 @@ class _TaskSettingsState extends State<TaskSettings> {
                         );
                       }
                     : null,
-                items:
-                    [
-                          SettingsEntity.PORTAL_TASKS_INVOICED,
-                          SettingsEntity.PORTAL_TASKS_UNINVOICED,
-                          SettingsEntity.PORTAL_TASKS_ALL,
-                        ]
-                        .map(
-                          (value) => DropdownMenuItem(
-                            child: Text(localization.lookup(value)),
-                            value: value,
-                          ),
-                        )
-                        .toList(),
+                items: [
+                  SettingsEntity.PORTAL_TASKS_INVOICED,
+                  SettingsEntity.PORTAL_TASKS_UNINVOICED,
+                  SettingsEntity.PORTAL_TASKS_ALL,
+                ]
+                    .map(
+                      (value) => DropdownMenuItem(
+                        child: Text(localization.lookup(value)),
+                        value: value,
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),

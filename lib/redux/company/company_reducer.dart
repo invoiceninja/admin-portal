@@ -140,13 +140,13 @@ Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
               ..sortAscending = action.sortColumn == null
                   ? settings.sortAscending
                   : action.sortColumn == settings.sortColumn
-                  ? !settings.sortAscending
-                  : true
+                      ? !settings.sortAscending
+                      : true
               ..sortTotalsAscending = action.sortTotalsIndex == null
                   ? settings.sortTotalsAscending
                   : action.sortTotalsIndex == settings.sortTotalsIndex
-                  ? !settings.sortTotalsAscending
-                  : true
+                      ? !settings.sortTotalsAscending
+                      : true
               ..sortColumn = action.sortColumn ?? settings.sortColumn
               ..sortTotalsIndex =
                   action.sortTotalsIndex ?? settings.sortTotalsIndex,

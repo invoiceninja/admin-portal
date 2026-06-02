@@ -256,9 +256,8 @@ void handlePaymentTermAction(
   //final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final paymentTerm = paymentTerms.first as PaymentTermEntity;
-  final paymentTermIds = paymentTerms
-      .map((paymentTerm) => paymentTerm.id)
-      .toList();
+  final paymentTermIds =
+      paymentTerms.map((paymentTerm) => paymentTerm.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -267,8 +266,8 @@ void handlePaymentTermAction(
     case EntityAction.restore:
       final message = paymentTermIds.length > 1
           ? localization!.restoredPaymentTerms
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', paymentTermIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.restoredPaymentTerm;
       store.dispatch(
         RestorePaymentTermsRequest(
@@ -280,8 +279,8 @@ void handlePaymentTermAction(
     case EntityAction.archive:
       final message = paymentTermIds.length > 1
           ? localization!.archivedPaymentTerms
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', paymentTermIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.archivedPaymentTerm;
       store.dispatch(
         ArchivePaymentTermsRequest(
@@ -293,8 +292,8 @@ void handlePaymentTermAction(
     case EntityAction.delete:
       final message = paymentTermIds.length > 1
           ? localization!.deletedPaymentTerms
-                .replaceFirst(':value', ':count')
-                .replaceFirst(':count', paymentTermIds.length.toString())
+              .replaceFirst(':value', ':count')
+              .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.deletedPaymentTerm;
       store.dispatch(
         DeletePaymentTermsRequest(

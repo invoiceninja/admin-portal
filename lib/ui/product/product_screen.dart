@@ -118,8 +118,7 @@ class ProductScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.product)
           ? FloatingActionButton(
               heroTag: 'product_fab',

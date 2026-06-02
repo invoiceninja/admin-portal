@@ -79,7 +79,8 @@ var memoizedContactReport = memo5(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => contactReport(
+  ) =>
+      contactReport(
     userCompany!,
     reportsUIState,
     clientMap,
@@ -158,12 +159,12 @@ ReportResult contactReport(
           case ContactReportFields.currency:
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
-                '';
+                    '';
             break;
           case ContactReportFields.language:
             value =
                 staticState.languageMap[client.languageId]?.listDisplayName ??
-                '';
+                    '';
             break;
           case ContactReportFields.private_notes:
             value = client.privateNotes;
@@ -174,7 +175,7 @@ ReportResult contactReport(
           case ContactReportFields.industry:
             value =
                 staticState.industryMap[client.industryId]?.listDisplayName ??
-                '';
+                    '';
             break;
           case ContactReportFields.size:
             value = staticState.sizeMap[client.sizeId]?.listDisplayName ?? '';
@@ -242,10 +243,8 @@ ReportResult contactReport(
             value = client.shippingPostalCode;
             break;
           case ContactReportFields.shipping_country:
-            value =
-                staticState
-                    .countryMap[client.shippingCountryId]
-                    ?.listDisplayName ??
+            value = staticState
+                    .countryMap[client.shippingCountryId]?.listDisplayName ??
                 '';
             break;
           case ContactReportFields.phone:
@@ -313,9 +312,8 @@ ReportResult contactReport(
             value = convertTimestampToDateString(contact.lastLogin);
             break;
           case ContactReportFields.total:
-            value = contact.isPrimary
-                ? (client.balance + client.paidToDate)
-                : 0.0;
+            value =
+                contact.isPrimary ? (client.balance + client.paidToDate) : 0.0;
             break;
           case ContactReportFields.balance:
             value = contact.isPrimary ? client.balance : 0.0;
@@ -358,7 +356,8 @@ ReportResult contactReport(
           case ContactReportFields.record_state:
             value = AppLocalization.of(
               navigatorKey.currentContext!,
-            )!.lookup(client.entityState);
+            )!
+                .lookup(client.entityState);
             break;
         }
 
@@ -412,9 +411,8 @@ ReportResult contactReport(
         .map((item) => EnumUtils.parse(item))
         .toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }

@@ -14,7 +14,8 @@ var memoizedDropdownDesignList = memo3(
     BuiltMap<String, DesignEntity> designMap,
     BuiltList<String> designList,
     String clientId,
-  ) => dropdownDesignsSelector(designMap, designList, clientId),
+  ) =>
+      dropdownDesignsSelector(designMap, designList, clientId),
 );
 
 List<String> dropdownDesignsSelector(
@@ -46,7 +47,8 @@ var memoizedFilteredDesignList = memo3(
     BuiltMap<String, DesignEntity> designMap,
     BuiltList<String> designList,
     ListUIState designListState,
-  ) => filteredDesignsSelector(designMap, designList, designListState),
+  ) =>
+      filteredDesignsSelector(designMap, designList, designListState),
 );
 
 List<String> filteredDesignsSelector(

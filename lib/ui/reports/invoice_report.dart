@@ -109,7 +109,8 @@ var memoizedInvoiceReport = memo9(
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, PaymentEntity> paymentMap,
     StaticState staticState,
-  ) => invoiceReport(
+  ) =>
+      invoiceReport(
     userCompany!,
     reportsUIState,
     invoiceMap,
@@ -478,7 +479,8 @@ ReportResult invoiceReport(
         case InvoiceReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!.lookup(invoice.entityState);
+          )!
+              .lookup(invoice.entityState);
           break;
       }
 
@@ -534,13 +536,11 @@ ReportResult invoiceReport(
   );
 
   return ReportResult(
-    allColumns: InvoiceReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        InvoiceReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

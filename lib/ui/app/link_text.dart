@@ -41,9 +41,8 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
         child: Text(
           widget.entity!.listDisplayName,
           style: TextStyle(
-            decoration: _isHovered
-                ? TextDecoration.underline
-                : TextDecoration.none,
+            decoration:
+                _isHovered ? TextDecoration.underline : TextDecoration.none,
           ),
         ),
         onTap: () {
@@ -68,12 +67,12 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
 
 class LinkTextSpan extends TextSpan {
   LinkTextSpan({TextStyle? style, String? url, String? text})
-    : super(
-        style: style,
-        text: text ?? url,
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            launchUrl(Uri.parse(url!));
-          },
-      );
+      : super(
+          style: style,
+          text: text ?? url,
+          recognizer: TapGestureRecognizer()
+            ..onTap = () {
+              launchUrl(Uri.parse(url!));
+            },
+        );
 }

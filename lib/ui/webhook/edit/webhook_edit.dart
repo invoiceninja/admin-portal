@@ -96,9 +96,8 @@ class _WebhookEditState extends State<WebhookEdit> {
 
     return EditScaffold(
       entity: webhook,
-      title: webhook.isNew
-          ? localization!.newWebhook
-          : localization!.editWebhook,
+      title:
+          webhook.isNew ? localization!.newWebhook : localization!.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(
@@ -119,8 +118,8 @@ class _WebhookEditState extends State<WebhookEdit> {
                         keyboardType: TextInputType.url,
                         validator: (value) =>
                             value.isEmpty || value.trim().isEmpty
-                            ? localization.pleaseEnterAValue
-                            : null,
+                                ? localization.pleaseEnterAValue
+                                : null,
                       ),
                     ),
                     AppDropdownButton<String>(

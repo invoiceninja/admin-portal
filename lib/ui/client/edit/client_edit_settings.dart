@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditSettings extends StatefulWidget {
   const ClientEditSettings({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -120,30 +120,27 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           AppDropdownButton<String>(
             showBlank: true,
             labelText: localization.invoicePaymentTerms,
-            items:
-                memoizedDropdownPaymentTermList(
-                  state.paymentTermState.map,
-                  state.paymentTermState.list,
-                ).map((paymentTermId) {
-                  final paymentTerm =
-                      state.paymentTermState.map[paymentTermId]!;
-                  return DropdownMenuItem<String>(
-                    child: Text(
-                      paymentTerm.numDays == 0
-                          ? localization.dueOnReceipt
-                          : paymentTerm.name,
-                    ),
-                    value: paymentTerm.numDays.toString(),
-                  );
-                }).toList(),
+            items: memoizedDropdownPaymentTermList(
+              state.paymentTermState.map,
+              state.paymentTermState.list,
+            ).map((paymentTermId) {
+              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
+              return DropdownMenuItem<String>(
+                child: Text(
+                  paymentTerm.numDays == 0
+                      ? localization.dueOnReceipt
+                      : paymentTerm.name,
+                ),
+                value: paymentTerm.numDays.toString(),
+              );
+            }).toList(),
             value: '${client.settings.defaultPaymentTerms}',
             onChanged: (dynamic numDays) {
               viewModel.onChanged(
                 client.rebuild(
                   (b) => b
-                    ..settings.defaultPaymentTerms = numDays == null
-                        ? null
-                        : '$numDays',
+                    ..settings.defaultPaymentTerms =
+                        numDays == null ? null : '$numDays',
                 ),
               );
             },
@@ -152,30 +149,27 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           AppDropdownButton<String>(
             showBlank: true,
             labelText: localization.quoteValidUntil,
-            items:
-                memoizedDropdownPaymentTermList(
-                  state.paymentTermState.map,
-                  state.paymentTermState.list,
-                ).map((paymentTermId) {
-                  final paymentTerm =
-                      state.paymentTermState.map[paymentTermId]!;
-                  return DropdownMenuItem<String>(
-                    child: Text(
-                      paymentTerm.numDays == 0
-                          ? localization.dueOnReceipt
-                          : paymentTerm.name,
-                    ),
-                    value: paymentTerm.numDays.toString(),
-                  );
-                }).toList(),
+            items: memoizedDropdownPaymentTermList(
+              state.paymentTermState.map,
+              state.paymentTermState.list,
+            ).map((paymentTermId) {
+              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
+              return DropdownMenuItem<String>(
+                child: Text(
+                  paymentTerm.numDays == 0
+                      ? localization.dueOnReceipt
+                      : paymentTerm.name,
+                ),
+                value: paymentTerm.numDays.toString(),
+              );
+            }).toList(),
             value: '${client.settings.defaultValidUntil}',
             onChanged: (dynamic numDays) {
               viewModel.onChanged(
                 client.rebuild(
                   (b) => b
-                    ..settings.defaultValidUntil = numDays == null
-                        ? null
-                        : '$numDays',
+                    ..settings.defaultValidUntil =
+                        numDays == null ? null : '$numDays',
                 ),
               );
             },

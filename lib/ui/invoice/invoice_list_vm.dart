@@ -97,24 +97,24 @@ class InvoiceListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-    onEntityAction,
+        onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-         state: state,
-         invoiceList: invoiceList,
-         invoiceMap: invoiceMap,
-         clientMap: clientMap,
-         filter: filter,
-         isLoading: isLoading,
-         onRefreshed: onRefreshed,
-         tableColumns: tableColumns,
-         entityType: entityType,
-         onSortColumn: onSortColumn,
-         onClearMultiselect: onClearMultiselect,
-       );
+          state: state,
+          invoiceList: invoiceList,
+          invoiceMap: invoiceMap,
+          clientMap: clientMap,
+          filter: filter,
+          isLoading: isLoading,
+          onRefreshed: onRefreshed,
+          tableColumns: tableColumns,
+          entityType: entityType,
+          onSortColumn: onSortColumn,
+          onClearMultiselect: onClearMultiselect,
+        );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -149,15 +149,15 @@ class InvoiceListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.invoiceListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> invoices,
-            EntityAction action,
-          ) => handleInvoiceAction(context, invoices, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> invoices,
+        EntityAction action,
+      ) =>
+          handleInvoiceAction(context, invoices, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.invoice) ??
-          InvoicePresenter.getDefaultTableFields(state.userCompany),
+              InvoicePresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),
       onClearMultiselect: () => store.dispatch(ClearInvoiceMultiselect()),

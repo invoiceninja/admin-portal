@@ -60,8 +60,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.webhook
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 
@@ -289,7 +289,8 @@ WebhookState _setLoadedWebhook(
 WebhookState _setLoadedWebhooks(
   WebhookState webhookState,
   LoadWebhooksSuccess action,
-) => webhookState.loadWebhooks(action.webhooks);
+) =>
+    webhookState.loadWebhooks(action.webhooks);
 
 WebhookState _setLoadedCompany(
   WebhookState webhookState,

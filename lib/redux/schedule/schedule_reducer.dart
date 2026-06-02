@@ -67,8 +67,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.schedule
-        ? action.entityId
-        : selectedId,
+            ? action.entityId
+            : selectedId,
   ),
 ]);
 
@@ -310,7 +310,8 @@ ScheduleState _setLoadedSchedule(
 ScheduleState _setLoadedSchedules(
   ScheduleState scheduleState,
   LoadSchedulesSuccess action,
-) => scheduleState.loadSchedules(action.schedules);
+) =>
+    scheduleState.loadSchedules(action.schedules);
 
 ScheduleState _setLoadedCompany(
   ScheduleState scheduleState,

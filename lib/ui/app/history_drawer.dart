@@ -264,9 +264,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
                   entities: [entity!],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
-                          ..future.then<Null>((_) {
-                            Navigator.pop(navigatorKey.currentContext!);
-                          }))
+                        ..future.then<Null>((_) {
+                          Navigator.pop(navigatorKey.currentContext!);
+                        }))
                       : null,
                 );
               },

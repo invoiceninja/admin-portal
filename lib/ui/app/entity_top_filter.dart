@@ -35,14 +35,11 @@ class EntityTopFilter extends StatelessWidget {
     final filterEntityType = uiState.filterEntityType;
     final routeEntityType = uiState.entityTypeRoute;
 
-    final entityMap = filterEntityType != null
-        ? state.getEntityMap(filterEntityType)
-        : null;
-    final filterEntity = entityMap != null
-        ? entityMap[uiState.filterEntityId]
-        : null;
-    final relatedTypes =
-        filterEntityType?.relatedTypes
+    final entityMap =
+        filterEntityType != null ? state.getEntityMap(filterEntityType) : null;
+    final filterEntity =
+        entityMap != null ? entityMap[uiState.filterEntityId] : null;
+    final relatedTypes = filterEntityType?.relatedTypes
             .where((element) => state.company.isModuleEnabled(element))
             .toList() ??
         [];
@@ -60,8 +57,8 @@ class EntityTopFilter extends StatelessWidget {
               child: uiState.filterEntityType == EntityType.client
                   ? ClientViewScreen(isTopFilter: true)
                   : uiState.filterEntityType == EntityType.vendor
-                  ? VendorViewScreen(isTopFilter: true)
-                  : Placeholder(),
+                      ? VendorViewScreen(isTopFilter: true)
+                      : Placeholder(),
             ),
           AnimatedContainer(
             height: show ? 46 : 0,
@@ -178,8 +175,8 @@ class EntityTopFilter extends StatelessWidget {
                                       border: relatedTypes[i] == routeEntityType
                                           ? Border(
                                               bottom: BorderSide(
-                                                color:
-                                                    prefState.enableDarkMode ||
+                                                color: prefState
+                                                            .enableDarkMode ||
                                                         !state.hasAccentColor
                                                     ? state.accentColor!
                                                     : Colors.white,
@@ -306,12 +303,10 @@ class EntityTopFilterHeader extends StatelessWidget {
 
     final filterEntityType = uiState.filterEntityType;
 
-    final entityMap = filterEntityType != null
-        ? state.getEntityMap(filterEntityType)
-        : null;
-    final filterEntity = entityMap != null
-        ? entityMap[uiState.filterEntityId]!
-        : null;
+    final entityMap =
+        filterEntityType != null ? state.getEntityMap(filterEntityType) : null;
+    final filterEntity =
+        entityMap != null ? entityMap[uiState.filterEntityId]! : null;
 
     final backgroundColor = !prefState.enableDarkMode && state.hasAccentColor
         ? state.accentColor
@@ -442,27 +437,27 @@ class EntityTopFilterHeader extends StatelessWidget {
                             .toList()
                             .sublist(entityActions.length - remaining)
                             .map((action) {
-                              return PopupMenuItem<EntityAction>(
-                                value: action,
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      getEntityActionIcon(action),
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.secondary,
-                                    ),
-                                    SizedBox(width: 16.0),
-                                    Text(
-                                      AppLocalization.of(
-                                        context,
-                                      )!.lookup(action.toString()),
-                                    ),
-                                  ],
+                          return PopupMenuItem<EntityAction>(
+                            value: action,
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  getEntityActionIcon(action),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
                                 ),
-                              );
-                            })
-                            .toList();
+                                SizedBox(width: 16.0),
+                                Text(
+                                  AppLocalization.of(
+                                    context,
+                                  )!
+                                      .lookup(action.toString()),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList();
                       },
                     );
                   },

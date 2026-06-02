@@ -76,12 +76,11 @@ class _$ExpenseCategoryStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -159,36 +158,30 @@ class _$ExpenseCategoryUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ExpenseCategoryEntity),
-                )!
-                as ExpenseCategoryEntity,
+              value,
+              specifiedType: const FullType(ExpenseCategoryEntity),
+            )! as ExpenseCategoryEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -205,13 +198,15 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
 
   factory _$ExpenseCategoryState([
     void Function(ExpenseCategoryStateBuilder)? updates,
-  ]) => (ExpenseCategoryStateBuilder()..update(updates))._build();
+  ]) =>
+      (ExpenseCategoryStateBuilder()..update(updates))._build();
 
   _$ExpenseCategoryState._({required this.map, required this.list}) : super._();
   @override
   ExpenseCategoryState rebuild(
     void Function(ExpenseCategoryStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   ExpenseCategoryStateBuilder toBuilder() =>
@@ -327,7 +322,8 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
 
   factory _$ExpenseCategoryUIState([
     void Function(ExpenseCategoryUIStateBuilder)? updates,
-  ]) => (ExpenseCategoryUIStateBuilder()..update(updates))._build();
+  ]) =>
+      (ExpenseCategoryUIStateBuilder()..update(updates))._build();
 
   _$ExpenseCategoryUIState._({
     this.editing,
@@ -341,7 +337,8 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
   @override
   ExpenseCategoryUIState rebuild(
     void Function(ExpenseCategoryUIStateBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   ExpenseCategoryUIStateBuilder toBuilder() =>
@@ -462,8 +459,7 @@ class ExpenseCategoryUIStateBuilder
   _$ExpenseCategoryUIState _build() {
     _$ExpenseCategoryUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$ExpenseCategoryUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

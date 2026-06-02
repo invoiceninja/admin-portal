@@ -54,8 +54,7 @@ class DesignViewVM {
 
   factory DesignViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final design =
-        state.designState.map[state.designUIState.selectedId] ??
+    final design = state.designState.map[state.designUIState.selectedId] ??
         DesignEntity(id: state.designUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {

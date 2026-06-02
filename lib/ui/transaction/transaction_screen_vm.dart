@@ -57,12 +57,12 @@ class TransactionScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.transactionListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> transactions,
-            EntityAction action,
-          ) => handleTransactionAction(context, transactions, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> transactions,
+        EntityAction action,
+      ) =>
+          handleTransactionAction(context, transactions, action),
     );
   }
 }

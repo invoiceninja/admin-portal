@@ -27,8 +27,8 @@ class RecurringExpenseRepository {
       credentials.token,
     );
 
-    final ExpenseItemResponse recurringExpenseResponse = serializers
-        .deserializeWith(ExpenseItemResponse.serializer, response)!;
+    final ExpenseItemResponse recurringExpenseResponse =
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
 
     return recurringExpenseResponse.data;
   }
@@ -37,8 +37,8 @@ class RecurringExpenseRepository {
     final String url = credentials.url + '/recurring_expenses?';
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ExpenseListResponse recurringExpenseResponse = serializers
-        .deserializeWith(ExpenseListResponse.serializer, response)!;
+    final ExpenseListResponse recurringExpenseResponse =
+        serializers.deserializeWith(ExpenseListResponse.serializer, response)!;
 
     return recurringExpenseResponse.data;
   }
@@ -52,8 +52,7 @@ class RecurringExpenseRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url =
-        credentials.url +
+    final url = credentials.url +
         '/recurring_expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,
@@ -61,8 +60,8 @@ class RecurringExpenseRepository {
       data: json.encode({'ids': ids, 'action': action.toApiParam()}),
     );
 
-    final ExpenseListResponse recurringExpenseResponse = serializers
-        .deserializeWith(ExpenseListResponse.serializer, response)!;
+    final ExpenseListResponse recurringExpenseResponse =
+        serializers.deserializeWith(ExpenseListResponse.serializer, response)!;
 
     return recurringExpenseResponse.data.toList();
   }
@@ -106,8 +105,8 @@ class RecurringExpenseRepository {
       );
     }
 
-    final ExpenseItemResponse recurringExpenseResponse = serializers
-        .deserializeWith(ExpenseItemResponse.serializer, response)!;
+    final ExpenseItemResponse recurringExpenseResponse =
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
 
     return recurringExpenseResponse.data;
   }

@@ -103,16 +103,16 @@ class WebhookListVM {
       webhookMap: state.webhookState.map,
       isLoading: state.isLoading,
       filter: state.webhookUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> webhooks,
-            EntityAction action,
-          ) => handleWebhookAction(context, webhooks, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> webhooks,
+        EntityAction action,
+      ) =>
+          handleWebhookAction(context, webhooks, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.webhook) ??
-          WebhookPresenter.getDefaultTableFields(state.userCompany),
+              WebhookPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortWebhooks(field)),
       onClearMultielsect: () => store.dispatch(ClearWebhookMultiselect()),
     );

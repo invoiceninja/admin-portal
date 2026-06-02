@@ -104,19 +104,18 @@ Middleware<AppState> _archiveSubscription(SubscriptionRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.subscriptionIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.subscriptionIds,
+      EntityAction.archive,
+    )
         .then((List<SubscriptionEntity> subscriptions) {
-          store.dispatch(ArchiveSubscriptionsSuccess(subscriptions));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchiveSubscriptionsFailure(prevSubscriptions));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchiveSubscriptionsSuccess(subscriptions));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveSubscriptionsFailure(prevSubscriptions));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -130,19 +129,18 @@ Middleware<AppState> _deleteSubscription(SubscriptionRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.subscriptionIds,
-          EntityAction.delete,
-        )
+      store.state.credentials,
+      action.subscriptionIds,
+      EntityAction.delete,
+    )
         .then((List<SubscriptionEntity> subscriptions) {
-          store.dispatch(DeleteSubscriptionsSuccess(subscriptions));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeleteSubscriptionsFailure(prevSubscriptions));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeleteSubscriptionsSuccess(subscriptions));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteSubscriptionsFailure(prevSubscriptions));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -156,19 +154,18 @@ Middleware<AppState> _restoreSubscription(SubscriptionRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.subscriptionIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.subscriptionIds,
+      EntityAction.restore,
+    )
         .then((List<SubscriptionEntity> subscriptions) {
-          store.dispatch(RestoreSubscriptionsSuccess(subscriptions));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestoreSubscriptionsFailure(prevSubscriptions));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestoreSubscriptionsSuccess(subscriptions));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreSubscriptionsFailure(prevSubscriptions));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -180,19 +177,18 @@ Middleware<AppState> _saveSubscription(SubscriptionRepository repository) {
     repository
         .saveData(store.state.credentials, action.subscription!)
         .then((SubscriptionEntity subscription) {
-          if (action.subscription!.isNew) {
-            store.dispatch(AddSubscriptionSuccess(subscription));
-          } else {
-            store.dispatch(SaveSubscriptionSuccess(subscription));
-          }
+      if (action.subscription!.isNew) {
+        store.dispatch(AddSubscriptionSuccess(subscription));
+      } else {
+        store.dispatch(SaveSubscriptionSuccess(subscription));
+      }
 
-          action.completer!.complete(subscription);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveSubscriptionFailure(error));
-          action.completer!.completeError(error);
-        });
+      action.completer!.complete(subscription);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveSubscriptionFailure(error));
+      action.completer!.completeError(error);
+    });
 
     next(action);
   };
@@ -207,19 +203,18 @@ Middleware<AppState> _loadSubscription(SubscriptionRepository repository) {
     repository
         .loadItem(state.credentials, action.subscriptionId)
         .then((subscription) {
-          store.dispatch(LoadSubscriptionSuccess(subscription));
+      store.dispatch(LoadSubscriptionSuccess(subscription));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadSubscriptionFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadSubscriptionFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -231,27 +226,24 @@ Middleware<AppState> _loadSubscriptions(SubscriptionRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadSubscriptionsRequest());
-    repository
-        .loadList(state.credentials)
-        .then((data) {
-          store.dispatch(LoadSubscriptionsSuccess(data));
+    repository.loadList(state.credentials).then((data) {
+      store.dispatch(LoadSubscriptionsSuccess(data));
 
-          if (action!.completer != null) {
-            action.completer!.complete(null);
-          }
-          /*
+      if (action!.completer != null) {
+        action.completer!.complete(null);
+      }
+      /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadSubscriptionsFailure(error));
-          if (action!.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadSubscriptionsFailure(error));
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };

@@ -119,8 +119,7 @@ class ViewScaffold extends StatelessWidget {
                   if (isEditable && userCompany.canEditEntity(entity))
                     Builder(
                       builder: (context) {
-                        final isDisabled =
-                            state.uiState.isEditing &&
+                        final isDisabled = state.uiState.isEditing &&
                             state.uiState.mainRoute ==
                                 state.uiState.filterEntityType.toString();
 
@@ -143,17 +142,16 @@ class ViewScaffold extends StatelessWidget {
                     entityActions: entity.getActions(
                       userCompany: userCompany,
                       client: entity is BelongsToClient
-                          ? state.clientState.map[(entity as BelongsToClient)
-                                .clientId]
+                          ? state.clientState
+                              .map[(entity as BelongsToClient).clientId]
                           : null,
                     ),
                   ),
                 ],
         ),
         body: SafeArea(
-          child: entity.isNew
-              ? BlankScreen(localization!.noRecordSelected)
-              : body,
+          child:
+              entity.isNew ? BlankScreen(localization!.noRecordSelected) : body,
         ),
       ),
     );

@@ -102,8 +102,8 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               label: invoice.entityType == EntityType.credit
                   ? localization.creditTerms
                   : invoice.entityType == EntityType.quote
-                  ? localization.quoteTerms
-                  : localization.invoiceTerms,
+                      ? localization.quoteTerms
+                      : localization.invoiceTerms,
               hint: invoice.isOld
                   ? ''
                   : settings.getDefaultTerms(invoice.entityType),
@@ -115,8 +115,8 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               label: invoice.entityType == EntityType.credit
                   ? localization.creditFooter
                   : invoice.entityType == EntityType.quote
-                  ? localization.quoteFooter
-                  : localization.invoiceFooter,
+                      ? localization.quoteFooter
+                      : localization.invoiceFooter,
               hint: invoice.isOld
                   ? ''
                   : settings.getDefaultFooter(invoice.entityType),

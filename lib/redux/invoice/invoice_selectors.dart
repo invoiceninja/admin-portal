@@ -75,7 +75,8 @@ var memoizedDropdownInvoiceList = memo8(
     BuiltMap<String, UserEntity> userMap,
     List<String?> excludedIds,
     String? recurringPrefix,
-  ) => dropdownInvoiceSelector(
+  ) =>
+      dropdownInvoiceSelector(
     invoiceMap,
     clientMap,
     vendorMap,
@@ -143,7 +144,8 @@ var memoizedFilteredInvoiceList = memo10(
     ListUIState invoiceListState,
     BuiltMap<String, UserEntity> userMap,
     String? recurringPrefix,
-  ) => filteredInvoicesSelector(
+  ) =>
+      filteredInvoicesSelector(
     selectionState,
     invoiceMap,
     invoiceList,

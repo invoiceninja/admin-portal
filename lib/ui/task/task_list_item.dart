@@ -64,19 +64,19 @@ class TaskListItem extends StatelessWidget {
     final statusLabel = task.isInvoiced
         ? localization!.invoiced
         : task.isRunning
-        ? localization!.running
-        : status.name.isNotEmpty
-        ? status.name
-        : localization!.logged;
+            ? localization!.running
+            : status.name.isNotEmpty
+                ? status.name
+                : localization!.logged;
     final statusColor = task.isInvoiced
         ? state.prefState.colorThemeModel!.colorSuccess
         : task.isRunning
-        ? state.prefState.colorThemeModel!.colorInfo
-        : status.color.isNotEmpty && status.color != '#fff'
-        ? convertHexStringToColor(status.color)
-        : TaskStatusColors(
-            state.prefState.colorThemeModel,
-          ).colors[task.calculateStatusId];
+            ? state.prefState.colorThemeModel!.colorInfo
+            : status.color.isNotEmpty && status.color != '#fff'
+                ? convertHexStringToColor(status.color)
+                : TaskStatusColors(
+                    state.prefState.colorThemeModel,
+                  ).colors[task.calculateStatusId];
 
     String subtitle = client.displayName;
     if (task.projectId.isNotEmpty) {
@@ -107,17 +107,16 @@ class TaskListItem extends StatelessWidget {
             onPressed: task.isInvoiced
                 ? null
                 : () => handleEntityAction(
-                    task,
-                    task.isRunning ? EntityAction.stop : EntityAction.start,
-                  ),
+                      task,
+                      task.isRunning ? EntityAction.stop : EntityAction.start,
+                    ),
             visualDensity: VisualDensity.compact,
           );
 
     return DismissibleEntity(
       showMultiselect: this.showCheckbox,
       isDismissible: isDismissible,
-      isSelected:
-          isDesktop(context) &&
+      isSelected: isDesktop(context) &&
           task.id ==
               (uiState.isEditing
                   ? taskUIState.editing!.id
@@ -201,9 +200,12 @@ class TaskListItem extends StatelessWidget {
                                 subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleSmall!
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor!.withOpacity(kLighterOpacity),
+                                      color: textColor!
+                                          .withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],

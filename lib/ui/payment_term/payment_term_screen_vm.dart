@@ -57,12 +57,12 @@ class PaymentTermScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.paymentTermListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> paymentTerms,
-            EntityAction action,
-          ) => handlePaymentTermAction(context, paymentTerms, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> paymentTerms,
+        EntityAction action,
+      ) =>
+          handlePaymentTermAction(context, paymentTerms, action),
     );
   }
 }

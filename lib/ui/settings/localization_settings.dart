@@ -29,7 +29,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class LocalizationSettings extends StatefulWidget {
   const LocalizationSettings({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   final LocalizationSettingsVM viewModel;
 
@@ -111,9 +111,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     final settings = viewModel.settings;
     final company = viewModel.company;
     final translations = settings.translations ?? BuiltMap<String, String>();
-    final customLabels = kCustomLabels
-        .where((key) => !translations.keys.contains(key))
-        .toList();
+    final customLabels =
+        kCustomLabels.where((key) => !translations.keys.contains(key)).toList();
     customLabels.sort(
       (a, b) => localization.lookup(a).compareTo(localization.lookup(b)),
     );
@@ -149,8 +148,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     entityId: settings.currencyId,
                     onSelected: (SelectableEntity? currency) =>
                         viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..currencyId = currency?.id),
-                        ),
+                      settings.rebuild((b) => b..currencyId = currency?.id),
+                    ),
                   ),
                   BoolDropdownButton(
                     value: settings.showCurrencyCode,
@@ -158,16 +157,14 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     onChanged: (value) => viewModel.onSettingsChanged(
                       settings.rebuild((b) => b..showCurrencyCode = value),
                     ),
-                    enabledLabel:
-                        '${localization.code}: ' +
+                    enabledLabel: '${localization.code}: ' +
                         formatNumber(
                           1000,
                           context,
                           showCurrencyCode: true,
                           currencyId: settings.currencyId,
                         )!,
-                    disabledLabel:
-                        '${localization.symbol}: ' +
+                    disabledLabel: '${localization.symbol}: ' +
                         formatNumber(
                           1000,
                           context,
@@ -188,10 +185,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         entityId: settings.languageId,
                         onSelected: (SelectableEntity? language) =>
                             viewModel.onSettingsChanged(
-                              settings.rebuild(
-                                (b) => b..languageId = language?.id,
-                              ),
-                            ),
+                          settings.rebuild(
+                            (b) => b..languageId = language?.id,
+                          ),
+                        ),
                       ),
                     ),
                   EntityDropdown(
@@ -203,8 +200,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     entityId: settings.timezoneId,
                     onSelected: (SelectableEntity? timezone) =>
                         viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..timezoneId = timezone?.id),
-                        ),
+                      settings.rebuild((b) => b..timezoneId = timezone?.id),
+                    ),
                   ),
                   EntityDropdown(
                     entityType: EntityType.dateFormat,
@@ -215,10 +212,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     entityId: settings.dateFormatId,
                     onSelected: (SelectableEntity? dateFormat) =>
                         viewModel.onSettingsChanged(
-                          settings.rebuild(
-                            (b) => b..dateFormatId = dateFormat?.id,
-                          ),
-                        ),
+                      settings.rebuild(
+                        (b) => b..dateFormatId = dateFormat?.id,
+                      ),
+                    ),
                   ),
                   BoolDropdownButton(
                     iconData: MdiIcons.clock,
@@ -289,12 +286,12 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                           .map(
                             (id, month) =>
                                 MapEntry<String, DropdownMenuItem<String>>(
-                                  id,
-                                  DropdownMenuItem<String>(
-                                    child: Text(localization.lookup(month)),
-                                    value: id,
-                                  ),
-                                ),
+                              id,
+                              DropdownMenuItem<String>(
+                                child: Text(localization.lookup(month)),
+                                value: id,
+                              ),
+                            ),
                           )
                           .values
                           .toList(),
@@ -373,11 +370,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                   },
                                 ))!;
                                 if (countryId.isNotEmpty) {
-                                  final key =
-                                      'country_' +
-                                      state
-                                          .staticState
-                                          .countryMap[countryId]!
+                                  final key = 'country_' +
+                                      state.staticState.countryMap[countryId]!
                                           .name;
                                   viewModel.onSettingsChanged(
                                     settings.rebuild(

@@ -193,7 +193,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
       final millisecondsSinceLastUpdate =
           DateTime.now().millisecondsSinceEpoch -
-          state.userCompanyState.lastUpdated;
+              state.userCompanyState.lastUpdated;
 
       if (millisecondsSinceLastUpdate > kMillisecondsToTimerRefreshData) {
         store.dispatch(RefreshData());
@@ -359,9 +359,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
             return StyledToast(
               locale: locale,
               duration: Duration(seconds: 4),
-              backgroundColor: state.prefState.enableDarkMode
-                  ? Colors.white
-                  : Colors.black,
+              backgroundColor:
+                  state.prefState.enableDarkMode ? Colors.white : Colors.black,
               textStyle: TextStyle(
                 color: state.prefState.enableDarkMode
                     ? Colors.black87
@@ -380,13 +379,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           ),
                           alwaysUse24HourFormat:
                               state.company.settings.enableMilitaryTime ??
-                              false,
+                                  false,
                         ),
                         child: child!,
                       );
                     },
-                    scrollBehavior:
-                        state.prefState.enableTouchEvents &&
+                    scrollBehavior: state.prefState.enableTouchEvents &&
                             state.prefState.isDesktop
                         ? MyCustomScrollBehavior()
                         : null,
@@ -408,8 +406,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ],
                     home:
                         state.prefState.requireAuthentication && !_authenticated
-                        ? LockScreen(onAuthenticatePressed: _authenticate)
-                        : InitScreen(),
+                            ? LockScreen(onAuthenticatePressed: _authenticate)
+                            : InitScreen(),
                     locale: locale,
                     /*
                   theme: state.prefState.enableDarkMode
@@ -475,9 +473,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                                 : const Color(0xFF5dabf4),
                             scaffoldBackgroundColor: const Color(0xFFF3F4F6),
                             tabBarTheme: TabBarTheme(
-                              labelColor: hasAccentColor
-                                  ? Colors.white
-                                  : Colors.black,
+                              labelColor:
+                                  hasAccentColor ? Colors.white : Colors.black,
                               unselectedLabelColor: hasAccentColor
                                   ? Colors.white.withOpacity(.65)
                                   : Colors.black.withOpacity(.65),
@@ -486,13 +483,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               color: hasAccentColor ? null : accentColor,
                             ),
                             appBarTheme: AppBarTheme(
-                              backgroundColor: hasAccentColor
-                                  ? accentColor
-                                  : Colors.white,
+                              backgroundColor:
+                                  hasAccentColor ? accentColor : Colors.white,
                               iconTheme: IconThemeData(
-                                color: hasAccentColor
-                                    ? Colors.white
-                                    : accentColor,
+                                color:
+                                    hasAccentColor ? Colors.white : accentColor,
                               ),
                               titleTextStyle: TextStyle(
                                 fontSize: 20,
@@ -780,8 +775,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-    PointerDeviceKind.touch,
-    PointerDeviceKind.mouse,
-    PointerDeviceKind.trackpad,
-  };
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
 }

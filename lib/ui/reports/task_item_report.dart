@@ -61,7 +61,8 @@ var memoizedTaskItemReport = memo10(
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, ProjectEntity> projectMap,
     StaticState staticState,
-  ) => taskItemReport(
+  ) =>
+      taskItemReport(
     userCompany!,
     reportsUIState,
     taskMap,
@@ -163,9 +164,8 @@ ReportResult taskItemReport(
             } else {
               final timestamp =
                   (taskItem.startDate!.millisecondsSinceEpoch / 1000).floor();
-              value = timestamp > 0
-                  ? convertTimestampToDateString(timestamp)
-                  : '';
+              value =
+                  timestamp > 0 ? convertTimestampToDateString(timestamp) : '';
             }
             break;
           case TaskItemReportFields.end_time:
@@ -174,9 +174,8 @@ ReportResult taskItemReport(
             } else {
               final timestamp =
                   (taskItem.endDate!.millisecondsSinceEpoch / 1000).floor();
-              value = timestamp > 0
-                  ? convertTimestampToDateString(timestamp)
-                  : '';
+              value =
+                  timestamp > 0 ? convertTimestampToDateString(timestamp) : '';
             }
             break;
           case TaskItemReportFields.description:
@@ -269,7 +268,8 @@ ReportResult taskItemReport(
           case TaskItemReportFields.record_state:
             value = AppLocalization.of(
               navigatorKey.currentContext!,
-            )!.lookup(task.entityState);
+            )!
+                .lookup(task.entityState);
             break;
           case TaskItemReportFields.is_invoiced:
             value = task.isInvoiced;
@@ -317,13 +317,11 @@ ReportResult taskItemReport(
   );
 
   return ReportResult(
-    allColumns: TaskItemReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        TaskItemReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

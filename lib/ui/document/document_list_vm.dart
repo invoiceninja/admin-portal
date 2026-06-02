@@ -115,18 +115,18 @@ class DocumentListVM {
       documentMap: state.documentState.map,
       isLoading: state.isLoading,
       filter: state.documentUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> documents,
-            EntityAction action,
-          ) => handleDocumentAction(context, documents, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> documents,
+        EntityAction action,
+      ) =>
+          handleDocumentAction(context, documents, action),
       onRefreshed: (context, clearData) => _handleRefresh(context, clearData),
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
       onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.document) ??
-          DocumentPresenter.getDefaultTableFields(state.userCompany),
+              DocumentPresenter.getDefaultTableFields(state.userCompany),
     );
   }
 
@@ -139,7 +139,7 @@ class DocumentListVM {
   final bool isLoading;
   final Function(BuildContext, bool) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)
-  onEntityAction;
+      onEntityAction;
   final Function(String) onSortColumn;
   final Function onClearMultielsect;
 }

@@ -344,7 +344,8 @@ ProductState _setLoadedProduct(
 ProductState _setLoadedProducts(
   ProductState productState,
   LoadProductsSuccess action,
-) => productState.loadProducts(action.products);
+) =>
+    productState.loadProducts(action.products);
 
 ProductState _setLoadedCompany(
   ProductState productState,

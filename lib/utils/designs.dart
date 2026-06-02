@@ -50,10 +50,9 @@ void loadDesign({
   webClient
       .post(url, credentials.token, data: json.encode(data), rawResponse: true)
       .then((dynamic response) {
-        onComplete(response);
-      })
-      .catchError((dynamic error) {
-        showErrorDialog(message: '$error');
-        onComplete(null);
-      });
+    onComplete(response);
+  }).catchError((dynamic error) {
+    showErrorDialog(message: '$error');
+    onComplete(null);
+  });
 }

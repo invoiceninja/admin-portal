@@ -47,9 +47,8 @@ class _CreditEditState extends State<CreditEdit>
     final showEInvoice =
         invoice.isOld && state.company.settings.enableEInvoice == true;
 
-    final index = viewModel.invoiceItemIndex != null
-        ? kItemScreen
-        : kDetailsScreen;
+    final index =
+        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
     _controller = TabController(
       vsync: this,
       length: showEInvoice ? 6 : 5,

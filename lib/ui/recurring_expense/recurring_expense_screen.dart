@@ -21,7 +21,7 @@ import 'recurring_expense_screen_vm.dart';
 
 class RecurringExpenseScreen extends StatelessWidget {
   const RecurringExpenseScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/recurring_expense';
 
@@ -146,8 +146,7 @@ class RecurringExpenseScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterRecurringExpensesByCustom4(value)),
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.recurringExpense)
           ? FloatingActionButton(
               heroTag: 'recurring_expense_fab',

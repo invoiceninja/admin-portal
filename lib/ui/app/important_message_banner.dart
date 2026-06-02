@@ -130,20 +130,19 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                                 store.dispatch(StartSaving());
                                 WebClient()
                                     .put(
-                                      url,
-                                      credentials.token,
-                                      data: json.encode(data),
-                                    )
+                                  url,
+                                  credentials.token,
+                                  data: json.encode(data),
+                                )
                                     .then((dynamic _) {
-                                      store.dispatch(StopSaving());
-                                      WebUtils.reloadBrowser();
-                                    })
-                                    .catchError((Object error) {
-                                      store.dispatch(StopSaving());
-                                      showErrorDialog(
-                                        message: error as String?,
-                                      );
-                                    });
+                                  store.dispatch(StopSaving());
+                                  WebUtils.reloadBrowser();
+                                }).catchError((Object error) {
+                                  store.dispatch(StopSaving());
+                                  showErrorDialog(
+                                    message: error as String?,
+                                  );
+                                });
                               },
                             );
                           }
@@ -168,8 +167,8 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         onPressed: () {
                           final layout =
                               widget.suggestedLayout == AppLayout.desktop
-                              ? AppLayout.mobile
-                              : AppLayout.desktop;
+                                  ? AppLayout.mobile
+                                  : AppLayout.desktop;
                           store.dispatch(
                             UpdateUserPreferences(appLayout: layout),
                           );

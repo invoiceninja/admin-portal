@@ -58,17 +58,17 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
     required ClientEntity? client,
     required VendorEntity? vendor,
     required Function(BuildContext, EmailTemplate, String, String, String)
-    onSendPressed,
+        onSendPressed,
   }) : super(
-         state: state,
-         isLoading: isLoading,
-         isSaving: isSaving,
-         company: company,
-         invoice: invoice,
-         client: client,
-         vendor: vendor,
-         onSendPressed: onSendPressed,
-       );
+          state: state,
+          isLoading: isLoading,
+          isSaving: isSaving,
+          company: company,
+          invoice: invoice,
+          client: client,
+          vendor: vendor,
+          onSendPressed: onSendPressed,
+        );
 
   factory EmailPurchaseOrderVM.fromStore(
     Store<AppState> store,

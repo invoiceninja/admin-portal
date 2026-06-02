@@ -20,10 +20,10 @@ class EntityStateLabel extends StatelessWidget {
             style: TextStyle(color: Colors.red, fontSize: 14.0),
           )
         : entity!.isArchived
-        ? Text(
-            localization!.archived,
-            style: TextStyle(color: Colors.orange, fontSize: 14.0),
-          )
-        : Container();
+            ? Text(
+                localization!.archived,
+                style: TextStyle(color: Colors.orange, fontSize: 14.0),
+              )
+            : Container();
   }
 }

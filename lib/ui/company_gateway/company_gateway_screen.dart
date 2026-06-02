@@ -26,7 +26,7 @@ import 'company_gateway_screen_vm.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
   const CompanyGatewayScreen({Key? key, required this.viewModel})
-    : super(key: key);
+      : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsCompanyGateways';
 
@@ -141,22 +141,22 @@ class CompanyGatewayScreen extends StatelessWidget {
       ),
       floatingActionButton:
           state.prefState.isMobile && state.userCompany.isAdmin
-          ? FloatingActionButton(
-              heroTag: 'company_gateway_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                if (settingsUIState.isFiltered) {
-                } else {
-                  createEntityByType(
-                    context: context,
-                    entityType: EntityType.companyGateway,
-                  );
-                }
-              },
-              child: Icon(Icons.add, color: Colors.white),
-              tooltip: localization.newCompanyGateway,
-            )
-          : null,
+              ? FloatingActionButton(
+                  heroTag: 'company_gateway_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    if (settingsUIState.isFiltered) {
+                    } else {
+                      createEntityByType(
+                        context: context,
+                        entityType: EntityType.companyGateway,
+                      );
+                    }
+                  },
+                  child: Icon(Icons.add, color: Colors.white),
+                  tooltip: localization.newCompanyGateway,
+                )
+              : null,
     );
   }
 }

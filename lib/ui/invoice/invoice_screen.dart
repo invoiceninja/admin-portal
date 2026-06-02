@@ -162,8 +162,7 @@ class InvoiceScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.invoice)
           ? FloatingActionButton(
               heroTag: 'invoice_fab',

@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PurchaseOrderViewScreen extends StatelessWidget {
   const PurchaseOrderViewScreen({Key? key, this.isFilter = false})
-    : super(key: key);
+      : super(key: key);
 
   final bool isFilter;
   static const String route = '/purchase_order/view';
@@ -64,28 +64,27 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext, DocumentEntity)? onViewExpense,
     Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
-         state: state,
-         company: company,
-         invoice: invoice,
-         client: client,
-         isSaving: isSaving,
-         isDirty: isDirty,
-         onActionSelected: onEntityAction,
-         onEditPressed: onEditPressed,
-         onPaymentsPressed: onPaymentsPressed,
-         onRefreshed: onRefreshed,
-         onUploadDocuments: onUploadDocuments,
-         onViewExpense: onViewExpense,
-         onViewPdf: onViewPdf,
-       );
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocuments: onUploadDocuments,
+          onViewExpense: onViewExpense,
+          onViewPdf: onViewPdf,
+        );
 
   factory PurchaseOrderViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final purchaseOrder =
         state.purchaseOrderState.map[state.purchaseOrderUIState.selectedId] ??
-        InvoiceEntity(id: state.purchaseOrderUIState.selectedId);
-    final client =
-        store.state.clientState.map[purchaseOrder.clientId] ??
+            InvoiceEntity(id: state.purchaseOrderUIState.selectedId);
+    final client = store.state.clientState.map[purchaseOrder.clientId] ??
         ClientEntity(id: purchaseOrder.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -120,38 +119,36 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([purchaseOrder], action, autoPop: true),
-      onUploadDocuments:
-          (
-            BuildContext context,
-            List<MultipartFile> multipartFile,
-            bool isPrivate,
-          ) {
-            final completer = Completer<List<DocumentEntity>>();
-            store.dispatch(
-              SavePurchaseOrderDocumentRequest(
-                isPrivate: isPrivate,
-                multipartFiles: multipartFile,
-                purchaseOrder: purchaseOrder,
-                completer: completer,
-              ),
-            );
-            completer.future
-                .then((client) {
-                  showToast(
-                    AppLocalization.of(
-                      navigatorKey.currentContext!,
-                    )!.uploadedDocument,
-                  );
-                })
-                .catchError((Object error) {
-                  showDialog<ErrorDialog>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(error);
-                    },
-                  );
-                });
-          },
+      onUploadDocuments: (
+        BuildContext context,
+        List<MultipartFile> multipartFile,
+        bool isPrivate,
+      ) {
+        final completer = Completer<List<DocumentEntity>>();
+        store.dispatch(
+          SavePurchaseOrderDocumentRequest(
+            isPrivate: isPrivate,
+            multipartFiles: multipartFile,
+            purchaseOrder: purchaseOrder,
+            completer: completer,
+          ),
+        );
+        completer.future.then((client) {
+          showToast(
+            AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!
+                .uploadedDocument,
+          );
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
+      },
       onViewPdf: (context, purchaseOrder, [activityId]) {
         store.dispatch(
           ShowPdfPurchaseOrder(

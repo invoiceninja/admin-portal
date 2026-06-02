@@ -73,8 +73,7 @@ class InvoiceItemListTile extends StatelessWidget {
     }
 
     if (company.calculateTaxes) {
-      subtitle +=
-          ' • ' +
+      subtitle += ' • ' +
           localization!.lookup(kTaxCategories[invoiceItem!.taxCategoryId]);
     }
 

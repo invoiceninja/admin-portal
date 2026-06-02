@@ -147,22 +147,18 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                       confirmCallback(
                         context: context,
                         callback: (_) {
-                          final url =
-                              state.credentials.url +
+                          final url = state.credentials.url +
                               '/locations/${location.id}';
-                          WebClient()
-                              .delete(url, state.token)
-                              .then((value) {
-                                showToast(localization.deletedLocation);
-                                store.dispatch(
-                                  LoadClient(
-                                    clientId: widget.viewModel!.client.id,
-                                  ),
-                                );
-                              })
-                              .catchError((error) {
-                                showErrorDialog(message: error);
-                              });
+                          WebClient().delete(url, state.token).then((value) {
+                            showToast(localization.deletedLocation);
+                            store.dispatch(
+                              LoadClient(
+                                clientId: widget.viewModel!.client.id,
+                              ),
+                            );
+                          }).catchError((error) {
+                            showErrorDialog(message: error);
+                          });
                         },
                       );
                     }
@@ -280,35 +276,33 @@ class __LocationModalState extends State<_LocationModal> {
     if (location.isNew) {
       webClient
           .post(
-            state.credentials.url + '/locations',
-            state.token,
-            data: json.encode(data),
-          )
+        state.credentials.url + '/locations',
+        state.token,
+        data: json.encode(data),
+      )
           .then((value) {
-            Navigator.of(navigatorKey.currentContext!).pop();
-            showToast(localization.addedLocation);
-            store.dispatch(LoadClient(clientId: location.clientId));
-          })
-          .catchError((error) {
-            showErrorDialog(message: error);
-            setState(() => _isLoading = false);
-          });
+        Navigator.of(navigatorKey.currentContext!).pop();
+        showToast(localization.addedLocation);
+        store.dispatch(LoadClient(clientId: location.clientId));
+      }).catchError((error) {
+        showErrorDialog(message: error);
+        setState(() => _isLoading = false);
+      });
     } else {
       await webClient
           .put(
-            state.credentials.url + '/locations/${location.id}',
-            state.token,
-            data: json.encode(data),
-          )
+        state.credentials.url + '/locations/${location.id}',
+        state.token,
+        data: json.encode(data),
+      )
           .then((value) {
-            Navigator.of(navigatorKey.currentContext!).pop();
-            showToast(localization.updatedLocation);
-            store.dispatch(LoadClient(clientId: location.clientId));
-          })
-          .catchError((error) {
-            showErrorDialog(message: error);
-            setState(() => _isLoading = false);
-          });
+        Navigator.of(navigatorKey.currentContext!).pop();
+        showToast(localization.updatedLocation);
+        store.dispatch(LoadClient(clientId: location.clientId));
+      }).catchError((error) {
+        showErrorDialog(message: error);
+        setState(() => _isLoading = false);
+      });
     }
   }
 

@@ -71,12 +71,11 @@ class _$InvoiceStateSerializer implements StructuredSerializer<InvoiceState> {
         case 'list':
           result.list.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(String),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(String),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -151,36 +150,30 @@ class _$InvoiceUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(InvoiceEntity),
-                )!
-                as InvoiceEntity,
+              value,
+              specifiedType: const FullType(InvoiceEntity),
+            )! as InvoiceEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(ListUIState),
-                )!
-                as ListUIState,
+              value,
+              specifiedType: const FullType(ListUIState),
+            )! as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.selectedId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'tabIndex':
-          result.tabIndex =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.tabIndex = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
       }
     }
@@ -468,8 +461,7 @@ class InvoiceUIStateBuilder
   _$InvoiceUIState _build() {
     _$InvoiceUIState _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$InvoiceUIState._(
             editing: _editing?.build(),
             editingItemIndex: editingItemIndex,

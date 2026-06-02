@@ -52,12 +52,12 @@ class TransactionRuleScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.transactionRuleListState.isInMultiselect(),
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> transactionRules,
-            EntityAction action,
-          ) => handleTransactionRuleAction(context, transactionRules, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> transactionRules,
+        EntityAction action,
+      ) =>
+          handleTransactionRuleAction(context, transactionRules, action),
     );
   }
 }

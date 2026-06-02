@@ -45,20 +45,16 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -147,8 +143,7 @@ class FontEntityBuilder implements Builder<FontEntity, FontEntityBuilder> {
   FontEntity build() => _build();
 
   _$FontEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$FontEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

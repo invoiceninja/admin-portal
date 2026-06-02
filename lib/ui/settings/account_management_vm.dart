@@ -73,46 +73,43 @@ class AccountManagementVM {
 
         final companyLength = state.companies.length;
         final deleteCompleter = Completer<Null>()
-          ..future
-              .then<Null>((_) {
-                final state = store.state;
-                if (companyLength == 1) {
-                  store.dispatch(UserLogout());
-                  if (state.user.isConnectedToGoogle) {
-                    GoogleOAuth.disconnect();
+          ..future.then<Null>((_) {
+            final state = store.state;
+            if (companyLength == 1) {
+              store.dispatch(UserLogout());
+              if (state.user.isConnectedToGoogle) {
+                GoogleOAuth.disconnect();
+              }
+            } else {
+              final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
+              final index = selectedCompanyIndex == 0 ? 1 : 0;
+              store.dispatch(SelectCompany(companyIndex: index));
+              final refreshCompleter = Completer<Null>()
+                ..future.then<Null>((_) {
+                  store.dispatch(SelectCompany(companyIndex: 0));
+                  store.dispatch(ViewDashboard());
+                  AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
+
+                  if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                    Navigator.of(navigatorKey.currentContext!).pop();
                   }
-                } else {
-                  final selectedCompanyIndex =
-                      state.uiState.selectedCompanyIndex;
-                  final index = selectedCompanyIndex == 0 ? 1 : 0;
-                  store.dispatch(SelectCompany(companyIndex: index));
-                  final refreshCompleter = Completer<Null>()
-                    ..future.then<Null>((_) {
-                      store.dispatch(SelectCompany(companyIndex: 0));
-                      store.dispatch(ViewDashboard());
-                      AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
+                });
+              store.dispatch(
+                RefreshData(clearData: true, completer: refreshCompleter),
+              );
+            }
+          }).catchError((Object error) {
+            if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+              Navigator.of(navigatorKey.currentContext!).pop();
+            }
 
-                      if (Navigator.of(navigatorKey.currentContext!).canPop()) {
-                        Navigator.of(navigatorKey.currentContext!).pop();
-                      }
-                    });
-                  store.dispatch(
-                    RefreshData(clearData: true, completer: refreshCompleter),
-                  );
-                }
-              })
-              .catchError((Object error) {
-                if (Navigator.of(navigatorKey.currentContext!).canPop()) {
-                  Navigator.of(navigatorKey.currentContext!).pop();
-                }
-
-                showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  },
-                );
-              });
+            showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              },
+            );
+          });
         store.dispatch(
           DeleteCompanyRequest(
             completer: deleteCompleter,

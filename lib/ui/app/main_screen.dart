@@ -273,9 +273,8 @@ class MainScreen extends StatelessWidget {
               } else if (item.id == null) {
                 history = item;
               } else {
-                final entity =
-                    state.getEntityMap(item.entityType)![item.id]
-                        as BaseEntity?;
+                final entity = state.getEntityMap(item.entityType)![item.id]
+                    as BaseEntity?;
                 if (entity == null || !entity.isActive) {
                   continue;
                 }
@@ -342,8 +341,7 @@ class MainScreen extends StatelessWidget {
                             Expanded(
                               child: AppBorder(
                                 child: screen,
-                                isLeft:
-                                    prefState.showMenu &&
+                                isLeft: prefState.showMenu &&
                                     (!state.isFullScreen || showFilterSidebar),
                               ),
                             ),
@@ -412,29 +410,29 @@ class EntityScreens extends StatelessWidget {
           child = isPdf
               ? InvoicePdfScreen()
               : isEmail
-              ? InvoiceEmailScreen()
-              : InvoiceEditScreen();
+                  ? InvoiceEmailScreen()
+                  : InvoiceEditScreen();
           break;
         case QuoteScreen.route:
           child = isPdf
               ? QuotePdfScreen()
               : isEmail
-              ? QuoteEmailScreen()
-              : QuoteEditScreen();
+                  ? QuoteEmailScreen()
+                  : QuoteEditScreen();
           break;
         case CreditScreen.route:
           child = isPdf
               ? CreditPdfScreen()
               : isEmail
-              ? CreditEmailScreen()
-              : CreditEditScreen();
+                  ? CreditEmailScreen()
+                  : CreditEditScreen();
           break;
         case PurchaseOrderScreen.route:
           child = isPdf
               ? PurchaseOrderPdfScreen()
               : isEmail
-              ? PurchaseOrderEmailScreen()
-              : PurchaseOrderEditScreen();
+                  ? PurchaseOrderEmailScreen()
+                  : PurchaseOrderEditScreen();
           break;
         case RecurringInvoiceScreen.route:
           child = isPdf
@@ -467,9 +465,8 @@ class EntityScreens extends StatelessWidget {
           }
       }
     } else if (subRoute == 'edit') {
-      final editEntityType = editingFilterEntity!
-          ? uiState.filterEntityType
-          : entityType;
+      final editEntityType =
+          editingFilterEntity! ? uiState.filterEntityType : entityType;
       switch (editEntityType) {
         case EntityType.client:
           child = ClientEditScreen();
@@ -522,9 +519,8 @@ class EntityScreens extends StatelessWidget {
       }
     } else {
       final previewStack = uiState.previewStack;
-      final previewEntityType = previewStack.isEmpty
-          ? entityType
-          : previewStack.last;
+      final previewEntityType =
+          previewStack.isEmpty ? entityType : previewStack.last;
       final entityUIState = state.getUIState(previewEntityType)!;
 
       if ((entityUIState.selectedId ?? '').isEmpty ||

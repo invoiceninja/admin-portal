@@ -56,12 +56,11 @@ class _$TaskListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(TaskEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(TaskEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -112,10 +111,9 @@ class _$TaskItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(TaskEntity),
-                )!
-                as TaskEntity,
+              value,
+              specifiedType: const FullType(TaskEntity),
+            )! as TaskEntity,
           );
           break;
       }
@@ -184,36 +182,28 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
       final Object? value = iterator.current;
       switch (key) {
         case 'startDate':
-          result.startDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(DateTime),
-                  )
-                  as DateTime?;
+          result.startDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime?;
           break;
         case 'endDate':
-          result.endDate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(DateTime),
-                  )
-                  as DateTime?;
+          result.endDate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(DateTime),
+          ) as DateTime?;
           break;
         case 'description':
-          result.description =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.description = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'isBillable':
-          result.isBillable =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.isBillable = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
       }
     }
@@ -374,180 +364,138 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'description':
-          result.description =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.description = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'number':
-          result.number =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.number = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'invoice_id':
-          result.invoiceId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.invoiceId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'client_id':
-          result.clientId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.clientId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'rate':
-          result.rate =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(double),
-                  )!
-                  as double;
+          result.rate = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          )! as double;
           break;
         case 'project_id':
-          result.projectId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.projectId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'time_log':
-          result.timeLog =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.timeLog = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'custom_value1':
-          result.customValue1 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customValue1 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'custom_value2':
-          result.customValue2 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customValue2 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'custom_value3':
-          result.customValue3 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customValue3 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'custom_value4':
-          result.customValue4 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.customValue4 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'status_id':
-          result.statusId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.statusId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'status_order':
-          result.statusOrder =
-              serializers.deserialize(value, specifiedType: const FullType(int))
-                  as int?;
+          result.statusOrder = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'documents':
           result.documents.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(DocumentEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(DocumentEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
         case 'isChanged':
-          result.isChanged =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isChanged = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'created_at':
-          result.createdAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.createdAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'updated_at':
-          result.updatedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.updatedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'archived_at':
-          result.archivedAt =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(int),
-                  )!
-                  as int;
+          result.archivedAt = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          )! as int;
           break;
         case 'is_deleted':
-          result.isDeleted =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )
-                  as bool?;
+          result.isDeleted = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool?;
           break;
         case 'user_id':
-          result.createdUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.createdUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )
-                  as String?;
+          result.assignedUserId = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String?;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -562,7 +510,8 @@ class _$TaskListResponse extends TaskListResponse {
 
   factory _$TaskListResponse([
     void Function(TaskListResponseBuilder)? updates,
-  ]) => (TaskListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (TaskListResponseBuilder()..update(updates))._build();
 
   _$TaskListResponse._({required this.data}) : super._();
   @override
@@ -593,7 +542,8 @@ class _$TaskListResponse extends TaskListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TaskListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -659,7 +609,8 @@ class _$TaskItemResponse extends TaskItemResponse {
 
   factory _$TaskItemResponse([
     void Function(TaskItemResponseBuilder)? updates,
-  ]) => (TaskItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (TaskItemResponseBuilder()..update(updates))._build();
 
   _$TaskItemResponse._({required this.data}) : super._();
   @override
@@ -690,7 +641,8 @@ class _$TaskItemResponse extends TaskItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TaskItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -856,8 +808,7 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   TaskTime build() => _build();
 
   _$TaskTime _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$TaskTime._(
           startDate: startDate,
           endDate: endDate,
@@ -1188,8 +1139,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   _$TaskEntity _build() {
     _$TaskEntity _$result;
     try {
-      _$result =
-          _$v ??
+      _$result = _$v ??
           _$TaskEntity._(
             description: BuiltValueNullFieldError.checkNotNull(
               description,

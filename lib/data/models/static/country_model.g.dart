@@ -59,12 +59,11 @@ class _$CountryListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(BuiltList, const [
-                    const FullType(CountryEntity),
-                  ]),
-                )!
-                as BuiltList<Object?>,
+              value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(CountryEntity),
+              ]),
+            )! as BuiltList<Object?>,
           );
           break;
       }
@@ -118,10 +117,9 @@ class _$CountryItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-                  value,
-                  specifiedType: const FullType(CountryEntity),
-                )!
-                as CountryEntity,
+              value,
+              specifiedType: const FullType(CountryEntity),
+            )! as CountryEntity,
           );
           break;
       }
@@ -192,68 +190,52 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.name = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'swap_postal_code':
-          result.swapPostalCode =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.swapPostalCode = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'swap_currency_symbol':
-          result.swapCurrencySymbol =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(bool),
-                  )!
-                  as bool;
+          result.swapCurrencySymbol = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          )! as bool;
           break;
         case 'thousand_separator':
-          result.thousandSeparator =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.thousandSeparator = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'decimal_separator':
-          result.decimalSeparator =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.decimalSeparator = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'iso_3166_2':
-          result.iso2 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.iso2 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'iso_3166_3':
-          result.iso3 =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.iso3 = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
         case 'id':
-          result.id =
-              serializers.deserialize(
-                    value,
-                    specifiedType: const FullType(String),
-                  )!
-                  as String;
+          result.id = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          )! as String;
           break;
       }
     }
@@ -268,13 +250,15 @@ class _$CountryListResponse extends CountryListResponse {
 
   factory _$CountryListResponse([
     void Function(CountryListResponseBuilder)? updates,
-  ]) => (CountryListResponseBuilder()..update(updates))._build();
+  ]) =>
+      (CountryListResponseBuilder()..update(updates))._build();
 
   _$CountryListResponse._({required this.data}) : super._();
   @override
   CountryListResponse rebuild(
     void Function(CountryListResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   CountryListResponseBuilder toBuilder() =>
@@ -300,7 +284,8 @@ class _$CountryListResponse extends CountryListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'CountryListResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -366,13 +351,15 @@ class _$CountryItemResponse extends CountryItemResponse {
 
   factory _$CountryItemResponse([
     void Function(CountryItemResponseBuilder)? updates,
-  ]) => (CountryItemResponseBuilder()..update(updates))._build();
+  ]) =>
+      (CountryItemResponseBuilder()..update(updates))._build();
 
   _$CountryItemResponse._({required this.data}) : super._();
   @override
   CountryItemResponse rebuild(
     void Function(CountryItemResponseBuilder) updates,
-  ) => (toBuilder()..update(updates)).build();
+  ) =>
+      (toBuilder()..update(updates)).build();
 
   @override
   CountryItemResponseBuilder toBuilder() =>
@@ -398,7 +385,8 @@ class _$CountryItemResponse extends CountryItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'CountryItemResponse',
-    )..add('data', data)).toString();
+    )..add('data', data))
+        .toString();
   }
 }
 
@@ -613,8 +601,7 @@ class CountryEntityBuilder
   CountryEntity build() => _build();
 
   _$CountryEntity _build() {
-    final _$result =
-        _$v ??
+    final _$result = _$v ??
         _$CountryEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

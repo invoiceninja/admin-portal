@@ -76,7 +76,9 @@ class EmailSettingsVM {
             showErrorDialog(
               message: AppLocalization.of(
                 context,
-              )!.bodyVariableMissing.replaceFirst(':body', '\$body'),
+              )!
+                  .bodyVariableMissing
+                  .replaceFirst(':body', '\$body'),
             );
             return;
           }

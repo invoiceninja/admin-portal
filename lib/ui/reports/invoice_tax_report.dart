@@ -36,7 +36,8 @@ var memoizedInvoiceTaxReport = memo9(
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) => taxReport(
+  ) =>
+      taxReport(
     userCompany!,
     reportsUIState,
     taxRateMap,
@@ -140,8 +141,7 @@ ReportResult taxReport(
               value = taxes[key]!['paid'] ?? 0.0;
               break;
             case TaxRateReportFields.currency:
-              value =
-                  staticState.currencyMap[client.currencyId]?.name ??
+              value = staticState.currencyMap[client.currencyId]?.name ??
                   staticState.currencyMap[client.settings.currencyId]?.name;
               break;
             case TaxRateReportFields.client_number:
@@ -227,8 +227,7 @@ ReportResult taxReport(
               value = (taxes[key]!['paid'] ?? 0.0) * -1;
               break;
             case TaxRateReportFields.currency:
-              value =
-                  staticState.currencyMap[client.currencyId]?.name ??
+              value = staticState.currencyMap[client.currencyId]?.name ??
                   staticState.currencyMap[client.settings.currencyId]?.name;
               break;
             case TaxRateReportFields.client_number:
@@ -277,13 +276,11 @@ ReportResult taxReport(
   );
 
   return ReportResult(
-    allColumns: TaxRateReportFields.values
-        .map((e) => EnumUtils.parse(e))
-        .toList(),
+    allColumns:
+        TaxRateReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
-    defaultColumns: defaultColumns
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    defaultColumns:
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
   );
 }

@@ -112,21 +112,20 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
     repository
         .saveData(store.state.credentials, action.document!)
         .then((DocumentEntity document) {
-          document = document.rebuild(
-            (b) => b
-              ..parentId = action.document!.parentId
-              ..parentType = action.document!.parentType,
-          );
+      document = document.rebuild(
+        (b) => b
+          ..parentId = action.document!.parentId
+          ..parentType = action.document!.parentType,
+      );
 
-          store.dispatch(SaveDocumentSuccess(document));
+      store.dispatch(SaveDocumentSuccess(document));
 
-          action.completer.complete(document);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveDocumentFailure(error));
-          action.completer.completeError(error);
-        });
+      action.completer.complete(document);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveDocumentFailure(error));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -141,19 +140,18 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
 
     repository
         .bulkAction(
-          store.state.credentials,
-          action.documentIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.documentIds,
+      EntityAction.archive,
+    )
         .then((List<DocumentEntity> documents) {
-          store.dispatch(ArchiveDocumentSuccess(documents));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchiveDocumentFailure(prevDocuments));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchiveDocumentSuccess(documents));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveDocumentFailure(prevDocuments));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -164,23 +162,22 @@ Middleware<AppState> _downloadDocuments(DocumentRepository repository) {
     final action = dynamicAction as DownloadDocumentsRequest;
     repository
         .bulkAction(
-          store.state.credentials,
-          action.documentIds!,
-          EntityAction.download,
-        )
+      store.state.credentials,
+      action.documentIds!,
+      EntityAction.download,
+    )
         .then((List<DocumentEntity> documents) {
-          store.dispatch(DownloadDocumentsSuccess());
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DownloadDocumentsFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      store.dispatch(DownloadDocumentsSuccess());
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DownloadDocumentsFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -193,20 +190,19 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
 
     repository
         .delete(
-          store.state.credentials,
-          documentId,
-          action.password,
-          action.idToken,
-        )
+      store.state.credentials,
+      documentId,
+      action.password,
+      action.idToken,
+    )
         .then((value) {
-          store.dispatch(DeleteDocumentSuccess(documentId: documentId));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeleteDocumentFailure());
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeleteDocumentSuccess(documentId: documentId));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteDocumentFailure());
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -221,19 +217,18 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
 
     repository
         .bulkAction(
-          store.state.credentials,
-          action.documentIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.documentIds,
+      EntityAction.restore,
+    )
         .then((List<DocumentEntity> documents) {
-          store.dispatch(RestoreDocumentSuccess(documents));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestoreDocumentFailure(prevDocuments));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestoreDocumentSuccess(documents));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreDocumentFailure(prevDocuments));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -247,19 +242,18 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
     repository
         .loadItem(store.state.credentials, action.documentId)
         .then((document) {
-          store.dispatch(LoadDocumentSuccess(document));
+      store.dispatch(LoadDocumentSuccess(document));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadDocumentFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadDocumentFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -273,24 +267,21 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
     final document = state.documentState.map[action.documentId]!;
 
     store.dispatch(LoadDocumentRequest());
-    repository
-        .loadData(store.state.credentials, document)
-        .then((bodyBytes) {
-          store.dispatch(
-            LoadDocumentSuccess(document.rebuild((b) => b..data = bodyBytes)),
-          );
+    repository.loadData(store.state.credentials, document).then((bodyBytes) {
+      store.dispatch(
+        LoadDocumentSuccess(document.rebuild((b) => b..data = bodyBytes)),
+      );
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadDocumentFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadDocumentFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };

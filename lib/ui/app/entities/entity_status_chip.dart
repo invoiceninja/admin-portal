@@ -125,19 +125,19 @@ class EntityStatusChip extends StatelessWidget {
           label = task.isInvoiced
               ? localization.invoiced
               : task.isRunning
-              ? localization.running
-              : status.name.isNotEmpty
-              ? status.name
-              : localization.logged;
+                  ? localization.running
+                  : status.name.isNotEmpty
+                      ? status.name
+                      : localization.logged;
           color = task.isInvoiced
               ? state.prefState.colorThemeModel!.colorSuccess
               : task.isRunning
-              ? state.prefState.colorThemeModel!.colorInfo
-              : status.color.isNotEmpty && status.color != '#fff'
-              ? convertHexStringToColor(status.color)
-              : TaskStatusColors(
-                  state.prefState.colorThemeModel,
-                ).colors[task.calculateStatusId];
+                  ? state.prefState.colorThemeModel!.colorInfo
+                  : status.color.isNotEmpty && status.color != '#fff'
+                      ? convertHexStringToColor(status.color)
+                      : TaskStatusColors(
+                          state.prefState.colorThemeModel,
+                        ).colors[task.calculateStatusId];
           break;
         default:
           return SizedBox();

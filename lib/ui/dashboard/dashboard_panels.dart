@@ -496,9 +496,9 @@ class DashboardPanels extends StatelessWidget {
                             child: InkWell(
                               onTap: isMobile(context)
                                   ? () => createEntityByType(
-                                      context: context,
-                                      entityType: EntityType.companyGateway,
-                                    )
+                                        context: context,
+                                        entityType: EntityType.companyGateway,
+                                      )
                                   : null,
                               child: Row(
                                 children: [
@@ -655,101 +655,95 @@ class DashboardPanels extends StatelessWidget {
                           crossAxisCount: isMobile(context)
                               ? userCompanySettings.dashboardFieldsPerRowMobile
                               : userCompanySettings
-                                    .dashboardFieldsPerRowDesktop,
+                                  .dashboardFieldsPerRowDesktop,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
-                                double value = 0;
-                                var field = dashboardField.field;
-                                if (dashboardField.isTimeFormat) {
-                                  field += '_duration';
-                                }
-                                if (dashboardField.period ==
-                                    DashboardUISettings.PERIOD_CURRENT) {
-                                  final data = currentFieldMap[field]!;
-                                  if (dashboardField.isCountCalculate) {
-                                    value = data.periodCount.toDouble();
-                                  } else if (dashboardField
-                                      .isAverageCalculate) {
-                                    value = data.periodAverage;
-                                  } else {
-                                    value = data.periodTotal;
-                                  }
-                                } else if (dashboardField.period ==
-                                    DashboardUISettings.PERIOD_PREVIOUS) {
-                                  final data = previousFieldMap[field]!;
-                                  if (dashboardField.isCountCalculate) {
-                                    value = data.periodCount.toDouble();
-                                  } else if (dashboardField
-                                      .isAverageCalculate) {
-                                    value = data.periodAverage;
-                                  } else {
-                                    value = data.periodTotal;
-                                  }
-                                } else if (dashboardField.period ==
-                                    DashboardUISettings.PERIOD_TOTAL) {
-                                  final data = currentFieldMap[field]!;
-                                  if (dashboardField.isCountCalculate) {
-                                    value = data.totalCount.toDouble();
-                                  } else if (dashboardField
-                                      .isAverageCalculate) {
-                                    value = data.totalAverage;
-                                  } else {
-                                    value = data.total;
-                                  }
-                                }
-                                return FormCard(
-                                  padding: const EdgeInsets.all(0),
-                                  children: [
-                                    Text(
-                                      localization!.lookup(
-                                        dashboardField.field,
-                                      ),
-                                      style: textTheme.titleMedium,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 6),
-                                    Text(
-                                      dashboardField.isCountCalculate
-                                          ? formatNumber(
-                                              value,
-                                              context,
-                                              formatNumberType:
-                                                  FormatNumberType.int,
-                                            )!
-                                          : dashboardField.isTimeFormat
+                            double value = 0;
+                            var field = dashboardField.field;
+                            if (dashboardField.isTimeFormat) {
+                              field += '_duration';
+                            }
+                            if (dashboardField.period ==
+                                DashboardUISettings.PERIOD_CURRENT) {
+                              final data = currentFieldMap[field]!;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.periodCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.periodAverage;
+                              } else {
+                                value = data.periodTotal;
+                              }
+                            } else if (dashboardField.period ==
+                                DashboardUISettings.PERIOD_PREVIOUS) {
+                              final data = previousFieldMap[field]!;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.periodCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.periodAverage;
+                              } else {
+                                value = data.periodTotal;
+                              }
+                            } else if (dashboardField.period ==
+                                DashboardUISettings.PERIOD_TOTAL) {
+                              final data = currentFieldMap[field]!;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.totalCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.totalAverage;
+                              } else {
+                                value = data.total;
+                              }
+                            }
+                            return FormCard(
+                              padding: const EdgeInsets.all(0),
+                              children: [
+                                Text(
+                                  localization!.lookup(
+                                    dashboardField.field,
+                                  ),
+                                  style: textTheme.titleMedium,
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  dashboardField.isCountCalculate
+                                      ? formatNumber(
+                                          value,
+                                          context,
+                                          formatNumberType:
+                                              FormatNumberType.int,
+                                        )!
+                                      : dashboardField.isTimeFormat
                                           ? formatDuration(
                                               Duration(seconds: value.toInt()),
                                             )
                                           : formatNumber(
                                               value,
                                               context,
-                                              currencyId: state
-                                                  .dashboardUIState
-                                                  .settings
-                                                  .currencyId,
+                                              currencyId: state.dashboardUIState
+                                                  .settings.currencyId,
                                             )!,
-                                      style: textTheme.headlineSmall,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 6),
-                                    Text(
-                                      localization.lookup(
-                                            dashboardField.period,
-                                          ) +
-                                          (dashboardField.calculate ==
-                                                  DashboardUISettings
-                                                      .CALCULATE_AVERAGE
-                                              ? ' • ${localization.average}'
-                                              : ''),
-                                      style: textTheme.bodySmall,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                );
-                              })
-                              .toList(),
+                                  style: textTheme.headlineSmall,
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 6),
+                                Text(
+                                  localization.lookup(
+                                        dashboardField.period,
+                                      ) +
+                                      (dashboardField.calculate ==
+                                              DashboardUISettings
+                                                  .CALCULATE_AVERAGE
+                                          ? ' • ${localization.average}'
+                                          : ''),
+                                  style: textTheme.bodySmall,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            );
+                          }).toList(),
                         ),
                       ),
                       _OverviewPanel(
@@ -947,11 +941,9 @@ class __DashboardPanelState extends State<_DashboardPanel> {
 
           dataGroup.previousTotal = widget.previousData[index].periodTotal;
 
-          for (
-            int i = 0;
-            i < min(currentSeries.length, previousSeries.length);
-            i++
-          ) {
+          for (int i = 0;
+              i < min(currentSeries.length, previousSeries.length);
+              i++) {
             previous.add(
               ChartMoneyData(currentSeries[i].date, previousSeries[i].amount),
             );
@@ -1066,11 +1058,9 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         final expenseSeries = expenseData![index].rawSeries;
         dataGroup.previousTotal = expenseData![index].periodTotal;
 
-        for (
-          int i = 0;
-          i < min(invoiceSeries.length, expenseSeries.length);
-          i++
-        ) {
+        for (int i = 0;
+            i < min(invoiceSeries.length, expenseSeries.length);
+            i++) {
           expenses.add(
             ChartMoneyData(invoiceSeries[i].date, expenseSeries[i].amount),
           );
@@ -1094,11 +1084,9 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       final paymentSeries = paymentData![index].rawSeries;
       dataGroup.previousTotal = paymentData![index].periodTotal;
 
-      for (
-        int i = 0;
-        i < min(invoiceSeries.length, paymentSeries.length);
-        i++
-      ) {
+      for (int i = 0;
+          i < min(invoiceSeries.length, paymentSeries.length);
+          i++) {
         payments.add(
           ChartMoneyData(invoiceSeries[i].date, paymentSeries[i].amount),
         );

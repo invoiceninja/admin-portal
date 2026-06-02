@@ -99,19 +99,18 @@ Middleware<AppState> _archiveBankAccount(BankAccountRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.bankAccountIds,
-          EntityAction.archive,
-        )
+      store.state.credentials,
+      action.bankAccountIds,
+      EntityAction.archive,
+    )
         .then((List<BankAccountEntity> bankAccounts) {
-          store.dispatch(ArchiveBankAccountsSuccess(bankAccounts));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(ArchiveBankAccountsFailure(prevBankAccounts));
-          action.completer.completeError(error);
-        });
+      store.dispatch(ArchiveBankAccountsSuccess(bankAccounts));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ArchiveBankAccountsFailure(prevBankAccounts));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -125,19 +124,18 @@ Middleware<AppState> _deleteBankAccount(BankAccountRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.bankAccountIds,
-          EntityAction.delete,
-        )
+      store.state.credentials,
+      action.bankAccountIds,
+      EntityAction.delete,
+    )
         .then((List<BankAccountEntity> bankAccounts) {
-          store.dispatch(DeleteBankAccountsSuccess(bankAccounts));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(DeleteBankAccountsFailure(prevBankAccounts));
-          action.completer.completeError(error);
-        });
+      store.dispatch(DeleteBankAccountsSuccess(bankAccounts));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteBankAccountsFailure(prevBankAccounts));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -151,19 +149,18 @@ Middleware<AppState> _restoreBankAccount(BankAccountRepository repository) {
         .toList();
     repository
         .bulkAction(
-          store.state.credentials,
-          action.bankAccountIds,
-          EntityAction.restore,
-        )
+      store.state.credentials,
+      action.bankAccountIds,
+      EntityAction.restore,
+    )
         .then((List<BankAccountEntity> bankAccounts) {
-          store.dispatch(RestoreBankAccountsSuccess(bankAccounts));
-          action.completer.complete(null);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(RestoreBankAccountsFailure(prevBankAccounts));
-          action.completer.completeError(error);
-        });
+      store.dispatch(RestoreBankAccountsSuccess(bankAccounts));
+      action.completer.complete(null);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(RestoreBankAccountsFailure(prevBankAccounts));
+      action.completer.completeError(error);
+    });
 
     next(action);
   };
@@ -175,19 +172,18 @@ Middleware<AppState> _saveBankAccount(BankAccountRepository repository) {
     repository
         .saveData(store.state.credentials, action.bankAccount!)
         .then((BankAccountEntity bankAccount) {
-          if (action.bankAccount!.isNew) {
-            store.dispatch(AddBankAccountSuccess(bankAccount));
-          } else {
-            store.dispatch(SaveBankAccountSuccess(bankAccount));
-          }
+      if (action.bankAccount!.isNew) {
+        store.dispatch(AddBankAccountSuccess(bankAccount));
+      } else {
+        store.dispatch(SaveBankAccountSuccess(bankAccount));
+      }
 
-          action.completer!.complete(bankAccount);
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(SaveBankAccountFailure(error));
-          action.completer!.completeError(error);
-        });
+      action.completer!.complete(bankAccount);
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(SaveBankAccountFailure(error));
+      action.completer!.completeError(error);
+    });
 
     next(action);
   };
@@ -202,19 +198,18 @@ Middleware<AppState> _loadBankAccount(BankAccountRepository repository) {
     repository
         .loadItem(state.credentials, action.bankAccountId)
         .then((bankAccount) {
-          store.dispatch(LoadBankAccountSuccess(bankAccount));
+      store.dispatch(LoadBankAccountSuccess(bankAccount));
 
-          if (action.completer != null) {
-            action.completer!.complete(null);
-          }
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadBankAccountFailure(error));
-          if (action.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadBankAccountFailure(error));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };
@@ -226,27 +221,24 @@ Middleware<AppState> _loadBankAccounts(BankAccountRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadBankAccountsRequest());
-    repository
-        .loadList(state.credentials)
-        .then((data) {
-          store.dispatch(LoadBankAccountsSuccess(data));
+    repository.loadList(state.credentials).then((data) {
+      store.dispatch(LoadBankAccountsSuccess(data));
 
-          if (action!.completer != null) {
-            action.completer!.complete(null);
-          }
-          /*
+      if (action!.completer != null) {
+        action.completer!.complete(null);
+      }
+      /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-        })
-        .catchError((Object error) {
-          print(error);
-          store.dispatch(LoadBankAccountsFailure(error));
-          if (action!.completer != null) {
-            action.completer!.completeError(error);
-          }
-        });
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadBankAccountsFailure(error));
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
+      }
+    });
 
     next(action);
   };

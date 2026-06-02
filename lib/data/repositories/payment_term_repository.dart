@@ -53,8 +53,7 @@ class PaymentTermRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url =
-        credentials.url +
+    final url = credentials.url +
         '/payment_terms/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,

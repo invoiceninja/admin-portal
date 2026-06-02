@@ -96,16 +96,16 @@ class ScheduleListVM {
       scheduleMap: state.scheduleState.map,
       isLoading: state.isLoading,
       filter: state.scheduleUIState.listUIState.filter,
-      onEntityAction:
-          (
-            BuildContext context,
-            List<BaseEntity> schedules,
-            EntityAction action,
-          ) => handleScheduleAction(context, schedules, action),
+      onEntityAction: (
+        BuildContext context,
+        List<BaseEntity> schedules,
+        EntityAction action,
+      ) =>
+          handleScheduleAction(context, schedules, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.schedule) ??
-          SchedulePresenter.getDefaultTableFields(state.userCompany),
+              SchedulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSchedules(field)),
       onClearMultielsect: () => store.dispatch(ClearScheduleMultiselect()),
     );

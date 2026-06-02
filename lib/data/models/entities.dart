@@ -79,21 +79,21 @@ class EntityType extends EnumClass {
   }
 
   bool get isSetting => [
-    EntityType.paymentTerm,
-    EntityType.taxRate,
-    EntityType.companyGateway,
-    EntityType.user,
-    EntityType.group,
-    EntityType.design,
-    EntityType.token,
-    EntityType.webhook,
-    EntityType.expenseCategory,
-    EntityType.taskStatus,
-    EntityType.paymentLink,
-    EntityType.bankAccount,
-    EntityType.transactionRule,
-    EntityType.schedule,
-  ].contains(this);
+        EntityType.paymentTerm,
+        EntityType.taxRate,
+        EntityType.companyGateway,
+        EntityType.user,
+        EntityType.group,
+        EntityType.design,
+        EntityType.token,
+        EntityType.webhook,
+        EntityType.expenseCategory,
+        EntityType.taskStatus,
+        EntityType.paymentLink,
+        EntityType.bankAccount,
+        EntityType.transactionRule,
+        EntityType.schedule,
+      ].contains(this);
 
   List<EntityType> get relatedTypes {
     switch (this) {
@@ -428,10 +428,10 @@ abstract mixin class BaseEntity implements SelectableEntity {
       ReportStringValue(entityId: id, entityType: entityType, value: value);
 
   ReportEntityTypeValue getReportEntityType() => ReportEntityTypeValue(
-    entityId: id,
-    entityType: entityType,
-    value: entityType,
-  );
+        entityId: id,
+        entityType: entityType,
+        value: entityType,
+      );
 
   ReportBoolValue getReportBool({bool? value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
@@ -457,20 +457,22 @@ abstract mixin class BaseEntity implements SelectableEntity {
     String? currencyId,
     double? exchangeRate,
     FormatNumberType? formatNumberType,
-  }) => ReportNumberValue(
-    entityId: id,
-    entityType: entityType,
-    value: value,
-    currencyId: currencyId,
-    exchangeRate: exchangeRate,
-    formatNumberType: formatNumberType,
-  );
+  }) =>
+      ReportNumberValue(
+        entityId: id,
+        entityType: entityType,
+        value: value,
+        currencyId: currencyId,
+        exchangeRate: exchangeRate,
+        formatNumberType: formatNumberType,
+      );
 
   ReportIntValue getReportInt({
     int? value,
     String? currencyId,
     FormatNumberType? formatNumberType,
-  }) => ReportIntValue(entityId: id, entityType: entityType, value: value);
+  }) =>
+      ReportIntValue(entityId: id, entityType: entityType, value: value);
 
   List<EntityAction?> getActions({
     UserCompanyEntity? userCompany,
@@ -760,8 +762,7 @@ abstract class ActivityEntity
       activityTypeId == kActivityComment || activityTypeId.isEmpty;
 
   EntityType? get entityType {
-    final resolveByEntityId =
-        isComment ||
+    final resolveByEntityId = isComment ||
         [
           kActivityCustomDocumentSigned,
           kActivityQuickbooksPushFailure,
@@ -1023,9 +1024,9 @@ abstract class ActivityEntity
     } else {
       final name = (clientContact?.fullName ?? '').isNotEmpty
           ? clientContact!.fullName +
-                ((client?.name ?? '').isNotEmpty
-                    ? (' (' + client!.name + ')')
-                    : '')
+              ((client?.name ?? '').isNotEmpty
+                  ? (' (' + client!.name + ')')
+                  : '')
           : (client?.displayName ?? '');
       activity = activity.replaceFirst(':contact', name);
     }
