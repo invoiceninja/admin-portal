@@ -213,6 +213,11 @@ void main({bool isTesting = false}) async {
         defaultValue: kClientVersion,
       );
       options.dist = kClientVersion;
+      // Native (crashpad) crash capture on Windows/desktop. Defaults to true in
+      // the SDK; set explicitly to document intent and guard against a default
+      // change. Native minidumps bypass the beforeSend gate below.
+      options.enableNativeCrashHandling = true;
+      options.attachStacktrace = true;
       options.beforeSend = (SentryEvent event, Hint hint) {
         final state = store.state;
         final account = state.account;
