@@ -127,7 +127,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                               child: Text(localization.clickOrDropFilesHere),
                             ),
                             color: _dragging
-                                ? Colors.blue.withValues(alpha: 0.4)
+                                ? Colors.blue.withOpacity(0.4)
                                 : Theme.of(context).scaffoldBackgroundColor,
                           ),
                           DashedRect(color: Colors.grey),

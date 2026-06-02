@@ -619,7 +619,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                                   return Container(
                                     color: highlightedIndex == index
                                         ? Theme.of(context).colorScheme.primary
-                                              .withValues(alpha: 0.1)
+                                              .withOpacity(0.1)
                                         : Theme.of(context).cardColor,
                                     child: ListTile(
                                       title: Text(
@@ -902,26 +902,26 @@ class _PeppolOnboarding extends StatelessWidget {
       children: [
         Text('PEPPOL', style: Theme.of(context).textTheme.titleMedium),
         SizedBox(height: 16),
-        RadioGroup<bool>(
-          groupValue: isBusinessEntity,
-          onChanged: (value) => onEntityTypeChanged(value!),
-          child: Row(
+        Row(
             children: [
               Expanded(
                 child: RadioListTile<bool>(
                   title: Text(localization.lookup('business')),
+                  groupValue: isBusinessEntity,
+                  onChanged: (value) => onEntityTypeChanged(value!),
                   value: true,
                 ),
               ),
               Expanded(
                 child: RadioListTile<bool>(
                   title: Text(localization.individual),
+                  groupValue: isBusinessEntity,
+                  onChanged: (value) => onEntityTypeChanged(value!),
                   value: false,
                 ),
               ),
             ],
           ),
-        ),
         DecoratedFormField(
           label: localization.companyName,
           controller: partyNameController,

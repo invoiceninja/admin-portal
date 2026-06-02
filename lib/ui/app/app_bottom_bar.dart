@@ -242,12 +242,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           builder: (BuildContext context, listUIState) {
             return Container(
               color: Theme.of(context).colorScheme.surface,
-              child: RadioGroup<String>(
-                groupValue: listUIState.sortField,
-                onChanged: (String? value) {
-                  widget.onSelectedSortField!(value ?? '');
-                },
-                child: Column(
+              child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: widget.sortFields.map((sortField) {
                     final field = sortField;
@@ -267,6 +262,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                                 )
                               : null,
                           activeColor: Theme.of(context).colorScheme.secondary,
+                          groupValue: listUIState.sortField,
+                          onChanged: (value) =>
+                              widget.onSelectedSortField!(value ?? ''),
                           value: field,
                           toggleable: true,
                         ),
@@ -274,7 +272,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     );
                   }).toList(),
                 ),
-              ),
             );
           },
         );

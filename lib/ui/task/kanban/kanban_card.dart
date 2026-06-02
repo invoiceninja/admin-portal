@@ -285,9 +285,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                             },
                             style: TextStyle(
                               fontSize: 12,
-                              color: textColor!.withValues(
-                                alpha: kLighterOpacity,
-                              ),
+                              color: textColor!.withOpacity(kLighterOpacity),
                             ),
                           ),
                         ),

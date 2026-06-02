@@ -6,7 +6,7 @@ documentation: https://invoiceninja.github.io
 publish_to: none
 
 environment:
-  sdk: '>=3.9.0 <4.0.0'
+  sdk: '>=3.5.0 <4.0.0'
 
 flutter_icons:
   android: true
@@ -21,7 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   web: ^1.0.0
-  google_sign_in: ^7.2.0
+  google_sign_in: ^6.2.2
   in_app_review: ^2.0.4
   in_app_purchase: ^3.2.3
   pinput: ^3.0.1
@@ -31,7 +31,7 @@ dependencies:
   path_provider: ^2.0.2
   shared_preferences: ^2.0.6
   material_design_icons_flutter: ^7.0.7296
-  built_value: ^8.12.2
+  built_value: ^8.9.5
   built_collection: ^5.1.0
   memoize: ^3.0.0
   url_launcher: ^6.3.1
@@ -45,7 +45,7 @@ dependencies:
       url: https://github.com/theyakka/qr.flutter.git
   local_auth: ^2.3.0
   sentry_flutter: ^9.6.0
-  image_picker: ^1.2.0
+  image_picker: ^1.1.2
   flutter_colorpicker: ^1.1.0
   flutter_json_viewer: ^1.0.1
   webview_flutter: ^4.4.1
@@ -58,7 +58,7 @@ dependencies:
       ref: master      
   version: ^3.0.2
   # flutter_launcher_icons: ^0.9.1
-  overflow_view: ^0.5.0
+  overflow_view: ^0.4.0
   flutter_styled_toast: ^2.0.0
   permission_handler: ^11.0.1 # Disables Windows support to fix crash
   file_picker: ^10.3.2
@@ -71,7 +71,7 @@ dependencies:
   states_rebuilder: ^6.2.0
   html2md: ^1.2.6
   printing: ^5.14.3
-  image_cropper: ^11.0.0
+  image_cropper: ^8.1.0
   msal_js: ^2.14.0
   sign_in_with_apple: ^7.0.1
   window_manager: ^0.3.0
@@ -85,7 +85,7 @@ dependencies:
   # idb_shim: ^1.11.1+1
   collection: ^1.15.0-nullsafety.4
   filesystem_picker: ^4.0.0
-  device_info_plus: ^12.2.0
+  device_info_plus: ^11.3.0
   ios_open_subscriptions_settings: ^0.0.4
   redux: any
   in_app_purchase_android: any
@@ -98,6 +98,12 @@ dependencies:
   
 dependency_overrides:
   intl: any
+  # Flutter 3.24.5's flutter_test pins collection 1.18.0, but contacts_service_plus
+  # requires ^1.19.1. 1.19.x is backward-compatible and supports Dart 3.5.4.
+  collection: ^1.19.0
+  # image_cropper_platform_interface 7.2.0 uses Color.toARGB32 (Flutter 3.32). Pin
+  # the last pre-toARGB32 release so it compiles on Flutter 3.24.5.
+  image_cropper_platform_interface: 7.1.0
   navigation_builder: ^0.0.3
   states_rebuilder: ^6.3.0
   win32: ^5.5.1
@@ -106,22 +112,22 @@ dependency_overrides:
     git:
       url: https://github.com/superlistapp/super_editor
       path: super_editor
-      ref: 9655c7f987968d680f83fc095a604f86d9ad15a1
+      ref: bcba72823a3c21336960f0ac40a73d68d9034623
   super_editor_markdown:
     git:
       url: https://github.com/superlistapp/super_editor
       path: super_editor_markdown
-      ref: 9655c7f987968d680f83fc095a604f86d9ad15a1
+      ref: bcba72823a3c21336960f0ac40a73d68d9034623
   super_text_layout:
     git:
       url: https://github.com/superlistapp/super_editor
       path: super_text_layout
-      ref: 9655c7f987968d680f83fc095a604f86d9ad15a1
+      ref: bcba72823a3c21336960f0ac40a73d68d9034623
   attributed_text:
     git:
       url: https://github.com/superlistapp/super_editor
       path: attributed_text
-      ref: 9655c7f987968d680f83fc095a604f86d9ad15a1
+      ref: bcba72823a3c21336960f0ac40a73d68d9034623
 
 dev_dependencies:
   flutter_driver:
@@ -130,7 +136,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.1.0
-  built_value_generator: ^8.12.2
+  built_value_generator: ^8.9.2
   faker: ^2.0.0
   msix: ^3.5.1
   import_sorter: ^4.6.0

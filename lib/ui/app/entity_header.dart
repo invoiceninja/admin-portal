@@ -49,7 +49,7 @@ class EntityHeader extends StatelessWidget {
               label!,
               style: TextStyle(
                 fontSize: 16.0,
-                color: textColor!.withValues(alpha: .65),
+                color: textColor!.withOpacity(.65),
               ),
             ),
             SizedBox(height: 8),
@@ -75,7 +75,7 @@ class EntityHeader extends StatelessWidget {
               secondLabel!,
               style: TextStyle(
                 fontSize: 16.0,
-                color: textColor!.withValues(alpha: .65),
+                color: textColor!.withOpacity(.65),
               ),
             ),
             SizedBox(height: 8),

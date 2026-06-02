@@ -1,6 +1,8 @@
 import 'dart:math';
 
+//import 'package:example/logging.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_the_leader/follow_the_leader.dart';
 import 'package:invoiceninja_flutter/utils/super_editor/super_editor_item_selector.dart';
 import 'package:overlord/follow_the_leader.dart';
@@ -73,17 +75,15 @@ class _EditorToolbarState extends State<EditorToolbar> {
   void initState() {
     super.initState();
 
-    _toolbarAligner = CupertinoPopoverToolbarAligner();
+    _toolbarAligner = CupertinoPopoverToolbarAligner(widget.editorViewportKey);
 
     _popoverFocusNode = FocusNode();
 
     _urlFocusNode = FocusNode();
-    _urlController =
-        ImeAttributedTextEditingController(
-            controller: SingleLineAttributedTextEditingController(_applyLink),
-          ) //
-          ..onPerformActionPressed = _onPerformAction
-          ..text = AttributedText('https://');
+    _urlController = ImeAttributedTextEditingController(
+        controller: SingleLineAttributedTextEditingController(_applyLink)) //
+      ..onPerformActionPressed = _onPerformAction
+      ..text = AttributedText('https://');
   }
 
   @override
@@ -92,6 +92,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
     _screenBoundary = WidgetFollowerBoundary(
       boundaryKey: widget.editorViewportKey,
+      devicePixelRatio: MediaQuery.devicePixelRatioOf(context),
     );
   }
 
@@ -100,7 +101,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
     _urlFocusNode.dispose();
     _urlController!.dispose();
     _popoverFocusNode.dispose();
-
     super.dispose();
   }
 
@@ -122,9 +122,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
   ///
   /// Throws an exception if the currently selected node is not a text node.
   _TextType _getCurrentTextType() {
-    final selectedNode = widget.document.getNodeById(
-      widget.composer.selection!.extent.nodeId,
-    );
+    final selectedNode =
+        widget.document.getNodeById(widget.composer.selection!.extent.nodeId);
     if (selectedNode is ParagraphNode) {
       final type = selectedNode.getMetadataValue('blockType');
 
@@ -144,9 +143,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           ? _TextType.orderedListItem
           : _TextType.unorderedListItem;
     } else {
-      throw Exception(
-        'Alignment does not apply to node of type: $selectedNode',
-      );
+      throw Exception('Invalid node type: $selectedNode');
     }
   }
 
@@ -172,7 +169,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
           return TextAlign.left;
       }
     } else {
-      throw Exception('Invalid node type: $selectedNode');
+      throw Exception(
+          'Alignment does not apply to node of type: $selectedNode');
     }
   }
 
@@ -215,7 +213,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
       widget.editor!.execute([
         ConvertListItemToParagraphRequest(
           nodeId: widget.composer.selection!.extent.nodeId,
-          paragraphMetadata: {'blockType': _getBlockTypeAttribution(newType)},
+          paragraphMetadata: {
+            'blockType': _getBlockTypeAttribution(newType),
+          },
         ),
       ]);
     } else if (!_isListItem(existingTextType) && _isListItem(newType)) {
@@ -289,27 +289,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
       ToggleTextAttributionsRequest(
         documentRange: widget.composer.selection!,
         attributions: {strikethroughAttribution},
-      ),
-    ]);
-  }
-
-  /*
-  /// Toggles superscript styling for the current selected text.
-  void _toggleSuperscript() {
-    widget.editor!.execute([
-      ToggleTextAttributionsRequest(
-        documentRange: widget.composer.selection!,
-        attributions: {superscriptAttribution},
-      ),
-    ]);
-  }
-
-  /// Toggles subscript styling for the current selected text.
-  void _toggleSubscript() {
-    widget.editor!.execute([
-      ToggleTextAttributionsRequest(
-        documentRange: widget.composer.selection!,
-        attributions: {subscriptAttribution},
       ),
     ]);
   }
@@ -393,7 +372,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         // the entire link attribution.
         text.removeAttribution(
           overlappingLinkSpan.attribution,
-          overlappingLinkSpan.range,
+          SpanRange(overlappingLinkSpan.start, overlappingLinkSpan.end),
         );
       }
     } else {
@@ -404,22 +383,19 @@ class _EditorToolbarState extends State<EditorToolbar> {
       });
     }
   }
-  */
 
   /// Takes the text from the [urlController] and applies it as a link
   /// attribution to the currently selected text.
   void _applyLink() {
-    final url = _urlController!.text.toPlainText(includePlaceholders: false);
+    final url = _urlController!.text.text;
 
     final selection = widget.composer.selection!;
     final baseOffset = (selection.base.nodePosition as TextPosition).offset;
     final extentOffset = (selection.extent.nodePosition as TextPosition).offset;
     final selectionStart = min(baseOffset, extentOffset);
     final selectionEnd = max(baseOffset, extentOffset);
-    final selectionRange = TextRange(
-      start: selectionStart,
-      end: selectionEnd - 1,
-    );
+    final selectionRange =
+        TextRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
         widget.document.getNodeById(selection.extent.nodeId) as TextNode;
@@ -427,31 +403,18 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
     final trimmedRange = _trimTextRangeWhitespace(text, selectionRange);
 
-    final linkAttribution = LinkAttribution.fromUri(Uri.parse(url));
-
-    widget.editor!.execute([
-      AddTextAttributionsRequest(
-        documentRange: DocumentRange(
-          start: DocumentPosition(
-            nodeId: textNode.id,
-            nodePosition: TextNodePosition(offset: trimmedRange.start),
-          ),
-          end: DocumentPosition(
-            nodeId: textNode.id,
-            nodePosition: TextNodePosition(offset: trimmedRange.end),
-          ),
-        ),
-        attributions: {linkAttribution},
-      ),
-    ]);
+    final linkAttribution = LinkAttribution(url: Uri.parse(url));
+    text.addAttribution(
+      linkAttribution,
+      trimmedRange,
+    );
 
     // Clear the field and hide the URL bar
-    _urlController!.clearTextAndSelection();
+    _urlController!.clear();
     setState(() {
       _showUrlField = false;
       _urlFocusNode.unfocus(
-        disposition: UnfocusDisposition.previouslyFocusedChild,
-      );
+          disposition: UnfocusDisposition.previouslyFocusedChild);
       widget.closeToolbar();
     });
   }
@@ -463,16 +426,14 @@ class _EditorToolbarState extends State<EditorToolbar> {
     int startOffset = range.start;
     int endOffset = range.end;
 
-    final plainText = text.toPlainText();
-    while (startOffset < range.end && plainText[startOffset] == ' ') {
+    while (startOffset < range.end && text.text[startOffset] == ' ') {
       startOffset += 1;
     }
-    while (endOffset > startOffset && plainText[endOffset] == ' ') {
+    while (endOffset > startOffset && text.text[endOffset] == ' ') {
       endOffset -= 1;
     }
 
-    // Add 1 to the end offset because SpanRange treats the end offset to be exclusive.
-    return SpanRange(startOffset, endOffset + 1);
+    return SpanRange(startOffset, endOffset);
   }
 
   /*
@@ -482,13 +443,27 @@ class _EditorToolbarState extends State<EditorToolbar> {
     if (newAlignment == null) {
       return;
     }
+    String? newAlignmentValue;
+    switch (newAlignment) {
+      case TextAlign.left:
+      case TextAlign.start:
+        newAlignmentValue = 'left';
+        break;
+      case TextAlign.center:
+        newAlignmentValue = 'center';
+        break;
+      case TextAlign.right:
+      case TextAlign.end:
+        newAlignmentValue = 'right';
+        break;
+      case TextAlign.justify:
+        newAlignmentValue = 'justify';
+        break;
+    }
 
-    widget.editor!.execute([
-      ChangeParagraphAlignmentRequest(
-        nodeId: widget.composer.selection!.extent.nodeId,
-        alignment: newAlignment,
-      ),
-    ]);
+    final selectedNode = widget.document
+        .getNodeById(widget.composer.selection!.extent.nodeId) as ParagraphNode;
+    selectedNode.putMetadataValue('textAlign', newAlignmentValue);
   }
   */
 
@@ -497,19 +472,37 @@ class _EditorToolbarState extends State<EditorToolbar> {
   String _getTextTypeName(_TextType textType) {
     switch (textType) {
       case _TextType.header1:
+        // return AppLocalizations.of(context)!.labelHeader1;
         return 'Header 1';
       case _TextType.header2:
+        // return AppLocalizations.of(context)!.labelHeader2;
         return 'Header 2';
       case _TextType.header3:
+        // return AppLocalizations.of(context)!.labelHeader3;
         return 'Header 3';
       case _TextType.paragraph:
+        // return AppLocalizations.of(context)!.labelParagraph;
         return 'Paragraph';
       case _TextType.blockquote:
+        // return AppLocalizations.of(context)!.labelBlockquote;
         return 'Blockquote';
       case _TextType.orderedListItem:
+        // return AppLocalizations.of(context)!.labelOrderedListItem;
         return 'Ordered List Item';
       case _TextType.unorderedListItem:
+        // return AppLocalizations.of(context)!.labelUnorderedListItem;
         return 'Unordered List Item';
+    }
+  }
+
+  /// Called when the user selects a block type on the toolbar.
+  void _onBlockTypeSelected(SuperEditorDemoTextItem? selectedItem) {
+    if (selectedItem != null) {
+      setState(() {
+        _convertTextToNewType(_TextType.values //
+            .where((e) => e.name == selectedItem.id)
+            .first);
+      });
     }
   }
 
@@ -518,32 +511,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
       _applyLink();
     }
   }
-
-  /// Called when the user selects a block type on the toolbar.
-  void _onBlockTypeSelected(SuperEditorDemoTextItem? selectedItem) {
-    if (selectedItem != null) {
-      setState(() {
-        _convertTextToNewType(
-          _TextType
-              .values //
-              .where((e) => e.name == selectedItem.id)
-              .first,
-        );
-      });
-    }
-  }
-
-  /*
-  /// Called when the user selects an alignment on the toolbar.
-  void _onAlignmentSelected(SuperEditorDemoIconItem? selectedItem) {
-    if (selectedItem != null) {
-      setState(() {
-        _changeAlignment(
-            TextAlign.values.firstWhere((e) => e.name == selectedItem.id));
-      });
-    }
-  }
-  */
 
   @override
   Widget build(BuildContext context) {
@@ -572,7 +539,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildToolbar(),
-          if (_showUrlField) ...[const SizedBox(height: 8), _buildUrlField()],
+          if (_showUrlField) ...[
+            const SizedBox(height: 8),
+            _buildUrlField(),
+          ],
         ],
       ),
     );
@@ -593,7 +563,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
               // the currently selected node can be converted.
               if (_isConvertibleNode()) ...[
                 Tooltip(
-                  message: 'Text Block Type',
+                  //message: AppLocalizations.of(context)!.labelTextBlockType,
+                  message: 'Block Type',
                   child: _buildBlockTypeSelector(),
                 ),
                 _buildVerticalDivider(),
@@ -603,6 +574,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   onPressed: _toggleBold,
                   icon: const Icon(Icons.format_bold),
                   splashRadius: 16,
+                  //tooltip: AppLocalizations.of(context)!.Bold,
                   tooltip: 'Bold',
                 ),
               ),
@@ -611,6 +583,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   onPressed: _toggleItalics,
                   icon: const Icon(Icons.format_italic),
                   splashRadius: 16,
+                  //tooltip: AppLocalizations.of(context)!.labelItalics,
                   tooltip: 'Italics',
                 ),
               ),
@@ -619,28 +592,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   onPressed: _toggleStrikethrough,
                   icon: const Icon(Icons.strikethrough_s),
                   splashRadius: 16,
+                  //tooltip: AppLocalizations.of(context)!.labelStrikethrough,
                   tooltip: 'Strikethrough',
                 ),
               ),
-              /*
-              Center(
-                child: IconButton(
-                  onPressed: _toggleSuperscript,
-                  icon: const Icon(Icons.superscript),
-                  splashRadius: 16,
-                  tooltip: 'Superscript',
-                ),
-              ),
-              Center(
-                child: IconButton(
-                  onPressed: _toggleSubscript,
-                  icon: const Icon(Icons.subscript),
-                  splashRadius: 16,
-                  tooltip: 'Subscript',
-                ),
-              ),
-              */
-              /*
               Center(
                 child: IconButton(
                   onPressed:
@@ -650,31 +605,53 @@ class _EditorToolbarState extends State<EditorToolbar> {
                       ? const Color(0xFF007AFF)
                       : IconTheme.of(context).color,
                   splashRadius: 16,
+                  //tooltip: AppLocalizations.of(context)!.labelLink,
                   tooltip: 'Link',
                 ),
               ),
-              */
+              /*
               // Only display alignment controls if the currently selected text
               // node respects alignment. List items, for example, do not.
-              /*
-              if (_isTextAlignable()) //
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildVerticalDivider(),
-                    Tooltip(
-                      message: 'Text Alignment',
-                      child: _buildAlignmentSelector(),
+              if (_isTextAlignable()) ...[
+                _buildVerticalDivider(),
+                Tooltip(
+                  //message: AppLocalizations.of(context)!.labelTextAlignment,
+                  message: 'Text Alignment',
+                  child: DropdownButton<TextAlign>(
+                    value: _getCurrentTextAlignment(),
+                    items: [
+                      TextAlign.left,
+                      TextAlign.center,
+                      TextAlign.right,
+                      TextAlign.justify
+                    ]
+                        .map((textAlign) => DropdownMenuItem<TextAlign>(
+                              value: textAlign,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Icon(_buildTextAlignIcon(textAlign)),
+                              ),
+                            ))
+                        .toList(),
+                    icon: const Icon(Icons.arrow_drop_down),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
                     ),
-                  ],
+                    underline: const SizedBox(),
+                    elevation: 0,
+                    itemHeight: 48,
+                    onChanged: _changeAlignment,
+                  ),
                 ),
-
+              ],
               _buildVerticalDivider(),
               Center(
                 child: IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.more_vert),
                   splashRadius: 16,
+                  //tooltip: AppLocalizations.of(context)!.labelMoreOptions,
                   tooltip: 'More Options',
                 ),
               ),
@@ -685,34 +662,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
       ),
     );
   }
-
-  /*
-  Widget _buildAlignmentSelector() {
-    final alignment = _getCurrentTextAlignment();
-    return SuperEditorDemoIconItemSelector(
-      parentFocusNode: widget.editorFocusNode,
-      boundaryKey: widget.editorViewportKey,
-      value: SuperEditorDemoIconItem(
-        id: alignment.name,
-        icon: _buildTextAlignIcon(alignment),
-      ),
-      items: const [
-        TextAlign.left,
-        TextAlign.center,
-        TextAlign.right,
-        TextAlign.justify
-      ]
-          .map(
-            (alignment) => SuperEditorDemoIconItem(
-              icon: _buildTextAlignIcon(alignment),
-              id: alignment.name,
-            ),
-          )
-          .toList(),
-      onSelected: _onAlignmentSelected,
-    );
-  }
-  */
 
   Widget _buildBlockTypeSelector() {
     final currentBlockType = _getCurrentTextType();
@@ -747,22 +696,35 @@ class _EditorToolbarState extends State<EditorToolbar> {
         child: Row(
           children: [
             Expanded(
-              child: SuperTextField(
+              child: Focus(
                 focusNode: _urlFocusNode,
-                textController: _urlController,
-                minLines: 1,
-                maxLines: 1,
-                inputSource: TextInputSource.ime,
-                hintBehavior: HintBehavior.displayHintUntilTextEntered,
-                hintBuilder: (context) {
-                  return const Text(
-                    'enter a url...',
-                    style: TextStyle(color: Colors.grey, fontSize: 16),
-                  );
-                },
-                textStyleBuilder: (_) {
-                  return const TextStyle(color: Colors.black, fontSize: 16);
-                },
+                parentNode: _popoverFocusNode,
+                // We use a SuperTextField instead of a TextField because TextField
+                // automatically re-parents its FocusNode, which causes #609. Flutter
+                // #106923 tracks the TextField issue.
+                child: SuperTextField(
+                  focusNode: _urlFocusNode,
+                  textController: _urlController,
+                  minLines: 1,
+                  maxLines: 1,
+                  inputSource: TextInputSource.ime,
+                  hintBehavior: HintBehavior.displayHintUntilTextEntered,
+                  hintBuilder: (context) {
+                    return const Text(
+                      'enter a url...',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                    );
+                  },
+                  textStyleBuilder: (_) {
+                    return const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    );
+                  },
+                ),
               ),
             ),
             IconButton(
@@ -774,7 +736,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 setState(() {
                   _urlFocusNode.unfocus();
                   _showUrlField = false;
-                  _urlController!.clearTextAndSelection();
+                  _urlController!.clear();
                 });
               },
             ),
@@ -785,7 +747,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
   }
 
   Widget _buildVerticalDivider() {
-    return Container(width: 1, color: Colors.grey.shade300);
+    return Container(
+      width: 1,
+      color: Colors.grey.shade300,
+    );
   }
 
   /*
@@ -873,6 +838,7 @@ class _ImageFormatToolbarState extends State<ImageFormatToolbar> {
       child: ValueListenableBuilder<DocumentSelection?>(
         valueListenable: widget.composer.selectionNotifier,
         builder: (context, selection, child) {
+          //appLog.fine("Building image toolbar. Selection: $selection");
           if (selection == null) {
             return const SizedBox();
           }
@@ -907,7 +873,8 @@ class _ImageFormatToolbarState extends State<ImageFormatToolbar> {
                   onPressed: _makeImageConfined,
                   icon: const Icon(Icons.photo_size_select_large),
                   splashRadius: 16,
-                  tooltip: 'Limited Width',
+                  //tooltip: AppLocalizations.of(context)!.labelBold,
+                  tooltip: 'Bold',
                 ),
               ),
               Center(
@@ -915,7 +882,8 @@ class _ImageFormatToolbarState extends State<ImageFormatToolbar> {
                   onPressed: _makeImageFullBleed,
                   icon: const Icon(Icons.photo_size_select_actual),
                   splashRadius: 16,
-                  tooltip: 'Full Width',
+                  //tooltip: AppLocalizations.of(context)!.labelItalics,
+                  tooltip: 'Italics',
                 ),
               ),
             ],
@@ -943,12 +911,16 @@ class _PositionedToolbar extends StatelessWidget {
     return ValueListenableBuilder<Offset?>(
       valueListenable: anchor,
       builder: (context, offset, _) {
+        //appLog.fine(
+        //    "(Re)Building _PositionedToolbar widget due to anchor change");
         if (offset == null || composer.selection == null) {
+          //appLog.fine("Anchor is null. Building an empty box.");
           // When no anchor position is available, or the user hasn't
           // selected any text, show nothing.
           return const SizedBox();
         }
 
+        //appLog.fine("Anchor is non-null: $offset, child: $child");
         return SizedBox.expand(
           child: Stack(
             children: [

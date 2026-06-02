@@ -96,7 +96,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
     final state = viewModel.state;
 
     final textColor = Theme.of(context).textTheme.bodyLarge!.color!;
-    final textStyle = TextStyle(color: textColor.withValues(alpha: .65));
+    final textStyle = TextStyle(color: textColor.withOpacity(.65));
 
     return EditScaffold(
       title: transactionRule.isNew
@@ -141,7 +141,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                     SwitchListTile(
                       title: Text(localization.matchAllRules),
                       subtitle: Text(localization.matchAllRulesHelp),
-                      activeThumbColor: Theme.of(context).colorScheme.secondary,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       value: transactionRule.matchesOnAll,
                       onChanged: (value) {
                         viewModel.onChanged(
@@ -154,7 +154,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                     SwitchListTile(
                       title: Text(localization.autoConvert),
                       subtitle: Text(localization.autoConvertHelp),
-                      activeThumbColor: Theme.of(context).colorScheme.secondary,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       value: transactionRule.autoConvert,
                       onChanged: (value) {
                         viewModel.onChanged(

@@ -50,7 +50,7 @@ class BoolDropdownButton extends StatelessWidget {
             ? Icon(iconData)
             : null,
         onChanged: (value) => onChanged(value),
-        activeThumbColor: Theme.of(context).colorScheme.secondary,
+        activeColor: Theme.of(context).colorScheme.secondary,
         subtitle: helpLabel != null ? Text(helpLabel!) : null,
       );
     }
@@ -71,10 +71,7 @@ class BoolDropdownButton extends StatelessWidget {
           )
         : Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: RadioGroup<bool>(
-              onChanged: (value) => null,
-              groupValue: value,
-              child: Flex(
+            child: Flex(
                 direction: isDesktop(context) ? Axis.horizontal : Axis.vertical,
                 children: <Widget>[
                   InkWell(
@@ -89,6 +86,8 @@ class BoolDropdownButton extends StatelessWidget {
                           IgnorePointer(
                             child: Radio<bool>(
                               value: false,
+                              groupValue: value,
+                              onChanged: (_) {},
                               activeColor: Theme.of(
                                 context,
                               ).colorScheme.secondary,
@@ -112,6 +111,8 @@ class BoolDropdownButton extends StatelessWidget {
                           IgnorePointer(
                             child: Radio<bool>(
                               value: true,
+                              groupValue: value,
+                              onChanged: (_) {},
                               activeColor: Theme.of(
                                 context,
                               ).colorScheme.secondary,
@@ -125,8 +126,7 @@ class BoolDropdownButton extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          );
+            );
 
     if (label == null) {
       return widget;

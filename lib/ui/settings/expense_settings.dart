@@ -58,7 +58,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.shouldBeInvoiced),
                 value: company.markExpensesInvoiceable,
                 subtitle: Text(localization.shouldBeInvoicedHelp),
@@ -67,7 +67,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.markPaid),
                 value: company.markExpensesPaid,
                 subtitle: Text(localization.markPaidHelp),
@@ -93,7 +93,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                   ),
                 ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertCurrency),
                 value: company.convertExpenseCurrency,
                 subtitle: Text(localization.convertExpenseCurrencyHelp),
@@ -102,7 +102,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
                 value: company.invoiceExpenseDocuments,
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
@@ -115,7 +115,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.notifyVendorWhenPaid),
                 value: company.notifyVendorWhenPaid,
                 subtitle: Text(localization.notifyVendorWhenPaidHelp),
@@ -141,7 +141,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 ),
                 SizedBox(height: 16),
                 SwitchListTile(
-                  activeThumbColor: Theme.of(context).colorScheme.secondary,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.inclusiveTaxes),
                   value: company.expenseInclusiveTaxes,
                   subtitle: Text(

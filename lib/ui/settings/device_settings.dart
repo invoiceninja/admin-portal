@@ -249,7 +249,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       value: prefState.showPdfPreview,
                       onChanged: (value) =>
                           viewModel.onShowPdfChanged(context, value),
-                      activeThumbColor: Theme.of(context).colorScheme.secondary,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(MdiIcons.filePdfBox),
                     ),
                     if (kIsWeb || !kReleaseMode)
@@ -259,7 +259,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         value: prefState.enableNativeBrowser,
                         onChanged: (value) => viewModel
                             .onEnableNativeBrowserChanged(context, value),
-                        activeThumbColor: Theme.of(
+                        activeColor: Theme.of(
                           context,
                         ).colorScheme.secondary,
                         secondary: Icon(MdiIcons.filePdfBox),
@@ -359,7 +359,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                                 ? MdiIcons.lock
                                 : MdiIcons.lockOpen,
                           ),
-                          activeThumbColor: Theme.of(
+                          activeColor: Theme.of(
                             context,
                           ).colorScheme.secondary,
                         );
@@ -374,7 +374,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.enableFlexibleSearch,
                     onChanged: (value) =>
                         viewModel.onEnableFlexibleSearchChanged(context, value),
-                    activeThumbColor: Theme.of(context).colorScheme.secondary,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.search),
                   ),
                   if (isDesktop(context)) ...[
@@ -384,7 +384,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       value: prefState.enableTouchEvents,
                       onChanged: (value) =>
                           viewModel.onEnableTouchEventsChanged(context, value),
-                      activeThumbColor: Theme.of(context).colorScheme.secondary,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(Icons.touch_app),
                     ),
                     SwitchListTile(
@@ -393,7 +393,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       value: prefState.enableTooltips,
                       onChanged: (value) =>
                           viewModel.onEnableTooltipsChanged(context, value),
-                      activeThumbColor: Theme.of(context).colorScheme.secondary,
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: Icon(MdiIcons.tooltip),
                     ),
                   ],
@@ -403,7 +403,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.persistData,
                     onChanged: (value) =>
                         viewModel.onPersistDataChanged(context, value),
-                    activeThumbColor: Theme.of(context).colorScheme.secondary,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                     secondary: Icon(Icons.save_alt),
                   ),
                 ],

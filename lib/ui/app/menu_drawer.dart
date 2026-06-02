@@ -893,7 +893,7 @@ class _DrawerTileState extends State<DrawerTile> {
     Color? color = Colors.transparent;
     Color? textColor = Theme.of(
       context,
-    ).textTheme.bodyLarge!.color!.withValues(alpha: isSelected ? 1 : .7);
+    ).textTheme.bodyLarge!.color!.withOpacity(isSelected ? 1 : .7);
 
     if (isSelected) {
       if (activeColor.isNotEmpty) {
@@ -1819,7 +1819,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                       setState(() => _includeLogs = value);
                     },
                     title: Text(localization.includeRecentErrors),
-                    activeThumbColor: Theme.of(context).colorScheme.secondary,
+                    activeColor: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
               ],

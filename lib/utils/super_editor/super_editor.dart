@@ -1,17 +1,23 @@
+//import 'package:example/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/markdown.dart';
 import 'package:super_editor/super_editor.dart';
-import 'package:super_editor_markdown/super_editor_markdown.dart';
+//import 'package:super_editor_markdown/super_editor_markdown.dart';
 
 import 'package:invoiceninja_flutter/utils/super_editor/toolbar.dart';
+//import '_toolbar.dart';
 
 /// Example of a rich text editor.
 ///
 /// This editor will expand in functionality as package
 /// capabilities expand.
 class ExampleEditor extends StatefulWidget {
-  const ExampleEditor({Key? key, required this.value, this.onChanged})
-    : super(key: key);
+  const ExampleEditor({
+    Key? key,
+    required this.value,
+    this.onChanged,
+  }) : super(key: key);
 
   final String value;
   final Function(String)? onChanged;
@@ -49,9 +55,8 @@ class _ExampleEditorState extends State<ExampleEditor> {
   final _imageSelectionAnchor = ValueNotifier<Offset?>(null);
 
   // TODO: get rid of overlay controller once Android is refactored to use a control scope (as follow up to: https://github.com/superlistapp/super_editor/pull/1470)
-  final _overlayController =
-      MagnifierAndToolbarController() //
-        ..screenPadding = const EdgeInsets.all(20.0);
+  final _overlayController = MagnifierAndToolbarController() //
+    ..screenPadding = const EdgeInsets.all(20.0);
 
   late final SuperEditorIosControlsController _iosControlsController;
 
@@ -69,14 +74,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
     _doc = deserializeMarkdownToDocument(markdown)
       ..addListener(_onDocumentChange);
-
     _composer = MutableDocumentComposer();
     _composer.selectionNotifier.addListener(_hideOrShowToolbar);
-    _docEditor = createDefaultDocumentEditor(
-      document: _doc,
-      composer: _composer,
-      isHistoryEnabled: true,
-    );
+    _docEditor =
+        createDefaultDocumentEditor(document: _doc, composer: _composer);
     _docOps = CommonEditorOperations(
       editor: _docEditor,
       document: _doc,
@@ -112,14 +113,13 @@ class _ExampleEditorState extends State<ExampleEditor> {
     _doc = deserializeMarkdownToDocument(markdown)
       ..addListener(_onDocumentChange);
 
-    _docEditor = createDefaultDocumentEditor(
-      document: _doc,
-      composer: _composer,
-    );
+    _docEditor =
+        createDefaultDocumentEditor(document: _doc, composer: _composer);
   }
 
   @override
   void dispose() {
+    _doc.removeListener(_onDocumentChange);
     _iosControlsController.dispose();
     _scrollController.dispose();
     _editorFocusNode.dispose();
@@ -172,6 +172,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     final selectedNode = _doc.getNodeById(selection.extent.nodeId);
 
     if (selectedNode is ImageNode) {
+      //appLog.fine("Showing image toolbar");
       // Show the editor's toolbar for image sizing.
       _showImageToolbar();
       _hideEditorToolbar();
@@ -202,15 +203,15 @@ class _ExampleEditorState extends State<ExampleEditor> {
     // text.
     // TODO: switch this to use a Leader and Follower
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final layout = _docLayoutKey.currentState as DocumentLayout;
-      final docBoundingBox = layout.getRectForSelection(
-        _composer.selection!.base,
-        _composer.selection!.extent,
-      )!;
-      final globalOffset = layout.getGlobalOffsetFromDocumentOffset(
-        Offset.zero,
+      final docBoundingBox = (_docLayoutKey.currentState as DocumentLayout)
+          .getRectForSelection(
+              _composer.selection!.base, _composer.selection!.extent)!;
+      final docBox =
+          _docLayoutKey.currentContext!.findRenderObject() as RenderBox;
+      final overlayBoundingBox = Rect.fromPoints(
+        docBox.localToGlobal(docBoundingBox.topLeft),
+        docBox.localToGlobal(docBoundingBox.bottomRight),
       );
-      final overlayBoundingBox = docBoundingBox.shift(globalOffset);
 
       _textSelectionAnchor.value = overlayBoundingBox.topCenter;
     });
@@ -228,16 +229,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     // I tried explicitly unfocus()'ing the URL textfield
     // in the toolbar but it didn't return focus to the
     // editor. I'm not sure why.
-    //
-    // Only do that if the primary focus is not at the root focus scope because
-    // this might signify that the app is going to the background. Removing
-    // the focus from the root focus scope in that situation prevents the editor
-    // from re-gaining focus when the app is brought back to the foreground.
-    //
-    // See https://github.com/superlistapp/super_editor/issues/2279 for details.
-    if (FocusManager.instance.primaryFocus != FocusManager.instance.rootScope) {
-      _editorFocusNode.requestFocus();
-    }
+    _editorFocusNode.requestFocus();
   }
 
   DocumentGestureMode get _gestureMode {
@@ -299,9 +291,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final docBoundingBox = (_docLayoutKey.currentState as DocumentLayout)
           .getRectForSelection(
-            _composer.selection!.base,
-            _composer.selection!.extent,
-          )!;
+              _composer.selection!.base, _composer.selection!.extent)!;
       final docBox =
           _docLayoutKey.currentContext!.findRenderObject() as RenderBox;
       final overlayBoundingBox = Rect.fromPoints(
@@ -323,16 +313,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     _imageFormatBarOverlayController.hide();
 
     // Ensure that focus returns to the editor.
-    //
-    // Only do that if the primary focus is not at the root focus scope because
-    // this might signify that the app is going to the background. Removing
-    // the focus from the root focus scope in that situation prevents the editor
-    // from re-gaining focus when the app is brought back to the foreground.
-    //
-    // See https://github.com/superlistapp/super_editor/issues/2279 for details.
-    if (FocusManager.instance.primaryFocus != FocusManager.instance.rootScope) {
-      _editorFocusNode.requestFocus();
-    }
+    _editorFocusNode.requestFocus();
   }
 
   @override
@@ -358,7 +339,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
                 children: [
                   Column(
                     children: [
-                      Expanded(child: _buildEditor(themedContext)),
+                      Expanded(
+                        child: _buildEditor(themedContext),
+                      ),
                       if (_isMobile) //
                         _buildMountedToolbar(),
                     ],
@@ -469,18 +452,19 @@ class _ExampleEditorState extends State<ExampleEditor> {
             controller: _iosControlsController,
             child: SuperEditor(
               editor: _docEditor,
+              document: _doc,
+              composer: _composer,
               focusNode: _editorFocusNode,
               scrollController: _scrollController,
               documentLayoutKey: _docLayoutKey,
               documentOverlayBuilders: [
                 DefaultCaretOverlayBuilder(
                   caretStyle: const CaretStyle().copyWith(
-                    color: isLight ? Colors.black : Colors.redAccent,
-                  ),
+                      color: isLight ? Colors.black : Colors.redAccent),
                 ),
                 if (defaultTargetPlatform == TargetPlatform.iOS) ...[
-                  SuperEditorIosHandlesDocumentLayerBuilder(),
-                  SuperEditorIosToolbarFocalPointDocumentLayerBuilder(),
+                  SuperEditorAndroidToolbarFocalPointDocumentLayerBuilder(),
+                  SuperEditorAndroidHandlesDocumentLayerBuilder(),
                 ],
                 if (defaultTargetPlatform == TargetPlatform.android) ...[
                   SuperEditorAndroidToolbarFocalPointDocumentLayerBuilder(),
@@ -491,10 +475,13 @@ class _ExampleEditorState extends State<ExampleEditor> {
               selectionStyle: isLight
                   ? defaultSelectionStyle
                   : SelectionStyles(
-                      selectionColor: Colors.red.withValues(alpha: 0.3),
+                      selectionColor: Colors.red.withOpacity(0.3),
                     ),
               stylesheet: defaultStylesheet.copyWith(
-                addRulesAfter: [if (!isLight) ..._darkModeStyles, taskStyles],
+                addRulesAfter: [
+                  if (!isLight) ..._darkModeStyles,
+                  taskStyles,
+                ],
               ),
               componentBuilders: [
                 TaskComponentBuilder(_docEditor),
@@ -507,7 +494,6 @@ class _ExampleEditorState extends State<ExampleEditor> {
                   : defaultKeyboardActions,
               androidToolbarBuilder: (_) => _buildAndroidFloatingToolbar(),
               overlayController: _overlayController,
-              plugins: {MarkdownInlineUpstreamSyntaxPlugin()},
             ),
           ),
         ),
@@ -534,7 +520,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
   Widget _buildMountedToolbar() {
     return MultiListenableBuilder(
-      listenables: <Listenable>{_docChangeSignal, _composer.selectionNotifier},
+      listenables: <Listenable>{
+        _docChangeSignal,
+        _composer.selectionNotifier,
+      },
       builder: (_) {
         final selection = _composer.selection;
 
@@ -571,19 +560,16 @@ class _ExampleEditorState extends State<ExampleEditor> {
       setWidth: (nodeId, width) {
         print('Applying width $width to node $nodeId');
         final node = _doc.getNodeById(nodeId)!;
-        final currentStyles = SingleColumnLayoutComponentStyles.fromMetadata(
-          node,
-        );
+        final currentStyles =
+            SingleColumnLayoutComponentStyles.fromMetadata(node);
+        SingleColumnLayoutComponentStyles(
+          width: width,
+          padding: currentStyles.padding,
+        ).applyTo(node);
 
-        _docEditor.execute([
-          ChangeSingleColumnLayoutComponentStylesRequest(
-            nodeId: nodeId,
-            styles: SingleColumnLayoutComponentStyles(
-              width: width,
-              padding: currentStyles.padding,
-            ),
-          ),
-        ]);
+        // TODO: schedule a presentation reflow so that the image changes size immediately (https://github.com/superlistapp/super_editor/issues/1529)
+        //       Right now, nothing happens when pressing the button, unless we force a
+        //       rebuild/reflow.
       },
       closeToolbar: _hideImageToolbar,
     );
@@ -592,13 +578,34 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
 // Makes text light, for use during dark mode styling.
 final _darkModeStyles = [
-  StyleRule(BlockSelector.all, (doc, docNode) {
-    return {Styles.textStyle: const TextStyle(color: Color(0xFFCCCCCC))};
-  }),
-  StyleRule(const BlockSelector('header1'), (doc, docNode) {
-    return {Styles.textStyle: const TextStyle(color: Color(0xFF888888))};
-  }),
-  StyleRule(const BlockSelector('header2'), (doc, docNode) {
-    return {Styles.textStyle: const TextStyle(color: Color(0xFF888888))};
-  }),
+  StyleRule(
+    BlockSelector.all,
+    (doc, docNode) {
+      return {
+        'textStyle': const TextStyle(
+          color: Color(0xFFCCCCCC),
+        ),
+      };
+    },
+  ),
+  StyleRule(
+    const BlockSelector('header1'),
+    (doc, docNode) {
+      return {
+        'textStyle': const TextStyle(
+          color: Color(0xFF888888),
+        ),
+      };
+    },
+  ),
+  StyleRule(
+    const BlockSelector('header2'),
+    (doc, docNode) {
+      return {
+        'textStyle': const TextStyle(
+          color: Color(0xFF888888),
+        ),
+      };
+    },
+  ),
 ];

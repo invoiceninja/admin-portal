@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:overlord/overlord.dart';
+import 'package:overlord/overlord.dart'
+    hide PopoverController, PopoverScaffold, RoundedRectanglePopoverAppearance;
 import 'package:super_editor/super_editor.dart';
 
 /// A selection control, which displays a button with the selected item, and upon tap, displays a
@@ -149,7 +150,7 @@ class _SuperEditorDemoTextItemSelectorState
     return DecoratedBox(
       decoration: BoxDecoration(
         color: isActive
-            ? Colors.grey.withValues(alpha: 0.2)
+            ? Colors.grey.withOpacity(0.2)
             : Colors.transparent,
       ),
       child: InkWell(
@@ -318,7 +319,7 @@ class _SuperEditorDemoIconItemSelectorState
     return DecoratedBox(
       decoration: BoxDecoration(
         color: isActive
-            ? Colors.grey.withValues(alpha: 0.2)
+            ? Colors.grey.withOpacity(0.2)
             : Colors.transparent,
       ),
       child: InkWell(

@@ -370,7 +370,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
-              activeThumbColor: Theme.of(context).colorScheme.secondary,
+              activeColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.addToInvoices),
               value: _contact!.sendEmail,
               onChanged: (value) {
@@ -390,7 +390,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.ccOnly),
                 value: _contact!.ccOnly,
                 onChanged: (value) {

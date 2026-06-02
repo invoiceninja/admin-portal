@@ -935,7 +935,7 @@ class RuledText extends StatelessWidget {
           Expanded(
             child: Container(
               height: 1,
-              color: Colors.grey.withValues(alpha: .5),
+              color: Colors.grey.withOpacity(.5),
             ),
           ),
           Padding(
@@ -948,7 +948,7 @@ class RuledText extends StatelessWidget {
           Expanded(
             child: Container(
               height: 1,
-              color: Colors.grey.withValues(alpha: .5),
+              color: Colors.grey.withOpacity(.5),
             ),
           ),
         ],

@@ -40,7 +40,7 @@ class AppDropdownButton<T> extends StatelessWidget {
       decoration: labelText != null
           ? InputDecoration(label: Text(labelText!))
           : InputDecoration.collapsed(hintText: ''),
-      initialValue: checkedValue == blankValue ? null : checkedValue,
+      value: checkedValue == blankValue ? null : checkedValue,
       isExpanded: true,
       autofocus: autofocus,
       isDense: labelText != null,

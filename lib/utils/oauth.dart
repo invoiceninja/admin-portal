@@ -1,126 +1,89 @@
-import 'dart:io' show Platform;
-
-import 'package:flutter/foundation.dart';
+// Package imports:
 import 'package:google_sign_in/google_sign_in.dart';
 
-/// Google sign-in for the InvoiceNinja API (`/oauth_login`).
-///
-/// We deliberately ride v7's "access token" path instead of the new
-/// "id token" path: the backend's `getTokenResponse(id_token)` route
-/// rejects v7-issued JWTs, while `harvestUser(access_token)` (which calls
-/// Google's userinfo endpoint) keeps working unchanged. So this returns
-/// `(idToken: '', accessToken)` and the repository layer omits the empty
-/// id_token from the request body so Laravel's `request()->has('id_token')`
-/// returns false and execution falls into the access-token branch.
-///
-/// Android requires `serverClientId` to be passed to `initialize()` — the
-/// v7 plugin routes through Credential Manager, which needs the Web OAuth
-/// client ID and does not auto-resolve it from `google-services.json`. iOS
-/// resolves its client ID from `Info.plist`/`GoogleService-Info.plist`, and
-/// passing `serverClientId` there breaks the flow, so it stays Android-only.
-const String _kAndroidServerClientId =
-    '640903115046-37ltu6s2j07gcqkssmf5feofj4isnsju.apps.googleusercontent.com';
+final GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'email',
+    'openid',
+    'profile',
+    //'https://www.googleapis.com/auth/gmail.send',
+  ],
+);
 
 class GoogleOAuth {
-  static bool _initialized = false;
-
   static bool get isEnabled => true;
 
-  static Future<void> init() async {
-    if (_initialized) {
-      return;
-    }
-    if (!kIsWeb && Platform.isAndroid) {
-      await GoogleSignIn.instance.initialize(
-        serverClientId: _kAndroidServerClientId,
-      );
-    } else {
-      await GoogleSignIn.instance.initialize();
-    }
-    _initialized = true;
-  }
-
-  static Future<bool> signIn(
-    void Function(String idToken, String accessToken) callback, {
-    bool isSilent = false,
-  }) async {
-    await init();
-
+  static Future<bool> signIn(Function(String, String) callback,
+      {bool isSilent = false}) async {
     GoogleSignInAccount? account;
 
     if (isSilent) {
-      account = await GoogleSignIn.instance.attemptLightweightAuthentication();
+      account = await _googleSignIn.signInSilently();
     }
 
-    account ??= await _interactiveAuthenticate();
+    account ??= await _googleSignIn.signIn();
 
-    if (account == null) {
-      callback('', '');
+    if (account != null) {
+      account.authentication.then((GoogleSignInAuthentication value) {
+        callback(
+          value.idToken ?? '',
+          value.accessToken ?? '',
+        );
+      });
+
+      return true;
+    } else {
+      print('## ERROR: sign in failed');
       return false;
     }
-
-    final accessToken = await _resolveAccessToken(account);
-    callback('', accessToken);
-    return accessToken.isNotEmpty;
   }
 
-  static Future<bool> signUp(
-    void Function(String idToken, String accessToken) callback,
-  ) async {
-    await init();
+  static Future<bool> signUp(Function(String, String) callback) async {
+    final account = await _googleSignIn.signIn();
+    if (account != null) {
+      account.authentication.then((GoogleSignInAuthentication value) {
+        callback(
+          value.idToken ?? '',
+          value.accessToken ?? '',
+        );
+      });
 
-    final account = await _interactiveAuthenticate();
-    if (account == null) {
-      callback('', '');
+      return true;
+    } else {
+      print('## ERROR: sign up failed');
       return false;
     }
-
-    final accessToken = await _resolveAccessToken(account);
-    callback('', accessToken);
-    return accessToken.isNotEmpty;
   }
 
-  static Future<void> signOut() async {
-    await init();
-    await GoogleSignIn.instance.signOut();
+  static Future<bool> requestGmailScope() async {
+    return await _googleSignIn
+        .requestScopes(['https://www.googleapis.com/auth/gmail.send']);
   }
 
-  static Future<void> disconnect() async {
-    await init();
-    await GoogleSignIn.instance.disconnect();
-  }
+  /*
+  static Future<bool> grantOfflineAccess(
+      Function(String, String, String) successCallback,
+      Function errorCallback) async {
+    final account = await _googleSignIn.grantOfflineAccess();
+    if (account != null) {
+      account.authentication.then((GoogleSignInAuthentication value) {
+        successCallback(value.idToken, value.accessToken, value.serverAuthCode);
+      });
 
-  static const _scopes = ['email', 'profile'];
-
-  static Future<GoogleSignInAccount?> _interactiveAuthenticate() async {
-    if (!GoogleSignIn.instance.supportsAuthenticate()) {
-      debugPrint('## authenticate() not supported on this platform');
-      return null;
-    }
-    try {
-      return await GoogleSignIn.instance.authenticate();
-    } on GoogleSignInException catch (e) {
-      debugPrint('## authenticate failed: ${e.code}');
-      return null;
+      return true;
+    } else {
+      print('## ERROR: grant offline failed');
+      errorCallback();
+      return false;
     }
   }
+  */
 
-  static Future<String> _resolveAccessToken(GoogleSignInAccount account) async {
-    final silent = await account.authorizationClient.authorizationForScopes(
-      _scopes,
-    );
-    if (silent != null) {
-      return silent.accessToken;
-    }
+  static Future<GoogleSignInAccount?> signOut() async {
+    return await _googleSignIn.signOut();
+  }
 
-    try {
-      final interactive = await account.authorizationClient.authorizeScopes(
-        _scopes,
-      );
-      return interactive.accessToken;
-    } on GoogleSignInException catch (e) {
-      debugPrint('## authorizeScopes failed: ${e.code}');
-      return '';
-    }
+  static Future<GoogleSignInAccount?> disconnect() async {
+    return await _googleSignIn.disconnect();
   }
 }

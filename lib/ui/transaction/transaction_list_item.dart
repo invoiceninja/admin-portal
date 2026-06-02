@@ -152,9 +152,7 @@ class TransactionListItem extends StatelessWidget {
                                         .textTheme
                                         .titleSmall!
                                         .copyWith(
-                                          color: textColor!.withValues(
-                                            alpha: kLighterOpacity,
-                                          ),
+                                          color: textColor!.withOpacity(kLighterOpacity),
                                         ),
                                   ),
                                 ],

@@ -694,7 +694,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: SwitchListTile(
-                  activeThumbColor: Theme.of(context).colorScheme.secondary,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.inclusiveTaxes),
                   dense: true,
                   value: invoice.usesInclusiveTaxes,
@@ -709,7 +709,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 8),
                 child: SwitchListTile(
-                  activeThumbColor: Theme.of(context).colorScheme.secondary,
+                  activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.autoBillEnabled),
                   dense: true,
                   value: invoice.autoBillEnabled,

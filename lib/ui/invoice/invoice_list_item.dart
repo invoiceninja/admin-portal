@@ -163,9 +163,7 @@ class InvoiceListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!.withValues(
-                                        alpha: kLighterOpacity,
-                                      ),
+                                      color: textColor!.withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],

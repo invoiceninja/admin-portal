@@ -201,7 +201,7 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                         ),
                   isDense: true,
                   onChanged: widget.enabled ? (dynamic x) {} : null,
-                  initialValue: widget.selectedValues.isNotEmpty
+                  value: widget.selectedValues.isNotEmpty
                       ? widget.selectedValues[0]
                       : null,
                   selectedItemBuilder: (context) {

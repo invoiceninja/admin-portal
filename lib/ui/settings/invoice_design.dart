@@ -269,7 +269,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                     );
                                     store.dispatch(ToggleShowPdfPreview());
                                   },
-                                  activeThumbColor: Theme.of(
+                                  activeColor: Theme.of(
                                     context,
                                   ).colorScheme.secondary,
                                 ),
@@ -1216,7 +1216,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       child: SwitchListTile(
                         title: Text(localization.shareInvoiceQuoteColumns),
                         value: settings.shareInvoiceQuoteColumns ?? true,
-                        activeThumbColor: Theme.of(
+                        activeColor: Theme.of(
                           context,
                         ).colorScheme.secondary,
                         onChanged: (value) {

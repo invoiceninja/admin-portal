@@ -447,10 +447,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               primary: accentColor,
                               surface: Colors.black,
                             ),
-                            bottomAppBarTheme: BottomAppBarThemeData(
+                            bottomAppBarTheme: BottomAppBarTheme(
                               color: const Color(0xFF1B1C1E),
                             ),
-                            tabBarTheme: TabBarThemeData(
+                            tabBarTheme: TabBarTheme(
                               indicatorColor: accentColor,
                             ),
                           )
@@ -474,13 +474,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                                 ? accentColor
                                 : const Color(0xFF5dabf4),
                             scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-                            tabBarTheme: TabBarThemeData(
+                            tabBarTheme: TabBarTheme(
                               labelColor: hasAccentColor
                                   ? Colors.white
                                   : Colors.black,
                               unselectedLabelColor: hasAccentColor
-                                  ? Colors.white.withValues(alpha: .65)
-                                  : Colors.black.withValues(alpha: .65),
+                                  ? Colors.white.withOpacity(.65)
+                                  : Colors.black.withOpacity(.65),
                             ),
                             iconTheme: IconThemeData(
                               color: hasAccentColor ? null : accentColor,
@@ -511,7 +511,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               secondary: accentColor,
                               surface: Colors.white,
                             ),
-                            bottomAppBarTheme: BottomAppBarThemeData(
+                            bottomAppBarTheme: BottomAppBarTheme(
                               color: Colors.white,
                             ),
                           ),

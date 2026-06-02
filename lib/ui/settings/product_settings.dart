@@ -102,7 +102,7 @@ class _ProductSettingsState extends State<ProductSettings> {
           FormCard(
             children: [
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.trackInventory),
                 value: company.trackInventory,
                 subtitle: Text(localization.trackInventoryHelp),
@@ -111,7 +111,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.stockNotifications),
                 value: company.stockNotification,
                 subtitle: Text(localization.stockNotificationsHelp),
@@ -130,7 +130,7 @@ class _ProductSettingsState extends State<ProductSettings> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductDiscount),
                 value: company.enableProductDiscount,
                 subtitle: Text(localization.showProductDiscountHelp),
@@ -139,7 +139,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductCost),
                 value: company.enableProductCost,
                 subtitle: Text(localization.showCostHelp),
@@ -148,7 +148,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductQuantity),
                 value: company.enableProductQuantity,
                 subtitle: Text(localization.showProductQuantityHelp),
@@ -157,7 +157,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.defaultQuantity),
                 value: company.defaultQuantity,
                 subtitle: Text(localization.defaultQuantityHelp),
@@ -171,7 +171,7 @@ class _ProductSettingsState extends State<ProductSettings> {
             isLast: true,
             children: <Widget>[
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showProductDescription),
                 value: company.showProductDetails,
                 subtitle: Text(localization.showProductDescriptionHelp),
@@ -180,7 +180,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.fillProducts),
                 value: company.fillProducts,
                 subtitle: Text(localization.fillProductsHelp),
@@ -189,7 +189,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.updateProducts),
                 value: company.updateProducts,
                 subtitle: Text(localization.updateProductsHelp),
@@ -198,7 +198,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                 ),
               ),
               SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertProducts),
                 value: company.convertProductExchangeRate,
                 subtitle: Text(localization.convertProductsHelp),

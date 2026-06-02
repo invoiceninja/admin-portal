@@ -42,7 +42,7 @@ class AppTabBar extends StatelessWidget {
       data: theme.copyWith(
         tabBarTheme: theme.tabBarTheme.copyWith(
           labelColor: Colors.black,
-          unselectedLabelColor: Colors.black.withValues(alpha: .65),
+          unselectedLabelColor: Colors.black.withOpacity(.65),
         ),
       ),
       child: tabBar,
