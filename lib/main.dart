@@ -227,9 +227,9 @@ void main({bool isTesting = false}) async {
           return null;
         }
 
-        event.environment = '${store.state.environment}'.split('.').last;
-
-        return event;
+        return event.copyWith(
+          environment: '${store.state.environment}'.split('.').last,
+        );
       };
     }, appRunner: () => runApp(InvoiceNinjaApp(store: store)));
   }

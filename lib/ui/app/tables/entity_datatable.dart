@@ -97,7 +97,7 @@ class EntityDataTableSource extends DataTableSource {
     return DataRow(
       color: backgroundColor == null
           ? null
-          : WidgetStateProperty.all<Color>(backgroundColor),
+          : MaterialStateProperty.all<Color>(backgroundColor),
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
       onSelectChanged:
           listState.isInMultiselect() ? (value) => onTap(entity) : null,

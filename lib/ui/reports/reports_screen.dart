@@ -343,7 +343,7 @@ class ReportsScreen extends StatelessWidget {
 
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_, __) {
+      onPopInvoked: (_) {
         store.dispatch(ViewDashboard());
       },
       child: Scaffold(

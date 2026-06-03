@@ -2,7 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
-import 'package:contacts_service_plus/contacts_service_plus.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

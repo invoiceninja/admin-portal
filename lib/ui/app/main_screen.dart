@@ -250,7 +250,7 @@ class MainScreen extends StatelessWidget {
 
         return PopScope(
           canPop: false,
-          onPopInvokedWithResult: (_, __) async {
+          onPopInvoked: (_) async {
             final state = store.state;
             final historyList = state.historyList;
             final isEditing = state.uiState.isEditing;

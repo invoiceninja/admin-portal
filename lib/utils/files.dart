@@ -150,7 +150,7 @@ void saveDownloadedFile(
               .replaceFirst(':path', directory),
         );
       } else {
-        await SharePlus.instance.share(ShareParams(files: [XFile(filePath)]));
+        await Share.shareXFiles([XFile(filePath)]);
       }
     }
   }

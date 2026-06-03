@@ -78,7 +78,7 @@ class ListScaffold extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16, right: 14),
         child: OutlinedButton(
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
+            backgroundColor: MaterialStateProperty.all(
               state.prefState.colorThemeModel!.colorSuccess,
             ),
           ),
@@ -128,7 +128,7 @@ class ListScaffold extends StatelessWidget {
 
     return PopScope(
       canPop: !isSettings,
-      onPopInvokedWithResult: (_, __) {
+      onPopInvoked: (_) {
         if (!isSettings) {
           store.dispatch(ViewDashboard());
         }
