@@ -349,7 +349,7 @@ class ReportsScreen extends StatelessWidget {
 
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (_, __) {
+      onPopInvoked: (_) {
         store.dispatch(ViewDashboard());
       },
       child: Scaffold(
@@ -773,8 +773,10 @@ class TotalsDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return mt.DataTable(
-      sortColumnIndex:
-          reportResult.columns.length > reportSettings.sortTotalsIndex
+      // Bound the sort index against the totals table's own column count
+      // (currency + count + totalable columns), not the full report columns.
+      sortColumnIndex: reportSettings.sortTotalsIndex <
+              2 + reportResult.totalableColumns().length
           ? reportSettings.sortTotalsIndex
           : null,
       sortAscending: reportSettings.sortTotalsAscending,
@@ -910,6 +912,8 @@ class ReportResult {
   final List<List<ReportElement>> data;
   final List<BaseEntity>? entities;
   final bool showTotals;
+
+  List<String>? _totalableColumns;
 
   static bool? matchField({
     required String column,
@@ -1288,15 +1292,17 @@ class ReportResult {
                 optionsBuilder: (TextEditingValue textEditingValue) {
                   final filter = textEditingValue.text.toLowerCase();
                   final index = columns.indexOf(column);
+                  if (index < 0) {
+                    return const Iterable<String>.empty();
+                  }
                   final options = data
+                      .where((row) => index < row.length)
                       .where(
                         (row) =>
-                            row[index]
-                                .renderText(context, column)!
+                            (row[index].renderText(context, column) ?? '')
                                 .toLowerCase()
                                 .contains(filter) &&
-                            row[index]
-                                .renderText(context, column)!
+                            (row[index].renderText(context, column) ?? '')
                                 .trim()
                                 .isNotEmpty,
                       )
@@ -1417,10 +1423,17 @@ class ReportResult {
     if (groupBy.isEmpty || reportState.isGroupByFiltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
-      for (var j = 0; j < row.length; j++) {
-        final index = columns.indexOf(sorted[j]);
-        final cell = row[index];
+      // Iterate over [sorted] (the same list used to build the header columns)
+      // so the row always has exactly one cell per column. Guard the lookup so a
+      // missing/out-of-range cell renders blank instead of crashing the table.
+      for (var j = 0; j < sorted.length; j++) {
         final column = sorted[j];
+        final cellIndex = columns.indexOf(column);
+        if (cellIndex < 0 || cellIndex >= row.length) {
+          cells.add(DataCell.empty);
+          continue;
+        }
+        final cell = row[cellIndex];
         cells.add(
           DataCell(
             ConstrainedBox(
@@ -1459,7 +1472,8 @@ class ReportResult {
           } else {
             value = group == 'null' ? localization!.blank : group;
           }
-          value = value + ' (' + values!['count']!.floor().toString() + ')';
+          value =
+              value + ' (' + (values?['count']?.floor() ?? 0).toString() + ')';
         } else if (columnType == ReportColumnType.number) {
           final currencyId = values!['${column}_currency_id'];
           value = formatNumber(
@@ -1473,7 +1487,9 @@ class ReportResult {
                 : currencyId.round().toString(),
           );
         } else if (columnType == ReportColumnType.duration) {
-          value = formatDuration(Duration(seconds: values![column]!.toInt()));
+          value = formatDuration(
+            Duration(seconds: (values?[column] ?? 0).toInt()),
+          );
         }
 
         cells.add(
@@ -1540,6 +1556,30 @@ class ReportResult {
     }
   }
 
+  // Single source of truth for the totals table's columns, in header order.
+  // Driven by the runtime cell type (not the column name) so a column that
+  // wasn't registered as numeric still totals instead of crashing the table.
+  List<String> totalableColumns() {
+    if (_totalableColumns != null) {
+      return _totalableColumns!;
+    }
+    final result = <String>{};
+    for (final row in data) {
+      for (var i = 0; i < row.length && i < columns.length; i++) {
+        final cell = row[i];
+        if ((cell is ReportIntValue ||
+                cell is ReportNumberValue ||
+                cell is ReportDurationValue ||
+                cell is ReportAgeValue) &&
+            canTotalColumn(columns[i])) {
+          result.add(columns[i]);
+        }
+      }
+    }
+    _totalableColumns = result.toList()..sort((a, b) => a.compareTo(b));
+    return _totalableColumns!;
+  }
+
   List<mt.DataColumn> totalColumns(
     BuildContext context,
     Function(int, bool) onSortCallback,
@@ -1547,35 +1587,23 @@ class ReportResult {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
     final localization = AppLocalization.of(context)!;
-    final sortedColumns =
-        columns.where((column) => canTotalColumn(column)).toList()
-          ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
-
-    //for (String column in sortedColumns)
-    //  print('## $column => ${getReportColumnType(column, context)}');
+    final sortedColumns = totalableColumns();
 
     final totalColumns = [
       mt.DataColumn(label: Text(localization.currency), onSort: onSortCallback),
       mt.DataColumn(label: Text(localization.count), onSort: onSortCallback),
-      for (String? column in sortedColumns)
-        if ([
-          ReportColumnType.number,
-          ReportColumnType.age,
-          ReportColumnType.duration,
-        ].contains(getReportColumnType(column, context)))
-          mt.DataColumn(
-            label: Text(
-              company.getCustomFieldLabel(column!).isEmpty
-                  ? localization.lookup(column)
-                  : company.getCustomFieldLabel(column),
-              overflow: TextOverflow.ellipsis,
-            ),
-            numeric: true,
-            onSort: onSortCallback,
+      for (final column in sortedColumns)
+        mt.DataColumn(
+          label: Text(
+            company.getCustomFieldLabel(column).isEmpty
+                ? localization.lookup(column)
+                : company.getCustomFieldLabel(column),
+            overflow: TextOverflow.ellipsis,
           ),
+          numeric: true,
+          onSort: onSortCallback,
+        ),
     ];
-
-    //print('## Total Columns: ${totalColumns.length}');
 
     return totalColumns;
   }
@@ -1591,6 +1619,8 @@ class ReportResult {
         ? settings.reportSettings[reportState.report]!
         : ReportSettingsEntity();
 
+    final totalable = totalableColumns();
+
     final Map<String, Map<String?, double>> totals = {};
 
     final allColumns = <String?>[];
@@ -1598,7 +1628,7 @@ class ReportResult {
     for (var i = 0; i < data.length; i++) {
       final row = data[i];
       bool countedRow = false;
-      for (var j = 0; j < row.length; j++) {
+      for (var j = 0; j < row.length && j < columns.length; j++) {
         final cell = row[j];
         final column = columns[j];
         final canTotal =
@@ -1647,7 +1677,7 @@ class ReportResult {
             totals[currencyId]![column] = 0;
           }
           totals[currencyId]![column] =
-              totals[currencyId]![column]! + cell.doubleValue!;
+              totals[currencyId]![column]! + (cell.doubleValue ?? 0);
         }
       }
     }
@@ -1673,10 +1703,11 @@ class ReportResult {
         valueA = totals[rowA]!['count'];
         valueB = totals[rowB]!['count'];
       } else {
-        final List<String?> fields = totals[rowA]!.keys.toList()
-          ..remove('count')
-          ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
-        final sortColumn = fields[reportSettings.sortTotalsIndex - 2];
+        final sortIndex = reportSettings.sortTotalsIndex - 2;
+        if (sortIndex < 0 || sortIndex >= totalable.length) {
+          return 0;
+        }
+        final sortColumn = totalable[sortIndex];
         valueA = totals[rowA]![sortColumn];
         valueB = totals[rowB]![sortColumn];
       }
@@ -1689,14 +1720,6 @@ class ReportResult {
           ? valueA.compareTo(valueB)
           : valueB.compareTo(valueA);
     });
-
-    List<String?> allFields = [];
-    keys.forEach((currencyId) {
-      final values = totals[currencyId]!;
-      allFields.addAll(values.keys);
-    });
-    allFields = allFields.toSet().toList()
-      ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
     keys.forEach((currencyId) {
       final values = totals[currencyId]!;
@@ -1713,33 +1736,33 @@ class ReportResult {
         ),
       ];
 
-      allFields.forEach((field) {
+      for (final field in totalable) {
         final amount = values[field];
-        if (field != 'count') {
-          String? value;
-          if (field == 'age') {
-            value = formatNumber(
-              amount! / values['count']!,
-              context,
-              formatNumberType: FormatNumberType.double,
-            );
-          } else if (field == 'duration') {
-            value = formatDuration(Duration(seconds: amount!.toInt()));
-          } else {
-            value = formatNumber(
-              amount,
-              context,
-              currencyId: currencyId,
-              formatNumberType: EntityPresenter.isFieldAmount(field)
-                  ? FormatNumberType.double
-                  : FormatNumberType.money,
-            );
-          }
-          cells.add(
-            mt.DataCell(CopyToClipboard(value: value!, child: Text(value))),
+        String? value;
+        if (amount == null) {
+          value = '';
+        } else if (field == 'age') {
+          value = formatNumber(
+            amount / (values['count'] ?? 1),
+            context,
+            formatNumberType: FormatNumberType.double,
+          );
+        } else if (field == 'duration') {
+          value = formatDuration(Duration(seconds: amount.toInt()));
+        } else {
+          value = formatNumber(
+            amount,
+            context,
+            currencyId: currencyId,
+            formatNumberType: EntityPresenter.isFieldAmount(field)
+                ? FormatNumberType.double
+                : FormatNumberType.money,
           );
         }
-      });
+        cells.add(
+          mt.DataCell(CopyToClipboard(value: value!, child: Text(value))),
+        );
+      }
 
       //print('## Total Rows: ${cells.length}');
       rows.add(mt.DataRow(cells: cells));
