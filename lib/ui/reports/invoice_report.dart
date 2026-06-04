@@ -289,7 +289,7 @@ ReportResult invoiceReport(
           value = invoice.partialDueDate;
           break;
         case InvoiceReportFields.paid_date:
-          value = invoice.isPaid ? lastPaymentMap[invoice.id]?.date : null;
+          value = invoice.isPaid ? (lastPaymentMap[invoice.id]?.date ?? '') : '';
           break;
         case InvoiceReportFields.auto_bill:
           value = invoice.autoBill;

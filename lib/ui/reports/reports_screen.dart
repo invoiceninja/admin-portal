@@ -2022,6 +2022,18 @@ int? sortReportTableRows(
   final dynamic valueA = rowA[index].value;
   final dynamic valueB = rowB[index].value;
 
+  // Sort empty cells like an empty string (the smallest value): at the top
+  // when ascending, the bottom when descending. Without this, sorting on a
+  // column with null cell values (e.g. Paid Date for unpaid invoices) throws
+  // NoSuchMethodError: 'compareTo' was called on null.
+  if (valueA == null && valueB == null) {
+    return 0;
+  } else if (valueA == null) {
+    return reportSettings.sortAscending ? -1 : 1;
+  } else if (valueB == null) {
+    return reportSettings.sortAscending ? 1 : -1;
+  }
+
   if (valueA is bool) {
     if (reportSettings.sortAscending) {
       return valueA ? 1 : -1;
