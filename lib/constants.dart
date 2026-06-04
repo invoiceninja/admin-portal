@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.199';
+const String kClientVersion = '5.0.200';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -1379,4 +1379,3 @@ const String kActivityQuickbooksPushFailure = '164';
 const String kActivityQuickbooksPushSuccess = '165';
 const String kActivityPurgeUser = '166';
 const String kActivityEInvoiceStatusUpdated = '167';
-
