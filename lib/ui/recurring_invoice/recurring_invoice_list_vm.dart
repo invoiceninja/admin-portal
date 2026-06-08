@@ -102,14 +102,15 @@ class RecurringInvoiceListVM {
       recurringInvoiceMap: state.recurringInvoiceState.map,
       isLoading: state.isLoading,
       filter: state.recurringInvoiceUIState.listUIState.filter,
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> recurringInvoices,
-        EntityAction action,
-      ) =>
-          handleRecurringInvoiceAction(context, recurringInvoices, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringInvoices,
+            EntityAction action,
+          ) => handleRecurringInvoiceAction(context, recurringInvoices, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings.getTableColumns(
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
             EntityType.recurringInvoice,
           ) ??
           RecurringInvoicePresenter.getDefaultTableFields(state.userCompany),

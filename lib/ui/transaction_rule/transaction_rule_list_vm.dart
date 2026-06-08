@@ -98,14 +98,15 @@ class TransactionRuleListVM {
       transactionRuleMap: state.transactionRuleState.map,
       isLoading: state.isLoading,
       filter: state.transactionRuleUIState.listUIState.filter,
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> transactionRules,
-        EntityAction action,
-      ) =>
-          handleTransactionRuleAction(context, transactionRules, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> transactionRules,
+            EntityAction action,
+          ) => handleTransactionRuleAction(context, transactionRules, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings.getTableColumns(
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
             EntityType.transactionRule,
           ) ??
           TransactionRulePresenter.getDefaultTableFields(state.userCompany),

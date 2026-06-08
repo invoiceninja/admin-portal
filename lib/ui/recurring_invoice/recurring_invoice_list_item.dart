@@ -43,7 +43,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
     final localization = AppLocalization.of(context)!;
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
 
     final statusLabel = localization.lookup(
@@ -64,7 +64,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
     subtitle += localization.lookup(kFrequencies[invoice.frequencyId]);
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           invoice.id ==
               (uiState.isEditing
                   ? invoiceUIState.editing!.id
@@ -148,12 +149,11 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                      color: textColor!.withOpacity(
+                                        kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],

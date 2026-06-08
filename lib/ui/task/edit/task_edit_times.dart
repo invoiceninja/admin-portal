@@ -44,8 +44,9 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
 
     int? index;
 
-    final List<dynamic> rawTaskTimes =
-        task.timeLog.isNotEmpty ? jsonDecode(task.timeLog) : <dynamic>[];
+    final List<dynamic> rawTaskTimes = task.timeLog.isNotEmpty
+        ? jsonDecode(task.timeLog)
+        : <dynamic>[];
     for (var i = 0; i < rawTaskTimes.length; i++) {
       final each = rawTaskTimes[i] as List<dynamic>;
       if (each[0] * 1000 == taskTime.startDate?.millisecondsSinceEpoch &&
@@ -78,7 +79,8 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final task = viewModel.task!;
     final taskTimes = task.getTaskTimes();
     final invalidTimes = task.getInvalidTimeIndices;
-    final taskTime = viewModel.taskTimeIndex != null &&
+    final taskTime =
+        viewModel.taskTimeIndex != null &&
             taskTimes.length > viewModel.taskTimeIndex!
         ? taskTimes[viewModel.taskTimeIndex!]
         : null;
@@ -162,8 +164,9 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
           children: <Widget>[
             DatePicker(
               key: ValueKey('__date_${_startTimeUpdatedAt}__'),
-              labelText:
-                  showEndDate ? localization.startDate : localization.date,
+              labelText: showEndDate
+                  ? localization.startDate
+                  : localization.date,
               selectedDate: _taskTime!.startDate == null
                   ? null
                   : convertDateTimeToSqlDate(_taskTime!.startDate!.toLocal()),
@@ -244,8 +247,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               },
               selectedDuration:
                   (_taskTime!.startDate == null || _taskTime!.endDate == null)
-                      ? null
-                      : duration,
+                  ? null
+                  : duration,
             ),
             if (company.settings.showTaskItemDescription!)
               GrowableFormField(

@@ -126,7 +126,8 @@ class _CompanyGatewayOverview extends StatelessWidget {
               formatNumber(settings.feeAmount, context) ?? '';
         }
         if (settings.feePercent != 0) {
-          fields[localization.feePercent] = formatNumber(
+          fields[localization.feePercent] =
+              formatNumber(
                 settings.feePercent,
                 context,
                 formatNumberType: FormatNumberType.percent,
@@ -185,8 +186,9 @@ class _CompanyGatewayOverview extends StatelessWidget {
                 SizedBox(width: kTableColumnGap),
                 Expanded(
                   child: AppButton(
-                    iconData:
-                        isDesktop(context) ? MdiIcons.checkCircleOutline : null,
+                    iconData: isDesktop(context)
+                        ? MdiIcons.checkCircleOutline
+                        : null,
                     label: localization.verifyCustomers.toUpperCase(),
                     onPressed: () => viewModel.onStripeVerifyPressed(context),
                   ),
@@ -264,7 +266,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
 
 class _CompanyGatewaySystemLog extends StatefulWidget {
   const _CompanyGatewaySystemLog({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final CompanyGatewayViewVM viewModel;
 

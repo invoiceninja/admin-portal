@@ -50,16 +50,20 @@ class _$DocumentStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -76,15 +80,13 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
 
   factory _$DocumentStatusEntity([
     void Function(DocumentStatusEntityBuilder)? updates,
-  ]) =>
-      (DocumentStatusEntityBuilder()..update(updates))._build();
+  ]) => (DocumentStatusEntityBuilder()..update(updates))._build();
 
   _$DocumentStatusEntity._({required this.id, required this.name}) : super._();
   @override
   DocumentStatusEntity rebuild(
     void Function(DocumentStatusEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DocumentStatusEntityBuilder toBuilder() =>
@@ -156,7 +158,8 @@ class DocumentStatusEntityBuilder
   DocumentStatusEntity build() => _build();
 
   _$DocumentStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DocumentStatusEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
             id,

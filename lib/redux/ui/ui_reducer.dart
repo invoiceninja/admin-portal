@@ -109,8 +109,8 @@ UIState uiReducer(UIState state, dynamic action) {
       ..previousRoute = state.currentRoute == currentRoute
           ? state.previousRoute
           : state.currentRoute.endsWith('edit')
-              ? state.previousRoute
-              : state.currentRoute
+          ? state.previousRoute
+          : state.currentRoute
       ..loadingEntityType = loadingEntityTypeReducer(
         state.loadingEntityType,
         action,

@@ -29,8 +29,9 @@ class SaveCancelButtons extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return Row(
-      crossAxisAlignment:
-          isHeader ? CrossAxisAlignment.stretch : CrossAxisAlignment.center,
+      crossAxisAlignment: isHeader
+          ? CrossAxisAlignment.stretch
+          : CrossAxisAlignment.center,
       children: <Widget>[
         if (onCancelPressed != null)
           Builder(

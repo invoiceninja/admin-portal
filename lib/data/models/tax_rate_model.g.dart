@@ -59,11 +59,12 @@ class _$TaxRateListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(TaxRateEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TaxRateEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$TaxRateItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaxRateEntity),
-            )! as TaxRateEntity,
+                  value,
+                  specifiedType: const FullType(TaxRateEntity),
+                )!
+                as TaxRateEntity,
           );
           break;
       }
@@ -215,64 +217,84 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'rate':
-          result.rate = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.rate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -287,15 +309,13 @@ class _$TaxRateListResponse extends TaxRateListResponse {
 
   factory _$TaxRateListResponse([
     void Function(TaxRateListResponseBuilder)? updates,
-  ]) =>
-      (TaxRateListResponseBuilder()..update(updates))._build();
+  ]) => (TaxRateListResponseBuilder()..update(updates))._build();
 
   _$TaxRateListResponse._({required this.data}) : super._();
   @override
   TaxRateListResponse rebuild(
     void Function(TaxRateListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TaxRateListResponseBuilder toBuilder() =>
@@ -321,8 +341,7 @@ class _$TaxRateListResponse extends TaxRateListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TaxRateListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -388,15 +407,13 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
 
   factory _$TaxRateItemResponse([
     void Function(TaxRateItemResponseBuilder)? updates,
-  ]) =>
-      (TaxRateItemResponseBuilder()..update(updates))._build();
+  ]) => (TaxRateItemResponseBuilder()..update(updates))._build();
 
   _$TaxRateItemResponse._({required this.data}) : super._();
   @override
   TaxRateItemResponse rebuild(
     void Function(TaxRateItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TaxRateItemResponseBuilder toBuilder() =>
@@ -422,8 +439,7 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TaxRateItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -658,7 +674,8 @@ class TaxRateEntityBuilder
   TaxRateEntity build() => _build();
 
   _$TaxRateEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TaxRateEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

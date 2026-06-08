@@ -49,7 +49,8 @@ class TokenListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: token,
-      isSelected: token.id ==
+      isSelected:
+          token.id ==
           (uiState.isEditing
               ? tokenUIState.editing!.id
               : tokenUIState.selectedId),

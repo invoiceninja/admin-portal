@@ -15,8 +15,7 @@ var memoizedDropdownClientList = memo4(
     BuiltList<String> clientList,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) =>
-      dropdownClientsSelector(clientMap, clientList, userMap, staticState),
+  ) => dropdownClientsSelector(clientMap, clientList, userMap, staticState),
 );
 
 List<String> dropdownClientsSelector(
@@ -25,8 +24,9 @@ List<String> dropdownClientsSelector(
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
-  final list =
-      clientList.where((clientId) => clientMap[clientId]!.isActive).toList();
+  final list = clientList
+      .where((clientId) => clientMap[clientId]!.isActive)
+      .toList();
 
   list.sort((clientAId, clientBId) {
     final clientA = clientMap[clientAId]!;
@@ -76,8 +76,7 @@ var memoizedFilteredClientList = memo7(
     ListUIState clientListState,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) =>
-      filteredClientsSelector(
+  ) => filteredClientsSelector(
     selectionState,
     clientMap,
     clientList,
@@ -193,5 +192,4 @@ SettingsEntity getVendorSettings(AppState state, VendorEntity? vendor) {
 bool? hasClientChanges(
   ClientEntity client,
   BuiltMap<String, ClientEntity> clientMap,
-) =>
-    client.isNew ? client.isChanged : client != clientMap[client.id];
+) => client.isNew ? client.isChanged : client != clientMap[client.id];

@@ -97,8 +97,9 @@ class _CustomFieldState extends State<CustomField> {
       case kFieldTypeSwitch:
         return BoolDropdownButton(
           onChanged: (value) {
-            _controller!.text =
-                value == true ? kSwitchValueYes : kSwitchValueNo;
+            _controller!.text = value == true
+                ? kSwitchValueYes
+                : kSwitchValueNo;
             Debouncer.complete();
             if (widget.onChanged != null) {
               widget.onChanged!(

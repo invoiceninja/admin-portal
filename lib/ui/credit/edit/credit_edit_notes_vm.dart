@@ -35,11 +35,11 @@ class CreditEditNotesVM extends EntityEditNotesVM {
     Function(InvoiceEntity)? onChanged,
     AppState? state,
   }) : super(
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          state: state,
-        );
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         state: state,
+       );
 
   factory CreditEditNotesVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

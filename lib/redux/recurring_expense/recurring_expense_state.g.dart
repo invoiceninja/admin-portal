@@ -76,11 +76,12 @@ class _$RecurringExpenseStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(String),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -158,30 +159,36 @@ class _$RecurringExpenseUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ExpenseEntity),
-            )! as ExpenseEntity,
+                  value,
+                  specifiedType: const FullType(ExpenseEntity),
+                )!
+                as ExpenseEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ListUIState),
-            )! as ListUIState,
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -198,16 +205,14 @@ class _$RecurringExpenseState extends RecurringExpenseState {
 
   factory _$RecurringExpenseState([
     void Function(RecurringExpenseStateBuilder)? updates,
-  ]) =>
-      (RecurringExpenseStateBuilder()..update(updates))._build();
+  ]) => (RecurringExpenseStateBuilder()..update(updates))._build();
 
   _$RecurringExpenseState._({required this.map, required this.list})
-      : super._();
+    : super._();
   @override
   RecurringExpenseState rebuild(
     void Function(RecurringExpenseStateBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   RecurringExpenseStateBuilder toBuilder() =>
@@ -282,7 +287,8 @@ class RecurringExpenseStateBuilder
   _$RecurringExpenseState _build() {
     _$RecurringExpenseState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$RecurringExpenseState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
@@ -323,8 +329,7 @@ class _$RecurringExpenseUIState extends RecurringExpenseUIState {
 
   factory _$RecurringExpenseUIState([
     void Function(RecurringExpenseUIStateBuilder)? updates,
-  ]) =>
-      (RecurringExpenseUIStateBuilder()..update(updates))._build();
+  ]) => (RecurringExpenseUIStateBuilder()..update(updates))._build();
 
   _$RecurringExpenseUIState._({
     this.editing,
@@ -338,8 +343,7 @@ class _$RecurringExpenseUIState extends RecurringExpenseUIState {
   @override
   RecurringExpenseUIState rebuild(
     void Function(RecurringExpenseUIStateBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   RecurringExpenseUIStateBuilder toBuilder() =>
@@ -460,7 +464,8 @@ class RecurringExpenseUIStateBuilder
   _$RecurringExpenseUIState _build() {
     _$RecurringExpenseUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$RecurringExpenseUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

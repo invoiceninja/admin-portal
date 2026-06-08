@@ -17,8 +17,8 @@ List<String?> countryList(BuiltMap<String, CountryEntity> countryMap) {
 
   list.sort(
     (idA, idB) => countryMap[idA]!.listDisplayName.compareTo(
-          countryMap[idB]!.listDisplayName,
-        ),
+      countryMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -44,13 +44,14 @@ var memoizedGroupList = memo1(
 );
 
 List<String?> groupList(BuiltMap<String, GroupEntity> groupMap) {
-  final list =
-      groupMap.keys.where((groupId) => groupMap[groupId]!.isActive).toList();
+  final list = groupMap.keys
+      .where((groupId) => groupMap[groupId]!.isActive)
+      .toList();
 
   list.sort(
     (idA, idB) => groupMap[idA]!.listDisplayName.compareTo(
-          groupMap[idB]!.listDisplayName,
-        ),
+      groupMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -65,8 +66,8 @@ List<String?> languageList(BuiltMap<String, LanguageEntity> languageMap) {
 
   list.sort(
     (idA, idB) => languageMap[idA]!.listDisplayName.compareTo(
-          languageMap[idB]!.listDisplayName,
-        ),
+      languageMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -81,8 +82,8 @@ List<String?> currencyList(BuiltMap<String, CurrencyEntity> currencyMap) {
 
   list.sort(
     (idA, idB) => currencyMap[idA]!.listDisplayName.compareTo(
-          currencyMap[idB]!.listDisplayName,
-        ),
+      currencyMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -97,8 +98,8 @@ List<String?> timezoneList(BuiltMap<String, TimezoneEntity> timezoneMap) {
 
   list.sort(
     (idA, idB) => timezoneMap[idA]!.listDisplayName.compareTo(
-          timezoneMap[idB]!.listDisplayName,
-        ),
+      timezoneMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -114,8 +115,8 @@ List<String?> dateFormatList(BuiltMap<String, DateFormatEntity> dateFormatMap) {
 
   list.sort(
     (idA, idB) => dateFormatMap[idA]!.listDisplayName.compareTo(
-          dateFormatMap[idB]!.listDisplayName,
-        ),
+      dateFormatMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -130,8 +131,8 @@ List<String?> industryList(BuiltMap<String?, IndustryEntity?> industryMap) {
 
   list.sort(
     (idA, idB) => industryMap[idA]!.listDisplayName.compareTo(
-          industryMap[idB]!.listDisplayName,
-        ),
+      industryMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;
@@ -198,8 +199,8 @@ List<String?> paymentTypeList(
 
   list.sort(
     (idA, idB) => paymentTypeMap[idA]!.listDisplayName.compareTo(
-          paymentTypeMap[idB]!.listDisplayName,
-        ),
+      paymentTypeMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;

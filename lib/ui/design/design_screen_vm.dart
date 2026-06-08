@@ -55,12 +55,12 @@ class DesignScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.designListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> designs,
-        EntityAction action,
-      ) =>
-          handleDesignAction(context, designs, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> designs,
+            EntityAction action,
+          ) => handleDesignAction(context, designs, action),
     );
   }
 }

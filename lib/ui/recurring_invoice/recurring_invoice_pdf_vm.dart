@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class RecurringInvoicePdfScreen extends StatelessWidget {
   const RecurringInvoicePdfScreen({Key? key, this.showAppBar = true})
-      : super(key: key);
+    : super(key: key);
 
   final bool showAppBar;
 

@@ -103,34 +103,36 @@ class SubscriptionEditVM {
               subscription: subscription,
             ),
           );
-          return completer.future.then((savedSubscription) {
-            showToast(
-              subscription.isNew
-                  ? localization!.createdPaymentLink
-                  : localization!.updatedPaymentLink,
-            );
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                UpdateCurrentRoute(SubscriptionViewScreen.route),
-              );
-              if (subscription.isNew) {
-                navigator!.pushReplacementNamed(
-                  SubscriptionViewScreen.route,
+          return completer.future
+              .then((savedSubscription) {
+                showToast(
+                  subscription.isNew
+                      ? localization!.createdPaymentLink
+                      : localization!.updatedPaymentLink,
                 );
-              } else {
-                navigator!.pop(savedSubscription);
-              }
-            } else {
-              viewEntity(entity: savedSubscription, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(SubscriptionViewScreen.route),
+                  );
+                  if (subscription.isNew) {
+                    navigator!.pushReplacementNamed(
+                      SubscriptionViewScreen.route,
+                    );
+                  } else {
+                    navigator!.pop(savedSubscription);
+                  }
+                } else {
+                  viewEntity(entity: savedSubscription, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

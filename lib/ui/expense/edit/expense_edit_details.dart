@@ -32,7 +32,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseEditDetails extends StatefulWidget {
   const ExpenseEditDetails({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
 
@@ -197,7 +197,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 onSelected: (client) {
                   String currencyId = '';
                   if (client != null) {
-                    currencyId = (client as ClientEntity).settings.currencyId ??
+                    currencyId =
+                        (client as ClientEntity).settings.currencyId ??
                         company.currencyId;
                   }
                   viewModel.onChanged!(

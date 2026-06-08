@@ -59,11 +59,12 @@ class _$PaymentTermListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(PaymentTermEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(PaymentTermEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$PaymentTermItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PaymentTermEntity),
-            )! as PaymentTermEntity,
+                  value,
+                  specifiedType: const FullType(PaymentTermEntity),
+                )!
+                as PaymentTermEntity,
           );
           break;
       }
@@ -216,64 +218,84 @@ class _$PaymentTermEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'num_days':
-          result.numDays = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.numDays =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -288,15 +310,13 @@ class _$PaymentTermListResponse extends PaymentTermListResponse {
 
   factory _$PaymentTermListResponse([
     void Function(PaymentTermListResponseBuilder)? updates,
-  ]) =>
-      (PaymentTermListResponseBuilder()..update(updates))._build();
+  ]) => (PaymentTermListResponseBuilder()..update(updates))._build();
 
   _$PaymentTermListResponse._({required this.data}) : super._();
   @override
   PaymentTermListResponse rebuild(
     void Function(PaymentTermListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PaymentTermListResponseBuilder toBuilder() =>
@@ -322,8 +342,7 @@ class _$PaymentTermListResponse extends PaymentTermListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'PaymentTermListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -390,15 +409,13 @@ class _$PaymentTermItemResponse extends PaymentTermItemResponse {
 
   factory _$PaymentTermItemResponse([
     void Function(PaymentTermItemResponseBuilder)? updates,
-  ]) =>
-      (PaymentTermItemResponseBuilder()..update(updates))._build();
+  ]) => (PaymentTermItemResponseBuilder()..update(updates))._build();
 
   _$PaymentTermItemResponse._({required this.data}) : super._();
   @override
   PaymentTermItemResponse rebuild(
     void Function(PaymentTermItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PaymentTermItemResponseBuilder toBuilder() =>
@@ -424,8 +441,7 @@ class _$PaymentTermItemResponse extends PaymentTermItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'PaymentTermItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -510,8 +526,7 @@ class _$PaymentTermEntity extends PaymentTermEntity {
 
   factory _$PaymentTermEntity([
     void Function(PaymentTermEntityBuilder)? updates,
-  ]) =>
-      (PaymentTermEntityBuilder()..update(updates))._build();
+  ]) => (PaymentTermEntityBuilder()..update(updates))._build();
 
   _$PaymentTermEntity._({
     required this.name,
@@ -665,7 +680,8 @@ class PaymentTermEntityBuilder
   PaymentTermEntity build() => _build();
 
   _$PaymentTermEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$PaymentTermEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

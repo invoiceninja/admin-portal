@@ -3,7 +3,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AutobillDropdownMenuItem extends StatelessWidget {
   const AutobillDropdownMenuItem({Key? key, required this.type})
-      : super(key: key);
+    : super(key: key);
 
   final String type;
 

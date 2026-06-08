@@ -113,7 +113,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
 
     final company = state.company;
     final client = state.clientState.get(task.clientId);
-    final rateLabel = localization.rate +
+    final rateLabel =
+        localization.rate +
         ' • ' +
         formatNumber(
           taskRateSelector(

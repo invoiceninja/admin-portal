@@ -12,8 +12,7 @@ var memoizedDropdownTaxRateList = memo3(
     BuiltMap<String, TaxRateEntity> taxRateMap,
     BuiltList<String> taxRateList,
     String clientId,
-  ) =>
-      dropdownTaxRatesSelector(taxRateMap, taxRateList, clientId),
+  ) => dropdownTaxRatesSelector(taxRateMap, taxRateList, clientId),
 );
 
 List<String> dropdownTaxRatesSelector(
@@ -46,8 +45,7 @@ var memoizedFilteredTaxRateList = memo4(
     BuiltMap<String?, TaxRateEntity?> taxRateMap,
     BuiltList<String> taxRateList,
     ListUIState taxRateListState,
-  ) =>
-      filteredTaxRatesSelector(
+  ) => filteredTaxRatesSelector(
     selectionState,
     taxRateMap,
     taxRateList,

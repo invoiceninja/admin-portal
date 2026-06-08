@@ -50,16 +50,20 @@ class _$InvoiceStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -76,15 +80,13 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
 
   factory _$InvoiceStatusEntity([
     void Function(InvoiceStatusEntityBuilder)? updates,
-  ]) =>
-      (InvoiceStatusEntityBuilder()..update(updates))._build();
+  ]) => (InvoiceStatusEntityBuilder()..update(updates))._build();
 
   _$InvoiceStatusEntity._({required this.id, required this.name}) : super._();
   @override
   InvoiceStatusEntity rebuild(
     void Function(InvoiceStatusEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvoiceStatusEntityBuilder toBuilder() =>
@@ -154,7 +156,8 @@ class InvoiceStatusEntityBuilder
   InvoiceStatusEntity build() => _build();
 
   _$InvoiceStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$InvoiceStatusEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
             id,

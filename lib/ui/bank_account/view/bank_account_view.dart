@@ -56,12 +56,9 @@ class _BankAccountViewState extends State<BankAccountView> {
                 child: AppButton(
                   label: localization.reconnect.toUpperCase(),
                   onPressed: () {
-                    handleBankAccountAction(
-                        context,
-                        [
-                          bankAccount,
-                        ],
-                        EntityAction.reconnect);
+                    handleBankAccountAction(context, [
+                      bankAccount,
+                    ], EntityAction.reconnect);
                   },
                   iconData: getEntityActionIcon(EntityAction.reconnect),
                 ),

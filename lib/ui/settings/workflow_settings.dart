@@ -149,19 +149,20 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       settings.rebuild((b) => b..lockInvoices = value),
                     ),
                     labelText: localization.lockInvoices,
-                    items: [
-                      SettingsEntity.LOCK_INVOICES_OFF,
-                      SettingsEntity.LOCK_INVOICES_WHEN_SENT,
-                      SettingsEntity.LOCK_INVOICES_WHEN_PAID,
-                      SettingsEntity.LOCK_INVOICES_END_OF_MONTH,
-                    ]
-                        .map(
-                          (option) => DropdownMenuItem(
-                            child: Text(localization.lookup(option)),
-                            value: option,
-                          ),
-                        )
-                        .toList(),
+                    items:
+                        [
+                              SettingsEntity.LOCK_INVOICES_OFF,
+                              SettingsEntity.LOCK_INVOICES_WHEN_SENT,
+                              SettingsEntity.LOCK_INVOICES_WHEN_PAID,
+                              SettingsEntity.LOCK_INVOICES_END_OF_MONTH,
+                            ]
+                            .map(
+                              (option) => DropdownMenuItem(
+                                child: Text(localization.lookup(option)),
+                                value: option,
+                              ),
+                            )
+                            .toList(),
                   ),
                 ],
               ),

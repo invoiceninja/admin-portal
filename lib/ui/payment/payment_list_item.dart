@@ -45,9 +45,10 @@ class PaymentListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (payment.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
-    final mobileSubtitle = filterMatch ??
+    final mobileSubtitle =
+        filterMatch ??
         payment.number + ' • ' + formatDate(payment.date, context);
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
@@ -63,7 +64,8 @@ class PaymentListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           showSelected &&
           payment.id ==
               (uiState.isEditing
@@ -141,12 +143,11 @@ class PaymentListItem extends StatelessWidget {
                                 filterMatch ?? desktopSubtitle,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                      color: textColor!.withOpacity(
+                                        kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],

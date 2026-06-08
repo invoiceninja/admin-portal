@@ -113,15 +113,15 @@ class ClientListVM {
       isLoading: state.isLoading,
       filter: state.clientListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> client,
-        EntityAction action,
-      ) =>
-          handleClientAction(context, client, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> client,
+            EntityAction action,
+          ) => handleClientAction(context, client, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.client) ??
-              ClientPresenter.getDefaultTableFields(state.userCompany),
+          ClientPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
       onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),
     );

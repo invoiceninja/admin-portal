@@ -104,18 +104,19 @@ Middleware<AppState> _archiveTaskStatus(TaskStatusRepository repository) {
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.taskStatusIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.taskStatusIds,
+          EntityAction.archive,
+        )
         .then((List<TaskStatusEntity> taskStatuses) {
-      store.dispatch(ArchiveTaskStatusesSuccess(taskStatuses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveTaskStatusesFailure(prevTaskStatuses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveTaskStatusesSuccess(taskStatuses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveTaskStatusesFailure(prevTaskStatuses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -129,18 +130,19 @@ Middleware<AppState> _deleteTaskStatus(TaskStatusRepository repository) {
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.taskStatusIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.taskStatusIds,
+          EntityAction.delete,
+        )
         .then((List<TaskStatusEntity> taskStatuses) {
-      store.dispatch(DeleteTaskStatusesSuccess(taskStatuses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteTaskStatusesFailure(prevTaskStatuses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteTaskStatusesSuccess(taskStatuses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteTaskStatusesFailure(prevTaskStatuses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -154,18 +156,19 @@ Middleware<AppState> _restoreTaskStatus(TaskStatusRepository repository) {
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.taskStatusIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.taskStatusIds,
+          EntityAction.restore,
+        )
         .then((List<TaskStatusEntity> taskStatuses) {
-      store.dispatch(RestoreTaskStatusesSuccess(taskStatuses));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreTaskStatusesFailure(prevTaskStatuses));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreTaskStatusesSuccess(taskStatuses));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreTaskStatusesFailure(prevTaskStatuses));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -177,19 +180,20 @@ Middleware<AppState> _saveTaskStatus(TaskStatusRepository repository) {
     repository
         .saveData(store.state.credentials, action.taskStatus!)
         .then((TaskStatusEntity taskStatus) {
-      if (action.taskStatus!.isNew) {
-        store.dispatch(AddTaskStatusSuccess(taskStatus));
-      } else {
-        store.dispatch(SaveTaskStatusSuccess(taskStatus));
-      }
+          if (action.taskStatus!.isNew) {
+            store.dispatch(AddTaskStatusSuccess(taskStatus));
+          } else {
+            store.dispatch(SaveTaskStatusSuccess(taskStatus));
+          }
 
-      store.dispatch(RefreshData());
-      action.completer!.complete(taskStatus);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveTaskStatusFailure(error));
-      action.completer!.completeError(error);
-    });
+          store.dispatch(RefreshData());
+          action.completer!.complete(taskStatus);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveTaskStatusFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -204,18 +208,19 @@ Middleware<AppState> _loadTaskStatus(TaskStatusRepository repository) {
     repository
         .loadItem(state.credentials, action.taskStatusId)
         .then((taskStatus) {
-      store.dispatch(LoadTaskStatusSuccess(taskStatus));
+          store.dispatch(LoadTaskStatusSuccess(taskStatus));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTaskStatusFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTaskStatusFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -227,24 +232,27 @@ Middleware<AppState> _loadTaskStatuses(TaskStatusRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadTaskStatusesRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadTaskStatusesSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadTaskStatusesSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-      /*
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+          /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTaskStatusesFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTaskStatusesFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

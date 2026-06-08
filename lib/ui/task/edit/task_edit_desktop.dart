@@ -136,7 +136,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     }
 
     final overlapping = task.getInvalidTimeIndices;
-    final rateLabel = localization.rate +
+    final rateLabel =
+        localization.rate +
         ' • ' +
         formatNumber(
           taskRateSelector(
@@ -358,18 +359,18 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                   labelText: settings.showTaskItemDescription!
                                       ? localization.startDate
                                       : null,
-                                  selectedDate: taskTimes[index].startDate ==
-                                          null
+                                  selectedDate:
+                                      taskTimes[index].startDate == null
                                       ? null
                                       : convertDateTimeToSqlDate(
                                           taskTimes[index].startDate!.toLocal(),
                                         ),
                                   onSelected: (date, _) {
-                                    final taskTime =
-                                        taskTimes[index].copyWithStartDate(
-                                      date,
-                                      syncDates: !showEndDate,
-                                    );
+                                    final taskTime = taskTimes[index]
+                                        .copyWithStartDate(
+                                          date,
+                                          syncDates: !showEndDate,
+                                        );
                                     viewModel.onUpdatedTaskTime(
                                       taskTime,
                                       index,
@@ -427,8 +428,8 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                     labelText: settings.showTaskItemDescription!
                                         ? localization.endDate
                                         : null,
-                                    selectedDate: taskTimes[index].endDate ==
-                                            null
+                                    selectedDate:
+                                        taskTimes[index].endDate == null
                                         ? null
                                         : convertDateTimeToSqlDate(
                                             taskTimes[index].endDate!.toLocal(),
@@ -507,9 +508,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                   },
                                   selectedDuration:
                                       (taskTimes[index].startDate == null ||
-                                              taskTimes[index].endDate == null)
-                                          ? null
-                                          : taskTimes[index].duration,
+                                          taskTimes[index].endDate == null)
+                                      ? null
+                                      : taskTimes[index].duration,
                                 ),
                               ),
                             ),
@@ -547,11 +548,11 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         onPressed: taskTime.isEmpty
                             ? null
                             : () => viewModel.onUpdatedTaskTime(
-                                  taskTime.rebuild(
-                                    (b) => b..isBillable = !taskTime.isBillable,
-                                  ),
-                                  index,
+                                taskTime.rebuild(
+                                  (b) => b..isBillable = !taskTime.isBillable,
                                 ),
+                                index,
+                              ),
                         icon: Icon(
                           taskTime.isBillable && !taskTime.isEmpty
                               ? Icons.check_box_outlined

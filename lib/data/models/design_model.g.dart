@@ -57,11 +57,12 @@ class _$DesignListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(DesignEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DesignEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -112,9 +113,10 @@ class _$DesignItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DesignEntity),
-            )! as DesignEntity,
+                  value,
+                  specifiedType: const FullType(DesignEntity),
+                )!
+                as DesignEntity,
           );
           break;
       }
@@ -176,23 +178,28 @@ class _$DesignPreviewRequestSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'entity_type':
-          result.entityType = serializers.deserialize(
-            value,
-            specifiedType: const FullType(EntityType),
-          )! as EntityType;
+          result.entityType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )!
+                  as EntityType;
           break;
         case 'entity_id':
-          result.entityId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.entityId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'design':
           result.design.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DesignEntity),
-            )! as DesignEntity,
+                  value,
+                  specifiedType: const FullType(DesignEntity),
+                )!
+                as DesignEntity,
           );
           break;
       }
@@ -311,10 +318,12 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'design':
           result.design.replace(
@@ -328,76 +337,100 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
           );
           break;
         case 'is_custom':
-          result.isCustom = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.isCustom =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_free':
-          result.isFree = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.isFree =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_template':
-          result.isTemplate = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.isTemplate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'entities':
-          result.entities = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.entities =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -412,15 +445,13 @@ class _$DesignListResponse extends DesignListResponse {
 
   factory _$DesignListResponse([
     void Function(DesignListResponseBuilder)? updates,
-  ]) =>
-      (DesignListResponseBuilder()..update(updates))._build();
+  ]) => (DesignListResponseBuilder()..update(updates))._build();
 
   _$DesignListResponse._({required this.data}) : super._();
   @override
   DesignListResponse rebuild(
     void Function(DesignListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DesignListResponseBuilder toBuilder() =>
@@ -446,8 +477,7 @@ class _$DesignListResponse extends DesignListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'DesignListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -513,15 +543,13 @@ class _$DesignItemResponse extends DesignItemResponse {
 
   factory _$DesignItemResponse([
     void Function(DesignItemResponseBuilder)? updates,
-  ]) =>
-      (DesignItemResponseBuilder()..update(updates))._build();
+  ]) => (DesignItemResponseBuilder()..update(updates))._build();
 
   _$DesignItemResponse._({required this.data}) : super._();
   @override
   DesignItemResponse rebuild(
     void Function(DesignItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DesignItemResponseBuilder toBuilder() =>
@@ -547,8 +575,7 @@ class _$DesignItemResponse extends DesignItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'DesignItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -617,8 +644,7 @@ class _$DesignPreviewRequest extends DesignPreviewRequest {
 
   factory _$DesignPreviewRequest([
     void Function(DesignPreviewRequestBuilder)? updates,
-  ]) =>
-      (DesignPreviewRequestBuilder()..update(updates))._build();
+  ]) => (DesignPreviewRequestBuilder()..update(updates))._build();
 
   _$DesignPreviewRequest._({
     required this.entityType,
@@ -628,8 +654,7 @@ class _$DesignPreviewRequest extends DesignPreviewRequest {
   @override
   DesignPreviewRequest rebuild(
     void Function(DesignPreviewRequestBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DesignPreviewRequestBuilder toBuilder() =>
@@ -711,7 +736,8 @@ class DesignPreviewRequestBuilder
   _$DesignPreviewRequest _build() {
     _$DesignPreviewRequest _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$DesignPreviewRequest._(
             entityType: BuiltValueNullFieldError.checkNotNull(
               entityType,
@@ -969,7 +995,8 @@ class DesignEntityBuilder
   _$DesignEntity _build() {
     _$DesignEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$DesignEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,

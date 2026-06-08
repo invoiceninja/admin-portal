@@ -66,7 +66,8 @@ class ClientViewVM {
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final client = state.clientState.map[state.clientUIState.selectedId] ??
+    final client =
+        state.clientState.map[state.clientUIState.selectedId] ??
         ClientEntity(id: state.clientUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -87,36 +88,38 @@ class ClientViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([client], action, autoPop: true),
-      onUploadDocuments: (
-        BuildContext context,
-        List<MultipartFile> multipartFile,
-        bool isPrivate,
-      ) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(
-          SaveClientDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFile: multipartFile,
-            client: client,
-            completer: completer,
-          ),
-        );
-        completer.future.then((client) {
-          showToast(
-            AppLocalization.of(
-              navigatorKey.currentContext!,
-            )!
-                .uploadedDocument,
-          );
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveClientDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFile: multipartFile,
+                client: client,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

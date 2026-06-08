@@ -66,8 +66,8 @@ class EditScaffold extends StatelessWidget {
     bool isCancelEnabled = false;
     String? upgradeMessage = state.userCompany.isOwner
         ? (state.account.isEligibleForTrial && !supportsInAppPurchase()
-            ? localization!.startFreeTrialMessage
-            : localization!.upgradeToPaidPlan)
+              ? localization!.startFreeTrialMessage
+              : localization!.upgradeToPaidPlan)
         : localization!.ownerUpgradeToPaidPlan;
     if (account.isTrial) {
       if (account.trialDaysLeft <= 1) {
@@ -101,8 +101,8 @@ class EditScaffold extends StatelessWidget {
       showUpgradeBanner = true;
       if (state.isEnterprisePlan) {
         upgradeMessage = localization.clickHereToConnectBankAccount;
-        bannerClick =
-            () => store.dispatch(ViewSettings(section: kSettingsBankAccounts));
+        bannerClick = () =>
+            store.dispatch(ViewSettings(section: kSettingsBankAccounts));
       } else {
         upgradeMessage = localization.upgradeToConnectBankAccount;
       }
@@ -202,9 +202,11 @@ class EditScaffold extends StatelessWidget {
                                   ? ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                        state.prefState.colorThemeModel!
-                                            .colorSuccess,
-                                      ),
+                                            state
+                                                .prefState
+                                                .colorThemeModel!
+                                                .colorSuccess,
+                                          ),
                                     )
                                   : null,
                               child: ConstrainedBox(
@@ -218,15 +220,16 @@ class EditScaffold extends StatelessWidget {
                                         style: state.isSaving
                                             ? null
                                             : action == EntityAction.save
-                                                ? textStyle.copyWith(
-                                                    color: Colors.white,
-                                                  )
-                                                : textStyle,
+                                            ? textStyle.copyWith(
+                                                color: Colors.white,
+                                              )
+                                            : textStyle,
                                       )
                                     : Text(
                                         label!,
-                                        style:
-                                            state.isSaving ? null : textStyle,
+                                        style: state.isSaving
+                                            ? null
+                                            : textStyle,
                                       ),
                               ),
                               onPressed: state.isSaving
@@ -283,27 +286,27 @@ class EditScaffold extends StatelessWidget {
                                     .toList()
                                     .sublist(entityActions.length - remaining)
                                     .map((action) {
-                                  return PopupMenuItem<EntityAction>(
-                                    value: action,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          getEntityActionIcon(action),
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.secondary,
+                                      return PopupMenuItem<EntityAction>(
+                                        value: action,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Icon(
+                                              getEntityActionIcon(action),
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.secondary,
+                                            ),
+                                            SizedBox(width: 16.0),
+                                            Text(
+                                              AppLocalization.of(
+                                                context,
+                                              )!.lookup(action.toString()),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(width: 16.0),
-                                        Text(
-                                          AppLocalization.of(
-                                            context,
-                                          )!
-                                              .lookup(action.toString()),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }).toList();
+                                      );
+                                    })
+                                    .toList();
                               },
                             );
                           },
@@ -346,7 +349,8 @@ class EditScaffold extends StatelessWidget {
                               constraints: BoxConstraints(minWidth: 60),
                               child: IconText(
                                 icon: getEntityActionIcon(EntityAction.back),
-                                text: (entity != null &&
+                                text:
+                                    (entity != null &&
                                         entity!.entityType!.isSetting)
                                     ? localization.back
                                     : localization.cancel,
@@ -359,12 +363,15 @@ class EditScaffold extends StatelessWidget {
                             style: isEnabled
                                 ? ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
-                                      state.prefState.colorThemeModel!
+                                      state
+                                          .prefState
+                                          .colorThemeModel!
                                           .colorSuccess,
                                     ),
                                   )
                                 : null,
-                            onPressed: !isEnabled ||
+                            onPressed:
+                                !isEnabled ||
                                     state.isSaving ||
                                     onSavePressed == null
                                 ? null
@@ -448,8 +455,7 @@ class EditScaffold extends StatelessWidget {
                                             Text(
                                               AppLocalization.of(
                                                 context,
-                                              )!
-                                                  .lookup(action.toString()),
+                                              )!.lookup(action.toString()),
                                             ),
                                           ],
                                         ),

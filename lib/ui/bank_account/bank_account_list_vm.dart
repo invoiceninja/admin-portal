@@ -97,16 +97,16 @@ class BankAccountListVM {
       bankAccountMap: state.bankAccountState.map,
       isLoading: state.isLoading,
       filter: state.bankAccountUIState.listUIState.filter,
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> bankAccounts,
-        EntityAction action,
-      ) =>
-          handleBankAccountAction(context, bankAccounts, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> bankAccounts,
+            EntityAction action,
+          ) => handleBankAccountAction(context, bankAccounts, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.bankAccount) ??
-              BankAccountPresenter.getDefaultTableFields(state.userCompany),
+          BankAccountPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortBankAccounts(field)),
       onClearMultielsect: () => store.dispatch(ClearBankAccountMultiselect()),
     );

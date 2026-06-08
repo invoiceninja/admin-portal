@@ -85,35 +85,37 @@ class BankAccountEditVM {
               bankAccount: bankAccount,
             ),
           );
-          return completer.future.then((savedBankAccount) {
-            showToast(
-              bankAccount!.isNew
-                  ? localization!.createdBankAccount
-                  : localization!.updatedBankAccount,
-            );
-
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                UpdateCurrentRoute(BankAccountViewScreen.route),
-              );
-              if (bankAccount.isNew) {
-                navigator!.pushReplacementNamed(
-                  BankAccountViewScreen.route,
+          return completer.future
+              .then((savedBankAccount) {
+                showToast(
+                  bankAccount!.isNew
+                      ? localization!.createdBankAccount
+                      : localization!.updatedBankAccount,
                 );
-              } else {
-                navigator!.pop(savedBankAccount);
-              }
-            } else {
-              viewEntity(entity: savedBankAccount);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(BankAccountViewScreen.route),
+                  );
+                  if (bankAccount.isNew) {
+                    navigator!.pushReplacementNamed(
+                      BankAccountViewScreen.route,
+                    );
+                  } else {
+                    navigator!.pop(savedBankAccount);
+                  }
+                } else {
+                  viewEntity(entity: savedBankAccount);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
       onEntityAction: (BuildContext context, EntityAction action) {

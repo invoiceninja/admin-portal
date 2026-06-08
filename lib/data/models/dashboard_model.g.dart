@@ -86,10 +86,10 @@ DateRangeComparison _$comparisonValueOf(String name) {
 
 final BuiltSet<DateRangeComparison> _$comparisonValues =
     BuiltSet<DateRangeComparison>(const <DateRangeComparison>[
-  _$previousPeriod,
-  _$previousYear,
-  _$customRange,
-]);
+      _$previousPeriod,
+      _$previousYear,
+      _$customRange,
+    ]);
 
 Serializer<DateRange> _$dateRangeSerializer = _$DateRangeSerializer();
 Serializer<DateRangeComparison> _$dateRangeComparisonSerializer =
@@ -106,16 +106,14 @@ class _$DateRangeSerializer implements PrimitiveSerializer<DateRange> {
     Serializers serializers,
     DateRange object, {
     FullType specifiedType = FullType.unspecified,
-  }) =>
-      object.name;
+  }) => object.name;
 
   @override
   DateRange deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
-  }) =>
-      DateRange.valueOf(serialized as String);
+  }) => DateRange.valueOf(serialized as String);
 }
 
 class _$DateRangeComparisonSerializer
@@ -130,16 +128,14 @@ class _$DateRangeComparisonSerializer
     Serializers serializers,
     DateRangeComparison object, {
     FullType specifiedType = FullType.unspecified,
-  }) =>
-      object.name;
+  }) => object.name;
 
   @override
   DateRangeComparison deserialize(
     Serializers serializers,
     Object serialized, {
     FullType specifiedType = FullType.unspecified,
-  }) =>
-      DateRangeComparison.valueOf(serialized as String);
+  }) => DateRangeComparison.valueOf(serialized as String);
 }
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

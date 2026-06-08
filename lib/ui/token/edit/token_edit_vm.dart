@@ -96,31 +96,33 @@ class TokenEditVM {
                   idToken: idToken,
                 ),
               );
-              return completer.future.then((savedToken) {
-                showToast(
-                  token!.isNew
-                      ? localization!.createdToken
-                      : localization!.updatedToken,
-                );
+              return completer.future
+                  .then((savedToken) {
+                    showToast(
+                      token!.isNew
+                          ? localization!.createdToken
+                          : localization!.updatedToken,
+                    );
 
-                if (state.prefState.isMobile) {
-                  store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
-                  if (token.isNew) {
-                    navigator!.pushReplacementNamed(TokenViewScreen.route);
-                  } else {
-                    navigator!.pop(savedToken);
-                  }
-                } else {
-                  viewEntity(entity: savedToken, force: true);
-                }
-              }).catchError((Object error) {
-                showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  },
-                );
-              });
+                    if (state.prefState.isMobile) {
+                      store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
+                      if (token.isNew) {
+                        navigator!.pushReplacementNamed(TokenViewScreen.route);
+                      } else {
+                        navigator!.pop(savedToken);
+                      }
+                    } else {
+                      viewEntity(entity: savedToken, force: true);
+                    }
+                  })
+                  .catchError((Object error) {
+                    showDialog<ErrorDialog>(
+                      context: navigatorKey.currentContext!,
+                      builder: (BuildContext context) {
+                        return ErrorDialog(error);
+                      },
+                    );
+                  });
             },
           );
         });

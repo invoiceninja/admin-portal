@@ -60,12 +60,12 @@ class CreditScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.creditListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> credits,
-        EntityAction action,
-      ) =>
-          handleCreditAction(context, credits, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> credits,
+            EntityAction action,
+          ) => handleCreditAction(context, credits, action),
     );
   }
 }

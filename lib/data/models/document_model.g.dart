@@ -59,11 +59,12 @@ class _$DocumentListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(DocumentEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$DocumentItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DocumentEntity),
-            )! as DocumentEntity,
+                  value,
+                  specifiedType: const FullType(DocumentEntity),
+                )!
+                as DocumentEntity,
           );
           break;
       }
@@ -260,124 +262,164 @@ class _$DocumentEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'hash':
-          result.hash = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.hash =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'url':
-          result.url = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.url =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'width':
-          result.width = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.width =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'height':
-          result.height = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.height =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'size':
-          result.size = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.size =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'preview':
-          result.preview = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.preview =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'is_default':
-          result.isDefault = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.isDefault =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_public':
-          result.isPublic = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.isPublic =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'parent_id':
-          result.parentId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.parentId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'parent_type':
-          result.parentType = serializers.deserialize(
-            value,
-            specifiedType: const FullType(EntityType),
-          ) as EntityType?;
+          result.parentType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )
+                  as EntityType?;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -392,15 +434,13 @@ class _$DocumentListResponse extends DocumentListResponse {
 
   factory _$DocumentListResponse([
     void Function(DocumentListResponseBuilder)? updates,
-  ]) =>
-      (DocumentListResponseBuilder()..update(updates))._build();
+  ]) => (DocumentListResponseBuilder()..update(updates))._build();
 
   _$DocumentListResponse._({required this.data}) : super._();
   @override
   DocumentListResponse rebuild(
     void Function(DocumentListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DocumentListResponseBuilder toBuilder() =>
@@ -426,8 +466,7 @@ class _$DocumentListResponse extends DocumentListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'DocumentListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -493,15 +532,13 @@ class _$DocumentItemResponse extends DocumentItemResponse {
 
   factory _$DocumentItemResponse([
     void Function(DocumentItemResponseBuilder)? updates,
-  ]) =>
-      (DocumentItemResponseBuilder()..update(updates))._build();
+  ]) => (DocumentItemResponseBuilder()..update(updates))._build();
 
   _$DocumentItemResponse._({required this.data}) : super._();
   @override
   DocumentItemResponse rebuild(
     void Function(DocumentItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DocumentItemResponseBuilder toBuilder() =>
@@ -527,8 +564,7 @@ class _$DocumentItemResponse extends DocumentItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'DocumentItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -886,7 +922,8 @@ class DocumentEntityBuilder
   DocumentEntity build() => _build();
 
   _$DocumentEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DocumentEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

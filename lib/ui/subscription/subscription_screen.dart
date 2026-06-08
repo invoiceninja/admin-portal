@@ -20,7 +20,7 @@ import 'subscription_screen_vm.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   const SubscriptionScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsPaymentLinks';
 
@@ -91,7 +91,8 @@ class SubscriptionScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterSubscriptionsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.paymentLink)
           ? FloatingActionButton(
               heroTag: 'subscription_fab',

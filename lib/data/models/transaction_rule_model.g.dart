@@ -7,15 +7,15 @@ part of 'transaction_rule_model.dart';
 // **************************************************************************
 
 Serializer<TransactionRuleListResponse>
-    _$transactionRuleListResponseSerializer =
+_$transactionRuleListResponseSerializer =
     _$TransactionRuleListResponseSerializer();
 Serializer<TransactionRuleItemResponse>
-    _$transactionRuleItemResponseSerializer =
+_$transactionRuleItemResponseSerializer =
     _$TransactionRuleItemResponseSerializer();
 Serializer<TransactionRuleEntity> _$transactionRuleEntitySerializer =
     _$TransactionRuleEntitySerializer();
 Serializer<TransactionRuleCriteriaEntity>
-    _$transactionRuleCriteriaEntitySerializer =
+_$transactionRuleCriteriaEntitySerializer =
     _$TransactionRuleCriteriaEntitySerializer();
 
 class _$TransactionRuleListResponseSerializer
@@ -64,11 +64,12 @@ class _$TransactionRuleListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(TransactionRuleEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TransactionRuleEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -122,9 +123,10 @@ class _$TransactionRuleItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TransactionRuleEntity),
-            )! as TransactionRuleEntity,
+                  value,
+                  specifiedType: const FullType(TransactionRuleEntity),
+                )!
+                as TransactionRuleEntity,
           );
           break;
       }
@@ -254,98 +256,127 @@ class _$TransactionRuleEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'matches_on_all':
-          result.matchesOnAll = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.matchesOnAll =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'auto_convert':
-          result.autoConvert = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.autoConvert =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'applies_to':
-          result.appliesTo = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.appliesTo =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'vendor_id':
-          result.vendorId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.vendorId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'category_id':
-          result.categoryId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.categoryId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'rules':
           result.rules.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(TransactionRuleCriteriaEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TransactionRuleCriteriaEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -406,22 +437,28 @@ class _$TransactionRuleCriteriaEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'search_key':
-          result.searchKey = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.searchKey =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'operator':
-          result.operator = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.operator =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'value':
-          result.value = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -436,15 +473,13 @@ class _$TransactionRuleListResponse extends TransactionRuleListResponse {
 
   factory _$TransactionRuleListResponse([
     void Function(TransactionRuleListResponseBuilder)? updates,
-  ]) =>
-      (TransactionRuleListResponseBuilder()..update(updates))._build();
+  ]) => (TransactionRuleListResponseBuilder()..update(updates))._build();
 
   _$TransactionRuleListResponse._({required this.data}) : super._();
   @override
   TransactionRuleListResponse rebuild(
     void Function(TransactionRuleListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionRuleListResponseBuilder toBuilder() =>
@@ -470,15 +505,16 @@ class _$TransactionRuleListResponse extends TransactionRuleListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TransactionRuleListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
 class TransactionRuleListResponseBuilder
     implements
-        Builder<TransactionRuleListResponse,
-            TransactionRuleListResponseBuilder> {
+        Builder<
+          TransactionRuleListResponse,
+          TransactionRuleListResponseBuilder
+        > {
   _$TransactionRuleListResponse? _$v;
 
   ListBuilder<TransactionRuleEntity>? _data;
@@ -539,15 +575,13 @@ class _$TransactionRuleItemResponse extends TransactionRuleItemResponse {
 
   factory _$TransactionRuleItemResponse([
     void Function(TransactionRuleItemResponseBuilder)? updates,
-  ]) =>
-      (TransactionRuleItemResponseBuilder()..update(updates))._build();
+  ]) => (TransactionRuleItemResponseBuilder()..update(updates))._build();
 
   _$TransactionRuleItemResponse._({required this.data}) : super._();
   @override
   TransactionRuleItemResponse rebuild(
     void Function(TransactionRuleItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionRuleItemResponseBuilder toBuilder() =>
@@ -573,15 +607,16 @@ class _$TransactionRuleItemResponse extends TransactionRuleItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TransactionRuleItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
 class TransactionRuleItemResponseBuilder
     implements
-        Builder<TransactionRuleItemResponse,
-            TransactionRuleItemResponseBuilder> {
+        Builder<
+          TransactionRuleItemResponse,
+          TransactionRuleItemResponseBuilder
+        > {
   _$TransactionRuleItemResponse? _$v;
 
   TransactionRuleEntityBuilder? _data;
@@ -670,8 +705,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
 
   factory _$TransactionRuleEntity([
     void Function(TransactionRuleEntityBuilder)? updates,
-  ]) =>
-      (TransactionRuleEntityBuilder()..update(updates))._build();
+  ]) => (TransactionRuleEntityBuilder()..update(updates))._build();
 
   _$TransactionRuleEntity._({
     required this.name,
@@ -693,8 +727,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
   @override
   TransactionRuleEntity rebuild(
     void Function(TransactionRuleEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionRuleEntityBuilder toBuilder() =>
@@ -876,7 +909,8 @@ class TransactionRuleEntityBuilder
   _$TransactionRuleEntity _build() {
     _$TransactionRuleEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TransactionRuleEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
               name,
@@ -963,8 +997,7 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
 
   factory _$TransactionRuleCriteriaEntity([
     void Function(TransactionRuleCriteriaEntityBuilder)? updates,
-  ]) =>
-      (TransactionRuleCriteriaEntityBuilder()..update(updates))._build();
+  ]) => (TransactionRuleCriteriaEntityBuilder()..update(updates))._build();
 
   _$TransactionRuleCriteriaEntity._({
     required this.searchKey,
@@ -974,8 +1007,7 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
   @override
   TransactionRuleCriteriaEntity rebuild(
     void Function(TransactionRuleCriteriaEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionRuleCriteriaEntityBuilder toBuilder() =>
@@ -1014,8 +1046,10 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
 
 class TransactionRuleCriteriaEntityBuilder
     implements
-        Builder<TransactionRuleCriteriaEntity,
-            TransactionRuleCriteriaEntityBuilder> {
+        Builder<
+          TransactionRuleCriteriaEntity,
+          TransactionRuleCriteriaEntityBuilder
+        > {
   _$TransactionRuleCriteriaEntity? _$v;
 
   String? _searchKey;
@@ -1059,7 +1093,8 @@ class TransactionRuleCriteriaEntityBuilder
   TransactionRuleCriteriaEntity build() => _build();
 
   _$TransactionRuleCriteriaEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TransactionRuleCriteriaEntity._(
           searchKey: BuiltValueNullFieldError.checkNotNull(
             searchKey,

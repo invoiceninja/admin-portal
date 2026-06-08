@@ -172,16 +172,16 @@ abstract class BankAccountEntity extends Object
       // STARTER: sort switch - do not remove comment
       case BankAccountFields.name:
         response = bankAccountA!.name.toLowerCase().compareTo(
-              bankAccountB!.name.toLowerCase(),
-            );
+          bankAccountB!.name.toLowerCase(),
+        );
         break;
       case BankAccountFields.balance:
         response = bankAccountA!.balance.compareTo(bankAccountB!.balance);
         break;
       case BankAccountFields.type:
         response = bankAccountA!.type.toLowerCase().compareTo(
-              bankAccountB!.type.toLowerCase(),
-            );
+          bankAccountB!.type.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by bankAccount.$sortField is not implemented');

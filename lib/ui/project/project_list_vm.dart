@@ -107,7 +107,7 @@ class ProjectListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.project) ??
-              ProjectPresenter.getDefaultTableFields(state.userCompany),
+          ProjectPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
       onClearMultielsect: () => store.dispatch(ClearProjectMultiselect()),
     );

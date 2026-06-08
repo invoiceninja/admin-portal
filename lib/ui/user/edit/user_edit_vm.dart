@@ -95,31 +95,33 @@ class UserEditVM {
               );
             },
           );
-          return completer.future.then((savedUser) {
-            showToast(
-              user!.isNew
-                  ? localization!.createdUser
-                  : localization!.updatedUser,
-            );
+          return completer.future
+              .then((savedUser) {
+                showToast(
+                  user!.isNew
+                      ? localization!.createdUser
+                      : localization!.updatedUser,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
-              if (user.isNew) {
-                navigator!.pushReplacementNamed(UserViewScreen.route);
-              } else {
-                navigator!.pop(savedUser);
-              }
-            } else {
-              viewEntity(entity: savedUser, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
+                  if (user.isNew) {
+                    navigator!.pushReplacementNamed(UserViewScreen.route);
+                  } else {
+                    navigator!.pop(savedUser);
+                  }
+                } else {
+                  viewEntity(entity: savedUser, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

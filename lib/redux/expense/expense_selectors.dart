@@ -56,8 +56,9 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     company.getCustomFieldLabel(CustomFieldType.expense2): expense.customValue2,
     company.getCustomFieldLabel(CustomFieldType.expense3): expense.customValue3,
     company.getCustomFieldLabel(CustomFieldType.expense4): expense.customValue4,
-    localization.category:
-        state.expenseCategoryState.get(expense.categoryId).name,
+    localization.category: state.expenseCategoryState
+        .get(expense.categoryId)
+        .name,
     localization.vendor: state.vendorState.get(expense.vendorId!).name,
     localization.date: formatDate(expense.date, context),
     localization.project: state.projectState.get(expense.projectId!).name,
@@ -90,14 +91,17 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
       ..customValue3 = customValue3
       ..customValue4 = customValue4
       ..taxName1 = company.numberOfItemTaxRates >= 1 ? expense.taxName1 : ''
-      ..taxRate1 =
-          company.numberOfItemTaxRates >= 1 ? expense.calculatetaxRate1 : 0
+      ..taxRate1 = company.numberOfItemTaxRates >= 1
+          ? expense.calculatetaxRate1
+          : 0
       ..taxName2 = company.numberOfItemTaxRates >= 2 ? expense.taxName2 : ''
-      ..taxRate2 =
-          company.numberOfItemTaxRates >= 2 ? expense.calculatetaxRate2 : 0
+      ..taxRate2 = company.numberOfItemTaxRates >= 2
+          ? expense.calculatetaxRate2
+          : 0
       ..taxName3 = company.numberOfItemTaxRates >= 3 ? expense.taxName3 : ''
-      ..taxRate3 =
-          company.numberOfItemTaxRates >= 3 ? expense.calculatetaxRate3 : 0,
+      ..taxRate3 = company.numberOfItemTaxRates >= 3
+          ? expense.calculatetaxRate3
+          : 0,
   );
 }
 
@@ -112,8 +116,7 @@ var memoizedDropdownExpenseList = memo9(
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     StaticState staticState,
     String clientId,
-  ) =>
-      dropdownExpensesSelector(
+  ) => dropdownExpensesSelector(
     expenseMap,
     expenseList,
     clientMap,
@@ -177,8 +180,7 @@ var memoizedFilteredExpenseList = memo9(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     StaticState staticState,
-  ) =>
-      filteredExpensesSelector(
+  ) => filteredExpensesSelector(
     selectionState,
     expenseMap,
     clientMap,
@@ -368,8 +370,8 @@ List<String?> clientExpenseList(
 
   list.sort(
     (idA, idB) => expenseMap[idA]!.listDisplayName.compareTo(
-          expenseMap[idB]!.listDisplayName,
-        ),
+      expenseMap[idB]!.listDisplayName,
+    ),
   );
 
   return list;

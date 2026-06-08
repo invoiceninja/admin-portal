@@ -35,7 +35,7 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
   const CompanyGatewayEdit({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final CompanyGatewayEditVM viewModel;
 
@@ -66,7 +66,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     if (_gatewayTypeId.isEmpty) {
       final companyGateway = widget.viewModel.companyGateway;
       final gateway = widget
-          .viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
+          .viewModel
+          .state
+          .staticState
+          .gatewayMap[companyGateway.gatewayId];
 
       final enabledGatewayIds = (gateway?.options.keys ?? []).where(
         (gatewayTypeId) =>
@@ -100,8 +103,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final companyGateway = viewModel.companyGateway;
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
-    final accountId =
-        (companyGateway.parsedConfig!['account_id'] ?? '').toString();
+    final accountId = (companyGateway.parsedConfig!['account_id'] ?? '')
+        .toString();
 
     final connectGateways = [
       kGatewayStripeConnect,
@@ -110,7 +113,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       kGatewayGoCardlessOAuth,
     ];
 
-    final disableSave = (state.isHosted &&
+    final disableSave =
+        (state.isHosted &&
             connectGateways.contains(companyGateway.gatewayId) &&
             companyGateway.isNew) ||
         state.isDemo;
@@ -236,7 +240,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       ),
                       keyboardType: TextInputType.text,
                     ),
-                    if (state.staticState.gatewayMap[companyGateway.gatewayId]
+                    if (state
+                            .staticState
+                            .gatewayMap[companyGateway.gatewayId]
                             ?.supportsTokenBilling ==
                         true)
                       AppDropdownButton<String>(
@@ -244,36 +250,39 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         value: companyGateway.tokenBilling,
                         selectedItemBuilder: companyGateway.tokenBilling.isEmpty
                             ? null
-                            : (context) => [
-                                  SettingsEntity.AUTO_BILL_ALWAYS,
-                                  SettingsEntity.AUTO_BILL_OPT_OUT,
-                                  SettingsEntity.AUTO_BILL_OPT_IN,
-                                  SettingsEntity.AUTO_BILL_OFF,
-                                ]
-                                    .map(
-                                      (type) => Text(localization.lookup(type)),
-                                    )
-                                    .toList(),
+                            : (context) =>
+                                  [
+                                        SettingsEntity.AUTO_BILL_ALWAYS,
+                                        SettingsEntity.AUTO_BILL_OPT_OUT,
+                                        SettingsEntity.AUTO_BILL_OPT_IN,
+                                        SettingsEntity.AUTO_BILL_OFF,
+                                      ]
+                                      .map(
+                                        (type) =>
+                                            Text(localization.lookup(type)),
+                                      )
+                                      .toList(),
                         onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway.rebuild(
                             (b) => b..tokenBilling = value,
                           ),
                         ),
-                        items: [
-                          SettingsEntity.AUTO_BILL_ALWAYS,
-                          SettingsEntity.AUTO_BILL_OPT_OUT,
-                          SettingsEntity.AUTO_BILL_OPT_IN,
-                          SettingsEntity.AUTO_BILL_OFF,
-                        ]
-                            .map(
-                              (value) => DropdownMenuItem(
-                                child: AutobillDropdownMenuItem(
-                                  type: value,
-                                ),
-                                value: value,
-                              ),
-                            )
-                            .toList(),
+                        items:
+                            [
+                                  SettingsEntity.AUTO_BILL_ALWAYS,
+                                  SettingsEntity.AUTO_BILL_OPT_OUT,
+                                  SettingsEntity.AUTO_BILL_OPT_IN,
+                                  SettingsEntity.AUTO_BILL_OFF,
+                                ]
+                                .map(
+                                  (value) => DropdownMenuItem(
+                                    child: AutobillDropdownMenuItem(
+                                      type: value,
+                                    ),
+                                    value: value,
+                                  ),
+                                )
+                                .toList(),
                       ),
                     SizedBox(height: 16),
                     for (var gatewayTypeId
@@ -286,9 +295,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                                 )
                               : '$gatewayTypeId',
                         ),
-                        activeColor: Theme.of(
-                          context,
-                        ).colorScheme.secondary,
+                        activeColor: Theme.of(context).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)
                             .isEnabled,
@@ -748,8 +755,8 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
       final dynamic value =
           (widget.value == null || widget.value == widget.defaultValue)
-              ? ''
-              : widget.value;
+          ? ''
+          : widget.value;
 
       return AppDropdownButton<String>(
         labelText: toTitleCase(widget.field),
@@ -887,8 +894,9 @@ class _LimitEditorState extends State<LimitEditor> {
     final updatedSettings = settings.rebuild(
       (b) => b
         ..minLimit = _enableMin! ? parseDouble(_minController!.text.trim()) : -1
-        ..maxLimit =
-            _enableMax! ? parseDouble(_maxController!.text.trim()) : -1,
+        ..maxLimit = _enableMax!
+            ? parseDouble(_maxController!.text.trim())
+            : -1,
     );
 
     if (settings != updatedSettings) {

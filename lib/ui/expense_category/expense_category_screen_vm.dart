@@ -56,12 +56,12 @@ class ExpenseCategoryScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.expenseCategoryListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> expenseCategories,
-        EntityAction action,
-      ) =>
-          handleExpenseCategoryAction(context, expenseCategories, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> expenseCategories,
+            EntityAction action,
+          ) => handleExpenseCategoryAction(context, expenseCategories, action),
     );
   }
 }

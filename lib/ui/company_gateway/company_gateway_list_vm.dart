@@ -86,12 +86,9 @@ class CompanyGatewayListVM {
       filter: state.companyGatewayUIState.listUIState.filter,
       onCompanyGatewayTap: (context, companyGateway) {
         if (store.state.companyGatewayListState.isInMultiselect()) {
-          handleCompanyGatewayAction(
-              context,
-              [
-                companyGateway,
-              ],
-              EntityAction.toggleMultiselect);
+          handleCompanyGatewayAction(context, [
+            companyGateway,
+          ], EntityAction.toggleMultiselect);
         } else {
           viewEntity(entity: companyGateway);
         }
@@ -101,8 +98,9 @@ class CompanyGatewayListVM {
         gatewayIds.remove(gatewayId);
         final settings = uiState.settings.rebuild(
           (b) => b
-            ..companyGatewayIds =
-                gatewayIds.isEmpty ? '0' : gatewayIds.join(','),
+            ..companyGatewayIds = gatewayIds.isEmpty
+                ? '0'
+                : gatewayIds.join(','),
         );
         store.dispatch(UpdateSettings(settings: settings));
       },

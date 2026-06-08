@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class BankAccountViewScreen extends StatelessWidget {
   const BankAccountViewScreen({Key? key, this.isFilter = false})
-      : super(key: key);
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsBankAccountsView';
 
@@ -51,7 +51,7 @@ class BankAccountViewVM {
     final state = store.state;
     final bankAccount =
         state.bankAccountState.map[state.bankAccountUIState.selectedId] ??
-            BankAccountEntity(id: state.bankAccountUIState.selectedId);
+        BankAccountEntity(id: state.bankAccountUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(

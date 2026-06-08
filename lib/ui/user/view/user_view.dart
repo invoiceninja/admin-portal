@@ -28,7 +28,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserView extends StatelessWidget {
   const UserView({Key? key, required this.viewModel, required this.isFilter})
-      : super(key: key);
+    : super(key: key);
 
   final UserViewVM viewModel;
   final bool isFilter;

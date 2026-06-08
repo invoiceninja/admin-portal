@@ -62,8 +62,8 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
     final invoiceItem =
         itemIndex != null && invoice.lineItems.length > itemIndex
-            ? invoice.lineItems[itemIndex]
-            : null;
+        ? invoice.lineItems[itemIndex]
+        : null;
 
     if (invoiceItem != null && itemIndex != selectedItemIndex) {
       viewModel.clearSelectedInvoiceItem!();
@@ -383,7 +383,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                       _onChanged();
                     });
                   },
-                  labelText: localization.tax +
+                  labelText:
+                      localization.tax +
                       (invoice?.usesInclusiveTaxes == true
                           ? ' - ${localization.inclusive}'
                           : ''),
@@ -398,7 +399,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                       _onChanged();
                     });
                   },
-                  labelText: localization.tax +
+                  labelText:
+                      localization.tax +
                       (invoice?.usesInclusiveTaxes == true
                           ? ' - ${localization.inclusive}'
                           : ''),
@@ -413,7 +415,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                       _onChanged();
                     });
                   },
-                  labelText: localization.tax +
+                  labelText:
+                      localization.tax +
                       (invoice?.usesInclusiveTaxes == true
                           ? ' - ${localization.inclusive}'
                           : ''),

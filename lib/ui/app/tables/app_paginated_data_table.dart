@@ -87,38 +87,38 @@ class AppPaginatedDataTable extends StatefulWidget {
     this.checkboxHorizontalMargin,
     this.controller,
     this.primary,
-  })  : assert(actions == null || (header != null)),
-        assert(columns.isNotEmpty),
-        assert(
-          sortColumnIndex == null ||
-              (sortColumnIndex >= 0 && sortColumnIndex < columns.length),
-        ),
-        assert(
-          dataRowMinHeight == null ||
-              dataRowMaxHeight == null ||
-              dataRowMaxHeight >= dataRowMinHeight,
-        ),
-        assert(
-          dataRowHeight == null ||
-              (dataRowMinHeight == null && dataRowMaxHeight == null),
-          'dataRowHeight ($dataRowHeight) must not be set if dataRowMinHeight ($dataRowMinHeight) or dataRowMaxHeight ($dataRowMaxHeight) are set.',
-        ),
-        dataRowMinHeight =
-            dataRowHeight ?? dataRowMinHeight ?? kMinInteractiveDimension,
-        dataRowMaxHeight =
-            dataRowHeight ?? dataRowMaxHeight ?? kMinInteractiveDimension,
-        assert(rowsPerPage > 0),
-        assert(() {
-          if (onRowsPerPageChanged != null) {
-            assert(availableRowsPerPage.contains(rowsPerPage));
-          }
-          return true;
-        }()),
-        assert(
-          !(controller != null && (primary ?? false)),
-          'Primary ScrollViews obtain their ScrollController via inheritance from a PrimaryScrollController widget. '
-          'You cannot both set primary to true and pass an explicit controller.',
-        );
+  }) : assert(actions == null || (header != null)),
+       assert(columns.isNotEmpty),
+       assert(
+         sortColumnIndex == null ||
+             (sortColumnIndex >= 0 && sortColumnIndex < columns.length),
+       ),
+       assert(
+         dataRowMinHeight == null ||
+             dataRowMaxHeight == null ||
+             dataRowMaxHeight >= dataRowMinHeight,
+       ),
+       assert(
+         dataRowHeight == null ||
+             (dataRowMinHeight == null && dataRowMaxHeight == null),
+         'dataRowHeight ($dataRowHeight) must not be set if dataRowMinHeight ($dataRowMinHeight) or dataRowMaxHeight ($dataRowMaxHeight) are set.',
+       ),
+       dataRowMinHeight =
+           dataRowHeight ?? dataRowMinHeight ?? kMinInteractiveDimension,
+       dataRowMaxHeight =
+           dataRowHeight ?? dataRowMaxHeight ?? kMinInteractiveDimension,
+       assert(rowsPerPage > 0),
+       assert(() {
+         if (onRowsPerPageChanged != null) {
+           assert(availableRowsPerPage.contains(rowsPerPage));
+         }
+         return true;
+       }()),
+       assert(
+         !(controller != null && (primary ?? false)),
+         'Primary ScrollViews obtain their ScrollController via inheritance from a PrimaryScrollController widget. '
+         'You cannot both set primary to true and pass an explicit controller.',
+       );
 
   /// The table card's optional header.
   ///
@@ -293,7 +293,8 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   @override
   void initState() {
     super.initState();
-    _firstRowIndex = PageStorage.maybeOf(context)?.readState(context) as int? ??
+    _firstRowIndex =
+        PageStorage.maybeOf(context)?.readState(context) as int? ??
         widget.initialFirstRowIndex ??
         0;
     widget.source.addListener(_handleDataSourceChanged);
@@ -444,8 +445,9 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
           //.where((int value) => value <= _rowCount || value == widget.rowsPerPage)
           .map<DropdownMenuItem<int>>((int value) {
-        return DropdownMenuItem<int>(value: value, child: Text('$value'));
-      }).toList();
+            return DropdownMenuItem<int>(value: value, child: Text('$value'));
+          })
+          .toList();
       footerWidgets.addAll(<Widget>[
         Container(
           width: 14.0,

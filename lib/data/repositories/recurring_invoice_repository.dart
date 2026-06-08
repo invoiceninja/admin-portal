@@ -27,8 +27,8 @@ class RecurringInvoiceRepository {
       credentials.token,
     );
 
-    final InvoiceItemResponse recurringInvoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return recurringInvoiceResponse.data;
   }
@@ -38,7 +38,8 @@ class RecurringInvoiceRepository {
     int page,
     bool filterDeleted,
   ) async {
-    String url = credentials.url +
+    String url =
+        credentials.url +
         '/recurring_invoices?per_page=$kMaxRecordsPerPage&page=$page';
 
     if (filterDeleted) {
@@ -47,8 +48,8 @@ class RecurringInvoiceRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse recurringInvoiceResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
+    final InvoiceListResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return recurringInvoiceResponse.data;
   }
@@ -63,7 +64,8 @@ class RecurringInvoiceRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/recurring_invoices/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final params = {'ids': ids, 'action': action.toApiParam()};
     if (data != null) {
@@ -76,8 +78,8 @@ class RecurringInvoiceRepository {
       data: json.encode(params),
     );
 
-    final InvoiceListResponse recurringInvoiceResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
+    final InvoiceListResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return recurringInvoiceResponse.data.toList();
   }
@@ -95,7 +97,8 @@ class RecurringInvoiceRepository {
     String url;
 
     if (recurringInvoice.isNew) {
-      url = credentials.url +
+      url =
+          credentials.url +
           '/recurring_invoices?include=activities,history&show_dates=true';
     } else {
       url =
@@ -124,8 +127,8 @@ class RecurringInvoiceRepository {
       );
     }
 
-    final InvoiceItemResponse recurringInvoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return recurringInvoiceResponse.data;
   }

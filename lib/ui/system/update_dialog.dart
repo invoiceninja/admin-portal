@@ -42,17 +42,17 @@ class _UpdateDialogState extends State<UpdateDialog> {
 
     http
         .read(
-      Uri.parse(
-        'https://github.com/invoiceninja/invoiceninja/blob/v5-develop/composer.json?raw=true',
-      ),
-    )
+          Uri.parse(
+            'https://github.com/invoiceninja/invoiceninja/blob/v5-develop/composer.json?raw=true',
+          ),
+        )
         .then((value) {
-      final data = jsonDecode(value);
-      setState(() {
-        phpVersion = data['require']['php'] ?? '';
-        phpVersion = phpVersion!.replaceFirst('^', '');
-      });
-    });
+          final data = jsonDecode(value);
+          setState(() {
+            phpVersion = data['require']['php'] ?? '';
+            phpVersion = phpVersion!.replaceFirst('^', '');
+          });
+        });
   }
 
   @override
@@ -83,63 +83,63 @@ class _UpdateDialogState extends State<UpdateDialog> {
       content: updateState == UpdateState.done
           ? SelectableText(message)
           : updateState == UpdateState.loading
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: LoadingIndicator(height: 50),
-                )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 400,
-                      child: Text(
-                        account.isUpdateAvailable
-                            ? localization.aNewVersionIsAvailable
-                            : localization.forceUpdateHelp,
-                        maxLines: 2,
-                      ),
-                    ),
-                    if (account.isUpdateAvailable) ...[
-                      SizedBox(height: 20),
-                      Text(
-                        '• ${localization.installedVersion}: v${account.currentVersion}',
-                      ),
-                      SizedBox(height: 6),
-                      Text(
-                        '• ${localization.latestVersion}: v${account.latestVersion}',
-                      ),
-                    ],
-                    if (account.isDocker) ...[
-                      SizedBox(height: 20),
-                      Text(localization.toUpdateRun + ':'),
-                      SizedBox(height: 20),
-                      ListTile(
-                        onTap: () {
-                          Clipboard.setData(ClipboardData(text: dockerCommand));
-                          showToast(
-                            localization.copiedToClipboard.replaceFirst(
-                              ':value ',
-                              '',
-                            ),
-                          );
-                        },
-                        subtitle: Text(dockerCommand),
-                        trailing: Icon(Icons.copy),
-                      ),
-                    ],
-                    SizedBox(height: 20),
-                    SizedBox(
-                      width: 400,
-                      child: Text(
-                        localization.latestRequiresPhpVersion.replaceFirst(
-                          ':version',
-                          phpVersion ?? '...',
-                        ),
-                      ),
-                    ),
-                  ],
+          ? Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: LoadingIndicator(height: 50),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  width: 400,
+                  child: Text(
+                    account.isUpdateAvailable
+                        ? localization.aNewVersionIsAvailable
+                        : localization.forceUpdateHelp,
+                    maxLines: 2,
+                  ),
                 ),
+                if (account.isUpdateAvailable) ...[
+                  SizedBox(height: 20),
+                  Text(
+                    '• ${localization.installedVersion}: v${account.currentVersion}',
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    '• ${localization.latestVersion}: v${account.latestVersion}',
+                  ),
+                ],
+                if (account.isDocker) ...[
+                  SizedBox(height: 20),
+                  Text(localization.toUpdateRun + ':'),
+                  SizedBox(height: 20),
+                  ListTile(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: dockerCommand));
+                      showToast(
+                        localization.copiedToClipboard.replaceFirst(
+                          ':value ',
+                          '',
+                        ),
+                      );
+                    },
+                    subtitle: Text(dockerCommand),
+                    trailing: Icon(Icons.copy),
+                  ),
+                ],
+                SizedBox(height: 20),
+                SizedBox(
+                  width: 400,
+                  child: Text(
+                    localization.latestRequiresPhpVersion.replaceFirst(
+                      ':version',
+                      phpVersion ?? '...',
+                    ),
+                  ),
+                ),
+              ],
+            ),
       actions: <Widget>[
         if (updateState == UpdateState.initial) ...[
           TextButton(
@@ -197,40 +197,41 @@ class _UpdateDialogState extends State<UpdateDialog> {
         final url = '${credentials.url}/self-update';
         webClient
             .post(
-          url,
-          credentials.token,
-          password: password,
-          idToken: idToken,
-          rawResponse: true,
-        )
+              url,
+              credentials.token,
+              password: password,
+              idToken: idToken,
+              rawResponse: true,
+            )
             .then((dynamic response) {
-          setState(() {
-            updateState = UpdateState.done;
-            updateResponse = jsonDecode(response.body)['message'];
-          });
+              setState(() {
+                updateState = UpdateState.done;
+                updateResponse = jsonDecode(response.body)['message'];
+              });
 
-          if (updateResponse!.contains('failed')) {
-            // do nothing
-          } else {
-            if (kIsWeb) {
-              WebUtils.reloadBrowser();
-            } else {
-              store.dispatch(
-                RefreshData(clearData: true, includeStatic: true),
-              );
-            }
-          }
-        }).catchError((dynamic error) {
-          var errorStr = '$error';
+              if (updateResponse!.contains('failed')) {
+                // do nothing
+              } else {
+                if (kIsWeb) {
+                  WebUtils.reloadBrowser();
+                } else {
+                  store.dispatch(
+                    RefreshData(clearData: true, includeStatic: true),
+                  );
+                }
+              }
+            })
+            .catchError((dynamic error) {
+              var errorStr = '$error';
 
-          if (errorStr.toLowerCase().contains('unexpected end of')) {
-            errorStr +=
-                '\n\nIt may help to increase the server PHP memory limit';
-          }
+              if (errorStr.toLowerCase().contains('unexpected end of')) {
+                errorStr +=
+                    '\n\nIt may help to increase the server PHP memory limit';
+              }
 
-          showErrorDialog(message: errorStr);
-          setState(() => updateState = UpdateState.initial);
-        });
+              showErrorDialog(message: errorStr);
+              setState(() => updateState = UpdateState.initial);
+            });
       },
     );
   }

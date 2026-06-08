@@ -46,7 +46,7 @@ class RecurringExpenseListItem extends StatelessWidget {
     final category = state.expenseCategoryState.get(expense.categoryId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (expense.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
     final listUIState = expenseUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
@@ -80,7 +80,8 @@ class RecurringExpenseListItem extends StatelessWidget {
     return DismissibleEntity(
       showMultiselect: this.showCheckbox,
       isDismissible: isDismissible,
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           expense.id ==
               (uiState.isEditing
                   ? expenseUIState.editing!.id
@@ -165,12 +166,11 @@ class RecurringExpenseListItem extends StatelessWidget {
                                 subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                      color: textColor!.withOpacity(
+                                        kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],
@@ -244,8 +244,8 @@ class RecurringExpenseListItem extends StatelessWidget {
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: textColor!.withOpacity(kLighterOpacity),
-                            ),
+                          color: textColor!.withOpacity(kLighterOpacity),
+                        ),
                       ),
                       EntityStateLabel(expense),
                     ],

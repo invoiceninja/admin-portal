@@ -416,8 +416,9 @@ void handleTransactionAction(
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final transaction = transactions.first as TransactionEntity;
-  final transactionIds =
-      transactions.map((transaction) => transaction.id).toList();
+  final transactionIds = transactions
+      .map((transaction) => transaction.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:

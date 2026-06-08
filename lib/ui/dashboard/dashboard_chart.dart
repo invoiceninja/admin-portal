@@ -74,18 +74,19 @@ class _DashboardChartState extends State<DashboardChart> {
       date = selectedDatum.first.datum.date;
       selectedDatum
           .where(
-        (charts.SeriesDatum datumPair) =>
-            datumPair.series.id == DashboardChart.PERIOD_CURRENT,
-      )
+            (charts.SeriesDatum datumPair) =>
+                datumPair.series.id == DashboardChart.PERIOD_CURRENT,
+          )
           .forEach((charts.SeriesDatum datumPair) {
-        total += datumPair.datum.amount;
-        measures[datumPair.series.displayName] = datumPair.datum.amount;
-      });
+            total += datumPair.datum.amount;
+            measures[datumPair.series.displayName] = datumPair.datum.amount;
+          });
     }
 
     setState(() {
       if (date != null) {
-        _selected = formatDate(date.toIso8601String(), context) +
+        _selected =
+            formatDate(date.toIso8601String(), context) +
             ' • ' +
             formatNumber(total, context, currencyId: widget.currencyId)!;
       } else {
@@ -170,13 +171,15 @@ class _DashboardChartState extends State<DashboardChart> {
                     final bool isSelected = index == _selectedIndex;
                     final bool isIncrease =
                         dataGroup.periodTotal > dataGroup.previousTotal;
-                    final String changeAmount = (isIncrease ? '+' : '') +
+                    final String changeAmount =
+                        (isIncrease ? '+' : '') +
                         formatNumber(
                           dataGroup.periodTotal - dataGroup.previousTotal,
                           context,
                           currencyId: widget.currencyId,
                         )!;
-                    final changePercent = (isIncrease ? '+' : '') +
+                    final changePercent =
+                        (isIncrease ? '+' : '') +
                         formatNumber(
                           dataGroup.periodTotal != 0 &&
                                   dataGroup.previousTotal != 0
@@ -192,7 +195,8 @@ class _DashboardChartState extends State<DashboardChart> {
                           formatNumberType: FormatNumberType.percent,
                           currencyId: widget.currencyId,
                         )!;
-                    final String changeString = dataGroup.periodTotal == 0 ||
+                    final String changeString =
+                        dataGroup.periodTotal == 0 ||
                             dataGroup.previousTotal == 0 ||
                             dataGroup.periodTotal == dataGroup.previousTotal
                         ? (settings.enableComparison ? ' ' : '')
@@ -242,8 +246,8 @@ class _DashboardChartState extends State<DashboardChart> {
                                       color: isSelected
                                           ? Colors.white
                                           : (isIncrease
-                                              ? Colors.green
-                                              : Colors.red),
+                                                ? Colors.green
+                                                : Colors.red),
                                     ),
                                   )
                                 : SizedBox(),

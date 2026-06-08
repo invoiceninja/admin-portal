@@ -180,19 +180,19 @@ abstract class ExpenseEntity extends Object
   int get hashCode;
 
   ExpenseEntity get clone => rebuild(
-        (b) => b
-          ..id = BaseEntity.nextId
-          ..number = ''
-          ..isChanged = false
-          ..isDeleted = false
-          ..invoiceId = null
-          ..date = convertDateTimeToSqlDate()
-          ..documents.clear()
-          ..transactionReference = ''
-          ..transactionId = ''
-          ..paymentTypeId = ''
-          ..paymentDate = '',
-      );
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..number = ''
+      ..isChanged = false
+      ..isDeleted = false
+      ..invoiceId = null
+      ..date = convertDateTimeToSqlDate()
+      ..documents.clear()
+      ..transactionReference = ''
+      ..transactionId = ''
+      ..paymentTypeId = ''
+      ..paymentDate = '',
+  );
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -417,15 +417,15 @@ abstract class ExpenseEntity extends Object
         final userA = userMap[expenseA!.assignedUserId] ?? UserEntity();
         final userB = userMap[expenseB!.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName.toLowerCase().compareTo(
-              userB.listDisplayName.toLowerCase(),
-            );
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.createdBy:
         final userA = userMap[expenseA!.createdUserId] ?? UserEntity();
         final userB = userMap[expenseB!.createdUserId] ?? UserEntity();
         response = userA.listDisplayName.toLowerCase().compareTo(
-              userB.listDisplayName.toLowerCase(),
-            );
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case ExpenseFields.clientId:
       case ExpenseFields.client:
@@ -447,23 +447,23 @@ abstract class ExpenseEntity extends Object
         final stateA = EntityState.valueOf(expenseA!.entityState);
         final stateB = EntityState.valueOf(expenseB!.entityState);
         response = stateA.name.toLowerCase().compareTo(
-              stateB.name.toLowerCase(),
-            );
+          stateB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.publicNotes:
         response = expenseA!.publicNotes.toLowerCase().compareTo(
-              expenseB!.publicNotes.toLowerCase(),
-            );
+          expenseB!.publicNotes.toLowerCase(),
+        );
         break;
       case ExpenseFields.expenseDate:
         response = expenseA!.date!.toLowerCase().compareTo(
-              expenseB!.date!.toLowerCase(),
-            );
+          expenseB!.date!.toLowerCase(),
+        );
         break;
       case ExpenseFields.paymentDate:
         response = expenseA!.paymentDate.toLowerCase().compareTo(
-              expenseB!.paymentDate.toLowerCase(),
-            );
+          expenseB!.paymentDate.toLowerCase(),
+        );
         break;
       case EntityFields.createdAt:
         response = expenseA!.createdAt.compareTo(expenseB!.createdAt);
@@ -501,8 +501,8 @@ abstract class ExpenseEntity extends Object
         final currencyA = currencyMap[expenseA!.currencyId] ?? CurrencyEntity();
         final currencyB = currencyMap[expenseB!.currencyId] ?? CurrencyEntity();
         response = currencyA.name.toLowerCase().compareTo(
-              currencyB.name.toLowerCase(),
-            );
+          currencyB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.categoryId:
       case ExpenseFields.category:
@@ -511,8 +511,8 @@ abstract class ExpenseEntity extends Object
         final categoryB =
             expenseCategoryMap[expenseB!.categoryId] ?? ExpenseCategoryEntity();
         response = categoryA.name.toLowerCase().compareTo(
-              categoryB.name.toLowerCase(),
-            );
+          categoryB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.exchangeRate:
         response = expenseA!.exchangeRate.compareTo(expenseB!.exchangeRate);
@@ -524,8 +524,8 @@ abstract class ExpenseEntity extends Object
         final currencyB =
             currencyMap[expenseB!.invoiceCurrencyId] ?? CurrencyEntity();
         response = currencyA.name.toLowerCase().compareTo(
-              currencyB.name.toLowerCase(),
-            );
+          currencyB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.taxName1:
         response = expenseA!.taxName1.compareTo(expenseB!.taxName1);

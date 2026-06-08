@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
   const RecurringInvoiceEdit({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -47,8 +47,9 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final showEInvoice =
         invoice.isOld && state.company.settings.enableEInvoice == true;
 
-    final index =
-        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+    final index = viewModel.invoiceItemIndex != null
+        ? kItemScreen
+        : kDetailsScreen;
     _controller = TabController(
       vsync: this,
       length: showEInvoice ? 6 : 5,

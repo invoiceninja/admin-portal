@@ -31,21 +31,21 @@ class AppToggleButtons extends StatelessWidget {
 
         final isSelected = tabLabels!.length == 4
             ? (selectedIndex == 0
-                ? [true, false, false, false]
-                : selectedIndex == 1
-                    ? [false, true, false, false]
-                    : selectedIndex == 2
-                        ? [false, false, true, false]
-                        : [false, false, false, true])
+                  ? [true, false, false, false]
+                  : selectedIndex == 1
+                  ? [false, true, false, false]
+                  : selectedIndex == 2
+                  ? [false, false, true, false]
+                  : [false, false, false, true])
             : tabLabels!.length == 3
-                ? (selectedIndex == 0
-                    ? [true, false, false]
-                    : selectedIndex == 1
-                        ? [false, true, false]
-                        : [false, false, true])
-                : selectedIndex == 0
-                    ? [true, false]
-                    : [false, true];
+            ? (selectedIndex == 0
+                  ? [true, false, false]
+                  : selectedIndex == 1
+                  ? [false, true, false]
+                  : [false, false, true])
+            : selectedIndex == 0
+            ? [true, false]
+            : [false, true];
 
         final children = tabLabels!
             .map(

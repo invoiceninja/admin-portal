@@ -111,22 +111,24 @@ Middleware<AppState> _viewClientList() {
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveClientsRequest;
-    final prevClients =
-        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
+    final prevClients = action.clientIds
+        .map((id) => store.state.clientState.map[id])
+        .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.clientIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.clientIds,
+          EntityAction.archive,
+        )
         .then((List<ClientEntity> clients) {
-      store.dispatch(ArchiveClientsSuccess(clients));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveClientsFailure(prevClients));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveClientsSuccess(clients));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveClientsFailure(prevClients));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -137,24 +139,25 @@ Middleware<AppState> _mergeClients(ClientRepository repository) {
     final action = dynamicAction as MergeClientsRequest;
     repository
         .merge(
-      credentials: store.state.credentials,
-      clientId: action.clientId,
-      mergeIntoClientId: action.mergeIntoClientId,
-      idToken: action.idToken,
-      password: action.password,
-    )
+          credentials: store.state.credentials,
+          clientId: action.clientId,
+          mergeIntoClientId: action.mergeIntoClientId,
+          idToken: action.idToken,
+          password: action.password,
+        )
         .then((client) {
-      store.dispatch(MergeClientsSuccess(action.clientId));
-      store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      store.dispatch(MergeClientsFailure(error as List<ClientEntity>));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          store.dispatch(MergeClientsSuccess(action.clientId));
+          store.dispatch(RefreshData());
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          store.dispatch(MergeClientsFailure(error as List<ClientEntity>));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -163,22 +166,24 @@ Middleware<AppState> _mergeClients(ClientRepository repository) {
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteClientsRequest;
-    final prevClients =
-        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
+    final prevClients = action.clientIds
+        .map((id) => store.state.clientState.map[id])
+        .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.clientIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.clientIds,
+          EntityAction.delete,
+        )
         .then((List<ClientEntity> clients) {
-      store.dispatch(DeleteClientsSuccess(clients));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteClientsFailure(prevClients));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteClientsSuccess(clients));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteClientsFailure(prevClients));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -189,19 +194,20 @@ Middleware<AppState> _purgeClient(ClientRepository repository) {
     final action = dynamicAction as PurgeClientRequest;
     repository
         .purge(
-      credentials: store.state.credentials,
-      clientId: action.clientId,
-      password: action.password,
-      idToken: action.idToken,
-    )
+          credentials: store.state.credentials,
+          clientId: action.clientId,
+          password: action.password,
+          idToken: action.idToken,
+        )
         .then((_) {
-      store.dispatch(PurgeClientSuccess(action.clientId));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(PurgeClientFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(PurgeClientSuccess(action.clientId));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(PurgeClientFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -210,22 +216,24 @@ Middleware<AppState> _purgeClient(ClientRepository repository) {
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreClientsRequest;
-    final prevClients =
-        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
+    final prevClients = action.clientIds
+        .map((id) => store.state.clientState.map[id])
+        .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.clientIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.clientIds,
+          EntityAction.restore,
+        )
         .then((List<ClientEntity> clients) {
-      store.dispatch(RestoreClientSuccess(clients));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreClientFailure(prevClients));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreClientSuccess(clients));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreClientFailure(prevClients));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -237,23 +245,24 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
     repository
         .saveData(store.state.credentials, action.client!)
         .then((ClientEntity client) {
-      if (action.client!.isNew) {
-        store.dispatch(AddClientSuccess(client));
-      } else {
-        store.dispatch(SaveClientSuccess(client));
-      }
+          if (action.client!.isNew) {
+            store.dispatch(AddClientSuccess(client));
+          } else {
+            store.dispatch(SaveClientSuccess(client));
+          }
 
-      action.completer!.complete(client);
+          action.completer!.complete(client);
 
-      final clientUIState = store.state.clientUIState;
-      if (clientUIState.saveCompleter != null) {
-        clientUIState.saveCompleter!.complete(client);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveClientFailure(error));
-      action.completer!.completeError(error);
-    });
+          final clientUIState = store.state.clientUIState;
+          if (clientUIState.saveCompleter != null) {
+            clientUIState.saveCompleter!.complete(client);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveClientFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -272,18 +281,19 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
     repository
         .loadItem(store.state.credentials, action!.clientId)
         .then((client) {
-      store.dispatch(LoadClientSuccess(client));
+          store.dispatch(LoadClientSuccess(client));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadClientFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadClientFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -295,40 +305,43 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadClientsRequest());
-    repository.loadList(state.credentials, action.page).then((data) {
-      store.dispatch(LoadClientsSuccess(data));
+    repository
+        .loadList(state.credentials, action.page)
+        .then((data) {
+          store.dispatch(LoadClientsSuccess(data));
 
-      final documents = <DocumentEntity>[];
-      data.forEach((client) {
-        client.documents.forEach((document) {
-          documents.add(
-            document.rebuild(
-              (b) => b
-                ..parentId = client.id
-                ..parentType = EntityType.client,
-            ),
-          );
+          final documents = <DocumentEntity>[];
+          data.forEach((client) {
+            client.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = client.id
+                    ..parentType = EntityType.client,
+                ),
+              );
+            });
+          });
+          store.dispatch(LoadDocumentsSuccess(documents));
+
+          if (data.length == kMaxRecordsPerPage) {
+            store.dispatch(
+              LoadClients(completer: action.completer, page: action.page + 1),
+            );
+          } else {
+            if (action.completer != null) {
+              action.completer!.complete(null);
+            }
+            store.dispatch(LoadProducts());
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadClientsFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
         });
-      });
-      store.dispatch(LoadDocumentsSuccess(documents));
-
-      if (data.length == kMaxRecordsPerPage) {
-        store.dispatch(
-          LoadClients(completer: action.completer, page: action.page + 1),
-        );
-      } else {
-        if (action.completer != null) {
-          action.completer!.complete(null);
-        }
-        store.dispatch(LoadProducts());
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadClientsFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
 
     next(action);
   };
@@ -340,32 +353,33 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-        store.state.credentials,
-        action!.client,
-        action.multipartFile,
-        action.isPrivate,
-      )
+            store.state.credentials,
+            action!.client,
+            action.multipartFile,
+            action.isPrivate,
+          )
           .then((client) {
-        store.dispatch(SaveClientSuccess(client));
+            store.dispatch(SaveClientSuccess(client));
 
-        final documents = <DocumentEntity>[];
-        client.documents.forEach((document) {
-          documents.add(
-            document.rebuild(
-              (b) => b
-                ..parentId = client.id
-                ..parentType = EntityType.client,
-            ),
-          );
-        });
+            final documents = <DocumentEntity>[];
+            client.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = client.id
+                    ..parentType = EntityType.client,
+                ),
+              );
+            });
 
-        store.dispatch(LoadDocumentsSuccess(documents));
-        action.completer.complete(documents);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveClientDocumentFailure(error));
-        action.completer.completeError(error);
-      });
+            store.dispatch(LoadDocumentsSuccess(documents));
+            action.completer.complete(documents);
+          })
+          .catchError((Object error) {
+            print(error);
+            store.dispatch(SaveClientDocumentFailure(error));
+            action.completer.completeError(error);
+          });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveClientDocumentFailure(error));

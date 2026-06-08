@@ -9,8 +9,7 @@ var memoizedUpcomingInvoices = memo2(
   (
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _upcomingInvoices(invoiceMap: invoiceMap, clientMap: clientMap),
+  ) => _upcomingInvoices(invoiceMap: invoiceMap, clientMap: clientMap),
 );
 
 List<InvoiceEntity?> _upcomingInvoices({
@@ -42,8 +41,7 @@ var memoizedPastDueInvoices = memo2(
   (
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _pastDueInvoices(invoiceMap: invoiceMap, clientMap: clientMap),
+  ) => _pastDueInvoices(invoiceMap: invoiceMap, clientMap: clientMap),
 );
 
 List<InvoiceEntity?> _pastDueInvoices({
@@ -75,8 +73,7 @@ var memoizedRecentPayments = memo2(
   (
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _recentPayments(paymentMap: paymentMap, clientMap: clientMap),
+  ) => _recentPayments(paymentMap: paymentMap, clientMap: clientMap),
 );
 
 List<PaymentEntity?> _recentPayments({
@@ -113,8 +110,7 @@ var memoizedUpcomingQuotes = memo2(
   (
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _upcomingQuotes(quoteMap: quoteMap, clientMap: clientMap),
+  ) => _upcomingQuotes(quoteMap: quoteMap, clientMap: clientMap),
 );
 
 List<InvoiceEntity?> _upcomingQuotes({
@@ -143,8 +139,7 @@ var memoizedExpiredQuotes = memo2(
   (
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _expiredQuotes(quoteMap: quoteMap, clientMap: clientMap),
+  ) => _expiredQuotes(quoteMap: quoteMap, clientMap: clientMap),
 );
 
 List<InvoiceEntity?> _expiredQuotes({
@@ -173,8 +168,7 @@ var memoizedRunningTasks = memo2(
   (
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _runningTasks(taskMap: taskMap, clientMap: clientMap),
+  ) => _runningTasks(taskMap: taskMap, clientMap: clientMap),
 );
 
 List<TaskEntity?> _runningTasks({
@@ -200,8 +194,7 @@ var memoizedRecentTasks = memo2(
   (
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _recentTasks(taskMap: taskMap, clientMap: clientMap),
+  ) => _recentTasks(taskMap: taskMap, clientMap: clientMap),
 );
 
 List<TaskEntity> _recentTasks({
@@ -259,8 +252,7 @@ var memoizedRecentExpenses = memo2(
   (
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ClientEntity> clientMap,
-  ) =>
-      _recentExpenses(expenseMap: expenseMap, clientMap: clientMap),
+  ) => _recentExpenses(expenseMap: expenseMap, clientMap: clientMap),
 );
 
 List<ExpenseEntity?> _recentExpenses({

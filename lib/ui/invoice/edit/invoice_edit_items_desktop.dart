@@ -95,22 +95,29 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
           lineItem.isEmpty;
     }).toList();
 
-    final hasTax1 = company.enableFirstItemTaxRate ||
+    final hasTax1 =
+        company.enableFirstItemTaxRate ||
         includedLineItems.any((item) => item.taxName1.isNotEmpty);
-    final hasTax2 = company.enableSecondItemTaxRate ||
+    final hasTax2 =
+        company.enableSecondItemTaxRate ||
         includedLineItems.any((item) => item.taxName2.isNotEmpty);
-    final hasTax3 = company.enableThirdItemTaxRate ||
+    final hasTax3 =
+        company.enableThirdItemTaxRate ||
         includedLineItems.any((item) => item.taxName3.isNotEmpty);
     final hasAnyTax = hasTax1 || hasTax2 || hasTax3;
 
-    final customField1 =
-        widget.isTasks ? CustomFieldType.task1 : CustomFieldType.product1;
-    final customField2 =
-        widget.isTasks ? CustomFieldType.task2 : CustomFieldType.product2;
-    final customField3 =
-        widget.isTasks ? CustomFieldType.task3 : CustomFieldType.product3;
-    final customField4 =
-        widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
+    final customField1 = widget.isTasks
+        ? CustomFieldType.task1
+        : CustomFieldType.product1;
+    final customField2 = widget.isTasks
+        ? CustomFieldType.task2
+        : CustomFieldType.product2;
+    final customField3 = widget.isTasks
+        ? CustomFieldType.task3
+        : CustomFieldType.product3;
+    final customField4 = widget.isTasks
+        ? CustomFieldType.task4
+        : CustomFieldType.product4;
 
     List<String> pdfColumns = company.settings
         .getFieldsForSection(
@@ -316,21 +323,27 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       state.userState.map,
     );
 
-    final customField1 =
-        widget.isTasks ? CustomFieldType.task1 : CustomFieldType.product1;
-    final customField2 =
-        widget.isTasks ? CustomFieldType.task2 : CustomFieldType.product2;
-    final customField3 =
-        widget.isTasks ? CustomFieldType.task3 : CustomFieldType.product3;
-    final customField4 =
-        widget.isTasks ? CustomFieldType.task4 : CustomFieldType.product4;
+    final customField1 = widget.isTasks
+        ? CustomFieldType.task1
+        : CustomFieldType.product1;
+    final customField2 = widget.isTasks
+        ? CustomFieldType.task2
+        : CustomFieldType.product2;
+    final customField3 = widget.isTasks
+        ? CustomFieldType.task3
+        : CustomFieldType.product3;
+    final customField4 = widget.isTasks
+        ? CustomFieldType.task4
+        : CustomFieldType.product4;
 
-    final tableFontColor = state.prefState
-            .activeCustomColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+    final tableFontColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_FONT_COLOR] ??
         '';
 
-    final tableHeaderColor = state.prefState.activeCustomColors[
-            PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+    final tableHeaderColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
 
     final tableHeaderColumns = <Widget>[];
@@ -363,7 +376,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       } else if (column == COLUMN_CUSTOM4) {
         label = company.getCustomFieldLabel(customField4);
       } else if ([COLUMN_TAX1, COLUMN_TAX2, COLUMN_TAX3].contains(column)) {
-        label = localization!.tax +
+        label =
+            localization!.tax +
             (invoice.usesInclusiveTaxes ? ' - ${localization.inclusive}' : '');
       } else if (column == COLUMN_TAX_CATEGORY) {
         label = localization!.taxCategory;
@@ -663,34 +677,35 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ),
                             optionsBuilder:
                                 (TextEditingValue textEditingValue) {
-                              final options = productIds
-                                  .map(
-                                    (productId) => productState.map[productId],
-                                  )
-                                  .whereType<ProductEntity>()
-                                  .where((product) {
-                                final filter =
-                                    textEditingValue.text.toLowerCase();
-                                final productKey =
-                                    product.productKey.toLowerCase();
+                                  final options = productIds
+                                      .map(
+                                        (productId) =>
+                                            productState.map[productId],
+                                      )
+                                      .whereType<ProductEntity>()
+                                      .where((product) {
+                                        final filter = textEditingValue.text
+                                            .toLowerCase();
+                                        final productKey = product.productKey
+                                            .toLowerCase();
 
-                                if (company.showProductDetails) {
-                                  return product.matchesFilter(filter);
-                                } else {
-                                  return productKey.contains(filter);
-                                }
-                              }).toList();
+                                        if (company.showProductDetails) {
+                                          return product.matchesFilter(filter);
+                                        } else {
+                                          return productKey.contains(filter);
+                                        }
+                                      })
+                                      .toList();
 
-                              if (options.length == 1 &&
-                                  options[0].productKey.toLowerCase() ==
-                                      lineItems[index]
-                                          .productKey
-                                          .toLowerCase()) {
-                                return <ProductEntity>[];
-                              }
+                                  if (options.length == 1 &&
+                                      options[0].productKey.toLowerCase() ==
+                                          lineItems[index].productKey
+                                              .toLowerCase()) {
+                                    return <ProductEntity>[];
+                                  }
 
-                              return options;
-                            },
+                                  return options;
+                                },
                             displayStringForOption: (product) =>
                                 product.productKey,
                             onSelected: (product) {
@@ -700,9 +715,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 invoice.clientId,
                               );
                               final currency = state
-                                  .staticState.currencyMap[client.currencyId];
+                                  .staticState
+                                  .currencyMap[client.currencyId];
 
-                              double cost = (invoice.isPurchaseOrder &&
+                              double cost =
+                                  (invoice.isPurchaseOrder &&
                                       company.enableProductCost &&
                                       product.cost != 0)
                                   ? product.cost
@@ -735,11 +752,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                             : cost
                                         ..quantity =
                                             item.isTask || item.quantity != 0
-                                                ? item.quantity
-                                                : viewModel.state!.company
-                                                        .defaultQuantity
-                                                    ? 1
-                                                    : product.quantity
+                                            ? item.quantity
+                                            : viewModel
+                                                  .state!
+                                                  .company
+                                                  .defaultQuantity
+                                            ? 1
+                                            : product.quantity
                                         ..customValue1 = product.customValue1
                                         ..customValue2 = product.customValue2
                                         ..customValue3 = product.customValue3
@@ -747,34 +766,34 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                         ..taxCategoryId = product.taxCategoryId
                                         ..taxName1 =
                                             company.numberOfItemTaxRates >= 1 &&
-                                                    product.taxName1.isNotEmpty
-                                                ? product.taxName1
-                                                : item.taxName1
+                                                product.taxName1.isNotEmpty
+                                            ? product.taxName1
+                                            : item.taxName1
                                         ..taxRate1 =
                                             company.numberOfItemTaxRates >= 1 &&
-                                                    product.taxName1.isNotEmpty
-                                                ? product.taxRate1
-                                                : item.taxRate1
+                                                product.taxName1.isNotEmpty
+                                            ? product.taxRate1
+                                            : item.taxRate1
                                         ..taxName2 =
                                             company.numberOfItemTaxRates >= 2 &&
-                                                    product.taxName2.isNotEmpty
-                                                ? product.taxName2
-                                                : item.taxName2
+                                                product.taxName2.isNotEmpty
+                                            ? product.taxName2
+                                            : item.taxName2
                                         ..taxRate2 =
                                             company.numberOfItemTaxRates >= 2 &&
-                                                    product.taxName2.isNotEmpty
-                                                ? product.taxRate2
-                                                : item.taxRate2
+                                                product.taxName2.isNotEmpty
+                                            ? product.taxRate2
+                                            : item.taxRate2
                                         ..taxName3 =
                                             company.numberOfItemTaxRates >= 3 &&
-                                                    product.taxName3.isNotEmpty
-                                                ? product.taxName3
-                                                : item.taxName3
+                                                product.taxName3.isNotEmpty
+                                            ? product.taxName3
+                                            : item.taxName3
                                         ..taxRate3 =
                                             company.numberOfItemTaxRates >= 3 &&
-                                                    product.taxName3.isNotEmpty
-                                                ? product.taxRate3
-                                                : item.taxRate3,
+                                                product.taxName3.isNotEmpty
+                                            ? product.taxRate3
+                                            : item.taxRate3,
                                     )
                                   : item.rebuild(
                                       (b) => b
@@ -786,115 +805,124 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               _onChanged(updatedItem, index, debounce: false);
                               _updateTable();
                             },
-                            fieldViewBuilder: (
-                              BuildContext context,
-                              TextEditingController textEditingController,
-                              FocusNode focusNode,
-                              VoidCallback onFieldSubmitted,
-                            ) {
-                              return DecoratedFormField(
-                                showClear: false,
-                                controller: textEditingController,
-                                keyboardType: TextInputType.text,
-                                focusNode: focusNode,
-                                onFieldSubmitted: (String value) {
-                                  onFieldSubmitted();
-                                },
-                                onChanged: (value) {
-                                  _onChanged(
-                                    lineItems[index].rebuild(
-                                      (b) => b..productKey = value,
-                                    ),
-                                    index,
+                            fieldViewBuilder:
+                                (
+                                  BuildContext context,
+                                  TextEditingController textEditingController,
+                                  FocusNode focusNode,
+                                  VoidCallback onFieldSubmitted,
+                                ) {
+                                  return DecoratedFormField(
+                                    showClear: false,
+                                    controller: textEditingController,
+                                    keyboardType: TextInputType.text,
+                                    focusNode: focusNode,
+                                    onFieldSubmitted: (String value) {
+                                      onFieldSubmitted();
+                                    },
+                                    onChanged: (value) {
+                                      _onChanged(
+                                        lineItems[index].rebuild(
+                                          (b) => b..productKey = value,
+                                        ),
+                                        index,
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
-                            optionsViewBuilder: (
-                              BuildContext context,
-                              AutocompleteOnSelected<ProductEntity> onSelected,
-                              Iterable<SelectableEntity> options,
-                            ) {
-                              final highlightedIndex =
-                                  AutocompleteHighlightedOption.of(context);
-                              return Theme(
-                                data: theme,
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Material(
-                                    elevation: 4,
-                                    child: AppBorder(
-                                      child: Container(
-                                        color: Theme.of(context).cardColor,
-                                        width: 250,
-                                        constraints: BoxConstraints(
-                                          maxHeight: 270,
-                                        ),
-                                        child: ScrollableListViewBuilder(
-                                          itemCount: options.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            final entity =
-                                                options.elementAt(index);
-                                            return Container(
-                                              color: highlightedIndex == index
-                                                  ? convertHexStringToColor(
-                                                      state.prefState
-                                                              .enableDarkMode
-                                                          ? kDefaultDarkSelectedColor
-                                                          : kDefaultLightSelectedColor,
-                                                    )
-                                                  : Theme.of(
-                                                      context,
-                                                    ).cardColor,
-                                              child: EntityAutocompleteListTile(
-                                                onTap: (entity) => onSelected(
-                                                  entity as ProductEntity,
-                                                ),
-                                                overrideSuggestedLabel:
-                                                    (entity) {
-                                                  var label =
-                                                      entity.listDisplayName;
-                                                  if (state
-                                                      .company.trackInventory) {
-                                                    final product =
-                                                        entity as ProductEntity;
-                                                    label +=
-                                                        ' [${product.stockQuantity}]';
-                                                  }
-                                                  return label;
-                                                },
-                                                overrideSuggestedAmount:
-                                                    (entity) {
-                                                  final product =
-                                                      entity as ProductEntity;
-                                                  return formatNumber(
-                                                    (invoice.isPurchaseOrder &&
+                            optionsViewBuilder:
+                                (
+                                  BuildContext context,
+                                  AutocompleteOnSelected<ProductEntity>
+                                  onSelected,
+                                  Iterable<SelectableEntity> options,
+                                ) {
+                                  final highlightedIndex =
+                                      AutocompleteHighlightedOption.of(context);
+                                  return Theme(
+                                    data: theme,
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Material(
+                                        elevation: 4,
+                                        child: AppBorder(
+                                          child: Container(
+                                            color: Theme.of(context).cardColor,
+                                            width: 250,
+                                            constraints: BoxConstraints(
+                                              maxHeight: 270,
+                                            ),
+                                            child: ScrollableListViewBuilder(
+                                              itemCount: options.length,
+                                              itemBuilder: (BuildContext context, int index) {
+                                                final entity = options
+                                                    .elementAt(index);
+                                                return Container(
+                                                  color:
+                                                      highlightedIndex == index
+                                                      ? convertHexStringToColor(
+                                                          state
+                                                                  .prefState
+                                                                  .enableDarkMode
+                                                              ? kDefaultDarkSelectedColor
+                                                              : kDefaultLightSelectedColor,
+                                                        )
+                                                      : Theme.of(
+                                                          context,
+                                                        ).cardColor,
+                                                  child: EntityAutocompleteListTile(
+                                                    onTap: (entity) =>
+                                                        onSelected(
+                                                          entity
+                                                              as ProductEntity,
+                                                        ),
+                                                    overrideSuggestedLabel: (entity) {
+                                                      var label = entity
+                                                          .listDisplayName;
+                                                      if (state
+                                                          .company
+                                                          .trackInventory) {
+                                                        final product =
+                                                            entity
+                                                                as ProductEntity;
+                                                        label +=
+                                                            ' [${product.stockQuantity}]';
+                                                      }
+                                                      return label;
+                                                    },
+                                                    overrideSuggestedAmount: (entity) {
+                                                      final product =
+                                                          entity
+                                                              as ProductEntity;
+                                                      return formatNumber(
+                                                        (invoice.isPurchaseOrder &&
+                                                                company
+                                                                    .enableProductCost &&
+                                                                product.cost !=
+                                                                    0)
+                                                            ? product.cost
+                                                            : product.price,
+                                                        context,
+                                                      );
+                                                    },
+                                                    subtitle:
+                                                        entity
+                                                                is ProductEntity &&
                                                             company
-                                                                .enableProductCost &&
-                                                            product.cost != 0)
-                                                        ? product.cost
-                                                        : product.price,
-                                                    context,
-                                                  );
-                                                },
-                                                subtitle: entity
-                                                            is ProductEntity &&
-                                                        company
-                                                            .showProductDetails
-                                                    ? entity.notes
-                                                    : null,
-                                                entity: entity,
-                                              ),
-                                            );
-                                          },
+                                                                .showProductDetails
+                                                        ? entity.notes
+                                                        : null,
+                                                    entity: entity,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              );
-                            },
+                                  );
+                                },
                           ),
                         ),
                       );
@@ -1273,7 +1301,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   ),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert),
-                    enabled: !lineItems[index].isEmpty ||
+                    enabled:
+                        !lineItems[index].isEmpty ||
                         index < includedLineItems.length,
                     itemBuilder: (BuildContext context) {
                       final sectionIndex = includedLineItems.indexOf(
@@ -1362,11 +1391,13 @@ class TableHeader extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    final tableHeaderColor = state.prefState.activeCustomColors[
-            PrefState.THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
+    final tableHeaderColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_BACKGROUND_COLOR] ??
         '';
-    final tableFontColor = state.prefState
-            .activeCustomColors[PrefState.THEME_INVOICE_HEADER_FONT_COLOR] ??
+    final tableFontColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_INVOICE_HEADER_FONT_COLOR] ??
         '';
 
     return Padding(

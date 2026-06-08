@@ -52,26 +52,27 @@ void loadEmailTemplate({
 
   webClient
       .post(
-    url,
-    credentials.token,
-    data: json.encode({
-      'entity': '${invoice?.entityType ?? ''}',
-      'entity_id': '${invoice?.id ?? ''}',
-      'template': template,
-      'subject': subject,
-      'body': body,
-    }),
-  )
+        url,
+        credentials.token,
+        data: json.encode({
+          'entity': '${invoice?.entityType ?? ''}',
+          'entity_id': '${invoice?.id ?? ''}',
+          'template': template,
+          'subject': subject,
+          'body': body,
+        }),
+      )
       .then((dynamic response) {
-    onComplete(
-      response['subject'],
-      response['body'],
-      response['wrapper'].replaceFirst('\$body', response['body']),
-      response['raw_subject'],
-      response['raw_body'],
-    );
-  }).catchError((dynamic error) {
-    showErrorDialog(message: '$error');
-    onComplete(subject, body, body, subject, body);
-  });
+        onComplete(
+          response['subject'],
+          response['body'],
+          response['wrapper'].replaceFirst('\$body', response['body']),
+          response['raw_subject'],
+          response['raw_body'],
+        );
+      })
+      .catchError((dynamic error) {
+        showErrorDialog(message: '$error');
+        onComplete(subject, body, body, subject, body);
+      });
 }

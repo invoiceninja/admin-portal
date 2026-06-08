@@ -87,8 +87,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.paymentLink
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -352,8 +352,7 @@ SubscriptionState _setLoadedSubscription(
 SubscriptionState _setLoadedSubscriptions(
   SubscriptionState subscriptionState,
   LoadSubscriptionsSuccess action,
-) =>
-    subscriptionState.loadSubscriptions(action.subscriptions);
+) => subscriptionState.loadSubscriptions(action.subscriptions);
 
 SubscriptionState _setLoadedCompany(
   SubscriptionState subscriptionState,

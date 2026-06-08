@@ -87,8 +87,9 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
       ];
     }
 
-    final contact =
-        vendor.contacts.contains(viewModel.contact) ? viewModel.contact : null;
+    final contact = vendor.contacts.contains(viewModel.contact)
+        ? viewModel.contact
+        : null;
 
     if (contact != null && contact != selectedContact) {
       selectedContact = contact;
@@ -108,10 +109,11 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
             bottom: 6,
           ),
           child: AppButton(
-            label: (vendor.contacts.length == 1
-                    ? localization!.addSecondContact
-                    : localization!.addContact)
-                .toUpperCase(),
+            label:
+                (vendor.contacts.length == 1
+                        ? localization!.addSecondContact
+                        : localization!.addContact)
+                    .toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
           ),
         ),

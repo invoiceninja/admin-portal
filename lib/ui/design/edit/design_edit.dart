@@ -500,15 +500,15 @@ class _DesignSettingsState extends State<DesignSettings> {
               ),
               SizedBox(height: 10),
               ...[
-                EntityType.client,
-                EntityType.invoice,
-                EntityType.payment,
-                EntityType.quote,
-                EntityType.credit,
-                EntityType.project,
-                EntityType.task,
-                EntityType.purchaseOrder,
-              ]
+                    EntityType.client,
+                    EntityType.invoice,
+                    EntityType.payment,
+                    EntityType.quote,
+                    EntityType.credit,
+                    EntityType.project,
+                    EntityType.task,
+                    EntityType.purchaseOrder,
+                  ]
                   .where(
                     (entityType) => state.company.isModuleEnabled(entityType),
                   )

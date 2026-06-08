@@ -58,17 +58,17 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocument,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          invoiceItemIndex: invoiceItemIndex,
-          origInvoice: origInvoice,
-          onSavePressed: onSavePressed,
-          onItemsAdded: onItemsAdded,
-          isSaving: isSaving,
-          onCancelPressed: onCancelPressed,
-          onUploadDocuments: onUploadDocument,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         invoiceItemIndex: invoiceItemIndex,
+         origInvoice: origInvoice,
+         onSavePressed: onSavePressed,
+         onItemsAdded: onItemsAdded,
+         isSaving: isSaving,
+         onCancelPressed: onCancelPressed,
+         onUploadDocuments: onUploadDocument,
+       );
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -110,49 +110,51 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 action: action,
               ),
             );
-            return completer.future.then((savedQuote) {
-              showToast(
-                quote.isNew
-                    ? localization!.createdQuote
-                    : localization!.updatedQuote,
-              );
+            return completer.future
+                .then((savedQuote) {
+                  showToast(
+                    quote.isNew
+                        ? localization!.createdQuote
+                        : localization!.updatedQuote,
+                  );
 
-              if (state.prefState.isMobile) {
-                store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
-                if (quote.isNew) {
-                  navigator!.pushReplacementNamed(QuoteViewScreen.route);
-                } else {
-                  navigator!.pop(savedQuote);
-                }
-              } else {
-                if (!state.prefState.isPreviewVisible) {
-                  store.dispatch(TogglePreviewSidebar());
-                }
+                  if (state.prefState.isMobile) {
+                    store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
+                    if (quote.isNew) {
+                      navigator!.pushReplacementNamed(QuoteViewScreen.route);
+                    } else {
+                      navigator!.pop(savedQuote);
+                    }
+                  } else {
+                    if (!state.prefState.isPreviewVisible) {
+                      store.dispatch(TogglePreviewSidebar());
+                    }
 
-                viewEntity(entity: savedQuote);
+                    viewEntity(entity: savedQuote);
 
-                if (state.prefState.isEditorFullScreen(
-                      EntityType.invoice,
-                    ) &&
-                    state.prefState.editAfterSaving) {
-                  editEntity(entity: savedQuote);
-                }
-              }
+                    if (state.prefState.isEditorFullScreen(
+                          EntityType.invoice,
+                        ) &&
+                        state.prefState.editAfterSaving) {
+                      editEntity(entity: savedQuote);
+                    }
+                  }
 
-              if (action != null && action.isClientSide) {
-                handleEntityAction(savedQuote, action);
-              } else if (action != null && action.requiresSecondRequest) {
-                handleEntityAction(savedQuote, action);
-                viewEntity(entity: savedQuote, force: true);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                },
-              );
-            });
+                  if (action != null && action.isClientSide) {
+                    handleEntityAction(savedQuote, action);
+                  } else if (action != null && action.requiresSecondRequest) {
+                    handleEntityAction(savedQuote, action);
+                    viewEntity(entity: savedQuote, force: true);
+                  }
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
           }
         });
       },
@@ -170,36 +172,38 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocument: (
-        BuildContext context,
-        List<MultipartFile> multipartFile,
-        bool? isPrivate,
-      ) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(
-          SaveQuoteDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFile: multipartFile,
-            quote: quote,
-            completer: completer,
-          ),
-        );
-        completer.future.then((client) {
-          showToast(
-            AppLocalization.of(
-              navigatorKey.currentContext!,
-            )!
-                .uploadedDocument,
-          );
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
-      },
+      onUploadDocument:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool? isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveQuoteDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFile: multipartFile,
+                quote: quote,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 }

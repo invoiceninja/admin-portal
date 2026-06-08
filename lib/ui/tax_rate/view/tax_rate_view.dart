@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateView extends StatefulWidget {
   const TaxRateView({Key? key, required this.viewModel, required this.isFilter})
-      : super(key: key);
+    : super(key: key);
 
   final TaxRateViewVM viewModel;
   final bool isFilter;

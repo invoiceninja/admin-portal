@@ -74,8 +74,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
     }
 
-    final ProductDetailsResponse productDetailResponse =
-        await _inAppPurchase.queryProductDetails(kProductPlans.toSet());
+    final ProductDetailsResponse productDetailResponse = await _inAppPurchase
+        .queryProductDetails(kProductPlans.toSet());
     if (productDetailResponse.error != null) {
       setState(() {
         _queryProductError = productDetailResponse.error!.message;
@@ -209,16 +209,16 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     final Map<String, PurchaseDetails> purchases =
         Map<String, PurchaseDetails>.fromEntries(
-      _purchases.map((PurchaseDetails purchase) {
-        if (purchase.pendingCompletePurchase) {
-          _inAppPurchase.completePurchase(purchase);
-        }
-        return MapEntry<String, PurchaseDetails>(
-          purchase.productID,
-          purchase,
+          _purchases.map((PurchaseDetails purchase) {
+            if (purchase.pendingCompletePurchase) {
+              _inAppPurchase.completePurchase(purchase);
+            }
+            return MapEntry<String, PurchaseDetails>(
+              purchase.productID,
+              purchase,
+            );
+          }),
         );
-      }),
-    );
     _products.sort((p1, p2) => p1.rawPrice.compareTo(p2.rawPrice));
     productList.addAll(
       _products.map((ProductDetails productDetails) {
@@ -290,7 +290,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     //final navigator = Navigator.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
+    final url =
+        (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
         '/api/admin/subscription';
 
     var purchaseID = purchaseDetails.purchaseID;

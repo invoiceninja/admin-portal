@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 
 class VendorEditContactsScreen extends StatelessWidget {
   const VendorEditContactsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final VendorEditVM viewModel;
 

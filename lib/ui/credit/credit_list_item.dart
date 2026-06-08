@@ -50,7 +50,7 @@ class CreditListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (credit.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
@@ -60,7 +60,8 @@ class CreditListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: credit.id ==
+      isSelected:
+          credit.id ==
           (uiState.isEditing
               ? creditUIState.editing!.id
               : creditUIState.selectedId),
@@ -142,12 +143,11 @@ class CreditListItem extends StatelessWidget {
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                      color: textColor!.withOpacity(
+                                        kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],

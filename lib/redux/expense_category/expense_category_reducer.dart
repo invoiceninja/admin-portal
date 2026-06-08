@@ -109,8 +109,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.expenseCategory
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -385,8 +385,7 @@ ExpenseCategoryState _setLoadedExpenseCategory(
 ExpenseCategoryState _setLoadedExpenseCategories(
   ExpenseCategoryState expenseCategoryState,
   LoadExpenseCategoriesSuccess action,
-) =>
-    expenseCategoryState.loadExpenseCategories(action.expenseCategories);
+) => expenseCategoryState.loadExpenseCategories(action.expenseCategories);
 
 ExpenseCategoryState _setLoadedCompany(
   ExpenseCategoryState expenseCategoryState,

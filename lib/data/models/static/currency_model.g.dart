@@ -59,11 +59,12 @@ class _$CurrencyListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(CurrencyEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(CurrencyEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$CurrencyItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CurrencyEntity),
-            )! as CurrencyEntity,
+                  value,
+                  specifiedType: const FullType(CurrencyEntity),
+                )!
+                as CurrencyEntity,
           );
           break;
       }
@@ -199,58 +201,76 @@ class _$CurrencyEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'symbol':
-          result.symbol = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.symbol =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'precision':
-          result.precision = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.precision =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'thousand_separator':
-          result.thousandSeparator = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.thousandSeparator =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'decimal_separator':
-          result.decimalSeparator = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.decimalSeparator =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'code':
-          result.code = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.code =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'swap_currency_symbol':
-          result.swapCurrencySymbol = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.swapCurrencySymbol =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'exchange_rate':
-          result.exchangeRate = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.exchangeRate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -265,15 +285,13 @@ class _$CurrencyListResponse extends CurrencyListResponse {
 
   factory _$CurrencyListResponse([
     void Function(CurrencyListResponseBuilder)? updates,
-  ]) =>
-      (CurrencyListResponseBuilder()..update(updates))._build();
+  ]) => (CurrencyListResponseBuilder()..update(updates))._build();
 
   _$CurrencyListResponse._({required this.data}) : super._();
   @override
   CurrencyListResponse rebuild(
     void Function(CurrencyListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CurrencyListResponseBuilder toBuilder() =>
@@ -299,8 +317,7 @@ class _$CurrencyListResponse extends CurrencyListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'CurrencyListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -366,15 +383,13 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
 
   factory _$CurrencyItemResponse([
     void Function(CurrencyItemResponseBuilder)? updates,
-  ]) =>
-      (CurrencyItemResponseBuilder()..update(updates))._build();
+  ]) => (CurrencyItemResponseBuilder()..update(updates))._build();
 
   _$CurrencyItemResponse._({required this.data}) : super._();
   @override
   CurrencyItemResponse rebuild(
     void Function(CurrencyItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CurrencyItemResponseBuilder toBuilder() =>
@@ -400,8 +415,7 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'CurrencyItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -626,7 +640,8 @@ class CurrencyEntityBuilder
   CurrencyEntity build() => _build();
 
   _$CurrencyEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$CurrencyEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

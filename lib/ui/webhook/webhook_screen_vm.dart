@@ -56,12 +56,12 @@ class WebhookScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.webhookListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> webhooks,
-        EntityAction action,
-      ) =>
-          handleWebhookAction(context, webhooks, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> webhooks,
+            EntityAction action,
+          ) => handleWebhookAction(context, webhooks, action),
     );
   }
 }

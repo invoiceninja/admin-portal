@@ -138,126 +138,154 @@ class _$SettingsUIStateSerializer
         case 'company':
           result.company.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CompanyEntity),
-            )! as CompanyEntity,
+                  value,
+                  specifiedType: const FullType(CompanyEntity),
+                )!
+                as CompanyEntity,
           );
           break;
         case 'origCompany':
           result.origCompany.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CompanyEntity),
-            )! as CompanyEntity,
+                  value,
+                  specifiedType: const FullType(CompanyEntity),
+                )!
+                as CompanyEntity,
           );
           break;
         case 'client':
           result.client.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ClientEntity),
-            )! as ClientEntity,
+                  value,
+                  specifiedType: const FullType(ClientEntity),
+                )!
+                as ClientEntity,
           );
           break;
         case 'origClient':
           result.origClient.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ClientEntity),
-            )! as ClientEntity,
+                  value,
+                  specifiedType: const FullType(ClientEntity),
+                )!
+                as ClientEntity,
           );
           break;
         case 'group':
           result.group.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(GroupEntity),
-            )! as GroupEntity,
+                  value,
+                  specifiedType: const FullType(GroupEntity),
+                )!
+                as GroupEntity,
           );
           break;
         case 'origGroup':
           result.origGroup.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(GroupEntity),
-            )! as GroupEntity,
+                  value,
+                  specifiedType: const FullType(GroupEntity),
+                )!
+                as GroupEntity,
           );
           break;
         case 'user':
           result.user.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(UserEntity),
-            )! as UserEntity,
+                  value,
+                  specifiedType: const FullType(UserEntity),
+                )!
+                as UserEntity,
           );
           break;
         case 'origUser':
           result.origUser.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(UserEntity),
-            )! as UserEntity,
+                  value,
+                  specifiedType: const FullType(UserEntity),
+                )!
+                as UserEntity,
           );
           break;
         case 'entityType':
-          result.entityType = serializers.deserialize(
-            value,
-            specifiedType: const FullType(EntityType),
-          )! as EntityType;
+          result.entityType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )!
+                  as EntityType;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'updatedAt':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'section':
-          result.section = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.section =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'selectedTemplate':
-          result.selectedTemplate = serializers.deserialize(
-            value,
-            specifiedType: const FullType(EmailTemplate),
-          )! as EmailTemplate;
+          result.selectedTemplate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EmailTemplate),
+                  )!
+                  as EmailTemplate;
           break;
         case 'filter':
-          result.filter = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.filter =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'filterClearedAt':
-          result.filterClearedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.filterClearedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'showNewSettings':
-          result.showNewSettings = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.showNewSettings =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'showPdfPreview':
-          result.showPdfPreview = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.showPdfPreview =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
       }
     }
@@ -542,7 +570,8 @@ class SettingsUIStateBuilder
   _$SettingsUIState _build() {
     _$SettingsUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$SettingsUIState._(
             company: company.build(),
             origCompany: origCompany.build(),

@@ -95,25 +95,29 @@ class ExpenseOverview extends StatelessWidget {
       String tax = '';
       if (expense.calculateTaxByAmount!) {
         if (expense.taxName1.isNotEmpty) {
-          tax += formatNumber(expense.taxAmount1, context)! +
+          tax +=
+              formatNumber(expense.taxAmount1, context)! +
               ' ' +
               expense.taxName1;
         }
         if (expense.taxName2.isNotEmpty) {
-          tax += ' ' +
+          tax +=
+              ' ' +
               formatNumber(expense.taxAmount2, context)! +
               ' ' +
               expense.taxName2;
         }
         if (expense.taxName3.isNotEmpty) {
-          tax += ' ' +
+          tax +=
+              ' ' +
               formatNumber(expense.taxAmount3, context)! +
               ' ' +
               expense.taxName3;
         }
       } else {
         if (expense.taxName1.isNotEmpty) {
-          tax += formatNumber(
+          tax +=
+              formatNumber(
                 expense.taxRate1,
                 context,
                 formatNumberType: FormatNumberType.percent,
@@ -122,7 +126,8 @@ class ExpenseOverview extends StatelessWidget {
               expense.taxName1;
         }
         if (expense.taxName2.isNotEmpty) {
-          tax += ' ' +
+          tax +=
+              ' ' +
               formatNumber(
                 expense.taxRate2,
                 context,
@@ -132,7 +137,8 @@ class ExpenseOverview extends StatelessWidget {
               expense.taxName2;
         }
         if (expense.taxName3.isNotEmpty) {
-          tax += ' ' +
+          tax +=
+              ' ' +
               formatNumber(
                 expense.taxRate3,
                 context,

@@ -113,8 +113,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.invoice
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -520,8 +520,7 @@ InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
 InvoiceState _setLoadedInvoices(
   InvoiceState invoiceState,
   LoadInvoicesSuccess action,
-) =>
-    invoiceState.loadInvoices(action.invoices);
+) => invoiceState.loadInvoices(action.invoices);
 
 InvoiceState _setLoadedCompany(
   InvoiceState invoiceState,

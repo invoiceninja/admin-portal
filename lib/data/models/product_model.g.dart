@@ -59,11 +59,12 @@ class _$ProductListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(ProductEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ProductEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$ProductItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ProductEntity),
-            )! as ProductEntity,
+                  value,
+                  specifiedType: const FullType(ProductEntity),
+                )!
+                as ProductEntity,
           );
           break;
       }
@@ -320,188 +322,247 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'product_key':
-          result.productKey = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.productKey =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'notes':
-          result.notes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.notes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'cost':
-          result.cost = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.cost =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'price':
-          result.price = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.price =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'quantity':
-          result.quantity = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.quantity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name1':
-          result.taxName1 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.taxName1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_rate1':
-          result.taxRate1 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.taxRate1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name2':
-          result.taxName2 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.taxName2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_rate2':
-          result.taxRate2 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.taxRate2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name3':
-          result.taxName3 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.taxName3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_rate3':
-          result.taxRate3 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.taxRate3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'in_stock_quantity':
-          result.stockQuantity = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.stockQuantity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'stock_notification_threshold':
-          result.stockNotificationThreshold = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.stockNotificationThreshold =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'stock_notification':
-          result.stockNotification = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.stockNotification =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'product_image':
-          result.imageUrl = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.imageUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'max_quantity':
-          result.maxQuantity = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.maxQuantity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'tax_id':
-          result.taxCategoryId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.taxCategoryId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'documents':
           result.documents.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(DocumentEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -516,15 +577,13 @@ class _$ProductListResponse extends ProductListResponse {
 
   factory _$ProductListResponse([
     void Function(ProductListResponseBuilder)? updates,
-  ]) =>
-      (ProductListResponseBuilder()..update(updates))._build();
+  ]) => (ProductListResponseBuilder()..update(updates))._build();
 
   _$ProductListResponse._({required this.data}) : super._();
   @override
   ProductListResponse rebuild(
     void Function(ProductListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ProductListResponseBuilder toBuilder() =>
@@ -550,8 +609,7 @@ class _$ProductListResponse extends ProductListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'ProductListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -617,15 +675,13 @@ class _$ProductItemResponse extends ProductItemResponse {
 
   factory _$ProductItemResponse([
     void Function(ProductItemResponseBuilder)? updates,
-  ]) =>
-      (ProductItemResponseBuilder()..update(updates))._build();
+  ]) => (ProductItemResponseBuilder()..update(updates))._build();
 
   _$ProductItemResponse._({required this.data}) : super._();
   @override
   ProductItemResponse rebuild(
     void Function(ProductItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ProductItemResponseBuilder toBuilder() =>
@@ -651,8 +707,7 @@ class _$ProductItemResponse extends ProductItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'ProductItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -1117,7 +1172,8 @@ class ProductEntityBuilder
   _$ProductEntity _build() {
     _$ProductEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ProductEntity._(
             productKey: BuiltValueNullFieldError.checkNotNull(
               productKey,

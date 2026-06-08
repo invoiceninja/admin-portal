@@ -87,8 +87,8 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                     setState(() {
                       _isExpanded[systemLog.id] =
                           _isExpanded.containsKey(systemLog.id)
-                              ? !_isExpanded[systemLog.id]!
-                              : true;
+                          ? !_isExpanded[systemLog.id]!
+                          : true;
                     });
                   },
                 );
@@ -96,20 +96,20 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               isExpanded: _isExpanded[systemLog.id] == true,
               body: _isExpanded[systemLog.id] == true
                   ? logs == null
-                      ? Padding(
-                          child: Text(systemLog.log),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
-                          ),
-                        )
-                      : Container(
-                          color: Colors.white,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: JsonViewer(logs),
-                          ),
-                        )
+                        ? Padding(
+                            child: Text(systemLog.log),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
+                          )
+                        : Container(
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: JsonViewer(logs),
+                            ),
+                          )
                   : SizedBox(),
             );
           }).toList(),

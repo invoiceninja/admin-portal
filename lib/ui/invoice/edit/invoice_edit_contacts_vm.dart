@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts.dart'
 
 class InvoiceEditContactsScreen extends StatelessWidget {
   const InvoiceEditContactsScreen({Key? key, required this.entityType})
-      : super(key: key);
+    : super(key: key);
 
   final EntityType? entityType;
 
@@ -67,15 +67,15 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
     required Function(VendorContactEntity) onAddVendorContact,
     required Function(InvitationEntity) onRemoveContact,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onAddClientContact: onAddClientContact,
-          onAddVendorContact: onAddVendorContact,
-          onRemoveContact: onRemoveContact,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onAddClientContact: onAddClientContact,
+         onAddVendorContact: onAddVendorContact,
+         onRemoveContact: onRemoveContact,
+       );
 
   factory InvoiceEditContactsVM.fromStore(
     Store<AppState> store,

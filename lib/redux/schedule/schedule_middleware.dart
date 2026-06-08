@@ -99,18 +99,19 @@ Middleware<AppState> _archiveSchedule(ScheduleRepository repository) {
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.scheduleIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.scheduleIds,
+          EntityAction.archive,
+        )
         .then((List<ScheduleEntity> schedules) {
-      store.dispatch(ArchiveSchedulesSuccess(schedules));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveSchedulesFailure(prevSchedules));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveSchedulesSuccess(schedules));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveSchedulesFailure(prevSchedules));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -124,18 +125,19 @@ Middleware<AppState> _deleteSchedule(ScheduleRepository repository) {
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.scheduleIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.scheduleIds,
+          EntityAction.delete,
+        )
         .then((List<ScheduleEntity> schedules) {
-      store.dispatch(DeleteSchedulesSuccess(schedules));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteSchedulesFailure(prevSchedules));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteSchedulesSuccess(schedules));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteSchedulesFailure(prevSchedules));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -149,18 +151,19 @@ Middleware<AppState> _restoreSchedule(ScheduleRepository repository) {
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.scheduleIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.scheduleIds,
+          EntityAction.restore,
+        )
         .then((List<ScheduleEntity> schedules) {
-      store.dispatch(RestoreSchedulesSuccess(schedules));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreSchedulesFailure(prevSchedules));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreSchedulesSuccess(schedules));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreSchedulesFailure(prevSchedules));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -172,18 +175,19 @@ Middleware<AppState> _saveSchedule(ScheduleRepository repository) {
     repository
         .saveData(store.state.credentials, action.schedule!)
         .then((ScheduleEntity schedule) {
-      if (action.schedule!.isNew) {
-        store.dispatch(AddScheduleSuccess(schedule));
-      } else {
-        store.dispatch(SaveScheduleSuccess(schedule));
-      }
+          if (action.schedule!.isNew) {
+            store.dispatch(AddScheduleSuccess(schedule));
+          } else {
+            store.dispatch(SaveScheduleSuccess(schedule));
+          }
 
-      action.completer!.complete(schedule);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveScheduleFailure(error));
-      action.completer!.completeError(error);
-    });
+          action.completer!.complete(schedule);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveScheduleFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -195,19 +199,22 @@ Middleware<AppState> _loadSchedule(ScheduleRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadScheduleRequest());
-    repository.loadItem(state.credentials, action.scheduleId).then((schedule) {
-      store.dispatch(LoadScheduleSuccess(schedule));
+    repository
+        .loadItem(state.credentials, action.scheduleId)
+        .then((schedule) {
+          store.dispatch(LoadScheduleSuccess(schedule));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadScheduleFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadScheduleFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -219,19 +226,22 @@ Middleware<AppState> _loadSchedules(ScheduleRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadSchedulesRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadSchedulesSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadSchedulesSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadSchedulesFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadSchedulesFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

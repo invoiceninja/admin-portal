@@ -95,9 +95,11 @@ class _DocumentGridState extends State<DocumentGrid> {
                     child: DropTarget(
                       onDragDone: (detail) async {
                         final List<MultipartFile> multipartFiles = [];
-                        for (var index = 0;
-                            index < detail.files.length;
-                            index++) {
+                        for (
+                          var index = 0;
+                          index < detail.files.length;
+                          index++
+                        ) {
                           final file = detail.files[index];
                           final bytes = await file.readAsBytes();
                           final multipartFile = MultipartFile.fromBytes(
@@ -301,12 +303,9 @@ class DocumentTile extends StatelessWidget {
               children: <Widget>[
                 InkWell(
                   onTap: (document.isImage || document.isPdf)
-                      ? () => handleDocumentAction(
-                          context,
-                          [
-                            document,
-                          ],
-                          EntityAction.viewDocument)
+                      ? () => handleDocumentAction(context, [
+                          document,
+                        ], EntityAction.viewDocument)
                       : null,
                   child: Stack(
                     alignment: Alignment.topLeft,
@@ -351,26 +350,17 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization!.view) {
-                                handleDocumentAction(
-                                    context,
-                                    [
-                                      document,
-                                    ],
-                                    EntityAction.viewDocument);
+                                handleDocumentAction(context, [
+                                  document,
+                                ], EntityAction.viewDocument);
                               } else if (value == localization.download) {
-                                handleDocumentAction(
-                                    context,
-                                    [
-                                      document,
-                                    ],
-                                    EntityAction.download);
+                                handleDocumentAction(context, [
+                                  document,
+                                ], EntityAction.download);
                               } else if (value == localization.delete) {
-                                handleDocumentAction(
-                                    context,
-                                    [
-                                      document,
-                                    ],
-                                    EntityAction.delete);
+                                handleDocumentAction(context, [
+                                  document,
+                                ], EntityAction.delete);
                               } else if (value == localization.viewExpense) {
                                 onViewExpense!(document);
                               } else if (value == localization.rename) {
@@ -385,8 +375,9 @@ class DocumentTile extends StatelessWidget {
                                       SaveDocumentRequest(
                                         completer:
                                             snackBarCompleter<DocumentEntity>(
-                                          localization.renamedDocument,
-                                        )..future.then((value) {
+                                                localization.renamedDocument,
+                                              )
+                                              ..future.then((value) {
                                                 onRenamedDocument();
                                               }),
                                         document: document.rebuild(

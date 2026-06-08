@@ -80,22 +80,24 @@ class TaskViewVM {
       store.dispatch(
         SaveTaskRequest(completer: completer, task: task.toggle()),
       );
-      completer.future.then((savedTask) {
-        showToast(
-          savedTask.isRunning
-              ? (savedTask.calculateDuration().inSeconds > 0
-                  ? localization!.resumedTask
-                  : localization!.startedTask)
-              : localization!.stoppedTask,
-        );
-      }).catchError((Object error) {
-        showDialog<ErrorDialog>(
-          context: navigatorKey.currentContext!,
-          builder: (BuildContext context) {
-            return ErrorDialog(error);
-          },
-        );
-      });
+      completer.future
+          .then((savedTask) {
+            showToast(
+              savedTask.isRunning
+                  ? (savedTask.calculateDuration().inSeconds > 0
+                        ? localization!.resumedTask
+                        : localization!.startedTask)
+                  : localization!.stoppedTask,
+            );
+          })
+          .catchError((Object error) {
+            showDialog<ErrorDialog>(
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              },
+            );
+          });
     }
 
     return TaskViewVM(
@@ -111,8 +113,9 @@ class TaskViewVM {
       onEditPressed: (BuildContext context, [TaskTime? taskTime]) {
         editEntity(
           entity: task,
-          subIndex:
-              taskTime != null ? task.getTaskTimes().indexOf(taskTime) : 0,
+          subIndex: taskTime != null
+              ? task.getTaskTimes().indexOf(taskTime)
+              : 0,
           completer: snackBarCompleter<TaskEntity>(
             AppLocalization.of(context)!.updatedTask,
           ),
@@ -121,36 +124,38 @@ class TaskViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([task], action, autoPop: true),
-      onUploadDocuments: (
-        BuildContext context,
-        List<MultipartFile> multipartFiles,
-        bool isPrivate,
-      ) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(
-          SaveTaskDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFiles,
-            task: task,
-            completer: completer,
-          ),
-        );
-        completer.future.then((client) {
-          showToast(
-            AppLocalization.of(
-              navigatorKey.currentContext!,
-            )!
-                .uploadedDocument,
-          );
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveTaskDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFiles,
+                task: task,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

@@ -21,25 +21,27 @@ Completer<T> snackBarCompleter<T>(
   final Completer<T> completer = Completer<T>();
   final navigator = Navigator.of(context);
 
-  completer.future.then((_) {
-    if (shouldPop && navigator.canPop()) {
-      navigator.pop();
-    }
-    showToast(message);
-    if (callback != null) {
-      callback();
-    }
-  }).catchError((Object error) {
-    if (shouldPop && navigator.canPop()) {
-      navigator.pop();
-    }
-    showDialog<ErrorDialog>(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext context) {
-        return ErrorDialog(error);
-      },
-    );
-  });
+  completer.future
+      .then((_) {
+        if (shouldPop && navigator.canPop()) {
+          navigator.pop();
+        }
+        showToast(message);
+        if (callback != null) {
+          callback();
+        }
+      })
+      .catchError((Object error) {
+        if (shouldPop && navigator.canPop()) {
+          navigator.pop();
+        }
+        showDialog<ErrorDialog>(
+          context: navigatorKey.currentContext!,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          },
+        );
+      });
 
   return completer;
 }
@@ -47,16 +49,18 @@ Completer<T> snackBarCompleter<T>(
 Completer<Null> popCompleter(BuildContext context, dynamic result) {
   final Completer<Null> completer = Completer<Null>();
 
-  completer.future.then<Null>((_) {
-    Navigator.of(navigatorKey.currentContext!).pop<dynamic>(result);
-  }).catchError((Object error) {
-    showDialog<ErrorDialog>(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext context) {
-        return ErrorDialog(error);
-      },
-    );
-  });
+  completer.future
+      .then<Null>((_) {
+        Navigator.of(navigatorKey.currentContext!).pop<dynamic>(result);
+      })
+      .catchError((Object error) {
+        showDialog<ErrorDialog>(
+          context: navigatorKey.currentContext!,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          },
+        );
+      });
 
   return completer;
 }

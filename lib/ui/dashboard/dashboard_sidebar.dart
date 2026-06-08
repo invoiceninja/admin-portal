@@ -98,7 +98,8 @@ class InvoiceSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.invoice,
-      label1: localization.upcomingInvoices +
+      label1:
+          localization.upcomingInvoices +
           (upcomingInvoices.isNotEmpty ? ' (${upcomingInvoices.length})' : ''),
       list1: upcomingInvoices.isEmpty
           ? null
@@ -112,7 +113,8 @@ class InvoiceSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.pastDueInvoices +
+      label2:
+          localization.pastDueInvoices +
           (pastDueInvoices.isNotEmpty ? ' (${pastDueInvoices.length})' : ''),
       list2: pastDueInvoices.isEmpty
           ? null
@@ -162,7 +164,8 @@ class PaymentSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.payment,
-      label1: localization.recentPayments +
+      label1:
+          localization.recentPayments +
           (recentPayments.isNotEmpty ? ' (${recentPayments.length})' : ''),
       list1: recentPayments.isEmpty
           ? null
@@ -216,7 +219,8 @@ class QuoteSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.quote,
-      label1: localization.upcomingQuotes +
+      label1:
+          localization.upcomingQuotes +
           (upcomingQuotes.isNotEmpty ? ' (${upcomingQuotes.length})' : ''),
       list1: upcomingQuotes.isEmpty
           ? null
@@ -230,7 +234,8 @@ class QuoteSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.expiredQuotes +
+      label2:
+          localization.expiredQuotes +
           (expriedQuotes.isNotEmpty ? ' (${expriedQuotes.length})' : ''),
       list2: expriedQuotes.isEmpty
           ? null
@@ -284,7 +289,8 @@ class TaskSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.quote,
-      label1: localization.runningTasks +
+      label1:
+          localization.runningTasks +
           (runningTasks.isNotEmpty ? ' (${runningTasks.length})' : ''),
       list1: runningTasks.isEmpty
           ? null
@@ -298,7 +304,8 @@ class TaskSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.recentTasks +
+      label2:
+          localization.recentTasks +
           (recentTasks.isNotEmpty ? ' (${recentTasks.length})' : ''),
       list2: recentTasks.isEmpty
           ? null
@@ -372,7 +379,8 @@ class ExpenseSidbar extends StatelessWidget {
               separatorBuilder: (context, index) => ListDivider(),
             ),
             */
-      label1: localization.recentExpenses +
+      label1:
+          localization.recentExpenses +
           (recentExpenses.isNotEmpty ? ' (${recentExpenses.length})' : ''),
       list1: recentExpenses.isEmpty
           ? null

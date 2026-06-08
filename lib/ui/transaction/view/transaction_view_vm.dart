@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TransactionViewScreen extends StatelessWidget {
   const TransactionViewScreen({Key? key, this.isFilter = false})
-      : super(key: key);
+    : super(key: key);
   static const String route = '/transaction/view';
   final bool isFilter;
 
@@ -131,8 +131,9 @@ class TransactionViewVM {
         store.dispatch(
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
-              AppLocalization.of(context)!.convertedTransaction,
-            )..future.then<Null>((_) {
+                AppLocalization.of(context)!.convertedTransaction,
+              )
+              ..future.then<Null>((_) {
                 if (state.transactionListState.isInMultiselect()) {
                   store.dispatch(ClearTransactionMultiselect());
                   if (store.state.prefState.isPreviewVisible) {

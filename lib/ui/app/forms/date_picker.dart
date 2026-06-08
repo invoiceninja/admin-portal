@@ -87,8 +87,8 @@ class _DatePickerState extends State<DatePicker> {
     DateTime firstDate = DateTime.now();
     final DateTime initialDate =
         widget.selectedDate != null && widget.selectedDate!.isNotEmpty
-            ? DateTime.tryParse(widget.selectedDate!)!
-            : DateTime.now();
+        ? DateTime.tryParse(widget.selectedDate!)!
+        : DateTime.now();
 
     if (widget.firstDate != null) {
       if (initialDate.isBefore(firstDate)) {
@@ -133,17 +133,17 @@ class _DatePickerState extends State<DatePicker> {
         labelText: _pendingValue ?? label,
         suffixIcon:
             widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
-                ? IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      _textController.text = '';
-                      widget.onSelected('', false);
-                    },
-                  )
-                : IconButton(
-                    icon: Icon(Icons.date_range),
-                    onPressed: () => _showDatePicker(),
-                  ),
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  widget.onSelected('', false);
+                },
+              )
+            : IconButton(
+                icon: Icon(Icons.date_range),
+                onPressed: () => _showDatePicker(),
+              ),
       ),
       onChanged: (value) {
         if (value.isEmpty) {

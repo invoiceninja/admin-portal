@@ -83,8 +83,7 @@ class TaskStatusListVM {
             completer: snackBarCompleter<TaskStatusEntity>(
               AppLocalization.of(
                 navigatorKey.currentContext!,
-              )!
-                  .updatedTaskStatus,
+              )!.updatedTaskStatus,
             ),
             taskStatus: taskStatus.rebuild(
               (b) => b..statusOrder = newIndex + 1,

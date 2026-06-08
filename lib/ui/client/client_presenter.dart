@@ -180,8 +180,9 @@ class ClientPresenter extends EntityPresenter {
         final group = state.groupState.get(client!.groupId);
         return LinkTextRelatedEntity(entity: group, relation: client);
       case ClientFields.contacts:
-        final contacts =
-            client!.contacts.map((contact) => contact.fullName).join('\n');
+        final contacts = client!.contacts
+            .map((contact) => contact.fullName)
+            .join('\n');
         return TableTooltip(message: contacts);
       case ClientFields.classification:
         return Text(localization!.lookup(client!.classification));

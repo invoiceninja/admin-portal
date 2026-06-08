@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice
 
 class RecurringInvoiceEditDetailsScreen extends StatelessWidget {
   const RecurringInvoiceEditDetailsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -62,21 +62,21 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
     BuiltMap<String, ClientEntity>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddClientPressed,
+    onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddVendorPressed,
+    onAddVendorPressed,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          onClientChanged: onClientChanged,
-          onVendorChanged: onVendorChanged,
-          clientMap: clientMap,
-          clientList: clientList,
-          onAddClientPressed: onAddClientPressed,
-          onAddVendorPressed: onAddVendorPressed,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         onClientChanged: onClientChanged,
+         onVendorChanged: onVendorChanged,
+         clientMap: clientMap,
+         clientList: clientList,
+         onAddClientPressed: onAddClientPressed,
+         onAddVendorPressed: onAddVendorPressed,
+       );
 
   factory RecurringInvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

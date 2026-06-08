@@ -7,10 +7,10 @@ part of 'expense_category_model.dart';
 // **************************************************************************
 
 Serializer<ExpenseCategoryListResponse>
-    _$expenseCategoryListResponseSerializer =
+_$expenseCategoryListResponseSerializer =
     _$ExpenseCategoryListResponseSerializer();
 Serializer<ExpenseCategoryItemResponse>
-    _$expenseCategoryItemResponseSerializer =
+_$expenseCategoryItemResponseSerializer =
     _$ExpenseCategoryItemResponseSerializer();
 Serializer<ExpenseCategoryEntity> _$expenseCategoryEntitySerializer =
     _$ExpenseCategoryEntitySerializer();
@@ -61,11 +61,12 @@ class _$ExpenseCategoryListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(ExpenseCategoryEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ExpenseCategoryEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -119,9 +120,10 @@ class _$ExpenseCategoryItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ExpenseCategoryEntity),
-            )! as ExpenseCategoryEntity,
+                  value,
+                  specifiedType: const FullType(ExpenseCategoryEntity),
+                )!
+                as ExpenseCategoryEntity,
           );
           break;
       }
@@ -224,64 +226,84 @@ class _$ExpenseCategoryEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'color':
-          result.color = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.color =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -296,15 +318,13 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
 
   factory _$ExpenseCategoryListResponse([
     void Function(ExpenseCategoryListResponseBuilder)? updates,
-  ]) =>
-      (ExpenseCategoryListResponseBuilder()..update(updates))._build();
+  ]) => (ExpenseCategoryListResponseBuilder()..update(updates))._build();
 
   _$ExpenseCategoryListResponse._({required this.data}) : super._();
   @override
   ExpenseCategoryListResponse rebuild(
     void Function(ExpenseCategoryListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ExpenseCategoryListResponseBuilder toBuilder() =>
@@ -330,15 +350,16 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'ExpenseCategoryListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
 class ExpenseCategoryListResponseBuilder
     implements
-        Builder<ExpenseCategoryListResponse,
-            ExpenseCategoryListResponseBuilder> {
+        Builder<
+          ExpenseCategoryListResponse,
+          ExpenseCategoryListResponseBuilder
+        > {
   _$ExpenseCategoryListResponse? _$v;
 
   ListBuilder<ExpenseCategoryEntity>? _data;
@@ -399,15 +420,13 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
 
   factory _$ExpenseCategoryItemResponse([
     void Function(ExpenseCategoryItemResponseBuilder)? updates,
-  ]) =>
-      (ExpenseCategoryItemResponseBuilder()..update(updates))._build();
+  ]) => (ExpenseCategoryItemResponseBuilder()..update(updates))._build();
 
   _$ExpenseCategoryItemResponse._({required this.data}) : super._();
   @override
   ExpenseCategoryItemResponse rebuild(
     void Function(ExpenseCategoryItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ExpenseCategoryItemResponseBuilder toBuilder() =>
@@ -433,15 +452,16 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'ExpenseCategoryItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
 class ExpenseCategoryItemResponseBuilder
     implements
-        Builder<ExpenseCategoryItemResponse,
-            ExpenseCategoryItemResponseBuilder> {
+        Builder<
+          ExpenseCategoryItemResponse,
+          ExpenseCategoryItemResponseBuilder
+        > {
   _$ExpenseCategoryItemResponse? _$v;
 
   ExpenseCategoryEntityBuilder? _data;
@@ -520,8 +540,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   factory _$ExpenseCategoryEntity([
     void Function(ExpenseCategoryEntityBuilder)? updates,
-  ]) =>
-      (ExpenseCategoryEntityBuilder()..update(updates))._build();
+  ]) => (ExpenseCategoryEntityBuilder()..update(updates))._build();
 
   _$ExpenseCategoryEntity._({
     required this.name,
@@ -538,8 +557,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   ExpenseCategoryEntity rebuild(
     void Function(ExpenseCategoryEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   ExpenseCategoryEntityBuilder toBuilder() =>
@@ -679,7 +697,8 @@ class ExpenseCategoryEntityBuilder
   ExpenseCategoryEntity build() => _build();
 
   _$ExpenseCategoryEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$ExpenseCategoryEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

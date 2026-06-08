@@ -88,8 +88,9 @@ class _PaymentRefundState extends State<PaymentRefund> {
     final localization = AppLocalization.of(context)!;
 
     final paymentables = payment.invoices.toList();
-    final needsEmpty =
-        paymentables.where((paymentable) => paymentable.isEmpty).isEmpty;
+    final needsEmpty = paymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty;
     final hasMultipleInvoices = payment.invoicePaymentables.length > 1;
     final addBlank = needsEmpty && hasMultipleInvoices;
     if (addBlank) {
@@ -102,7 +103,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
     );
     final GatewayEntity gateway =
         state.staticState.gatewayMap[companyGateway.gatewayId] ??
-            GatewayEntity();
+        GatewayEntity();
 
     final body = Form(
       key: _formKey,
@@ -371,7 +372,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               ),
               label: localization!.amount,
               autofocus: !hasMultipleInvoices,
-              validator: (value) => !hasMultipleInvoices &&
+              validator: (value) =>
+                  !hasMultipleInvoices &&
                       (value.trim().isEmpty || parseDouble(value) == 0)
                   ? localization.pleaseEnterAValue
                   : null,

@@ -53,7 +53,8 @@ class ProductListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isDismissible: isDismissible,
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           product.id ==
               (uiState.isEditing
                   ? productUIState.editing!.id

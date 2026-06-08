@@ -59,12 +59,12 @@ class RecurringInvoiceScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.recurringInvoiceListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> recurringInvoices,
-        EntityAction action,
-      ) =>
-          handleRecurringInvoiceAction(context, recurringInvoices, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringInvoices,
+            EntityAction action,
+          ) => handleRecurringInvoiceAction(context, recurringInvoices, action),
     );
   }
 }

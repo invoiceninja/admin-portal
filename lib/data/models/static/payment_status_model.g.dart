@@ -50,16 +50,20 @@ class _$PaymentStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -76,15 +80,13 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
 
   factory _$PaymentStatusEntity([
     void Function(PaymentStatusEntityBuilder)? updates,
-  ]) =>
-      (PaymentStatusEntityBuilder()..update(updates))._build();
+  ]) => (PaymentStatusEntityBuilder()..update(updates))._build();
 
   _$PaymentStatusEntity._({required this.id, required this.name}) : super._();
   @override
   PaymentStatusEntity rebuild(
     void Function(PaymentStatusEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PaymentStatusEntityBuilder toBuilder() =>
@@ -154,7 +156,8 @@ class PaymentStatusEntityBuilder
   PaymentStatusEntity build() => _build();
 
   _$PaymentStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$PaymentStatusEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
             id,

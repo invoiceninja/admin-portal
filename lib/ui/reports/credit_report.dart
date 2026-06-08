@@ -90,8 +90,7 @@ var memoizedCreditReport = memo6(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) =>
-      creditReport(
+  ) => creditReport(
     userCompany!,
     reportsUIState,
     creditMap,
@@ -373,8 +372,7 @@ ReportResult creditReport(
         case CreditReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(credit.entityState);
+          )!.lookup(credit.entityState);
           break;
       }
 
@@ -422,11 +420,13 @@ ReportResult creditReport(
   );
 
   return ReportResult(
-    allColumns:
-        CreditReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: CreditReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

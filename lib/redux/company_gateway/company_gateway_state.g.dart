@@ -76,11 +76,12 @@ class _$CompanyGatewayStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(String),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -158,30 +159,36 @@ class _$CompanyGatewayUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CompanyGatewayEntity),
-            )! as CompanyGatewayEntity,
+                  value,
+                  specifiedType: const FullType(CompanyGatewayEntity),
+                )!
+                as CompanyGatewayEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ListUIState),
-            )! as ListUIState,
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -198,15 +205,13 @@ class _$CompanyGatewayState extends CompanyGatewayState {
 
   factory _$CompanyGatewayState([
     void Function(CompanyGatewayStateBuilder)? updates,
-  ]) =>
-      (CompanyGatewayStateBuilder()..update(updates))._build();
+  ]) => (CompanyGatewayStateBuilder()..update(updates))._build();
 
   _$CompanyGatewayState._({required this.map, required this.list}) : super._();
   @override
   CompanyGatewayState rebuild(
     void Function(CompanyGatewayStateBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayStateBuilder toBuilder() =>
@@ -322,8 +327,7 @@ class _$CompanyGatewayUIState extends CompanyGatewayUIState {
 
   factory _$CompanyGatewayUIState([
     void Function(CompanyGatewayUIStateBuilder)? updates,
-  ]) =>
-      (CompanyGatewayUIStateBuilder()..update(updates))._build();
+  ]) => (CompanyGatewayUIStateBuilder()..update(updates))._build();
 
   _$CompanyGatewayUIState._({
     this.editing,
@@ -337,8 +341,7 @@ class _$CompanyGatewayUIState extends CompanyGatewayUIState {
   @override
   CompanyGatewayUIState rebuild(
     void Function(CompanyGatewayUIStateBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayUIStateBuilder toBuilder() =>
@@ -459,7 +462,8 @@ class CompanyGatewayUIStateBuilder
   _$CompanyGatewayUIState _build() {
     _$CompanyGatewayUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$CompanyGatewayUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

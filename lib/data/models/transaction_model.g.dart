@@ -61,11 +61,12 @@ class _$TransactionListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(TransactionEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TransactionEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -119,9 +120,10 @@ class _$TransactionItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TransactionEntity),
-            )! as TransactionEntity,
+                  value,
+                  specifiedType: const FullType(TransactionEntity),
+                )!
+                as TransactionEntity,
           );
           break;
       }
@@ -304,160 +306,212 @@ class _$TransactionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'amount':
-          result.amount = serializers.deserialize(
-            value,
-            specifiedType: const FullType(double),
-          )! as double;
+          result.amount =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'currency_id':
-          result.currencyId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.currencyId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'category_type':
-          result.category = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.category =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'base_type':
-          result.baseType = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.baseType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'date':
-          result.date = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.date =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'bank_integration_id':
-          result.bankAccountId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.bankAccountId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'description':
-          result.description = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.description =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'status_id':
-          result.statusId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.statusId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'ninja_category_id':
-          result.categoryId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.categoryId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'invoice_ids':
-          result.invoiceIds = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.invoiceIds =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'payment_id':
-          result.paymentId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.paymentId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'expense_id':
-          result.expenseId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.expenseId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'vendor_id':
-          result.vendorId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.vendorId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'transaction_id':
-          result.transactionId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.transactionId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'bank_transaction_rule_id':
-          result.transactionRuleId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.transactionRuleId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'participant_name':
-          result.participantName = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.participantName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'participant':
-          result.participant = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.participant =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'pendingVendorId':
-          result.pendingVendorId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.pendingVendorId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -507,16 +561,20 @@ class _$TransactionStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -531,15 +589,13 @@ class _$TransactionListResponse extends TransactionListResponse {
 
   factory _$TransactionListResponse([
     void Function(TransactionListResponseBuilder)? updates,
-  ]) =>
-      (TransactionListResponseBuilder()..update(updates))._build();
+  ]) => (TransactionListResponseBuilder()..update(updates))._build();
 
   _$TransactionListResponse._({required this.data}) : super._();
   @override
   TransactionListResponse rebuild(
     void Function(TransactionListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionListResponseBuilder toBuilder() =>
@@ -565,8 +621,7 @@ class _$TransactionListResponse extends TransactionListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TransactionListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -633,15 +688,13 @@ class _$TransactionItemResponse extends TransactionItemResponse {
 
   factory _$TransactionItemResponse([
     void Function(TransactionItemResponseBuilder)? updates,
-  ]) =>
-      (TransactionItemResponseBuilder()..update(updates))._build();
+  ]) => (TransactionItemResponseBuilder()..update(updates))._build();
 
   _$TransactionItemResponse._({required this.data}) : super._();
   @override
   TransactionItemResponse rebuild(
     void Function(TransactionItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionItemResponseBuilder toBuilder() =>
@@ -667,8 +720,7 @@ class _$TransactionItemResponse extends TransactionItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TransactionItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -789,8 +841,7 @@ class _$TransactionEntity extends TransactionEntity {
 
   factory _$TransactionEntity([
     void Function(TransactionEntityBuilder)? updates,
-  ]) =>
-      (TransactionEntityBuilder()..update(updates))._build();
+  ]) => (TransactionEntityBuilder()..update(updates))._build();
 
   _$TransactionEntity._({
     required this.amount,
@@ -1115,7 +1166,8 @@ class TransactionEntityBuilder
   TransactionEntity build() => _build();
 
   _$TransactionEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TransactionEntity._(
           amount: BuiltValueNullFieldError.checkNotNull(
             amount,
@@ -1243,16 +1295,14 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
 
   factory _$TransactionStatusEntity([
     void Function(TransactionStatusEntityBuilder)? updates,
-  ]) =>
-      (TransactionStatusEntityBuilder()..update(updates))._build();
+  ]) => (TransactionStatusEntityBuilder()..update(updates))._build();
 
   _$TransactionStatusEntity._({required this.id, required this.name})
-      : super._();
+    : super._();
   @override
   TransactionStatusEntity rebuild(
     void Function(TransactionStatusEntityBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TransactionStatusEntityBuilder toBuilder() =>
@@ -1325,7 +1375,8 @@ class TransactionStatusEntityBuilder
   TransactionStatusEntity build() => _build();
 
   _$TransactionStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TransactionStatusEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
             id,

@@ -32,8 +32,7 @@ var memoizedDocumentReport = memo4(
     ReportsUIState reportsUIState,
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltMap<String, UserEntity> userMap,
-  ) =>
-      documentReport(userCompany!, reportsUIState, documentMap, userMap),
+  ) => documentReport(userCompany!, reportsUIState, documentMap, userMap),
 );
 
 ReportResult documentReport(
@@ -161,11 +160,13 @@ ReportResult documentReport(
   );
 
   return ReportResult(
-    allColumns:
-        DocumentReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: DocumentReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     showTotals: false,
     entities: entities,

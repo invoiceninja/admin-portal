@@ -176,35 +176,37 @@ class CompanyDetailsVM {
           ),
         );
       },
-      onUploadDocuments: (
-        BuildContext context,
-        List<MultipartFile> multipartFile,
-        bool isPrivate,
-      ) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(
-          SaveCompanyDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFile,
-            completer: completer,
-          ),
-        );
-        completer.future.then((client) {
-          showToast(
-            AppLocalization.of(
-              navigatorKey.currentContext!,
-            )!
-                .uploadedDocument,
-          );
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveCompanyDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

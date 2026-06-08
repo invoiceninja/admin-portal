@@ -42,7 +42,7 @@ class QuoteListItem extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (quote.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
 
     String subtitle = '';
@@ -57,7 +57,8 @@ class QuoteListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: quote.id ==
+      isSelected:
+          quote.id ==
           (uiState.isEditing
               ? quoteUIState.editing!.id
               : quoteUIState.selectedId),
@@ -138,12 +139,11 @@ class QuoteListItem extends StatelessWidget {
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                      color: textColor!.withOpacity(
+                                        kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],

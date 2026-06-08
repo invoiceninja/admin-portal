@@ -45,7 +45,8 @@ class QuoteRepository {
     int createdAt,
     bool filterDeleted,
   ) async {
-    String url = credentials.url +
+    String url =
+        credentials.url +
         '/quotes?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {

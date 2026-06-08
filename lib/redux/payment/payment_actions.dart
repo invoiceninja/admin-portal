@@ -401,8 +401,8 @@ void handlePaymentAction(
     case EntityAction.restore:
       final message = paymentIds.length > 1
           ? localization!.restoredPayments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentIds.length.toString())
           : localization!.restoredPayment;
       store.dispatch(
         RestorePaymentsRequest(snackBarCompleter<Null>(message), paymentIds),
@@ -411,8 +411,8 @@ void handlePaymentAction(
     case EntityAction.archive:
       final message = paymentIds.length > 1
           ? localization!.archivedPayments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentIds.length.toString())
           : localization!.archivedPayment;
       store.dispatch(
         ArchivePaymentsRequest(snackBarCompleter<Null>(message), paymentIds),
@@ -421,8 +421,8 @@ void handlePaymentAction(
     case EntityAction.delete:
       final message = paymentIds.length > 1
           ? localization!.deletedPayments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', paymentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', paymentIds.length.toString())
           : localization!.deletedPayment;
       store.dispatch(
         DeletePaymentsRequest(snackBarCompleter<Null>(message), paymentIds),

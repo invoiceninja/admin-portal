@@ -274,8 +274,9 @@ void handleExpenseCategoryAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final expenseCategory = expenseCategories.first as ExpenseCategoryEntity;
-  final expenseCategoryIds =
-      expenseCategories.map((expenseCategory) => expenseCategory.id).toList();
+  final expenseCategoryIds = expenseCategories
+      .map((expenseCategory) => expenseCategory.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -284,8 +285,8 @@ void handleExpenseCategoryAction(
     case EntityAction.restore:
       final message = expenseCategoryIds.length > 1
           ? localization!.restoredExpenseCategories
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseCategoryIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseCategoryIds.length.toString())
           : localization!.restoredExpenseCategory;
       store.dispatch(
         RestoreExpenseCategoriesRequest(
@@ -297,8 +298,8 @@ void handleExpenseCategoryAction(
     case EntityAction.archive:
       final message = expenseCategoryIds.length > 1
           ? localization!.archivedExpenseCategories
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseCategoryIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseCategoryIds.length.toString())
           : localization!.archivedExpenseCategory;
       store.dispatch(
         ArchiveExpenseCategoriesRequest(
@@ -310,8 +311,8 @@ void handleExpenseCategoryAction(
     case EntityAction.delete:
       final message = expenseCategoryIds.length > 1
           ? localization!.deletedExpenseCategories
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseCategoryIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseCategoryIds.length.toString())
           : localization!.deletedExpenseCategory;
       store.dispatch(
         DeleteExpenseCategoriesRequest(

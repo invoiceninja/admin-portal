@@ -127,7 +127,8 @@ class SettingsRepository {
   ) async {
     dynamic response;
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/users/${user.id}/disconnect_oauth?include=company_user';
     response = await webClient.post(
       url,
@@ -152,7 +153,8 @@ class SettingsRepository {
   ) async {
     dynamic response;
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/users/$userId/disconnect_mailer?include=company_user';
     response = await webClient.post(url, credentials.token, password: password);
 
@@ -224,8 +226,8 @@ class SettingsRepository {
     final route = type == EntityType.company
         ? 'companies'
         : type == EntityType.group
-            ? 'group_settings'
-            : 'clients';
+        ? 'group_settings'
+        : 'clients';
     final url = '${credentials.url}/$route/$entityId';
 
     final dynamic response = await webClient.post(

@@ -86,8 +86,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.transaction
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -430,8 +430,7 @@ TransactionState _setLoadedTransaction(
 TransactionState _setLoadedTransactions(
   TransactionState transactionState,
   LoadTransactionsSuccess action,
-) =>
-    transactionState.loadTransactions(action.transactions);
+) => transactionState.loadTransactions(action.transactions);
 
 TransactionState _setLoadedCompany(
   TransactionState transactionState,

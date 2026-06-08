@@ -595,8 +595,9 @@ void handlePurchaseOrderAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final purchaseOrder = purchaseOrders.first as InvoiceEntity;
-  final purchaseOrderIds =
-      purchaseOrders.map((purchaseOrder) => purchaseOrder.id).toList();
+  final purchaseOrderIds = purchaseOrders
+      .map((purchaseOrder) => purchaseOrder.id)
+      .toList();
   final vendor = state.vendorState.get(purchaseOrder.vendorId);
 
   switch (action) {
@@ -927,43 +928,45 @@ void handlePurchaseOrderAction(
       store.dispatch(StartLoading());
       await WebClient()
           .get(
-        purchaseOrder.invitationEPurchaseOrderDownloadLink,
-        state.token,
-        rawResponse: true,
-      )
+            purchaseOrder.invitationEPurchaseOrderDownloadLink,
+            state.token,
+            rawResponse: true,
+          )
           .then((response) {
-        store.dispatch(StopLoading());
-        saveDownloadedFile(
-          response.bodyBytes,
-          purchaseOrder.number + '.xml',
-          prefix: EntityType.invoice.apiValue,
-          languageId: vendor.languageId,
-        );
-      }).catchError((error) {
-        store.dispatch(StopLoading());
-        showErrorDialog(message: error);
-      });
+            store.dispatch(StopLoading());
+            saveDownloadedFile(
+              response.bodyBytes,
+              purchaseOrder.number + '.xml',
+              prefix: EntityType.invoice.apiValue,
+              languageId: vendor.languageId,
+            );
+          })
+          .catchError((error) {
+            store.dispatch(StopLoading());
+            showErrorDialog(message: error);
+          });
       break;
     case EntityAction.download:
       store.dispatch(StartLoading());
       await WebClient()
           .get(
-        purchaseOrder.invitationDownloadLink,
-        state.token,
-        rawResponse: true,
-      )
+            purchaseOrder.invitationDownloadLink,
+            state.token,
+            rawResponse: true,
+          )
           .then((response) {
-        store.dispatch(StopLoading());
-        saveDownloadedFile(
-          response.bodyBytes,
-          purchaseOrder.number + '.pdf',
-          prefix: EntityType.purchaseOrder.apiValue,
-          languageId: vendor.languageId,
-        );
-      }).catchError((error) {
-        store.dispatch(StopLoading());
-        showErrorDialog(message: error);
-      });
+            store.dispatch(StopLoading());
+            saveDownloadedFile(
+              response.bodyBytes,
+              purchaseOrder.number + '.pdf',
+              prefix: EntityType.purchaseOrder.apiValue,
+              languageId: vendor.languageId,
+            );
+          })
+          .catchError((error) {
+            store.dispatch(StopLoading());
+            showErrorDialog(message: error);
+          });
 
       break;
     case EntityAction.bulkDownload:

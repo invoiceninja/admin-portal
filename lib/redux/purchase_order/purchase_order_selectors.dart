@@ -38,8 +38,7 @@ var memoizedDropdownPurchaseOrderList = memo7(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
     String clientId,
-  ) =>
-      dropdownPurchaseOrdersSelector(
+  ) => dropdownPurchaseOrdersSelector(
     purchaseOrderMap,
     purchaseOrderList,
     staticState,
@@ -94,8 +93,7 @@ var memoizedFilteredPurchaseOrderList = memo7(
     BuiltMap<String, VendorEntity> vendorMap,
     ListUIState invoiceListState,
     BuiltMap<String, UserEntity> userMap,
-  ) =>
-      filteredPurchaseOrdersSelector(
+  ) => filteredPurchaseOrdersSelector(
     selectionState,
     invoiceMap,
     invoiceList,

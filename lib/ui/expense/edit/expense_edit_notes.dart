@@ -86,7 +86,8 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
     final company = state.company;
 
-    final showDocuments = isDesktop(context) &&
+    final showDocuments =
+        isDesktop(context) &&
         state.isEnterprisePlan &&
         company.isModuleEnabled(EntityType.document);
 
@@ -125,10 +126,10 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                   documents: expense.documents.toList(),
                   onUploadDocument: (path, isPrivate) =>
                       widget.viewModel.onUploadDocument!(
-                    context,
-                    path,
-                    isPrivate,
-                  ),
+                        context,
+                        path,
+                        isPrivate,
+                      ),
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
                 ),

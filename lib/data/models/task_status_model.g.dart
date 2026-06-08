@@ -59,11 +59,12 @@ class _$TaskStatusListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(TaskStatusEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TaskStatusEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$TaskStatusItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaskStatusEntity),
-            )! as TaskStatusEntity,
+                  value,
+                  specifiedType: const FullType(TaskStatusEntity),
+                )!
+                as TaskStatusEntity,
           );
           break;
       }
@@ -225,68 +227,89 @@ class _$TaskStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'color':
-          result.color = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.color =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'status_order':
-          result.statusOrder = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.statusOrder =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          ) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -301,15 +324,13 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
 
   factory _$TaskStatusListResponse([
     void Function(TaskStatusListResponseBuilder)? updates,
-  ]) =>
-      (TaskStatusListResponseBuilder()..update(updates))._build();
+  ]) => (TaskStatusListResponseBuilder()..update(updates))._build();
 
   _$TaskStatusListResponse._({required this.data}) : super._();
   @override
   TaskStatusListResponse rebuild(
     void Function(TaskStatusListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TaskStatusListResponseBuilder toBuilder() =>
@@ -335,8 +356,7 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TaskStatusListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -402,15 +422,13 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
 
   factory _$TaskStatusItemResponse([
     void Function(TaskStatusItemResponseBuilder)? updates,
-  ]) =>
-      (TaskStatusItemResponseBuilder()..update(updates))._build();
+  ]) => (TaskStatusItemResponseBuilder()..update(updates))._build();
 
   _$TaskStatusItemResponse._({required this.data}) : super._();
   @override
   TaskStatusItemResponse rebuild(
     void Function(TaskStatusItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TaskStatusItemResponseBuilder toBuilder() =>
@@ -436,8 +454,7 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TaskStatusItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -523,8 +540,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
 
   factory _$TaskStatusEntity([
     void Function(TaskStatusEntityBuilder)? updates,
-  ]) =>
-      (TaskStatusEntityBuilder()..update(updates))._build();
+  ]) => (TaskStatusEntityBuilder()..update(updates))._build();
 
   _$TaskStatusEntity._({
     required this.name,
@@ -689,7 +705,8 @@ class TaskStatusEntityBuilder
   TaskStatusEntity build() => _build();
 
   _$TaskStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TaskStatusEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

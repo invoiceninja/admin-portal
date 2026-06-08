@@ -87,10 +87,9 @@ class _DashboardScreenState extends State<DashboardScreen>
       initialIndex: 0,
     )..addListener(onTabListener);
     _scrollController = ScrollController(
-        // initialScrollOffset: (index > 0 ? index + 1 : 0) *
-        // (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)
-        )
-      ..addListener(onScrollListener);
+      // initialScrollOffset: (index > 0 ? index + 1 : 0) *
+      // (kIsWeb ? kDashboardPanelHeightWeb : kDashboardPanelHeight)
+    )..addListener(onScrollListener);
 
     final companyName = state.company.settings.name ?? '';
     if (!state.isDemo &&
@@ -281,17 +280,18 @@ class _DashboardScreenState extends State<DashboardScreen>
                         store.dispatch(StartSaving());
                         WebClient()
                             .put(
-                          url,
-                          credentials.token,
-                          data: json.encode(data),
-                        )
+                              url,
+                              credentials.token,
+                              data: json.encode(data),
+                            )
                             .then((dynamic _) {
-                          store.dispatch(StopSaving());
-                          WebUtils.reloadBrowser();
-                        }).catchError((Object error) {
-                          store.dispatch(StopSaving());
-                          showErrorDialog(message: error as String?);
-                        });
+                              store.dispatch(StopSaving());
+                              WebUtils.reloadBrowser();
+                            })
+                            .catchError((Object error) {
+                              store.dispatch(StopSaving());
+                              showErrorDialog(message: error as String?);
+                            });
                       },
                     );
                   }

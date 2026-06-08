@@ -170,10 +170,10 @@ class _TransactionEditState extends State<TransactionEdit> {
                       entityId: transaction.currencyId,
                       onSelected: (SelectableEntity? currency) =>
                           viewModel.onChanged(
-                        viewModel.transaction.rebuild(
-                          (b) => b..currencyId = currency?.id ?? '',
-                        ),
-                      ),
+                            viewModel.transaction.rebuild(
+                              (b) => b..currencyId = currency?.id ?? '',
+                            ),
+                          ),
                     ),
                     EntityDropdown(
                       entityType: EntityType.bankAccount,
@@ -205,8 +205,8 @@ class _TransactionEditState extends State<TransactionEdit> {
                       },
                       validator: (dynamic value) =>
                           transaction.bankAccountId.isEmpty
-                              ? localization.pleaseEnterAValue
-                              : null,
+                          ? localization.pleaseEnterAValue
+                          : null,
                       overrideSuggestedAmount: (entity) => '',
                     ),
                     DecoratedFormField(

@@ -57,23 +57,24 @@ Future<void> showEntityActionsDialog({
   actions.addAll(
     first
         .getActions(
-      userCompany: state.userCompany,
-      includeEdit: true,
-      client: client,
-      multiselect: multiselect,
-    )
+          userCompany: state.userCompany,
+          includeEdit: true,
+          client: client,
+          multiselect: multiselect,
+        )
         .map((entityAction) {
-      if (entityAction == null) {
-        return Divider();
-      } else {
-        return EntityActionListTile(
-          entities: entities,
-          action: entityAction,
-          mainContext: mainContext,
-          completer: completer,
-        );
-      }
-    }).toList(),
+          if (entityAction == null) {
+            return Divider();
+          } else {
+            return EntityActionListTile(
+              entities: entities,
+              action: entityAction,
+              mainContext: mainContext,
+              completer: completer,
+            );
+          }
+        })
+        .toList(),
   );
 
   if (actions.isEmpty) {

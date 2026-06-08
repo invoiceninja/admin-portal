@@ -88,8 +88,9 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       ];
     }
 
-    final contact =
-        client.contacts.contains(viewModel.contact) ? viewModel.contact : null;
+    final contact = client.contacts.contains(viewModel.contact)
+        ? viewModel.contact
+        : null;
 
     if (contact != null && contact != selectedContact) {
       selectedContact = contact;
@@ -109,10 +110,11 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             bottom: 6,
           ),
           child: AppButton(
-            label: (client.contacts.length == 1
-                    ? localization!.addSecondContact
-                    : localization!.addContact)
-                .toUpperCase(),
+            label:
+                (client.contacts.length == 1
+                        ? localization!.addSecondContact
+                        : localization!.addContact)
+                    .toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
           ),
         ),
@@ -294,8 +296,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           controller: _firstNameController,
           validator: (String val) =>
               val.trim().isEmpty && !viewModel.client!.hasNameSet
-                  ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
-                  : null,
+              ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
+              : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.firstName,
           keyboardType: TextInputType.text,
@@ -306,8 +308,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           label: localization.lastName,
           validator: (String val) =>
               val.trim().isEmpty && !viewModel.client!.hasNameSet
-                  ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
-                  : null,
+              ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
+              : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           keyboardType: TextInputType.text,
           textCapitalization: TextCapitalization.words,

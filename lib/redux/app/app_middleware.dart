@@ -222,17 +222,18 @@ Middleware<AppState> _createLoadState(
         );
       }
 
-      final AppState appState = AppState(
-        prefState: prefState,
-        isWhiteLabeled: store.state.isWhiteLabeled,
-        reportErrors: store.state.account.reportErrors,
-      ).rebuild(
-        (b) => b
-          ..authState.replace(authState!)
-          ..uiState.replace(uiState!)
-          ..staticState.replace(staticState!)
-          ..userCompanyStates.replace(companyStates),
-      );
+      final AppState appState =
+          AppState(
+            prefState: prefState,
+            isWhiteLabeled: store.state.isWhiteLabeled,
+            reportErrors: store.state.account.reportErrors,
+          ).rebuild(
+            (b) => b
+              ..authState.replace(authState!)
+              ..uiState.replace(uiState!)
+              ..staticState.replace(staticState!)
+              ..userCompanyStates.replace(companyStates),
+          );
 
       AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
       store.dispatch(LoadStateSuccess(appState));
@@ -318,31 +319,32 @@ List<String> _getRoutes(AppState state) {
       .split('/')
       .where((part) => part.isNotEmpty)
       .forEach((part) {
-    if (part == 'edit') {
-      // Only restore new unsaved entities to prevent conflicts
-      final bool isNew = state.getUIState(entityType)?.isCreatingNew ?? false;
-      if (isNew) {
-        route += '/edit';
-      }
-    } else if (part == 'view') {
-      // do nothing
-    } else {
-      if (![kMain, kDashboard, kSettings].contains(part) &&
-          entityType == null) {
-        try {
-          entityType = EntityType.valueOf(part);
-        } catch (e) {
+        if (part == 'edit') {
+          // Only restore new unsaved entities to prevent conflicts
+          final bool isNew =
+              state.getUIState(entityType)?.isCreatingNew ?? false;
+          if (isNew) {
+            route += '/edit';
+          }
+        } else if (part == 'view') {
           // do nothing
+        } else {
+          if (![kMain, kDashboard, kSettings].contains(part) &&
+              entityType == null) {
+            try {
+              entityType = EntityType.valueOf(part);
+            } catch (e) {
+              // do nothing
+            }
+          }
+
+          if (part != 'pdf' && part != 'email') {
+            route += '/' + part;
+          }
         }
-      }
 
-      if (part != 'pdf' && part != 'email') {
-        route += '/' + part;
-      }
-    }
-
-    routes.add(route);
-  });
+        routes.add(route);
+      });
 
   return routes;
 }
@@ -437,9 +439,11 @@ Middleware<AppState> _createAccountLoaded() {
 
     try {
       print('## Account Loaded: ${response.userCompanies.length}');
-      for (int i = 0;
-          i < min(response.userCompanies.length, kMaxNumberOfCompanies);
-          i++) {
+      for (
+        int i = 0;
+        i < min(response.userCompanies.length, kMaxNumberOfCompanies);
+        i++
+      ) {
         final UserCompanyEntity userCompany = response.userCompanies[i];
 
         if (i == 0) {
@@ -520,9 +524,11 @@ Middleware<AppState> _createDataRefreshed() {
         final userCompany = response.userCompanies.first;
         store.dispatch(LoadCompanySuccess(userCompany));
       } else {
-        for (int i = 0;
-            i < min(response.userCompanies.length, kMaxNumberOfCompanies);
-            i++) {
+        for (
+          int i = 0;
+          i < min(response.userCompanies.length, kMaxNumberOfCompanies);
+          i++
+        ) {
           final UserCompanyEntity userCompany = response.userCompanies[i];
 
           if (i == 0) {

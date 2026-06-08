@@ -105,34 +105,37 @@ class ProjectEditVM {
           store.dispatch(
             SaveProjectRequest(completer: completer, project: project),
           );
-          return completer.future.then((savedProject) {
-            showToast(
-              project!.isNew
-                  ? localization!.createdProject
-                  : localization!.updatedProject,
-            );
+          return completer.future
+              .then((savedProject) {
+                showToast(
+                  project!.isNew
+                      ? localization!.createdProject
+                      : localization!.updatedProject,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
-              if (project.isNew && state.projectUIState.saveCompleter == null) {
-                navigator!.pushReplacementNamed(ProjectViewScreen.route);
-              } else {
-                navigator!.pop(savedProject);
-              }
-            } else if (state.projectUIState.saveCompleter == null) {
-              if (!state.prefState.isPreviewVisible) {
-                store.dispatch(TogglePreviewSidebar());
-              }
-              viewEntity(entity: savedProject, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
+                  if (project.isNew &&
+                      state.projectUIState.saveCompleter == null) {
+                    navigator!.pushReplacementNamed(ProjectViewScreen.route);
+                  } else {
+                    navigator!.pop(savedProject);
+                  }
+                } else if (state.projectUIState.saveCompleter == null) {
+                  if (!state.prefState.isPreviewVisible) {
+                    store.dispatch(TogglePreviewSidebar());
+                  }
+                  viewEntity(entity: savedProject, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );
@@ -148,5 +151,5 @@ class ProjectEditVM {
   final bool isLoading;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
+  onAddClientPressed;
 }

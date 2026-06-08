@@ -79,8 +79,9 @@ Future<List<MultipartFile>?> _pickFiles({
 }) async {
   final result = await FilePicker.platform.pickFiles(
     type: fileType ?? FileType.custom,
-    allowedExtensions:
-        fileType == FileType.image ? [] : allowedExtensions ?? [],
+    allowedExtensions: fileType == FileType.image
+        ? []
+        : allowedExtensions ?? [],
     withData: true,
     allowMultiple: allowMultiple,
   );
@@ -113,12 +114,14 @@ void saveDownloadedFile(
   if (prefix != null) {
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-    final effectiveLanguageId =
-        languageId.isNotEmpty ? languageId : store.state.company.languageId;
+    final effectiveLanguageId = languageId.isNotEmpty
+        ? languageId
+        : store.state.company.languageId;
     final localeCode =
         store.state.staticState.languageMap[effectiveLanguageId]!.locale;
 
-    fileName = localization.lookup(prefix, overrideLocaleCode: localeCode) +
+    fileName =
+        localization.lookup(prefix, overrideLocaleCode: localeCode) +
         '_' +
         fileName;
   }
@@ -145,9 +148,7 @@ void saveDownloadedFile(
         showToast(
           AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .fileSavedInPath
-              .replaceFirst(':path', directory),
+          )!.fileSavedInPath.replaceFirst(':path', directory),
         );
       } else {
         await Share.shareXFiles([XFile(filePath)]);
@@ -184,9 +185,7 @@ Future<String?> getAppDownloadDirectory() async {
     showErrorDialog(
       message: AppLocalization.of(
         navigatorKey.currentContext!,
-      )!
-          .downloadsFolderDoesNotExist
-          .replaceFirst(':value', path),
+      )!.downloadsFolderDoesNotExist.replaceFirst(':value', path),
     );
 
     return null;

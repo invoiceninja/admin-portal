@@ -341,8 +341,7 @@ PaymentTermState _setLoadedPaymentTerm(
 PaymentTermState _setLoadedPaymentTerms(
   PaymentTermState paymentTermState,
   LoadPaymentTermsSuccess action,
-) =>
-    paymentTermState.loadPaymentTerms(action.paymentTerms);
+) => paymentTermState.loadPaymentTerms(action.paymentTerms);
 
 PaymentTermState _setLoadedCompany(
   PaymentTermState paymentTermState,

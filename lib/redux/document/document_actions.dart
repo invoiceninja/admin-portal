@@ -318,8 +318,8 @@ void handleDocumentAction(
     case EntityAction.restore:
       final message = documentIds.length > 1
           ? localization.restoredDocuments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', documentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', documentIds.length.toString())
           : localization.restoredDocument;
       store.dispatch(
         RestoreDocumentRequest(snackBarCompleter<Null>(message), documentIds),
@@ -328,8 +328,8 @@ void handleDocumentAction(
     case EntityAction.archive:
       final message = documentIds.length > 1
           ? localization.archivedDocuments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', documentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', documentIds.length.toString())
           : localization.archivedDocument;
       store.dispatch(
         ArchiveDocumentRequest(snackBarCompleter<Null>(message), documentIds),

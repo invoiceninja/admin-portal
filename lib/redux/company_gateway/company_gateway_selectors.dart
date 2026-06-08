@@ -16,8 +16,7 @@ var memoizedDropdownCompanyGatewayList = memo3(
     BuiltMap<String, CompanyGatewayEntity> companyGatewayMap,
     BuiltList<String> companyGatewayList,
     String clientId,
-  ) =>
-      dropdownCompanyGatewaysSelector(
+  ) => dropdownCompanyGatewaysSelector(
     companyGatewayMap,
     companyGatewayList,
     clientId,
@@ -59,8 +58,7 @@ var memoizedFilteredCompanyGatewayList = memo5(
     ListUIState companyGatewayListState,
     String? companyGatewayIds,
     bool includeAll,
-  ) =>
-      filteredCompanyGatewaysSelector(
+  ) => filteredCompanyGatewaysSelector(
     companyGatewayMap,
     companyGatewayList,
     companyGatewayListState,
@@ -112,9 +110,9 @@ List<String> filteredCompanyGatewaysSelector(
 var memoizedCalculateCompanyGatewayProcessed = memo2(
   (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
       calculateCompanyGatewayProcessed(
-    companyGatewayId: companyGatewayId,
-    paymentMap: paymentMap,
-  ),
+        companyGatewayId: companyGatewayId,
+        paymentMap: paymentMap,
+      ),
 );
 
 double calculateCompanyGatewayProcessed({

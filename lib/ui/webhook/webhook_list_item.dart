@@ -51,7 +51,8 @@ class WebhookListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: webhook,
-      isSelected: webhook.id ==
+      isSelected:
+          webhook.id ==
           (uiState.isEditing
               ? webhookUIState.editing!.id
               : webhookUIState.selectedId),

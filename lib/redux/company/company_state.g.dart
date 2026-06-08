@@ -198,249 +198,281 @@ class _$UserCompanyStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.lastUpdated =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'userCompany':
           result.userCompany.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(UserCompanyEntity),
-            )! as UserCompanyEntity,
+                  value,
+                  specifiedType: const FullType(UserCompanyEntity),
+                )!
+                as UserCompanyEntity,
           );
           break;
         case 'documentState':
           result.documentState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DocumentState),
-            )! as DocumentState,
+                  value,
+                  specifiedType: const FullType(DocumentState),
+                )!
+                as DocumentState,
           );
           break;
         case 'productState':
           result.productState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ProductState),
-            )! as ProductState,
+                  value,
+                  specifiedType: const FullType(ProductState),
+                )!
+                as ProductState,
           );
           break;
         case 'clientState':
           result.clientState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ClientState),
-            )! as ClientState,
+                  value,
+                  specifiedType: const FullType(ClientState),
+                )!
+                as ClientState,
           );
           break;
         case 'invoiceState':
           result.invoiceState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(InvoiceState),
-            )! as InvoiceState,
+                  value,
+                  specifiedType: const FullType(InvoiceState),
+                )!
+                as InvoiceState,
           );
           break;
         case 'expenseState':
           result.expenseState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ExpenseState),
-            )! as ExpenseState,
+                  value,
+                  specifiedType: const FullType(ExpenseState),
+                )!
+                as ExpenseState,
           );
           break;
         case 'vendorState':
           result.vendorState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(VendorState),
-            )! as VendorState,
+                  value,
+                  specifiedType: const FullType(VendorState),
+                )!
+                as VendorState,
           );
           break;
         case 'taskState':
           result.taskState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaskState),
-            )! as TaskState,
+                  value,
+                  specifiedType: const FullType(TaskState),
+                )!
+                as TaskState,
           );
           break;
         case 'projectState':
           result.projectState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ProjectState),
-            )! as ProjectState,
+                  value,
+                  specifiedType: const FullType(ProjectState),
+                )!
+                as ProjectState,
           );
           break;
         case 'paymentState':
           result.paymentState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PaymentState),
-            )! as PaymentState,
+                  value,
+                  specifiedType: const FullType(PaymentState),
+                )!
+                as PaymentState,
           );
           break;
         case 'quoteState':
           result.quoteState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(QuoteState),
-            )! as QuoteState,
+                  value,
+                  specifiedType: const FullType(QuoteState),
+                )!
+                as QuoteState,
           );
           break;
         case 'scheduleState':
           result.scheduleState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ScheduleState),
-            )! as ScheduleState,
+                  value,
+                  specifiedType: const FullType(ScheduleState),
+                )!
+                as ScheduleState,
           );
           break;
         case 'transactionRuleState':
           result.transactionRuleState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TransactionRuleState),
-            )! as TransactionRuleState,
+                  value,
+                  specifiedType: const FullType(TransactionRuleState),
+                )!
+                as TransactionRuleState,
           );
           break;
         case 'transactionState':
           result.transactionState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TransactionState),
-            )! as TransactionState,
+                  value,
+                  specifiedType: const FullType(TransactionState),
+                )!
+                as TransactionState,
           );
           break;
         case 'bankAccountState':
           result.bankAccountState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BankAccountState),
-            )! as BankAccountState,
+                  value,
+                  specifiedType: const FullType(BankAccountState),
+                )!
+                as BankAccountState,
           );
           break;
         case 'purchaseOrderState':
           result.purchaseOrderState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PurchaseOrderState),
-            )! as PurchaseOrderState,
+                  value,
+                  specifiedType: const FullType(PurchaseOrderState),
+                )!
+                as PurchaseOrderState,
           );
           break;
         case 'recurringExpenseState':
           result.recurringExpenseState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(RecurringExpenseState),
-            )! as RecurringExpenseState,
+                  value,
+                  specifiedType: const FullType(RecurringExpenseState),
+                )!
+                as RecurringExpenseState,
           );
           break;
         case 'subscriptionState':
           result.subscriptionState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(SubscriptionState),
-            )! as SubscriptionState,
+                  value,
+                  specifiedType: const FullType(SubscriptionState),
+                )!
+                as SubscriptionState,
           );
           break;
         case 'taskStatusState':
           result.taskStatusState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaskStatusState),
-            )! as TaskStatusState,
+                  value,
+                  specifiedType: const FullType(TaskStatusState),
+                )!
+                as TaskStatusState,
           );
           break;
         case 'expenseCategoryState':
           result.expenseCategoryState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ExpenseCategoryState),
-            )! as ExpenseCategoryState,
+                  value,
+                  specifiedType: const FullType(ExpenseCategoryState),
+                )!
+                as ExpenseCategoryState,
           );
           break;
         case 'recurringInvoiceState':
           result.recurringInvoiceState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(RecurringInvoiceState),
-            )! as RecurringInvoiceState,
+                  value,
+                  specifiedType: const FullType(RecurringInvoiceState),
+                )!
+                as RecurringInvoiceState,
           );
           break;
         case 'webhookState':
           result.webhookState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(WebhookState),
-            )! as WebhookState,
+                  value,
+                  specifiedType: const FullType(WebhookState),
+                )!
+                as WebhookState,
           );
           break;
         case 'tokenState':
           result.tokenState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TokenState),
-            )! as TokenState,
+                  value,
+                  specifiedType: const FullType(TokenState),
+                )!
+                as TokenState,
           );
           break;
         case 'paymentTermState':
           result.paymentTermState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PaymentTermState),
-            )! as PaymentTermState,
+                  value,
+                  specifiedType: const FullType(PaymentTermState),
+                )!
+                as PaymentTermState,
           );
           break;
         case 'designState':
           result.designState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DesignState),
-            )! as DesignState,
+                  value,
+                  specifiedType: const FullType(DesignState),
+                )!
+                as DesignState,
           );
           break;
         case 'creditState':
           result.creditState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CreditState),
-            )! as CreditState,
+                  value,
+                  specifiedType: const FullType(CreditState),
+                )!
+                as CreditState,
           );
           break;
         case 'userState':
           result.userState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(UserState),
-            )! as UserState,
+                  value,
+                  specifiedType: const FullType(UserState),
+                )!
+                as UserState,
           );
           break;
         case 'taxRateState':
           result.taxRateState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaxRateState),
-            )! as TaxRateState,
+                  value,
+                  specifiedType: const FullType(TaxRateState),
+                )!
+                as TaxRateState,
           );
           break;
         case 'companyGatewayState':
           result.companyGatewayState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CompanyGatewayState),
-            )! as CompanyGatewayState,
+                  value,
+                  specifiedType: const FullType(CompanyGatewayState),
+                )!
+                as CompanyGatewayState,
           );
           break;
         case 'groupState':
           result.groupState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(GroupState),
-            )! as GroupState,
+                  value,
+                  specifiedType: const FullType(GroupState),
+                )!
+                as GroupState,
           );
           break;
       }
@@ -516,8 +548,7 @@ class _$UserCompanyState extends UserCompanyState {
 
   factory _$UserCompanyState([
     void Function(UserCompanyStateBuilder)? updates,
-  ]) =>
-      (UserCompanyStateBuilder()..update(updates))._build();
+  ]) => (UserCompanyStateBuilder()..update(updates))._build();
 
   _$UserCompanyState._({
     required this.lastUpdated,
@@ -782,8 +813,7 @@ class UserCompanyStateBuilder
       _$this._recurringExpenseState ??= RecurringExpenseStateBuilder();
   set recurringExpenseState(
     RecurringExpenseStateBuilder? recurringExpenseState,
-  ) =>
-      _$this._recurringExpenseState = recurringExpenseState;
+  ) => _$this._recurringExpenseState = recurringExpenseState;
 
   SubscriptionStateBuilder? _subscriptionState;
   SubscriptionStateBuilder get subscriptionState =>
@@ -808,8 +838,7 @@ class UserCompanyStateBuilder
       _$this._recurringInvoiceState ??= RecurringInvoiceStateBuilder();
   set recurringInvoiceState(
     RecurringInvoiceStateBuilder? recurringInvoiceState,
-  ) =>
-      _$this._recurringInvoiceState = recurringInvoiceState;
+  ) => _$this._recurringInvoiceState = recurringInvoiceState;
 
   WebhookStateBuilder? _webhookState;
   WebhookStateBuilder get webhookState =>
@@ -920,7 +949,8 @@ class UserCompanyStateBuilder
   _$UserCompanyState _build() {
     _$UserCompanyState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$UserCompanyState._(
             lastUpdated: BuiltValueNullFieldError.checkNotNull(
               lastUpdated,

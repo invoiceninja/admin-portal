@@ -99,13 +99,13 @@ class InvoicePresenter extends EntityPresenter {
           invoice.isPaid
               ? ''
               : invoice.nextSendDatetime.isNotEmpty
-                  ? formatDate(
-                      invoice.nextSendDatetime,
-                      context,
-                      showTime: true,
-                      showSeconds: false,
-                    )
-                  : formatDate(invoice.nextSendDate, context),
+              ? formatDate(
+                  invoice.nextSendDatetime,
+                  context,
+                  showTime: true,
+                  showSeconds: false,
+                )
+              : formatDate(invoice.nextSendDate, context),
         );
       case InvoiceFields.reminder1Sent:
         return Text(formatDate(invoice.reminder1Sent, context));

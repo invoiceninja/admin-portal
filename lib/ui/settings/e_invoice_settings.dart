@@ -173,8 +173,8 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
       (b) => b
         ..eInvoiceCertificatePassphrase =
             isFiltered && eInvoiceCertificatePassphrase.isEmpty
-                ? null
-                : eInvoiceCertificatePassphrase,
+            ? null
+            : eInvoiceCertificatePassphrase,
     );
     if (company != viewModel.company) {
       viewModel.onCompanyChanged(company);
@@ -224,19 +224,20 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
 
     WebClient()
         .post(
-      url,
-      state.credentials.token,
-      rawResponse: true,
-      data: json.encode({
-        'entity': 'company',
-        'payment_means': [data],
-      }),
-    )
+          url,
+          state.credentials.token,
+          rawResponse: true,
+          data: json.encode({
+            'entity': 'company',
+            'payment_means': [data],
+          }),
+        )
         .then((_) {
-      // Saved with the main settings save
-    }).catchError((error) {
-      showErrorDialog(message: '$error');
-    });
+          // Saved with the main settings save
+        })
+        .catchError((error) {
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -455,7 +456,8 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                                   ),
                                   onPressed: () {
                                     _eInvoiceCertificatePassphraseController
-                                        .text = '';
+                                            .text =
+                                        '';
                                     _onChanged();
                                     viewModel.onSavePressed(context);
                                   },
@@ -579,63 +581,64 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                     setState(() => _paymentMeansCode = code);
                     _paymentMeansCodeController.text = value;
                   },
-                  fieldViewBuilder: (
-                    BuildContext context,
-                    TextEditingController textEditingController,
-                    FocusNode focusNode,
-                    VoidCallback onFieldSubmitted,
-                  ) {
-                    return DecoratedFormField(
-                      label: localization.lookup('code'),
-                      controller: textEditingController,
-                      focusNode: focusNode,
-                      keyboardType: TextInputType.text,
-                      onFieldSubmitted: (value) => onFieldSubmitted(),
-                    );
-                  },
-                  optionsViewBuilder: (
-                    BuildContext context,
-                    AutocompleteOnSelected<String> onSelected,
-                    Iterable<String> options,
-                  ) {
-                    final highlightedIndex =
-                        AutocompleteHighlightedOption.of(context);
-                    return Align(
-                      alignment: Alignment.topLeft,
-                      child: Material(
-                        elevation: 4,
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                          width: 500,
-                          constraints: BoxConstraints(maxHeight: 270),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: options.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                color: highlightedIndex == index
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.1)
-                                    : Theme.of(context).cardColor,
-                                child: ListTile(
-                                  title: Text(
-                                    options.elementAt(index),
-                                    style: Theme.of(
-                                      context,
-                                    ).textTheme.titleMedium,
-                                  ),
-                                  onTap: () =>
-                                      onSelected(options.elementAt(index)),
-                                ),
-                              );
-                            },
+                  fieldViewBuilder:
+                      (
+                        BuildContext context,
+                        TextEditingController textEditingController,
+                        FocusNode focusNode,
+                        VoidCallback onFieldSubmitted,
+                      ) {
+                        return DecoratedFormField(
+                          label: localization.lookup('code'),
+                          controller: textEditingController,
+                          focusNode: focusNode,
+                          keyboardType: TextInputType.text,
+                          onFieldSubmitted: (value) => onFieldSubmitted(),
+                        );
+                      },
+                  optionsViewBuilder:
+                      (
+                        BuildContext context,
+                        AutocompleteOnSelected<String> onSelected,
+                        Iterable<String> options,
+                      ) {
+                        final highlightedIndex =
+                            AutocompleteHighlightedOption.of(context);
+                        return Align(
+                          alignment: Alignment.topLeft,
+                          child: Material(
+                            elevation: 4,
+                            child: Container(
+                              color: Theme.of(context).cardColor,
+                              width: 500,
+                              constraints: BoxConstraints(maxHeight: 270),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: options.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    color: highlightedIndex == index
+                                        ? Theme.of(
+                                            context,
+                                          ).colorScheme.primary.withOpacity(0.1)
+                                        : Theme.of(context).cardColor,
+                                    child: ListTile(
+                                      title: Text(
+                                        options.elementAt(index),
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleMedium,
+                                      ),
+                                      onTap: () =>
+                                          onSelected(options.elementAt(index)),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
+                        );
+                      },
                 ),
                 if (_visibleFields.contains('iban'))
                   DecoratedFormField(
@@ -734,13 +737,16 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
   void _loadQuota() {
     final state = widget.store.state;
     final url = state.credentials.url + '/einvoice/quota';
-    WebClient().get(url, state.credentials.token).then((response) {
-      if (mounted) {
-        setState(() {
-          _quota = (response['quota'] ?? '').toString();
-        });
-      }
-    }).catchError((_) {});
+    WebClient()
+        .get(url, state.credentials.token)
+        .then((response) {
+          if (mounted) {
+            setState(() {
+              _quota = (response['quota'] ?? '').toString();
+            });
+          }
+        })
+        .catchError((_) {});
   }
 
   void _updatePeppolPreferences({
@@ -751,20 +757,21 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
     final url = state.credentials.url + '/einvoice/peppol/update';
     WebClient()
         .put(
-      url,
-      state.credentials.token,
-      data: json.encode({
-        'acts_as_sender': actsAsSender,
-        'acts_as_receiver': actsAsReceiver,
-        'legal_entity_id': widget.company.legalEntityId,
-        'e_invoicing_token': '',
-      }),
-    )
+          url,
+          state.credentials.token,
+          data: json.encode({
+            'acts_as_sender': actsAsSender,
+            'acts_as_receiver': actsAsReceiver,
+            'legal_entity_id': widget.company.legalEntityId,
+            'e_invoicing_token': '',
+          }),
+        )
         .then((_) {
-      showToast(widget.localization.lookup('saved_settings'));
-    }).catchError((error) {
-      showErrorDialog(message: '$error');
-    });
+          showToast(widget.localization.lookup('saved_settings'));
+        })
+        .catchError((error) {
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -829,13 +836,16 @@ class _PeppolPreferencesState extends State<_PeppolPreferences> {
                 final url =
                     state.credentials.url + '/einvoice/peppol/disconnect';
                 widget.store.dispatch(StartSaving());
-                WebClient().post(url, state.credentials.token).then((_) {
-                  widget.store.dispatch(StopSaving());
-                  widget.store.dispatch(RefreshData());
-                }).catchError((error) {
-                  widget.store.dispatch(StopSaving());
-                  showErrorDialog(message: '$error');
-                });
+                WebClient()
+                    .post(url, state.credentials.token)
+                    .then((_) {
+                      widget.store.dispatch(StopSaving());
+                      widget.store.dispatch(RefreshData());
+                    })
+                    .catchError((error) {
+                      widget.store.dispatch(StopSaving());
+                      showErrorDialog(message: '$error');
+                    });
               },
             );
           },
@@ -973,34 +983,37 @@ class _PeppolOnboarding extends StatelessWidget {
             store.dispatch(StartSaving());
             WebClient()
                 .post(
-              url,
-              state.credentials.token,
-              data: json.encode({
-                'party_name': partyNameController.text.trim(),
-                'line1': line1Controller.text.trim(),
-                'line2': line2Controller.text.trim(),
-                'city': cityController.text.trim(),
-                'county': countyController.text.trim(),
-                'zip': zipController.text.trim(),
-                'country': countryId,
-                if (isBusinessEntity)
-                  'vat_number': vatNumberController.text.trim()
-                else
-                  'id_number': idNumberController.text.trim(),
-                'acts_as_sender': actsAsSender,
-                'acts_as_receiver': actsAsReceiver,
-                'classification': isBusinessEntity ? 'business' : 'individual',
-                'tenant_id': company.id,
-              }),
-            )
+                  url,
+                  state.credentials.token,
+                  data: json.encode({
+                    'party_name': partyNameController.text.trim(),
+                    'line1': line1Controller.text.trim(),
+                    'line2': line2Controller.text.trim(),
+                    'city': cityController.text.trim(),
+                    'county': countyController.text.trim(),
+                    'zip': zipController.text.trim(),
+                    'country': countryId,
+                    if (isBusinessEntity)
+                      'vat_number': vatNumberController.text.trim()
+                    else
+                      'id_number': idNumberController.text.trim(),
+                    'acts_as_sender': actsAsSender,
+                    'acts_as_receiver': actsAsReceiver,
+                    'classification': isBusinessEntity
+                        ? 'business'
+                        : 'individual',
+                    'tenant_id': company.id,
+                  }),
+                )
                 .then((_) {
-              store.dispatch(StopSaving());
-              showToast(localization.lookup('saved_settings'));
-              store.dispatch(RefreshData());
-            }).catchError((error) {
-              store.dispatch(StopSaving());
-              showErrorDialog(message: '$error');
-            });
+                  store.dispatch(StopSaving());
+                  showToast(localization.lookup('saved_settings'));
+                  store.dispatch(RefreshData());
+                })
+                .catchError((error) {
+                  store.dispatch(StopSaving());
+                  showErrorDialog(message: '$error');
+                });
           },
         ),
       ],
@@ -1075,25 +1088,27 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
                 IconButton(
                   icon: Icon(Icons.remove_circle_outline, color: Colors.red),
                   onPressed: () {
-                    final url = state.credentials.url +
+                    final url =
+                        state.credentials.url +
                         '/einvoice/peppol/remove_additional_legal_identifier';
                     widget.store.dispatch(StartSaving());
                     WebClient()
                         .delete(
-                      url,
-                      state.credentials.token,
-                      data: json.encode({
-                        'country': country.id,
-                        'vat_number': vatNumber,
-                      }),
-                    )
+                          url,
+                          state.credentials.token,
+                          data: json.encode({
+                            'country': country.id,
+                            'vat_number': vatNumber,
+                          }),
+                        )
                         .then((_) {
-                      widget.store.dispatch(StopSaving());
-                      widget.store.dispatch(RefreshData());
-                    }).catchError((error) {
-                      widget.store.dispatch(StopSaving());
-                      showErrorDialog(message: '$error');
-                    });
+                          widget.store.dispatch(StopSaving());
+                          widget.store.dispatch(RefreshData());
+                        })
+                        .catchError((error) {
+                          widget.store.dispatch(StopSaving());
+                          showErrorDialog(message: '$error');
+                        });
                   },
                 ),
               ],
@@ -1115,10 +1130,11 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setDialogState) {
-            final peppolCountryList = countryMap.values
-                .where((country) => kPeppolCountries.contains(country.id))
-                .toList()
-              ..sort((a, b) => a.name.compareTo(b.name));
+            final peppolCountryList =
+                countryMap.values
+                    .where((country) => kPeppolCountries.contains(country.id))
+                    .toList()
+                  ..sort((a, b) => a.name.compareTo(b.name));
 
             return AlertDialog(
               title: Text(widget.localization.lookup('add_tax_identifier')),
@@ -1161,25 +1177,27 @@ class _EUTaxDetailsState extends State<_EUTaxDetails> {
                       return;
                     }
                     Navigator.pop(context);
-                    final url = state.credentials.url +
+                    final url =
+                        state.credentials.url +
                         '/einvoice/peppol/add_additional_legal_identifier';
                     widget.store.dispatch(StartSaving());
                     WebClient()
                         .post(
-                      url,
-                      state.credentials.token,
-                      data: json.encode({
-                        'country': selectedCountryId,
-                        'vat_number': vatNumber,
-                      }),
-                    )
+                          url,
+                          state.credentials.token,
+                          data: json.encode({
+                            'country': selectedCountryId,
+                            'vat_number': vatNumber,
+                          }),
+                        )
                         .then((_) {
-                      widget.store.dispatch(StopSaving());
-                      widget.store.dispatch(RefreshData());
-                    }).catchError((error) {
-                      widget.store.dispatch(StopSaving());
-                      showErrorDialog(message: '$error');
-                    });
+                          widget.store.dispatch(StopSaving());
+                          widget.store.dispatch(RefreshData());
+                        })
+                        .catchError((error) {
+                          widget.store.dispatch(StopSaving());
+                          showErrorDialog(message: '$error');
+                        });
                   },
                   child: Text(widget.localization.save.toUpperCase()),
                 ),

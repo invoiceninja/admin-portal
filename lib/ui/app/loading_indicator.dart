@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({Key? key, this.useCard = false, this.height})
-      : super(key: key);
+    : super(key: key);
 
   final double? height;
   final bool useCard;

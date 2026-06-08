@@ -78,8 +78,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.taskStatus
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -356,8 +356,7 @@ TaskStatusState _setLoadedTaskStatus(
 TaskStatusState _setLoadedTaskStatuses(
   TaskStatusState taskStatusState,
   LoadTaskStatusesSuccess action,
-) =>
-    taskStatusState.loadTaskStatuses(action.taskStatuses);
+) => taskStatusState.loadTaskStatuses(action.taskStatuses);
 
 TaskStatusState _setLoadedCompany(
   TaskStatusState taskStatusState,

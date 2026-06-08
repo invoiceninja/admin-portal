@@ -33,7 +33,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
   const TemplatesAndReminders({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final TemplatesAndRemindersVM viewModel;
 
@@ -399,53 +399,56 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                       _onChanged();
                       viewModel.onTemplateChanged(value);
                     }),
-                    items: EmailTemplate.values.where((value) {
-                      if ([
-                            EmailTemplate.invoice,
-                            EmailTemplate.statement,
-                            EmailTemplate.payment,
-                            EmailTemplate.payment_partial,
-                            EmailTemplate.payment_failed,
-                          ].contains(value) &&
-                          !company.isModuleEnabled(EntityType.invoice)) {
-                        return false;
-                      } else if ([
-                            EmailTemplate.quote,
-                            EmailTemplate.quote_reminder1,
-                          ].contains(value) &&
-                          !company.isModuleEnabled(EntityType.quote)) {
-                        return false;
-                      } else if (value == EmailTemplate.credit &&
-                          !company.isModuleEnabled(EntityType.credit)) {
-                        return false;
-                      } else if (value == EmailTemplate.purchase_order &&
-                          !company.isModuleEnabled(
-                            EntityType.purchaseOrder,
-                          )) {
-                        return false;
-                      }
-                      return true;
-                    }).map((item) {
-                      var name = localization.lookup(item.name);
-                      if (item == EmailTemplate.reminder1) {
-                        name = localization.firstReminder;
-                      } else if (item == EmailTemplate.reminder2) {
-                        name = localization.secondReminder;
-                      } else if (item == EmailTemplate.reminder3) {
-                        name = localization.thirdReminder;
-                      } else if (item == EmailTemplate.custom1) {
-                        name = localization.firstCustom;
-                      } else if (item == EmailTemplate.custom2) {
-                        name = localization.secondCustom;
-                      } else if (item == EmailTemplate.custom3) {
-                        name = localization.thirdCustom;
-                      }
+                    items: EmailTemplate.values
+                        .where((value) {
+                          if ([
+                                EmailTemplate.invoice,
+                                EmailTemplate.statement,
+                                EmailTemplate.payment,
+                                EmailTemplate.payment_partial,
+                                EmailTemplate.payment_failed,
+                              ].contains(value) &&
+                              !company.isModuleEnabled(EntityType.invoice)) {
+                            return false;
+                          } else if ([
+                                EmailTemplate.quote,
+                                EmailTemplate.quote_reminder1,
+                              ].contains(value) &&
+                              !company.isModuleEnabled(EntityType.quote)) {
+                            return false;
+                          } else if (value == EmailTemplate.credit &&
+                              !company.isModuleEnabled(EntityType.credit)) {
+                            return false;
+                          } else if (value == EmailTemplate.purchase_order &&
+                              !company.isModuleEnabled(
+                                EntityType.purchaseOrder,
+                              )) {
+                            return false;
+                          }
+                          return true;
+                        })
+                        .map((item) {
+                          var name = localization.lookup(item.name);
+                          if (item == EmailTemplate.reminder1) {
+                            name = localization.firstReminder;
+                          } else if (item == EmailTemplate.reminder2) {
+                            name = localization.secondReminder;
+                          } else if (item == EmailTemplate.reminder3) {
+                            name = localization.thirdReminder;
+                          } else if (item == EmailTemplate.custom1) {
+                            name = localization.firstCustom;
+                          } else if (item == EmailTemplate.custom2) {
+                            name = localization.secondCustom;
+                          } else if (item == EmailTemplate.custom3) {
+                            name = localization.thirdCustom;
+                          }
 
-                      return DropdownMenuItem<EmailTemplate>(
-                        child: Text(name),
-                        value: item,
-                      );
-                    }).toList(),
+                          return DropdownMenuItem<EmailTemplate>(
+                            child: Text(name),
+                            value: item,
+                          );
+                        })
+                        .toList(),
                   ),
                   if (!enableCustomEmail && state.isTrial)
                     Padding(
@@ -595,12 +598,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                           .map(
                             (id, frequency) =>
                                 MapEntry<String, DropdownMenuItem<String>>(
-                              id,
-                              DropdownMenuItem<String>(
-                                child: Text(localization.lookup(frequency)),
-                                value: id,
-                              ),
-                            ),
+                                  id,
+                                  DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(frequency)),
+                                    value: id,
+                                  ),
+                                ),
                           )
                           .values
                           .toList(),
@@ -791,8 +794,9 @@ class _ReminderSettingsState extends State<ReminderSettings> {
             ),
             AppDropdownButton(
               showBlank: true,
-              blankLabel:
-                  state.settingsUIState.isFiltered ? '' : localization.disabled,
+              blankLabel: state.settingsUIState.isFiltered
+                  ? ''
+                  : localization.disabled,
               value: widget.schedule,
               labelText: localization.schedule,
               onChanged: (dynamic value) {

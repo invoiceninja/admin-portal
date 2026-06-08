@@ -158,8 +158,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       list.add(companyState.company);
     }
 
-    final companies =
-        list.where((CompanyEntity company) => company.id.isNotEmpty).toList();
+    final companies = list
+        .where((CompanyEntity company) => company.id.isNotEmpty)
+        .toList();
 
     return companies;
   }
@@ -460,8 +461,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final entityUIState = getUIState(type)!;
 
     return SelectionState(
-      selectedId:
-          entityUIState.forceSelected == true ? entityUIState.selectedId : null,
+      selectedId: entityUIState.forceSelected == true
+          ? entityUIState.selectedId
+          : null,
       filterEntityId: uiState.filterEntityId,
       filterEntityType: uiState.filterEntityType,
     );
@@ -856,9 +858,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isSelfHosted && account.isUpdateAvailable && userCompany.isAdmin;
 
   bool get isUsingPostmark => [
-        if (isHosted) SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
-        SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
-      ].contains(company.settings.emailSendingMethod);
+    if (isHosted) SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
+    SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
+  ].contains(company.settings.emailSendingMethod);
 
   bool get isUserConfirmed {
     if (isSelfHosted) {
@@ -977,10 +979,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
     final staticUpdated =
         staticState.updatedAt == null || staticState.updatedAt == 0
-            ? 'Blank'
-            : timeago.format(
-                convertTimestampToDate((staticState.updatedAt! / 1000).round()),
-              );
+        ? 'Blank'
+        : timeago.format(
+            convertTimestampToDate((staticState.updatedAt! / 1000).round()),
+          );
 
     final passwordUpdated = authState.lastEnteredPasswordAt == 0
         ? 'Blank'

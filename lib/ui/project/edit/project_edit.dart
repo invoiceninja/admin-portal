@@ -141,8 +141,9 @@ class _ProjectEditState extends State<ProjectEdit> {
 
     return EditScaffold(
       entity: project,
-      title:
-          project.isNew ? localization!.newProject : localization!.editProject,
+      title: project.isNew
+          ? localization!.newProject
+          : localization!.editProject,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(
@@ -178,8 +179,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                             ),
                             validator: (String? val) =>
                                 (val ?? '').trim().isEmpty
-                                    ? localization.pleaseSelectAClient
-                                    : null,
+                                ? localization.pleaseSelectAClient
+                                : null,
                             onSelected: (client) {
                               viewModel.onChanged(
                                 project.rebuild(

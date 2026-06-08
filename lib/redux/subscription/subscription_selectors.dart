@@ -15,8 +15,7 @@ var memoizedDropdownSubscriptionList = memo5(
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
     String clientId,
-  ) =>
-      dropdownSubscriptionsSelector(
+  ) => dropdownSubscriptionsSelector(
     subscriptionMap,
     subscriptionList,
     staticState,
@@ -61,8 +60,7 @@ var memoizedFilteredSubscriptionList = memo4(
     BuiltMap<String?, SubscriptionEntity?> subscriptionMap,
     BuiltList<String> subscriptionList,
     ListUIState subscriptionListState,
-  ) =>
-      filteredSubscriptionsSelector(
+  ) => filteredSubscriptionsSelector(
     selectionState,
     subscriptionMap,
     subscriptionList,

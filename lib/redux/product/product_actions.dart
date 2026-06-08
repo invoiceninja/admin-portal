@@ -347,8 +347,8 @@ void handleProductAction(
     case EntityAction.restore:
       final message = productIds.length > 1
           ? localization!.restoredProducts
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', productIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', productIds.length.toString())
           : localization!.restoredProduct;
       store.dispatch(
         RestoreProductsRequest(snackBarCompleter<Null>(message), productIds),
@@ -357,8 +357,8 @@ void handleProductAction(
     case EntityAction.archive:
       final message = productIds.length > 1
           ? localization!.archivedProducts
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', productIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', productIds.length.toString())
           : localization!.archivedProduct;
       store.dispatch(
         ArchiveProductsRequest(snackBarCompleter<Null>(message), productIds),
@@ -367,8 +367,8 @@ void handleProductAction(
     case EntityAction.delete:
       final message = productIds.length > 1
           ? localization!.deletedProducts
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', productIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', productIds.length.toString())
           : localization!.deletedProduct;
       store.dispatch(
         DeleteProductsRequest(snackBarCompleter<Null>(message), productIds),

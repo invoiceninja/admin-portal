@@ -14,8 +14,7 @@ var memoizedDropdownGroupList = memo3(
     BuiltMap<String, GroupEntity> groupMap,
     BuiltList<String> groupList,
     String clientId,
-  ) =>
-      dropdownGroupsSelector(groupMap, groupList, clientId),
+  ) => dropdownGroupsSelector(groupMap, groupList, clientId),
 );
 
 List<String> dropdownGroupsSelector(
@@ -48,8 +47,7 @@ var memoizedFilteredGroupList = memo4(
     BuiltMap<String, GroupEntity> groupMap,
     BuiltList<String> groupList,
     ListUIState groupListState,
-  ) =>
-      filteredGroupsSelector(
+  ) => filteredGroupsSelector(
     selectionState,
     groupMap,
     groupList,

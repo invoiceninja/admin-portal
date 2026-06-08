@@ -117,8 +117,7 @@ var memoizedDropdownProjectList = memo5(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     String? clientId,
-  ) =>
-      dropdownProjectsSelector(
+  ) => dropdownProjectsSelector(
     projectMap,
     projectList,
     clientMap,
@@ -172,8 +171,7 @@ var memoizedFilteredProjectList = memo6(
     ListUIState projectListState,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
-  ) =>
-      filteredProjectsSelector(
+  ) => filteredProjectsSelector(
     selectionState,
     projectMap,
     projectList,
@@ -198,7 +196,8 @@ List<String> filteredProjectsSelector(
     final project = projectMap[projectId]!;
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
-    final user = userMap[project.assignedUserId] ??
+    final user =
+        userMap[project.assignedUserId] ??
         UserEntity(id: project.assignedUserId);
 
     if (project.id == selectionState.selectedId) {

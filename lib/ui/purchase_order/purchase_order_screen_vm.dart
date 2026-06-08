@@ -55,12 +55,12 @@ class PurchaseOrderScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.purchaseOrderListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> purchaseOrders,
-        EntityAction action,
-      ) =>
-          handlePurchaseOrderAction(context, purchaseOrders, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> purchaseOrders,
+            EntityAction action,
+          ) => handlePurchaseOrderAction(context, purchaseOrders, action),
     );
   }
 }

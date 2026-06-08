@@ -81,14 +81,15 @@ class TemplatesAndRemindersVM {
             WebClient()
                 .post(url, state.credentials.token)
                 .then((dynamic value) {
-              // Give the server a few seconds to process
-              Timer(Duration(seconds: 2), () {
-                store.dispatch(StopSaving());
-                store.dispatch(RefreshData());
-              });
-            }).catchError((dynamic error) {
-              store.dispatch(StopSaving());
-            });
+                  // Give the server a few seconds to process
+                  Timer(Duration(seconds: 2), () {
+                    store.dispatch(StopSaving());
+                    store.dispatch(RefreshData());
+                  });
+                })
+                .catchError((dynamic error) {
+                  store.dispatch(StopSaving());
+                });
           };
 
           final settingsUIState = store.state.uiState.settingsUIState;

@@ -103,7 +103,8 @@ class ClientScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterClientsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
               heroTag: 'client_fab',

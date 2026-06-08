@@ -72,8 +72,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final company = widget.viewModel.selectedCompany;
-    final inactiveColor = state.prefState.activeCustomColors[
-            PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+    final inactiveColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
 
     if (company == null) {
@@ -359,8 +360,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
         width: state.isMenuCollapsed
             ? 65
             : isDesktop(context)
-                ? kDrawerWidthDesktop
-                : kDrawerWidthMobile,
+            ? kDrawerWidthDesktop
+            : kDrawerWidthMobile,
         child: Drawer(
           child: SafeArea(
             child: Column(
@@ -385,7 +386,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 state.credentials.token.isEmpty
                     ? SizedBox()
                     : Theme(
-                        data: state.prefState.enableDarkMode ||
+                        data:
+                            state.prefState.enableDarkMode ||
                                 (state.prefState.activeCustomColors[PrefState
                                             .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
                                         '')
@@ -499,8 +501,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                               context: context,
                                               builder: (BuildContext context) =>
                                                   UserSmsVerification(
-                                                showChangeNumber: true,
-                                              ),
+                                                    showChangeNumber: true,
+                                                  ),
                                             );
                                           },
                                           icon: Icon(
@@ -863,24 +865,29 @@ class _DrawerTileState extends State<DrawerTile> {
 
     // Workaround to show clients/vendors as selected when
     // viewing their sub-entities
-    final isSelected = uiState.filterEntityType != null &&
+    final isSelected =
+        uiState.filterEntityType != null &&
             prefState.isViewerFullScreen(uiState.filterEntityType) &&
             !uiState.isEditing &&
             (prefState.isPreviewVisible || uiState.isList)
         ? widget.entityType == uiState.filterEntityType
         : uiState.currentRoute.startsWith('/${toSnakeCase(route)}');
 
-    final inactiveColor = prefState.activeCustomColors[
-            PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+    final inactiveColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
-    final inactiveFontColor = prefState
-            .activeCustomColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
+    final inactiveFontColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
         '';
-    final activeColor = prefState.activeCustomColors[
-            PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
+    final activeColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
         '';
-    final activeFontColor = prefState
-            .activeCustomColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ??
+    final activeFontColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_ACTIVE_FONT_COLOR] ??
         '';
 
     Color? color = Colors.transparent;
@@ -1024,23 +1031,22 @@ class _DrawerTileState extends State<DrawerTile> {
           leading: _isHovered && isDesktop(context) && iconWidget != null
               ? iconWidget
               : isLoading
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 8),
-                      child: SizedBox(
-                        child:
-                            CircularProgressIndicator(color: state.accentColor),
-                        width: 22,
-                        height: 22,
-                      ),
-                    )
-                  : FocusTraversalGroup(
-                      descendantsAreFocusable: false,
-                      child: IconButton(
-                        icon: Icon(widget.icon),
-                        color: textColor,
-                        onPressed: onTap,
-                      ),
-                    ),
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 8),
+                  child: SizedBox(
+                    child: CircularProgressIndicator(color: state.accentColor),
+                    width: 22,
+                    height: 22,
+                  ),
+                )
+              : FocusTraversalGroup(
+                  descendantsAreFocusable: false,
+                  child: IconButton(
+                    icon: Icon(widget.icon),
+                    color: textColor,
+                    onPressed: onTap,
+                  ),
+                ),
           title: Text(
             widget.title!,
             key: ValueKey('menu_${widget.title}'),
@@ -1158,8 +1164,9 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.forum),
               onPressed: () => launchUrl(Uri.parse(kForumUrl)),
-              tooltip:
-                  prefState.enableTooltips ? localization!.supportForum : '',
+              tooltip: prefState.enableTooltips
+                  ? localization!.supportForum
+                  : '',
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
@@ -1227,8 +1234,9 @@ class SidebarFooter extends StatelessWidget {
               AppBorder(
                 isLeft: true,
                 child: Tooltip(
-                  message:
-                      prefState.enableTooltips ? localization!.hideMenu : '',
+                  message: prefState.enableTooltips
+                      ? localization!.hideMenu
+                      : '',
                   child: InkWell(
                     onTap: () => store.dispatch(
                       UpdateUserPreferences(sidebar: AppSidebar.menu),
@@ -1260,7 +1268,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       color: Theme.of(context).cardColor,
-      child: state.uiState.filterEntityType != null &&
+      child:
+          state.uiState.filterEntityType != null &&
               state.prefState.isFilterVisible
           ? PopupMenuButton<String>(
               icon: state.isUpdateAvailable
@@ -1385,8 +1394,9 @@ void _showAbout(BuildContext context) async {
 
   final userCompany = state.userCompany;
   String subtitle = state.appVersion + '\n';
-  subtitle +=
-      state.isSelfHosted ? localization!.selfhosted : localization!.hosted;
+  subtitle += state.isSelfHosted
+      ? localization!.selfhosted
+      : localization!.hosted;
   if (userCompany.isOwner) {
     subtitle += ' • ' + localization.owner;
   } else if (userCompany.isAdmin) {
@@ -1448,7 +1458,8 @@ void _showAbout(BuildContext context) async {
                       final directory =
                           await getApplicationDocumentsDirectory();
                       showMessageDialog(
-                        message: FLUTTER_VERSION['channel']!.toUpperCase() +
+                        message:
+                            FLUTTER_VERSION['channel']!.toUpperCase() +
                             ' • ' +
                             FLUTTER_VERSION['frameworkVersion']! +
                             '\n\n${directory.path}' +
@@ -1628,10 +1639,11 @@ void _showAbout(BuildContext context) async {
                     if (!state.account.disableAutoUpdate &&
                         (!state.account.isDocker || state.isUpdateAvailable))
                       AppButton(
-                        label: (state.isUpdateAvailable
-                                ? localization.updateApp
-                                : localization.forceUpdate)
-                            .toUpperCase(),
+                        label:
+                            (state.isUpdateAvailable
+                                    ? localization.updateApp
+                                    : localization.forceUpdate)
+                                .toUpperCase(),
                         iconData: MdiIcons.cloudDownload,
                         color: Colors.orange,
                         onPressed: () => _showUpdate(context),
@@ -1725,29 +1737,30 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
     setState(() => _isSaving = true);
     WebClient()
         .post(
-      state.credentials.url + '/support/messages/send',
-      state.credentials.token,
-      data: json.encode({
-        'message': _message,
-        'send_logs': _includeLogs ? 'true' : '',
-        'platform': getPlatformLetter(),
-        'version': state.appVersion,
-      }),
-    )
+          state.credentials.url + '/support/messages/send',
+          state.credentials.token,
+          data: json.encode({
+            'message': _message,
+            'send_logs': _includeLogs ? 'true' : '',
+            'platform': getPlatformLetter(),
+            'version': state.appVersion,
+          }),
+        )
         .then((dynamic response) async {
-      setState(() => _isSaving = false);
-      await showDialog<MessageDialog>(
-        context: navigatorKey.currentContext!,
-        builder: (BuildContext context) {
-          return MessageDialog(localization!.yourMessageHasBeenReceived);
-        },
-      );
-      Navigator.pop(navigatorKey.currentContext!);
-    }).catchError((dynamic error) {
-      print('## ERROR: $error');
-      setState(() => _isSaving = false);
-      showErrorDialog(message: '$error');
-    });
+          setState(() => _isSaving = false);
+          await showDialog<MessageDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return MessageDialog(localization!.yourMessageHasBeenReceived);
+            },
+          );
+          Navigator.pop(navigatorKey.currentContext!);
+        })
+        .catchError((dynamic error) {
+          print('## ERROR: $error');
+          setState(() => _isSaving = false);
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override

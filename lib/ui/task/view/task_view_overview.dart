@@ -128,8 +128,8 @@ class _TaskOverviewState extends State<TaskOverview> {
           statusColor: task.isInvoiced
               ? Colors.green
               : task.isRunning
-                  ? Colors.blue
-                  : null,
+              ? Colors.blue
+              : null,
           label: localization!.duration,
           value: formatDuration(task.calculateDuration()),
           secondLabel: localization.amount,
@@ -199,8 +199,8 @@ class _TaskOverviewState extends State<TaskOverview> {
               isValid: true,
               onTap: (BuildContext context) =>
                   viewModel.state.userCompany.canEditEntity(task)
-                      ? viewModel.onEditPressed(context, taskTime)
-                      : null,
+                  ? viewModel.onEditPressed(context, taskTime)
+                  : null,
             ),
           ]);
         });

@@ -110,23 +110,25 @@ Middleware<AppState> _viewTaskList() {
 Middleware<AppState> _archiveTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveTaskRequest;
-    final prevTasks =
-        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+    final prevTasks = action.taskIds
+        .map((id) => store.state.taskState.map[id])
+        .toList();
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.taskIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.taskIds,
+          EntityAction.archive,
+        )
         .then((List<TaskEntity> tasks) {
-      store.dispatch(ArchiveTaskSuccess(tasks));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveTaskFailure(prevTasks));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveTaskSuccess(tasks));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveTaskFailure(prevTasks));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -135,19 +137,21 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
 Middleware<AppState> _startTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as StartTasksRequest;
-    final prevTasks =
-        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+    final prevTasks = action.taskIds
+        .map((id) => store.state.taskState.map[id])
+        .toList();
 
     repository
         .bulkAction(store.state.credentials, action.taskIds, EntityAction.start)
         .then((List<TaskEntity> tasks) {
-      store.dispatch(StartTasksSuccess(tasks));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(StartTasksFailure(prevTasks));
-      action.completer.completeError(error);
-    });
+          store.dispatch(StartTasksSuccess(tasks));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(StartTasksFailure(prevTasks));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -156,19 +160,21 @@ Middleware<AppState> _startTask(TaskRepository repository) {
 Middleware<AppState> _stopTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as StopTasksRequest;
-    final prevTasks =
-        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+    final prevTasks = action.taskIds
+        .map((id) => store.state.taskState.map[id])
+        .toList();
 
     repository
         .bulkAction(store.state.credentials, action.taskIds, EntityAction.stop)
         .then((List<TaskEntity> tasks) {
-      store.dispatch(StopTasksSuccess(tasks));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(StopTasksFailure(prevTasks));
-      action.completer.completeError(error);
-    });
+          store.dispatch(StopTasksSuccess(tasks));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(StopTasksFailure(prevTasks));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -177,23 +183,25 @@ Middleware<AppState> _stopTask(TaskRepository repository) {
 Middleware<AppState> _deleteTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteTaskRequest;
-    final prevTasks =
-        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+    final prevTasks = action.taskIds
+        .map((id) => store.state.taskState.map[id])
+        .toList();
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.taskIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.taskIds,
+          EntityAction.delete,
+        )
         .then((List<TaskEntity> tasks) {
-      store.dispatch(DeleteTaskSuccess(tasks));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteTaskFailure(prevTasks));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteTaskSuccess(tasks));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteTaskFailure(prevTasks));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -202,23 +210,25 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
 Middleware<AppState> _restoreTask(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreTaskRequest;
-    final prevTasks =
-        action.taskIds.map((id) => store.state.taskState.map[id]).toList();
+    final prevTasks = action.taskIds
+        .map((id) => store.state.taskState.map[id])
+        .toList();
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.taskIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.taskIds,
+          EntityAction.restore,
+        )
         .then((List<TaskEntity> tasks) {
-      store.dispatch(RestoreTaskSuccess(tasks));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreTaskFailure(prevTasks));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreTaskSuccess(tasks));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreTaskFailure(prevTasks));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -230,19 +240,20 @@ Middleware<AppState> _saveTask(TaskRepository repository) {
     repository
         .saveData(store.state.credentials, action.task!, action: action.action)
         .then((TaskEntity task) {
-      if (action.task!.isNew) {
-        store.dispatch(
-          AddTaskSuccess(task: task, autoSelect: action.autoSelect),
-        );
-      } else {
-        store.dispatch(SaveTaskSuccess(task));
-      }
-      action.completer!.complete(task);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveTaskFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.task!.isNew) {
+            store.dispatch(
+              AddTaskSuccess(task: task, autoSelect: action.autoSelect),
+            );
+          } else {
+            store.dispatch(SaveTaskSuccess(task));
+          }
+          action.completer!.complete(task);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveTaskFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -254,19 +265,22 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadTaskRequest());
-    repository.loadItem(state.credentials, action.taskId).then((task) {
-      store.dispatch(LoadTaskSuccess(task));
+    repository
+        .loadItem(state.credentials, action.taskId)
+        .then((task) {
+          store.dispatch(LoadTaskSuccess(task));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTaskFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTaskFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -280,45 +294,46 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     store.dispatch(LoadTasksRequest());
     repository
         .loadList(
-      state.credentials,
-      action.page,
-      state.createdAtLimit,
-      state.filterDeletedClients,
-    )
+          state.credentials,
+          action.page,
+          state.createdAtLimit,
+          state.filterDeletedClients,
+        )
         .then((data) {
-      store.dispatch(LoadTasksSuccess(data));
+          store.dispatch(LoadTasksSuccess(data));
 
-      final documents = <DocumentEntity>[];
-      data.forEach((task) {
-        task.documents.forEach((document) {
-          documents.add(
-            document.rebuild(
-              (b) => b
-                ..parentId = task.id
-                ..parentType = EntityType.task,
-            ),
-          );
+          final documents = <DocumentEntity>[];
+          data.forEach((task) {
+            task.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = task.id
+                    ..parentType = EntityType.task,
+                ),
+              );
+            });
+          });
+          store.dispatch(LoadDocumentsSuccess(documents));
+
+          if (data.length == kMaxRecordsPerPage) {
+            store.dispatch(
+              LoadTasks(completer: action.completer, page: action.page + 1),
+            );
+          } else {
+            if (action.completer != null) {
+              action.completer!.complete(null);
+            }
+            store.dispatch(LoadVendors());
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTasksFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
         });
-      });
-      store.dispatch(LoadDocumentsSuccess(documents));
-
-      if (data.length == kMaxRecordsPerPage) {
-        store.dispatch(
-          LoadTasks(completer: action.completer, page: action.page + 1),
-        );
-      } else {
-        if (action.completer != null) {
-          action.completer!.complete(null);
-        }
-        store.dispatch(LoadVendors());
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTasksFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
 
     next(action);
   };
@@ -330,31 +345,32 @@ Middleware<AppState> _saveDocument(TaskRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-        store.state.credentials,
-        action!.task,
-        action.multipartFiles,
-        action.isPrivate,
-      )
+            store.state.credentials,
+            action!.task,
+            action.multipartFiles,
+            action.isPrivate,
+          )
           .then((task) {
-        store.dispatch(SaveTaskSuccess(task));
+            store.dispatch(SaveTaskSuccess(task));
 
-        final documents = <DocumentEntity>[];
-        task.documents.forEach((document) {
-          documents.add(
-            document.rebuild(
-              (b) => b
-                ..parentId = task.id
-                ..parentType = EntityType.task,
-            ),
-          );
-        });
-        store.dispatch(LoadDocumentsSuccess(documents));
-        action.completer.complete(documents);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveTaskDocumentFailure(error));
-        action.completer.completeError(error);
-      });
+            final documents = <DocumentEntity>[];
+            task.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = task.id
+                    ..parentType = EntityType.task,
+                ),
+              );
+            });
+            store.dispatch(LoadDocumentsSuccess(documents));
+            action.completer.complete(documents);
+          })
+          .catchError((Object error) {
+            print(error);
+            store.dispatch(SaveTaskDocumentFailure(error));
+            action.completer.completeError(error);
+          });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveTaskDocumentFailure(error));
@@ -372,22 +388,23 @@ Middleware<AppState> _sortTasks(TaskRepository repository) {
     repository
         .sortTasks(store.state.credentials, action.statusIds, action.taskIds)
         .then((_) {
-      store.dispatch(
-        SortTasksSuccess(
-          statusIds: action.statusIds,
-          taskIds: action.taskIds,
-        ),
-      );
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SortTasksFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          store.dispatch(
+            SortTasksSuccess(
+              statusIds: action.statusIds,
+              taskIds: action.taskIds,
+            ),
+          );
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SortTasksFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

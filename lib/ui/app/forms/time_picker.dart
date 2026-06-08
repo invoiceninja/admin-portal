@@ -153,8 +153,10 @@ class _TimePickerState extends State<TimePicker> {
           value = value.replaceAll(RegExp('[^\\d\:]'), '');
           value = value.toLowerCase().replaceAll('.', ':');
 
-          final parts =
-              value.split(':').where((element) => element.isNotEmpty).toList();
+          final parts = value
+              .split(':')
+              .where((element) => element.isNotEmpty)
+              .toList();
           String dateTimeStr = '';
 
           if (parts.length == 1) {

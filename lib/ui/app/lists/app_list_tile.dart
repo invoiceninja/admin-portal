@@ -38,9 +38,7 @@ class AppListTile extends StatelessWidget {
     showToast(
       AppLocalization.of(
         context,
-      )!
-          .copiedToClipboard
-          .replaceFirst(':value', copyValue ?? title!),
+      )!.copiedToClipboard.replaceFirst(':value', copyValue ?? title!),
     );
   }
 

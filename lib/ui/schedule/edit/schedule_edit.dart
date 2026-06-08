@@ -221,8 +221,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                 ..remainingCycles = value.isEmpty
                                     ? 1
                                     : schedule.frequencyId.isEmpty
-                                        ? -1
-                                        : schedule.remainingCycles,
+                                    ? -1
+                                    : schedule.remainingCycles,
                             ),
                           );
                         },
@@ -362,18 +362,19 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             ),
                           );
                         },
-                        items: [
-                          kStatementStatusAll,
-                          kStatementStatusPaid,
-                          kStatementStatusUnpaid,
-                        ]
-                            .map(
-                              (value) => DropdownMenuItem<String>(
-                                child: Text(localization.lookup(value)),
-                                value: value,
-                              ),
-                            )
-                            .toList(),
+                        items:
+                            [
+                                  kStatementStatusAll,
+                                  kStatementStatusPaid,
+                                  kStatementStatusUnpaid,
+                                ]
+                                .map(
+                                  (value) => DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(value)),
+                                    value: value,
+                                  ),
+                                )
+                                .toList(),
                       ),
                       SizedBox(height: 20),
                       BoolDropdownButton(
@@ -477,21 +478,22 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             ),
                           );
                         },
-                        items: [
-                          EntityType.invoice,
-                          EntityType.quote,
-                          EntityType.credit,
-                          EntityType.purchaseOrder,
-                        ]
-                            .map(
-                              (entityType) => DropdownMenuItem<String>(
-                                value: entityType.apiValue,
-                                child: Text(
-                                  localization.lookup(entityType.apiValue),
-                                ),
-                              ),
-                            )
-                            .toList(),
+                        items:
+                            [
+                                  EntityType.invoice,
+                                  EntityType.quote,
+                                  EntityType.credit,
+                                  EntityType.purchaseOrder,
+                                ]
+                                .map(
+                                  (entityType) => DropdownMenuItem<String>(
+                                    value: entityType.apiValue,
+                                    child: Text(
+                                      localization.lookup(entityType.apiValue),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
                       ),
                       if (parameters.entityType == EntityType.invoice.apiValue)
                         EntityDropdown(

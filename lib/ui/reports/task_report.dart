@@ -61,8 +61,7 @@ var memoizedTaskReport = memo10(
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, ProjectEntity> projectMap,
     StaticState staticState,
-  ) =>
-      taskReport(
+  ) => taskReport(
     userCompany!,
     reportsUIState,
     taskMap,
@@ -258,8 +257,7 @@ ReportResult taskReport(
         case TaskReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(task.entityState);
+          )!.lookup(task.entityState);
           break;
         case TaskReportFields.is_invoiced:
           value = task.isInvoiced;
@@ -308,8 +306,9 @@ ReportResult taskReport(
   return ReportResult(
     allColumns: TaskReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

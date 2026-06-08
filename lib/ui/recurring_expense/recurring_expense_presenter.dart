@@ -130,7 +130,9 @@ class RecurringExpensePresenter extends EntityPresenter {
         );
       case RecurringExpenseFields.category:
         return Text(
-          state.expenseCategoryState.map[expense!.categoryId]
+          state
+                  .expenseCategoryState
+                  .map[expense!.categoryId]
                   ?.listDisplayName ??
               '',
         );
@@ -146,7 +148,9 @@ class RecurringExpensePresenter extends EntityPresenter {
         );
       case RecurringExpenseFields.invoiceCurrencyId:
         return Text(
-          state.staticState.currencyMap[expense!.invoiceCurrencyId]
+          state
+                  .staticState
+                  .currencyMap[expense!.invoiceCurrencyId]
                   ?.listDisplayName ??
               '',
         );

@@ -43,10 +43,10 @@ class EntityList extends StatefulWidget {
     this.presenter,
     this.tableColumns,
   }) : super(
-          key: ValueKey(
-            '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType)!.listUIState.tableHashCode}__',
-          ),
-        );
+         key: ValueKey(
+           '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType)!.listUIState.tableHashCode}__',
+         ),
+       );
 
   final AppState state;
   final EntityType entityType;
@@ -118,8 +118,9 @@ class _EntityListState extends State<EntityList> {
     final uiState = state.getUIState(widget.entityType)!;
     dataTableSource.editingId = uiState.editingId;
     dataTableSource.entityList = widget.entityList;
-    dataTableSource.entityMap = state.getEntityMap(widget.entityType)
-        as BuiltMap<String?, BaseEntity?>?;
+    dataTableSource.entityMap =
+        state.getEntityMap(widget.entityType)
+            as BuiltMap<String?, BaseEntity?>?;
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
@@ -184,8 +185,8 @@ class _EntityListState extends State<EntityList> {
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       separatorBuilder: (context, index) =>
                           (index == 0 || index == entityList.length)
-                              ? SizedBox()
-                              : ListDivider(),
+                          ? SizedBox()
+                          : ListDivider(),
                       itemCount: entityList.length + 2,
                       itemBuilder: (BuildContext context, index) {
                         if (index == 0 || index == entityList.length + 1) {
@@ -220,8 +221,7 @@ class _EntityListState extends State<EntityList> {
                           }
                         },
                       ),
-                    )*/
-              ,
+                    )*/,
             ),
           ],
         );
@@ -281,8 +281,7 @@ class _EntityListState extends State<EntityList> {
                       ...widget.tableColumns!.map((field) {
                         String? label = AppLocalization.of(
                           context,
-                        )!
-                            .lookup(field);
+                        )!.lookup(field);
                         if (field.startsWith('custom')) {
                           final key = field.replaceFirst(
                             'custom',
@@ -301,10 +300,10 @@ class _EntityListState extends State<EntityList> {
                       }),
                     ],
                     source: dataTableSource,
-                    sortColumnIndex: widget.tableColumns!
-                            .contains(listUIState.sortField)
+                    sortColumnIndex:
+                        widget.tableColumns!.contains(listUIState.sortField)
                         ? widget.tableColumns!.indexOf(listUIState.sortField) +
-                            1
+                              1
                         : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
@@ -334,21 +333,22 @@ class _EntityListState extends State<EntityList> {
     final entities = listUIState.selectedIds == null
         ? <BaseEntity>[]
         : listUIState.selectedIds!
-            .map<BaseEntity>((entityId) => entityMap![entityId] as BaseEntity)
-            .toList();
+              .map<BaseEntity>((entityId) => entityMap![entityId] as BaseEntity)
+              .toList();
     final firstEntity = entities.isEmpty ? null : entities.first;
-    final actions = (firstEntity?.getActions(
-              includeEdit: false,
-              multiselect: true,
-              userCompany: state.userCompany,
-              client: (firstEntity is BelongsToClient)
-                  ? state.clientState.get(
-                      (firstEntity as BelongsToClient).clientId!,
-                    )
-                  : null,
-            ) ??
-            [])
-        .nonNulls;
+    final actions =
+        (firstEntity?.getActions(
+                  includeEdit: false,
+                  multiselect: true,
+                  userCompany: state.userCompany,
+                  client: (firstEntity is BelongsToClient)
+                      ? state.clientState.get(
+                          (firstEntity as BelongsToClient).clientId!,
+                        )
+                      : null,
+                ) ??
+                [])
+            .nonNulls;
 
     final column = Column(
       children: [
@@ -385,7 +385,8 @@ class _EntityListState extends State<EntityList> {
                       );
                     },
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    value: entityList.length ==
+                    value:
+                        entityList.length ==
                         (listUIState.selectedIds ?? <String>[]).length,
                   ),
                 if (isDesktop(context)) ...[
@@ -454,27 +455,27 @@ class _EntityListState extends State<EntityList> {
                                   .toList()
                                   .sublist(actions.length - remaining)
                                   .map((action) {
-                                return PopupMenuItem<EntityAction>(
-                                  value: action,
-                                  child: Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        getEntityActionIcon(action),
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.secondary,
+                                    return PopupMenuItem<EntityAction>(
+                                      value: action,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            getEntityActionIcon(action),
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.secondary,
+                                          ),
+                                          SizedBox(width: 16.0),
+                                          Text(
+                                            AppLocalization.of(
+                                              context,
+                                            )!.lookup(action.toString()),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(width: 16.0),
-                                      Text(
-                                        AppLocalization.of(
-                                          context,
-                                        )!
-                                            .lookup(action.toString()),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList();
+                                    );
+                                  })
+                                  .toList();
                             },
                           );
                         },

@@ -89,8 +89,7 @@ var memoizedClientReport = memo6(
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, GroupEntity> groupMap,
     StaticState staticState,
-  ) =>
-      clientReport(
+  ) => clientReport(
     userCompany!,
     reportsUIState,
     clientMap,
@@ -256,8 +255,10 @@ ReportResult clientReport(
           value = client.shippingPostalCode;
           break;
         case ClientReportFields.shipping_country:
-          value = staticState
-                  .countryMap[client.shippingCountryId]?.listDisplayName ??
+          value =
+              staticState
+                  .countryMap[client.shippingCountryId]
+                  ?.listDisplayName ??
               '';
           break;
         case ClientReportFields.phone:
@@ -378,14 +379,12 @@ ReportResult clientReport(
         case ClientReportFields.classification:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(client.classification);
+          )!.lookup(client.classification);
           break;
         case ClientReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(client.entityState);
+          )!.lookup(client.entityState);
       }
 
       if (!ReportResult.matchField(
@@ -436,11 +435,13 @@ ReportResult clientReport(
   );
 
   return ReportResult(
-    allColumns:
-        ClientReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
+    allColumns: ClientReportFields.values
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

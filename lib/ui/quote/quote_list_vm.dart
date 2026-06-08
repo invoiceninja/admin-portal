@@ -64,24 +64,24 @@ class QuoteListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-        onEntityAction,
+    onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-          state: state,
-          invoiceList: invoiceList,
-          invoiceMap: invoiceMap,
-          clientMap: clientMap,
-          filter: filter,
-          isLoading: isLoading,
-          onRefreshed: onRefreshed,
-          tableColumns: tableColumns,
-          entityType: entityType,
-          onSortColumn: onSortColumn,
-          onClearMultiselect: onClearMultiselect,
-        );
+         state: state,
+         invoiceList: invoiceList,
+         invoiceMap: invoiceMap,
+         clientMap: clientMap,
+         filter: filter,
+         isLoading: isLoading,
+         onRefreshed: onRefreshed,
+         tableColumns: tableColumns,
+         entityType: entityType,
+         onSortColumn: onSortColumn,
+         onClearMultiselect: onClearMultiselect,
+       );
 
   static QuoteListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -113,15 +113,15 @@ class QuoteListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.quoteListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> quotes,
-        EntityAction action,
-      ) =>
-          handleQuoteAction(context, quotes, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> quotes,
+            EntityAction action,
+          ) => handleQuoteAction(context, quotes, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.quote) ??
-              QuotePresenter.getDefaultTableFields(state.userCompany),
+          QuotePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortQuotes(field)),
       onClearMultiselect: () => store.dispatch(ClearQuoteMultiselect()),
       entityType: EntityType.quote,

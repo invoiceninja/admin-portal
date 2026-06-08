@@ -94,20 +94,20 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext, DocumentEntity)? onViewExpense,
     Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          isSaving: isSaving,
-          isDirty: isDirty,
-          onActionSelected: onEntityAction,
-          onEditPressed: onEditPressed,
-          onPaymentsPressed: onPaymentsPressed,
-          onRefreshed: onRefreshed,
-          onUploadDocuments: onUploadDocuments,
-          onViewExpense: onViewExpense,
-          onViewPdf: onViewPdf,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         client: client,
+         isSaving: isSaving,
+         isDirty: isDirty,
+         onActionSelected: onEntityAction,
+         onEditPressed: onEditPressed,
+         onPaymentsPressed: onPaymentsPressed,
+         onRefreshed: onRefreshed,
+         onUploadDocuments: onUploadDocuments,
+         onViewExpense: onViewExpense,
+         onViewPdf: onViewPdf,
+       );
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -147,36 +147,38 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([invoice], action, autoPop: true),
-      onUploadDocuments: (
-        BuildContext context,
-        List<MultipartFile> multipartFile,
-        bool isPrivate,
-      ) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(
-          SaveInvoiceDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFile,
-            invoice: invoice,
-            completer: completer,
-          ),
-        );
-        completer.future.then((client) {
-          showToast(
-            AppLocalization.of(
-              navigatorKey.currentContext!,
-            )!
-                .uploadedDocument,
-          );
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFile,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveInvoiceDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFile,
+                invoice: invoice,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
       onViewExpense: (BuildContext context, DocumentEntity document) {
         /*
         viewEntityById(

@@ -73,11 +73,12 @@ class _$TaskStatusStateSerializer
         case 'list':
           result.list.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(String),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -152,30 +153,36 @@ class _$TaskStatusUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaskStatusEntity),
-            )! as TaskStatusEntity,
+                  value,
+                  specifiedType: const FullType(TaskStatusEntity),
+                )!
+                as TaskStatusEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ListUIState),
-            )! as ListUIState,
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -309,8 +316,7 @@ class _$TaskStatusUIState extends TaskStatusUIState {
 
   factory _$TaskStatusUIState([
     void Function(TaskStatusUIStateBuilder)? updates,
-  ]) =>
-      (TaskStatusUIStateBuilder()..update(updates))._build();
+  ]) => (TaskStatusUIStateBuilder()..update(updates))._build();
 
   _$TaskStatusUIState._({
     this.editing,
@@ -443,7 +449,8 @@ class TaskStatusUIStateBuilder
   _$TaskStatusUIState _build() {
     _$TaskStatusUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TaskStatusUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

@@ -71,11 +71,12 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
         case 'list':
           result.list.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(String),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -150,30 +151,36 @@ class _$WebhookUIStateSerializer
         case 'editing':
           result.editing.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(WebhookEntity),
-            )! as WebhookEntity,
+                  value,
+                  specifiedType: const FullType(WebhookEntity),
+                )!
+                as WebhookEntity,
           );
           break;
         case 'listUIState':
           result.listUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ListUIState),
-            )! as ListUIState,
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
           );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -437,7 +444,8 @@ class WebhookUIStateBuilder
   _$WebhookUIState _build() {
     _$WebhookUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$WebhookUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),

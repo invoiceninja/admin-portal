@@ -65,7 +65,8 @@ class VendorRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/vendors/bulk?per_page=$kMaxEntitiesPerBulkAction&include=activities';
     final dynamic response = await webClient.post(
       url,

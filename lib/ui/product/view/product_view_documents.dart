@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 
 class ProductViewDocuments extends StatelessWidget {
   const ProductViewDocuments({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final ProductViewVM viewModel;
 

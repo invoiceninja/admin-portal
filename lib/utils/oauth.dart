@@ -13,8 +13,10 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
 class GoogleOAuth {
   static bool get isEnabled => true;
 
-  static Future<bool> signIn(Function(String, String) callback,
-      {bool isSilent = false}) async {
+  static Future<bool> signIn(
+    Function(String, String) callback, {
+    bool isSilent = false,
+  }) async {
     GoogleSignInAccount? account;
 
     if (isSilent) {
@@ -25,10 +27,7 @@ class GoogleOAuth {
 
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
-        callback(
-          value.idToken ?? '',
-          value.accessToken ?? '',
-        );
+        callback(value.idToken ?? '', value.accessToken ?? '');
       });
 
       return true;
@@ -42,10 +41,7 @@ class GoogleOAuth {
     final account = await _googleSignIn.signIn();
     if (account != null) {
       account.authentication.then((GoogleSignInAuthentication value) {
-        callback(
-          value.idToken ?? '',
-          value.accessToken ?? '',
-        );
+        callback(value.idToken ?? '', value.accessToken ?? '');
       });
 
       return true;
@@ -56,8 +52,9 @@ class GoogleOAuth {
   }
 
   static Future<bool> requestGmailScope() async {
-    return await _googleSignIn
-        .requestScopes(['https://www.googleapis.com/auth/gmail.send']);
+    return await _googleSignIn.requestScopes([
+      'https://www.googleapis.com/auth/gmail.send',
+    ]);
   }
 
   /*

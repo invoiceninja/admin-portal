@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 
 class WebSocketRefresh extends StatefulWidget {
   const WebSocketRefresh({Key? key, this.child, this.companyId})
-      : super(key: key);
+    : super(key: key);
 
   final Widget? child;
   final String? companyId;

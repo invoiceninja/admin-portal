@@ -39,7 +39,8 @@ class FormCard extends StatelessWidget {
     }
 
     return Padding(
-      padding: padding ??
+      padding:
+          padding ??
           (forceNarrow
               ? EdgeInsets.symmetric(
                   horizontal: max(

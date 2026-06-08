@@ -205,8 +205,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
           },
           onAddPressed: widget.onAddPressed != null
               ? (context, completer) => widget.onAddPressed!(
-                    completer as Completer<SelectableEntity>,
-                  )
+                  completer as Completer<SelectableEntity>,
+                )
               : null,
           overrideSuggestedAmount: widget.overrideSuggestedAmount,
           overrideSuggestedLabel: widget.overrideSuggestedLabel,
@@ -239,19 +239,19 @@ class _EntityDropdownState extends State<EntityDropdown> {
             },
           )
         : widget.onAddPressed != null
-            ? IconButton(
-                icon: Icon(Icons.add_circle_outline),
-                tooltip: AppLocalization.of(context)!.createNew,
-                onPressed: () {
-                  final Completer<SelectableEntity> completer =
-                      Completer<SelectableEntity>();
-                  widget.onAddPressed!(completer);
-                  completer.future.then((entity) {
-                    widget.onSelected(entity);
-                  });
-                },
-              )
-            : null;
+        ? IconButton(
+            icon: Icon(Icons.add_circle_outline),
+            tooltip: AppLocalization.of(context)!.createNew,
+            onPressed: () {
+              final Completer<SelectableEntity> completer =
+                  Completer<SelectableEntity>();
+              widget.onAddPressed!(completer);
+              completer.future.then((entity) {
+                widget.onSelected(entity);
+              });
+            },
+          )
+        : null;
 
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
@@ -343,122 +343,127 @@ class _EntityDropdownState extends State<EntityDropdown> {
                 });
 
                 final completer = Completer<SelectableEntity>();
-                completer.future.then((value) {
-                  showToast(
-                    AppLocalization.of(
-                      navigatorKey.currentContext!,
-                    )!
-                        .createdRecord,
-                  );
-                  _wrapUp(value);
-                  _focusNode.addListener(_onFocusChanged);
-                }).catchError((dynamic error) {
-                  _focusNode.addListener(_onFocusChanged);
-                });
+                completer.future
+                    .then((value) {
+                      showToast(
+                        AppLocalization.of(
+                          navigatorKey.currentContext!,
+                        )!.createdRecord,
+                      );
+                      _wrapUp(value);
+                      _focusNode.addListener(_onFocusChanged);
+                    })
+                    .catchError((dynamic error) {
+                      _focusNode.addListener(_onFocusChanged);
+                    });
                 widget.onCreateNew!(completer, name);
               } else {
                 _wrapUp(entity);
               }
             },
-            fieldViewBuilder: (
-              BuildContext context,
-              TextEditingController textEditingController,
-              FocusNode focusNode,
-              VoidCallback onFieldSubmitted,
-            ) {
-              return DecoratedFormField(
-                validator: widget.validator,
-                showClear: showClear,
-                label: widget.labelText,
-                autofocus: (widget.autofocus ?? false) &&
-                    (widget.entityId ?? '').isEmpty,
-                controller: textEditingController,
-                focusNode: focusNode,
-                keyboardType: TextInputType.text,
-                onFieldSubmitted: (String value) {
-                  onFieldSubmitted();
+            fieldViewBuilder:
+                (
+                  BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted,
+                ) {
+                  return DecoratedFormField(
+                    validator: widget.validator,
+                    showClear: showClear,
+                    label: widget.labelText,
+                    autofocus:
+                        (widget.autofocus ?? false) &&
+                        (widget.entityId ?? '').isEmpty,
+                    controller: textEditingController,
+                    focusNode: focusNode,
+                    keyboardType: TextInputType.text,
+                    onFieldSubmitted: (String value) {
+                      onFieldSubmitted();
+                    },
+                    onChanged: (value) {
+                      _filter = value;
+                      if (hasValue) {
+                        widget.onSelected(null);
+                      }
+                    },
+                    suffixIconButton: iconButton,
+                  );
                 },
-                onChanged: (value) {
-                  _filter = value;
-                  if (hasValue) {
-                    widget.onSelected(null);
-                  }
-                },
-                suffixIconButton: iconButton,
-              );
-            },
             optionsViewOpenDirection: autocompletePositionNotifier.value,
-            optionsViewBuilder: (
-              BuildContext context,
-              AutocompleteOnSelected<SelectableEntity> onSelected,
-              Iterable<SelectableEntity> options,
-            ) {
-              if (hasValue) {
-                return SizedBox();
-              }
+            optionsViewBuilder:
+                (
+                  BuildContext context,
+                  AutocompleteOnSelected<SelectableEntity> onSelected,
+                  Iterable<SelectableEntity> options,
+                ) {
+                  if (hasValue) {
+                    return SizedBox();
+                  }
 
-              return Theme(
-                data: theme,
-                child: Align(
-                  alignment: autocompletePositionNotifier.value ==
-                          OptionsViewOpenDirection.up
-                      ? Alignment.bottomLeft
-                      : Alignment.topLeft,
-                  child: Material(
-                    elevation: 4,
-                    child: AppBorder(
-                      child: Container(
-                        color: Theme.of(context).cardColor,
-                        width: 250,
-                        constraints: BoxConstraints(maxHeight: 270),
-                        child: Scrollbar(
-                          controller: _scrollController,
-                          thumbVisibility: true,
-                          child: ScrollableListViewBuilder(
-                            scrollController: _scrollController,
-                            itemCount: options.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  final highlightedIndex =
-                                      AutocompleteHighlightedOption.of(
-                                    context,
-                                  );
-                                  if (highlightedIndex == index) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((timeStamp) {
-                                      Scrollable.ensureVisible(context);
-                                    });
-                                  }
-                                  return Container(
-                                    color: highlightedIndex == index
-                                        ? convertHexStringToColor(
-                                            state.prefState.enableDarkMode
-                                                ? kDefaultDarkSelectedColor
-                                                : kDefaultLightSelectedColor,
-                                          )
-                                        : Theme.of(context).cardColor,
-                                    child: EntityAutocompleteListTile(
-                                      onTap: (entity) => onSelected(entity),
-                                      entity: options.elementAt(index),
-                                      filter: _filter,
-                                      overrideSuggestedAmount:
-                                          widget.overrideSuggestedAmount,
-                                      overrideSuggestedLabel:
-                                          widget.overrideSuggestedLabel,
-                                    ),
+                  return Theme(
+                    data: theme,
+                    child: Align(
+                      alignment:
+                          autocompletePositionNotifier.value ==
+                              OptionsViewOpenDirection.up
+                          ? Alignment.bottomLeft
+                          : Alignment.topLeft,
+                      child: Material(
+                        elevation: 4,
+                        child: AppBorder(
+                          child: Container(
+                            color: Theme.of(context).cardColor,
+                            width: 250,
+                            constraints: BoxConstraints(maxHeight: 270),
+                            child: Scrollbar(
+                              controller: _scrollController,
+                              thumbVisibility: true,
+                              child: ScrollableListViewBuilder(
+                                scrollController: _scrollController,
+                                itemCount: options.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      final highlightedIndex =
+                                          AutocompleteHighlightedOption.of(
+                                            context,
+                                          );
+                                      if (highlightedIndex == index) {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((timeStamp) {
+                                              Scrollable.ensureVisible(context);
+                                            });
+                                      }
+                                      return Container(
+                                        color: highlightedIndex == index
+                                            ? convertHexStringToColor(
+                                                state.prefState.enableDarkMode
+                                                    ? kDefaultDarkSelectedColor
+                                                    : kDefaultLightSelectedColor,
+                                              )
+                                            : Theme.of(context).cardColor,
+                                        child: EntityAutocompleteListTile(
+                                          onTap: (entity) => onSelected(entity),
+                                          entity: options.elementAt(index),
+                                          filter: _filter,
+                                          overrideSuggestedAmount:
+                                              widget.overrideSuggestedAmount,
+                                          overrideSuggestedLabel:
+                                              widget.overrideSuggestedLabel,
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
+                  );
+                },
           );
         },
       );
@@ -673,8 +678,9 @@ class EntityAutocompleteListTile extends StatelessWidget {
               : Container(),
         ],
       ),
-      subtitle:
-          (subtitle ?? '').isNotEmpty ? Text(subtitle!, maxLines: 2) : null,
+      subtitle: (subtitle ?? '').isNotEmpty
+          ? Text(subtitle!, maxLines: 2)
+          : null,
       onTap: onTap != null ? () => onTap!(entity) : null,
     );
   }

@@ -53,7 +53,7 @@ class ExpenseListItem extends StatelessWidget {
     final category = state.expenseCategoryState.get(expense.categoryId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (expense.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
@@ -78,7 +78,8 @@ class ExpenseListItem extends StatelessWidget {
     return DismissibleEntity(
       showMultiselect: showSelected,
       isDismissible: isDismissible,
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           showSelected &&
           expense.id ==
               (uiState.isEditing
@@ -165,12 +166,11 @@ class ExpenseListItem extends StatelessWidget {
                                 subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
+                                style: Theme.of(context).textTheme.titleSmall!
                                     .copyWith(
-                                      color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                      color: textColor!.withOpacity(
+                                        kLighterOpacity,
+                                      ),
                                     ),
                               ),
                             ],
@@ -247,12 +247,11 @@ class ExpenseListItem extends StatelessWidget {
                               filterMatch == null ? subtitle : filterMatch,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
+                              style: Theme.of(context).textTheme.titleSmall!
                                   .copyWith(
-                                    color:
-                                        textColor!.withOpacity(kLighterOpacity),
+                                    color: textColor!.withOpacity(
+                                      kLighterOpacity,
+                                    ),
                                   ),
                             ),
                             EntityStateLabel(expense),
@@ -264,7 +263,8 @@ class ExpenseListItem extends StatelessWidget {
                           kExpenseStatuses[expense.calculatedStatusId],
                         ),
                         style: TextStyle(
-                          color: category.color.isNotEmpty &&
+                          color:
+                              category.color.isNotEmpty &&
                                   category.color != '#fff'
                               ? convertHexStringToColor(category.color)
                               : ExpenseStatusColors(

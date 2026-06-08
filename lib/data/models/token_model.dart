@@ -118,8 +118,8 @@ abstract class TokenEntity extends Object
     switch (sortField) {
       case TokenFields.name:
         response = tokenA!.name.toLowerCase().compareTo(
-              tokenB!.name.toLowerCase(),
-            );
+          tokenB!.name.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by token.$sortField is not implemented');

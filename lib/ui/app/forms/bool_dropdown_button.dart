@@ -46,8 +46,9 @@ class BoolDropdownButton extends StatelessWidget {
       return SwitchListTile(
         title: Text(label ?? ''),
         value: value ?? false,
-        secondary:
-            iconData != null && isDesktop(context) ? Icon(iconData) : null,
+        secondary: iconData != null && isDesktop(context)
+            ? Icon(iconData)
+            : null,
         onChanged: (value) => onChanged(value),
         activeColor: Theme.of(context).colorScheme.secondary,
         subtitle: helpLabel != null ? Text(helpLabel!) : null,

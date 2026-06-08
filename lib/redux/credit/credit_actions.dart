@@ -676,39 +676,41 @@ Future handleCreditAction(
       store.dispatch(StartLoading());
       await WebClient()
           .get(
-        credit.invitationECreditDownloadLink,
-        state.token,
-        rawResponse: true,
-      )
+            credit.invitationECreditDownloadLink,
+            state.token,
+            rawResponse: true,
+          )
           .then((response) {
-        store.dispatch(StopLoading());
-        saveDownloadedFile(
-          response.bodyBytes,
-          credit.number + '.xml',
-          prefix: EntityType.invoice.apiValue,
-          languageId: client.languageId,
-        );
-      }).catchError((error) {
-        store.dispatch(StopLoading());
-        showErrorDialog(message: error);
-      });
+            store.dispatch(StopLoading());
+            saveDownloadedFile(
+              response.bodyBytes,
+              credit.number + '.xml',
+              prefix: EntityType.invoice.apiValue,
+              languageId: client.languageId,
+            );
+          })
+          .catchError((error) {
+            store.dispatch(StopLoading());
+            showErrorDialog(message: error);
+          });
       break;
     case EntityAction.download:
       store.dispatch(StartLoading());
       await WebClient()
           .get(credit.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
-        store.dispatch(StopLoading());
-        saveDownloadedFile(
-          response.bodyBytes,
-          credit.number + '.pdf',
-          prefix: EntityType.credit.apiValue,
-          languageId: client.languageId,
-        );
-      }).catchError((error) {
-        store.dispatch(StopLoading());
-        showErrorDialog(message: error);
-      });
+            store.dispatch(StopLoading());
+            saveDownloadedFile(
+              response.bodyBytes,
+              credit.number + '.pdf',
+              prefix: EntityType.credit.apiValue,
+              languageId: client.languageId,
+            );
+          })
+          .catchError((error) {
+            store.dispatch(StopLoading());
+            showErrorDialog(message: error);
+          });
       break;
     case EntityAction.bulkDownload:
       store.dispatch(
@@ -721,8 +723,8 @@ Future handleCreditAction(
     case EntityAction.restore:
       final message = creditIds.length > 1
           ? localization!.restoredCredits
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', creditIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', creditIds.length.toString())
           : localization!.restoredCredit;
       store.dispatch(
         RestoreCreditsRequest(snackBarCompleter<Null>(message), creditIds),
@@ -731,8 +733,8 @@ Future handleCreditAction(
     case EntityAction.archive:
       final message = creditIds.length > 1
           ? localization!.archivedCredits
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', creditIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', creditIds.length.toString())
           : localization!.archivedCredit;
       store.dispatch(
         ArchiveCreditsRequest(snackBarCompleter<Null>(message), creditIds),
@@ -741,8 +743,8 @@ Future handleCreditAction(
     case EntityAction.delete:
       final message = creditIds.length > 1
           ? localization!.deletedCredits
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', creditIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', creditIds.length.toString())
           : localization!.deletedCredit;
       store.dispatch(
         DeleteCreditsRequest(snackBarCompleter<Null>(message), creditIds),

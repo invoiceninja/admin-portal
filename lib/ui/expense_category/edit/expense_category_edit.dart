@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryEdit extends StatefulWidget {
   const ExpenseCategoryEdit({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final ExpenseCategoryEditVM viewModel;
 

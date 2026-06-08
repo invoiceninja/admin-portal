@@ -55,8 +55,7 @@ var memoizedCreditItemReport = memo6(
     BuiltMap<String, InvoiceEntity> creditMap,
     BuiltMap<String, ClientEntity> clientMap,
     StaticState staticState,
-  ) =>
-      lineItemReport(
+  ) => lineItemReport(
     userCompany!,
     reportsUIState,
     productMap,
@@ -151,7 +150,8 @@ ReportResult lineItemReport(
             } else {
               cost = productId == null ? 0.0 : productMap[productId]!.cost;
             }
-            value = (lineItem.netTotal(credit, precision) *
+            value =
+                (lineItem.netTotal(credit, precision) *
                     1 /
                     credit.exchangeRate) -
                 cost;
@@ -178,7 +178,7 @@ ReportResult lineItemReport(
             value = credit.usesInclusiveTaxes
                 ? lineItem.total(credit, precision)
                 : lineItem.total(credit, precision) +
-                    lineItem.taxAmount(credit, precision);
+                      lineItem.taxAmount(credit, precision);
             break;
           case CreditItemReportFields.productKey:
             value = lineItem.productKey;
@@ -221,7 +221,7 @@ ReportResult lineItemReport(
           case CreditItemReportFields.currency:
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
-                    '';
+                '';
             break;
           case CreditItemReportFields.clientNumber:
             value = client.number;
@@ -232,8 +232,7 @@ ReportResult lineItemReport(
           case CreditItemReportFields.record_state:
             value = AppLocalization.of(
               navigatorKey.currentContext!,
-            )!
-                .lookup(credit.entityState);
+            )!.lookup(credit.entityState);
             break;
         }
 
@@ -255,9 +254,9 @@ ReportResult lineItemReport(
               currencyId: column == CreditItemReportFields.quantity
                   ? null
                   : column == CreditItemReportFields.profit ||
-                          column == CreditItemReportFields.cost
-                      ? userCompany.company.currencyId
-                      : client.currencyId,
+                        column == CreditItemReportFields.cost
+                  ? userCompany.company.currencyId
+                  : client.currencyId,
             ),
           );
         } else {
@@ -291,8 +290,9 @@ ReportResult lineItemReport(
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

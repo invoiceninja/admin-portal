@@ -90,8 +90,7 @@ var memoizedPurchaseOrderReport = memo7(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) =>
-      purchaseOrderReport(
+  ) => purchaseOrderReport(
     userCompany!,
     reportsUIState,
     purchaseOrderMap,
@@ -118,8 +117,8 @@ ReportResult purchaseOrderReport(
   final reportSettings = userCompany.settings.reportSettings;
   final purchaseOrderReportSettings =
       reportSettings.containsKey(kReportPurchaseOrder)
-          ? reportSettings[kReportPurchaseOrder]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportPurchaseOrder]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     PurchaseOrderReportFields.number,
@@ -320,7 +319,9 @@ ReportResult purchaseOrderReport(
           value = vendor.city;
           break;
         case PurchaseOrderReportFields.currency:
-          value = staticState.currencyMap[userCompany.company.currencyId]
+          value =
+              staticState
+                  .currencyMap[userCompany.company.currencyId]
                   ?.listDisplayName ??
               '';
           break;
@@ -377,8 +378,7 @@ ReportResult purchaseOrderReport(
         case PurchaseOrderReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(purchaseOrder.entityState);
+          )!.lookup(purchaseOrder.entityState);
           break;
       }
 
@@ -431,8 +431,9 @@ ReportResult purchaseOrderReport(
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

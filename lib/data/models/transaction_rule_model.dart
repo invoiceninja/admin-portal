@@ -137,8 +137,8 @@ abstract class TransactionRuleEntity extends Object
       // STARTER: sort switch - do not remove comment
       case TransactionRuleFields.name:
         response = transactionRuleA!.name.toLowerCase().compareTo(
-              transactionRuleB!.name.toLowerCase(),
-            );
+          transactionRuleB!.name.toLowerCase(),
+        );
         break;
 
       default:
@@ -186,8 +186,10 @@ abstract class TransactionRuleEntity extends Object
 
 abstract class TransactionRuleCriteriaEntity
     implements
-        Built<TransactionRuleCriteriaEntity,
-            TransactionRuleCriteriaEntityBuilder> {
+        Built<
+          TransactionRuleCriteriaEntity,
+          TransactionRuleCriteriaEntityBuilder
+        > {
   factory TransactionRuleCriteriaEntity({
     String? searchKey,
     String? operator,
@@ -241,8 +243,7 @@ abstract class TransactionRuleCriteriaEntity
   // ignore: unused_element
   static void _initializeBuilder(
     TransactionRuleCriteriaEntityBuilder builder,
-  ) =>
-      builder..value = '';
+  ) => builder..value = '';
 
   static Serializer<TransactionRuleCriteriaEntity> get serializer =>
       _$transactionRuleCriteriaEntitySerializer;

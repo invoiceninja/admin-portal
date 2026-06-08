@@ -84,36 +84,38 @@ class TransactionRuleEditVM {
               transactionRule: transactionRule,
             ),
           );
-          return completer.future.then((savedTransactionRule) {
-            showToast(
-              transactionRule!.isNew
-                  ? localization!.createdTransactionRule
-                  : localization!.updatedTransactionRule,
-            );
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                UpdateCurrentRoute(TransactionRuleViewScreen.route),
-              );
-              if (transactionRule.isNew) {
-                Navigator.of(
-                  navigatorKey.currentContext!,
-                ).pushReplacementNamed(TransactionRuleViewScreen.route);
-              } else {
-                Navigator.of(
-                  navigatorKey.currentContext!,
-                ).pop(savedTransactionRule);
-              }
-            } else {
-              viewEntity(entity: savedTransactionRule, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+          return completer.future
+              .then((savedTransactionRule) {
+                showToast(
+                  transactionRule!.isNew
+                      ? localization!.createdTransactionRule
+                      : localization!.updatedTransactionRule,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(TransactionRuleViewScreen.route),
+                  );
+                  if (transactionRule.isNew) {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pushReplacementNamed(TransactionRuleViewScreen.route);
+                  } else {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pop(savedTransactionRule);
+                  }
+                } else {
+                  viewEntity(entity: savedTransactionRule, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

@@ -109,8 +109,8 @@ abstract class GroupEntity extends Object
     switch (sortField) {
       case GroupFields.name:
         response = groupA!.name.toLowerCase().compareTo(
-              groupB!.name.toLowerCase(),
-            );
+          groupB!.name.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by group.$sortField is not implemented');

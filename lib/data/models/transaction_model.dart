@@ -242,8 +242,8 @@ abstract class TransactionEntity extends Object
     switch (sortField) {
       case TransactionFields.description:
         response = transactionA!.description.toLowerCase().compareTo(
-              transactionB!.description.toLowerCase(),
-            );
+          transactionB!.description.toLowerCase(),
+        );
         break;
       case TransactionFields.deposit:
       case TransactionFields.withdrawal:
@@ -258,8 +258,8 @@ abstract class TransactionEntity extends Object
         break;
       case TransactionFields.defaultCategory:
         response = transactionA!.category.toLowerCase().compareTo(
-              transactionB!.category.toLowerCase(),
-            );
+          transactionB!.category.toLowerCase(),
+        );
         break;
       case TransactionFields.accountType:
         final bankAccountA =
@@ -274,31 +274,33 @@ abstract class TransactionEntity extends Object
         final invoiceB =
             invoiceMap[transactionB!.firstInvoiceId] ?? InvoiceEntity();
         response = invoiceA.listDisplayName.toLowerCase().compareTo(
-              invoiceB.listDisplayName.toLowerCase(),
-            );
+          invoiceB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.expense:
         final expenseA = expenseMap[transactionA!.expenseId] ?? ExpenseEntity();
         final expenseB = expenseMap[transactionB!.expenseId] ?? ExpenseEntity();
         response = expenseA.listDisplayName.toLowerCase().compareTo(
-              expenseB.listDisplayName.toLowerCase(),
-            );
+          expenseB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.vendor:
         final vendorA = vendorMap[transactionA!.vendorId] ?? VendorEntity();
         final vendorB = vendorMap[transactionB!.vendorId] ?? VendorEntity();
         response = vendorA.listDisplayName.toLowerCase().compareTo(
-              vendorB.listDisplayName.toLowerCase(),
-            );
+          vendorB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.category:
-        final categoryA = expenseCategoryMap[transactionA!.categoryId] ??
+        final categoryA =
+            expenseCategoryMap[transactionA!.categoryId] ??
             ExpenseCategoryEntity();
-        final categoryB = expenseCategoryMap[transactionB!.categoryId] ??
+        final categoryB =
+            expenseCategoryMap[transactionB!.categoryId] ??
             ExpenseCategoryEntity();
         response = categoryA.listDisplayName.toLowerCase().compareTo(
-              categoryB.listDisplayName.toLowerCase(),
-            );
+          categoryB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.bankAccount:
         final bankAccountA =
@@ -306,18 +308,18 @@ abstract class TransactionEntity extends Object
         final bankAccountB =
             bankAccountMap[transactionB!.bankAccountId] ?? BankAccountEntity();
         response = bankAccountA.listDisplayName.toLowerCase().compareTo(
-              bankAccountB.listDisplayName.toLowerCase(),
-            );
+          bankAccountB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.participant:
         response = transactionA!.participant.toLowerCase().compareTo(
-              transactionB!.participant.toLowerCase(),
-            );
+          transactionB!.participant.toLowerCase(),
+        );
         break;
       case TransactionFields.participantName:
         response = transactionA!.participantName.toLowerCase().compareTo(
-              transactionB!.participantName.toLowerCase(),
-            );
+          transactionB!.participantName.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by transaction.$sortField is not implemented');

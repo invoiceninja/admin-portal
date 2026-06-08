@@ -59,11 +59,12 @@ class _$TimezoneListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(TimezoneEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TimezoneEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -117,9 +118,10 @@ class _$TimezoneItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TimezoneEntity),
-            )! as TimezoneEntity,
+                  value,
+                  specifiedType: const FullType(TimezoneEntity),
+                )!
+                as TimezoneEntity,
           );
           break;
       }
@@ -172,22 +174,28 @@ class _$TimezoneEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'location':
-          result.location = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.location =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'id':
-          result.id = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -202,15 +210,13 @@ class _$TimezoneListResponse extends TimezoneListResponse {
 
   factory _$TimezoneListResponse([
     void Function(TimezoneListResponseBuilder)? updates,
-  ]) =>
-      (TimezoneListResponseBuilder()..update(updates))._build();
+  ]) => (TimezoneListResponseBuilder()..update(updates))._build();
 
   _$TimezoneListResponse._({required this.data}) : super._();
   @override
   TimezoneListResponse rebuild(
     void Function(TimezoneListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TimezoneListResponseBuilder toBuilder() =>
@@ -236,8 +242,7 @@ class _$TimezoneListResponse extends TimezoneListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TimezoneListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -303,15 +308,13 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
 
   factory _$TimezoneItemResponse([
     void Function(TimezoneItemResponseBuilder)? updates,
-  ]) =>
-      (TimezoneItemResponseBuilder()..update(updates))._build();
+  ]) => (TimezoneItemResponseBuilder()..update(updates))._build();
 
   _$TimezoneItemResponse._({required this.data}) : super._();
   @override
   TimezoneItemResponse rebuild(
     void Function(TimezoneItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TimezoneItemResponseBuilder toBuilder() =>
@@ -337,8 +340,7 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'TimezoneItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -494,7 +496,8 @@ class TimezoneEntityBuilder
   TimezoneEntity build() => _build();
 
   _$TimezoneEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TimezoneEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
             name,

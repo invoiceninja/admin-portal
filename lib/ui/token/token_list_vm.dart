@@ -103,16 +103,16 @@ class TokenListVM {
       tokenMap: state.tokenState.map,
       isLoading: state.isLoading,
       filter: state.tokenUIState.listUIState.filter,
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> tokens,
-        EntityAction action,
-      ) =>
-          handleTokenAction(context, tokens, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> tokens,
+            EntityAction action,
+          ) => handleTokenAction(context, tokens, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.token) ??
-              TokenPresenter.getDefaultTableFields(state.userCompany),
+          TokenPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTokens(field)),
       onClearMultielsect: () => store.dispatch(ClearTokenMultiselect()),
     );

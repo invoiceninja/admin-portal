@@ -16,8 +16,7 @@ var memoizedFilteredRecurringInvoiceList = memo7(
     BuiltList<String> recurringInvoiceList,
     ListUIState recurringInvoiceListState,
     BuiltMap<String, UserEntity> userMap,
-  ) =>
-      filteredRecurringInvoicesSelector(
+  ) => filteredRecurringInvoicesSelector(
     selectionState,
     recurringInvoiceMap,
     clientMap,

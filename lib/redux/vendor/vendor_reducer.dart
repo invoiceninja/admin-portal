@@ -100,8 +100,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.vendor
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -385,8 +385,7 @@ VendorState _setLoadedVendor(
 VendorState _setLoadedVendors(
   VendorState vendorState,
   LoadVendorsSuccess action,
-) =>
-    vendorState.loadVendors(action.vendors);
+) => vendorState.loadVendors(action.vendors);
 
 VendorState _setLoadedCompany(
   VendorState vendorState,

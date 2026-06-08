@@ -67,7 +67,8 @@ class ClientRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/clients/bulk?per_page=$kMaxEntitiesPerBulkAction&include=gateway_tokens,activities,ledger,system_logs,documents';
     final dynamic response = await webClient.post(
       url,
@@ -141,7 +142,8 @@ class ClientRepository {
         data: json.encode(data),
       );
     } else {
-      final url = credentials.url +
+      final url =
+          credentials.url +
           '/clients/${client.id}?include=gateway_tokens,activities,ledger,system_logs,documents';
       response = await webClient.put(
         url,

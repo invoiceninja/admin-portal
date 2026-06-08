@@ -17,7 +17,7 @@ import 'purchase_order_screen_vm.dart';
 
 class PurchaseOrderScreen extends StatelessWidget {
   const PurchaseOrderScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   static const String route = '/purchase_order';
 
@@ -143,7 +143,8 @@ class PurchaseOrderScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterPurchaseOrdersByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.purchaseOrder)
           ? FloatingActionButton(
               heroTag: 'purchase_order_fab',

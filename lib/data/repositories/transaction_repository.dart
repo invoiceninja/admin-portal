@@ -32,7 +32,8 @@ class TransactionRepository {
     int page,
     int createdAt,
   ) async {
-    final String url = credentials.url +
+    final String url =
+        credentials.url +
         '/bank_transactions?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -51,7 +52,8 @@ class TransactionRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/bank_transactions/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,

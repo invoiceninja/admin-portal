@@ -264,327 +264,377 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'selectedCompanyIndex':
-          result.selectedCompanyIndex = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.selectedCompanyIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'currentRoute':
-          result.currentRoute = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.currentRoute =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'previousRoute':
-          result.previousRoute = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          )! as String;
+          result.previousRoute =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'dismissedFlutterWebWarning':
-          result.dismissedFlutterWebWarning = serializers.deserialize(
-            value,
-            specifiedType: const FullType(bool),
-          )! as bool;
+          result.dismissedFlutterWebWarning =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'loadingEntityType':
-          result.loadingEntityType = serializers.deserialize(
-            value,
-            specifiedType: const FullType(EntityType),
-          ) as EntityType?;
+          result.loadingEntityType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )
+                  as EntityType?;
           break;
         case 'previewStack':
           result.previewStack.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(EntityType),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EntityType),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
         case 'filterStack':
           result.filterStack.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(BaseEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(BaseEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
         case 'filter':
-          result.filter = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String?;
+          result.filter =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'filterClearedAt':
-          result.filterClearedAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.filterClearedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'lastActivityAt':
-          result.lastActivityAt = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          )! as int;
+          result.lastActivityAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DashboardUIState),
-            )! as DashboardUIState,
+                  value,
+                  specifiedType: const FullType(DashboardUIState),
+                )!
+                as DashboardUIState,
           );
           break;
         case 'productUIState':
           result.productUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ProductUIState),
-            )! as ProductUIState,
+                  value,
+                  specifiedType: const FullType(ProductUIState),
+                )!
+                as ProductUIState,
           );
           break;
         case 'clientUIState':
           result.clientUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ClientUIState),
-            )! as ClientUIState,
+                  value,
+                  specifiedType: const FullType(ClientUIState),
+                )!
+                as ClientUIState,
           );
           break;
         case 'invoiceUIState':
           result.invoiceUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(InvoiceUIState),
-            )! as InvoiceUIState,
+                  value,
+                  specifiedType: const FullType(InvoiceUIState),
+                )!
+                as InvoiceUIState,
           );
           break;
         case 'scheduleUIState':
           result.scheduleUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ScheduleUIState),
-            )! as ScheduleUIState,
+                  value,
+                  specifiedType: const FullType(ScheduleUIState),
+                )!
+                as ScheduleUIState,
           );
           break;
         case 'transactionRuleUIState':
           result.transactionRuleUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TransactionRuleUIState),
-            )! as TransactionRuleUIState,
+                  value,
+                  specifiedType: const FullType(TransactionRuleUIState),
+                )!
+                as TransactionRuleUIState,
           );
           break;
         case 'transactionUIState':
           result.transactionUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TransactionUIState),
-            )! as TransactionUIState,
+                  value,
+                  specifiedType: const FullType(TransactionUIState),
+                )!
+                as TransactionUIState,
           );
           break;
         case 'bankAccountUIState':
           result.bankAccountUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BankAccountUIState),
-            )! as BankAccountUIState,
+                  value,
+                  specifiedType: const FullType(BankAccountUIState),
+                )!
+                as BankAccountUIState,
           );
           break;
         case 'purchaseOrderUIState':
           result.purchaseOrderUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PurchaseOrderUIState),
-            )! as PurchaseOrderUIState,
+                  value,
+                  specifiedType: const FullType(PurchaseOrderUIState),
+                )!
+                as PurchaseOrderUIState,
           );
           break;
         case 'recurringExpenseUIState':
           result.recurringExpenseUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(RecurringExpenseUIState),
-            )! as RecurringExpenseUIState,
+                  value,
+                  specifiedType: const FullType(RecurringExpenseUIState),
+                )!
+                as RecurringExpenseUIState,
           );
           break;
         case 'subscriptionUIState':
           result.subscriptionUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(SubscriptionUIState),
-            )! as SubscriptionUIState,
+                  value,
+                  specifiedType: const FullType(SubscriptionUIState),
+                )!
+                as SubscriptionUIState,
           );
           break;
         case 'taskStatusUIState':
           result.taskStatusUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaskStatusUIState),
-            )! as TaskStatusUIState,
+                  value,
+                  specifiedType: const FullType(TaskStatusUIState),
+                )!
+                as TaskStatusUIState,
           );
           break;
         case 'expenseCategoryUIState':
           result.expenseCategoryUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ExpenseCategoryUIState),
-            )! as ExpenseCategoryUIState,
+                  value,
+                  specifiedType: const FullType(ExpenseCategoryUIState),
+                )!
+                as ExpenseCategoryUIState,
           );
           break;
         case 'recurringInvoiceUIState':
           result.recurringInvoiceUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(RecurringInvoiceUIState),
-            )! as RecurringInvoiceUIState,
+                  value,
+                  specifiedType: const FullType(RecurringInvoiceUIState),
+                )!
+                as RecurringInvoiceUIState,
           );
           break;
         case 'webhookUIState':
           result.webhookUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(WebhookUIState),
-            )! as WebhookUIState,
+                  value,
+                  specifiedType: const FullType(WebhookUIState),
+                )!
+                as WebhookUIState,
           );
           break;
         case 'tokenUIState':
           result.tokenUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TokenUIState),
-            )! as TokenUIState,
+                  value,
+                  specifiedType: const FullType(TokenUIState),
+                )!
+                as TokenUIState,
           );
           break;
         case 'paymentTermUIState':
           result.paymentTermUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PaymentTermUIState),
-            )! as PaymentTermUIState,
+                  value,
+                  specifiedType: const FullType(PaymentTermUIState),
+                )!
+                as PaymentTermUIState,
           );
           break;
         case 'designUIState':
           result.designUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DesignUIState),
-            )! as DesignUIState,
+                  value,
+                  specifiedType: const FullType(DesignUIState),
+                )!
+                as DesignUIState,
           );
           break;
         case 'creditUIState':
           result.creditUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CreditUIState),
-            )! as CreditUIState,
+                  value,
+                  specifiedType: const FullType(CreditUIState),
+                )!
+                as CreditUIState,
           );
           break;
         case 'userUIState':
           result.userUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(UserUIState),
-            )! as UserUIState,
+                  value,
+                  specifiedType: const FullType(UserUIState),
+                )!
+                as UserUIState,
           );
           break;
         case 'taxRateUIState':
           result.taxRateUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaxRateUIState),
-            )! as TaxRateUIState,
+                  value,
+                  specifiedType: const FullType(TaxRateUIState),
+                )!
+                as TaxRateUIState,
           );
           break;
         case 'companyGatewayUIState':
           result.companyGatewayUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(CompanyGatewayUIState),
-            )! as CompanyGatewayUIState,
+                  value,
+                  specifiedType: const FullType(CompanyGatewayUIState),
+                )!
+                as CompanyGatewayUIState,
           );
           break;
         case 'groupUIState':
           result.groupUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(GroupUIState),
-            )! as GroupUIState,
+                  value,
+                  specifiedType: const FullType(GroupUIState),
+                )!
+                as GroupUIState,
           );
           break;
         case 'documentUIState':
           result.documentUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(DocumentUIState),
-            )! as DocumentUIState,
+                  value,
+                  specifiedType: const FullType(DocumentUIState),
+                )!
+                as DocumentUIState,
           );
           break;
         case 'expenseUIState':
           result.expenseUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ExpenseUIState),
-            )! as ExpenseUIState,
+                  value,
+                  specifiedType: const FullType(ExpenseUIState),
+                )!
+                as ExpenseUIState,
           );
           break;
         case 'vendorUIState':
           result.vendorUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(VendorUIState),
-            )! as VendorUIState,
+                  value,
+                  specifiedType: const FullType(VendorUIState),
+                )!
+                as VendorUIState,
           );
           break;
         case 'taskUIState':
           result.taskUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(TaskUIState),
-            )! as TaskUIState,
+                  value,
+                  specifiedType: const FullType(TaskUIState),
+                )!
+                as TaskUIState,
           );
           break;
         case 'projectUIState':
           result.projectUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ProjectUIState),
-            )! as ProjectUIState,
+                  value,
+                  specifiedType: const FullType(ProjectUIState),
+                )!
+                as ProjectUIState,
           );
           break;
         case 'paymentUIState':
           result.paymentUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(PaymentUIState),
-            )! as PaymentUIState,
+                  value,
+                  specifiedType: const FullType(PaymentUIState),
+                )!
+                as PaymentUIState,
           );
           break;
         case 'quoteUIState':
           result.quoteUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(QuoteUIState),
-            )! as QuoteUIState,
+                  value,
+                  specifiedType: const FullType(QuoteUIState),
+                )!
+                as QuoteUIState,
           );
           break;
         case 'settingsUIState':
           result.settingsUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(SettingsUIState),
-            )! as SettingsUIState,
+                  value,
+                  specifiedType: const FullType(SettingsUIState),
+                )!
+                as SettingsUIState,
           );
           break;
         case 'reportsUIState':
           result.reportsUIState.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(ReportsUIState),
-            )! as ReportsUIState,
+                  value,
+                  specifiedType: const FullType(ReportsUIState),
+                )!
+                as ReportsUIState,
           );
           break;
       }
@@ -970,8 +1020,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._transactionRuleUIState ??= TransactionRuleUIStateBuilder();
   set transactionRuleUIState(
     TransactionRuleUIStateBuilder? transactionRuleUIState,
-  ) =>
-      _$this._transactionRuleUIState = transactionRuleUIState;
+  ) => _$this._transactionRuleUIState = transactionRuleUIState;
 
   TransactionUIStateBuilder? _transactionUIState;
   TransactionUIStateBuilder get transactionUIState =>
@@ -996,8 +1045,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._recurringExpenseUIState ??= RecurringExpenseUIStateBuilder();
   set recurringExpenseUIState(
     RecurringExpenseUIStateBuilder? recurringExpenseUIState,
-  ) =>
-      _$this._recurringExpenseUIState = recurringExpenseUIState;
+  ) => _$this._recurringExpenseUIState = recurringExpenseUIState;
 
   SubscriptionUIStateBuilder? _subscriptionUIState;
   SubscriptionUIStateBuilder get subscriptionUIState =>
@@ -1016,16 +1064,14 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._expenseCategoryUIState ??= ExpenseCategoryUIStateBuilder();
   set expenseCategoryUIState(
     ExpenseCategoryUIStateBuilder? expenseCategoryUIState,
-  ) =>
-      _$this._expenseCategoryUIState = expenseCategoryUIState;
+  ) => _$this._expenseCategoryUIState = expenseCategoryUIState;
 
   RecurringInvoiceUIStateBuilder? _recurringInvoiceUIState;
   RecurringInvoiceUIStateBuilder get recurringInvoiceUIState =>
       _$this._recurringInvoiceUIState ??= RecurringInvoiceUIStateBuilder();
   set recurringInvoiceUIState(
     RecurringInvoiceUIStateBuilder? recurringInvoiceUIState,
-  ) =>
-      _$this._recurringInvoiceUIState = recurringInvoiceUIState;
+  ) => _$this._recurringInvoiceUIState = recurringInvoiceUIState;
 
   WebhookUIStateBuilder? _webhookUIState;
   WebhookUIStateBuilder get webhookUIState =>
@@ -1074,8 +1120,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._companyGatewayUIState ??= CompanyGatewayUIStateBuilder();
   set companyGatewayUIState(
     CompanyGatewayUIStateBuilder? companyGatewayUIState,
-  ) =>
-      _$this._companyGatewayUIState = companyGatewayUIState;
+  ) => _$this._companyGatewayUIState = companyGatewayUIState;
 
   GroupUIStateBuilder? _groupUIState;
   GroupUIStateBuilder get groupUIState =>
@@ -1207,7 +1252,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _build() {
     _$UIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$UIState._(
             selectedCompanyIndex: BuiltValueNullFieldError.checkNotNull(
               selectedCompanyIndex,

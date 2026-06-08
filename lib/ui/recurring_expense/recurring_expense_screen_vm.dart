@@ -61,12 +61,12 @@ class RecurringExpenseScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.recurringExpenseListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> recurringExpenses,
-        EntityAction action,
-      ) =>
-          handleRecurringExpenseAction(context, recurringExpenses, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringExpenses,
+            EntityAction action,
+          ) => handleRecurringExpenseAction(context, recurringExpenses, action),
     );
   }
 }

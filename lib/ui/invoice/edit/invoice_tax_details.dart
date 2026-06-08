@@ -24,7 +24,8 @@ class InvoiceTaxDetails extends StatelessWidget {
       title: Text(localization.taxDetails),
       content: SizedBox(
         width: isDesktop(context) ? 500 : null,
-        child: (invoice.isPurchaseOrder && vendor.isTaxExempt) ||
+        child:
+            (invoice.isPurchaseOrder && vendor.isTaxExempt) ||
                 (!invoice.isPurchaseOrder && client.isTaxExempt)
             ? SizedBox(child: HelpText(localization.isTaxExempt), height: 100)
             : DataTable(

@@ -50,8 +50,7 @@ var memoizedProfitAndLossReport = memo9(
     BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState,
-  ) =>
-      profitAndLossReport(
+  ) => profitAndLossReport(
     userCompany!,
     reportsUIState,
     clientMap,
@@ -81,8 +80,8 @@ ReportResult profitAndLossReport(
   final reportSettings = userCompany.settings.reportSettings;
   final profitAndLossReportSettings =
       reportSettings.containsKey(kReportProfitAndLoss)
-          ? reportSettings[kReportProfitAndLoss]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportProfitAndLoss]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ProfitAndLossReportFields.type,
@@ -183,8 +182,7 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(payment.entityState);
+          )!.lookup(payment.entityState);
           break;
         case ProfitAndLossReportFields.converted_amount:
           value = payment.convertedAmount;
@@ -303,8 +301,7 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(expense.entityState);
+          )!.lookup(expense.entityState);
           break;
         case ProfitAndLossReportFields.converted_amount:
           value = -expense.convertedAmount;
@@ -360,8 +357,9 @@ ReportResult profitAndLossReport(
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

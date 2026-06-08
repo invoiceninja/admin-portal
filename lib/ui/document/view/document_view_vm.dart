@@ -52,7 +52,7 @@ class DocumentViewVM {
     final state = store.state;
     final document =
         state.documentState.map[state.documentUIState.selectedId] ??
-            DocumentEntity(id: state.documentUIState.selectedId);
+        DocumentEntity(id: state.documentUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(

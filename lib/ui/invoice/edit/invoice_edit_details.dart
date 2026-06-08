@@ -191,134 +191,135 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           children: <Widget>[
             invoice.isNew
                 ? invoice.isPurchaseOrder
-                    ? Column(
-                        children: [
-                          VendorPicker(
-                            vendorId: invoice.vendorId,
-                            vendorState: state.vendorState,
-                            onSelected: (vendor) {
-                              viewModel.onVendorChanged!(
-                                context,
-                                invoice,
-                                vendor as VendorEntity?,
-                              );
-                            },
-                            onAddPressed: (completer) =>
-                                viewModel.onAddVendorPressed!(
-                              context,
-                              completer,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          if (vendor.privateNotes.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                              ),
-                              child: IconText(
-                                text: vendor.privateNotes,
-                                icon: Icons.lock,
-                                iconSize: 16,
-                                maxLines: 3,
-                              ),
-                            ),
-                          if (vendor.publicNotes.isNotEmpty)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: vendor.publicNotes.isEmpty ? 8 : 0,
-                                bottom: 8,
-                              ),
-                              child: IconText(
-                                text: vendor.publicNotes,
-                                icon: Icons.note,
-                                iconSize: 16,
-                                maxLines: 3,
-                              ),
-                            ),
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          ClientPicker(
-                            clientId: invoice.clientId,
-                            clientState: state.clientState,
-                            onSelected: (client) => viewModel.onClientChanged!(
-                              context,
-                              invoice,
-                              client as ClientEntity?,
-                            ),
-                            onAddPressed: (completer) =>
-                                viewModel.onAddClientPressed!(
-                              context,
-                              completer,
-                            ),
-                          ),
-                          if (client.locations.isNotEmpty)
-                            AppDropdownButton(
-                              showBlank: true,
-                              labelText: localization.location,
-                              value: invoice.locationId,
-                              onChanged: (locationId) {
-                                viewModel.onChanged!(
-                                  invoice.rebuild(
-                                    (b) => b..locationId = locationId,
-                                  ),
+                      ? Column(
+                          children: [
+                            VendorPicker(
+                              vendorId: invoice.vendorId,
+                              vendorState: state.vendorState,
+                              onSelected: (vendor) {
+                                viewModel.onVendorChanged!(
+                                  context,
+                                  invoice,
+                                  vendor as VendorEntity?,
                                 );
                               },
-                              items: client.locations
-                                  .map(
-                                    (location) => DropdownMenuItem(
-                                      value: location.id,
-                                      child: Text(location.name),
+                              onAddPressed: (completer) =>
+                                  viewModel.onAddVendorPressed!(
+                                    context,
+                                    completer,
+                                  ),
+                            ),
+                            SizedBox(height: 4),
+                            if (vendor.privateNotes.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                child: IconText(
+                                  text: vendor.privateNotes,
+                                  icon: Icons.lock,
+                                  iconSize: 16,
+                                  maxLines: 3,
+                                ),
+                              ),
+                            if (vendor.publicNotes.isNotEmpty)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: vendor.publicNotes.isEmpty ? 8 : 0,
+                                  bottom: 8,
+                                ),
+                                child: IconText(
+                                  text: vendor.publicNotes,
+                                  icon: Icons.note,
+                                  iconSize: 16,
+                                  maxLines: 3,
+                                ),
+                              ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            ClientPicker(
+                              clientId: invoice.clientId,
+                              clientState: state.clientState,
+                              onSelected: (client) =>
+                                  viewModel.onClientChanged!(
+                                    context,
+                                    invoice,
+                                    client as ClientEntity?,
+                                  ),
+                              onAddPressed: (completer) =>
+                                  viewModel.onAddClientPressed!(
+                                    context,
+                                    completer,
+                                  ),
+                            ),
+                            if (client.locations.isNotEmpty)
+                              AppDropdownButton(
+                                showBlank: true,
+                                labelText: localization.location,
+                                value: invoice.locationId,
+                                onChanged: (locationId) {
+                                  viewModel.onChanged!(
+                                    invoice.rebuild(
+                                      (b) => b..locationId = locationId,
                                     ),
-                                  )
-                                  .toList(),
-                            ),
-                          SizedBox(height: 4),
-                          if (client.privateNotes.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
+                                  );
+                                },
+                                items: client.locations
+                                    .map(
+                                      (location) => DropdownMenuItem(
+                                        value: location.id,
+                                        child: Text(location.name),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
-                              child: IconText(
-                                text: client.privateNotes,
-                                icon: Icons.lock,
-                                iconSize: 16,
-                                maxLines: 3,
+                            SizedBox(height: 4),
+                            if (client.privateNotes.isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                child: IconText(
+                                  text: client.privateNotes,
+                                  icon: Icons.lock,
+                                  iconSize: 16,
+                                  maxLines: 3,
+                                ),
                               ),
-                            ),
-                          if (client.publicNotes.isNotEmpty)
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: client.publicNotes.isEmpty ? 8 : 0,
-                                bottom: 8,
+                            if (client.publicNotes.isNotEmpty)
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: client.publicNotes.isEmpty ? 8 : 0,
+                                  bottom: 8,
+                                ),
+                                child: IconText(
+                                  text: client.publicNotes,
+                                  icon: Icons.note,
+                                  iconSize: 16,
+                                  maxLines: 3,
+                                ),
                               ),
-                              child: IconText(
-                                text: client.publicNotes,
-                                icon: Icons.note,
-                                iconSize: 16,
-                                maxLines: 3,
-                              ),
-                            ),
-                        ],
-                      )
+                          ],
+                        )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,
                     label: widget.entityType == EntityType.purchaseOrder
                         ? localization.poNumber
                         : widget.entityType == EntityType.credit
-                            ? localization.creditNumber
-                            : widget.entityType == EntityType.quote
-                                ? localization.quoteNumber
-                                : localization.invoiceNumber,
+                        ? localization.creditNumber
+                        : widget.entityType == EntityType.quote
+                        ? localization.quoteNumber
+                        : localization.invoiceNumber,
                     keyboardType: TextInputType.text,
-                    validator: (String val) => val.trim().isEmpty &&
+                    validator: (String val) =>
+                        val.trim().isEmpty &&
                             invoice.isOld &&
                             originalInvoice!.number.isNotEmpty
                         ? AppLocalization.of(
                             context,
-                          )!
-                            .pleaseEnterAnInvoiceNumber
+                          )!.pleaseEnterAnInvoiceNumber
                         : null,
                   ),
             UserPicker(
@@ -399,11 +400,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                             value == 1
                                 ? localization.firstDayOfTheMonth
                                 : value == 31
-                                    ? localization.lastDayOfTheMonth
-                                    : localization.dayCount.replaceFirst(
-                                        ':count',
-                                        '$value',
-                                      ),
+                                ? localization.lastDayOfTheMonth
+                                : localization.dayCount.replaceFirst(
+                                    ':count',
+                                    '$value',
+                                  ),
                           ),
                           value: '$value',
                         ),
@@ -419,17 +420,18 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 labelText: widget.entityType == EntityType.purchaseOrder
                     ? localization.purchaseOrderDate
                     : widget.entityType == EntityType.credit
-                        ? localization.creditDate
-                        : widget.entityType == EntityType.quote
-                            ? localization.quoteDate
-                            : localization.invoiceDate,
+                    ? localization.creditDate
+                    : widget.entityType == EntityType.quote
+                    ? localization.quoteDate
+                    : localization.invoiceDate,
                 selectedDate: invoice.date,
                 onSelected: (date, _) {
                   viewModel.onChanged!(invoice.rebuild((b) => b..date = date));
                 },
               ),
               DatePicker(
-                labelText: widget.entityType == EntityType.invoice ||
+                labelText:
+                    widget.entityType == EntityType.invoice ||
                         widget.entityType == EntityType.purchaseOrder
                     ? localization.dueDate
                     : localization.validUntil,
@@ -492,29 +494,28 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 selectedItemBuilder: (invoice.autoBill ?? '').isEmpty
                     ? null
                     : (context) => [
+                        SettingsEntity.AUTO_BILL_ALWAYS,
+                        SettingsEntity.AUTO_BILL_OPT_OUT,
+                        SettingsEntity.AUTO_BILL_OPT_IN,
+                        SettingsEntity.AUTO_BILL_OFF,
+                      ].map((type) => Text(localization.lookup(type))).toList(),
+                onChanged: (dynamic value) => viewModel.onChanged!(
+                  invoice.rebuild((b) => b..autoBill = value),
+                ),
+                items:
+                    [
                           SettingsEntity.AUTO_BILL_ALWAYS,
                           SettingsEntity.AUTO_BILL_OPT_OUT,
                           SettingsEntity.AUTO_BILL_OPT_IN,
                           SettingsEntity.AUTO_BILL_OFF,
                         ]
-                            .map((type) => Text(localization.lookup(type)))
-                            .toList(),
-                onChanged: (dynamic value) => viewModel.onChanged!(
-                  invoice.rebuild((b) => b..autoBill = value),
-                ),
-                items: [
-                  SettingsEntity.AUTO_BILL_ALWAYS,
-                  SettingsEntity.AUTO_BILL_OPT_OUT,
-                  SettingsEntity.AUTO_BILL_OPT_IN,
-                  SettingsEntity.AUTO_BILL_OFF,
-                ]
-                    .map(
-                      (value) => DropdownMenuItem(
-                        child: AutobillDropdownMenuItem(type: value),
-                        value: value,
-                      ),
-                    )
-                    .toList(),
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: AutobillDropdownMenuItem(type: value),
+                            value: value,
+                          ),
+                        )
+                        .toList(),
               ),
             CustomField(
               controller: _custom1Controller,
@@ -577,7 +578,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               TaxRateDropdown(
                 onSelected: (taxRate) =>
                     viewModel.onChanged!(invoice.applyTax(taxRate)),
-                labelText: localization.tax +
+                labelText:
+                    localization.tax +
                     (invoice.usesInclusiveTaxes
                         ? ' - ${localization.inclusive}'
                         : ''),
@@ -590,7 +592,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 onSelected: (taxRate) => viewModel.onChanged!(
                   invoice.applyTax(taxRate, isSecond: true),
                 ),
-                labelText: localization.tax +
+                labelText:
+                    localization.tax +
                     (invoice.usesInclusiveTaxes
                         ? ' - ${localization.inclusive}'
                         : ''),
@@ -603,7 +606,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 onSelected: (taxRate) => viewModel.onChanged!(
                   invoice.applyTax(taxRate, isThird: true),
                 ),
-                labelText: localization.tax +
+                labelText:
+                    localization.tax +
                     (invoice.usesInclusiveTaxes
                         ? ' - ${localization.inclusive}'
                         : ''),

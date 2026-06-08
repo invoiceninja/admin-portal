@@ -59,17 +59,17 @@ class EmailCreditVM extends EmailEntityVM {
     VendorEntity? vendor,
     Function? loadClient,
     Function(BuildContext, EmailTemplate, String, String, String)?
-        onSendPressed,
+    onSendPressed,
   }) : super(
-          state: state,
-          isLoading: isLoading,
-          isSaving: isSaving,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onSendPressed: onSendPressed,
-        );
+         state: state,
+         isLoading: isLoading,
+         isSaving: isSaving,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onSendPressed: onSendPressed,
+       );
 
   factory EmailCreditVM.fromStore(Store<AppState> store, InvoiceEntity credit) {
     final state = store.state;

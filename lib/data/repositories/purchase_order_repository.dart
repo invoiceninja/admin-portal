@@ -22,8 +22,8 @@ class PurchaseOrderRepository {
       credentials.token,
     );
 
-    final InvoiceItemResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse purchaseOrderResponse = serializers
+        .deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return purchaseOrderResponse.data;
   }
@@ -34,7 +34,8 @@ class PurchaseOrderRepository {
     int createdAt,
     //bool filterDeleted,
   ) async {
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/purchase_orders?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /*
@@ -45,8 +46,8 @@ class PurchaseOrderRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
+    final InvoiceListResponse purchaseOrderResponse = serializers
+        .deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return purchaseOrderResponse.data;
   }
@@ -61,7 +62,8 @@ class PurchaseOrderRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/purchase_orders/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,
@@ -77,8 +79,8 @@ class PurchaseOrderRepository {
       '## DATA: ${json.encode({'ids': ids, 'action': action.toApiParam()})}',
     );
 
-    final InvoiceListResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
+    final InvoiceListResponse purchaseOrderResponse = serializers
+        .deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return purchaseOrderResponse.data.toList();
   }
@@ -130,8 +132,8 @@ class PurchaseOrderRepository {
       );
     }
 
-    final InvoiceItemResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse purchaseOrderResponse = serializers
+        .deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return purchaseOrderResponse.data;
   }

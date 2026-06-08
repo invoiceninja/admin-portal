@@ -94,55 +94,57 @@ class CompanyGatewayEditVM {
               companyGateway: companyGateway,
             ),
           );
-          return completer.future.then((savedCompanyGateway) {
-            showToast(
-              companyGateway!.isNew
-                  ? localization!.createdCompanyGateway
-                  : localization!.updatedCompanyGateway,
-            );
+          return completer.future
+              .then((savedCompanyGateway) {
+                showToast(
+                  companyGateway!.isNew
+                      ? localization!.createdCompanyGateway
+                      : localization!.updatedCompanyGateway,
+                );
 
-            final company = store.state.company;
-            if ((company.settings.companyGatewayIds ?? '').isNotEmpty) {
-              store.dispatch(
-                SaveCompanyRequest(
-                  completer: Completer<Null>(),
-                  company: company.rebuild(
-                    (b) => b
-                      ..settings.companyGatewayIds =
-                          company.settings.companyGatewayIds! +
+                final company = store.state.company;
+                if ((company.settings.companyGatewayIds ?? '').isNotEmpty) {
+                  store.dispatch(
+                    SaveCompanyRequest(
+                      completer: Completer<Null>(),
+                      company: company.rebuild(
+                        (b) => b
+                          ..settings.companyGatewayIds =
+                              company.settings.companyGatewayIds! +
                               ',' +
                               savedCompanyGateway.id,
-                  ),
-                ),
-              );
-            }
+                      ),
+                    ),
+                  );
+                }
 
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                UpdateCurrentRoute(CompanyGatewayViewScreen.route),
-              );
-              if (companyGateway.isNew) {
-                navigator!.pushReplacementNamed(
-                  CompanyGatewayViewScreen.route,
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(CompanyGatewayViewScreen.route),
+                  );
+                  if (companyGateway.isNew) {
+                    navigator!.pushReplacementNamed(
+                      CompanyGatewayViewScreen.route,
+                    );
+                  } else {
+                    navigator!.pop(savedCompanyGateway);
+                  }
+                } else {
+                  viewEntityById(
+                    entityId: savedCompanyGateway.id,
+                    entityType: EntityType.companyGateway,
+                    force: true,
+                  );
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
                 );
-              } else {
-                navigator!.pop(savedCompanyGateway);
-              }
-            } else {
-              viewEntityById(
-                entityId: savedCompanyGateway.id,
-                entityType: EntityType.companyGateway,
-                force: true,
-              );
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+              });
         });
       },
       onGatewaySignUpPressed: (gatewayId) async {
@@ -154,48 +156,49 @@ class CompanyGatewayEditVM {
 
         webClient
             .post(
-          url,
-          credentials.token,
-          data: jsonEncode({
-            'context': {'return_url': ''},
-          }),
-        )
+              url,
+              credentials.token,
+              data: jsonEncode({
+                'context': {'return_url': ''},
+              }),
+            )
             .then((dynamic response) {
-          store.dispatch(StopSaving());
-          switch (gatewayId) {
-            case kGatewayStripeConnect:
-              launchUrl(
-                Uri.parse(
-                  '${cleanApiUrl(credentials.url)}/stripe/signup/${response['hash']}',
-                ),
-              );
-              break;
-            case kGatewayWePay:
-              launchUrl(
-                Uri.parse(
-                  '${cleanApiUrl(credentials.url)}/wepay/signup/${response['hash']}',
-                ),
-              );
-              break;
-            case kGatewayPayPalPlatform:
-              launchUrl(
-                Uri.parse(
-                  '${cleanApiUrl(credentials.url)}/paypal?hash=${response['hash']}',
-                ),
-              );
-              break;
-            case kGatewayGoCardlessOAuth:
-              launchUrl(
-                Uri.parse(
-                  '${cleanApiUrl(credentials.url)}/gocardless/oauth/connect/${response['hash']}',
-                ),
-              );
-              break;
-          }
-        }).catchError((dynamic error) {
-          store.dispatch(StopSaving());
-          showErrorDialog(message: '$error');
-        });
+              store.dispatch(StopSaving());
+              switch (gatewayId) {
+                case kGatewayStripeConnect:
+                  launchUrl(
+                    Uri.parse(
+                      '${cleanApiUrl(credentials.url)}/stripe/signup/${response['hash']}',
+                    ),
+                  );
+                  break;
+                case kGatewayWePay:
+                  launchUrl(
+                    Uri.parse(
+                      '${cleanApiUrl(credentials.url)}/wepay/signup/${response['hash']}',
+                    ),
+                  );
+                  break;
+                case kGatewayPayPalPlatform:
+                  launchUrl(
+                    Uri.parse(
+                      '${cleanApiUrl(credentials.url)}/paypal?hash=${response['hash']}',
+                    ),
+                  );
+                  break;
+                case kGatewayGoCardlessOAuth:
+                  launchUrl(
+                    Uri.parse(
+                      '${cleanApiUrl(credentials.url)}/gocardless/oauth/connect/${response['hash']}',
+                    ),
+                  );
+                  break;
+              }
+            })
+            .catchError((dynamic error) {
+              store.dispatch(StopSaving());
+              showErrorDialog(message: '$error');
+            });
       },
     );
   }

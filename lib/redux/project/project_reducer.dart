@@ -86,8 +86,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.project
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -360,8 +360,7 @@ ProjectState _setLoadedProject(
 ProjectState _setLoadedProjects(
   ProjectState projectState,
   LoadProjectsSuccess action,
-) =>
-    projectState.loadProjects(action.projects);
+) => projectState.loadProjects(action.projects);
 
 ProjectState _setLoadedCompany(
   ProjectState projectState,

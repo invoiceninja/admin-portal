@@ -148,11 +148,11 @@ abstract class DocumentEntity extends Object
   EntityType? get parentType;
 
   DocumentEntity get clone => rebuild(
-        (b) => b
-          ..id = BaseEntity.nextId
-          ..isChanged = false
-          ..isDeleted = false,
-      );
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..isChanged = false
+      ..isDeleted = false,
+  );
 
   @override
   EntityType get entityType {
@@ -208,8 +208,8 @@ abstract class DocumentEntity extends Object
     switch (sortField) {
       case DocumentFields.name:
         response = documentA!.name.toLowerCase().compareTo(
-              documentB!.name.toLowerCase(),
-            );
+          documentB!.name.toLowerCase(),
+        );
         break;
       case DocumentFields.id:
         response = documentA!.id.compareTo(documentB!.id);

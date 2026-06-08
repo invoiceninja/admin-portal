@@ -173,7 +173,8 @@ class _MarkdownToDocument implements md.NodeVisitor {
       case 'li':
         if (_listItemTypeStack.isEmpty) {
           throw Exception(
-              'Tried to parse a markdown list item but the list item type was null');
+            'Tried to parse a markdown list item but the list item type was null',
+          );
         }
 
         _addListItem(
@@ -233,19 +234,14 @@ class _MarkdownToDocument implements md.NodeVisitor {
       ParagraphNode(
         id: Editor.createNodeId(),
         text: _parseInlineText(element),
-        metadata: <String, dynamic>{
-          'blockType': headerAttribution,
-        },
+        metadata: <String, dynamic>{'blockType': headerAttribution},
       ),
     );
   }
 
   void _addParagraph(AttributedText attributedText) {
     _content.add(
-      ParagraphNode(
-        id: Editor.createNodeId(),
-        text: attributedText,
-      ),
+      ParagraphNode(id: Editor.createNodeId(), text: attributedText),
     );
   }
 
@@ -254,9 +250,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
       ParagraphNode(
         id: Editor.createNodeId(),
         text: _parseInlineText(element),
-        metadata: <String, dynamic>{
-          'blockType': blockquoteAttribution,
-        },
+        metadata: <String, dynamic>{'blockType': blockquoteAttribution},
       ),
     );
   }
@@ -273,20 +267,13 @@ class _MarkdownToDocument implements md.NodeVisitor {
     _content.add(
       ParagraphNode(
         id: Editor.createNodeId(),
-        text: AttributedText(
-          element.textContent,
-        ),
-        metadata: <String, dynamic>{
-          'blockType': codeAttribution,
-        },
+        text: AttributedText(element.textContent),
+        metadata: <String, dynamic>{'blockType': codeAttribution},
       ),
     );
   }
 
-  void _addImage({
-    required String imageUrl,
-    required String altText,
-  }) {
+  void _addImage({required String imageUrl, required String altText}) {
     _content.add(
       ImageNode(
         id: Editor.createNodeId(),
@@ -297,9 +284,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   }
 
   void _addHorizontalRule() {
-    _content.add(HorizontalRuleNode(
-      id: Editor.createNodeId(),
-    ));
+    _content.add(HorizontalRuleNode(id: Editor.createNodeId()));
   }
 
   void _addListItem(
@@ -393,26 +378,17 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
     if (element.tag == 'strong') {
       styledText.addAttribution(
         boldAttribution,
-        SpanRange(
-          0,
-          styledText.text.length - 1,
-        ),
+        SpanRange(0, styledText.text.length - 1),
       );
     } else if (element.tag == 'em') {
       styledText.addAttribution(
         italicsAttribution,
-        SpanRange(
-          0,
-          styledText.text.length - 1,
-        ),
+        SpanRange(0, styledText.text.length - 1),
       );
     } else if (element.tag == 'a') {
       styledText.addAttribution(
         LinkAttribution(url: Uri.parse(element.attributes['href']!)),
-        SpanRange(
-          0,
-          styledText.text.length - 1,
-        ),
+        SpanRange(0, styledText.text.length - 1),
       );
     }
 
@@ -454,18 +430,20 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
     Set<Attribution> endingAttributions,
   ) {
     // Write out the text between the end of the last markers, and these new markers.
-    _buffer!.write(
-      fullText.text.substring(_bufferCursor, index),
-    );
+    _buffer!.write(fullText.text.substring(_bufferCursor, index));
 
     // Add start markers.
     if (startingAttributions.isNotEmpty) {
       final markdownStyles = _sortAndSerializeAttributions(
-          startingAttributions, AttributionVisitEvent.start);
+        startingAttributions,
+        AttributionVisitEvent.start,
+      );
       // Links are different from the plain styles since they are both not NamedAttributions (and therefore
       // can't be checked using equality comparison) and asymmetrical in markdown.
-      final linkMarker =
-          _encodeLinkMarker(startingAttributions, AttributionVisitEvent.start);
+      final linkMarker = _encodeLinkMarker(
+        startingAttributions,
+        AttributionVisitEvent.start,
+      );
 
       _buffer!
         ..write(linkMarker)
@@ -479,11 +457,15 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
     // Add end markers.
     if (endingAttributions.isNotEmpty) {
       final markdownStyles = _sortAndSerializeAttributions(
-          endingAttributions, AttributionVisitEvent.end);
+        endingAttributions,
+        AttributionVisitEvent.end,
+      );
       // Links are different from the plain styles since they are both not NamedAttributions (and therefore
       // can't be checked using equality comparison) and asymmetrical in markdown.
-      final linkMarker =
-          _encodeLinkMarker(endingAttributions, AttributionVisitEvent.end);
+      final linkMarker = _encodeLinkMarker(
+        endingAttributions,
+        AttributionVisitEvent.end,
+      );
 
       // +1 on end index because this visitor has inclusive indices
       // whereas substring() expects an exclusive ending index.
@@ -505,17 +487,20 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
   /// order such that opening and closing styles match each other on
   /// the opening and closing ends of a span.
   static String _sortAndSerializeAttributions(
-      Set<Attribution> attributions, AttributionVisitEvent event) {
+    Set<Attribution> attributions,
+    AttributionVisitEvent event,
+  ) {
     const startOrder = [
       codeAttribution,
       boldAttribution,
       italicsAttribution,
-      strikethroughAttribution
+      strikethroughAttribution,
     ];
 
     final buffer = StringBuffer();
-    final encodingOrder =
-        event == AttributionVisitEvent.start ? startOrder : startOrder.reversed;
+    final encodingOrder = event == AttributionVisitEvent.start
+        ? startOrder
+        : startOrder.reversed;
 
     for (final markdownStyleAttribution in encodingOrder) {
       if (attributions.contains(markdownStyleAttribution)) {
@@ -543,9 +528,12 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
   /// Checks for the presence of a link in the attributions and returns the characters necessary to represent it
   /// at the open or closing boundary of the attribution, depending on the event.
   static String _encodeLinkMarker(
-      Set<Attribution> attributions, AttributionVisitEvent event) {
-    final linkAttributions =
-        attributions.where((element) => element is LinkAttribution);
+    Set<Attribution> attributions,
+    AttributionVisitEvent event,
+  ) {
+    final linkAttributions = attributions.where(
+      (element) => element is LinkAttribution,
+    );
     if (linkAttributions.isNotEmpty) {
       final linkAttribution = linkAttributions.first as LinkAttribution;
 

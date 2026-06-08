@@ -272,8 +272,9 @@ void handleTransactionRuleAction(
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final transactionRule = transactionRules.first as TransactionRuleEntity;
-  final transactionRuleIds =
-      transactionRules.map((transactionRule) => transactionRule.id).toList();
+  final transactionRuleIds = transactionRules
+      .map((transactionRule) => transactionRule.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:

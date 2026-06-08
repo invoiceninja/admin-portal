@@ -42,7 +42,7 @@ class _WebWebView extends StatelessWidget {
 
 class _MobileWebView extends StatefulWidget {
   const _MobileWebView({Key? key, required this.html, required this.width})
-      : super(key: key);
+    : super(key: key);
 
   final String? html;
   final double width;

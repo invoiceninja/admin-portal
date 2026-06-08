@@ -61,9 +61,11 @@ class ProjectViewVM {
 
   factory ProjectViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final project = state.projectState.map[state.projectUIState.selectedId] ??
+    final project =
+        state.projectState.map[state.projectUIState.selectedId] ??
         ProjectEntity(id: state.projectUIState.selectedId);
-    final client = state.clientState.map[project.clientId] ??
+    final client =
+        state.clientState.map[project.clientId] ??
         ClientEntity(id: project.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
@@ -83,22 +85,20 @@ class ProjectViewVM {
       project: project,
       client: client,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityPressed: (
-        BuildContext context,
-        EntityType entityType, {
-        bool? longPress = false,
-      }) {
-        if (longPress == true && project.isActive && client.isActive) {
-          handleProjectAction(
-              context,
-              [
+      onEntityPressed:
+          (
+            BuildContext context,
+            EntityType entityType, {
+            bool? longPress = false,
+          }) {
+            if (longPress == true && project.isActive && client.isActive) {
+              handleProjectAction(context, [
                 project,
-              ],
-              EntityAction.newEntityType(entityType));
-        } else {
-          viewEntitiesByType(entityType: entityType, filterEntity: project);
-        }
-      },
+              ], EntityAction.newEntityType(entityType));
+            } else {
+              viewEntitiesByType(entityType: entityType, filterEntity: project);
+            }
+          },
       onAddTaskPressed: (context) {
         createEntity(
           entity: TaskEntity(state: state).rebuild(
@@ -111,36 +111,38 @@ class ProjectViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([project], action, autoPop: true),
-      onUploadDocuments: (
-        BuildContext context,
-        List<MultipartFile> multipartFiles,
-        bool isPrivate,
-      ) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(
-          SaveProjectDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFile: multipartFiles,
-            project: project,
-            completer: completer,
-          ),
-        );
-        completer.future.then((client) {
-          showToast(
-            AppLocalization.of(
-              navigatorKey.currentContext!,
-            )!
-                .uploadedDocument,
-          );
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-            context: navigatorKey.currentContext!,
-            builder: (BuildContext context) {
-              return ErrorDialog(error);
-            },
-          );
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveProjectDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFile: multipartFiles,
+                project: project,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

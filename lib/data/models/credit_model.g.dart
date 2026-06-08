@@ -54,11 +54,12 @@ class _$CreditListResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(InvoiceEntity),
-              ]),
-            )! as BuiltList<Object?>,
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(InvoiceEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
           );
           break;
       }
@@ -109,9 +110,10 @@ class _$CreditItemResponseSerializer
         case 'data':
           result.data.replace(
             serializers.deserialize(
-              value,
-              specifiedType: const FullType(InvoiceEntity),
-            )! as InvoiceEntity,
+                  value,
+                  specifiedType: const FullType(InvoiceEntity),
+                )!
+                as InvoiceEntity,
           );
           break;
       }
@@ -127,15 +129,13 @@ class _$CreditListResponse extends CreditListResponse {
 
   factory _$CreditListResponse([
     void Function(CreditListResponseBuilder)? updates,
-  ]) =>
-      (CreditListResponseBuilder()..update(updates))._build();
+  ]) => (CreditListResponseBuilder()..update(updates))._build();
 
   _$CreditListResponse._({required this.data}) : super._();
   @override
   CreditListResponse rebuild(
     void Function(CreditListResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CreditListResponseBuilder toBuilder() =>
@@ -161,8 +161,7 @@ class _$CreditListResponse extends CreditListResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'CreditListResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 
@@ -228,15 +227,13 @@ class _$CreditItemResponse extends CreditItemResponse {
 
   factory _$CreditItemResponse([
     void Function(CreditItemResponseBuilder)? updates,
-  ]) =>
-      (CreditItemResponseBuilder()..update(updates))._build();
+  ]) => (CreditItemResponseBuilder()..update(updates))._build();
 
   _$CreditItemResponse._({required this.data}) : super._();
   @override
   CreditItemResponse rebuild(
     void Function(CreditItemResponseBuilder) updates,
-  ) =>
-      (toBuilder()..update(updates)).build();
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CreditItemResponseBuilder toBuilder() =>
@@ -262,8 +259,7 @@ class _$CreditItemResponse extends CreditItemResponse {
   String toString() {
     return (newBuiltValueToStringHelper(
       r'CreditItemResponse',
-    )..add('data', data))
-        .toString();
+    )..add('data', data)).toString();
   }
 }
 

@@ -196,22 +196,28 @@ abstract class ScheduleParameters
     implements Built<ScheduleParameters, ScheduleParametersBuilder> {
   factory ScheduleParameters(String action) {
     return _$ScheduleParameters._(
-      clients: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ||
+      clients:
+          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ||
               action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
           ? BuiltList<String>()
           : null,
-      dateRange: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD ||
+      dateRange:
+          action == ScheduleEntity.TEMPLATE_EMAIL_RECORD ||
               action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE
           ? null
           : DateRange.thisQuarter.snakeCase,
-      showAgingTable:
-          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
-      showPaymentsTable:
-          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
-      onlyClientsWithInvoices:
-          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? false : null,
-      showCreditsTable:
-          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
+      showAgingTable: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+          ? true
+          : null,
+      showPaymentsTable: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+          ? true
+          : null,
+      onlyClientsWithInvoices: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+          ? false
+          : null,
+      showCreditsTable: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
+          ? true
+          : null,
       status: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
           ? kStatementStatusAll
           : null,
@@ -227,11 +233,12 @@ abstract class ScheduleParameters
           : null,
       includeProjectTasks:
           action == ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS
-              ? false
-              : null,
+          ? false
+          : null,
       invoiceId: action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? '' : null,
-      autoBill:
-          action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE ? false : null,
+      autoBill: action == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE
+          ? false
+          : null,
     );
   }
 

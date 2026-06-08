@@ -61,8 +61,8 @@ class _VariablesHelpState extends State<VariablesHelp>
                 widget.showInvoiceAsQuote
                     ? localization.quote
                     : widget.showInvoiceAsInvoices
-                        ? localization.invoices
-                        : localization.invoice,
+                    ? localization.invoices
+                    : localization.invoice,
               ),
             ),
             Tab(child: Text(localization.client)),
@@ -250,9 +250,7 @@ class _VariableGrid extends StatelessWidget {
                       showToast(
                         AppLocalization.of(
                           context,
-                        )!
-                            .copiedToClipboard
-                            .replaceFirst(':value', '\$$field'),
+                        )!.copiedToClipboard.replaceFirst(':value', '\$$field'),
                       );
                     },
                   ),

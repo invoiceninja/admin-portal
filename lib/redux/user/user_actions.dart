@@ -419,17 +419,17 @@ void handleUserAction(
     case EntityAction.restore:
       final message = userIds.length > 1
           ? localization!.restoredUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.restoredUser;
       final dispatch = ([String? password, String? idToken]) => store.dispatch(
-            RestoreUserRequest(
-              completer: snackBarCompleter<Null>(message),
-              userIds: userIds,
-              password: password,
-              idToken: idToken,
-            ),
-          );
+        RestoreUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userIds: userIds,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       passwordCallback(
         context: context,
         callback: (password, idToken) {
@@ -440,17 +440,17 @@ void handleUserAction(
     case EntityAction.archive:
       final message = userIds.length > 1
           ? localization!.archivedUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.archivedUser;
       final dispatch = ([String? password, String? idToken]) => store.dispatch(
-            ArchiveUserRequest(
-              completer: snackBarCompleter<Null>(message),
-              userIds: userIds,
-              password: password,
-              idToken: idToken,
-            ),
-          );
+        ArchiveUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userIds: userIds,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       passwordCallback(
         context: context,
         callback: (password, idToken) {
@@ -461,17 +461,17 @@ void handleUserAction(
     case EntityAction.delete:
       final message = userIds.length > 1
           ? localization!.deletedUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.deletedUser;
       final dispatch = ([String? password, String? idToken]) => store.dispatch(
-            DeleteUserRequest(
-              completer: snackBarCompleter<Null>(message),
-              userIds: userIds,
-              password: password,
-              idToken: idToken,
-            ),
-          );
+        DeleteUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userIds: userIds,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       passwordCallback(
         context: context,
         callback: (password, idToken) {
@@ -491,17 +491,17 @@ void handleUserAction(
     case EntityAction.remove:
       final message = userIds.length > 1
           ? localization!.removedUsers
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', userIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', userIds.length.toString())
           : localization!.removedUser;
       final dispatch = ([String? password, String? idToken]) => store.dispatch(
-            RemoveUserRequest(
-              completer: snackBarCompleter<Null>(message),
-              userId: user.id,
-              password: password,
-              idToken: idToken,
-            ),
-          );
+        RemoveUserRequest(
+          completer: snackBarCompleter<Null>(message),
+          userId: user.id,
+          password: password,
+          idToken: idToken,
+        ),
+      );
       confirmCallback(
         context: context,
         callback: (_) {

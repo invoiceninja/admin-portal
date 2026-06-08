@@ -106,8 +106,8 @@ final selectedIdReducer = combineReducers<String?>([
     (selectedId, action) => action.clearSelection
         ? ''
         : action.entityType == EntityType.client
-            ? action.entityId
-            : selectedId,
+        ? action.entityId
+        : selectedId,
   ),
 ]);
 
@@ -417,8 +417,7 @@ ClientState _purgeClientSuccess(
 ClientState _setLoadedClients(
   ClientState clientState,
   LoadClientsSuccess action,
-) =>
-    clientState.loadClients(action.clients);
+) => clientState.loadClients(action.clients);
 
 ClientState _setLoadedCompany(
   ClientState clientState,

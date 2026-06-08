@@ -73,8 +73,9 @@ class MultiSelectListState extends State<MultiSelectList> {
   @override
   void initState() {
     super.initState();
-    selected =
-        widget.selected.isNotEmpty ? widget.selected : widget.defaultSelected;
+    selected = widget.selected.isNotEmpty
+        ? widget.selected
+        : widget.defaultSelected;
     _controller = ScrollController();
   }
 
@@ -118,16 +119,15 @@ class MultiSelectListState extends State<MultiSelectList> {
             ? option.replaceFirst('custom', widget.entityType!.snakeCase)
             : option,
       );
-      options[option] =
-          columnTitle.isEmpty ? lookupOption(option) : columnTitle;
+      options[option] = columnTitle.isEmpty
+          ? lookupOption(option)
+          : columnTitle;
     });
     final keys = options.keys.toList();
     keys.sort(
       (a, b) => lookupOption(
         a!,
-      )!
-          .toLowerCase()
-          .compareTo(lookupOption(b!)!.toLowerCase()),
+      )!.toLowerCase().compareTo(lookupOption(b!)!.toLowerCase()),
     );
 
     final column = Container(

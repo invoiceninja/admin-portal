@@ -377,8 +377,8 @@ void handleTaskAction(
     case EntityAction.resume:
       final message = taskIds.length > 1
           ? localization!.startedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.startedTask;
       store.dispatch(
         StartTasksRequest(snackBarCompleter<Null>(message), taskIds),
@@ -387,8 +387,8 @@ void handleTaskAction(
     case EntityAction.stop:
       final message = taskIds.length > 1
           ? localization!.stoppedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.stoppedTask;
       store.dispatch(
         StopTasksRequest(snackBarCompleter<Null>(message), taskIds),
@@ -446,21 +446,24 @@ void handleTaskAction(
       final items = <InvoiceItemEntity>[];
       TaskEntity? lastTask;
 
-      tasks.where((entity) {
-        final task = entity as TaskEntity;
-        return !task.isDeleted! && !task.isRunning && !task.isInvoiced;
-      }).forEach((task) {
-        items.add(
-          convertTaskToInvoiceItem(
-            task: task as TaskEntity,
-            context: context,
-            includeProjectHeader: company.invoiceTaskProject &&
-                !company.hasCustomProductField(localization!.project) &&
-                task.projectId != lastTask?.projectId,
-          ),
-        );
-        lastTask = task;
-      });
+      tasks
+          .where((entity) {
+            final task = entity as TaskEntity;
+            return !task.isDeleted! && !task.isRunning && !task.isInvoiced;
+          })
+          .forEach((task) {
+            items.add(
+              convertTaskToInvoiceItem(
+                task: task as TaskEntity,
+                context: context,
+                includeProjectHeader:
+                    company.invoiceTaskProject &&
+                    !company.hasCustomProductField(localization!.project) &&
+                    task.projectId != lastTask?.projectId,
+              ),
+            );
+            lastTask = task;
+          });
 
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceTask) {
@@ -489,8 +492,8 @@ void handleTaskAction(
     case EntityAction.restore:
       final message = taskIds.length > 1
           ? localization!.restoredTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.restoredTask;
       store.dispatch(
         RestoreTaskRequest(snackBarCompleter<Null>(message), taskIds),
@@ -499,8 +502,8 @@ void handleTaskAction(
     case EntityAction.archive:
       final message = taskIds.length > 1
           ? localization!.archivedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.archivedTask;
       store.dispatch(
         ArchiveTaskRequest(snackBarCompleter<Null>(message), taskIds),
@@ -509,8 +512,8 @@ void handleTaskAction(
     case EntityAction.delete:
       final message = taskIds.length > 1
           ? localization!.deletedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.deletedTask;
       store.dispatch(
         DeleteTaskRequest(snackBarCompleter<Null>(message), taskIds),

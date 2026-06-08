@@ -83,34 +83,36 @@ class ScheduleEditVM {
           store.dispatch(
             SaveScheduleRequest(completer: completer, schedule: schedule),
           );
-          return completer.future.then((savedSchedule) {
-            showToast(
-              schedule!.isNew
-                  ? localization!.createdSchedule
-                  : localization!.updatedSchedule,
-            );
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
-              if (schedule.isNew) {
-                Navigator.of(
-                  navigatorKey.currentContext!,
-                ).pushReplacementNamed(ScheduleViewScreen.route);
-              } else {
-                Navigator.of(
-                  navigatorKey.currentContext!,
-                ).pop(savedSchedule);
-              }
-            } else {
-              viewEntity(entity: savedSchedule, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              },
-            );
-          });
+          return completer.future
+              .then((savedSchedule) {
+                showToast(
+                  schedule!.isNew
+                      ? localization!.createdSchedule
+                      : localization!.updatedSchedule,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
+                  if (schedule.isNew) {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pushReplacementNamed(ScheduleViewScreen.route);
+                  } else {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pop(savedSchedule);
+                  }
+                } else {
+                  viewEntity(entity: savedSchedule, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

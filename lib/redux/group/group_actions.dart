@@ -253,8 +253,8 @@ void handleGroupAction(
     case EntityAction.restore:
       final message = groupIds.length > 1
           ? localization!.restoredGroups
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', groupIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', groupIds.length.toString())
           : localization!.restoredGroup;
       store.dispatch(
         RestoreGroupRequest(snackBarCompleter<Null>(message), groupIds),
@@ -263,8 +263,8 @@ void handleGroupAction(
     case EntityAction.archive:
       final message = groupIds.length > 1
           ? localization!.archivedGroups
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', groupIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', groupIds.length.toString())
           : localization!.archivedGroup;
       store.dispatch(
         ArchiveGroupRequest(snackBarCompleter<Null>(message), groupIds),
@@ -273,8 +273,8 @@ void handleGroupAction(
     case EntityAction.delete:
       final message = groupIds.length > 1
           ? localization!.deletedGroups
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', groupIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', groupIds.length.toString())
           : localization!.deletedGroup;
       store.dispatch(
         DeleteGroupRequest(snackBarCompleter<Null>(message), groupIds),

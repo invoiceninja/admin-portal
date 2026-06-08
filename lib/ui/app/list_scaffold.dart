@@ -102,7 +102,8 @@ class ListScaffold extends StatelessWidget {
     } else if (entityType == EntityType.document) {
       leadingWidth = kMinInteractiveDimension;
     } else {
-      leadingWidth = (isDesktop(context) ? 100 : 10) +
+      leadingWidth =
+          (isDesktop(context) ? 100 : 10) +
           (kMinInteractiveDimension - 4) *
               (appBarLeadingActions.length +
                   (onCheckboxPressed == null || isMobile(context) ? 1 : 2));
@@ -114,9 +115,11 @@ class ListScaffold extends StatelessWidget {
         if (isDesktop(context) && onCheckboxPressed != null)
           IconButton(
             icon: Icon(Icons.check_box),
-            tooltip:
-                prefState.enableTooltips ? localization!.multiselect : null,
-            onPressed: state.prefState.showKanban &&
+            tooltip: prefState.enableTooltips
+                ? localization!.multiselect
+                : null,
+            onPressed:
+                state.prefState.showKanban &&
                     state.uiState.mainRoute == '${EntityType.task}'
                 ? null
                 : () => onCheckboxPressed!(),
@@ -138,7 +141,8 @@ class ListScaffold extends StatelessWidget {
           drawer: isMobile(context) || state.prefState.isMenuFloated
               ? MenuDrawerBuilder()
               : null,
-          endDrawer: isMobile(context) ||
+          endDrawer:
+              isMobile(context) ||
                   (state.prefState.isHistoryFloated && !isSettings)
               ? HistoryDrawerBuilder()
               : null,

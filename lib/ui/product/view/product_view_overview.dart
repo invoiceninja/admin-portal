@@ -31,7 +31,8 @@ class _ProductOverviewState extends State<ProductOverview> {
 
     String tax = '';
     if (product.taxName1.isNotEmpty) {
-      tax += formatNumber(
+      tax +=
+          formatNumber(
             product.taxRate1,
             context,
             formatNumberType: FormatNumberType.percent,
@@ -40,7 +41,8 @@ class _ProductOverviewState extends State<ProductOverview> {
           product.taxName1;
     }
     if (product.taxName2.isNotEmpty) {
-      tax += ' ' +
+      tax +=
+          ' ' +
           formatNumber(
             product.taxRate2,
             context,

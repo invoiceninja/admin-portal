@@ -131,8 +131,9 @@ class _UserEditState extends State<UserEdit>
     } else {
       permissions.add(permission);
     }
-    final permissionsString =
-        permissions.where((value) => value.isNotEmpty).join(',');
+    final permissionsString = permissions
+        .where((value) => value.isNotEmpty)
+        .join(',');
 
     widget.viewModel.onUserChanged(
       user.rebuild((b) => b..userCompany.permissions = permissionsString),
@@ -159,8 +160,9 @@ class _UserEditState extends State<UserEdit>
 
     return EditScaffold(
       entity: user,
-      title:
-          viewModel.user.isNew ? localization.newUser : localization.editUser,
+      title: viewModel.user.isNew
+          ? localization.newUser
+          : localization.editUser,
       appBarBottom: TabBar(
         controller: _controller,
         isScrollable: isMobile(context),
@@ -471,99 +473,106 @@ class _UserEditState extends State<UserEdit>
                           ],
                         ),
                         ...<EntityType>[
-                          EntityType.client,
-                          EntityType.product,
-                          EntityType.invoice,
-                          EntityType.recurringInvoice,
-                          EntityType.payment,
-                          EntityType.quote,
-                          EntityType.credit,
-                          EntityType.project,
-                          EntityType.task,
-                          EntityType.vendor,
-                          EntityType.purchaseOrder,
-                          EntityType.expense,
-                          EntityType.recurringExpense,
-                          EntityType.transaction,
-                        ]
+                              EntityType.client,
+                              EntityType.product,
+                              EntityType.invoice,
+                              EntityType.recurringInvoice,
+                              EntityType.payment,
+                              EntityType.quote,
+                              EntityType.credit,
+                              EntityType.project,
+                              EntityType.task,
+                              EntityType.vendor,
+                              EntityType.purchaseOrder,
+                              EntityType.expense,
+                              EntityType.recurringExpense,
+                              EntityType.transaction,
+                            ]
                             .where(
-                          (entityType) =>
-                              state.company.isModuleEnabled(entityType),
-                        )
+                              (entityType) =>
+                                  state.company.isModuleEnabled(entityType),
+                            )
                             .map((EntityType type) {
-                          final createPermission = 'create_' + type.apiValue;
-                          final editPermission = 'edit_' + type.apiValue;
-                          final viewPermission = 'view_' + type.apiValue;
-                          return DataRow(
-                            cells: [
-                              DataCell(
-                                Text(localization.lookup('$type')),
-                                onTap: () {
-                                  _togglePermission(createPermission);
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((duration) {
-                                    _togglePermission(viewPermission);
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((
-                                      duration,
-                                    ) {
-                                      _togglePermission(
-                                        editPermission,
-                                      );
-                                    });
-                                  });
-                                },
-                              ),
-                              DataCell(
-                                _PermissionCheckbox(
-                                  userCompany: userCompany,
-                                  permission: createPermission,
-                                  onChanged: (value) =>
-                                      _togglePermission(createPermission),
-                                  checkAll: userCompany.permissions
-                                      .contains(kPermissionCreateAll),
-                                ),
-                                onTap: userCompany.permissions.contains(
-                                  kPermissionCreateAll,
-                                )
-                                    ? null
-                                    : () => _togglePermission(
-                                          createPermission,
-                                        ),
-                              ),
-                              DataCell(
-                                _PermissionCheckbox(
-                                  userCompany: userCompany,
-                                  permission: viewPermission,
-                                  onChanged: (value) =>
-                                      _togglePermission(viewPermission),
-                                  checkAll: userCompany.permissions
-                                      .contains(kPermissionViewAll),
-                                ),
-                                onTap: userCompany.permissions.contains(
-                                  kPermissionViewAll,
-                                )
-                                    ? null
-                                    : () => _togglePermission(viewPermission),
-                              ),
-                              DataCell(
-                                _PermissionCheckbox(
-                                  userCompany: userCompany,
-                                  permission: editPermission,
-                                  onChanged: (value) =>
-                                      _togglePermission(editPermission),
-                                  checkAll: userCompany.permissions
-                                      .contains(kPermissionEditAll),
-                                ),
-                                onTap: userCompany.permissions.contains(
-                                  kPermissionEditAll,
-                                )
-                                    ? null
-                                    : () => _togglePermission(editPermission),
-                              ),
-                            ],
-                          );
-                        }).toList(),
+                              final createPermission =
+                                  'create_' + type.apiValue;
+                              final editPermission = 'edit_' + type.apiValue;
+                              final viewPermission = 'view_' + type.apiValue;
+                              return DataRow(
+                                cells: [
+                                  DataCell(
+                                    Text(localization.lookup('$type')),
+                                    onTap: () {
+                                      _togglePermission(createPermission);
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((duration) {
+                                            _togglePermission(viewPermission);
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((
+                                                  duration,
+                                                ) {
+                                                  _togglePermission(
+                                                    editPermission,
+                                                  );
+                                                });
+                                          });
+                                    },
+                                  ),
+                                  DataCell(
+                                    _PermissionCheckbox(
+                                      userCompany: userCompany,
+                                      permission: createPermission,
+                                      onChanged: (value) =>
+                                          _togglePermission(createPermission),
+                                      checkAll: userCompany.permissions
+                                          .contains(kPermissionCreateAll),
+                                    ),
+                                    onTap:
+                                        userCompany.permissions.contains(
+                                          kPermissionCreateAll,
+                                        )
+                                        ? null
+                                        : () => _togglePermission(
+                                            createPermission,
+                                          ),
+                                  ),
+                                  DataCell(
+                                    _PermissionCheckbox(
+                                      userCompany: userCompany,
+                                      permission: viewPermission,
+                                      onChanged: (value) =>
+                                          _togglePermission(viewPermission),
+                                      checkAll: userCompany.permissions
+                                          .contains(kPermissionViewAll),
+                                    ),
+                                    onTap:
+                                        userCompany.permissions.contains(
+                                          kPermissionViewAll,
+                                        )
+                                        ? null
+                                        : () =>
+                                              _togglePermission(viewPermission),
+                                  ),
+                                  DataCell(
+                                    _PermissionCheckbox(
+                                      userCompany: userCompany,
+                                      permission: editPermission,
+                                      onChanged: (value) =>
+                                          _togglePermission(editPermission),
+                                      checkAll: userCompany.permissions
+                                          .contains(kPermissionEditAll),
+                                    ),
+                                    onTap:
+                                        userCompany.permissions.contains(
+                                          kPermissionEditAll,
+                                        )
+                                        ? null
+                                        : () =>
+                                              _togglePermission(editPermission),
+                                  ),
+                                ],
+                              );
+                            })
+                            .toList(),
                       ],
                     ),
                   ),

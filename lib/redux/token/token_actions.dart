@@ -279,8 +279,8 @@ void handleTokenAction(
     case EntityAction.restore:
       final message = tokenIds.length > 1
           ? localization!.restoredTokens
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', tokenIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', tokenIds.length.toString())
           : localization!.restoredToken;
       store.dispatch(
         RestoreTokensRequest(snackBarCompleter<Null>(message), tokenIds),
@@ -289,8 +289,8 @@ void handleTokenAction(
     case EntityAction.archive:
       final message = tokenIds.length > 1
           ? localization!.archivedTokens
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', tokenIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', tokenIds.length.toString())
           : localization!.archivedToken;
       store.dispatch(
         ArchiveTokensRequest(snackBarCompleter<Null>(message), tokenIds),
@@ -299,8 +299,8 @@ void handleTokenAction(
     case EntityAction.delete:
       final message = tokenIds.length > 1
           ? localization!.deletedTokens
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', tokenIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', tokenIds.length.toString())
           : localization!.deletedToken;
       store.dispatch(
         DeleteTokensRequest(snackBarCompleter<Null>(message), tokenIds),

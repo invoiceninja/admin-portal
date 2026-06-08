@@ -100,7 +100,7 @@ class ReportsScreenVM {
   final Function(BuildContext) onExportPressed;
   final Function(BuildContext) onSchedulePressed;
   final Function(BuildContext, BuiltMap<String?, String?>)
-      onReportFiltersChanged;
+  onReportFiltersChanged;
   final Function(String?, bool) onReportSorted;
   final Function(int, bool) onReportTotalsSorted;
   final Function({
@@ -111,7 +111,8 @@ class ReportsScreenVM {
     String? selectedGroup,
     String? subgroup,
     String? chart,
-  }) onSettingsChanged;
+  })
+  onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -444,8 +445,8 @@ class ReportsScreenVM {
           (b) => b
             ..reportSettings[state.uiState.reportsUIState.report] =
                 reportSettings!.rebuild(
-              (b) => b..columns.replace(BuiltList<String>(columns)),
-            ),
+                  (b) => b..columns.replace(BuiltList<String>(columns)),
+                ),
         );
         final userCompany = state.userCompany.rebuild(
           (b) => b..settings.replace(settings),
@@ -460,30 +461,31 @@ class ReportsScreenVM {
           SaveUserSettingsRequest(completer: completer, user: user),
         );
       },
-      onSettingsChanged: ({
-        String? report,
-        String? group,
-        String? selectedGroup,
-        String? subgroup,
-        String? chart,
-        String? customStartDate,
-        String? customEndDate,
-      }) {
-        Timer(Duration(milliseconds: 100), () {
-          final reportState = state.uiState.reportsUIState;
-          store.dispatch(
-            UpdateReportSettings(
-              report: report ?? reportState.report,
-              group: group,
-              selectedGroup: selectedGroup,
-              subgroup: subgroup,
-              chart: chart,
-              customStartDate: customStartDate,
-              customEndDate: customEndDate,
-            ),
-          );
-        });
-      },
+      onSettingsChanged:
+          ({
+            String? report,
+            String? group,
+            String? selectedGroup,
+            String? subgroup,
+            String? chart,
+            String? customStartDate,
+            String? customEndDate,
+          }) {
+            Timer(Duration(milliseconds: 100), () {
+              final reportState = state.uiState.reportsUIState;
+              store.dispatch(
+                UpdateReportSettings(
+                  report: report ?? reportState.report,
+                  group: group,
+                  selectedGroup: selectedGroup,
+                  subgroup: subgroup,
+                  chart: chart,
+                  customStartDate: customStartDate,
+                  customEndDate: customEndDate,
+                ),
+              );
+            });
+          },
       onSchedulePressed: (context) async {
         createEntity(
           entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_REPORT).rebuild(
@@ -526,7 +528,8 @@ class ReportsScreenVM {
               .toList();
           columns.sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
-          csvData += localization!.lookup(reportState.group) +
+          csvData +=
+              localization!.lookup(reportState.group) +
               ',' +
               localization.count;
 
@@ -602,8 +605,7 @@ var memoizeedGroupTotals = memo5(
     ReportSettingsEntity? reportSettings,
     BuiltMap<String, CurrencyEntity> currencyMap,
     CompanyEntity? company,
-  ) =>
-      calculateReportTotals(
+  ) => calculateReportTotals(
     reportResult: reportResult!,
     reportState: reportUIState,
     reportSettings: reportSettings,

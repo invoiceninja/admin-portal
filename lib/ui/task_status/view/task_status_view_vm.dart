@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusViewScreen extends StatelessWidget {
   const TaskStatusViewScreen({Key? key, this.isFilter = false})
-      : super(key: key);
+    : super(key: key);
   static const String route = '/$kSettings/$kSettingsTaskStatusView';
   final bool isFilter;
 
@@ -56,7 +56,7 @@ class TaskStatusViewVM {
     final state = store.state;
     final taskStatus =
         state.taskStatusState.map[state.taskStatusUIState.selectedId] ??
-            TaskStatusEntity(id: state.taskStatusUIState.selectedId);
+        TaskStatusEntity(id: state.taskStatusUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(

@@ -65,7 +65,8 @@ class TransactionRuleListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: transactionRule,
-      isSelected: transactionRule.id ==
+      isSelected:
+          transactionRule.id ==
           (uiState.isEditing
               ? transactionRuleUIState.editing!.id
               : transactionRuleUIState.selectedId),

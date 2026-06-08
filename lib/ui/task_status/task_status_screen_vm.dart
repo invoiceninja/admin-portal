@@ -56,12 +56,12 @@ class TaskStatusScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.taskStatusListState.isInMultiselect(),
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> taskStatuses,
-        EntityAction action,
-      ) =>
-          handleTaskStatusAction(context, taskStatuses, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> taskStatuses,
+            EntityAction action,
+          ) => handleTaskStatusAction(context, taskStatuses, action),
     );
   }
 }

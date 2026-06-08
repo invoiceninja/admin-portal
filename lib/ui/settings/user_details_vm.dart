@@ -219,8 +219,7 @@ class UserDetailsVM {
                   showErrorDialog(
                     message: AppLocalization.of(
                       context,
-                    )!
-                        .anErrorOccurredTryAgain,
+                    )!.anErrorOccurredTryAgain,
                   );
                 } else {
                   store.dispatch(
@@ -238,8 +237,7 @@ class UserDetailsVM {
                 showErrorDialog(
                   message: AppLocalization.of(
                     navigatorKey.currentContext!,
-                  )!
-                      .anErrorOccurredTryAgain,
+                  )!.anErrorOccurredTryAgain,
                 );
               }
             } catch (error) {
@@ -391,7 +389,7 @@ class UserDetailsVM {
             message: localization.changingPhoneDisablesTwoFactor,
             skip:
                 state.user.phone == state.uiState.settingsUIState.user.phone ||
-                    !state.user.isTwoFactorEnabled,
+                !state.user.isTwoFactorEnabled,
             callback: (_) {
               passwordCallback(
                 context: context,

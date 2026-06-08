@@ -63,20 +63,23 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final credentials = state.credentials;
     final url = '${credentials.url}/health_check';
 
-    webClient.get(url, credentials.token).then((dynamic response) {
-      if (!kReleaseMode) {
-        print('## response: $response');
-      }
-      setState(() {
-        _response = serializers.deserializeWith(
-          HealthCheckResponse.serializer,
-          response,
-        );
-      });
-    }).catchError((dynamic error) {
-      Navigator.of(navigatorKey.currentContext!).pop();
-      showErrorDialog(message: error);
-    });
+    webClient
+        .get(url, credentials.token)
+        .then((dynamic response) {
+          if (!kReleaseMode) {
+            print('## response: $response');
+          }
+          setState(() {
+            _response = serializers.deserializeWith(
+              HealthCheckResponse.serializer,
+              response,
+            );
+          });
+        })
+        .catchError((dynamic error) {
+          Navigator.of(navigatorKey.currentContext!).pop();
+          showErrorDialog(message: error);
+        });
   }
 
   void clearCache() {
@@ -90,18 +93,21 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final credentials = state.credentials;
     final url = '${credentials.url}/ping?clear_cache=true';
 
-    webClient.get(url, credentials.token).then((dynamic response) {
-      store.dispatch(
-        RefreshData(
-          completer: Completer<Null>()
-            ..future.then<Null>((_) {
-              runCheck();
-            }),
-        ),
-      );
-    }).catchError((dynamic error) {
-      showErrorDialog(message: error);
-    });
+    webClient
+        .get(url, credentials.token)
+        .then((dynamic response) {
+          store.dispatch(
+            RefreshData(
+              completer: Completer<Null>()
+                ..future.then<Null>((_) {
+                  runCheck();
+                }),
+            ),
+          );
+        })
+        .catchError((dynamic error) {
+          showErrorDialog(message: error);
+        });
   }
 
   String _parseVersion(String version) {
@@ -170,11 +176,13 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   _HealthListTile(
                     title: 'PHP Info',
                     // TODO move this logic to the backend
-                    isValid: _response!.phpVersion.isOkay &&
+                    isValid:
+                        _response!.phpVersion.isOkay &&
                         webPhpVersion.startsWith('v8') &&
                         (cliPhpVersion.startsWith('v8') ||
                             !cliPhpVersion.startsWith('v')),
-                    subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
+                    subtitle:
+                        'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
                         (phpMemoryLimit.isNotEmpty
                             ? '\nMemory Limit: $phpMemoryLimit'
                             : ''),
@@ -185,7 +193,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       isValid: _response!.queueData.failed == 0,
                       subtitle:
                           'Pending Jobs: ${_response!.queueData.pending}\nFailed Jobs: ${_response!.queueData.failed}',
-                      level: _response!.queueData.failed == 0 &&
+                      level:
+                          _response!.queueData.failed == 0 &&
                               _response!.queueData.pending > 0
                           ? _HealthCheckLevel.Warning
                           : null,
@@ -363,8 +372,8 @@ class _HealthListTile extends StatelessWidget {
             subtitle != null
                 ? subtitle!
                 : (level != null
-                    ? level.toString()
-                    : (isValid ? 'Passed' : 'Failed')),
+                      ? level.toString()
+                      : (isValid ? 'Passed' : 'Failed')),
           ),
           if (buttonLabel != null)
             Padding(
@@ -382,13 +391,13 @@ class _HealthListTile extends StatelessWidget {
         level == _HealthCheckLevel.Warning
             ? Icons.warning
             : level == _HealthCheckLevel.Info
-                ? Icons.info_outline
-                : (isValid ? Icons.check_circle_outline : Icons.warning),
+            ? Icons.info_outline
+            : (isValid ? Icons.check_circle_outline : Icons.warning),
         color: level == _HealthCheckLevel.Warning
             ? Colors.orange
             : level == _HealthCheckLevel.Info
-                ? Colors.blue
-                : (isValid ? Colors.green : Colors.red),
+            ? Colors.blue
+            : (isValid ? Colors.green : Colors.red),
       ),
       onTap: url != null ? () => launchUrl(Uri.parse(url!)) : null,
     );

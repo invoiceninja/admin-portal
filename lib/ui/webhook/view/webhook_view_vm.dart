@@ -54,7 +54,8 @@ class WebhookViewVM {
 
   factory WebhookViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final webhook = state.webhookState.map[state.webhookUIState.selectedId] ??
+    final webhook =
+        state.webhookState.map[state.webhookUIState.selectedId] ??
         WebhookEntity(id: state.webhookUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {

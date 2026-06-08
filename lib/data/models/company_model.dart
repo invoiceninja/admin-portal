@@ -749,25 +749,25 @@ abstract class CompanyEntity extends Object
 
   // TODO make sure to clear everything
   CompanyEntity get coreCompany => rebuild(
-        (b) => b
-          ..clients.clear()
-          ..products.clear()
-          ..invoices.clear()
-          ..payments.clear()
-          ..quotes.clear()
-          ..purchaseOrders.clear()
-          ..bankAccounts.clear()
-          ..transactions.clear()
-          ..transactionRules.clear()
-          ..credits.clear()
-          ..tasks.clear()
-          ..projects.clear()
-          ..vendors.clear()
-          ..expenses.clear()
-          ..webhooks.clear()
-          ..designs.clear()
-          ..companyGateways.clear(),
-      );
+    (b) => b
+      ..clients.clear()
+      ..products.clear()
+      ..invoices.clear()
+      ..payments.clear()
+      ..quotes.clear()
+      ..purchaseOrders.clear()
+      ..bankAccounts.clear()
+      ..transactions.clear()
+      ..transactionRules.clear()
+      ..credits.clear()
+      ..tasks.clear()
+      ..projects.clear()
+      ..vendors.clear()
+      ..expenses.clear()
+      ..webhooks.clear()
+      ..designs.clear()
+      ..companyGateways.clear(),
+  );
 
   bool isModuleEnabled(EntityType? entityType) {
     if ((entityType == EntityType.invoice ||

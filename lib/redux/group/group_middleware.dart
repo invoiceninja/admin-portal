@@ -103,23 +103,25 @@ Middleware<AppState> _viewGroupList() {
 Middleware<AppState> _archiveGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveGroupRequest;
-    final prevGroups =
-        action.groupIds.map((id) => store.state.groupState.map[id]).toList();
+    final prevGroups = action.groupIds
+        .map((id) => store.state.groupState.map[id])
+        .toList();
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.groupIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.groupIds,
+          EntityAction.archive,
+        )
         .then((List<GroupEntity> groups) {
-      store.dispatch(ArchiveGroupSuccess(groups));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveGroupFailure(prevGroups));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveGroupSuccess(groups));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveGroupFailure(prevGroups));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -128,23 +130,25 @@ Middleware<AppState> _archiveGroup(GroupRepository repository) {
 Middleware<AppState> _deleteGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteGroupRequest;
-    final prevGroups =
-        action.groupIds.map((id) => store.state.groupState.map[id]).toList();
+    final prevGroups = action.groupIds
+        .map((id) => store.state.groupState.map[id])
+        .toList();
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.groupIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.groupIds,
+          EntityAction.delete,
+        )
         .then((List<GroupEntity> groups) {
-      store.dispatch(DeleteGroupSuccess(groups));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteGroupFailure(prevGroups));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteGroupSuccess(groups));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteGroupFailure(prevGroups));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -153,23 +157,25 @@ Middleware<AppState> _deleteGroup(GroupRepository repository) {
 Middleware<AppState> _restoreGroup(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreGroupRequest;
-    final prevGroups =
-        action.groupIds.map((id) => store.state.groupState.map[id]).toList();
+    final prevGroups = action.groupIds
+        .map((id) => store.state.groupState.map[id])
+        .toList();
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.groupIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.groupIds,
+          EntityAction.restore,
+        )
         .then((List<GroupEntity> groups) {
-      store.dispatch(RestoreGroupSuccess(groups));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreGroupFailure(prevGroups));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreGroupSuccess(groups));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreGroupFailure(prevGroups));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -181,17 +187,18 @@ Middleware<AppState> _saveGroup(GroupRepository repository) {
     repository
         .saveData(store.state.credentials, action.group!)
         .then((GroupEntity group) {
-      if (action.group!.isNew) {
-        store.dispatch(AddGroupSuccess(group));
-      } else {
-        store.dispatch(SaveGroupSuccess(group));
-      }
-      action.completer!.complete(group);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveGroupFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.group!.isNew) {
+            store.dispatch(AddGroupSuccess(group));
+          } else {
+            store.dispatch(SaveGroupSuccess(group));
+          }
+          action.completer!.complete(group);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveGroupFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -203,19 +210,22 @@ Middleware<AppState> _loadGroup(GroupRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadGroupRequest());
-    repository.loadItem(state.credentials, action.groupId).then((group) {
-      store.dispatch(LoadGroupSuccess(group));
+    repository
+        .loadItem(state.credentials, action.groupId)
+        .then((group) {
+          store.dispatch(LoadGroupSuccess(group));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadGroupFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadGroupFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -227,33 +237,36 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadGroupsRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadGroupsSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadGroupsSuccess(data));
 
-      final documents = <DocumentEntity>[];
-      data.forEach((group) {
-        group.documents.forEach((document) {
-          documents.add(
-            document.rebuild(
-              (b) => b
-                ..parentId = group.id
-                ..parentType = EntityType.group,
-            ),
-          );
+          final documents = <DocumentEntity>[];
+          data.forEach((group) {
+            group.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = group.id
+                    ..parentType = EntityType.group,
+                ),
+              );
+            });
+          });
+          store.dispatch(LoadDocumentsSuccess(documents));
+
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadGroupsFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
         });
-      });
-      store.dispatch(LoadDocumentsSuccess(documents));
-
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadGroupsFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
 
     next(action);
   };
@@ -265,31 +278,32 @@ Middleware<AppState> _saveDocument(GroupRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-        store.state.credentials,
-        action!.group,
-        action.multipartFiles,
-        action.isPrivate,
-      )
+            store.state.credentials,
+            action!.group,
+            action.multipartFiles,
+            action.isPrivate,
+          )
           .then((group) {
-        store.dispatch(SaveGroupSuccess(group));
+            store.dispatch(SaveGroupSuccess(group));
 
-        final documents = <DocumentEntity>[];
-        group.documents.forEach((document) {
-          documents.add(
-            document.rebuild(
-              (b) => b
-                ..parentId = group.id
-                ..parentType = EntityType.group,
-            ),
-          );
-        });
-        store.dispatch(LoadDocumentsSuccess(documents));
-        action.completer.complete(documents);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveGroupDocumentFailure(error));
-        action.completer.completeError(error);
-      });
+            final documents = <DocumentEntity>[];
+            group.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = group.id
+                    ..parentType = EntityType.group,
+                ),
+              );
+            });
+            store.dispatch(LoadDocumentsSuccess(documents));
+            action.completer.complete(documents);
+          })
+          .catchError((Object error) {
+            print(error);
+            store.dispatch(SaveGroupDocumentFailure(error));
+            action.completer.completeError(error);
+          });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveGroupDocumentFailure(error));

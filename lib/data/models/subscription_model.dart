@@ -225,8 +225,8 @@ abstract class SubscriptionEntity extends Object
     switch (sortField) {
       case SubscriptionFields.name:
         response = subscriptionA!.displayName.toLowerCase().compareTo(
-              subscriptionB!.displayName.toLowerCase(),
-            );
+          subscriptionB!.displayName.toLowerCase(),
+        );
         break;
       case SubscriptionFields.createdAt:
         response = subscriptionA!.createdAt.compareTo(subscriptionB!.createdAt);

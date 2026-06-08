@@ -50,23 +50,22 @@ class _DocumentViewState extends State<DocumentView> {
             child: document.data == null
                 ? LoadingIndicator()
                 : document.isImage
-                    ? PinchZoom(child: Image.memory(document.data!))
-                    : document.isPdf
-                        ? PdfPreview(
-                            build: (format) => document.data!,
-                            canChangeOrientation: false,
-                            canChangePageFormat: false,
-                            allowPrinting: false,
-                            allowSharing: false,
-                            canDebug: false,
-                          )
-                        : document.isTxt
-                            ? FormCard(
-                                child:
-                                    SelectableText(utf8.decode(document.data!)),
-                                isLast: true,
-                              )
-                            : SizedBox(),
+                ? PinchZoom(child: Image.memory(document.data!))
+                : document.isPdf
+                ? PdfPreview(
+                    build: (format) => document.data!,
+                    canChangeOrientation: false,
+                    canChangePageFormat: false,
+                    allowPrinting: false,
+                    allowSharing: false,
+                    canDebug: false,
+                  )
+                : document.isTxt
+                ? FormCard(
+                    child: SelectableText(utf8.decode(document.data!)),
+                    isLast: true,
+                  )
+                : SizedBox(),
           ),
           BottomButtons(
             entity: document,

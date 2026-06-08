@@ -21,7 +21,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final VendorEditVM viewModel;
 
@@ -121,10 +121,12 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
 
-    final contactEmail =
-        contact.emails!.isNotEmpty ? contact.emails!.first : null;
-    final contactPhone =
-        contact.phones!.isNotEmpty ? contact.phones!.first : null;
+    final contactEmail = contact.emails!.isNotEmpty
+        ? contact.emails!.first
+        : null;
+    final contactPhone = contact.phones!.isNotEmpty
+        ? contact.phones!.first
+        : null;
     final contactAddress = contact.postalAddresses!.isNotEmpty
         ? contact.postalAddresses!.first
         : null;

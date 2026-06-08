@@ -25,19 +25,22 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
 
 Reducer<BuiltMap<EntityType?, BuiltList<String>>> selectedEntitiesReducer =
     combineReducers([
-  TypedReducer<BuiltMap<EntityType?, BuiltList<String>>,
-      UpdateDashboardSelection>((state, action) {
-    return state.rebuild(
-      (b) => b..[action.entityType] = BuiltList(action.entityIds ?? <String>[]),
-    );
-  }),
-  TypedReducer<BuiltMap<EntityType?, BuiltList<String>>, SelectCompany>((
-    state,
-    action,
-  ) {
-    return state.rebuild((b) => b..clear());
-  }),
-]);
+      TypedReducer<
+        BuiltMap<EntityType?, BuiltList<String>>,
+        UpdateDashboardSelection
+      >((state, action) {
+        return state.rebuild(
+          (b) => b
+            ..[action.entityType] = BuiltList(action.entityIds ?? <String>[]),
+        );
+      }),
+      TypedReducer<BuiltMap<EntityType?, BuiltList<String>>, SelectCompany>((
+        state,
+        action,
+      ) {
+        return state.rebuild((b) => b..clear());
+      }),
+    ]);
 
 Reducer<EntityType?> selectedEntityTypeReducer = combineReducers([
   TypedReducer<EntityType?, UpdateDashboardEntityType>((state, action) {

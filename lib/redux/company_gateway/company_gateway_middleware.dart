@@ -121,18 +121,19 @@ Middleware<AppState> _archiveCompanyGateway(
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.companyGatewayIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.companyGatewayIds,
+          EntityAction.archive,
+        )
         .then((List<CompanyGatewayEntity> companyGateways) {
-      store.dispatch(ArchiveCompanyGatewaySuccess(companyGateways));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveCompanyGatewayFailure(prevCompanyGateways));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveCompanyGatewaySuccess(companyGateways));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveCompanyGatewayFailure(prevCompanyGateways));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -148,18 +149,19 @@ Middleware<AppState> _deleteCompanyGateway(
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.companyGatewayIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.companyGatewayIds,
+          EntityAction.delete,
+        )
         .then((List<CompanyGatewayEntity> companyGateways) {
-      store.dispatch(DeleteCompanyGatewaySuccess(companyGateways));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteCompanyGatewayFailure(prevCompanyGateways));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteCompanyGatewaySuccess(companyGateways));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteCompanyGatewayFailure(prevCompanyGateways));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -176,18 +178,19 @@ Middleware<AppState> _restoreCompanyGateway(
 
     repository
         .bulkAction(
-      store.state.credentials,
-      action.companyGatewayIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.companyGatewayIds,
+          EntityAction.restore,
+        )
         .then((List<CompanyGatewayEntity> companyGateways) {
-      store.dispatch(RestoreCompanyGatewaySuccess(companyGateways));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreCompanyGatewayFailure(prevCompanyGateways));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreCompanyGatewaySuccess(companyGateways));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreCompanyGatewayFailure(prevCompanyGateways));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -200,19 +203,20 @@ Middleware<AppState> _disconnectCompanyGateway(
     final action = dynamicAction as DisconnectCompanyGatewayRequest;
     repository
         .disconnect(
-      store.state.credentials,
-      action.companyGatewayId,
-      action.password,
-      action.idToken,
-    )
+          store.state.credentials,
+          action.companyGatewayId,
+          action.password,
+          action.idToken,
+        )
         .then((_) {
-      store.dispatch(DisconnectCompanyGatewaySuccess());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DisconnectCompanyGatewayFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DisconnectCompanyGatewaySuccess());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DisconnectCompanyGatewayFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -224,23 +228,24 @@ Middleware<AppState> _saveCompanyGateway(CompanyGatewayRepository repository) {
     repository
         .saveData(store.state.credentials, action.companyGateway!)
         .then((CompanyGatewayEntity companyGateway) {
-      if (action.companyGateway!.isNew) {
-        store.dispatch(AddCompanyGatewaySuccess(companyGateway));
-      } else {
-        store.dispatch(SaveCompanyGatewaySuccess(companyGateway));
-      }
-      action.completer!.complete(companyGateway);
-    }).catchError((Object error) {
-      print(error);
-      dev.log(
-        'Failed to save company gateway',
-        name: 'company_gateway_middleware',
-        stackTrace: StackTrace.current,
-        error: error,
-      );
-      store.dispatch(SaveCompanyGatewayFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.companyGateway!.isNew) {
+            store.dispatch(AddCompanyGatewaySuccess(companyGateway));
+          } else {
+            store.dispatch(SaveCompanyGatewaySuccess(companyGateway));
+          }
+          action.completer!.complete(companyGateway);
+        })
+        .catchError((Object error) {
+          print(error);
+          dev.log(
+            'Failed to save company gateway',
+            name: 'company_gateway_middleware',
+            stackTrace: StackTrace.current,
+            error: error,
+          );
+          store.dispatch(SaveCompanyGatewayFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -255,18 +260,19 @@ Middleware<AppState> _loadCompanyGateway(CompanyGatewayRepository repository) {
     repository
         .loadItem(state.credentials, action.companyGatewayId)
         .then((companyGateway) {
-      store.dispatch(LoadCompanyGatewaySuccess(companyGateway));
+          store.dispatch(LoadCompanyGatewaySuccess(companyGateway));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadCompanyGatewayFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadCompanyGatewayFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -278,24 +284,27 @@ Middleware<AppState> _loadCompanyGateways(CompanyGatewayRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadCompanyGatewaysRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadCompanyGatewaysSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadCompanyGatewaysSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-      /*
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+          /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadCompanyGatewaysFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadCompanyGatewaysFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

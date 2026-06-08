@@ -18,7 +18,7 @@ import 'transaction_screen_vm.dart';
 
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   static const String route = '/transaction';
 
@@ -142,7 +142,8 @@ class TransactionScreen extends StatelessWidget {
             store.dispatch(FilterTransactionsByCustom4(value)),
         statuses: statuses,
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.transaction)
           ? FloatingActionButton(
               heroTag: 'transaction_fab',

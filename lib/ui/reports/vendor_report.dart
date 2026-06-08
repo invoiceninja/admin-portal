@@ -80,8 +80,7 @@ var memoizedVendorReport = memo6(
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, GroupEntity> groupMap,
     StaticState staticState,
-  ) =>
-      vendorReport(
+  ) => vendorReport(
     userCompany!,
     reportsUIState,
     vendorMap,
@@ -340,14 +339,12 @@ ReportResult vendorReport(
         case VendorReportFields.classification:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(vendor.classification);
+          )!.lookup(vendor.classification);
           break;
         case VendorReportFields.record_state:
           value = AppLocalization.of(
             navigatorKey.currentContext!,
-          )!
-              .lookup(vendor.entityState);
+          )!.lookup(vendor.entityState);
           break;
         case VendorReportFields.tax_exempt:
           value = vendor.isTaxExempt;
@@ -393,11 +390,13 @@ ReportResult vendorReport(
   );
 
   return ReportResult(
-    allColumns:
-        VendorReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
+    allColumns: VendorReportFields.values
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

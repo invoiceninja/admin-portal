@@ -146,7 +146,8 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                             vertical: 10,
                             horizontal: 10,
                           ).copyWith(right: 32),
-                          child: widget.menuItembuilder != null &&
+                          child:
+                              widget.menuItembuilder != null &&
                                   widget.selectedValues.isNotEmpty
                               ? ClipRRect(
                                   child: SingleChildScrollView(
@@ -175,8 +176,8 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                               : Text(
                                   widget.selectedValues.isNotEmpty
                                       ? widget.selectedValues
-                                          .map((dynamic e) => e.toString())
-                                          .reduce((a, b) => a + ' , ' + b)
+                                            .map((dynamic e) => e.toString())
+                                            .reduce((a, b) => a + ' , ' + b)
                                       : widget.whenEmpty,
                                 ),
                         ),

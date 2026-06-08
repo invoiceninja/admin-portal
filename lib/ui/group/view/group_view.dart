@@ -20,7 +20,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupView extends StatefulWidget {
   const GroupView({Key? key, required this.viewModel, required this.isFilter})
-      : super(key: key);
+    : super(key: key);
 
   final GroupViewVM viewModel;
   final bool isFilter;
@@ -80,12 +80,9 @@ class _GroupViewState extends State<GroupView>
                 child: AppButton(
                   label: localization.configureSettings.toUpperCase(),
                   iconData: Icons.settings,
-                  onPressed: () => handleGroupAction(
-                      context,
-                      [
-                        group,
-                      ],
-                      EntityAction.settings),
+                  onPressed: () => handleGroupAction(context, [
+                    group,
+                  ], EntityAction.settings),
                 ),
               ),
               ListDivider(),
@@ -129,8 +126,9 @@ class SettingsViewer extends StatelessWidget {
 
     return FieldGrid({
       localization.name: settings.name,
-      localization.address:
-          settings.hasAddress ? formatAddress(state, object: settings) : null,
+      localization.address: settings.hasAddress
+          ? formatAddress(state, object: settings)
+          : null,
       localization.phone: settings.phone,
       localization.email: settings.email,
       localization.logo: settings.hasLogo ? localization.enabled : null,
@@ -162,8 +160,8 @@ class SettingsViewer extends StatelessWidget {
       localization.militaryTime: settings.enableMilitaryTime == true
           ? localization.enabled
           : settings.enableMilitaryTime == false
-              ? localization.disabled
-              : null,
+          ? localization.disabled
+          : null,
       localization.language: settings.hasLanguage
           ? staticState.languageMap[settings.languageId]?.name
           : null,
@@ -173,23 +171,23 @@ class SettingsViewer extends StatelessWidget {
       localization.sendReminders: settings.sendReminders == true
           ? localization.enabled
           : settings.sendReminders == false
-              ? localization.disabled
-              : null,
+          ? localization.disabled
+          : null,
       localization.clientPortal: settings.enablePortal == true
           ? localization.enabled
           : settings.enablePortal == false
-              ? localization.disabled
-              : null,
+          ? localization.disabled
+          : null,
       localization.clientPortalTasks: settings.enablePortal == true
           ? localization.enabled
           : settings.enablePortal == false
-              ? localization.disabled
-              : null,
+          ? localization.disabled
+          : null,
       localization.clientPortalDashboard: settings.enablePortal == true
           ? localization.enabled
           : settings.enablePortal == false
-              ? localization.disabled
-              : null,
+          ? localization.disabled
+          : null,
       localization.paymentType: settings.hasDefaultPaymentTypeId
           ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
           : null,
@@ -203,19 +201,21 @@ class SettingsViewer extends StatelessWidget {
       localization.customValue4: settings.customValue4,
       //localization.paymentTerms: settings.defaultPaymentTerms,
       localization.paymentTerms: settings.companyGatewayIds != null
-          ? state.companyGatewayState.map[settings.companyGatewayIds]
-              ?.listDisplayName
+          ? state
+                .companyGatewayState
+                .map[settings.companyGatewayIds]
+                ?.listDisplayName
           : null,
       localization.taskRate: settings.defaultTaskRate?.toString(),
       localization.attachPdf: settings.pdfEmailAttachment?.toString(),
       localization.attachUbl: settings.ublEmailAttachment?.toString(),
-      localization.attachDocuments:
-          settings.documentEmailAttachment?.toString(),
-      localization.attachDocuments:
-          settings.documentEmailAttachment?.toString(),
+      localization.attachDocuments: settings.documentEmailAttachment
+          ?.toString(),
+      localization.attachDocuments: settings.documentEmailAttachment
+          ?.toString(),
       localization.emailStyleCustom: settings.emailStyleCustom?.toString(),
-      localization.emailSubjectInvoice:
-          settings.emailSubjectInvoice?.toString(),
+      localization.emailSubjectInvoice: settings.emailSubjectInvoice
+          ?.toString(),
       localization.emailSubjectQuote: settings.emailSubjectQuote?.toString(),
       localization.emailSubjectPayment: settings.emailSubjectPayment,
       localization.emailSubjectPaymentPartial:
@@ -244,18 +244,21 @@ class SettingsViewer extends StatelessWidget {
       //    settings.emailBodyReminder3?.toString(),
       //localization.emailBodyReminder4:
       //    settings.emailBodyReminder4?.toString(),
-      localization.customMessageDashboard:
-          settings.customMessageDashboard?.toString(),
-      localization.customMessageUnpaidInvoice:
-          settings.customMessageUnpaidInvoice?.toString(),
-      localization.customMessagePaidInvoice:
-          settings.customMessagePaidInvoice?.toString(),
-      localization.customMessageUnapprovedQuote:
-          settings.customMessageUnapprovedQuote?.toString(),
-      localization.autoArchivePaidInvoices:
-          settings.autoArchiveInvoice?.toString(),
-      localization.autoArchiveCancelledInvoices:
-          settings.autoArchiveInvoiceCancelled?.toString(),
+      localization.customMessageDashboard: settings.customMessageDashboard
+          ?.toString(),
+      localization.customMessageUnpaidInvoice: settings
+          .customMessageUnpaidInvoice
+          ?.toString(),
+      localization.customMessagePaidInvoice: settings.customMessagePaidInvoice
+          ?.toString(),
+      localization.customMessageUnapprovedQuote: settings
+          .customMessageUnapprovedQuote
+          ?.toString(),
+      localization.autoArchivePaidInvoices: settings.autoArchiveInvoice
+          ?.toString(),
+      localization.autoArchiveCancelledInvoices: settings
+          .autoArchiveInvoiceCancelled
+          ?.toString(),
       localization.autoArchiveQuote: settings.autoArchiveQuote?.toString(),
       localization.autoEmailInvoice: settings.autoEmailInvoice?.toString(),
       localization.autoConvertQuote: settings.autoConvertQuote?.toString(),
@@ -264,36 +267,37 @@ class SettingsViewer extends StatelessWidget {
       localization.taskNumberPattern: settings.taskNumberPattern,
       localization.taskNumberCounter: settings.taskNumberCounter?.toString(),
       localization.expenseNumberPattern: settings.expenseNumberPattern,
-      localization.expenseNumberCounter:
-          settings.expenseNumberCounter?.toString(),
+      localization.expenseNumberCounter: settings.expenseNumberCounter
+          ?.toString(),
       localization.vendorNumberPattern: settings.vendorNumberPattern,
-      localization.vendorNumberCounter:
-          settings.vendorNumberCounter?.toString(),
+      localization.vendorNumberCounter: settings.vendorNumberCounter
+          ?.toString(),
       localization.ticketNumberPattern: settings.ticketNumberPattern,
-      localization.ticketNumberCounter:
-          settings.ticketNumberCounter?.toString(),
+      localization.ticketNumberCounter: settings.ticketNumberCounter
+          ?.toString(),
       localization.paymentNumberPattern: settings.paymentNumberPattern,
-      localization.paymentNumberCounter:
-          settings.paymentNumberCounter?.toString(),
+      localization.paymentNumberCounter: settings.paymentNumberCounter
+          ?.toString(),
       localization.invoiceNumberPattern: settings.invoiceNumberPattern,
-      localization.invoiceNumberCounter:
-          settings.invoiceNumberCounter?.toString(),
+      localization.invoiceNumberCounter: settings.invoiceNumberCounter
+          ?.toString(),
       localization.quoteNumberPattern: settings.quoteNumberPattern,
       localization.quoteNumberCounter: settings.quoteNumberCounter?.toString(),
       localization.clientNumberPattern: settings.clientNumberPattern,
-      localization.clientNumberCounter:
-          settings.clientNumberCounter?.toString(),
+      localization.clientNumberCounter: settings.clientNumberCounter
+          ?.toString(),
       localization.creditNumberPattern: settings.creditNumberPattern,
-      localization.creditNumberCounter:
-          settings.creditNumberCounter?.toString(),
+      localization.creditNumberCounter: settings.creditNumberCounter
+          ?.toString(),
       localization.recurringPrefix: settings.recurringNumberPrefix?.toString(),
       localization.resetCounter: settings.resetCounterFrequencyId?.toString(),
       localization.resetCounterDate: settings.resetCounterDate?.toString(),
       localization.counterPadding: settings.counterPadding?.toString(),
-      localization.sharedInvoiceQuoteCounter:
-          settings.sharedInvoiceQuoteCounter?.toString(),
-      localization.sharedInvoiceCreditCounter:
-          settings.sharedInvoiceCreditCounter?.toString(),
+      localization.sharedInvoiceQuoteCounter: settings.sharedInvoiceQuoteCounter
+          ?.toString(),
+      localization.sharedInvoiceCreditCounter: settings
+          .sharedInvoiceCreditCounter
+          ?.toString(),
       localization.invoiceTerms: settings.defaultInvoiceTerms,
       localization.quoteTerms: settings.defaultQuoteTerms,
       localization.quoteFooter: settings.defaultQuoteFooter,
@@ -310,18 +314,18 @@ class SettingsViewer extends StatelessWidget {
       localization.defaultTaxName3: settings.defaultTaxName3?.toString(),
       localization.defaultTaxRate3: settings.defaultTaxRate3?.toString(),
       //localization.defaultPaymentTypeId: settings.defaultPaymentTypeId,
-      localization.enablePortalPassword:
-          settings.enablePortalPassword?.toString(),
+      localization.enablePortalPassword: settings.enablePortalPassword
+          ?.toString(),
       localization.signatureOnPdf: settings.signatureOnPdf?.toString(),
       localization.enableMarkup: settings.enableEmailMarkup?.toString(),
-      localization.showAcceptInvoiceTerms:
-          settings.showAcceptInvoiceTerms?.toString(),
-      localization.showAcceptQuoteTerms:
-          settings.showAcceptQuoteTerms?.toString(),
-      localization.requireInvoiceSignature:
-          settings.requireInvoiceSignature?.toString(),
-      localization.requireQuoteSignature:
-          settings.requireQuoteSignature?.toString(),
+      localization.showAcceptInvoiceTerms: settings.showAcceptInvoiceTerms
+          ?.toString(),
+      localization.showAcceptQuoteTerms: settings.showAcceptQuoteTerms
+          ?.toString(),
+      localization.requireInvoiceSignature: settings.requireInvoiceSignature
+          ?.toString(),
+      localization.requireQuoteSignature: settings.requireQuoteSignature
+          ?.toString(),
       localization.allPagesHeader: settings.allPagesHeader?.toString(),
       localization.allPagesFooter: settings.allPagesFooter?.toString(),
       //localization.enableReminder1: settings.enableReminder1,

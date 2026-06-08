@@ -116,22 +116,23 @@ class _ClientPortalState extends State<ClientPortal>
 
       _webClient
           .post(
-        url,
-        credentials.token,
-        data: jsonEncode({'subdomain': subdomain}),
-      )
+            url,
+            credentials.token,
+            data: jsonEncode({'subdomain': subdomain}),
+          )
           .then((dynamic data) {
-        setState(() {
-          _isSubdomainUnique = true;
-          _isCheckingSubdomain = false;
-          _onChanged();
-        });
-      }).catchError((Object error) {
-        setState(() {
-          _isSubdomainUnique = false;
-          _isCheckingSubdomain = false;
-        });
-      });
+            setState(() {
+              _isSubdomainUnique = true;
+              _isCheckingSubdomain = false;
+              _onChanged();
+            });
+          })
+          .catchError((Object error) {
+            setState(() {
+              _isSubdomainUnique = false;
+              _isCheckingSubdomain = false;
+            });
+          });
     });
   }
 
@@ -198,11 +199,11 @@ class _ClientPortalState extends State<ClientPortal>
       final portalDomain = _portalDomainController.text.trim();
       final subdomain = _subdomainController.text.trim();
       final customMessageDashboard = _customMessageDashboard.text.trim();
-      final customMessageUnpaidInvoice =
-          _customMessageUnpaidInvoice.text.trim();
+      final customMessageUnpaidInvoice = _customMessageUnpaidInvoice.text
+          .trim();
       final customMessagePaidInvoice = _customMessagePaidInvoice.text.trim();
-      final customMessageUnapprovedQuote =
-          _customMessageUnapprovedQuote.text.trim();
+      final customMessageUnapprovedQuote = _customMessageUnapprovedQuote.text
+          .trim();
       final clientPortalTerms = _termsController.text.trim();
       final clientPortalPrivacy = _privacyController.text.trim();
       final clientPortalCustomJs = _customJavaScriptController.text.trim();
@@ -215,8 +216,9 @@ class _ClientPortalState extends State<ClientPortal>
 
       final company = widget.viewModel.company.rebuild(
         (b) => b
-          ..portalDomain =
-              isFiltered && portalDomain.isEmpty ? null : portalDomain
+          ..portalDomain = isFiltered && portalDomain.isEmpty
+              ? null
+              : portalDomain
           ..subdomain = isFiltered && subdomain.isEmpty ? null : subdomain,
       );
 
@@ -228,22 +230,23 @@ class _ClientPortalState extends State<ClientPortal>
         (b) => b
           ..customMessageDashboard =
               isFiltered && customMessageDashboard.isEmpty
-                  ? null
-                  : customMessageDashboard
+              ? null
+              : customMessageDashboard
           ..customMessageUnpaidInvoice =
               isFiltered && customMessageUnpaidInvoice.isEmpty
-                  ? null
-                  : customMessageUnpaidInvoice
+              ? null
+              : customMessageUnpaidInvoice
           ..customMessagePaidInvoice =
               isFiltered && customMessagePaidInvoice.isEmpty
-                  ? null
-                  : customMessagePaidInvoice
+              ? null
+              : customMessagePaidInvoice
           ..customMessageUnapprovedQuote =
               isFiltered && customMessageUnapprovedQuote.isEmpty
-                  ? null
-                  : customMessageUnapprovedQuote
-          ..clientPortalTerms =
-              isFiltered && clientPortalTerms.isEmpty ? null : clientPortalTerms
+              ? null
+              : customMessageUnapprovedQuote
+          ..clientPortalTerms = isFiltered && clientPortalTerms.isEmpty
+              ? null
+              : clientPortalTerms
           ..clientPortalPrivacy = isFiltered && clientPortalPrivacy.isEmpty
               ? null
               : clientPortalPrivacy
@@ -255,12 +258,12 @@ class _ClientPortalState extends State<ClientPortal>
               : clientPortalCustomCss
           ..clientPortalCustomHeader =
               isFiltered && clientPortalCustomHeader.isEmpty
-                  ? null
-                  : clientPortalCustomHeader
+              ? null
+              : clientPortalCustomHeader
           ..clientPortalCustomFooter =
               isFiltered && clientPortalCustomFooter.isEmpty
-                  ? null
-                  : clientPortalCustomFooter,
+              ? null
+              : clientPortalCustomFooter,
       );
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
@@ -321,10 +324,10 @@ class _ClientPortalState extends State<ClientPortal>
                         value: viewModel.company.portalMode,
                         onChanged: (dynamic value) =>
                             viewModel.onCompanyChanged(
-                          viewModel.company.rebuild(
-                            (b) => b..portalMode = value,
-                          ),
-                        ),
+                              viewModel.company.rebuild(
+                                (b) => b..portalMode = value,
+                              ),
+                            ),
                         items: [
                           DropdownMenuItem(
                             child: Text(localization.subdomain),
@@ -363,8 +366,8 @@ class _ClientPortalState extends State<ClientPortal>
                           _isCheckingSubdomain
                               ? Icons.pending_outlined
                               : _isSubdomainUnique
-                                  ? Icons.check_circle_outline
-                                  : Icons.error_outline,
+                              ? Icons.check_circle_outline
+                              : Icons.error_outline,
                         ),
                         onChanged: (value) => _validateSubdomain(),
                         inputFormatters: [
@@ -376,7 +379,8 @@ class _ClientPortalState extends State<ClientPortal>
                     ] else ...[
                       DecoratedFormField(
                         enabled: state.isEnterprisePlan,
-                        label: company.portalMode == kClientPortalModeDomain ||
+                        label:
+                            company.portalMode == kClientPortalModeDomain ||
                                 state.isSelfHosted
                             ? localization.domainUrl
                             : localization.iFrameUrl,
@@ -387,9 +391,9 @@ class _ClientPortalState extends State<ClientPortal>
                         keyboardType: TextInputType.url,
                         validator: (val) =>
                             (val.isEmpty || val.trim().isEmpty) &&
-                                    state.isHosted
-                                ? localization.pleaseEnterAValue
-                                : null,
+                                state.isHosted
+                            ? localization.pleaseEnterAValue
+                            : null,
                         onSavePressed: _onSavePressed,
                       ),
                       SizedBox(height: 16),
@@ -630,19 +634,21 @@ class _ClientPortalState extends State<ClientPortal>
                               viewModel.onCompanyChanged(
                                 company.rebuild(
                                   (b) => b
-                                    ..clientRegistrationFields[index] =
-                                        field.rebuild(
-                                      (b) => b
-                                        ..required = value ==
-                                            RegistrationFieldEntity
-                                                .SETTING_REQUIRED
-                                        ..visible = value ==
+                                    ..clientRegistrationFields[index] = field
+                                        .rebuild(
+                                          (b) => b
+                                            ..required =
+                                                value ==
                                                 RegistrationFieldEntity
-                                                    .SETTING_REQUIRED ||
-                                            value ==
-                                                RegistrationFieldEntity
-                                                    .SETTING_OPTIONAL,
-                                    ),
+                                                    .SETTING_REQUIRED
+                                            ..visible =
+                                                value ==
+                                                    RegistrationFieldEntity
+                                                        .SETTING_REQUIRED ||
+                                                value ==
+                                                    RegistrationFieldEntity
+                                                        .SETTING_OPTIONAL,
+                                        ),
                                 ),
                               );
                             },

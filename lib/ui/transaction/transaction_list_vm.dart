@@ -102,16 +102,16 @@ class TransactionListVM {
       transactionMap: state.transactionState.map,
       isLoading: state.isLoading,
       filter: state.transactionUIState.listUIState.filter,
-      onEntityAction: (
-        BuildContext context,
-        List<BaseEntity> transactions,
-        EntityAction action,
-      ) =>
-          handleTransactionAction(context, transactions, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> transactions,
+            EntityAction action,
+          ) => handleTransactionAction(context, transactions, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.transaction) ??
-              TransactionPresenter.getDefaultTableFields(state.userCompany),
+          TransactionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactions(field)),
       onClearMultielsect: () => store.dispatch(ClearTransactionMultiselect()),
     );

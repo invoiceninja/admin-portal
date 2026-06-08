@@ -112,20 +112,21 @@ Middleware<AppState> _archiveExpenseCategory(
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.expenseCategoryIds,
-      EntityAction.archive,
-    )
+          store.state.credentials,
+          action.expenseCategoryIds,
+          EntityAction.archive,
+        )
         .then((List<ExpenseCategoryEntity> expenseCategories) {
-      store.dispatch(ArchiveExpenseCategoriesSuccess(expenseCategories));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(
-        ArchiveExpenseCategoriesFailure(prevExpenseCategories),
-      );
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveExpenseCategoriesSuccess(expenseCategories));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(
+            ArchiveExpenseCategoriesFailure(prevExpenseCategories),
+          );
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -141,18 +142,19 @@ Middleware<AppState> _deleteExpenseCategory(
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.expenseCategoryIds,
-      EntityAction.delete,
-    )
+          store.state.credentials,
+          action.expenseCategoryIds,
+          EntityAction.delete,
+        )
         .then((List<ExpenseCategoryEntity> expenseCategories) {
-      store.dispatch(DeleteExpenseCategoriesSuccess(expenseCategories));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteExpenseCategoriesFailure(prevExpenseCategories));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteExpenseCategoriesSuccess(expenseCategories));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteExpenseCategoriesFailure(prevExpenseCategories));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -168,20 +170,21 @@ Middleware<AppState> _restoreExpenseCategory(
         .toList();
     repository
         .bulkAction(
-      store.state.credentials,
-      action.expenseCategoryIds,
-      EntityAction.restore,
-    )
+          store.state.credentials,
+          action.expenseCategoryIds,
+          EntityAction.restore,
+        )
         .then((List<ExpenseCategoryEntity> expenseCategories) {
-      store.dispatch(RestoreExpenseCategoriesSuccess(expenseCategories));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(
-        RestoreExpenseCategoriesFailure(prevExpenseCategories),
-      );
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreExpenseCategoriesSuccess(expenseCategories));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(
+            RestoreExpenseCategoriesFailure(prevExpenseCategories),
+          );
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -195,23 +198,24 @@ Middleware<AppState> _saveExpenseCategory(
     repository
         .saveData(store.state.credentials, action.expenseCategory!)
         .then((ExpenseCategoryEntity expenseCategory) {
-      if (action.expenseCategory!.isNew) {
-        store.dispatch(AddExpenseCategorySuccess(expenseCategory));
-      } else {
-        store.dispatch(SaveExpenseCategorySuccess(expenseCategory));
-      }
+          if (action.expenseCategory!.isNew) {
+            store.dispatch(AddExpenseCategorySuccess(expenseCategory));
+          } else {
+            store.dispatch(SaveExpenseCategorySuccess(expenseCategory));
+          }
 
-      action.completer!.complete(expenseCategory);
+          action.completer!.complete(expenseCategory);
 
-      final expenseCategoryUIState = store.state.expenseCategoryUIState;
-      if (expenseCategoryUIState.saveCompleter != null) {
-        expenseCategoryUIState.saveCompleter!.complete(expenseCategory);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveExpenseCategoryFailure(error));
-      action.completer!.completeError(error);
-    });
+          final expenseCategoryUIState = store.state.expenseCategoryUIState;
+          if (expenseCategoryUIState.saveCompleter != null) {
+            expenseCategoryUIState.saveCompleter!.complete(expenseCategory);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveExpenseCategoryFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -228,18 +232,19 @@ Middleware<AppState> _loadExpenseCategory(
     repository
         .loadItem(state.credentials, action.expenseCategoryId)
         .then((expenseCategory) {
-      store.dispatch(LoadExpenseCategorySuccess(expenseCategory));
+          store.dispatch(LoadExpenseCategorySuccess(expenseCategory));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadExpenseCategoryFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadExpenseCategoryFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -253,24 +258,27 @@ Middleware<AppState> _loadExpenseCategories(
     final AppState state = store.state;
 
     store.dispatch(LoadExpenseCategoriesRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadExpenseCategoriesSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadExpenseCategoriesSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-      /*
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+          /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadExpenseCategoriesFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadExpenseCategoriesFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

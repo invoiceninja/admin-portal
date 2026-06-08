@@ -45,7 +45,8 @@ class _WebSessionTimeoutState extends State<WebSessionTimeout> {
         return;
       }
 
-      final sessionLength = DateTime.now().millisecondsSinceEpoch -
+      final sessionLength =
+          DateTime.now().millisecondsSinceEpoch -
           state.userCompanyState.lastUpdated;
 
       if (sessionLength > sessionTimeout) {

@@ -33,8 +33,10 @@ abstract class PreImportResponse
 
 abstract class PreImportResponseEntityDetails
     implements
-        Built<PreImportResponseEntityDetails,
-            PreImportResponseEntityDetailsBuilder> {
+        Built<
+          PreImportResponseEntityDetails,
+          PreImportResponseEntityDetailsBuilder
+        > {
   factory PreImportResponseEntityDetails() {
     return _$PreImportResponseEntityDetails._(
       available: BuiltList<String>(),
@@ -210,20 +212,20 @@ class ExportType extends EnumClass {
   static const ExportType user_sales = _$user_sales;
 
   bool get hasDocuments => [
-        clients,
-        credits,
-        expenses,
-        invoices,
-        invoice_items,
-        purchase_orders,
-        purchase_order_items,
-        quotes,
-        quote_items,
-        payments,
-        products,
-        tasks,
-        vendors,
-      ].contains(this);
+    clients,
+    credits,
+    expenses,
+    invoices,
+    invoice_items,
+    purchase_orders,
+    purchase_order_items,
+    quotes,
+    quote_items,
+    payments,
+    products,
+    tasks,
+    vendors,
+  ].contains(this);
 
   static BuiltSet<ExportType> get values => _$exportValues;
 

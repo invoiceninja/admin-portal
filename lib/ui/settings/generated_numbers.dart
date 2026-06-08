@@ -156,7 +156,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     values.forEach((value) {
       value ??= '';
       final containsSubCounter = value.contains('{\$client_counter}');
-      final containsCounterOrId = value.contains('{\$client_id_number}') ||
+      final containsCounterOrId =
+          value.contains('{\$client_id_number}') ||
           value.contains('{\$client_number}') ||
           value.contains('{\$counter}');
 
@@ -172,9 +173,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           return ErrorDialog(
             AppLocalization.of(
               context,
-            )!
-                .counterPatternError
-                .replaceAll(':', '\$'),
+            )!.counterPatternError.replaceAll(':', '\$'),
           );
         },
       );
@@ -287,12 +286,12 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                           .map(
                             (id, frequency) =>
                                 MapEntry<String, DropdownMenuItem<String>>(
-                              id,
-                              DropdownMenuItem<String>(
-                                child: Text(localization.lookup(frequency)),
-                                value: id,
-                              ),
-                            ),
+                                  id,
+                                  DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(frequency)),
+                                    value: id,
+                                  ),
+                                ),
                           )
                           .values
                           .toList(),
@@ -612,7 +611,8 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
             if (offset >= 0) {
               final currentValue = _patternController.text;
-              newValue = currentValue.substring(0, offset) +
+              newValue =
+                  currentValue.substring(0, offset) +
                   field +
                   currentValue.substring(offset);
               newOffset = offset + field.length;

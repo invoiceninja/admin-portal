@@ -35,7 +35,7 @@ class EntityListTile extends StatefulWidget {
   final bool isFilter;
   final ClientEntity? client;
   final Function(BuildContext, BaseEntity?, EntityAction)?
-      onEntityActionSelected;
+  onEntityActionSelected;
 
   @override
   _EntityListTileState createState() => _EntityListTileState();
@@ -52,21 +52,24 @@ class _EntityListTileState extends State<EntityListTile> {
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final isFilteredBy = state.uiState.filterEntityId == widget.entity.id &&
+    final isFilteredBy =
+        state.uiState.filterEntityId == widget.entity.id &&
         state.uiState.filterEntityType == widget.entity.entityType;
 
-    final entityClient = widget.client ??
+    final entityClient =
+        widget.client ??
         (widget.entity is BelongsToClient
             ? state.clientState.map[(widget.entity as BelongsToClient).clientId]
             : null);
     final isHovered =
         (!RendererBinding.instance.mouseTracker.mouseIsConnected &&
-                isFilteredBy) ||
-            _isHovered;
+            isFilteredBy) ||
+        _isHovered;
 
     final leading = ActionMenuButton(
-      iconData:
-          isHovered ? Icons.more_vert : getEntityIcon(widget.entity.entityType),
+      iconData: isHovered
+          ? Icons.more_vert
+          : getEntityIcon(widget.entity.entityType),
       iconSize: isHovered ? null : 18,
       entityActions: widget.entity.getActions(
         userCompany: state.userCompany,
@@ -85,7 +88,8 @@ class _EntityListTileState extends State<EntityListTile> {
     final trailing = widget.entity.createdAt == 0
         ? null
         : IgnorePointer(
-            ignoring: !isHovered ||
+            ignoring:
+                !isHovered ||
                 widget.isFilter ||
                 widget.entity.entityType == EntityType.company,
             child: IconButton(
@@ -111,23 +115,23 @@ class _EntityListTileState extends State<EntityListTile> {
     if (entity is InvoiceEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, clientId: entity.clientId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     } else if (entity is PaymentEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, clientId: entity.clientId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     } else if (entity is ExpenseEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, currencyId: entity.currencyId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     } else if (entity is TransactionEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, currencyId: entity.currencyId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     }
 
     return MouseRegion(
@@ -144,7 +148,8 @@ class _EntityListTileState extends State<EntityListTile> {
               onTap: () {
                 if (state.prefState.isViewerFullScreen(
                   widget.entity.entityType,
-                )) store.dispatch(ToggleViewerLayout(widget.entity.entityType));
+                ))
+                  store.dispatch(ToggleViewerLayout(widget.entity.entityType));
                 inspectEntity(entity: widget.entity);
               },
               onLongPress: () =>
@@ -154,7 +159,8 @@ class _EntityListTileState extends State<EntityListTile> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              subtitle: ((widget.subtitle ?? '').isNotEmpty ||
+              subtitle:
+                  ((widget.subtitle ?? '').isNotEmpty ||
                       defaultSubtitle.isNotEmpty ||
                       !entity.isActive)
                   ? Column(
@@ -206,9 +212,9 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
   bool _isHovered = false;
 
   void _onTap(BuildContext context) => viewEntitiesByType(
-        entityType: widget.entityType,
-        filterEntity: widget.entity,
-      );
+    entityType: widget.entityType,
+    filterEntity: widget.entity,
+  );
 
   void _onLongPress() {
     if (widget.entity.isDeleted!) {
@@ -252,7 +258,8 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                     ? AppLocalization.of(context)!.none
                     : widget.subtitle!,
               ),
-              leading: _isHovered &&
+              leading:
+                  _isHovered &&
                       !widget.hideNew &&
                       !widget.entity.isDeleted! &&
                       state.userCompany.canCreate(widget.entityType)

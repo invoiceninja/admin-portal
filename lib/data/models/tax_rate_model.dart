@@ -106,8 +106,8 @@ abstract class TaxRateEntity extends Object
     switch (sortField) {
       case TaxRateFields.name:
         response = taxRateA!.name.toLowerCase().compareTo(
-              taxRateB!.name.toLowerCase(),
-            );
+          taxRateB!.name.toLowerCase(),
+        );
         break;
       case TaxRateFields.rate:
         response = taxRateA!.rate.compareTo(taxRateB!.rate);

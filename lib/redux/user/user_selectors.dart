@@ -13,8 +13,7 @@ var memoizedDropdownUserList = memo3(
     BuiltMap<String, UserEntity> userMap,
     BuiltList<String> userList,
     String clientId,
-  ) =>
-      dropdownUsersSelector(userMap, userList, clientId),
+  ) => dropdownUsersSelector(userMap, userList, clientId),
 );
 
 List<String> dropdownUsersSelector(
@@ -48,8 +47,7 @@ var memoizedFilteredUserList = memo5(
     BuiltList<String> userList,
     ListUIState userListState,
     String authUserId,
-  ) =>
-      filteredUsersSelector(
+  ) => filteredUsersSelector(
     selectionState,
     userMap,
     userList,
@@ -99,13 +97,14 @@ var memoizedUserList = memo1(
 );
 
 List<String?> userList(BuiltMap<String, UserEntity> userMap) {
-  final list =
-      userMap.keys.where((userId) => userMap[userId]!.isActive).toList();
+  final list = userMap.keys
+      .where((userId) => userMap[userId]!.isActive)
+      .toList();
 
   list.sort(
     (idA, idB) => userMap[idA]!.fullName.toLowerCase().compareTo(
-          userMap[idB]!.fullName.toLowerCase(),
-        ),
+      userMap[idB]!.fullName.toLowerCase(),
+    ),
   );
 
   return list;

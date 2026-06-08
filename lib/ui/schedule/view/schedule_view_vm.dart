@@ -49,10 +49,10 @@ class ScheduleViewVM {
     final state = store.state;
     final schedule =
         state.scheduleState.map[state.scheduleUIState.selectedId] ??
-            ScheduleEntity(
-              ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
-              id: state.scheduleUIState.selectedId,
-            );
+        ScheduleEntity(
+          ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+          id: state.scheduleUIState.selectedId,
+        );
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
