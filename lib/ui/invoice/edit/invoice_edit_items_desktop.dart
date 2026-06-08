@@ -68,6 +68,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   // Stable trailing placeholder row; reused across builds so its createdAt
   // (and therefore the TableRow key) doesn't churn and drop keyboard focus.
   InvoiceItemEntity? _emptyLineItem;
+  // Bumped on structural edits (remove/move/clone/insert) to re-key the table
+  // and force a full rebuild. Needed because the rows are keyed by createdAt,
+  // which can collide on legacy data (e.g. task items saved with createdAt 0),
+  // causing Flutter to reuse stale rows and drop the wrong one on removal.
+  int _tableGeneration = 0;
   final _columns = <String>[];
 
   @override
@@ -622,6 +627,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     return FormCard(
       padding: const EdgeInsets.symmetric(horizontal: kMobileDialogPadding),
       child: Table(
+        key: ValueKey('__line_items_table_${_tableGeneration}__'),
         columnWidths: {
           _columns.indexOf(COLUMN_ITEM): FlexColumnWidth(1.3),
           _columns.indexOf(COLUMN_DESCRIPTION): FlexColumnWidth(2.2),
@@ -1339,6 +1345,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           entityId: lineItems[index].taskId,
                           entityType: EntityType.task,
                         );
+                        return;
                       } else if (action == localization.moveTop) {
                         viewModel.onMovedInvoiceItem!(index, 0);
                       } else if (action == localization.moveUp) {
@@ -1357,6 +1364,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       } else if (action == localization.clone) {
                         viewModel.cloneLineItem!(index);
                       }
+                      // Structural edit: re-key the table so rows rebuild from
+                      // current data rather than reusing stale (positionally
+                      // keyed) rows when createdAt values collide.
+                      _tableGeneration++;
                       _updateTable();
                     },
                   ),
