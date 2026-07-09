@@ -775,7 +775,8 @@ class TotalsDataTable extends StatelessWidget {
     return mt.DataTable(
       // Bound the sort index against the totals table's own column count
       // (currency + count + totalable columns), not the full report columns.
-      sortColumnIndex: reportSettings.sortTotalsIndex <
+      sortColumnIndex:
+          reportSettings.sortTotalsIndex <
               2 + reportResult.totalableColumns().length
           ? reportSettings.sortTotalsIndex
           : null,

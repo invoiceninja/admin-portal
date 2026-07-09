@@ -42,8 +42,13 @@ void main() {
 
     group('SELF-HOSTED', () {
       test('No input provided by user', () async {
-        await login(driver!,
-            loginEmail: '', loginPassword: '', loginUrl: '', loginSecret: '');
+        await login(
+          driver!,
+          loginEmail: '',
+          loginPassword: '',
+          loginUrl: '',
+          loginSecret: '',
+        );
 
         await driver!.waitFor(find.text(localization.pleaseEnterYourEmail));
         await driver!.waitFor(find.text(localization.pleaseEnterYourPassword));

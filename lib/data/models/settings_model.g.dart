@@ -1776,6 +1776,22 @@ class _$SettingsEntitySerializer
           serializers.serialize(value, specifiedType: const FullType(String)),
         );
     }
+    value = object.franceReportingEnabled;
+    if (value != null) {
+      result
+        ..add('france_reporting_enabled')
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
+    }
+    value = object.franceReportingSchedule;
+    if (value != null) {
+      result
+        ..add('france_reporting_schedule')
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
+    }
     value = object.defaultExpensePaymentTypeId;
     if (value != null) {
       result
@@ -3754,6 +3770,22 @@ class _$SettingsEntitySerializer
                   )
                   as String?;
           break;
+        case 'france_reporting_enabled':
+          result.franceReportingEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
+          break;
+        case 'france_reporting_schedule':
+          result.franceReportingSchedule =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
+          break;
         case 'default_expense_payment_type_id':
           result.defaultExpensePaymentTypeId =
               serializers.deserialize(
@@ -4547,6 +4579,10 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String? eQuoteType;
   @override
+  final bool? franceReportingEnabled;
+  @override
+  final String? franceReportingSchedule;
+  @override
   final String? defaultExpensePaymentTypeId;
   @override
   final String? classification;
@@ -4833,6 +4869,8 @@ class _$SettingsEntity extends SettingsEntity {
     this.enableEInvoice,
     this.eInvoiceType,
     this.eQuoteType,
+    this.franceReportingEnabled,
+    this.franceReportingSchedule,
     this.defaultExpensePaymentTypeId,
     this.classification,
     this.paymentEmailAllContacts,
@@ -5102,6 +5140,8 @@ class _$SettingsEntity extends SettingsEntity {
         enableEInvoice == other.enableEInvoice &&
         eInvoiceType == other.eInvoiceType &&
         eQuoteType == other.eQuoteType &&
+        franceReportingEnabled == other.franceReportingEnabled &&
+        franceReportingSchedule == other.franceReportingSchedule &&
         defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId &&
         classification == other.classification &&
         paymentEmailAllContacts == other.paymentEmailAllContacts &&
@@ -5362,6 +5402,8 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, enableEInvoice.hashCode);
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
     _$hash = $jc(_$hash, eQuoteType.hashCode);
+    _$hash = $jc(_$hash, franceReportingEnabled.hashCode);
+    _$hash = $jc(_$hash, franceReportingSchedule.hashCode);
     _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
@@ -5636,6 +5678,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('enableEInvoice', enableEInvoice)
           ..add('eInvoiceType', eInvoiceType)
           ..add('eQuoteType', eQuoteType)
+          ..add('franceReportingEnabled', franceReportingEnabled)
+          ..add('franceReportingSchedule', franceReportingSchedule)
           ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId)
           ..add('classification', classification)
           ..add('paymentEmailAllContacts', paymentEmailAllContacts)
@@ -6773,6 +6817,16 @@ class SettingsEntityBuilder
   String? get eQuoteType => _$this._eQuoteType;
   set eQuoteType(String? eQuoteType) => _$this._eQuoteType = eQuoteType;
 
+  bool? _franceReportingEnabled;
+  bool? get franceReportingEnabled => _$this._franceReportingEnabled;
+  set franceReportingEnabled(bool? franceReportingEnabled) =>
+      _$this._franceReportingEnabled = franceReportingEnabled;
+
+  String? _franceReportingSchedule;
+  String? get franceReportingSchedule => _$this._franceReportingSchedule;
+  set franceReportingSchedule(String? franceReportingSchedule) =>
+      _$this._franceReportingSchedule = franceReportingSchedule;
+
   String? _defaultExpensePaymentTypeId;
   String? get defaultExpensePaymentTypeId =>
       _$this._defaultExpensePaymentTypeId;
@@ -7148,6 +7202,8 @@ class SettingsEntityBuilder
       _enableEInvoice = $v.enableEInvoice;
       _eInvoiceType = $v.eInvoiceType;
       _eQuoteType = $v.eQuoteType;
+      _franceReportingEnabled = $v.franceReportingEnabled;
+      _franceReportingSchedule = $v.franceReportingSchedule;
       _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
       _classification = $v.classification;
       _paymentEmailAllContacts = $v.paymentEmailAllContacts;
@@ -7425,6 +7481,8 @@ class SettingsEntityBuilder
             enableEInvoice: enableEInvoice,
             eInvoiceType: eInvoiceType,
             eQuoteType: eQuoteType,
+            franceReportingEnabled: franceReportingEnabled,
+            franceReportingSchedule: franceReportingSchedule,
             defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
             classification: classification,
             paymentEmailAllContacts: paymentEmailAllContacts,

@@ -307,6 +307,14 @@ const kEQuoteTypes = [
   kEQuoteType,
 ];
 
+const String kFranceReportingScheduleTenDay = 'ten_day';
+const String kFranceReportingScheduleMonthly = 'monthly';
+
+const kFranceReportingSchedules = [
+  kFranceReportingScheduleTenDay,
+  kFranceReportingScheduleMonthly,
+];
+
 const kPaymentMeansCodes = <String, String>{
   '1': 'Instrument not defined',
   '2': 'Automated clearing house credit',

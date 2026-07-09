@@ -70,15 +70,19 @@ void runTestSuite({bool batchMode = false}) {
       await driver!.tap(find.byTooltip(localization.newProduct));
 
       print('Fill form: $productKey');
-      await fillAndSaveForm(driver!, <String, dynamic>{
-        localization.product: productKey,
-        localization.description: description,
-        //localization.cost: cost,
-      }, skipCheckFor: [
-        localization.product,
-        localization.description
-        //localization.cost
-      ]);
+      await fillAndSaveForm(
+        driver!,
+        <String, dynamic>{
+          localization.product: productKey,
+          localization.description: description,
+          //localization.cost: cost,
+        },
+        skipCheckFor: [
+          localization.product,
+          localization.description,
+          //localization.cost
+        ],
+      );
 
       if (await isMobile(driver!)) {
         print('Click back');
@@ -92,32 +96,36 @@ void runTestSuite({bool batchMode = false}) {
       if (await isMobile(driver!)) {
         print('Select product: $productKey');
         await driver!.scrollUntilVisible(
-            find.byType('ListView'), find.text(productKey),
-            dyScroll: -300);
+          find.byType('ListView'),
+          find.text(productKey),
+          dyScroll: -300,
+        );
         await driver!.tap(find.text(productKey));
       }
 
       print('Tap edit');
       await driver!.tap(find.text(localization.edit));
 
-      await fillAndSaveForm(driver!, <String, dynamic>{
-        localization.product: updatedProductKey,
-        localization.description: updatedDescription,
-        //localization.cost: updatedCost,
-      }, skipCheckFor: [
-        localization.product,
-        localization.description
-      ]);
+      await fillAndSaveForm(
+        driver!,
+        <String, dynamic>{
+          localization.product: updatedProductKey,
+          localization.description: updatedDescription,
+          //localization.cost: updatedCost,
+        },
+        skipCheckFor: [localization.product, localization.description],
+      );
     });
 
     // Archive the edited product
     test('Archive/delete product test', () async {
       await testArchiveAndDelete(
-          driver: driver!,
-          rowText: updatedProductKey,
-          archivedMessage: localization.archivedProduct,
-          deletedMessage: localization.deletedProduct,
-          restoredMessage: localization.restoredProduct);
+        driver: driver!,
+        rowText: updatedProductKey,
+        archivedMessage: localization.archivedProduct,
+        deletedMessage: localization.deletedProduct,
+        restoredMessage: localization.restoredProduct,
+      );
 
       if (await isMobile(driver!)) {
         await driver!.tap(find.pageBack());

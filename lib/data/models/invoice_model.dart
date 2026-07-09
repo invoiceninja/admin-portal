@@ -1848,26 +1848,46 @@ abstract class InvoiceItemEntity
   }
 
   double taxAmount(InvoiceEntity invoice, int precision) {
-    double calculateTaxAmount(double rate) {
-      double taxAmount;
+    final lineTotal = total(invoice, precision);
+    final useInclusive = invoice.usesInclusiveTaxes;
+
+    // Shared additive base (issue invoiceninja/invoiceninja#12072): each tier
+    // extracts against the divisor of its OWN group's rate sum (Σr). Item-level
+    // rates (InvoiceItemSum) and invoice-level rates (InvoiceSum) are separate
+    // groups server-side, so they get separate divisors. A single rate in a
+    // group reduces to the legacy `lineTotal - lineTotal/(1 + rate/100)`.
+    double extract(double rate, double sumRate) {
       if (rate == 0) {
         return 0;
       }
-      final lineTotal = total(invoice, precision);
-      if (invoice.usesInclusiveTaxes) {
-        taxAmount = lineTotal - (lineTotal / (1 + (rate / 100)));
+      // Combined inclusive rate ≤ 0 → no tax (parity with backend
+      // InclusiveTax::backout `combined_rate <= 0`).
+      if (useInclusive && sumRate <= 0) {
+        return 0;
+      }
+      double taxAmount;
+      if (useInclusive) {
+        if (sumRate == rate) {
+          taxAmount = lineTotal - (lineTotal / (1 + (rate / 100)));
+        } else {
+          final net = lineTotal / (1 + (sumRate / 100));
+          taxAmount = rate / 100 * net;
+        }
       } else {
         taxAmount = lineTotal * rate / 100;
       }
       return round(taxAmount, precision);
     }
 
-    return calculateTaxAmount(taxRate1) +
-        calculateTaxAmount(taxRate2) +
-        calculateTaxAmount(taxRate3) +
-        calculateTaxAmount(invoice.taxRate1) +
-        calculateTaxAmount(invoice.taxRate2) +
-        calculateTaxAmount(invoice.taxRate3);
+    final itemSum = taxRate1 + taxRate2 + taxRate3;
+    final invoiceSum = invoice.taxRate1 + invoice.taxRate2 + invoice.taxRate3;
+
+    return extract(taxRate1, itemSum) +
+        extract(taxRate2, itemSum) +
+        extract(taxRate3, itemSum) +
+        extract(invoice.taxRate1, invoiceSum) +
+        extract(invoice.taxRate2, invoiceSum) +
+        extract(invoice.taxRate3, invoiceSum);
   }
 
   InvoiceItemEntity get clone => rebuild(

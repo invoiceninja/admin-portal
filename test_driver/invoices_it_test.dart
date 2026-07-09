@@ -17,17 +17,21 @@ void runTestSuite({bool batchMode = false}) {
     FlutterDriver? driver;
 
     final clientName = makeUnique(faker.company.name());
-    final poNumber =
-        faker.randomGenerator.integer(999999, min: 100000).toString();
+    final poNumber = faker.randomGenerator
+        .integer(999999, min: 100000)
+        .toString();
     final productKey = makeUnique(faker.food.cuisine());
-    final clientKey =
-        faker.randomGenerator.integer(999999, min: 100000).toString();
+    final clientKey = faker.randomGenerator
+        .integer(999999, min: 100000)
+        .toString();
     final description = faker.lorem.sentences(5).toString();
-    final cost =
-        faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
+    final cost = faker.randomGenerator
+        .decimal(min: 50, scale: 10)
+        .toStringAsFixed(2);
 
-    final updatedPoNumber =
-        faker.randomGenerator.integer(999999, min: 100000).toString();
+    final updatedPoNumber = faker.randomGenerator
+        .integer(999999, min: 100000)
+        .toString();
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -83,7 +87,7 @@ void runTestSuite({bool batchMode = false}) {
       print('Fill the client form');
       await fillTextFields(driver, <String, String>{
         localization.name: clientName,
-        localization.idNumber: clientKey
+        localization.idNumber: clientKey,
       });
       // Await for Debouncer
       await Future<dynamic>.delayed(Duration(milliseconds: 500));
@@ -113,7 +117,7 @@ void runTestSuite({bool batchMode = false}) {
           getLineItemKey('name', 0): productKey,
           getLineItemKey('description', 0): description,
           getLineItemKey('cost', 0): cost,
-          getLineItemKey('quantity', 0): '1'
+          getLineItemKey('quantity', 0): '1',
         });
       }
 
@@ -133,8 +137,10 @@ void runTestSuite({bool batchMode = false}) {
       if (await isMobile(driver!)) {
         print('Select invoice: $clientName');
         await driver!.scrollUntilVisible(
-            find.byType('ListView'), find.text(clientName),
-            dyScroll: -300);
+          find.byType('ListView'),
+          find.text(clientName),
+          dyScroll: -300,
+        );
         await driver!.tap(find.text(clientName));
       }
 
@@ -149,11 +155,12 @@ void runTestSuite({bool batchMode = false}) {
     // Archive the edited invoice
     test('Archive/delete invoice test', () async {
       await testArchiveAndDelete(
-          driver: driver!,
-          rowText: clientName,
-          archivedMessage: localization.archivedInvoice,
-          deletedMessage: localization.deletedInvoice,
-          restoredMessage: localization.restoredInvoice);
+        driver: driver!,
+        rowText: clientName,
+        archivedMessage: localization.archivedInvoice,
+        deletedMessage: localization.deletedInvoice,
+        restoredMessage: localization.restoredInvoice,
+      );
     });
 
     // Mark the invoice as paid
@@ -161,8 +168,9 @@ void runTestSuite({bool batchMode = false}) {
       await selectAction(driver!, localization.enterPayment);
       await driver!.tap(find.text(localization.save));
       // "Completed" status
-      await driver!
-          .waitFor(find.text(localization.paymentStatus4.toUpperCase()));
+      await driver!.waitFor(
+        find.text(localization.paymentStatus4.toUpperCase()),
+      );
 
       if (await isMobile(driver!)) {
         await driver!.tap(find.pageBack());

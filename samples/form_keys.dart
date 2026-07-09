@@ -24,8 +24,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_appState');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_appState',
+  );
 
   static final GlobalKey<ClientPageState> _clientKey =
       GlobalKey<ClientPageState>();
@@ -50,8 +51,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     // Create a test client to show initially
     final ClientEntity _client = ClientEntity(
-        name: 'Acme Client',
-        contacts: [ContactEntity(email: 'test@example.com')]);
+      name: 'Acme Client',
+      contacts: [ContactEntity(email: 'test@example.com')],
+    );
 
     return MaterialApp(
       home: Scaffold(
@@ -82,17 +84,13 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 // Do something with the client...
                 print('Client name: ${client.name}');
               },
-            )
+            ),
           ],
           bottom: TabBar(
             controller: _controller,
             tabs: [
-              Tab(
-                text: 'Details',
-              ),
-              Tab(
-                text: 'Contacts',
-              ),
+              Tab(text: 'Details'),
+              Tab(text: 'Contacts'),
             ],
           ),
         ),
@@ -113,10 +111,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
 // Display the client's details, currently just their name
 class ClientPage extends StatefulWidget {
-  const ClientPage({
-    Key? key,
-    required this.client,
-  }) : super(key: key);
+  const ClientPage({Key? key, required this.client}) : super(key: key);
 
   final ClientEntity client;
 
@@ -142,9 +137,7 @@ class ClientPageState extends State<ClientPage>
         TextFormField(
           initialValue: widget.client.name,
           onSaved: (value) => name = value!.trim(),
-          decoration: InputDecoration(
-            labelText: 'Name',
-          ),
+          decoration: InputDecoration(labelText: 'Name'),
         ),
       ],
     );
@@ -153,10 +146,7 @@ class ClientPageState extends State<ClientPage>
 
 // Displays the list of contacts with a button to add more
 class ContactsPage extends StatefulWidget {
-  const ContactsPage({
-    Key? key,
-    required this.client,
-  }) : super(key: key);
+  const ContactsPage({Key? key, required this.client}) : super(key: key);
 
   final ClientEntity client;
 
@@ -213,24 +203,26 @@ class ContactsPageState extends State<ContactsPage>
     for (var i = 0; i < _contacts.length; i++) {
       final contact = _contacts[i];
       final contactKey = _contactKeys[i];
-      items.add(ContactForm(
-        contact: contact,
-        key: contactKey,
-        onRemovePressed: (key) => _onRemovePressed(key),
-      ));
+      items.add(
+        ContactForm(
+          contact: contact,
+          key: contactKey,
+          onRemovePressed: (key) => _onRemovePressed(key),
+        ),
+      );
     }
 
-    items.add(Padding(
-      padding: const EdgeInsets.all(16),
-      child: ElevatedButton(
-        child: Text('ADD CONTACT'),
-        onPressed: _onAddPressed,
+    items.add(
+      Padding(
+        padding: const EdgeInsets.all(16),
+        child: ElevatedButton(
+          child: Text('ADD CONTACT'),
+          onPressed: _onAddPressed,
+        ),
       ),
-    ));
-
-    return ScrollableListView(
-      children: items,
     );
+
+    return ScrollableListView(children: items);
   }
 }
 
@@ -263,9 +255,7 @@ class ContactFormState extends State<ContactForm> {
         TextFormField(
           initialValue: widget.contact.email,
           onSaved: (value) => _email = value!.trim(),
-          decoration: InputDecoration(
-            labelText: 'Email',
-          ),
+          decoration: InputDecoration(labelText: 'Email'),
           keyboardType: TextInputType.emailAddress,
         ),
         Row(
@@ -274,16 +264,15 @@ class ContactFormState extends State<ContactForm> {
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: TextButton(
-                onPressed: () => widget
-                    .onRemovePressed(widget.key as GlobalKey<ContactFormState>),
+                onPressed: () => widget.onRemovePressed(
+                  widget.key as GlobalKey<ContactFormState>,
+                ),
                 child: Text(
                   'Delete',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(color: Colors.grey[600]),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ],
@@ -304,10 +293,12 @@ class FormCard extends StatelessWidget {
         elevation: 2.0,
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
-          child: Column(
-            children: children!,
+            left: 12.0,
+            right: 12.0,
+            top: 12.0,
+            bottom: 18.0,
           ),
+          child: Column(children: children!),
         ),
       ),
     );
