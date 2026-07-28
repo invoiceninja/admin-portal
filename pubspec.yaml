@@ -23,7 +23,7 @@ dependencies:
   web: ^1.0.0
   google_sign_in: ^7.2.0
   in_app_review: ^2.0.4
-  in_app_purchase: ^3.2.3
+  in_app_purchase: ^3.3.0
   pinput: ^3.0.1
   flutter_redux: ^0.10.0
   redux_logging: ^0.5.0
@@ -88,7 +88,13 @@ dependencies:
   device_info_plus: ^12.2.0
   ios_open_subscriptions_settings: ^0.0.4
   redux: any
-  in_app_purchase_android: any
+  # Pinned: 0.5.0 is the newest release that still resolves on the Flutter
+  # version this repo pins (3.41.9 / Dart 3.11.5 — set in BOTH codemagic.yaml
+  # and .flutter-version); 0.5.0+1 and later require Dart ^3.12 / Flutter
+  # >=3.44. 0.5.0 already carries Google Play Billing Library 8.0.0, which
+  # Play requires for uploads from 2026-08-31.
+  # Relax back to `any` once both Flutter pins move to 3.44+.
+  in_app_purchase_android: 0.5.0
   in_app_purchase_storekit: any
   overlord: any
   super_editor: any
