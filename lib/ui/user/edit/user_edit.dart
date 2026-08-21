@@ -369,11 +369,11 @@ class _UserEditState extends State<UserEdit>
                     activeThumbColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SwitchListTile(
-                    title: Text(localization.sendEmails),
-                    subtitle: Text(localization.sendEmailsPermission),
+                    title: Text(localization.disableEmails),
+                    subtitle: Text(localization.disableEmailsHelp),
                     value: userCompany.isAdmin
-                        ? true
-                        : !userCompany.permissions.contains(
+                        ? false
+                        : userCompany.permissions.contains(
                             kPermissionDisableEmails,
                           ),
                     onChanged: userCompany.isAdmin
@@ -384,16 +384,16 @@ class _UserEditState extends State<UserEdit>
                                 .where((element) => element.isNotEmpty)
                                 .toList();
                             if (value) {
-                              if (permissions.contains(
-                                kPermissionDisableEmails,
-                              )) {
-                                permissions.remove(kPermissionDisableEmails);
-                              }
-                            } else {
                               if (!permissions.contains(
                                 kPermissionDisableEmails,
                               )) {
                                 permissions.add(kPermissionDisableEmails);
+                              }
+                            } else {
+                              if (permissions.contains(
+                                kPermissionDisableEmails,
+                              )) {
+                                permissions.remove(kPermissionDisableEmails);
                               }
                             }
 
