@@ -741,8 +741,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   ? item.rebuild(
                                       (b) => b
                                         ..productKey = product.productKey
-                                        ..createdAt = DateTime.now()
-                                            .microsecondsSinceEpoch
+                                        ..createdAt = nextLineItemId()
                                         ..notes = item.isTask
                                             ? item.notes
                                             : product.notes
@@ -798,8 +797,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   : item.rebuild(
                                       (b) => b
                                         ..productKey = product.productKey
-                                        ..createdAt = DateTime.now()
-                                            .microsecondsSinceEpoch,
+                                        ..createdAt = nextLineItemId(),
                                     );
 
                               _onChanged(updatedItem, index, debounce: false);

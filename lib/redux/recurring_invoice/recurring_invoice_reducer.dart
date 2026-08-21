@@ -261,7 +261,8 @@ InvoiceEntity _clearEditing(InvoiceEntity? recurringInvoice, dynamic action) {
 }
 
 InvoiceEntity? _updateEditing(InvoiceEntity? recurringInvoice, dynamic action) {
-  return action.recurringInvoice;
+  final updated = action.recurringInvoice as InvoiceEntity?;
+  return updated?.assignLineItemIds();
 }
 
 InvoiceEntity _addRecurringInvoiceItem(

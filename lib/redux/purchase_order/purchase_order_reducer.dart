@@ -231,7 +231,8 @@ InvoiceEntity _clearEditing(InvoiceEntity? purchaseOrder, dynamic action) {
 }
 
 InvoiceEntity? _updateEditing(InvoiceEntity? purchaseOrder, dynamic action) {
-  return action.purchaseOrder;
+  final updated = action.purchaseOrder as InvoiceEntity?;
+  return updated?.assignLineItemIds();
 }
 
 InvoiceEntity _addPurchaseOrderItem(
