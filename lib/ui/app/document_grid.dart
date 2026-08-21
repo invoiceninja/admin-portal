@@ -49,12 +49,22 @@ class DocumentGrid extends StatefulWidget {
 
 class _DocumentGridState extends State<DocumentGrid> {
   bool _dragging = false;
-  bool _isPrivate = false;
+
+  /// Null until the user touches the switch, so the company's
+  /// `documents_public_by_default` setting seeds it and a manual toggle still
+  /// wins for the rest of the session. Resolved in `build` rather than
+  /// `initState` because the store is only read from a built context here.
+  bool? _isPrivate;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
+
+    // Every upload below sends `is_public` explicitly, so without this seed the
+    // client would override the company setting on every single attachment.
+    final isPrivate =
+        _isPrivate ?? !(state.company.settings.documentsPublicByDefault ?? true);
 
     final privateSwitch = Padding(
       padding: const EdgeInsets.all(8.0),
@@ -66,7 +76,7 @@ class _DocumentGridState extends State<DocumentGrid> {
             Text(localization.private),
           ],
         ),
-        value: _isPrivate,
+        value: isPrivate,
         onChanged: (value) {
           setState(() {
             _isPrivate = value;
@@ -87,7 +97,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                       allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                     );
                     if (files != null && files.isNotEmpty) {
-                      widget.onUploadDocument(files, _isPrivate);
+                      widget.onUploadDocument(files, isPrivate);
                     }
                   },
                   child: Padding(
@@ -110,7 +120,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                           multipartFiles.add(multipartFile);
                         }
 
-                        widget.onUploadDocument(multipartFiles, _isPrivate);
+                        widget.onUploadDocument(multipartFiles, isPrivate);
                       },
                       onDragEntered: (detail) {
                         setState(() => _dragging = true);
@@ -182,7 +192,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                               filename: image.path.split('/').last,
                             );
                             multipartFiles.add(multipartFile);
-                            widget.onUploadDocument(multipartFiles, _isPrivate);
+                            widget.onUploadDocument(multipartFiles, isPrivate);
                           }
                         } else {
                           openAppSettings();
@@ -204,7 +214,7 @@ class _DocumentGridState extends State<DocumentGrid> {
 
                           if (multipartFiles != null &&
                               multipartFiles.isNotEmpty) {
-                            widget.onUploadDocument(multipartFiles, _isPrivate);
+                            widget.onUploadDocument(multipartFiles, isPrivate);
                           }
                         },
                       ),
@@ -222,7 +232,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                           allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
                         );
                         if (files != null && files.isNotEmpty) {
-                          widget.onUploadDocument(files, _isPrivate);
+                          widget.onUploadDocument(files, isPrivate);
                         }
                       },
                     ),

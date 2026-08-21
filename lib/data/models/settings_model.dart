@@ -938,6 +938,11 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'skip_automatic_email_with_peppol')
   bool? get skipAutomaticEmailWithPeppol;
 
+  // Default visibility for newly uploaded documents. Read company-level;
+  // `null` means the server's historical default, public.
+  @BuiltValueField(wireName: 'documents_public_by_default')
+  bool? get documentsPublicByDefault;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 

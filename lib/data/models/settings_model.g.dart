@@ -2028,6 +2028,14 @@ class _$SettingsEntitySerializer
           serializers.serialize(value, specifiedType: const FullType(bool)),
         );
     }
+    value = object.documentsPublicByDefault;
+    if (value != null) {
+      result
+        ..add('documents_public_by_default')
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
+    }
     return result;
   }
 
@@ -4020,6 +4028,14 @@ class _$SettingsEntitySerializer
                   )
                   as bool?;
           break;
+        case 'documents_public_by_default':
+          result.documentsPublicByDefault =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
+          break;
       }
     }
 
@@ -4642,6 +4658,8 @@ class _$SettingsEntity extends SettingsEntity {
   final String? eExpenseForwardEmail;
   @override
   final bool? skipAutomaticEmailWithPeppol;
+  @override
+  final bool? documentsPublicByDefault;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (SettingsEntityBuilder()..update(updates))._build();
@@ -4901,6 +4919,7 @@ class _$SettingsEntity extends SettingsEntity {
     this.eInvoiceForwardEmail,
     this.eExpenseForwardEmail,
     this.skipAutomaticEmailWithPeppol,
+    this.documentsPublicByDefault,
   }) : super._();
   @override
   SettingsEntity rebuild(void Function(SettingsEntityBuilder) updates) =>
@@ -5172,7 +5191,8 @@ class _$SettingsEntity extends SettingsEntity {
         sesFromAddress == other.sesFromAddress &&
         eInvoiceForwardEmail == other.eInvoiceForwardEmail &&
         eExpenseForwardEmail == other.eExpenseForwardEmail &&
-        skipAutomaticEmailWithPeppol == other.skipAutomaticEmailWithPeppol;
+        skipAutomaticEmailWithPeppol == other.skipAutomaticEmailWithPeppol &&
+        documentsPublicByDefault == other.documentsPublicByDefault;
   }
 
   int? __hashCode;
@@ -5434,6 +5454,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, eInvoiceForwardEmail.hashCode);
     _$hash = $jc(_$hash, eExpenseForwardEmail.hashCode);
     _$hash = $jc(_$hash, skipAutomaticEmailWithPeppol.hashCode);
+    _$hash = $jc(_$hash, documentsPublicByDefault.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -5712,7 +5733,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('sesFromAddress', sesFromAddress)
           ..add('eInvoiceForwardEmail', eInvoiceForwardEmail)
           ..add('eExpenseForwardEmail', eExpenseForwardEmail)
-          ..add('skipAutomaticEmailWithPeppol', skipAutomaticEmailWithPeppol))
+          ..add('skipAutomaticEmailWithPeppol', skipAutomaticEmailWithPeppol)
+          ..add('documentsPublicByDefault', documentsPublicByDefault))
         .toString();
   }
 }
@@ -6975,6 +6997,11 @@ class SettingsEntityBuilder
   set skipAutomaticEmailWithPeppol(bool? skipAutomaticEmailWithPeppol) =>
       _$this._skipAutomaticEmailWithPeppol = skipAutomaticEmailWithPeppol;
 
+  bool? _documentsPublicByDefault;
+  bool? get documentsPublicByDefault => _$this._documentsPublicByDefault;
+  set documentsPublicByDefault(bool? documentsPublicByDefault) =>
+      _$this._documentsPublicByDefault = documentsPublicByDefault;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -7234,6 +7261,7 @@ class SettingsEntityBuilder
       _eInvoiceForwardEmail = $v.eInvoiceForwardEmail;
       _eExpenseForwardEmail = $v.eExpenseForwardEmail;
       _skipAutomaticEmailWithPeppol = $v.skipAutomaticEmailWithPeppol;
+      _documentsPublicByDefault = $v.documentsPublicByDefault;
       _$v = null;
     }
     return this;
@@ -7514,6 +7542,7 @@ class SettingsEntityBuilder
             eInvoiceForwardEmail: eInvoiceForwardEmail,
             eExpenseForwardEmail: eExpenseForwardEmail,
             skipAutomaticEmailWithPeppol: skipAutomaticEmailWithPeppol,
+            documentsPublicByDefault: documentsPublicByDefault,
           );
     } catch (_) {
       late String _$failedField;
