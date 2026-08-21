@@ -177,7 +177,8 @@ InvoiceEntity _clearEditing(InvoiceEntity? credit, dynamic action) {
 }
 
 InvoiceEntity? _updateEditing(InvoiceEntity? credit, dynamic action) {
-  return action.credit;
+  final updated = action.credit as InvoiceEntity?;
+  return updated?.assignLineItemIds();
 }
 
 InvoiceEntity _addCreditItem(InvoiceEntity? credit, AddCreditItem action) {

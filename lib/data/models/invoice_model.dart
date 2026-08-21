@@ -286,6 +286,27 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'idempotency_key')
   String? get idempotencyKey;
 
+  // The editor keys its table rows on createdAt, so a null or repeated id makes
+  // that key purely positional -- which is what made deleting a row show the
+  // previous occupant's text. Line items reach us with all three cases: null
+  // (created server-side, or by a client predating this), repeated (older
+  // clients minted from DateTime.now(), which is millisecond-resolution on web,
+  // so a bulk add produced runs of identical values), and unique. Hand out a
+  // fresh id for the first two. Must run before the editor renders.
+  // Deliberately doesn't set isChanged -- this must not dirty the form.
+  InvoiceEntity assignLineItemIds() {
+    final seen = <int>{};
+    return rebuild(
+      (b) => b
+        ..lineItems.map((item) {
+          final id = item.createdAt;
+          return (id == null || id == 0 || !seen.add(id))
+              ? item.rebuild((ib) => ib..createdAt = nextLineItemId())
+              : item;
+        }),
+    );
+  }
+
   InvoiceEntity moveLineItem(int oldIndex, int? newIndex) {
     final lineItem = lineItems[oldIndex];
     InvoiceEntity invoice = rebuild((b) => b..lineItems.removeAt(oldIndex));
@@ -1728,6 +1749,14 @@ class TaskItemFields {
   */
 }
 
+// Row identity for a line item, used only by the editor to key its table rows.
+// The server has no such field -- it round-trips through line_items as an
+// unknown key -- but it must be unique per item, and DateTime.now() is not
+// enough: on web it has only millisecond resolution, and the bulk-add paths
+// mint every item inside one synchronous loop.
+int _lineItemIdCounter = DateTime.now().microsecondsSinceEpoch;
+int nextLineItemId() => ++_lineItemIdCounter;
+
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   factory InvoiceItemEntity({String? productKey, String? typeId}) {
@@ -1756,7 +1785,7 @@ abstract class InvoiceItemEntity
       customValue4: '',
       discount: 0,
       taxCategoryId: '',
-      createdAt: DateTime.now().microsecondsSinceEpoch,
+      createdAt: nextLineItemId(),
     );
   }
 
@@ -1893,7 +1922,8 @@ abstract class InvoiceItemEntity
   InvoiceItemEntity get clone => rebuild(
     (b) => b
       ..expenseId = ''
-      ..taskId = '',
+      ..taskId = ''
+      ..createdAt = nextLineItemId(),
   );
 
   bool get isTask => typeId == TYPE_TASK;

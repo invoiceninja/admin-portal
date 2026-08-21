@@ -184,9 +184,9 @@ InvoiceEntity _clearEditing(InvoiceEntity? invoice, dynamic action) {
 }
 
 InvoiceEntity _updateEditing(InvoiceEntity? invoice, dynamic action) {
-  return (action.invoice as InvoiceEntity).rebuild(
-    (b) => b..idempotencyKey = BaseEntity.nextIdempotencyKey,
-  );
+  return (action.invoice as InvoiceEntity)
+      .rebuild((b) => b..idempotencyKey = BaseEntity.nextIdempotencyKey)
+      .assignLineItemIds();
 }
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity? invoice, AddInvoiceItem action) {

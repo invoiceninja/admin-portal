@@ -177,7 +177,8 @@ InvoiceEntity _clearEditing(InvoiceEntity? quote, dynamic action) {
 }
 
 InvoiceEntity? _updateEditing(InvoiceEntity? quote, dynamic action) {
-  return action.quote;
+  final updated = action.quote as InvoiceEntity?;
+  return updated?.assignLineItemIds();
 }
 
 InvoiceEntity _addQuoteItem(InvoiceEntity? quote, AddQuoteItem action) {
