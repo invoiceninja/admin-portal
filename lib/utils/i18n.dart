@@ -18,6 +18,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'documents_public_by_default': 'Documents public by default',
+      'documents_public_by_default_help':
+          'New attachments are visible to clients in the portal unless marked private',
       'disable_emails': 'Disable Emails',
       'disable_emails_help':
           'Prevents a user from sending emails from the system',
@@ -132695,6 +132698,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get disableEmailsHelp =>
       _localizedValues[localeCode]!['disable_emails_help'] ??
       _localizedValues['en']!['disable_emails_help']!;
+
+  String get documentsPublicByDefault =>
+      _localizedValues[localeCode]!['documents_public_by_default'] ??
+      _localizedValues['en']!['documents_public_by_default']!;
+
+  String get documentsPublicByDefaultHelp =>
+      _localizedValues[localeCode]!['documents_public_by_default_help'] ??
+      _localizedValues['en']!['documents_public_by_default_help']!;
 
   // STARTER: lang field - do not remove comment
 

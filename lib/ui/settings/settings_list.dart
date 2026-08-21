@@ -367,7 +367,7 @@ class SettingsSearch extends StatelessWidget {
           'credit_terms',
           'credit_footer',
         ],
-        ['default_documents'],
+        ['default_documents', 'documents_public_by_default#2026-08-21'],
       ],
       kSettingsUserDetails: [
         [

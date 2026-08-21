@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
@@ -722,11 +723,40 @@ class _CompanyDetailsState extends State<CompanyDetails>
             ],
           ),
           if (!state.settingsUIState.isFiltered)
-            DocumentGrid(
-              documents: state.company.documents.toList(),
-              onUploadDocument: (path, isPrivate) =>
-                  viewModel.onUploadDocuments(context, path, isPrivate),
-              onRenamedDocument: () => store.dispatch(RefreshData()),
+            // Company-wide default visibility for every new attachment, then
+            // the company's own document grid. DocumentGrid is itself a
+            // ScrollableListView, so it goes in an Expanded rather than
+            // nested inside another scroll view.
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                FormCard(
+                  children: [
+                    BoolDropdownButton(
+                      label: localization.documentsPublicByDefault,
+                      helpLabel: localization.documentsPublicByDefaultHelp,
+                      // `null` means the server's historical default, public —
+                      // showing it as off would misreport current behavior.
+                      value: settings.documentsPublicByDefault ?? true,
+                      iconData: Icons.public,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild(
+                          (b) => b..documentsPublicByDefault = value,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: DocumentGrid(
+                    documents: state.company.documents.toList(),
+                    onUploadDocument: (path, isPrivate) =>
+                        viewModel.onUploadDocuments(context, path, isPrivate),
+                    onRenamedDocument: () => store.dispatch(RefreshData()),
+                  ),
+                ),
+              ],
             ),
         ],
       ),
