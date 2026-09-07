@@ -241,5 +241,60 @@ abstract class DesignEntity extends Object
     ..isTemplate = false
     ..entities = '';
 
-  static Serializer<DesignEntity> get serializer => _$designEntitySerializer;
+  static Serializer<DesignEntity> get serializer => const DesignEntitySerializer();
+}
+
+class DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
+  const DesignEntitySerializer();
+
+  @override
+  final Iterable<Type> types = const [DesignEntity, _$DesignEntity];
+
+  @override
+  final String wireName = 'DesignEntity';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, DesignEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    return (_$designEntitySerializer as StructuredSerializer<DesignEntity>)
+        .serialize(serializers, object, specifiedType: specifiedType);
+  }
+
+  @override
+  DesignEntity deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    return (_$designEntitySerializer as StructuredSerializer<DesignEntity>)
+        .deserialize(serializers, _sanitizeDesign(serialized),
+            specifiedType: specifiedType);
+  }
+
+  // Newer invoice designs carry a `blocks` array (visual builder). The
+  // generated deserializer expects every `design` value to be a String and
+  // throws on it, so we drop the non-string entries before delegating.
+
+  static Iterable<Object?> _sanitizeDesign(Iterable<Object?> serialized) {
+    final result = <Object?>[];
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current;
+      if (!iterator.moveNext()) {
+        result.add(key);
+        break;
+      }
+      var value = iterator.current;
+      if (key == 'design' && value is Map) {
+        value = <String, String>{
+          for (final entry in value.entries)
+            if (entry.key is String && entry.value is String)
+              entry.key as String: entry.value as String
+        };
+      }
+      result
+        ..add(key)
+        ..add(value);
+    }
+    return result;
+  }
 }
