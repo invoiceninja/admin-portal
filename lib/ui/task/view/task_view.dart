@@ -41,9 +41,10 @@ class _TaskViewState extends State<TaskView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: widget.isFilter ? 0 : state.taskUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: widget.isFilter ? 0 : state.taskUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -90,9 +91,7 @@ class _TaskViewState extends State<TaskView>
               controller: _controller,
               isScrollable: false,
               tabs: [
-                Tab(
-                  text: localization!.overview,
-                ),
+                Tab(text: localization!.overview),
                 Tab(
                   text: documents.isEmpty
                       ? localization.documents
@@ -101,53 +100,55 @@ class _TaskViewState extends State<TaskView>
               ],
             )
           : null,
-      body: Builder(builder: (context) {
-        return Column(
-          children: <Widget>[
-            Expanded(
-              child: company.isModuleEnabled(EntityType.document)
-                  ? TabBarView(
-                      controller: _controller,
-                      children: <Widget>[
-                        RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
-                          child: TaskOverview(
-                            viewModel: viewModel,
-                            isFilter: widget.isFilter,
+      body: Builder(
+        builder: (context) {
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: company.isModuleEnabled(EntityType.document)
+                    ? TabBarView(
+                        controller: _controller,
+                        children: <Widget>[
+                          RefreshIndicator(
+                            onRefresh: () => viewModel.onRefreshed(context),
+                            child: TaskOverview(
+                              viewModel: viewModel,
+                              isFilter: widget.isFilter,
+                            ),
                           ),
-                        ),
-                        RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
-                          child: TaskViewDocuments(
-                            viewModel: viewModel,
-                            key: ValueKey(viewModel.task.id),
+                          RefreshIndicator(
+                            onRefresh: () => viewModel.onRefreshed(context),
+                            child: TaskViewDocuments(
+                              viewModel: viewModel,
+                              key: ValueKey(viewModel.task.id),
+                            ),
                           ),
+                        ],
+                      )
+                    : RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: TaskOverview(
+                          viewModel: viewModel,
+                          isFilter: widget.isFilter,
                         ),
-                      ],
-                    )
-                  : RefreshIndicator(
-                      onRefresh: () => viewModel.onRefreshed(context),
-                      child: TaskOverview(
-                        viewModel: viewModel,
-                        isFilter: widget.isFilter,
                       ),
-                    ),
-            ),
-            BottomButtons(
-              entity: task,
-              action1: task.isRunning
-                  ? EntityAction.stop
-                  : task.getTaskTimes().isEmpty
-                      ? EntityAction.start
-                      : EntityAction.resume,
-              action2: task.isInvoiced
-                  ? EntityAction.archive
-                  : EntityAction.invoiceTask,
-              action1Enabled: !task.isInvoiced,
-            ),
-          ],
-        );
-      }),
+              ),
+              BottomButtons(
+                entity: task,
+                action1: task.isRunning
+                    ? EntityAction.stop
+                    : task.getTaskTimes().isEmpty
+                    ? EntityAction.start
+                    : EntityAction.resume,
+                action2: task.isInvoiced
+                    ? EntityAction.archive
+                    : EntityAction.invoiceTask,
+                action1Enabled: !task.isInvoiced,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

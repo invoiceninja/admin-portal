@@ -13,19 +13,23 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TokenRepository {
-  const TokenRepository({
-    this.webClient = const WebClient(),
-  });
+  const TokenRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<TokenEntity> loadItem(
-      Credentials credentials, String? entityId) async {
+    Credentials credentials,
+    String? entityId,
+  ) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/tokens/$entityId', credentials.token);
+      '${credentials.url}/tokens/$entityId',
+      credentials.token,
+    );
 
-    final TokenItemResponse tokenResponse =
-        serializers.deserializeWith(TokenItemResponse.serializer, response)!;
+    final TokenItemResponse tokenResponse = serializers.deserializeWith(
+      TokenItemResponse.serializer,
+      response,
+    )!;
 
     return tokenResponse.data;
   }
@@ -35,25 +39,35 @@ class TokenRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final TokenListResponse tokenResponse =
-        serializers.deserializeWith(TokenListResponse.serializer, response)!;
+    final TokenListResponse tokenResponse = serializers.deserializeWith(
+      TokenListResponse.serializer,
+      response,
+    )!;
 
     return tokenResponse.data;
   }
 
   Future<List<TokenEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action,
+  ) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
         credentials.url + '/tokens/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({'ids': ids, 'action': action.toApiParam()}),
+    );
 
-    final TokenListResponse tokenResponse =
-        serializers.deserializeWith(TokenListResponse.serializer, response)!;
+    final TokenListResponse tokenResponse = serializers.deserializeWith(
+      TokenListResponse.serializer,
+      response,
+    )!;
 
     return tokenResponse.data.toList();
   }
@@ -86,8 +100,10 @@ class TokenRepository {
       );
     }
 
-    final TokenItemResponse tokenResponse =
-        serializers.deserializeWith(TokenItemResponse.serializer, response)!;
+    final TokenItemResponse tokenResponse = serializers.deserializeWith(
+      TokenItemResponse.serializer,
+      response,
+    )!;
 
     return tokenResponse.data;
   }

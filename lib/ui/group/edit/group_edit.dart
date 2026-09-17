@@ -11,10 +11,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupEdit extends StatefulWidget {
-  const GroupEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const GroupEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final GroupEditVM viewModel;
 
@@ -23,8 +20,9 @@ class GroupEdit extends StatefulWidget {
 }
 
 class _GroupEditState extends State<GroupEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_groupEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_groupEdit',
+  );
 
   final _nameController = TextEditingController();
   final _custom1Controller = TextEditingController();
@@ -35,11 +33,7 @@ class _GroupEditState extends State<GroupEdit> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-      _custom1Controller,
-      _custom2Controller,
-    ];
+    _controllers = [_nameController, _custom1Controller, _custom2Controller];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
@@ -62,8 +56,9 @@ class _GroupEditState extends State<GroupEdit> {
   }
 
   void _onChanged() {
-    final group = widget.viewModel.group
-        .rebuild((b) => b..name = _nameController.text.trim());
+    final group = widget.viewModel.group.rebuild(
+      (b) => b..name = _nameController.text.trim(),
+    );
     if (group != widget.viewModel.group) {
       _debouncer.run(() {
         widget.viewModel.onChanged(group);

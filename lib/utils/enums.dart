@@ -13,7 +13,9 @@ class EnumUtils {
       return null;
     }
 
-    return enumValues.singleWhereOrNull((enumItem) =>
-        EnumUtils.parse(enumItem).toLowerCase() == value.toLowerCase());
+    return enumValues.singleWhereOrNull(
+      (enumItem) =>
+          EnumUtils.parse(enumItem).toLowerCase() == value.toLowerCase(),
+    );
   }
 }

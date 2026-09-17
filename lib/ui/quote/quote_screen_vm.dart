@@ -21,9 +21,7 @@ class QuoteScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, QuoteScreenVM>(
       converter: QuoteScreenVM.fromStore,
       builder: (context, vm) {
-        return QuoteScreen(
-          viewModel: vm,
-        );
+        return QuoteScreen(viewModel: vm);
       },
     );
   }
@@ -48,13 +46,14 @@ class QuoteScreenVM {
     return QuoteScreenVM(
       quoteMap: state.quoteState.map,
       quoteList: memoizedFilteredQuoteList(
-          state.getUISelection(EntityType.quote),
-          state.quoteState.map,
-          state.quoteState.list,
-          state.clientState.map,
-          state.vendorState.map,
-          state.quoteListState,
-          state.userState.map),
+        state.getUISelection(EntityType.quote),
+        state.quoteState.map,
+        state.quoteState.list,
+        state.clientState.map,
+        state.vendorState.map,
+        state.quoteListState,
+        state.userState.map,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.quoteListState.isInMultiselect(),
     );

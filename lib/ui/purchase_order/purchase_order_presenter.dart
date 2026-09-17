@@ -73,9 +73,11 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.status:
         return EntityStatusChip(entity: purchaseOrder, showState: true);
       case PurchaseOrderFields.number:
-        return Text(purchaseOrder.number.isEmpty
-            ? localization!.pending
-            : purchaseOrder.number);
+        return Text(
+          purchaseOrder.number.isEmpty
+              ? localization!.pending
+              : purchaseOrder.number,
+        );
       case PurchaseOrderFields.client:
         return LinkTextRelatedEntity(entity: client, relation: purchaseOrder);
       case PurchaseOrderFields.date:
@@ -85,8 +87,13 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(purchaseOrder.amount, context,
-              vendorId: purchaseOrder.vendorId)!),
+          child: Text(
+            formatNumber(
+              purchaseOrder.amount,
+              context,
+              vendorId: purchaseOrder.vendorId,
+            )!,
+          ),
         );
       case PurchaseOrderFields.dueDate:
         return Text(formatDate(purchaseOrder.dueDate, context));
@@ -103,25 +110,44 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.privateNotes:
         return TableTooltip(message: purchaseOrder.privateNotes);
       case PurchaseOrderFields.discount:
-        return Text(purchaseOrder.isAmountDiscount
-            ? formatNumber(purchaseOrder.discount, context,
-                formatNumberType: FormatNumberType.money,
-                vendorId: purchaseOrder.vendorId)!
-            : formatNumber(purchaseOrder.discount, context,
-                formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          purchaseOrder.isAmountDiscount
+              ? formatNumber(
+                  purchaseOrder.discount,
+                  context,
+                  formatNumberType: FormatNumberType.money,
+                  vendorId: purchaseOrder.vendorId,
+                )!
+              : formatNumber(
+                  purchaseOrder.discount,
+                  context,
+                  formatNumberType: FormatNumberType.percent,
+                )!,
+        );
       case PurchaseOrderFields.poNumber:
         return Text(purchaseOrder.poNumber);
       case PurchaseOrderFields.documents:
         return Text('${purchaseOrder.documents.length}');
       case PurchaseOrderFields.taxAmount:
-        return Text(formatNumber(purchaseOrder.taxAmount, context,
-            vendorId: purchaseOrder.vendorId)!);
+        return Text(
+          formatNumber(
+            purchaseOrder.taxAmount,
+            context,
+            vendorId: purchaseOrder.vendorId,
+          )!,
+        );
       case PurchaseOrderFields.exchangeRate:
-        return Text(formatNumber(purchaseOrder.exchangeRate, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            purchaseOrder.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case PurchaseOrderFields.isViewed:
         return Text(
-            purchaseOrder.isViewed ? localization!.yes : localization!.no);
+          purchaseOrder.isViewed ? localization!.yes : localization!.no,
+        );
       case PurchaseOrderFields.project:
         final project = state.projectState.get(purchaseOrder.projectId);
         return LinkTextRelatedEntity(entity: project, relation: purchaseOrder);
@@ -139,7 +165,9 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.contactName:
       case PurchaseOrderFields.contactEmail:
         final contact = purchaseOrderContactSelector(
-            purchaseOrder, state.vendorState.get(purchaseOrder.vendorId));
+          purchaseOrder,
+          state.vendorState.get(purchaseOrder.vendorId),
+        );
         if (contact == null) {
           return SizedBox();
         }
@@ -152,8 +180,13 @@ class PurchaseOrderPresenter extends EntityPresenter {
           onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case PurchaseOrderFields.partial:
-        return Text(formatNumber(purchaseOrder.partial, context,
-            vendorId: purchaseOrder.vendorId)!);
+        return Text(
+          formatNumber(
+            purchaseOrder.partial,
+            context,
+            vendorId: purchaseOrder.vendorId,
+          )!,
+        );
       case PurchaseOrderFields.partialDueDate:
         return Text(formatDate(purchaseOrder.partialDueDate, context));
       case PurchaseOrderFields.expense:

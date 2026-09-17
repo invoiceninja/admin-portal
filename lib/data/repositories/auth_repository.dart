@@ -18,9 +18,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class AuthRepository {
-  const AuthRepository({
-    this.webClient = const WebClient(),
-  });
+  const AuthRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
@@ -45,9 +43,10 @@ class AuthRepository {
     }
 
     return sendRequest(
-        url: formatApiUrl(url) + '/signup?rc=$referralCode',
-        data: credentials,
-        secret: secret);
+      url: formatApiUrl(url) + '/signup?rc=$referralCode',
+      data: credentials,
+      secret: secret,
+    );
   }
 
   Future<LoginResponse> oauthSignUp({
@@ -79,18 +78,20 @@ class AuthRepository {
     }
 
     return sendRequest(
-        url: formatApiUrl(url) + '/oauth_login?create=true&rc=$referralCode',
-        data: credentials,
-        secret: Config.API_SECRET);
+      url: formatApiUrl(url) + '/oauth_login?create=true&rc=$referralCode',
+      data: credentials,
+      secret: Config.API_SECRET,
+    );
   }
 
-  Future<LoginResponse> login(
-      {String? email,
-      String? password,
-      String? url,
-      String? secret,
-      String? platform,
-      String? oneTimePassword}) async {
+  Future<LoginResponse> login({
+    String? email,
+    String? password,
+    String? url,
+    String? secret,
+    String? platform,
+    String? oneTimePassword,
+  }) async {
     final credentials = {
       'email': email,
       'password': password,
@@ -103,10 +104,7 @@ class AuthRepository {
   }
 
   Future<dynamic> logout({required Credentials credentials}) async {
-    return webClient.post(
-      '${credentials.url}/logout',
-      credentials.token,
-    );
+    return webClient.post('${credentials.url}/logout', credentials.token);
   }
 
   Future<LoginResponse> oauthLogin({
@@ -149,7 +147,8 @@ class AuthRepository {
 
     if (updatedAt > 0) {
       url += '&updated_at=$updatedAt';
-      includeStatic = includeStatic ||
+      includeStatic =
+          includeStatic ||
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
               kMillisecondsToRefreshStaticData;
     } else {
@@ -159,11 +158,13 @@ class AuthRepository {
     return sendRequest(url: url, token: token, includeStatic: includeStatic);
   }
 
-  Future<LoginResponse> recoverPassword(
-      {String? email, String? url, String? secret, String? platform}) async {
-    final credentials = {
-      'email': email,
-    };
+  Future<LoginResponse> recoverPassword({
+    String? email,
+    String? url,
+    String? secret,
+    String? platform,
+  }) async {
+    final credentials = {'email': email};
     url = formatApiUrl(url) + '/reset_password';
 
     return sendRequest(url: url, data: credentials);
@@ -177,13 +178,9 @@ class AuthRepository {
     return webClient.post(url, credentials.token);
   }
 
-  Future<dynamic> addCompany({
-    required Credentials credentials,
-  }) async {
+  Future<dynamic> addCompany({required Credentials credentials}) async {
     final url = '${credentials.url}/companies';
-    final data = {
-      'token_name': _tokenName,
-    };
+    final data = {'token_name': _tokenName};
 
     return webClient.post(url, credentials.token, data: json.encode(data));
   }
@@ -199,9 +196,7 @@ class AuthRepository {
       url,
       credentials.token,
       password: password,
-      data: json.encode(
-        {'cancellation_message': reason},
-      ),
+      data: json.encode({'cancellation_message': reason}),
     );
   }
 
@@ -219,8 +214,10 @@ class AuthRepository {
     );
   }
 
-  Future<dynamic> resendConfirmation(
-      {required Credentials credentials, required String userId}) async {
+  Future<dynamic> resendConfirmation({
+    required Credentials credentials,
+    required String userId,
+  }) async {
     return webClient.post(
       '${credentials.url}/user/$userId/reconfirm',
       credentials.token,
@@ -251,17 +248,23 @@ class AuthRepository {
     if (Config.DEMO_MODE) {
       response = json.decode(kMockLogin);
     } else {
-      response = await webClient.post(url, token ?? '',
-          secret: secret, data: json.encode(data));
+      response = await webClient.post(
+        url,
+        token ?? '',
+        secret: secret,
+        data: json.encode(data),
+      );
     }
 
-    return await compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-        <dynamic>[LoginResponse.serializer, response]);
+    return await compute<dynamic, dynamic>(
+      SerializationUtils.deserializeWith,
+      <dynamic>[LoginResponse.serializer, response],
+    );
   }
 
   String get _tokenName => kIsWeb
       ? 'web_client'
       : Platform.isAndroid
-          ? 'android_client'
-          : 'ios_client';
+      ? 'android_client'
+      : 'ios_client';
 }

@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'token_screen_vm.dart';
 
 class TokenScreen extends StatelessWidget {
-  const TokenScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TokenScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTokens';
 
@@ -67,9 +64,7 @@ class TokenScreen extends StatelessWidget {
         onSelectedSortField: (value) {
           store.dispatch(SortTokens(value));
         },
-        sortFields: [
-          TokenFields.name,
-        ],
+        sortFields: [TokenFields.name],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTokensByState(state));
         },
@@ -89,19 +84,19 @@ class TokenScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTokensByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.token)
           ? FloatingActionButton(
               heroTag: 'token_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.token);
+                  context: context,
+                  entityType: EntityType.token,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newToken,
             )
           : null,

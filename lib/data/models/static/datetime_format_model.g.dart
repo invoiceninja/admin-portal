@@ -18,20 +18,25 @@ class _$DatetimeFormatListResponseSerializer
   @override
   final Iterable<Type> types = const [
     DatetimeFormatListResponse,
-    _$DatetimeFormatListResponse
+    _$DatetimeFormatListResponse,
   ];
   @override
   final String wireName = 'DatetimeFormatListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DatetimeFormatListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DatetimeFormatListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DatetimeFormatEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DatetimeFormatEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$DatetimeFormatListResponseSerializer
 
   @override
   DatetimeFormatListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DatetimeFormatListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$DatetimeFormatListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DatetimeFormatEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DatetimeFormatEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$DatetimeFormatItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     DatetimeFormatItemResponse,
-    _$DatetimeFormatItemResponse
+    _$DatetimeFormatItemResponse,
   ];
   @override
   final String wireName = 'DatetimeFormatItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DatetimeFormatItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DatetimeFormatItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(DatetimeFormatEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(DatetimeFormatEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$DatetimeFormatItemResponseSerializer
 
   @override
   DatetimeFormatItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DatetimeFormatItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,9 +116,13 @@ class _$DatetimeFormatItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DatetimeFormatEntity))!
-              as DatetimeFormatEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DatetimeFormatEntity),
+                )!
+                as DatetimeFormatEntity,
+          );
           break;
       }
     }
@@ -114,21 +136,25 @@ class _$DatetimeFormatEntitySerializer
   @override
   final Iterable<Type> types = const [
     DatetimeFormatEntity,
-    _$DatetimeFormatEntity
+    _$DatetimeFormatEntity,
   ];
   @override
   final String wireName = 'DatetimeFormatEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DatetimeFormatEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DatetimeFormatEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'format_dart',
-      serializers.serialize(object.format,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.format,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -136,8 +162,10 @@ class _$DatetimeFormatEntitySerializer
 
   @override
   DatetimeFormatEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DatetimeFormatEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -147,12 +175,20 @@ class _$DatetimeFormatEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'format_dart':
-          result.format = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.format =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -165,15 +201,15 @@ class _$DatetimeFormatListResponse extends DatetimeFormatListResponse {
   @override
   final BuiltList<DatetimeFormatEntity> data;
 
-  factory _$DatetimeFormatListResponse(
-          [void Function(DatetimeFormatListResponseBuilder)? updates]) =>
-      (DatetimeFormatListResponseBuilder()..update(updates))._build();
+  factory _$DatetimeFormatListResponse([
+    void Function(DatetimeFormatListResponseBuilder)? updates,
+  ]) => (DatetimeFormatListResponseBuilder()..update(updates))._build();
 
   _$DatetimeFormatListResponse._({required this.data}) : super._();
   @override
   DatetimeFormatListResponse rebuild(
-          void Function(DatetimeFormatListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DatetimeFormatListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DatetimeFormatListResponseBuilder toBuilder() =>
@@ -197,9 +233,9 @@ class _$DatetimeFormatListResponse extends DatetimeFormatListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'DatetimeFormatListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'DatetimeFormatListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -240,10 +276,7 @@ class DatetimeFormatListResponseBuilder
   _$DatetimeFormatListResponse _build() {
     _$DatetimeFormatListResponse _$result;
     try {
-      _$result = _$v ??
-          _$DatetimeFormatListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$DatetimeFormatListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -251,7 +284,10 @@ class DatetimeFormatListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DatetimeFormatListResponse', _$failedField, e.toString());
+          r'DatetimeFormatListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -264,15 +300,15 @@ class _$DatetimeFormatItemResponse extends DatetimeFormatItemResponse {
   @override
   final DatetimeFormatEntity data;
 
-  factory _$DatetimeFormatItemResponse(
-          [void Function(DatetimeFormatItemResponseBuilder)? updates]) =>
-      (DatetimeFormatItemResponseBuilder()..update(updates))._build();
+  factory _$DatetimeFormatItemResponse([
+    void Function(DatetimeFormatItemResponseBuilder)? updates,
+  ]) => (DatetimeFormatItemResponseBuilder()..update(updates))._build();
 
   _$DatetimeFormatItemResponse._({required this.data}) : super._();
   @override
   DatetimeFormatItemResponse rebuild(
-          void Function(DatetimeFormatItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DatetimeFormatItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DatetimeFormatItemResponseBuilder toBuilder() =>
@@ -296,9 +332,9 @@ class _$DatetimeFormatItemResponse extends DatetimeFormatItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'DatetimeFormatItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'DatetimeFormatItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -339,10 +375,7 @@ class DatetimeFormatItemResponseBuilder
   _$DatetimeFormatItemResponse _build() {
     _$DatetimeFormatItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$DatetimeFormatItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$DatetimeFormatItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -350,7 +383,10 @@ class DatetimeFormatItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DatetimeFormatItemResponse', _$failedField, e.toString());
+          r'DatetimeFormatItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -365,16 +401,16 @@ class _$DatetimeFormatEntity extends DatetimeFormatEntity {
   @override
   final String format;
 
-  factory _$DatetimeFormatEntity(
-          [void Function(DatetimeFormatEntityBuilder)? updates]) =>
-      (DatetimeFormatEntityBuilder()..update(updates))._build();
+  factory _$DatetimeFormatEntity([
+    void Function(DatetimeFormatEntityBuilder)? updates,
+  ]) => (DatetimeFormatEntityBuilder()..update(updates))._build();
 
   _$DatetimeFormatEntity._({required this.id, required this.format})
-      : super._();
+    : super._();
   @override
   DatetimeFormatEntity rebuild(
-          void Function(DatetimeFormatEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DatetimeFormatEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DatetimeFormatEntityBuilder toBuilder() =>
@@ -446,12 +482,19 @@ class DatetimeFormatEntityBuilder
   DatetimeFormatEntity build() => _build();
 
   _$DatetimeFormatEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DatetimeFormatEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'DatetimeFormatEntity', 'id'),
+            id,
+            r'DatetimeFormatEntity',
+            'id',
+          ),
           format: BuiltValueNullFieldError.checkNotNull(
-              format, r'DatetimeFormatEntity', 'format'),
+            format,
+            r'DatetimeFormatEntity',
+            'format',
+          ),
         );
     replace(_$result);
     return _$result;

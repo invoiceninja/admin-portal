@@ -19,24 +19,35 @@ class _$DashboardUIStateSerializer
   final String wireName = 'DashboardUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DashboardUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DashboardUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'settings',
-      serializers.serialize(object.settings,
-          specifiedType: const FullType(DashboardUISettings)),
+      serializers.serialize(
+        object.settings,
+        specifiedType: const FullType(DashboardUISettings),
+      ),
       'selectedEntityType',
-      serializers.serialize(object.selectedEntityType,
-          specifiedType: const FullType(EntityType)),
+      serializers.serialize(
+        object.selectedEntityType,
+        specifiedType: const FullType(EntityType),
+      ),
       'selectedEntities',
-      serializers.serialize(object.selectedEntities,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(EntityType),
-            const FullType(BuiltList, const [const FullType(String)])
-          ])),
+      serializers.serialize(
+        object.selectedEntities,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType.nullable(EntityType),
+          const FullType(BuiltList, const [const FullType(String)]),
+        ]),
+      ),
       'showSidebar',
-      serializers.serialize(object.showSidebar,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.showSidebar,
+        specifiedType: const FullType(bool),
+      ),
     ];
 
     return result;
@@ -44,8 +55,10 @@ class _$DashboardUIStateSerializer
 
   @override
   DashboardUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DashboardUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -55,24 +68,40 @@ class _$DashboardUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'settings':
-          result.settings.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DashboardUISettings))!
-              as DashboardUISettings);
+          result.settings.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DashboardUISettings),
+                )!
+                as DashboardUISettings,
+          );
           break;
         case 'selectedEntityType':
-          result.selectedEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType))! as EntityType;
+          result.selectedEntityType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )!
+                  as EntityType;
           break;
         case 'selectedEntities':
-          result.selectedEntities.replace(serializers.deserialize(value,
+          result.selectedEntities.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType.nullable(EntityType),
-                const FullType(BuiltList, const [const FullType(String)])
-              ]))!);
+                const FullType(BuiltList, const [const FullType(String)]),
+              ]),
+            )!,
+          );
           break;
         case 'showSidebar':
-          result.showSidebar = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.showSidebar =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
       }
     }
@@ -86,48 +115,70 @@ class _$DashboardUISettingsSerializer
   @override
   final Iterable<Type> types = const [
     DashboardUISettings,
-    _$DashboardUISettings
+    _$DashboardUISettings,
   ];
   @override
   final String wireName = 'DashboardUISettings';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DashboardUISettings object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DashboardUISettings object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'dateRange',
-      serializers.serialize(object.dateRange,
-          specifiedType: const FullType(DateRange)),
+      serializers.serialize(
+        object.dateRange,
+        specifiedType: const FullType(DateRange),
+      ),
       'customStartDate',
-      serializers.serialize(object.customStartDate,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customStartDate,
+        specifiedType: const FullType(String),
+      ),
       'customEndDate',
-      serializers.serialize(object.customEndDate,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customEndDate,
+        specifiedType: const FullType(String),
+      ),
       'enableComparison',
-      serializers.serialize(object.enableComparison,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.enableComparison,
+        specifiedType: const FullType(bool),
+      ),
       'compareDateRange',
-      serializers.serialize(object.compareDateRange,
-          specifiedType: const FullType(DateRangeComparison)),
+      serializers.serialize(
+        object.compareDateRange,
+        specifiedType: const FullType(DateRangeComparison),
+      ),
       'compareCustomStartDate',
-      serializers.serialize(object.compareCustomStartDate,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.compareCustomStartDate,
+        specifiedType: const FullType(String),
+      ),
       'compareCustomEndDate',
-      serializers.serialize(object.compareCustomEndDate,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.compareCustomEndDate,
+        specifiedType: const FullType(String),
+      ),
       'offset',
       serializers.serialize(object.offset, specifiedType: const FullType(int)),
       'currencyId',
-      serializers.serialize(object.currencyId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.currencyId,
+        specifiedType: const FullType(String),
+      ),
       'includeTaxes',
-      serializers.serialize(object.includeTaxes,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.includeTaxes,
+        specifiedType: const FullType(bool),
+      ),
       'groupBy',
-      serializers.serialize(object.groupBy,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.groupBy,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -135,8 +186,10 @@ class _$DashboardUISettingsSerializer
 
   @override
   DashboardUISettings deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DashboardUISettingsBuilder();
 
     final iterator = serialized.iterator;
@@ -146,49 +199,92 @@ class _$DashboardUISettingsSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'dateRange':
-          result.dateRange = serializers.deserialize(value,
-              specifiedType: const FullType(DateRange))! as DateRange;
+          result.dateRange =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateRange),
+                  )!
+                  as DateRange;
           break;
         case 'customStartDate':
-          result.customStartDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customStartDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'customEndDate':
-          result.customEndDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customEndDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'enableComparison':
-          result.enableComparison = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.enableComparison =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'compareDateRange':
-          result.compareDateRange = serializers.deserialize(value,
-                  specifiedType: const FullType(DateRangeComparison))!
-              as DateRangeComparison;
+          result.compareDateRange =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateRangeComparison),
+                  )!
+                  as DateRangeComparison;
           break;
         case 'compareCustomStartDate':
-          result.compareCustomStartDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.compareCustomStartDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'compareCustomEndDate':
-          result.compareCustomEndDate = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.compareCustomEndDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'offset':
-          result.offset = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.offset =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'currencyId':
-          result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.currencyId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'includeTaxes':
-          result.includeTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.includeTaxes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'groupBy':
-          result.groupBy = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.groupBy =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -207,16 +303,16 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final bool showSidebar;
 
-  factory _$DashboardUIState(
-          [void Function(DashboardUIStateBuilder)? updates]) =>
-      (DashboardUIStateBuilder()..update(updates))._build();
+  factory _$DashboardUIState([
+    void Function(DashboardUIStateBuilder)? updates,
+  ]) => (DashboardUIStateBuilder()..update(updates))._build();
 
-  _$DashboardUIState._(
-      {required this.settings,
-      required this.selectedEntityType,
-      required this.selectedEntities,
-      required this.showSidebar})
-      : super._();
+  _$DashboardUIState._({
+    required this.settings,
+    required this.selectedEntityType,
+    required this.selectedEntities,
+    required this.showSidebar,
+  }) : super._();
   @override
   DashboardUIState rebuild(void Function(DashboardUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -278,8 +374,8 @@ class DashboardUIStateBuilder
   MapBuilder<EntityType?, BuiltList<String>> get selectedEntities =>
       _$this._selectedEntities ??= MapBuilder<EntityType?, BuiltList<String>>();
   set selectedEntities(
-          MapBuilder<EntityType?, BuiltList<String>>? selectedEntities) =>
-      _$this._selectedEntities = selectedEntities;
+    MapBuilder<EntityType?, BuiltList<String>>? selectedEntities,
+  ) => _$this._selectedEntities = selectedEntities;
 
   bool? _showSidebar;
   bool? get showSidebar => _$this._showSidebar;
@@ -315,14 +411,21 @@ class DashboardUIStateBuilder
   _$DashboardUIState _build() {
     _$DashboardUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$DashboardUIState._(
             settings: settings.build(),
             selectedEntityType: BuiltValueNullFieldError.checkNotNull(
-                selectedEntityType, r'DashboardUIState', 'selectedEntityType'),
+              selectedEntityType,
+              r'DashboardUIState',
+              'selectedEntityType',
+            ),
             selectedEntities: selectedEntities.build(),
             showSidebar: BuiltValueNullFieldError.checkNotNull(
-                showSidebar, r'DashboardUIState', 'showSidebar'),
+              showSidebar,
+              r'DashboardUIState',
+              'showSidebar',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -334,7 +437,10 @@ class DashboardUIStateBuilder
         selectedEntities.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DashboardUIState', _$failedField, e.toString());
+          r'DashboardUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -367,27 +473,27 @@ class _$DashboardUISettings extends DashboardUISettings {
   @override
   final String groupBy;
 
-  factory _$DashboardUISettings(
-          [void Function(DashboardUISettingsBuilder)? updates]) =>
-      (DashboardUISettingsBuilder()..update(updates))._build();
+  factory _$DashboardUISettings([
+    void Function(DashboardUISettingsBuilder)? updates,
+  ]) => (DashboardUISettingsBuilder()..update(updates))._build();
 
-  _$DashboardUISettings._(
-      {required this.dateRange,
-      required this.customStartDate,
-      required this.customEndDate,
-      required this.enableComparison,
-      required this.compareDateRange,
-      required this.compareCustomStartDate,
-      required this.compareCustomEndDate,
-      required this.offset,
-      required this.currencyId,
-      required this.includeTaxes,
-      required this.groupBy})
-      : super._();
+  _$DashboardUISettings._({
+    required this.dateRange,
+    required this.customStartDate,
+    required this.customEndDate,
+    required this.enableComparison,
+    required this.compareDateRange,
+    required this.compareCustomStartDate,
+    required this.compareCustomEndDate,
+    required this.offset,
+    required this.currencyId,
+    required this.includeTaxes,
+    required this.groupBy,
+  }) : super._();
   @override
   DashboardUISettings rebuild(
-          void Function(DashboardUISettingsBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DashboardUISettingsBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DashboardUISettingsBuilder toBuilder() =>
@@ -539,34 +645,64 @@ class DashboardUISettingsBuilder
   DashboardUISettings build() => _build();
 
   _$DashboardUISettings _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DashboardUISettings._(
           dateRange: BuiltValueNullFieldError.checkNotNull(
-              dateRange, r'DashboardUISettings', 'dateRange'),
+            dateRange,
+            r'DashboardUISettings',
+            'dateRange',
+          ),
           customStartDate: BuiltValueNullFieldError.checkNotNull(
-              customStartDate, r'DashboardUISettings', 'customStartDate'),
+            customStartDate,
+            r'DashboardUISettings',
+            'customStartDate',
+          ),
           customEndDate: BuiltValueNullFieldError.checkNotNull(
-              customEndDate, r'DashboardUISettings', 'customEndDate'),
+            customEndDate,
+            r'DashboardUISettings',
+            'customEndDate',
+          ),
           enableComparison: BuiltValueNullFieldError.checkNotNull(
-              enableComparison, r'DashboardUISettings', 'enableComparison'),
+            enableComparison,
+            r'DashboardUISettings',
+            'enableComparison',
+          ),
           compareDateRange: BuiltValueNullFieldError.checkNotNull(
-              compareDateRange, r'DashboardUISettings', 'compareDateRange'),
+            compareDateRange,
+            r'DashboardUISettings',
+            'compareDateRange',
+          ),
           compareCustomStartDate: BuiltValueNullFieldError.checkNotNull(
-              compareCustomStartDate,
-              r'DashboardUISettings',
-              'compareCustomStartDate'),
+            compareCustomStartDate,
+            r'DashboardUISettings',
+            'compareCustomStartDate',
+          ),
           compareCustomEndDate: BuiltValueNullFieldError.checkNotNull(
-              compareCustomEndDate,
-              r'DashboardUISettings',
-              'compareCustomEndDate'),
+            compareCustomEndDate,
+            r'DashboardUISettings',
+            'compareCustomEndDate',
+          ),
           offset: BuiltValueNullFieldError.checkNotNull(
-              offset, r'DashboardUISettings', 'offset'),
+            offset,
+            r'DashboardUISettings',
+            'offset',
+          ),
           currencyId: BuiltValueNullFieldError.checkNotNull(
-              currencyId, r'DashboardUISettings', 'currencyId'),
+            currencyId,
+            r'DashboardUISettings',
+            'currencyId',
+          ),
           includeTaxes: BuiltValueNullFieldError.checkNotNull(
-              includeTaxes, r'DashboardUISettings', 'includeTaxes'),
+            includeTaxes,
+            r'DashboardUISettings',
+            'includeTaxes',
+          ),
           groupBy: BuiltValueNullFieldError.checkNotNull(
-              groupBy, r'DashboardUISettings', 'groupBy'),
+            groupBy,
+            r'DashboardUISettings',
+            'groupBy',
+          ),
         );
     replace(_$result);
     return _$result;

@@ -11,10 +11,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenEdit extends StatefulWidget {
-  const TokenEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TokenEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final TokenEditVM viewModel;
 
@@ -23,8 +20,9 @@ class TokenEdit extends StatefulWidget {
 }
 
 class _TokenEditState extends State<TokenEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_tokenEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_tokenEdit',
+  );
   final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
@@ -33,9 +31,7 @@ class _TokenEditState extends State<TokenEdit> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-    ];
+    _controllers = [_nameController];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
@@ -58,8 +54,9 @@ class _TokenEditState extends State<TokenEdit> {
   }
 
   void _onChanged() {
-    final token = widget.viewModel.token
-        .rebuild((b) => b..name = _nameController.text.trim());
+    final token = widget.viewModel.token.rebuild(
+      (b) => b..name = _nameController.text.trim(),
+    );
     if (token != widget.viewModel.token) {
       _debouncer.run(() {
         widget.viewModel.onChanged(token);
@@ -89,8 +86,9 @@ class _TokenEditState extends State<TokenEdit> {
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
@@ -101,8 +99,8 @@ class _TokenEditState extends State<TokenEdit> {
                       label: localization.name,
                       validator: (value) =>
                           value.isEmpty || value.trim().isEmpty
-                              ? localization.pleaseEnterAName
-                              : null,
+                          ? localization.pleaseEnterAName
+                          : null,
                       onSavePressed: _onSavePressed,
                       keyboardType: TextInputType.text,
                     ),
@@ -110,7 +108,9 @@ class _TokenEditState extends State<TokenEdit> {
                 ),
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }

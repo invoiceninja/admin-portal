@@ -87,8 +87,8 @@ class _DatePickerState extends State<DatePicker> {
     DateTime firstDate = DateTime.now();
     final DateTime initialDate =
         widget.selectedDate != null && widget.selectedDate!.isNotEmpty
-            ? DateTime.tryParse(widget.selectedDate!)!
-            : DateTime.now();
+        ? DateTime.tryParse(widget.selectedDate!)!
+        : DateTime.now();
 
     if (widget.firstDate != null) {
       if (initialDate.isBefore(firstDate)) {
@@ -133,17 +133,17 @@ class _DatePickerState extends State<DatePicker> {
         labelText: _pendingValue ?? label,
         suffixIcon:
             widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
-                ? IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      _textController.text = '';
-                      widget.onSelected('', false);
-                    },
-                  )
-                : IconButton(
-                    icon: Icon(Icons.date_range),
-                    onPressed: () => _showDatePicker(),
-                  ),
+            ? IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _textController.text = '';
+                  widget.onSelected('', false);
+                },
+              )
+            : IconButton(
+                icon: Icon(Icons.date_range),
+                onPressed: () => _showDatePicker(),
+              ),
       ),
       onChanged: (value) {
         if (value.isEmpty) {
@@ -153,7 +153,8 @@ class _DatePickerState extends State<DatePicker> {
           final dateAsNumber = value.replaceAll('/', '').replaceAll('\\', '');
           if (value.startsWith('+') || value.startsWith('-')) {
             date = convertDateTimeToSqlDate(
-                DateTime.now().add(Duration(days: parseInt(value)!)));
+              DateTime.now().add(Duration(days: parseInt(value)!)),
+            );
           } else if (isAllDigits(dateAsNumber) || value.length <= 5) {
             String firstPart = '01';
             String secondPart = '01';
@@ -238,10 +239,7 @@ class _DatePickerState extends State<DatePicker> {
             final state = StoreProvider.of<AppState>(context).state;
             final countryId = state.company.settings.countryId;
 
-            value = [
-              kCountryUnitedStates,
-              kCountryCanada,
-            ].contains(countryId)
+            value = [kCountryUnitedStates, kCountryCanada].contains(countryId)
                 ? '$month$day'
                 : '$day$month';
 

@@ -41,36 +41,39 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 import 'package:printing/printing.dart';
 
-void showRefreshDataDialog(
-    {required BuildContext context, bool includeStatic = false}) async {
+void showRefreshDataDialog({
+  required BuildContext context,
+  bool includeStatic = false,
+}) async {
   final store = StoreProvider.of<AppState>(context);
-  store.dispatch(RefreshData(
-    completer: snackBarCompleter<Null>(
+  store.dispatch(
+    RefreshData(
+      completer: snackBarCompleter<Null>(
         AppLocalization.of(context)!.refreshComplete,
-        shouldPop: true),
-    clearData: true,
-    includeStatic: includeStatic,
-  ));
+        shouldPop: true,
+      ),
+      clearData: true,
+      includeStatic: includeStatic,
+    ),
+  );
 
   await showDialog<AlertDialog>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => SimpleDialog(
-            children: <Widget>[LoadingDialog()],
-          ));
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) =>
+        SimpleDialog(children: <Widget>[LoadingDialog()]),
+  );
 
   AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
 }
 
-void showErrorDialog({
-  String? message,
-  bool clearErrorOnDismiss = false,
-}) {
+void showErrorDialog({String? message, bool clearErrorOnDismiss = false}) {
   showDialog<ErrorDialog>(
-      context: navigatorKey.currentContext!,
-      builder: (BuildContext context) {
-        return ErrorDialog(message, clearErrorOnDismiss: clearErrorOnDismiss);
-      });
+    context: navigatorKey.currentContext!,
+    builder: (BuildContext context) {
+      return ErrorDialog(message, clearErrorOnDismiss: clearErrorOnDismiss);
+    },
+  );
 }
 
 void showMessageDialog({
@@ -80,14 +83,15 @@ void showMessageDialog({
 }) {
   final context = navigatorKey.currentContext!;
   showDialog<MessageDialog>(
-      context: context,
-      builder: (BuildContext context) {
-        return MessageDialog(
-          message,
-          secondaryActions: secondaryActions,
-          onDismiss: onDismiss,
-        );
-      });
+    context: context,
+    builder: (BuildContext context) {
+      return MessageDialog(
+        message,
+        secondaryActions: secondaryActions,
+        onDismiss: onDismiss,
+      );
+    },
+  );
 }
 
 void confirmCallback({
@@ -120,8 +124,11 @@ void confirmCallback({
           callback(_reason);
         } else {
           showMessageDialog(
-              message: localization!.pleaseTypeToConfirm
-                  .replaceFirst(':value', typeToConfirm));
+            message: localization!.pleaseTypeToConfirm.replaceFirst(
+              ':value',
+              typeToConfirm,
+            ),
+          );
         }
       }
 
@@ -136,9 +143,13 @@ void confirmCallback({
                   children: [
                     SizedBox(height: 8),
                     Flexible(
-                      child: Text(localization.pleaseTypeToConfirm
-                              .replaceFirst(':value', typeToConfirm) +
-                          ':'),
+                      child: Text(
+                        localization.pleaseTypeToConfirm.replaceFirst(
+                              ':value',
+                              typeToConfirm,
+                            ) +
+                            ':',
+                      ),
                     ),
                     DecoratedFormField(
                       autofocus: true,
@@ -159,26 +170,28 @@ void confirmCallback({
                     ],
                     SizedBox(height: 30),
                     Flexible(
-                        child: Text(
-                      title,
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    )),
+                      child: Text(
+                        title,
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
                   ],
                 )
               : content == null
-                  ? null
-                  : Text(content),
+              ? null
+              : Text(content),
           actions: <Widget>[
             TextButton(
-                child: Text(localization.cancel.toUpperCase()),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
+              child: Text(localization.cancel.toUpperCase()),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             TextButton(
               child: Text(localization.ok.toUpperCase()),
               onPressed: () => _onPressed(),
               autofocus: typeToConfirm == null,
-            )
+            ),
           ],
         ),
       );
@@ -198,19 +211,22 @@ void passwordCallback({
   final user = state.user;
 
   print(
-      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider}, ${state.company.oauthPasswordRequired}');
+    '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider}, ${state.company.oauthPasswordRequired}',
+  );
 
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
-        message: localization!.pleaseSetAPassword,
-        secondaryActions: [
-          TextButton(
-              onPressed: () {
-                store.dispatch(ViewSettings(section: kSettingsUserDetails));
-                Navigator.of(context).pop();
-              },
-              child: Text(localization.setPassword.toUpperCase()))
-        ]);
+      message: localization!.pleaseSetAPassword,
+      secondaryActions: [
+        TextButton(
+          onPressed: () {
+            store.dispatch(ViewSettings(section: kSettingsUserDetails));
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.setPassword.toUpperCase()),
+        ),
+      ],
+    );
     print('## 1');
     return;
   }
@@ -232,9 +248,7 @@ void passwordCallback({
       barrierDismissible: false,
       builder: (BuildContext context) {
         print('## 3');
-        return PasswordConfirmation(
-          callback: callback,
-        );
+        return PasswordConfirmation(callback: callback);
       },
     );
     return;
@@ -253,36 +267,36 @@ void passwordCallback({
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
-              return PasswordConfirmation(
-                callback: callback,
-                idToken: idToken,
-              );
+              return PasswordConfirmation(callback: callback, idToken: idToken);
             },
           );
         }
       }, isSilent: true);
     } else if (user.isConnectedToMicrosoft) {
-      WebUtils.microsoftLogin((idToken, accessToken) {
-        if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
-            !user.hasPassword) {
-          print('## 6');
-          callback(null, idToken);
-        } else {
-          print('## 7');
-          showDialog<AlertDialog>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return PasswordConfirmation(
-                callback: callback,
-                idToken: idToken,
-              );
-            },
-          );
-        }
-      }, (dynamic error) {
-        showErrorDialog(message: error);
-      });
+      WebUtils.microsoftLogin(
+        (idToken, accessToken) {
+          if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
+              !user.hasPassword) {
+            print('## 6');
+            callback(null, idToken);
+          } else {
+            print('## 7');
+            showDialog<AlertDialog>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return PasswordConfirmation(
+                  callback: callback,
+                  idToken: idToken,
+                );
+              },
+            );
+          }
+        },
+        (dynamic error) {
+          showErrorDialog(message: error);
+        },
+      );
     }
   } catch (error) {
     showErrorDialog(message: '$error');
@@ -344,11 +358,13 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       ),
       actions: <Widget>[
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(localization.cancel.toUpperCase())),
+          onPressed: () => Navigator.pop(context),
+          child: Text(localization.cancel.toUpperCase()),
+        ),
         TextButton(
-            onPressed: () => _submit(),
-            child: Text(localization.submit.toUpperCase())),
+          onPressed: () => _submit(),
+          child: Text(localization.submit.toUpperCase()),
+        ),
       ],
     );
   }
@@ -429,28 +445,26 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
             ? MaxLengthEnforcement.enforced
             : MaxLengthEnforcement.none,
         //buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
-        decoration: InputDecoration(
-          labelText: widget.field,
-        ),
+        decoration: InputDecoration(labelText: widget.field),
         onFieldSubmitted: (value) => _submit(),
       ),
       actions: <Widget>[
         ...widget.secondaryActions ?? [],
         SizedBox(width: 6),
         TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(localization.cancel.toUpperCase())),
+          onPressed: () => Navigator.pop(context),
+          child: Text(localization.cancel.toUpperCase()),
+        ),
         TextButton(
-            onPressed: () => _submit(),
-            child: Text(localization.submit.toUpperCase())),
+          onPressed: () => _submit(),
+          child: Text(localization.submit.toUpperCase()),
+        ),
       ],
     );
   }
 }
 
-void cloneToDialog({
-  required InvoiceEntity invoice,
-}) {
+void cloneToDialog({required InvoiceEntity invoice}) {
   final context = navigatorKey.currentContext!;
   final localization = AppLocalization.of(context);
   final store = StoreProvider.of<AppState>(context);
@@ -458,69 +472,72 @@ void cloneToDialog({
   final userCompany = state.userCompany;
 
   showDialog<AlertDialog>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(localization!.cloneTo),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (userCompany.canCreate(EntityType.invoice))
-                ListTile(
-                  leading: Icon(getEntityIcon(EntityType.invoice)),
-                  title: Text(localization.invoice),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    handleEntityAction(invoice, EntityAction.cloneToInvoice);
-                  },
-                ),
-              if (userCompany.canCreate(EntityType.quote))
-                ListTile(
-                  leading: Icon(getEntityIcon(EntityType.quote)),
-                  title: Text(localization.quote),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    handleEntityAction(invoice, EntityAction.cloneToQuote);
-                  },
-                ),
-              if (userCompany.canCreate(EntityType.credit))
-                ListTile(
-                  leading: Icon(getEntityIcon(EntityType.credit)),
-                  title: Text(localization.credit),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    handleEntityAction(invoice, EntityAction.cloneToCredit);
-                  },
-                ),
-              if (userCompany.canCreate(EntityType.recurringInvoice))
-                ListTile(
-                  leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
-                  title: Text(localization.recurringInvoice),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    handleEntityAction(invoice, EntityAction.cloneToRecurring);
-                  },
-                ),
-              if (userCompany.canCreate(EntityType.purchaseOrder))
-                ListTile(
-                  leading: Icon(getEntityIcon(EntityType.purchaseOrder)),
-                  title: Text(localization.purchaseOrder),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    handleEntityAction(
-                        invoice, EntityAction.cloneToPurchaseOrder);
-                  },
-                ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: Text(localization.close.toUpperCase()),
-              onPressed: () => Navigator.of(context).pop(),
-            )
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(localization!.cloneTo),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (userCompany.canCreate(EntityType.invoice))
+              ListTile(
+                leading: Icon(getEntityIcon(EntityType.invoice)),
+                title: Text(localization.invoice),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  handleEntityAction(invoice, EntityAction.cloneToInvoice);
+                },
+              ),
+            if (userCompany.canCreate(EntityType.quote))
+              ListTile(
+                leading: Icon(getEntityIcon(EntityType.quote)),
+                title: Text(localization.quote),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  handleEntityAction(invoice, EntityAction.cloneToQuote);
+                },
+              ),
+            if (userCompany.canCreate(EntityType.credit))
+              ListTile(
+                leading: Icon(getEntityIcon(EntityType.credit)),
+                title: Text(localization.credit),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  handleEntityAction(invoice, EntityAction.cloneToCredit);
+                },
+              ),
+            if (userCompany.canCreate(EntityType.recurringInvoice))
+              ListTile(
+                leading: Icon(getEntityIcon(EntityType.recurringInvoice)),
+                title: Text(localization.recurringInvoice),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  handleEntityAction(invoice, EntityAction.cloneToRecurring);
+                },
+              ),
+            if (userCompany.canCreate(EntityType.purchaseOrder))
+              ListTile(
+                leading: Icon(getEntityIcon(EntityType.purchaseOrder)),
+                title: Text(localization.purchaseOrder),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  handleEntityAction(
+                    invoice,
+                    EntityAction.cloneToPurchaseOrder,
+                  );
+                },
+              ),
           ],
-        );
-      });
+        ),
+        actions: [
+          TextButton(
+            child: Text(localization.close.toUpperCase()),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 void changeTaskStatusDialog({
@@ -531,42 +548,45 @@ void changeTaskStatusDialog({
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final statusIds = memoizedSortedActiveTaskStatusIds(
-          state.taskStatusState.list, state.taskStatusState.map)
-      .where((statusId) => statusId != task.statusId)
-      .toList();
+    state.taskStatusState.list,
+    state.taskStatusState.map,
+  ).where((statusId) => statusId != task.statusId).toList();
 
   showDialog<AlertDialog>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(localization!.changeStatus),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: statusIds.map((statusId) {
-              final status = state.taskStatusState.get(statusId);
-              return ListTile(
-                title: Text(status.name),
-                leading: Icon(Icons.check_circle),
-                onTap: () {
-                  store.dispatch(SaveTaskRequest(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(localization!.changeStatus),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: statusIds.map((statusId) {
+            final status = state.taskStatusState.get(statusId);
+            return ListTile(
+              title: Text(status.name),
+              leading: Icon(Icons.check_circle),
+              onTap: () {
+                store.dispatch(
+                  SaveTaskRequest(
                     task: task.rebuild((b) => b..statusId = statusId),
                     completer: snackBarCompleter<TaskEntity>(
                       localization.changedStatus,
                     ),
-                  ));
-                  Navigator.of(context).pop();
-                },
-              );
-            }).toList(),
+                  ),
+                );
+                Navigator.of(context).pop();
+              },
+            );
+          }).toList(),
+        ),
+        actions: [
+          TextButton(
+            child: Text(localization.close.toUpperCase()),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-          actions: [
-            TextButton(
-              child: Text(localization.close.toUpperCase()),
-              onPressed: () => Navigator.of(context).pop(),
-            )
-          ],
-        );
-      });
+        ],
+      );
+    },
+  );
 }
 
 void addToInvoiceDialog({
@@ -592,30 +612,35 @@ void addToInvoiceDialog({
   }
 
   showDialog<AlertDialog>(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text(localization!.addToInvoice),
-          children: invoices.map((invoice) {
-            return SimpleDialogOption(
-              child: Row(children: [
+    context: context,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        title: Text(localization!.addToInvoice),
+        children: invoices.map((invoice) {
+          return SimpleDialogOption(
+            child: Row(
+              children: [
                 Expanded(child: Text(invoice.number)),
                 Text(
-                  formatNumber(invoice.amount, context,
-                      clientId: invoice.clientId)!,
+                  formatNumber(
+                    invoice.amount,
+                    context,
+                    clientId: invoice.clientId,
+                  )!,
                 ),
-              ]),
-              onPressed: () {
-                Navigator.of(context).pop();
-                editEntity(
-                    entity: invoice.rebuild(
-                  (b) => b..lineItems.addAll(items),
-                ));
-              },
-            );
-          }).toList(),
-        );
-      });
+              ],
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              editEntity(
+                entity: invoice.rebuild((b) => b..lineItems.addAll(items)),
+              );
+            },
+          );
+        }).toList(),
+      );
+    },
+  );
 }
 
 class BulkUpdateDialog extends StatefulWidget {
@@ -654,7 +679,7 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
               widget.entities.length == 1
                   ? localization.lookup(widget.entityType.snakeCase)
                   : localization.lookup(widget.entityType.plural) +
-                      ' (${widget.entities.length})',
+                        ' (${widget.entities.length})',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             SizedBox(height: 8),
@@ -663,7 +688,7 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                 .toList(),
             if (_isLoading) ...[
               SizedBox(height: 32),
-              LinearProgressIndicator()
+              LinearProgressIndicator(),
             ] else ...[
               SizedBox(height: 16),
               AppDropdownButton<String>(
@@ -677,21 +702,29 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                   });
                 },
                 items: state
-                    .staticState.bulkUpdates[widget.entityType.apiValue]!
+                    .staticState
+                    .bulkUpdates[widget.entityType.apiValue]!
                     .where((field) {
                       if (field.contains('custom_value')) {
                         return company.hasCustomField(
-                            field.replaceFirst('custom_value', 'client'));
+                          field.replaceFirst('custom_value', 'client'),
+                        );
                       }
 
                       return true;
                     })
-                    .map((field) => DropdownMenuItem(
-                        child: Text(field.contains('custom_value')
-                            ? company.getCustomFieldLabel(
-                                field.replaceFirst('custom_value', 'client'))
-                            : localization.lookup(field)),
-                        value: field))
+                    .map(
+                      (field) => DropdownMenuItem(
+                        child: Text(
+                          field.contains('custom_value')
+                              ? company.getCustomFieldLabel(
+                                  field.replaceFirst('custom_value', 'client'),
+                                )
+                              : localization.lookup(field),
+                        ),
+                        value: field,
+                      ),
+                    )
                     .toList(),
               ),
               if (_field == ClientFields.publicNotes)
@@ -707,44 +740,48 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                 )
               else if (_field == ClientFields.sizeId)
                 AppDropdownButton(
-                    value: _value,
-                    labelText: localization.size,
-                    items: memoizedSizeList(state.staticState.sizeMap)
-                        .map((sizeId) => DropdownMenuItem(
-                              child:
-                                  Text(state.staticState.sizeMap[sizeId]!.name),
-                              value: sizeId,
-                            ))
-                        .toList(),
-                    onChanged: (dynamic size) {
-                      setState(() {
-                        _value = size?.id;
-                      });
-                    })
+                  value: _value,
+                  labelText: localization.size,
+                  items: memoizedSizeList(state.staticState.sizeMap)
+                      .map(
+                        (sizeId) => DropdownMenuItem(
+                          child: Text(state.staticState.sizeMap[sizeId]!.name),
+                          value: sizeId,
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (dynamic size) {
+                    setState(() {
+                      _value = size?.id;
+                    });
+                  },
+                )
               else if (_field == ClientFields.industryId)
                 EntityDropdown(
-                    entityId: _value,
-                    entityType: EntityType.industry,
-                    entityList:
-                        memoizedIndustryList(state.staticState.industryMap),
-                    labelText: localization.industry,
-                    onSelected: (SelectableEntity? industry) {
-                      setState(() {
-                        _value = industry?.id;
-                      });
-                    })
+                  entityId: _value,
+                  entityType: EntityType.industry,
+                  entityList: memoizedIndustryList(
+                    state.staticState.industryMap,
+                  ),
+                  labelText: localization.industry,
+                  onSelected: (SelectableEntity? industry) {
+                    setState(() {
+                      _value = industry?.id;
+                    });
+                  },
+                )
               else if (_field == ClientFields.countryId)
                 EntityDropdown(
-                    entityId: _value,
-                    entityType: EntityType.country,
-                    entityList:
-                        memoizedCountryList(state.staticState.countryMap),
-                    labelText: localization.country,
-                    onSelected: (SelectableEntity? country) {
-                      setState(() {
-                        _value = country?.id;
-                      });
-                    })
+                  entityId: _value,
+                  entityType: EntityType.country,
+                  entityList: memoizedCountryList(state.staticState.countryMap),
+                  labelText: localization.country,
+                  onSelected: (SelectableEntity? country) {
+                    setState(() {
+                      _value = country?.id;
+                    });
+                  },
+                )
               else if ((_field ?? '').contains('custom_value'))
                 CustomField(
                   field: (_field ?? '').replaceFirst('custom_value', 'client'),
@@ -765,7 +802,7 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                       _value = value;
                     });
                   },
-                )
+                ),
             ],
           ],
         ),
@@ -795,14 +832,15 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
                       .then((response) async {
-                    setState(() => _isLoading = false);
-                    Navigator.of(navigatorKey.currentContext!).pop();
-                    showToast(localization.bulkUpdated);
-                    store.dispatch(RefreshData());
-                  }).catchError((error) {
-                    showErrorDialog(message: error);
-                    setState(() => _isLoading = false);
-                  });
+                        setState(() => _isLoading = false);
+                        Navigator.of(navigatorKey.currentContext!).pop();
+                        showToast(localization.bulkUpdated);
+                        store.dispatch(RefreshData());
+                      })
+                      .catchError((error) {
+                        showErrorDialog(message: error);
+                        setState(() => _isLoading = false);
+                      });
                 },
         ),
       ],
@@ -840,8 +878,11 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
       await Future.delayed(Duration(seconds: 3));
 
       try {
-        final response =
-            await WebClient().post(url, credentials.token, rawResponse: true);
+        final response = await WebClient().post(
+          url,
+          credentials.token,
+          rawResponse: true,
+        );
         _data = response.bodyBytes;
       } catch (error) {
         print('## CATCH ERROR: $error');
@@ -864,8 +905,10 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text((_isLoading ? localization.cancel : localization.close)
-              .toUpperCase()),
+          child: Text(
+            (_isLoading ? localization.cancel : localization.close)
+                .toUpperCase(),
+          ),
         ),
         if (_data != null) ...[
           /*
@@ -897,8 +940,9 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     final url =
                         '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
                     final data = {
-                      'ids':
-                          widget.entities.map((entity) => entity.id).toList(),
+                      'ids': widget.entities
+                          .map((entity) => entity.id)
+                          .toList(),
                       'entity': widget.entityType.apiValue,
                       'template_id': _designId,
                       'send_email': _sendEmail,
@@ -912,21 +956,22 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     WebClient()
                         .post(url, credentials.token, data: jsonEncode(data))
                         .then((response) async {
-                      //print('## RESPONSE: $response');
+                          //print('## RESPONSE: $response');
 
-                      if (_sendEmail) {
-                        setState(() => _isLoading = false);
-                        Navigator.of(navigatorKey.currentContext!).pop();
-                        showToast(localization.exportedData);
-                      } else {
-                        final jobHash = response['message'];
-                        await loadTemplate(jobHash);
-                        setState(() => _isLoading = false);
-                      }
-                    }).catchError((error) {
-                      showErrorDialog(message: error);
-                      setState(() => _isLoading = false);
-                    });
+                          if (_sendEmail) {
+                            setState(() => _isLoading = false);
+                            Navigator.of(navigatorKey.currentContext!).pop();
+                            showToast(localization.exportedData);
+                          } else {
+                            final jobHash = response['message'];
+                            await loadTemplate(jobHash);
+                            setState(() => _isLoading = false);
+                          }
+                        })
+                        .catchError((error) {
+                          showErrorDialog(message: error);
+                          setState(() => _isLoading = false);
+                        });
                   },
             child: Text(localization.start.toUpperCase()),
           ),
@@ -951,7 +996,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     widget.entities.length == 1
                         ? localization.lookup(widget.entityType.snakeCase)
                         : localization.lookup(widget.entityType.plural) +
-                            ' (${widget.entities.length})',
+                              ' (${widget.entities.length})',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 8),
@@ -960,7 +1005,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                       .toList(),
                   if (_isLoading) ...[
                     SizedBox(height: 32),
-                    LinearProgressIndicator()
+                    LinearProgressIndicator(),
                   ] else ...[
                     SizedBox(height: 16),
                     DesignPicker(
@@ -976,9 +1021,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                     SizedBox(height: 16),
                     SwitchListTile(
                       value: _sendEmail,
-                      title: Text(
-                        localization.sendEmail,
-                      ),
+                      title: Text(localization.sendEmail),
                       onChanged: (value) {
                         setState(() {
                           _sendEmail = value;
@@ -1026,9 +1069,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: Text(
-                  localization.cancel.toUpperCase(),
-                ),
+                child: Text(localization.cancel.toUpperCase()),
               ),
               TextButton(
                 onPressed: _comment.isEmpty
@@ -1046,19 +1087,23 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
                         setState(() => _isLoading = true);
 
                         WebClient()
-                            .post(url, credentials.token,
-                                data: jsonEncode(data))
+                            .post(
+                              url,
+                              credentials.token,
+                              data: jsonEncode(data),
+                            )
                             .then((response) async {
-                          Navigator.of(navigatorKey.currentContext!).pop(true);
-                          showToast(localization.addedComment);
-                        }).catchError((error) {
-                          showErrorDialog(message: error);
-                          setState(() => _isLoading = false);
-                        });
+                              Navigator.of(
+                                navigatorKey.currentContext!,
+                              ).pop(true);
+                              showToast(localization.addedComment);
+                            })
+                            .catchError((error) {
+                              showErrorDialog(message: error);
+                              setState(() => _isLoading = false);
+                            });
                       },
-                child: Text(
-                  localization.save.toUpperCase(),
-                ),
+                child: Text(localization.save.toUpperCase()),
               ),
             ],
       content: _isLoading

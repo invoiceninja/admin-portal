@@ -45,9 +45,10 @@ class PaymentListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (payment.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+              client.matchesFilterValue(filter))
         : null;
-    final mobileSubtitle = filterMatch ??
+    final mobileSubtitle =
+        filterMatch ??
         payment.number + ' • ' + formatDate(payment.date, context);
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
@@ -63,7 +64,8 @@ class PaymentListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           showSelected &&
           payment.id ==
               (uiState.isEditing
@@ -73,25 +75,25 @@ class PaymentListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: payment,
       child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return constraints.maxWidth > kTableListWidthCutoff
-            ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap!()
-                    : selectEntity(entity: payment, forceView: !showCheckbox),
-                onLongPress: () => onTap != null
-                    ? null
-                    : selectEntity(entity: payment, longPress: true),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 28,
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return constraints.maxWidth > kTableListWidthCutoff
+              ? InkWell(
+                  onTap: () => onTap != null
+                      ? onTap!()
+                      : selectEntity(entity: payment, forceView: !showCheckbox),
+                  onLongPress: () => onTap != null
+                      ? null
+                      : selectEntity(entity: payment, longPress: true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 28,
+                      top: 4,
+                      bottom: 4,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
                           padding: const EdgeInsets.only(right: 16),
                           child: showCheckbox
                               ? IgnorePointer(
@@ -100,8 +102,9 @@ class PaymentListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) => null,
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
+                                    activeColor: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
                                   ),
                                 )
                               : ActionMenuButton(
@@ -114,119 +117,131 @@ class PaymentListItem extends StatelessWidget {
                                   entity: payment,
                                   onSelected: (context, action) =>
                                       handleEntityAction(payment, action),
-                                )),
-                      SizedBox(
-                        width: kListNumberWidth,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              payment.number,
-                              style: textStyle,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            if (!payment.isActive) EntityStateLabel(payment)
-                          ],
+                                ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(client.displayName, style: textStyle),
-                            Text(
-                              filterMatch ?? desktopSubtitle,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color: textColor!
-                                        .withValues(alpha: kLighterOpacity),
-                                  ),
-                            ),
-                          ],
+                        SizedBox(
+                          width: kListNumberWidth,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                payment.number,
+                                style: textStyle,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              if (!payment.isActive) EntityStateLabel(payment),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        formatNumber(payment.amount, context,
-                            clientId: client.id)!,
-                        style: textStyle,
-                        textAlign: TextAlign.end,
-                      ),
-                      SizedBox(width: 25),
-                      EntityStatusChip(entity: payment)
-                    ],
-                  ),
-                ),
-              )
-            : ListTile(
-                onTap: () => onTap != null
-                    ? onTap!()
-                    : selectEntity(entity: payment, forceView: !showCheckbox),
-                onLongPress: () => onTap != null
-                    ? null
-                    : selectEntity(entity: payment, longPress: true),
-                leading: showCheckbox
-                    ? IgnorePointer(
-                        child: Checkbox(
-                          value: isChecked,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => null,
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                        ),
-                      )
-                    : null,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          client.displayName,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      Text(
-                          formatNumber(payment.amount, context,
-                              clientId: payment.clientId)!,
-                          style: Theme.of(context).textTheme.titleMedium),
-                    ],
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
+                        SizedBox(width: 10),
                         Expanded(
-                          child: mobileSubtitle.isNotEmpty
-                              ? Text(
-                                  mobileSubtitle,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              : Container(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(client.displayName, style: textStyle),
+                              Text(
+                                filterMatch ?? desktopSubtitle,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.titleSmall!
+                                    .copyWith(
+                                      color: textColor!.withValues(
+                                        alpha: kLighterOpacity,
+                                      ),
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
+                        SizedBox(width: 10),
                         Text(
-                            localization!.lookup(
-                                'payment_status_${payment.calculatedStatusId}'),
-                            style: TextStyle(
-                              color: PaymentStatusColors(
-                                      state.prefState.colorThemeModel)
-                                  .colors[payment.calculatedStatusId],
-                            )),
+                          formatNumber(
+                            payment.amount,
+                            context,
+                            clientId: client.id,
+                          )!,
+                          style: textStyle,
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(width: 25),
+                        EntityStatusChip(entity: payment),
                       ],
                     ),
-                    EntityStateLabel(payment),
-                  ],
-                ),
-              );
-      }),
+                  ),
+                )
+              : ListTile(
+                  onTap: () => onTap != null
+                      ? onTap!()
+                      : selectEntity(entity: payment, forceView: !showCheckbox),
+                  onLongPress: () => onTap != null
+                      ? null
+                      : selectEntity(entity: payment, longPress: true),
+                  leading: showCheckbox
+                      ? IgnorePointer(
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => null,
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                          ),
+                        )
+                      : null,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            client.displayName,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        Text(
+                          formatNumber(
+                            payment.amount,
+                            context,
+                            clientId: payment.clientId,
+                          )!,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: mobileSubtitle.isNotEmpty
+                                ? Text(
+                                    mobileSubtitle,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                : Container(),
+                          ),
+                          Text(
+                            localization!.lookup(
+                              'payment_status_${payment.calculatedStatusId}',
+                            ),
+                            style: TextStyle(
+                              color: PaymentStatusColors(
+                                state.prefState.colorThemeModel,
+                              ).colors[payment.calculatedStatusId],
+                            ),
+                          ),
+                        ],
+                      ),
+                      EntityStateLabel(payment),
+                    ],
+                  ),
+                );
+        },
+      ),
     );
   }
 }

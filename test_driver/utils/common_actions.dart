@@ -16,8 +16,9 @@ class Keys {
 }
 
 Future<bool> isTablet(FlutterDriver driver) async {
-  final info =
-      await driver.getRenderObjectDiagnostics(find.byType('MaterialApp'));
+  final info = await driver.getRenderObjectDiagnostics(
+    find.byType('MaterialApp'),
+  );
 
   final regExp = new RegExp(r'Size\(([\d\.]*), ([\d\.]*)');
   final match = regExp.firstMatch(info.toString())!;
@@ -30,13 +31,15 @@ Future<bool> isTablet(FlutterDriver driver) async {
 
 Future<bool> isMobile(FlutterDriver driver) async => !await isTablet(driver);
 
-Future<void> login(FlutterDriver driver,
-    {bool selfHosted = true,
-    bool retype = false,
-    String loginEmail = Config.TEST_EMAIL,
-    String loginPassword = Config.TEST_PASSWORD,
-    String loginUrl = Config.TEST_URL,
-    String loginSecret = Config.TEST_SECRET}) async {
+Future<void> login(
+  FlutterDriver driver, {
+  bool selfHosted = true,
+  bool retype = false,
+  String loginEmail = Config.TEST_EMAIL,
+  String loginPassword = Config.TEST_PASSWORD,
+  String loginUrl = Config.TEST_URL,
+  String loginSecret = Config.TEST_SECRET,
+}) async {
   final localization = TestLocalization('en');
 
   /*
@@ -75,8 +78,10 @@ Future<void> login(FlutterDriver driver,
 
   if (loginEmail.isNotEmpty) {
     print('Wait for  ' + localization.overview);
-    await driver.waitFor(find.text(localization.overview),
-        timeout: new Duration(seconds: 60));
+    await driver.waitFor(
+      find.text(localization.overview),
+      timeout: new Duration(seconds: 60),
+    );
   }
 }
 
@@ -102,8 +107,11 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   await driver.waitFor(find.text(localization.selfhosted));
 }
 
-Future<void> viewSection(
-    {required FlutterDriver driver, required String name, TestLocalization? localization}) async {
+Future<void> viewSection({
+  required FlutterDriver driver,
+  required String name,
+  TestLocalization? localization,
+}) async {
   if (await isMobile(driver)) {
     await driver.tap(find.byTooltip('Menu Sidebar'));
   }
@@ -111,21 +119,29 @@ Future<void> viewSection(
   await driver.tap(find.byValueKey('menu_' + name));
 }
 
-Future<void> fillTextField(
-    {required FlutterDriver driver, String? field, required String value}) async {
+Future<void> fillTextField({
+  required FlutterDriver driver,
+  String? field,
+  required String value,
+}) async {
   await driver.tap(find.byValueKey(field));
   await driver.enterText(value);
 }
 
 Future<void> fillTextFields(
-    FlutterDriver? driver, Map<String, dynamic> values) async {
+  FlutterDriver? driver,
+  Map<String, dynamic> values,
+) async {
   for (var entry in values.entries) {
     await fillTextField(driver: driver!, field: entry.key, value: entry.value);
   }
 }
 
-Future<void> checkTextFields(FlutterDriver driver, Map<String, dynamic> values,
-    {List<String> except = const []}) async {
+Future<void> checkTextFields(
+  FlutterDriver driver,
+  Map<String, dynamic> values, {
+  List<String> except = const [],
+}) async {
   for (var entry in values.entries) {
     if (except.contains(entry.key)) {
       continue;
@@ -135,8 +151,11 @@ Future<void> checkTextFields(FlutterDriver driver, Map<String, dynamic> values,
   }
 }
 
-Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
-    {List<String> skipCheckFor = const []}) async {
+Future<void> fillAndSaveForm(
+  FlutterDriver driver,
+  Map<String, dynamic> values, {
+  List<String> skipCheckFor = const [],
+}) async {
   final localization = TestLocalization('en');
 
   print('Fill in form');
@@ -156,12 +175,13 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
   //await driver.tap(find.pageBack());
 }
 
-Future<void> testArchiveAndDelete(
-    {required FlutterDriver driver,
-    required String archivedMessage,
-    String? rowText,
-    required String deletedMessage,
-    required String restoredMessage}) async {
+Future<void> testArchiveAndDelete({
+  required FlutterDriver driver,
+  required String archivedMessage,
+  String? rowText,
+  required String deletedMessage,
+  required String restoredMessage,
+}) async {
   final localization = TestLocalization('en');
   final mobile = await isMobile(driver);
 
@@ -178,8 +198,11 @@ Future<void> testArchiveAndDelete(
 
   print('Restore record');
   if (mobile)
-    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText!),
-        dyScroll: -300);
+    await driver.scrollUntilVisible(
+      find.byType('ListView'),
+      find.text(rowText!),
+      dyScroll: -300,
+    );
 
   //await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
@@ -193,8 +216,11 @@ Future<void> testArchiveAndDelete(
 
   print('Restore record');
   if (mobile)
-    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText!),
-        dyScroll: -300);
+    await driver.scrollUntilVisible(
+      find.byType('ListView'),
+      find.text(rowText!),
+      dyScroll: -300,
+    );
   //await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));

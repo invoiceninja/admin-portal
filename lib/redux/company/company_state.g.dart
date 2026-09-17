@@ -17,102 +17,167 @@ class _$UserCompanyStateSerializer
   final String wireName = 'UserCompanyState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserCompanyState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserCompanyState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'lastUpdated',
-      serializers.serialize(object.lastUpdated,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.lastUpdated,
+        specifiedType: const FullType(int),
+      ),
       'userCompany',
-      serializers.serialize(object.userCompany,
-          specifiedType: const FullType(UserCompanyEntity)),
+      serializers.serialize(
+        object.userCompany,
+        specifiedType: const FullType(UserCompanyEntity),
+      ),
       'documentState',
-      serializers.serialize(object.documentState,
-          specifiedType: const FullType(DocumentState)),
+      serializers.serialize(
+        object.documentState,
+        specifiedType: const FullType(DocumentState),
+      ),
       'productState',
-      serializers.serialize(object.productState,
-          specifiedType: const FullType(ProductState)),
+      serializers.serialize(
+        object.productState,
+        specifiedType: const FullType(ProductState),
+      ),
       'clientState',
-      serializers.serialize(object.clientState,
-          specifiedType: const FullType(ClientState)),
+      serializers.serialize(
+        object.clientState,
+        specifiedType: const FullType(ClientState),
+      ),
       'invoiceState',
-      serializers.serialize(object.invoiceState,
-          specifiedType: const FullType(InvoiceState)),
+      serializers.serialize(
+        object.invoiceState,
+        specifiedType: const FullType(InvoiceState),
+      ),
       'expenseState',
-      serializers.serialize(object.expenseState,
-          specifiedType: const FullType(ExpenseState)),
+      serializers.serialize(
+        object.expenseState,
+        specifiedType: const FullType(ExpenseState),
+      ),
       'vendorState',
-      serializers.serialize(object.vendorState,
-          specifiedType: const FullType(VendorState)),
+      serializers.serialize(
+        object.vendorState,
+        specifiedType: const FullType(VendorState),
+      ),
       'taskState',
-      serializers.serialize(object.taskState,
-          specifiedType: const FullType(TaskState)),
+      serializers.serialize(
+        object.taskState,
+        specifiedType: const FullType(TaskState),
+      ),
       'projectState',
-      serializers.serialize(object.projectState,
-          specifiedType: const FullType(ProjectState)),
+      serializers.serialize(
+        object.projectState,
+        specifiedType: const FullType(ProjectState),
+      ),
       'paymentState',
-      serializers.serialize(object.paymentState,
-          specifiedType: const FullType(PaymentState)),
+      serializers.serialize(
+        object.paymentState,
+        specifiedType: const FullType(PaymentState),
+      ),
       'quoteState',
-      serializers.serialize(object.quoteState,
-          specifiedType: const FullType(QuoteState)),
+      serializers.serialize(
+        object.quoteState,
+        specifiedType: const FullType(QuoteState),
+      ),
       'scheduleState',
-      serializers.serialize(object.scheduleState,
-          specifiedType: const FullType(ScheduleState)),
+      serializers.serialize(
+        object.scheduleState,
+        specifiedType: const FullType(ScheduleState),
+      ),
       'transactionRuleState',
-      serializers.serialize(object.transactionRuleState,
-          specifiedType: const FullType(TransactionRuleState)),
+      serializers.serialize(
+        object.transactionRuleState,
+        specifiedType: const FullType(TransactionRuleState),
+      ),
       'transactionState',
-      serializers.serialize(object.transactionState,
-          specifiedType: const FullType(TransactionState)),
+      serializers.serialize(
+        object.transactionState,
+        specifiedType: const FullType(TransactionState),
+      ),
       'bankAccountState',
-      serializers.serialize(object.bankAccountState,
-          specifiedType: const FullType(BankAccountState)),
+      serializers.serialize(
+        object.bankAccountState,
+        specifiedType: const FullType(BankAccountState),
+      ),
       'purchaseOrderState',
-      serializers.serialize(object.purchaseOrderState,
-          specifiedType: const FullType(PurchaseOrderState)),
+      serializers.serialize(
+        object.purchaseOrderState,
+        specifiedType: const FullType(PurchaseOrderState),
+      ),
       'recurringExpenseState',
-      serializers.serialize(object.recurringExpenseState,
-          specifiedType: const FullType(RecurringExpenseState)),
+      serializers.serialize(
+        object.recurringExpenseState,
+        specifiedType: const FullType(RecurringExpenseState),
+      ),
       'subscriptionState',
-      serializers.serialize(object.subscriptionState,
-          specifiedType: const FullType(SubscriptionState)),
+      serializers.serialize(
+        object.subscriptionState,
+        specifiedType: const FullType(SubscriptionState),
+      ),
       'taskStatusState',
-      serializers.serialize(object.taskStatusState,
-          specifiedType: const FullType(TaskStatusState)),
+      serializers.serialize(
+        object.taskStatusState,
+        specifiedType: const FullType(TaskStatusState),
+      ),
       'expenseCategoryState',
-      serializers.serialize(object.expenseCategoryState,
-          specifiedType: const FullType(ExpenseCategoryState)),
+      serializers.serialize(
+        object.expenseCategoryState,
+        specifiedType: const FullType(ExpenseCategoryState),
+      ),
       'recurringInvoiceState',
-      serializers.serialize(object.recurringInvoiceState,
-          specifiedType: const FullType(RecurringInvoiceState)),
+      serializers.serialize(
+        object.recurringInvoiceState,
+        specifiedType: const FullType(RecurringInvoiceState),
+      ),
       'webhookState',
-      serializers.serialize(object.webhookState,
-          specifiedType: const FullType(WebhookState)),
+      serializers.serialize(
+        object.webhookState,
+        specifiedType: const FullType(WebhookState),
+      ),
       'tokenState',
-      serializers.serialize(object.tokenState,
-          specifiedType: const FullType(TokenState)),
+      serializers.serialize(
+        object.tokenState,
+        specifiedType: const FullType(TokenState),
+      ),
       'paymentTermState',
-      serializers.serialize(object.paymentTermState,
-          specifiedType: const FullType(PaymentTermState)),
+      serializers.serialize(
+        object.paymentTermState,
+        specifiedType: const FullType(PaymentTermState),
+      ),
       'designState',
-      serializers.serialize(object.designState,
-          specifiedType: const FullType(DesignState)),
+      serializers.serialize(
+        object.designState,
+        specifiedType: const FullType(DesignState),
+      ),
       'creditState',
-      serializers.serialize(object.creditState,
-          specifiedType: const FullType(CreditState)),
+      serializers.serialize(
+        object.creditState,
+        specifiedType: const FullType(CreditState),
+      ),
       'userState',
-      serializers.serialize(object.userState,
-          specifiedType: const FullType(UserState)),
+      serializers.serialize(
+        object.userState,
+        specifiedType: const FullType(UserState),
+      ),
       'taxRateState',
-      serializers.serialize(object.taxRateState,
-          specifiedType: const FullType(TaxRateState)),
+      serializers.serialize(
+        object.taxRateState,
+        specifiedType: const FullType(TaxRateState),
+      ),
       'companyGatewayState',
-      serializers.serialize(object.companyGatewayState,
-          specifiedType: const FullType(CompanyGatewayState)),
+      serializers.serialize(
+        object.companyGatewayState,
+        specifiedType: const FullType(CompanyGatewayState),
+      ),
       'groupState',
-      serializers.serialize(object.groupState,
-          specifiedType: const FullType(GroupState)),
+      serializers.serialize(
+        object.groupState,
+        specifiedType: const FullType(GroupState),
+      ),
     ];
 
     return result;
@@ -120,8 +185,10 @@ class _$UserCompanyStateSerializer
 
   @override
   UserCompanyState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserCompanyStateBuilder();
 
     final iterator = serialized.iterator;
@@ -131,140 +198,282 @@ class _$UserCompanyStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.lastUpdated =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'userCompany':
-          result.userCompany.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))!
-              as UserCompanyEntity);
+          result.userCompany.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserCompanyEntity),
+                )!
+                as UserCompanyEntity,
+          );
           break;
         case 'documentState':
-          result.documentState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DocumentState))! as DocumentState);
+          result.documentState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DocumentState),
+                )!
+                as DocumentState,
+          );
           break;
         case 'productState':
-          result.productState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductState))! as ProductState);
+          result.productState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ProductState),
+                )!
+                as ProductState,
+          );
           break;
         case 'clientState':
-          result.clientState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientState))! as ClientState);
+          result.clientState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ClientState),
+                )!
+                as ClientState,
+          );
           break;
         case 'invoiceState':
-          result.invoiceState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceState))! as InvoiceState);
+          result.invoiceState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(InvoiceState),
+                )!
+                as InvoiceState,
+          );
           break;
         case 'expenseState':
-          result.expenseState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ExpenseState))! as ExpenseState);
+          result.expenseState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ExpenseState),
+                )!
+                as ExpenseState,
+          );
           break;
         case 'vendorState':
-          result.vendorState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(VendorState))! as VendorState);
+          result.vendorState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(VendorState),
+                )!
+                as VendorState,
+          );
           break;
         case 'taskState':
-          result.taskState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaskState))! as TaskState);
+          result.taskState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TaskState),
+                )!
+                as TaskState,
+          );
           break;
         case 'projectState':
-          result.projectState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProjectState))! as ProjectState);
+          result.projectState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ProjectState),
+                )!
+                as ProjectState,
+          );
           break;
         case 'paymentState':
-          result.paymentState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(PaymentState))! as PaymentState);
+          result.paymentState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(PaymentState),
+                )!
+                as PaymentState,
+          );
           break;
         case 'quoteState':
-          result.quoteState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(QuoteState))! as QuoteState);
+          result.quoteState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(QuoteState),
+                )!
+                as QuoteState,
+          );
           break;
         case 'scheduleState':
-          result.scheduleState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ScheduleState))! as ScheduleState);
+          result.scheduleState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ScheduleState),
+                )!
+                as ScheduleState,
+          );
           break;
         case 'transactionRuleState':
-          result.transactionRuleState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TransactionRuleState))!
-              as TransactionRuleState);
+          result.transactionRuleState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TransactionRuleState),
+                )!
+                as TransactionRuleState,
+          );
           break;
         case 'transactionState':
-          result.transactionState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TransactionState))!
-              as TransactionState);
+          result.transactionState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TransactionState),
+                )!
+                as TransactionState,
+          );
           break;
         case 'bankAccountState':
-          result.bankAccountState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(BankAccountState))!
-              as BankAccountState);
+          result.bankAccountState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BankAccountState),
+                )!
+                as BankAccountState,
+          );
           break;
         case 'purchaseOrderState':
-          result.purchaseOrderState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PurchaseOrderState))!
-              as PurchaseOrderState);
+          result.purchaseOrderState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(PurchaseOrderState),
+                )!
+                as PurchaseOrderState,
+          );
           break;
         case 'recurringExpenseState':
-          result.recurringExpenseState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(RecurringExpenseState))!
-              as RecurringExpenseState);
+          result.recurringExpenseState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(RecurringExpenseState),
+                )!
+                as RecurringExpenseState,
+          );
           break;
         case 'subscriptionState':
-          result.subscriptionState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SubscriptionState))!
-              as SubscriptionState);
+          result.subscriptionState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(SubscriptionState),
+                )!
+                as SubscriptionState,
+          );
           break;
         case 'taskStatusState':
-          result.taskStatusState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TaskStatusState))!
-              as TaskStatusState);
+          result.taskStatusState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TaskStatusState),
+                )!
+                as TaskStatusState,
+          );
           break;
         case 'expenseCategoryState':
-          result.expenseCategoryState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ExpenseCategoryState))!
-              as ExpenseCategoryState);
+          result.expenseCategoryState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ExpenseCategoryState),
+                )!
+                as ExpenseCategoryState,
+          );
           break;
         case 'recurringInvoiceState':
-          result.recurringInvoiceState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(RecurringInvoiceState))!
-              as RecurringInvoiceState);
+          result.recurringInvoiceState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(RecurringInvoiceState),
+                )!
+                as RecurringInvoiceState,
+          );
           break;
         case 'webhookState':
-          result.webhookState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(WebhookState))! as WebhookState);
+          result.webhookState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(WebhookState),
+                )!
+                as WebhookState,
+          );
           break;
         case 'tokenState':
-          result.tokenState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TokenState))! as TokenState);
+          result.tokenState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TokenState),
+                )!
+                as TokenState,
+          );
           break;
         case 'paymentTermState':
-          result.paymentTermState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PaymentTermState))!
-              as PaymentTermState);
+          result.paymentTermState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(PaymentTermState),
+                )!
+                as PaymentTermState,
+          );
           break;
         case 'designState':
-          result.designState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DesignState))! as DesignState);
+          result.designState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DesignState),
+                )!
+                as DesignState,
+          );
           break;
         case 'creditState':
-          result.creditState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CreditState))! as CreditState);
+          result.creditState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(CreditState),
+                )!
+                as CreditState,
+          );
           break;
         case 'userState':
-          result.userState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserState))! as UserState);
+          result.userState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserState),
+                )!
+                as UserState,
+          );
           break;
         case 'taxRateState':
-          result.taxRateState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxRateState))! as TaxRateState);
+          result.taxRateState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TaxRateState),
+                )!
+                as TaxRateState,
+          );
           break;
         case 'companyGatewayState':
-          result.companyGatewayState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(CompanyGatewayState))!
-              as CompanyGatewayState);
+          result.companyGatewayState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(CompanyGatewayState),
+                )!
+                as CompanyGatewayState,
+          );
           break;
         case 'groupState':
-          result.groupState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GroupState))! as GroupState);
+          result.groupState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(GroupState),
+                )!
+                as GroupState,
+          );
           break;
       }
     }
@@ -337,43 +546,43 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final GroupState groupState;
 
-  factory _$UserCompanyState(
-          [void Function(UserCompanyStateBuilder)? updates]) =>
-      (UserCompanyStateBuilder()..update(updates))._build();
+  factory _$UserCompanyState([
+    void Function(UserCompanyStateBuilder)? updates,
+  ]) => (UserCompanyStateBuilder()..update(updates))._build();
 
-  _$UserCompanyState._(
-      {required this.lastUpdated,
-      required this.userCompany,
-      required this.documentState,
-      required this.productState,
-      required this.clientState,
-      required this.invoiceState,
-      required this.expenseState,
-      required this.vendorState,
-      required this.taskState,
-      required this.projectState,
-      required this.paymentState,
-      required this.quoteState,
-      required this.scheduleState,
-      required this.transactionRuleState,
-      required this.transactionState,
-      required this.bankAccountState,
-      required this.purchaseOrderState,
-      required this.recurringExpenseState,
-      required this.subscriptionState,
-      required this.taskStatusState,
-      required this.expenseCategoryState,
-      required this.recurringInvoiceState,
-      required this.webhookState,
-      required this.tokenState,
-      required this.paymentTermState,
-      required this.designState,
-      required this.creditState,
-      required this.userState,
-      required this.taxRateState,
-      required this.companyGatewayState,
-      required this.groupState})
-      : super._();
+  _$UserCompanyState._({
+    required this.lastUpdated,
+    required this.userCompany,
+    required this.documentState,
+    required this.productState,
+    required this.clientState,
+    required this.invoiceState,
+    required this.expenseState,
+    required this.vendorState,
+    required this.taskState,
+    required this.projectState,
+    required this.paymentState,
+    required this.quoteState,
+    required this.scheduleState,
+    required this.transactionRuleState,
+    required this.transactionState,
+    required this.bankAccountState,
+    required this.purchaseOrderState,
+    required this.recurringExpenseState,
+    required this.subscriptionState,
+    required this.taskStatusState,
+    required this.expenseCategoryState,
+    required this.recurringInvoiceState,
+    required this.webhookState,
+    required this.tokenState,
+    required this.paymentTermState,
+    required this.designState,
+    required this.creditState,
+    required this.userState,
+    required this.taxRateState,
+    required this.companyGatewayState,
+    required this.groupState,
+  }) : super._();
   @override
   UserCompanyState rebuild(void Function(UserCompanyStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -603,8 +812,8 @@ class UserCompanyStateBuilder
   RecurringExpenseStateBuilder get recurringExpenseState =>
       _$this._recurringExpenseState ??= RecurringExpenseStateBuilder();
   set recurringExpenseState(
-          RecurringExpenseStateBuilder? recurringExpenseState) =>
-      _$this._recurringExpenseState = recurringExpenseState;
+    RecurringExpenseStateBuilder? recurringExpenseState,
+  ) => _$this._recurringExpenseState = recurringExpenseState;
 
   SubscriptionStateBuilder? _subscriptionState;
   SubscriptionStateBuilder get subscriptionState =>
@@ -628,8 +837,8 @@ class UserCompanyStateBuilder
   RecurringInvoiceStateBuilder get recurringInvoiceState =>
       _$this._recurringInvoiceState ??= RecurringInvoiceStateBuilder();
   set recurringInvoiceState(
-          RecurringInvoiceStateBuilder? recurringInvoiceState) =>
-      _$this._recurringInvoiceState = recurringInvoiceState;
+    RecurringInvoiceStateBuilder? recurringInvoiceState,
+  ) => _$this._recurringInvoiceState = recurringInvoiceState;
 
   WebhookStateBuilder? _webhookState;
   WebhookStateBuilder get webhookState =>
@@ -740,10 +949,14 @@ class UserCompanyStateBuilder
   _$UserCompanyState _build() {
     _$UserCompanyState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$UserCompanyState._(
             lastUpdated: BuiltValueNullFieldError.checkNotNull(
-                lastUpdated, r'UserCompanyState', 'lastUpdated'),
+              lastUpdated,
+              r'UserCompanyState',
+              'lastUpdated',
+            ),
             userCompany: userCompany.build(),
             documentState: documentState.build(),
             productState: productState.build(),
@@ -840,7 +1053,10 @@ class UserCompanyStateBuilder
         groupState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserCompanyState', _$failedField, e.toString());
+          r'UserCompanyState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

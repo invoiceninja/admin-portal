@@ -53,31 +53,33 @@ class DocumentListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           document.id ==
               (uiState.isEditing
                   ? documentUIState.editing!.id
                   : documentUIState.selectedId),
       userCompany: userCompany,
       entity: document,
-      child: LayoutBuilder(builder: (context, constraints) {
-        return constraints.maxWidth > kTableListWidthCutoff
-            ? InkWell(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: document),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress!()
-                    : selectEntity(entity: document, longPress: true),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 28,
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return constraints.maxWidth > kTableListWidthCutoff
+              ? InkWell(
+                  onTap: () =>
+                      onTap != null ? onTap!() : selectEntity(entity: document),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress!()
+                      : selectEntity(entity: document, longPress: true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 28,
+                      top: 4,
+                      bottom: 4,
+                    ),
+                    child: Row(
+                      children: [
+                        Padding(
                           padding: const EdgeInsets.only(right: 16),
                           child: showCheckbox
                               ? IgnorePointer(
@@ -88,8 +90,9 @@ class DocumentListItem extends StatelessWidget {
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
                                         onCheckboxChanged!(value),
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
+                                    activeColor: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
                                   ),
                                 )
                               : ActionMenuButton(
@@ -101,97 +104,109 @@ class DocumentListItem extends StatelessWidget {
                                   entity: document,
                                   onSelected: (context, action) =>
                                       handleEntityAction(document, action),
-                                )),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              document.name,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              formatDate(
+                                ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                document.name,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                formatDate(
                                       convertTimestampToDateString(
-                                          document.createdAt),
-                                      context) +
-                                  (!document.isPublic
-                                      ? ' • ${AppLocalization.of(context)!.private}'
-                                      : ''),
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
+                                        document.createdAt,
+                                      ),
+                                      context,
+                                    ) +
+                                    (!document.isPublic
+                                        ? ' • ${AppLocalization.of(context)!.private}'
+                                        : ''),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Text(document.prettySize,
-                          style: Theme.of(context).textTheme.titleMedium),
-                    ],
+                        Text(
+                          document.prettySize,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            : ListTile(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: document),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress!()
-                    : selectEntity(entity: document, longPress: true),
-                leading: showCheckbox
-                    ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
-                        child: Checkbox(
-                          value: isChecked,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged!(value),
-                          activeColor: Theme.of(context).colorScheme.secondary,
+                )
+              : ListTile(
+                  onTap: () =>
+                      onTap != null ? onTap!() : selectEntity(entity: document),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress!()
+                      : selectEntity(entity: document, longPress: true),
+                  leading: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged!(value),
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                          ),
+                        )
+                      : null,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                document.name,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                formatDate(
+                                      convertTimestampToDateString(
+                                        document.createdAt,
+                                      ),
+                                      context,
+                                    ) +
+                                    (!document.isPublic
+                                        ? ' • ${AppLocalization.of(context)!.private}'
+                                        : ''),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
                         ),
-                      )
-                    : null,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
+                        Text(
+                          document.prettySize,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              document.name,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              formatDate(
-                                      convertTimestampToDateString(
-                                          document.createdAt),
-                                      context) +
-                                  (!document.isPublic
-                                      ? ' • ${AppLocalization.of(context)!.private}'
-                                      : ''),
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Text(document.prettySize,
-                          style: Theme.of(context).textTheme.titleMedium),
+                      subtitle != null && subtitle.isNotEmpty
+                          ? Text(
+                              subtitle,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          : Container(),
+                      EntityStateLabel(document),
                     ],
                   ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    subtitle != null && subtitle.isNotEmpty
-                        ? Text(
-                            subtitle,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Container(),
-                    EntityStateLabel(document),
-                  ],
-                ),
-              );
-      }),
+                );
+        },
+      ),
     );
   }
 }

@@ -22,9 +22,7 @@ class RecurringInvoiceScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, RecurringInvoiceScreenVM>(
       converter: RecurringInvoiceScreenVM.fromStore,
       builder: (context, vm) {
-        return RecurringInvoiceScreen(
-          viewModel: vm,
-        );
+        return RecurringInvoiceScreen(viewModel: vm);
       },
     );
   }
@@ -51,18 +49,22 @@ class RecurringInvoiceScreenVM {
     return RecurringInvoiceScreenVM(
       recurringInvoiceMap: state.recurringInvoiceState.map,
       recurringInvoiceList: memoizedFilteredRecurringInvoiceList(
-          state.getUISelection(EntityType.recurringInvoice),
-          state.recurringInvoiceState.map,
-          state.clientState.map,
-          state.vendorState.map,
-          state.recurringInvoiceState.list,
-          state.recurringInvoiceListState,
-          state.userState.map),
+        state.getUISelection(EntityType.recurringInvoice),
+        state.recurringInvoiceState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.recurringInvoiceState.list,
+        state.recurringInvoiceListState,
+        state.userState.map,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.recurringInvoiceListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> recurringInvoices,
-              EntityAction action) =>
-          handleRecurringInvoiceAction(context, recurringInvoices, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringInvoices,
+            EntityAction action,
+          ) => handleRecurringInvoiceAction(context, recurringInvoices, action),
     );
   }
 }

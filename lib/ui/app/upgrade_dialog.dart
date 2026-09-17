@@ -39,14 +39,17 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   void initState() {
     final Stream<List<PurchaseDetails>> purchaseUpdated =
         _inAppPurchase.purchaseStream;
-    _subscription =
-        purchaseUpdated.listen((List<PurchaseDetails> purchaseDetailsList) {
-      _listenToPurchaseUpdated(purchaseDetailsList);
-    }, onDone: () {
-      _subscription.cancel();
-    }, onError: (Object error) {
-      // handle error here.
-    });
+    _subscription = purchaseUpdated.listen(
+      (List<PurchaseDetails> purchaseDetailsList) {
+        _listenToPurchaseUpdated(purchaseDetailsList);
+      },
+      onDone: () {
+        _subscription.cancel();
+      },
+      onError: (Object error) {
+        // handle error here.
+      },
+    );
     initStoreInfo();
     super.initState();
   }
@@ -71,8 +74,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
     }
 
-    final ProductDetailsResponse productDetailResponse =
-        await _inAppPurchase.queryProductDetails(kProductPlans.toSet());
+    final ProductDetailsResponse productDetailResponse = await _inAppPurchase
+        .queryProductDetails(kProductPlans.toSet());
     if (productDetailResponse.error != null) {
       setState(() {
         _queryProductError = productDetailResponse.error!.message;
@@ -147,9 +150,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         ),
       );
     } else {
-      stack.add(Center(
-        child: Text(_queryProductError!),
-      ));
+      stack.add(Center(child: Text(_queryProductError!)));
     }
     if (_purchasePending) {
       stack.add(
@@ -159,9 +160,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
               opacity: 0.3,
               child: ModalBarrier(dismissible: false, color: Colors.grey),
             ),
-            Center(
-              child: CircularProgressIndicator(),
-            ),
+            Center(child: CircularProgressIndicator()),
           ],
         ),
       );
@@ -170,17 +169,16 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     return AlertDialog(
       title: Text(localization.upgrade),
       content: Column(
-        children: [
-          Expanded(child: Stack(children: stack)),
-        ],
+        children: [Expanded(child: Stack(children: stack))],
       ),
       actions: [
         if (!_loading)
           TextButton(
-              onPressed: () {
-                _inAppPurchase.restorePurchases();
-              },
-              child: Text(localization.restorePurchases)),
+            onPressed: () {
+              _inAppPurchase.restorePurchases();
+            },
+            child: Text(localization.restorePurchases),
+          ),
         TextButton(
           child: Text(localization.termsOfService),
           onPressed: () => launchUrl(Uri.parse(kTermsOfServiceURL)),
@@ -196,9 +194,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   Widget _buildProductList() {
     if (_loading) {
       return const Card(
-          child: ListTile(
-              leading: CircularProgressIndicator(),
-              title: Text('Fetching products...')));
+        child: ListTile(
+          leading: CircularProgressIndicator(),
+          title: Text('Fetching products...'),
+        ),
+      );
     }
     if (!_isAvailable) {
       return const Card();
@@ -209,15 +209,19 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     final Map<String, PurchaseDetails> purchases =
         Map<String, PurchaseDetails>.fromEntries(
-            _purchases.map((PurchaseDetails purchase) {
-      if (purchase.pendingCompletePurchase) {
-        _inAppPurchase.completePurchase(purchase);
-      }
-      return MapEntry<String, PurchaseDetails>(purchase.productID, purchase);
-    }));
+          _purchases.map((PurchaseDetails purchase) {
+            if (purchase.pendingCompletePurchase) {
+              _inAppPurchase.completePurchase(purchase);
+            }
+            return MapEntry<String, PurchaseDetails>(
+              purchase.productID,
+              purchase,
+            );
+          }),
+        );
     _products.sort((p1, p2) => p1.rawPrice.compareTo(p2.rawPrice));
-    productList.addAll(_products.map(
-      (ProductDetails productDetails) {
+    productList.addAll(
+      _products.map((ProductDetails productDetails) {
         final PurchaseDetails? previousPurchase = purchases[productDetails.id];
 
         return ListTile(
@@ -239,8 +243,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
                     if (Platform.isAndroid) {
                       purchaseParam = GooglePlayPurchaseParam(
-                          productDetails: productDetails,
-                          applicationUserName: account.id);
+                        productDetails: productDetails,
+                        applicationUserName: account.id,
+                      );
                     } else {
                       purchaseParam = PurchaseParam(
                         productDetails: productDetails,
@@ -253,16 +258,18 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                     );
                   }
                 },
-                child: Text(previousPurchase != null
-                    ? AppLocalization.of(context)!.activate
-                    : productDetails.price),
+                child: Text(
+                  previousPurchase != null
+                      ? AppLocalization.of(context)!.activate
+                      : productDetails.price,
+                ),
               ),
               SizedBox(height: 20),
             ],
           ),
         );
-      },
-    ));
+      }),
+    );
 
     return Column(children: productList);
   }
@@ -283,16 +290,14 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     //final navigator = Navigator.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
+    final url =
+        (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
         '/api/admin/subscription';
 
-    var purchaseID = purchaseDetails.purchaseID;
-    if (purchaseDetails is AppStorePurchaseDetails) {
-      final originalTransaction =
-          purchaseDetails.skPaymentTransaction.originalTransaction;
-      if (originalTransaction != null) {
-        purchaseID = originalTransaction.transactionIdentifier;
-      }
+    final purchaseID = _inAppTransactionId(purchaseDetails);
+    if (purchaseID == null || purchaseID.isEmpty) {
+      // The server requires a non-empty string; posting null just 422s.
+      return;
     }
 
     final data = {
@@ -301,8 +306,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'plan': purchaseDetails.productID.replaceAll('-', '_'),
     };
 
-    await WebClient()
-        .post(url, state.credentials.token, data: jsonEncode(data));
+    await WebClient().post(
+      url,
+      state.credentials.token,
+      data: jsonEncode(data),
+    );
 
     store.dispatch(RefreshData());
 
@@ -313,6 +321,71 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
      */
   }
 
+  /// The value the hosted endpoint stores as `accounts.inapp_transaction_id`.
+  ///
+  /// Apple keys its renewal / cancellation / refund notifications on the
+  /// subscription's **original** transaction id and the server matches that
+  /// exactly, so storing a per-transaction id silently orphans the account —
+  /// later notifications find no match and the plan stops being extended. For
+  /// an initial purchase the two are identical; they diverge on restore and on
+  /// renewals, which both reach here.
+  ///
+  /// Google is the opposite: its notifications resolve to the `orderId` that
+  /// already arrives as [PurchaseDetails.purchaseID], so Android falls through
+  /// unchanged.
+  String? _inAppTransactionId(PurchaseDetails purchaseDetails) {
+    if (purchaseDetails is AppStorePurchaseDetails) {
+      // StoreKit 1 — only reached if `enableStoreKit1()` is ever called.
+      // `originalTransaction` is populated for restored transactions only.
+      final originalTransaction =
+          purchaseDetails.skPaymentTransaction.originalTransaction;
+      if (originalTransaction != null) {
+        return originalTransaction.transactionIdentifier;
+      }
+    } else {
+      // StoreKit 2 (the plugin default) drops `originalId` when it builds
+      // SK2PurchaseDetails, but Apple's own transaction JSON is passed through
+      // as `localVerificationData` and still carries it. Google's equivalent
+      // JSON has no such key, so Android returns null here and falls back to
+      // `purchaseID`.
+      final original = _appleOriginalTransactionId(
+        purchaseDetails.verificationData.localVerificationData,
+      );
+      if (original != null) {
+        return original;
+      }
+    }
+    return purchaseDetails.purchaseID;
+  }
+
+  /// Pulls Apple's `originalTransactionId` out of a StoreKit 2 transaction's
+  /// `localVerificationData` — Apple's `Transaction.jsonRepresentation`.
+  ///
+  /// Returns null when the payload is empty, isn't a JSON object, or carries no
+  /// usable `originalTransactionId`. Never throws: this runs inside the
+  /// purchase-stream callback, where an exception would take down delivery of a
+  /// paid purchase. Apple documents the field as a string but encodes some
+  /// numeric ids as JSON numbers, so both are accepted.
+  String? _appleOriginalTransactionId(String localVerificationData) {
+    if (localVerificationData.isEmpty) {
+      return null;
+    }
+    try {
+      final decoded = jsonDecode(localVerificationData);
+      if (decoded is! Map<String, dynamic>) {
+        return null;
+      }
+      final value = decoded['originalTransactionId'];
+      if (value == null) {
+        return null;
+      }
+      final id = value is String ? value : value.toString();
+      return id.isEmpty ? null : id;
+    } catch (_) {
+      return null;
+    }
+  }
+
   void handleError(IAPError? error) {
     setState(() {
       _purchasePending = false;
@@ -320,7 +393,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   }
 
   Future<void> _listenToPurchaseUpdated(
-      List<PurchaseDetails> purchaseDetailsList) async {
+    List<PurchaseDetails> purchaseDetailsList,
+  ) async {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         showPendingUI();
@@ -356,7 +430,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 class ExamplePaymentQueueDelegate implements SKPaymentQueueDelegateWrapper {
   @override
   bool shouldContinueTransaction(
-      SKPaymentTransactionWrapper transaction, SKStorefrontWrapper storefront) {
+    SKPaymentTransactionWrapper transaction,
+    SKStorefrontWrapper storefront,
+  ) {
     return true;
   }
 

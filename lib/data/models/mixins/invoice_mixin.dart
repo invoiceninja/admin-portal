@@ -45,18 +45,40 @@ abstract mixin class CalculateInvoiceTotal {
   BuiltList<InvoiceItemEntity> get lineItems;
 
   double _calculateTaxAmount(
-      double amount, double rate, bool useInclusiveTaxes, int precision) {
+    double amount,
+    double rate,
+    bool useInclusiveTaxes,
+    int precision, {
+    double? totalRate,
+  }) {
     double taxAmount;
     if (useInclusiveTaxes) {
-      taxAmount = amount - (amount / (1 + (rate / 100)));
+      // Shared additive base (issue invoiceninja/invoiceninja#12072): the
+      // divisor uses Σr (all inclusive rates in this group), the numerator uses
+      // THIS rate, on the unrounded net. A single applicable rate (Σr == rate)
+      // is the exact legacy extraction.
+      final sumRate = totalRate ?? rate;
+      // Combined inclusive rate ≤ 0 → no tax (parity with backend
+      // InclusiveTax::backout `combined_rate <= 0`).
+      if (sumRate <= 0) {
+        return 0;
+      }
+      if (sumRate == rate) {
+        taxAmount = amount - (amount / (1 + (rate / 100)));
+      } else {
+        final net = amount / (1 + (sumRate / 100));
+        taxAmount = rate / 100 * net;
+      }
     } else {
       taxAmount = amount * rate / 100;
     }
     return round(taxAmount, precision);
   }
 
-  Map<String, double> calculateTaxes(
-      {required bool useInclusiveTaxes, required int precision}) {
+  Map<String, double> calculateTaxes({
+    required bool useInclusiveTaxes,
+    required int precision,
+  }) {
     double total = calculateSubtotal(precision: precision);
     double taxAmount;
     final map = <String, double>{};
@@ -65,26 +87,53 @@ abstract mixin class CalculateInvoiceTotal {
       final double taxRate1 = round(item.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
       final double taxRate3 = round(item.taxRate3, 3);
+      // Σr for this line: the item's own inclusive rates share one divisor
+      // (issue #12072). Zero rates contribute nothing.
+      final double itemRateSum = taxRate1 + taxRate2 + taxRate3;
 
       final lineTotal = getItemTaxable(item, total, precision);
 
       if (taxRate1 != 0) {
         taxAmount = _calculateTaxAmount(
-            lineTotal, taxRate1, useInclusiveTaxes, precision);
-        map.update(item.taxName1, (value) => value + taxAmount,
-            ifAbsent: () => taxAmount);
+          lineTotal,
+          taxRate1,
+          useInclusiveTaxes,
+          precision,
+          totalRate: itemRateSum,
+        );
+        map.update(
+          item.taxName1,
+          (value) => value + taxAmount,
+          ifAbsent: () => taxAmount,
+        );
       }
       if (taxRate2 != 0) {
         taxAmount = _calculateTaxAmount(
-            lineTotal, taxRate2, useInclusiveTaxes, precision);
-        map.update(item.taxName2, (value) => value + taxAmount,
-            ifAbsent: () => taxAmount);
+          lineTotal,
+          taxRate2,
+          useInclusiveTaxes,
+          precision,
+          totalRate: itemRateSum,
+        );
+        map.update(
+          item.taxName2,
+          (value) => value + taxAmount,
+          ifAbsent: () => taxAmount,
+        );
       }
       if (taxRate3 != 0) {
         taxAmount = _calculateTaxAmount(
-            lineTotal, taxRate3, useInclusiveTaxes, precision);
-        map.update(item.taxName3, (value) => value + taxAmount,
-            ifAbsent: () => taxAmount);
+          lineTotal,
+          taxRate3,
+          useInclusiveTaxes,
+          precision,
+          totalRate: itemRateSum,
+        );
+        map.update(
+          item.taxName3,
+          (value) => value + taxAmount,
+          ifAbsent: () => taxAmount,
+        );
       }
     });
 
@@ -112,25 +161,53 @@ abstract mixin class CalculateInvoiceTotal {
       total += round(customSurcharge4, precision);
     }
 
+    // Σr for invoice-level inclusive tax — the mixin applies these rate-only
+    // (no tax_name gate), so all three invoice rates share the divisor.
+    final double invoiceRateSum = taxRate1 + taxRate2 + taxRate3;
+
     if (taxRate1 != 0) {
-      taxAmount =
-          _calculateTaxAmount(total, taxRate1, useInclusiveTaxes, precision);
-      map.update(taxName1, (value) => value + taxAmount,
-          ifAbsent: () => taxAmount);
+      taxAmount = _calculateTaxAmount(
+        total,
+        taxRate1,
+        useInclusiveTaxes,
+        precision,
+        totalRate: invoiceRateSum,
+      );
+      map.update(
+        taxName1,
+        (value) => value + taxAmount,
+        ifAbsent: () => taxAmount,
+      );
     }
 
     if (taxRate2 != 0) {
-      taxAmount =
-          _calculateTaxAmount(total, taxRate2, useInclusiveTaxes, precision);
-      map.update(taxName2, (value) => value + taxAmount,
-          ifAbsent: () => taxAmount);
+      taxAmount = _calculateTaxAmount(
+        total,
+        taxRate2,
+        useInclusiveTaxes,
+        precision,
+        totalRate: invoiceRateSum,
+      );
+      map.update(
+        taxName2,
+        (value) => value + taxAmount,
+        ifAbsent: () => taxAmount,
+      );
     }
 
     if (taxRate3 != 0) {
-      taxAmount =
-          _calculateTaxAmount(total, taxRate3, useInclusiveTaxes, precision);
-      map.update(taxName3, (value) => value + taxAmount,
-          ifAbsent: () => taxAmount);
+      taxAmount = _calculateTaxAmount(
+        total,
+        taxRate3,
+        useInclusiveTaxes,
+        precision,
+        totalRate: invoiceRateSum,
+      );
+      map.update(
+        taxName3,
+        (value) => value + taxAmount,
+        ifAbsent: () => taxAmount,
+      );
     }
 
     return map;
@@ -179,7 +256,10 @@ abstract mixin class CalculateInvoiceTotal {
   }
 
   double getItemTaxable(
-      InvoiceItemEntity item, double invoiceTotal, int precision) {
+    InvoiceItemEntity item,
+    double invoiceTotal,
+    int precision,
+  ) {
     final double qty = round(item.quantity, 5);
     final double cost = round(item.cost, 5);
     final double itemDiscount = round(item.discount, 5);

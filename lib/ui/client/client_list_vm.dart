@@ -31,28 +31,29 @@ class ClientListBuilder extends StatelessWidget {
       converter: ClientListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.client,
-            presenter: ClientPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.clientList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final clientId = viewModel.clientList[index];
-              final client = viewModel.clientMap[clientId]!;
-              final listState = state.getListState(EntityType.client);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.client,
+          presenter: ClientPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.clientList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final clientId = viewModel.clientList[index];
+            final client = viewModel.clientMap[clientId]!;
+            final listState = state.getListState(EntityType.client);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return ClientListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                client: client as ClientEntity,
-                isChecked: isInMultiselect && listState.isSelected(client.id),
-              );
-            });
+            return ClientListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              client: client as ClientEntity,
+              isChecked: isInMultiselect && listState.isSelected(client.id),
+            );
+          },
+        );
       },
     );
   }
@@ -88,8 +89,9 @@ class ClientListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -99,23 +101,27 @@ class ClientListVM {
     return ClientListVM(
       state: state,
       clientList: memoizedFilteredClientList(
-          state.getUISelection(EntityType.client),
-          state.clientState.map,
-          state.clientState.list,
-          state.groupState.map,
-          state.clientListState,
-          state.userState.map,
-          state.staticState),
+        state.getUISelection(EntityType.client),
+        state.clientState.map,
+        state.clientState.list,
+        state.groupState.map,
+        state.clientListState,
+        state.userState.map,
+        state.staticState,
+      ),
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.clientListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction: (BuildContext context, List<BaseEntity> client,
-              EntityAction action) =>
-          handleClientAction(context, client, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> client,
+            EntityAction action,
+          ) => handleClientAction(context, client, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.client) ??
-              ClientPresenter.getDefaultTableFields(state.userCompany),
+          ClientPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
       onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),
     );

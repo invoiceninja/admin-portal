@@ -58,8 +58,11 @@ Middleware<AppState> _editDesign() {
 }
 
 Middleware<AppState> _viewDesign() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewDesign?;
 
     next(action);
@@ -86,7 +89,9 @@ Middleware<AppState> _viewDesignList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          DesignScreen.route, (Route<dynamic> route) => false);
+        DesignScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
@@ -94,19 +99,24 @@ Middleware<AppState> _viewDesignList() {
 Middleware<AppState> _archiveDesign(DesignRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveDesignsRequest;
-    final prevDesigns =
-        action.designIds.map((id) => store.state.designState.map[id]).toList();
+    final prevDesigns = action.designIds
+        .map((id) => store.state.designState.map[id])
+        .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.designIds, EntityAction.archive)
+          store.state.credentials,
+          action.designIds,
+          EntityAction.archive,
+        )
         .then((List<DesignEntity> designs) {
-      store.dispatch(ArchiveDesignsSuccess(designs));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveDesignsFailure(prevDesigns));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveDesignsSuccess(designs));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveDesignsFailure(prevDesigns));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -115,19 +125,24 @@ Middleware<AppState> _archiveDesign(DesignRepository repository) {
 Middleware<AppState> _deleteDesign(DesignRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteDesignsRequest;
-    final prevDesigns =
-        action.designIds.map((id) => store.state.designState.map[id]).toList();
+    final prevDesigns = action.designIds
+        .map((id) => store.state.designState.map[id])
+        .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.designIds, EntityAction.delete)
+          store.state.credentials,
+          action.designIds,
+          EntityAction.delete,
+        )
         .then((List<DesignEntity> designs) {
-      store.dispatch(DeleteDesignsSuccess(designs));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteDesignsFailure(prevDesigns));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteDesignsSuccess(designs));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteDesignsFailure(prevDesigns));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -136,19 +151,24 @@ Middleware<AppState> _deleteDesign(DesignRepository repository) {
 Middleware<AppState> _restoreDesign(DesignRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreDesignsRequest;
-    final prevDesigns =
-        action.designIds.map((id) => store.state.designState.map[id]).toList();
+    final prevDesigns = action.designIds
+        .map((id) => store.state.designState.map[id])
+        .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.designIds, EntityAction.restore)
+          store.state.credentials,
+          action.designIds,
+          EntityAction.restore,
+        )
         .then((List<DesignEntity> designs) {
-      store.dispatch(RestoreDesignsSuccess(designs));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreDesignsFailure(prevDesigns));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreDesignsSuccess(designs));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreDesignsFailure(prevDesigns));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -160,18 +180,19 @@ Middleware<AppState> _saveDesign(DesignRepository repository) {
     repository
         .saveData(store.state.credentials, action.design!)
         .then((DesignEntity design) {
-      if (action.design!.isNew) {
-        store.dispatch(AddDesignSuccess(design));
-      } else {
-        store.dispatch(SaveDesignSuccess(design));
-      }
+          if (action.design!.isNew) {
+            store.dispatch(AddDesignSuccess(design));
+          } else {
+            store.dispatch(SaveDesignSuccess(design));
+          }
 
-      action.completer!.complete(design);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveDesignFailure(error));
-      action.completer!.completeError(error);
-    });
+          action.completer!.complete(design);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveDesignFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -183,19 +204,22 @@ Middleware<AppState> _loadDesign(DesignRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadDesignRequest());
-    repository.loadItem(state.credentials, action.designId).then((design) {
-      store.dispatch(LoadDesignSuccess(design));
+    repository
+        .loadItem(state.credentials, action.designId)
+        .then((design) {
+          store.dispatch(LoadDesignSuccess(design));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadDesignFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadDesignFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -207,24 +231,27 @@ Middleware<AppState> _loadDesigns(DesignRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadDesignsRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadDesignsSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadDesignsSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-      /*
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+          /*
       if (state.productState.isStale) {
         store.dispatch(LoadProducts());
       }
       */
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadDesignsFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadDesignsFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

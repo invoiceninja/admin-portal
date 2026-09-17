@@ -18,28 +18,35 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class CreditRepository {
-  const CreditRepository({
-    this.webClient = const WebClient(),
-  });
+  const CreditRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
-      Credentials credentials, String? entityId) async {
+    Credentials credentials,
+    String? entityId,
+  ) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/credits/$entityId?include=activities.history',
-        credentials.token);
+      '${credentials.url}/credits/$entityId?include=activities.history',
+      credentials.token,
+    );
 
     final InvoiceItemResponse creditResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[InvoiceItemResponse.serializer, response]);
+      SerializationUtils.deserializeWith,
+      <dynamic>[InvoiceItemResponse.serializer, response],
+    );
 
     return creditResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
-      int createdAt, bool filterDeleted) async {
-    String url = credentials.url +
+  Future<BuiltList<InvoiceEntity>> loadList(
+    Credentials credentials,
+    int page,
+    int createdAt,
+    bool filterDeleted,
+  ) async {
+    String url =
+        credentials.url +
         '/credits?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -49,30 +56,39 @@ class CreditRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse creditResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[InvoiceListResponse.serializer, response]);
+      SerializationUtils.deserializeWith,
+      <dynamic>[InvoiceListResponse.serializer, response],
+    );
 
     return creditResponse.data;
   }
 
   Future<List<InvoiceEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action,
-      {EmailTemplate? template}) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action, {
+    EmailTemplate? template,
+  }) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
         credentials.url + '/credits/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({
-          'ids': ids,
-          'action': action.toApiParam(),
-          if (template != null) 'email_type': 'email_template_$template',
-        }));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({
+        'ids': ids,
+        'action': action.toApiParam(),
+        if (template != null) 'email_type': 'email_template_$template',
+      }),
+    );
 
-    final InvoiceListResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
+    final InvoiceListResponse invoiceResponse = serializers.deserializeWith(
+      InvoiceListResponse.serializer,
+      response,
+    )!;
 
     return invoiceResponse.data.toList();
   }
@@ -101,15 +117,23 @@ class CreditRepository {
     }
 
     if (credit.isNew) {
-      response =
-          await webClient.post(url, credentials.token, data: json.encode(data));
+      response = await webClient.post(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     } else {
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     }
 
-    final InvoiceItemResponse creditResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse creditResponse = serializers.deserializeWith(
+      InvoiceItemResponse.serializer,
+      response,
+    )!;
 
     return creditResponse.data;
   }
@@ -132,31 +156,41 @@ class CreditRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url + '/emails', credentials.token,
-        data: json.encode(data));
+      credentials.url + '/emails',
+      credentials.token,
+      data: json.encode(data),
+    );
 
-    final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+      InvoiceItemResponse.serializer,
+      response,
+    )!;
 
     return invoiceResponse.data;
   }
 
   Future<InvoiceEntity> uploadDocuments(
-      Credentials credentials,
-      BaseEntity entity,
-      List<MultipartFile> multipartFiles,
-      bool isPrivate) async {
+    Credentials credentials,
+    BaseEntity entity,
+    List<MultipartFile> multipartFiles,
+    bool isPrivate,
+  ) async {
     final fields = <String, String>{
       '_method': 'put',
       'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/credits/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: multipartFiles);
+      '${credentials.url}/credits/${entity.id}/upload',
+      credentials.token,
+      data: fields,
+      multipartFiles: multipartFiles,
+    );
 
-    final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
+    final InvoiceItemResponse invoiceResponse = serializers.deserializeWith(
+      InvoiceItemResponse.serializer,
+      response,
+    )!;
 
     return invoiceResponse.data;
   }

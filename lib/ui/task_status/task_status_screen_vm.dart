@@ -22,9 +22,7 @@ class TaskStatusScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, TaskStatusScreenVM>(
       converter: TaskStatusScreenVM.fromStore,
       builder: (context, vm) {
-        return TaskStatusScreen(
-          viewModel: vm,
-        );
+        return TaskStatusScreen(viewModel: vm);
       },
     );
   }
@@ -51,15 +49,19 @@ class TaskStatusScreenVM {
     return TaskStatusScreenVM(
       taskStatusMap: state.taskStatusState.map,
       taskStatusList: memoizedFilteredTaskStatusList(
-          state.getUISelection(EntityType.taskStatus),
-          state.taskStatusState.map,
-          state.taskStatusState.list,
-          state.taskStatusListState),
+        state.getUISelection(EntityType.taskStatus),
+        state.taskStatusState.map,
+        state.taskStatusState.list,
+        state.taskStatusListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.taskStatusListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> taskStatuses,
-              EntityAction action) =>
-          handleTaskStatusAction(context, taskStatuses, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> taskStatuses,
+            EntityAction action,
+          ) => handleTaskStatusAction(context, taskStatuses, action),
     );
   }
 }

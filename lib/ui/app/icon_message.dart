@@ -38,23 +38,16 @@ class IconMessage extends StatelessWidget {
                       child: Text(
                         text!,
                         maxLines: null,
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                        style: TextStyle(color: Colors.white),
                       ),
                     )
                   : Text(
                       text!,
                       maxLines: null,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                      style: TextStyle(color: Colors.white),
                     ),
             ),
-            if (trailing != null) ...[
-              SizedBox(width: 16),
-              trailing!,
-            ]
+            if (trailing != null) ...[SizedBox(width: 16), trailing!],
           ],
         ),
       ),

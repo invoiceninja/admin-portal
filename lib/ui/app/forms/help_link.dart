@@ -9,10 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HelpLink extends StatelessWidget {
-  const HelpLink({
-    required this.url,
-    required this.message,
-  });
+  const HelpLink({required this.url, required this.message});
 
   final String url;
   final String message;
@@ -22,8 +19,9 @@ class HelpLink extends StatelessWidget {
     final localization = AppLocalization.of(context)!;
     final ThemeData themeData = Theme.of(context);
     final TextStyle? aboutTextStyle = themeData.textTheme.bodyMedium;
-    final TextStyle linkStyle = themeData.textTheme.bodyMedium!
-        .copyWith(color: themeData.colorScheme.secondary);
+    final TextStyle linkStyle = themeData.textTheme.bodyMedium!.copyWith(
+      color: themeData.colorScheme.secondary,
+    );
 
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 30),
@@ -38,10 +36,7 @@ class HelpLink extends StatelessWidget {
                 },
               text: localization.clickHereCapital + ' ',
             ),
-            TextSpan(
-              style: aboutTextStyle,
-              text: message,
-            ),
+            TextSpan(style: aboutTextStyle, text: message),
           ],
         ),
       ),

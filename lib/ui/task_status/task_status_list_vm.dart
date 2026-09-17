@@ -52,18 +52,20 @@ class TaskStatusListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
     final state = store.state;
     final taskStatusIds = memoizedFilteredTaskStatusList(
-        state.getUISelection(EntityType.taskStatus),
-        state.taskStatusState.map,
-        state.taskStatusState.list,
-        state.taskStatusListState);
+      state.getUISelection(EntityType.taskStatus),
+      state.taskStatusState.map,
+      state.taskStatusState.list,
+      state.taskStatusListState,
+    );
 
     return TaskStatusListVM(
       state: state,
@@ -76,12 +78,18 @@ class TaskStatusListVM {
         final taskStatusId = taskStatusIds[oldIndex];
         final taskStatus = state.taskStatusState.get(taskStatusId);
 
-        store.dispatch(SaveTaskStatusRequest(
+        store.dispatch(
+          SaveTaskStatusRequest(
             completer: snackBarCompleter<TaskStatusEntity>(
-                AppLocalization.of(navigatorKey.currentContext!)!
-                    .updatedTaskStatus),
-            taskStatus:
-                taskStatus.rebuild((b) => b..statusOrder = newIndex + 1)));
+              AppLocalization.of(
+                navigatorKey.currentContext!,
+              )!.updatedTaskStatus,
+            ),
+            taskStatus: taskStatus.rebuild(
+              (b) => b..statusOrder = newIndex + 1,
+            ),
+          ),
+        );
       },
     );
   }

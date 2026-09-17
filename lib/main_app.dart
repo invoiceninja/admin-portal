@@ -177,8 +177,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       WebUtils.warnChanges(widget.store);
     }
 
-    Timer.periodic(Duration(milliseconds: kMillisecondsToTimerRefreshData),
-        (_) {
+    Timer.periodic(Duration(milliseconds: kMillisecondsToTimerRefreshData), (
+      _,
+    ) {
       final store = widget.store!;
       final state = store.state;
 
@@ -192,7 +193,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
       final millisecondsSinceLastUpdate =
           DateTime.now().millisecondsSinceEpoch -
-              state.userCompanyState.lastUpdated;
+          state.userCompanyState.lastUpdated;
 
       if (millisecondsSinceLastUpdate > kMillisecondsToTimerRefreshData) {
         store.dispatch(RefreshData());
@@ -236,7 +237,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
     if (prefState.enableDarkModeSystem != enableDarkModeSystem) {
       store.dispatch(
-          UpdateUserPreferences(enableDarkModeSystem: enableDarkModeSystem));
+        UpdateUserPreferences(enableDarkModeSystem: enableDarkModeSystem),
+      );
     }
 
     super.didChangeDependencies();
@@ -326,83 +328,90 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     return StoreProvider<AppState>(
       store: widget.store!,
       child: WebSessionTimeout(
-        child: AppBuilder(builder: (context) {
-          final store = widget.store!;
-          final state = store.state;
-          final hasAccentColor = state.hasAccentColor;
-          final accentColor = state.accentColor;
-          const fontFamily = kIsWeb ? 'Roboto' : null;
-          final pageTransitionsTheme = PageTransitionsTheme(builders: {
-            TargetPlatform.android: ZoomPageTransitionsBuilder(),
-          });
-          Intl.defaultLocale = localeSelector(state);
-          final locale = AppLocalization.createLocale(localeSelector(state));
-          _initTimeago();
+        child: AppBuilder(
+          builder: (context) {
+            final store = widget.store!;
+            final state = store.state;
+            final hasAccentColor = state.hasAccentColor;
+            final accentColor = state.accentColor;
+            const fontFamily = kIsWeb ? 'Roboto' : null;
+            final pageTransitionsTheme = PageTransitionsTheme(
+              builders: {TargetPlatform.android: ZoomPageTransitionsBuilder()},
+            );
+            Intl.defaultLocale = localeSelector(state);
+            final locale = AppLocalization.createLocale(localeSelector(state));
+            _initTimeago();
 
-          final textButtonTheme = TextButton.styleFrom(
-            minimumSize: Size(88, 36),
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
-            ),
-          );
+            final textButtonTheme = TextButton.styleFrom(
+              minimumSize: Size(88, 36),
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+              ),
+            );
 
-          final outlinedButtonTheme = OutlinedButton.styleFrom(
-            foregroundColor:
-                state.prefState.enableDarkMode ? Colors.white : Colors.black87,
-          );
+            final outlinedButtonTheme = OutlinedButton.styleFrom(
+              foregroundColor: state.prefState.enableDarkMode
+                  ? Colors.white
+                  : Colors.black87,
+            );
 
-          return StyledToast(
-            locale: locale,
-            duration: Duration(seconds: 4),
-            backgroundColor:
-                state.prefState.enableDarkMode ? Colors.white : Colors.black,
-            textStyle: TextStyle(
-              color: state.prefState.enableDarkMode
-                  ? Colors.black87
-                  : Colors.white,
-            ),
-            child: WebSocketRefresh(
-              companyId: state.company.id,
-              child: WindowManager(
-                child: MaterialApp(
-                  builder: (BuildContext context, Widget? child) {
-                    final MediaQueryData data = MediaQuery.of(context);
-                    return MediaQuery(
-                      data: data.copyWith(
-                        textScaler:
-                            TextScaler.linear(state.prefState.textScaleFactor),
-                        alwaysUse24HourFormat:
-                            state.company.settings.enableMilitaryTime ?? false,
-                      ),
-                      child: child!,
-                    );
-                  },
-                  scrollBehavior: state.prefState.enableTouchEvents &&
-                          state.prefState.isDesktop
-                      ? MyCustomScrollBehavior()
-                      : null,
-                  navigatorKey: navigatorKey,
-                  supportedLocales: kLanguages
-                      .map((String locale) =>
-                          AppLocalization.createLocale(locale))
-                      .toList(),
-                  debugShowCheckedModeBanner: false,
-                  //showPerformanceOverlay: true,
-                  navigatorObservers: [
-                    SentryNavigatorObserver(),
-                  ],
-                  localizationsDelegates: [
-                    const AppLocalizationsDelegate(),
-                    GlobalCupertinoLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate
-                  ],
-                  home: state.prefState.requireAuthentication && !_authenticated
-                      ? LockScreen(onAuthenticatePressed: _authenticate)
-                      : InitScreen(),
-                  locale: locale,
-                  /*
+            return StyledToast(
+              locale: locale,
+              duration: Duration(seconds: 4),
+              backgroundColor: state.prefState.enableDarkMode
+                  ? Colors.white
+                  : Colors.black,
+              textStyle: TextStyle(
+                color: state.prefState.enableDarkMode
+                    ? Colors.black87
+                    : Colors.white,
+              ),
+              child: WebSocketRefresh(
+                companyId: state.company.id,
+                child: WindowManager(
+                  child: MaterialApp(
+                    builder: (BuildContext context, Widget? child) {
+                      final MediaQueryData data = MediaQuery.of(context);
+                      return MediaQuery(
+                        data: data.copyWith(
+                          textScaler: TextScaler.linear(
+                            state.prefState.textScaleFactor,
+                          ),
+                          alwaysUse24HourFormat:
+                              state.company.settings.enableMilitaryTime ??
+                              false,
+                        ),
+                        child: child!,
+                      );
+                    },
+                    scrollBehavior:
+                        state.prefState.enableTouchEvents &&
+                            state.prefState.isDesktop
+                        ? MyCustomScrollBehavior()
+                        : null,
+                    navigatorKey: navigatorKey,
+                    supportedLocales: kLanguages
+                        .map(
+                          (String locale) =>
+                              AppLocalization.createLocale(locale),
+                        )
+                        .toList(),
+                    debugShowCheckedModeBanner: false,
+                    //showPerformanceOverlay: true,
+                    navigatorObservers: [SentryNavigatorObserver()],
+                    localizationsDelegates: [
+                      const AppLocalizationsDelegate(),
+                      GlobalCupertinoLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                    ],
+                    home:
+                        state.prefState.requireAuthentication && !_authenticated
+                        ? LockScreen(onAuthenticatePressed: _authenticate)
+                        : InitScreen(),
+                    locale: locale,
+                    /*
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
                           brightness: Brightness.dark,
@@ -413,334 +422,356 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           colorSchemeSeed: accentColor,
                           useMaterial3: true),
                   */
-                  theme: state.prefState.enableDarkMode
-                      ? ThemeData(
-                          useMaterial3: false,
-                          tooltipTheme: TooltipThemeData(
-                            waitDuration: Duration(milliseconds: 500),
-                          ),
-                          pageTransitionsTheme: pageTransitionsTheme,
-                          textSelectionTheme: TextSelectionThemeData(
-                            selectionHandleColor: accentColor,
-                          ),
-                          fontFamily: fontFamily,
-                          canvasColor: Colors.black,
-                          cardColor: const Color(0xFF1B1C1E),
-                          primaryColorDark: Colors.black,
-                          textButtonTheme:
-                              TextButtonThemeData(style: textButtonTheme),
-                          outlinedButtonTheme: OutlinedButtonThemeData(
-                              style: outlinedButtonTheme),
-                          colorScheme: ColorScheme.dark().copyWith(
-                            secondary: accentColor,
-                            primary: accentColor,
-                            surface: Colors.black,
-                          ),
-                          bottomAppBarTheme: BottomAppBarThemeData(
-                              color: const Color(0xFF1B1C1E)),
-                          tabBarTheme:
-                              TabBarThemeData(indicatorColor: accentColor),
-                        )
-                      : ThemeData(
-                          useMaterial3: false,
-                          tooltipTheme: TooltipThemeData(
-                            waitDuration: Duration(milliseconds: 500),
-                          ),
-                          pageTransitionsTheme: pageTransitionsTheme,
-                          primaryColor: accentColor,
-                          textSelectionTheme: TextSelectionThemeData(
-                            selectionColor: accentColor,
-                          ),
-                          fontFamily: fontFamily,
-                          canvasColor: Colors.white,
-                          cardColor: Colors.white,
-                          primaryColorDark: hasAccentColor
-                              ? accentColor
-                              : const Color(0xFF0D5D91),
-                          primaryColorLight: hasAccentColor
-                              ? accentColor
-                              : const Color(0xFF5dabf4),
-                          scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-                          tabBarTheme: TabBarThemeData(
-                            labelColor:
-                                hasAccentColor ? Colors.white : Colors.black,
-                            unselectedLabelColor: hasAccentColor
-                                ? Colors.white.withValues(alpha: .65)
-                                : Colors.black.withValues(alpha: .65),
-                          ),
-                          iconTheme: IconThemeData(
-                            color: hasAccentColor ? null : accentColor,
-                          ),
-                          appBarTheme: AppBarTheme(
-                            backgroundColor:
-                                hasAccentColor ? accentColor : Colors.white,
-                            iconTheme: IconThemeData(
-                              color:
-                                  hasAccentColor ? Colors.white : accentColor,
+                    theme: state.prefState.enableDarkMode
+                        ? ThemeData(
+                            useMaterial3: false,
+                            tooltipTheme: TooltipThemeData(
+                              waitDuration: Duration(milliseconds: 500),
                             ),
-                            titleTextStyle: TextStyle(
+                            pageTransitionsTheme: pageTransitionsTheme,
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionHandleColor: accentColor,
+                            ),
+                            fontFamily: fontFamily,
+                            canvasColor: Colors.black,
+                            cardColor: const Color(0xFF1B1C1E),
+                            primaryColorDark: Colors.black,
+                            textButtonTheme: TextButtonThemeData(
+                              style: textButtonTheme,
+                            ),
+                            outlinedButtonTheme: OutlinedButtonThemeData(
+                              style: outlinedButtonTheme,
+                            ),
+                            colorScheme: ColorScheme.dark().copyWith(
+                              secondary: accentColor,
+                              primary: accentColor,
+                              surface: Colors.black,
+                            ),
+                            bottomAppBarTheme: BottomAppBarThemeData(
+                              color: const Color(0xFF1B1C1E),
+                            ),
+                            tabBarTheme: TabBarThemeData(
+                              indicatorColor: accentColor,
+                            ),
+                          )
+                        : ThemeData(
+                            useMaterial3: false,
+                            tooltipTheme: TooltipThemeData(
+                              waitDuration: Duration(milliseconds: 500),
+                            ),
+                            pageTransitionsTheme: pageTransitionsTheme,
+                            primaryColor: accentColor,
+                            textSelectionTheme: TextSelectionThemeData(
+                              selectionColor: accentColor,
+                            ),
+                            fontFamily: fontFamily,
+                            canvasColor: Colors.white,
+                            cardColor: Colors.white,
+                            primaryColorDark: hasAccentColor
+                                ? accentColor
+                                : const Color(0xFF0D5D91),
+                            primaryColorLight: hasAccentColor
+                                ? accentColor
+                                : const Color(0xFF5dabf4),
+                            scaffoldBackgroundColor: const Color(0xFFF3F4F6),
+                            tabBarTheme: TabBarThemeData(
+                              labelColor: hasAccentColor
+                                  ? Colors.white
+                                  : Colors.black,
+                              unselectedLabelColor: hasAccentColor
+                                  ? Colors.white.withValues(alpha: .65)
+                                  : Colors.black.withValues(alpha: .65),
+                            ),
+                            iconTheme: IconThemeData(
+                              color: hasAccentColor ? null : accentColor,
+                            ),
+                            appBarTheme: AppBarTheme(
+                              backgroundColor: hasAccentColor
+                                  ? accentColor
+                                  : Colors.white,
+                              iconTheme: IconThemeData(
+                                color: hasAccentColor
+                                    ? Colors.white
+                                    : accentColor,
+                              ),
+                              titleTextStyle: TextStyle(
                                 fontSize: 20,
                                 color: hasAccentColor
                                     ? Colors.white
-                                    : Colors.black),
-                          ),
-                          textButtonTheme:
-                              TextButtonThemeData(style: textButtonTheme),
-                          outlinedButtonTheme: OutlinedButtonThemeData(
-                              style: outlinedButtonTheme),
-                          colorScheme: ColorScheme.fromSwatch().copyWith(
-                            secondary: accentColor,
-                            surface: Colors.white,
-                          ),
-                          bottomAppBarTheme:
-                              BottomAppBarThemeData(color: Colors.white),
-                        ),
-                  title: kAppName,
-                  onGenerateRoute: isMobile(context) ? null : generateRoute,
-                  routes: isMobile(context)
-                      ? {
-                          LoginScreen.route: (context) => LoginScreen(),
-                          MainScreen.route: (context) => MainScreen(),
-                          DashboardScreenBuilder.route: (context) =>
-                              ImportantMessageBanner(
-                                suggestedLayout: AppLayout.mobile,
-                                appLayout: state.prefState.appLayout,
-                                child: DashboardScreenBuilder(),
+                                    : Colors.black,
                               ),
-                          ProductScreen.route: (context) =>
-                              ProductScreenBuilder(),
-                          ProductViewScreen.route: (context) =>
-                              ProductViewScreen(),
-                          ProductEditScreen.route: (context) =>
-                              ProductEditScreen(),
-                          ClientScreen.route: (context) =>
-                              ClientScreenBuilder(),
-                          ClientViewScreen.route: (context) =>
-                              ClientViewScreen(),
-                          ClientEditScreen.route: (context) =>
-                              ClientEditScreen(),
-                          ClientPdfScreen.route: (context) => ClientPdfScreen(),
-                          InvoiceScreen.route: (context) =>
-                              InvoiceScreenBuilder(),
-                          InvoiceViewScreen.route: (context) =>
-                              InvoiceViewScreen(),
-                          InvoiceEditScreen.route: (context) =>
-                              InvoiceEditScreen(),
-                          InvoiceEmailScreen.route: (context) =>
-                              InvoiceEmailScreen(),
-                          InvoicePdfScreen.route: (context) =>
-                              InvoicePdfScreen(),
-                          DocumentScreen.route: (context) =>
-                              DocumentScreenBuilder(),
-                          DocumentViewScreen.route: (context) =>
-                              DocumentViewScreen(),
-                          DocumentEditScreen.route: (context) =>
-                              DocumentEditScreen(),
-                          ExpenseScreen.route: (context) =>
-                              ExpenseScreenBuilder(),
-                          ExpenseViewScreen.route: (context) =>
-                              ExpenseViewScreen(),
-                          ExpenseEditScreen.route: (context) =>
-                              ExpenseEditScreen(),
-                          VendorScreen.route: (context) =>
-                              VendorScreenBuilder(),
-                          VendorViewScreen.route: (context) =>
-                              VendorViewScreen(),
-                          VendorEditScreen.route: (context) =>
-                              VendorEditScreen(),
-                          TaskScreen.route: (context) => TaskScreenBuilder(),
-                          TaskViewScreen.route: (context) => TaskViewScreen(),
-                          TaskEditScreen.route: (context) => TaskEditScreen(),
-                          ProjectScreen.route: (context) =>
-                              ProjectScreenBuilder(),
-                          ProjectViewScreen.route: (context) =>
-                              ProjectViewScreen(),
-                          ProjectEditScreen.route: (context) =>
-                              ProjectEditScreen(),
-                          PaymentScreen.route: (context) =>
-                              PaymentScreenBuilder(),
-                          PaymentViewScreen.route: (context) =>
-                              PaymentViewScreen(),
-                          PaymentEditScreen.route: (context) =>
-                              PaymentEditScreen(),
-                          PaymentRefundScreen.route: (context) =>
-                              PaymentRefundScreen(),
-                          QuoteScreen.route: (context) => QuoteScreenBuilder(),
-                          QuoteViewScreen.route: (context) => QuoteViewScreen(),
-                          QuoteEditScreen.route: (context) => QuoteEditScreen(),
-                          QuoteEmailScreen.route: (context) =>
-                              QuoteEmailScreen(),
-                          QuotePdfScreen.route: (context) => QuotePdfScreen(),
-                          // STARTER: routes - do not remove comment
-                          ScheduleScreen.route: (context) =>
-                              ScheduleScreenBuilder(),
-                          ScheduleViewScreen.route: (context) =>
-                              ScheduleViewScreen(),
-                          ScheduleEditScreen.route: (context) =>
-                              ScheduleEditScreen(),
-                          TransactionRuleScreen.route: (context) =>
-                              TransactionRuleScreenBuilder(),
-                          TransactionRuleViewScreen.route: (context) =>
-                              TransactionRuleViewScreen(),
-                          TransactionRuleEditScreen.route: (context) =>
-                              TransactionRuleEditScreen(),
+                            ),
+                            textButtonTheme: TextButtonThemeData(
+                              style: textButtonTheme,
+                            ),
+                            outlinedButtonTheme: OutlinedButtonThemeData(
+                              style: outlinedButtonTheme,
+                            ),
+                            colorScheme: ColorScheme.fromSwatch().copyWith(
+                              secondary: accentColor,
+                              surface: Colors.white,
+                            ),
+                            bottomAppBarTheme: BottomAppBarThemeData(
+                              color: Colors.white,
+                            ),
+                          ),
+                    title: kAppName,
+                    onGenerateRoute: isMobile(context) ? null : generateRoute,
+                    routes: isMobile(context)
+                        ? {
+                            LoginScreen.route: (context) => LoginScreen(),
+                            MainScreen.route: (context) => MainScreen(),
+                            DashboardScreenBuilder.route: (context) =>
+                                ImportantMessageBanner(
+                                  suggestedLayout: AppLayout.mobile,
+                                  appLayout: state.prefState.appLayout,
+                                  child: DashboardScreenBuilder(),
+                                ),
+                            ProductScreen.route: (context) =>
+                                ProductScreenBuilder(),
+                            ProductViewScreen.route: (context) =>
+                                ProductViewScreen(),
+                            ProductEditScreen.route: (context) =>
+                                ProductEditScreen(),
+                            ClientScreen.route: (context) =>
+                                ClientScreenBuilder(),
+                            ClientViewScreen.route: (context) =>
+                                ClientViewScreen(),
+                            ClientEditScreen.route: (context) =>
+                                ClientEditScreen(),
+                            ClientPdfScreen.route: (context) =>
+                                ClientPdfScreen(),
+                            InvoiceScreen.route: (context) =>
+                                InvoiceScreenBuilder(),
+                            InvoiceViewScreen.route: (context) =>
+                                InvoiceViewScreen(),
+                            InvoiceEditScreen.route: (context) =>
+                                InvoiceEditScreen(),
+                            InvoiceEmailScreen.route: (context) =>
+                                InvoiceEmailScreen(),
+                            InvoicePdfScreen.route: (context) =>
+                                InvoicePdfScreen(),
+                            DocumentScreen.route: (context) =>
+                                DocumentScreenBuilder(),
+                            DocumentViewScreen.route: (context) =>
+                                DocumentViewScreen(),
+                            DocumentEditScreen.route: (context) =>
+                                DocumentEditScreen(),
+                            ExpenseScreen.route: (context) =>
+                                ExpenseScreenBuilder(),
+                            ExpenseViewScreen.route: (context) =>
+                                ExpenseViewScreen(),
+                            ExpenseEditScreen.route: (context) =>
+                                ExpenseEditScreen(),
+                            VendorScreen.route: (context) =>
+                                VendorScreenBuilder(),
+                            VendorViewScreen.route: (context) =>
+                                VendorViewScreen(),
+                            VendorEditScreen.route: (context) =>
+                                VendorEditScreen(),
+                            TaskScreen.route: (context) => TaskScreenBuilder(),
+                            TaskViewScreen.route: (context) => TaskViewScreen(),
+                            TaskEditScreen.route: (context) => TaskEditScreen(),
+                            ProjectScreen.route: (context) =>
+                                ProjectScreenBuilder(),
+                            ProjectViewScreen.route: (context) =>
+                                ProjectViewScreen(),
+                            ProjectEditScreen.route: (context) =>
+                                ProjectEditScreen(),
+                            PaymentScreen.route: (context) =>
+                                PaymentScreenBuilder(),
+                            PaymentViewScreen.route: (context) =>
+                                PaymentViewScreen(),
+                            PaymentEditScreen.route: (context) =>
+                                PaymentEditScreen(),
+                            PaymentRefundScreen.route: (context) =>
+                                PaymentRefundScreen(),
+                            QuoteScreen.route: (context) =>
+                                QuoteScreenBuilder(),
+                            QuoteViewScreen.route: (context) =>
+                                QuoteViewScreen(),
+                            QuoteEditScreen.route: (context) =>
+                                QuoteEditScreen(),
+                            QuoteEmailScreen.route: (context) =>
+                                QuoteEmailScreen(),
+                            QuotePdfScreen.route: (context) => QuotePdfScreen(),
+                            // STARTER: routes - do not remove comment
+                            ScheduleScreen.route: (context) =>
+                                ScheduleScreenBuilder(),
+                            ScheduleViewScreen.route: (context) =>
+                                ScheduleViewScreen(),
+                            ScheduleEditScreen.route: (context) =>
+                                ScheduleEditScreen(),
+                            TransactionRuleScreen.route: (context) =>
+                                TransactionRuleScreenBuilder(),
+                            TransactionRuleViewScreen.route: (context) =>
+                                TransactionRuleViewScreen(),
+                            TransactionRuleEditScreen.route: (context) =>
+                                TransactionRuleEditScreen(),
 
-                          TransactionScreen.route: (context) =>
-                              TransactionScreenBuilder(),
-                          TransactionViewScreen.route: (context) =>
-                              TransactionViewScreen(),
-                          TransactionEditScreen.route: (context) =>
-                              TransactionEditScreen(),
-                          BankAccountScreen.route: (context) =>
-                              BankAccountScreenBuilder(),
-                          BankAccountViewScreen.route: (context) =>
-                              BankAccountViewScreen(),
-                          BankAccountEditScreen.route: (context) =>
-                              BankAccountEditScreen(),
-                          PurchaseOrderScreen.route: (context) =>
-                              PurchaseOrderScreenBuilder(),
-                          PurchaseOrderViewScreen.route: (context) =>
-                              PurchaseOrderViewScreen(),
-                          PurchaseOrderEditScreen.route: (context) =>
-                              PurchaseOrderEditScreen(),
-                          PurchaseOrderEmailScreen.route: (context) =>
-                              PurchaseOrderEmailScreen(),
-                          PurchaseOrderPdfScreen.route: (context) =>
-                              PurchaseOrderPdfScreen(),
-                          RecurringExpenseScreen.route: (context) =>
-                              RecurringExpenseScreenBuilder(),
-                          RecurringExpenseViewScreen.route: (context) =>
-                              RecurringExpenseViewScreen(),
-                          RecurringExpenseEditScreen.route: (context) =>
-                              RecurringExpenseEditScreen(),
-                          SubscriptionScreen.route: (context) =>
-                              SubscriptionScreenBuilder(),
-                          SubscriptionViewScreen.route: (context) =>
-                              SubscriptionViewScreen(),
-                          SubscriptionEditScreen.route: (context) =>
-                              SubscriptionEditScreen(),
-                          TaskStatusScreen.route: (context) =>
-                              TaskStatusScreenBuilder(),
-                          TaskStatusViewScreen.route: (context) =>
-                              TaskStatusViewScreen(),
-                          TaskStatusEditScreen.route: (context) =>
-                              TaskStatusEditScreen(),
-                          ExpenseCategoryScreen.route: (context) =>
-                              ExpenseCategoryScreenBuilder(),
-                          ExpenseCategoryViewScreen.route: (context) =>
-                              ExpenseCategoryViewScreen(),
-                          ExpenseCategoryEditScreen.route: (context) =>
-                              ExpenseCategoryEditScreen(),
-                          RecurringInvoiceScreen.route: (context) =>
-                              RecurringInvoiceScreenBuilder(),
-                          RecurringInvoiceViewScreen.route: (context) =>
-                              RecurringInvoiceViewScreen(),
-                          RecurringInvoiceEditScreen.route: (context) =>
-                              RecurringInvoiceEditScreen(),
-                          RecurringInvoicePdfScreen.route: (context) =>
-                              RecurringInvoicePdfScreen(),
-                          WebhookScreen.route: (context) =>
-                              WebhookScreenBuilder(),
-                          WebhookViewScreen.route: (context) =>
-                              WebhookViewScreen(),
-                          WebhookEditScreen.route: (context) =>
-                              WebhookEditScreen(),
-                          TokenScreen.route: (context) => TokenScreenBuilder(),
-                          TokenViewScreen.route: (context) => TokenViewScreen(),
-                          TokenEditScreen.route: (context) => TokenEditScreen(),
-                          PaymentTermScreen.route: (context) =>
-                              PaymentTermScreenBuilder(),
-                          PaymentTermEditScreen.route: (context) =>
-                              PaymentTermEditScreen(),
-                          PaymentTermViewScreen.route: (context) =>
-                              PaymentTermViewScreen(),
-                          DesignScreen.route: (context) =>
-                              DesignScreenBuilder(),
-                          DesignViewScreen.route: (context) =>
-                              DesignViewScreen(),
-                          DesignEditScreen.route: (context) =>
-                              DesignEditScreen(),
-                          CreditScreen.route: (context) =>
-                              CreditScreenBuilder(),
-                          CreditViewScreen.route: (context) =>
-                              CreditViewScreen(),
-                          CreditEditScreen.route: (context) =>
-                              CreditEditScreen(),
-                          CreditEmailScreen.route: (context) =>
-                              CreditEmailScreen(),
-                          CreditPdfScreen.route: (context) => CreditPdfScreen(),
-                          UserScreen.route: (context) => UserScreenBuilder(),
-                          UserViewScreen.route: (context) => UserViewScreen(),
-                          UserEditScreen.route: (context) => UserEditScreen(),
-                          GroupSettingsScreen.route: (context) =>
-                              GroupScreenBuilder(),
-                          GroupViewScreen.route: (context) => GroupViewScreen(),
-                          GroupEditScreen.route: (context) => GroupEditScreen(),
-                          SettingsScreen.route: (context) =>
-                              SettingsScreenBuilder(),
-                          ReportsScreen.route: (context) =>
-                              ReportsScreenBuilder(),
-                          CompanyDetailsScreen.route: (context) =>
-                              CompanyDetailsScreen(),
-                          UserDetailsScreen.route: (context) =>
-                              UserDetailsScreen(),
-                          LocalizationScreen.route: (context) =>
-                              LocalizationScreen(),
-                          PaymentsSettingsScreen.route: (context) =>
-                              PaymentsSettingsScreen(),
-                          CompanyGatewayScreen.route: (context) =>
-                              CompanyGatewayScreenBuilder(),
-                          CompanyGatewayViewScreen.route: (context) =>
-                              CompanyGatewayViewScreen(),
-                          CompanyGatewayEditScreen.route: (context) =>
-                              CompanyGatewayEditScreen(),
-                          TaxSettingsScreen.route: (context) =>
-                              TaxSettingsScreen(),
-                          TaxRateSettingsScreen.route: (context) =>
-                              TaxRateScreenBuilder(),
-                          TaxRateViewScreen.route: (context) =>
-                              TaxRateViewScreen(),
-                          TaxRateEditScreen.route: (context) =>
-                              TaxRateEditScreen(),
-                          ProductSettingsScreen.route: (context) =>
-                              ProductSettingsScreen(),
-                          ExpenseSettingsScreen.route: (context) =>
-                              ExpenseSettingsScreen(),
-                          TaskSettingsScreen.route: (context) =>
-                              TaskSettingsScreen(),
-                          ImportExportScreen.route: (context) =>
-                              ImportExportScreen(),
-                          DeviceSettingsScreen.route: (context) =>
-                              DeviceSettingsScreen(),
-                          AccountManagementScreen.route: (context) =>
-                              AccountManagementScreen(),
-                          CustomFieldsScreen.route: (context) =>
-                              CustomFieldsScreen(),
-                          GeneratedNumbersScreen.route: (context) =>
-                              GeneratedNumbersScreen(),
-                          WorkflowSettingsScreen.route: (context) =>
-                              WorkflowSettingsScreen(),
-                          InvoiceDesignScreen.route: (context) =>
-                              InvoiceDesignScreen(),
-                          ClientPortalScreen.route: (context) =>
-                              ClientPortalScreen(),
-                          EmailSettingsScreen.route: (context) =>
-                              EmailSettingsScreen(),
-                          TemplatesAndRemindersScreen.route: (context) =>
-                              TemplatesAndRemindersScreen(),
-                          CreditCardsAndBanksScreen.route: (context) =>
-                              CreditCardsAndBanksScreen(),
-                          DataVisualizationsScreen.route: (context) =>
-                              DataVisualizationsScreen(),
-                          EInvoiceSettingsScreen.route: (context) =>
-                              EInvoiceSettingsScreen(),
-                        }
-                      : {},
+                            TransactionScreen.route: (context) =>
+                                TransactionScreenBuilder(),
+                            TransactionViewScreen.route: (context) =>
+                                TransactionViewScreen(),
+                            TransactionEditScreen.route: (context) =>
+                                TransactionEditScreen(),
+                            BankAccountScreen.route: (context) =>
+                                BankAccountScreenBuilder(),
+                            BankAccountViewScreen.route: (context) =>
+                                BankAccountViewScreen(),
+                            BankAccountEditScreen.route: (context) =>
+                                BankAccountEditScreen(),
+                            PurchaseOrderScreen.route: (context) =>
+                                PurchaseOrderScreenBuilder(),
+                            PurchaseOrderViewScreen.route: (context) =>
+                                PurchaseOrderViewScreen(),
+                            PurchaseOrderEditScreen.route: (context) =>
+                                PurchaseOrderEditScreen(),
+                            PurchaseOrderEmailScreen.route: (context) =>
+                                PurchaseOrderEmailScreen(),
+                            PurchaseOrderPdfScreen.route: (context) =>
+                                PurchaseOrderPdfScreen(),
+                            RecurringExpenseScreen.route: (context) =>
+                                RecurringExpenseScreenBuilder(),
+                            RecurringExpenseViewScreen.route: (context) =>
+                                RecurringExpenseViewScreen(),
+                            RecurringExpenseEditScreen.route: (context) =>
+                                RecurringExpenseEditScreen(),
+                            SubscriptionScreen.route: (context) =>
+                                SubscriptionScreenBuilder(),
+                            SubscriptionViewScreen.route: (context) =>
+                                SubscriptionViewScreen(),
+                            SubscriptionEditScreen.route: (context) =>
+                                SubscriptionEditScreen(),
+                            TaskStatusScreen.route: (context) =>
+                                TaskStatusScreenBuilder(),
+                            TaskStatusViewScreen.route: (context) =>
+                                TaskStatusViewScreen(),
+                            TaskStatusEditScreen.route: (context) =>
+                                TaskStatusEditScreen(),
+                            ExpenseCategoryScreen.route: (context) =>
+                                ExpenseCategoryScreenBuilder(),
+                            ExpenseCategoryViewScreen.route: (context) =>
+                                ExpenseCategoryViewScreen(),
+                            ExpenseCategoryEditScreen.route: (context) =>
+                                ExpenseCategoryEditScreen(),
+                            RecurringInvoiceScreen.route: (context) =>
+                                RecurringInvoiceScreenBuilder(),
+                            RecurringInvoiceViewScreen.route: (context) =>
+                                RecurringInvoiceViewScreen(),
+                            RecurringInvoiceEditScreen.route: (context) =>
+                                RecurringInvoiceEditScreen(),
+                            RecurringInvoicePdfScreen.route: (context) =>
+                                RecurringInvoicePdfScreen(),
+                            WebhookScreen.route: (context) =>
+                                WebhookScreenBuilder(),
+                            WebhookViewScreen.route: (context) =>
+                                WebhookViewScreen(),
+                            WebhookEditScreen.route: (context) =>
+                                WebhookEditScreen(),
+                            TokenScreen.route: (context) =>
+                                TokenScreenBuilder(),
+                            TokenViewScreen.route: (context) =>
+                                TokenViewScreen(),
+                            TokenEditScreen.route: (context) =>
+                                TokenEditScreen(),
+                            PaymentTermScreen.route: (context) =>
+                                PaymentTermScreenBuilder(),
+                            PaymentTermEditScreen.route: (context) =>
+                                PaymentTermEditScreen(),
+                            PaymentTermViewScreen.route: (context) =>
+                                PaymentTermViewScreen(),
+                            DesignScreen.route: (context) =>
+                                DesignScreenBuilder(),
+                            DesignViewScreen.route: (context) =>
+                                DesignViewScreen(),
+                            DesignEditScreen.route: (context) =>
+                                DesignEditScreen(),
+                            CreditScreen.route: (context) =>
+                                CreditScreenBuilder(),
+                            CreditViewScreen.route: (context) =>
+                                CreditViewScreen(),
+                            CreditEditScreen.route: (context) =>
+                                CreditEditScreen(),
+                            CreditEmailScreen.route: (context) =>
+                                CreditEmailScreen(),
+                            CreditPdfScreen.route: (context) =>
+                                CreditPdfScreen(),
+                            UserScreen.route: (context) => UserScreenBuilder(),
+                            UserViewScreen.route: (context) => UserViewScreen(),
+                            UserEditScreen.route: (context) => UserEditScreen(),
+                            GroupSettingsScreen.route: (context) =>
+                                GroupScreenBuilder(),
+                            GroupViewScreen.route: (context) =>
+                                GroupViewScreen(),
+                            GroupEditScreen.route: (context) =>
+                                GroupEditScreen(),
+                            SettingsScreen.route: (context) =>
+                                SettingsScreenBuilder(),
+                            ReportsScreen.route: (context) =>
+                                ReportsScreenBuilder(),
+                            CompanyDetailsScreen.route: (context) =>
+                                CompanyDetailsScreen(),
+                            UserDetailsScreen.route: (context) =>
+                                UserDetailsScreen(),
+                            LocalizationScreen.route: (context) =>
+                                LocalizationScreen(),
+                            PaymentsSettingsScreen.route: (context) =>
+                                PaymentsSettingsScreen(),
+                            CompanyGatewayScreen.route: (context) =>
+                                CompanyGatewayScreenBuilder(),
+                            CompanyGatewayViewScreen.route: (context) =>
+                                CompanyGatewayViewScreen(),
+                            CompanyGatewayEditScreen.route: (context) =>
+                                CompanyGatewayEditScreen(),
+                            TaxSettingsScreen.route: (context) =>
+                                TaxSettingsScreen(),
+                            TaxRateSettingsScreen.route: (context) =>
+                                TaxRateScreenBuilder(),
+                            TaxRateViewScreen.route: (context) =>
+                                TaxRateViewScreen(),
+                            TaxRateEditScreen.route: (context) =>
+                                TaxRateEditScreen(),
+                            ProductSettingsScreen.route: (context) =>
+                                ProductSettingsScreen(),
+                            ExpenseSettingsScreen.route: (context) =>
+                                ExpenseSettingsScreen(),
+                            TaskSettingsScreen.route: (context) =>
+                                TaskSettingsScreen(),
+                            ImportExportScreen.route: (context) =>
+                                ImportExportScreen(),
+                            DeviceSettingsScreen.route: (context) =>
+                                DeviceSettingsScreen(),
+                            AccountManagementScreen.route: (context) =>
+                                AccountManagementScreen(),
+                            CustomFieldsScreen.route: (context) =>
+                                CustomFieldsScreen(),
+                            GeneratedNumbersScreen.route: (context) =>
+                                GeneratedNumbersScreen(),
+                            WorkflowSettingsScreen.route: (context) =>
+                                WorkflowSettingsScreen(),
+                            InvoiceDesignScreen.route: (context) =>
+                                InvoiceDesignScreen(),
+                            ClientPortalScreen.route: (context) =>
+                                ClientPortalScreen(),
+                            EmailSettingsScreen.route: (context) =>
+                                EmailSettingsScreen(),
+                            TemplatesAndRemindersScreen.route: (context) =>
+                                TemplatesAndRemindersScreen(),
+                            CreditCardsAndBanksScreen.route: (context) =>
+                                CreditCardsAndBanksScreen(),
+                            DataVisualizationsScreen.route: (context) =>
+                                DataVisualizationsScreen(),
+                            EInvoiceSettingsScreen.route: (context) =>
+                                EInvoiceSettingsScreen(),
+                          }
+                        : {},
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
@@ -749,8 +780,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
   @override
   Set<PointerDeviceKind> get dragDevices => {
-        PointerDeviceKind.touch,
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.trackpad,
-      };
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+  };
 }

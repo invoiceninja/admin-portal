@@ -72,14 +72,20 @@ class ActivityListTile extends StatelessWidget {
     );
 
     return ListTile(
-      leading: Icon(activity.isComment
-          ? MdiIcons.comment
-          : getEntityIcon(activity.entityType)),
-      title: Text(activity.isComment
-          ? (user?.fullName == null
-              ? ''
-              : (user!.fullName + ': ' + activity.notes.replaceAll('\n', ' ')))
-          : title),
+      leading: Icon(
+        activity.isComment
+            ? MdiIcons.comment
+            : getEntityIcon(activity.entityType),
+      ),
+      title: Text(
+        activity.isComment
+            ? (user?.fullName == null
+                  ? ''
+                  : (user!.fullName +
+                        ': ' +
+                        activity.notes.replaceAll('\n', ' ')))
+            : title,
+      ),
       onTap: !enableNavigation
           ? null
           : () {
@@ -93,8 +99,9 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.client:
                   viewEntityById(
-                      entityId: activity.clientId,
-                      entityType: EntityType.client);
+                    entityId: activity.clientId,
+                    entityType: EntityType.client,
+                  );
                   break;
                 case EntityType.invoice:
                   viewEntityById(
@@ -140,14 +147,20 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 default:
                   print(
-                      'Error: entity type ${activity.entityType} not handled in activity_list_tile');
+                    'Error: entity type ${activity.entityType} not handled in activity_list_tile',
+                  );
               }
             },
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
-      subtitle: Text(formatDate(
-              convertTimestampToDateString(activity.createdAt), context,
-              showTime: true, showSeconds: false) +
-          ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip! : '')),
+      subtitle: Text(
+        formatDate(
+              convertTimestampToDateString(activity.createdAt),
+              context,
+              showTime: true,
+              showSeconds: false,
+            ) +
+            ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip! : ''),
+      ),
     );
   }
 }

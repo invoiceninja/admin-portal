@@ -21,7 +21,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 
 class InvoiceEditDetailsScreen extends StatelessWidget {
   const InvoiceEditDetailsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -39,9 +39,7 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
             key: ValueKey('__invoice_${viewModel.invoice!.id}__'),
           );
         } else {
-          return InvoiceEditDetails(
-            viewModel: viewModel,
-          );
+          return InvoiceEditDetails(viewModel: viewModel);
         }
       },
     );
@@ -67,15 +65,15 @@ class EntityEditDetailsVM {
   final InvoiceEntity? invoice;
   final Function(InvoiceEntity)? onChanged;
   final Function(BuildContext context, InvoiceEntity, ClientEntity?)?
-      onClientChanged;
+  onClientChanged;
   final Function(BuildContext context, InvoiceEntity, VendorEntity?)?
-      onVendorChanged;
+  onVendorChanged;
   final BuiltMap<String, ClientEntity>? clientMap;
   final BuiltList<String>? clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)?
-      onAddClientPressed;
+  onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)?
-      onAddVendorPressed;
+  onAddVendorPressed;
 }
 
 class InvoiceEditDetailsVM extends EntityEditDetailsVM {
@@ -89,21 +87,21 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     BuiltMap<String, ClientEntity>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddClientPressed,
+    onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddVendorPressed,
+    onAddVendorPressed,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          onClientChanged: onClientChanged,
-          onVendorChanged: onVendorChanged,
-          clientMap: clientMap,
-          clientList: clientList,
-          onAddClientPressed: onAddClientPressed,
-          onAddVendorPressed: onAddVendorPressed,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         onClientChanged: onClientChanged,
+         onVendorChanged: onVendorChanged,
+         clientMap: clientMap,
+         clientList: clientList,
+         onAddClientPressed: onAddClientPressed,
+         onAddVendorPressed: onAddVendorPressed,
+       );
 
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

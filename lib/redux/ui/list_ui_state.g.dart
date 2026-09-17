@@ -15,65 +15,101 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   final String wireName = 'ListUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, ListUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    ListUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'filterClearedAt',
-      serializers.serialize(object.filterClearedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.filterClearedAt,
+        specifiedType: const FullType(int),
+      ),
       'sortField',
-      serializers.serialize(object.sortField,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.sortField,
+        specifiedType: const FullType(String),
+      ),
       'sortAscending',
-      serializers.serialize(object.sortAscending,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.sortAscending,
+        specifiedType: const FullType(bool),
+      ),
       'stateFilters',
-      serializers.serialize(object.stateFilters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(EntityState)])),
+      serializers.serialize(
+        object.stateFilters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(EntityState),
+        ]),
+      ),
       'statusFilters',
-      serializers.serialize(object.statusFilters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(EntityStatus)])),
+      serializers.serialize(
+        object.statusFilters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(EntityStatus),
+        ]),
+      ),
       'custom1Filters',
-      serializers.serialize(object.custom1Filters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.custom1Filters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'custom2Filters',
-      serializers.serialize(object.custom2Filters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.custom2Filters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'custom3Filters',
-      serializers.serialize(object.custom3Filters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.custom3Filters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'custom4Filters',
-      serializers.serialize(object.custom4Filters,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.custom4Filters,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
     Object? value;
     value = object.filter;
     if (value != null) {
       result
         ..add('filter')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.selectedIds;
     if (value != null) {
       result
         ..add('selectedIds')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(String),
+            ]),
+          ),
+        );
     }
     return result;
   }
 
   @override
-  ListUIState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  ListUIState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = ListUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -83,62 +119,113 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'filter':
-          result.filter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.filter =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'filterClearedAt':
-          result.filterClearedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.filterClearedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'sortField':
-          result.sortField = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.sortField =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'sortAscending':
-          result.sortAscending = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.sortAscending =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'stateFilters':
-          result.stateFilters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(EntityState)]))!
-              as BuiltList<Object?>);
+          result.stateFilters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EntityState),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'statusFilters':
-          result.statusFilters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(EntityStatus)]))!
-              as BuiltList<Object?>);
+          result.statusFilters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EntityStatus),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'custom1Filters':
-          result.custom1Filters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.custom1Filters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'custom2Filters':
-          result.custom2Filters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.custom2Filters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'custom3Filters':
-          result.custom3Filters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.custom3Filters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'custom4Filters':
-          result.custom4Filters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.custom4Filters.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'selectedIds':
-          result.selectedIds.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.selectedIds.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -174,19 +261,19 @@ class _$ListUIState extends ListUIState {
   factory _$ListUIState([void Function(ListUIStateBuilder)? updates]) =>
       (ListUIStateBuilder()..update(updates))._build();
 
-  _$ListUIState._(
-      {this.filter,
-      required this.filterClearedAt,
-      required this.sortField,
-      required this.sortAscending,
-      required this.stateFilters,
-      required this.statusFilters,
-      required this.custom1Filters,
-      required this.custom2Filters,
-      required this.custom3Filters,
-      required this.custom4Filters,
-      this.selectedIds})
-      : super._();
+  _$ListUIState._({
+    this.filter,
+    required this.filterClearedAt,
+    required this.sortField,
+    required this.sortAscending,
+    required this.stateFilters,
+    required this.statusFilters,
+    required this.custom1Filters,
+    required this.custom2Filters,
+    required this.custom3Filters,
+    required this.custom4Filters,
+    this.selectedIds,
+  }) : super._();
   @override
   ListUIState rebuild(void Function(ListUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -349,15 +436,25 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   _$ListUIState _build() {
     _$ListUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$ListUIState._(
             filter: filter,
             filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                filterClearedAt, r'ListUIState', 'filterClearedAt'),
+              filterClearedAt,
+              r'ListUIState',
+              'filterClearedAt',
+            ),
             sortField: BuiltValueNullFieldError.checkNotNull(
-                sortField, r'ListUIState', 'sortField'),
+              sortField,
+              r'ListUIState',
+              'sortField',
+            ),
             sortAscending: BuiltValueNullFieldError.checkNotNull(
-                sortAscending, r'ListUIState', 'sortAscending'),
+              sortAscending,
+              r'ListUIState',
+              'sortAscending',
+            ),
             stateFilters: stateFilters.build(),
             statusFilters: statusFilters.build(),
             custom1Filters: custom1Filters.build(),
@@ -385,7 +482,10 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
         _selectedIds?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'ListUIState', _$failedField, e.toString());
+          r'ListUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

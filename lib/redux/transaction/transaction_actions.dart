@@ -10,31 +10,26 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
 class ViewTransactionList implements PersistUI {
-  ViewTransactionList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewTransactionList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewTransaction implements PersistUI, PersistPrefs {
-  ViewTransaction({
-    required this.transactionId,
-    this.force = false,
-  });
+  ViewTransaction({required this.transactionId, this.force = false});
 
   final String? transactionId;
   final bool force;
 }
 
 class EditTransaction implements PersistUI, PersistPrefs {
-  EditTransaction(
-      {required this.transaction,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditTransaction({
+    required this.transaction,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final TransactionEntity transaction;
   final Completer? completer;
@@ -248,10 +243,7 @@ class LinkTransactionToPaymentFailure implements StopSaving {
 }
 
 class UnlinkTransactionsRequest implements StartSaving {
-  UnlinkTransactionsRequest(
-    this.completer,
-    this.transactionIds,
-  );
+  UnlinkTransactionsRequest(this.completer, this.transactionIds);
 
   final Completer completer;
   final List<String> transactionIds;
@@ -412,8 +404,11 @@ class UpdateTransactionTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleTransactionAction(BuildContext? context,
-    List<BaseEntity> transactions, EntityAction? action) {
+void handleTransactionAction(
+  BuildContext? context,
+  List<BaseEntity> transactions,
+  EntityAction? action,
+) {
   if (transactions.isEmpty) {
     return;
   }
@@ -421,40 +416,60 @@ void handleTransactionAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final transaction = transactions.first as TransactionEntity;
-  final transactionIds =
-      transactions.map((transaction) => transaction.id).toList();
+  final transactionIds = transactions
+      .map((transaction) => transaction.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
       editEntity(entity: transaction);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreTransactionsRequest(
+      store.dispatch(
+        RestoreTransactionsRequest(
           snackBarCompleter<Null>(localization!.restoredTransaction),
-          transactionIds));
+          transactionIds,
+        ),
+      );
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveTransactionsRequest(
+      store.dispatch(
+        ArchiveTransactionsRequest(
           snackBarCompleter<Null>(localization!.archivedTransaction),
-          transactionIds));
+          transactionIds,
+        ),
+      );
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteTransactionsRequest(
+      store.dispatch(
+        DeleteTransactionsRequest(
           snackBarCompleter<Null>(localization!.deletedTransaction),
-          transactionIds));
+          transactionIds,
+        ),
+      );
       break;
     case EntityAction.convertMatched:
-      store.dispatch(ConvertTransactionsRequest(
+      store.dispatch(
+        ConvertTransactionsRequest(
           snackBarCompleter<Null>(localization!.convertedTransactions),
-          transactionIds));
+          transactionIds,
+        ),
+      );
       break;
     case EntityAction.unlink:
-      store.dispatch(UnlinkTransactionsRequest(
-          snackBarCompleter<Null>(transactionIds.length == 1
-              ? localization!.unlinkedTransaction
-              : localization!.unlinkedTransactions
-                  .replaceFirst(':count', '${transactionIds.length}')),
-          transactionIds));
+      store.dispatch(
+        UnlinkTransactionsRequest(
+          snackBarCompleter<Null>(
+            transactionIds.length == 1
+                ? localization!.unlinkedTransaction
+                : localization!.unlinkedTransactions.replaceFirst(
+                    ':count',
+                    '${transactionIds.length}',
+                  ),
+          ),
+          transactionIds,
+        ),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.transactionListState.isInMultiselect()) {
@@ -474,9 +489,7 @@ void handleTransactionAction(BuildContext? context,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [transaction],
-      );
+      showEntityActionsDialog(entities: [transaction]);
       break;
     default:
       print('## ERROR: unhandled action $action in transaction_actions');

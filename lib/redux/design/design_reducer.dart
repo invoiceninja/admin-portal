@@ -12,11 +12,13 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState designUIReducer(DesignUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(designListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(designListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -33,14 +35,19 @@ final forceSelectedReducer = combineReducers<bool?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveDesignsSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteDesignsSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.design ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.design ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewDesign>(
-      (String? selectedId, dynamic action) => action.designId),
+    (String? selectedId, dynamic action) => action.designId,
+  ),
   TypedReducer<String?, AddDesignSuccess>(
-      (String? selectedId, dynamic action) => action.design.id),
+    (String? selectedId, dynamic action) => action.design.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortDesigns>((selectedId, action) => ''),
   TypedReducer<String?, FilterDesigns>((selectedId, action) => ''),
@@ -87,45 +94,61 @@ final designListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartDesignMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToDesignMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromDesignMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearDesignMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewDesignList>(_viewDesignList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewDesignList(
-    ListUIState designListState, ViewDesignList action) {
-  return designListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState designListState,
+  ViewDesignList action,
+) {
+  return designListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterDesignsByCustom1(
-    ListUIState designListState, FilterDesignsByCustom1 action) {
+  ListUIState designListState,
+  FilterDesignsByCustom1 action,
+) {
   if (designListState.custom1Filters.contains(action.value)) {
-    return designListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return designListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
     return designListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
 }
 
 ListUIState _filterDesignsByCustom2(
-    ListUIState designListState, FilterDesignsByCustom2 action) {
+  ListUIState designListState,
+  FilterDesignsByCustom2 action,
+) {
   if (designListState.custom2Filters.contains(action.value)) {
-    return designListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return designListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
     return designListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
 ListUIState _filterDesignsByState(
-    ListUIState designListState, FilterDesignsByState action) {
+  ListUIState designListState,
+  FilterDesignsByState action,
+) {
   if (designListState.stateFilters.contains(action.state)) {
     return designListState.rebuild((b) => b..stateFilters.remove(action.state));
   } else {
@@ -134,37 +157,50 @@ ListUIState _filterDesignsByState(
 }
 
 ListUIState _filterDesigns(ListUIState designListState, FilterDesigns action) {
-  return designListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : designListState.filterClearedAt);
+  return designListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : designListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortDesigns(ListUIState designListState, SortDesigns action) {
-  return designListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return designListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState productListState, StartDesignMultiselect action) {
+  ListUIState productListState,
+  StartDesignMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState productListState, AddToDesignMultiselect action) {
+  ListUIState productListState,
+  AddToDesignMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState productListState, RemoveFromDesignMultiselect action) {
-  return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState productListState,
+  RemoveFromDesignMultiselect action,
+) {
+  return productListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState productListState, ClearDesignMultiselect action) {
+  ListUIState productListState,
+  ClearDesignMultiselect action,
+) {
   return productListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -180,7 +216,9 @@ final designsReducer = combineReducers<DesignState>([
 ]);
 
 DesignState _archiveDesignSuccess(
-    DesignState designState, ArchiveDesignsSuccess action) {
+  DesignState designState,
+  ArchiveDesignsSuccess action,
+) {
   return designState.rebuild((b) {
     for (final design in action.designs) {
       b.map[design.id] = design;
@@ -189,7 +227,9 @@ DesignState _archiveDesignSuccess(
 }
 
 DesignState _deleteDesignSuccess(
-    DesignState designState, DeleteDesignsSuccess action) {
+  DesignState designState,
+  DeleteDesignsSuccess action,
+) {
   return designState.rebuild((b) {
     for (final design in action.designs) {
       b.map[design.id] = design;
@@ -198,7 +238,9 @@ DesignState _deleteDesignSuccess(
 }
 
 DesignState _restoreDesignSuccess(
-    DesignState designState, RestoreDesignsSuccess action) {
+  DesignState designState,
+  RestoreDesignsSuccess action,
+) {
   return designState.rebuild((b) {
     for (final design in action.designs) {
       b.map[design.id] = design;
@@ -207,9 +249,11 @@ DesignState _restoreDesignSuccess(
 }
 
 DesignState _addDesign(DesignState designState, AddDesignSuccess action) {
-  return designState.rebuild((b) => b
-    ..map[action.design.id] = action.design
-    ..list.add(action.design.id));
+  return designState.rebuild(
+    (b) => b
+      ..map[action.design.id] = action.design
+      ..list.add(action.design.id),
+  );
 }
 
 DesignState _updateDesign(DesignState designState, SaveDesignSuccess action) {
@@ -217,16 +261,21 @@ DesignState _updateDesign(DesignState designState, SaveDesignSuccess action) {
 }
 
 DesignState _setLoadedDesign(
-    DesignState designState, LoadDesignSuccess action) {
+  DesignState designState,
+  LoadDesignSuccess action,
+) {
   return designState.rebuild((b) => b..map[action.design.id] = action.design);
 }
 
 DesignState _setLoadedDesigns(
-        DesignState designState, LoadDesignsSuccess action) =>
-    designState.loadDesigns(action.designs);
+  DesignState designState,
+  LoadDesignsSuccess action,
+) => designState.loadDesigns(action.designs);
 
 DesignState _setLoadedCompany(
-    DesignState designState, LoadCompanySuccess action) {
+  DesignState designState,
+  LoadCompanySuccess action,
+) {
   final company = action.userCompany.company;
 
   return designState.loadDesigns(company.designs);

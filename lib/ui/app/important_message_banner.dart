@@ -113,32 +113,39 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                             launchUrl(Uri.parse(kAppReactUrl));
                           } else {
                             confirmCallback(
-                                context: context,
-                                message: localization.enableReactApp,
-                                callback: (_) {
-                                  final credentials = state.credentials;
-                                  final account = state.account.rebuild(
-                                      (b) => b..setReactAsDefaultAP = true);
-                                  final url =
-                                      '${credentials.url}/accounts/${account.id}';
-                                  final data = serializers.serializeWith(
-                                      AccountEntity.serializer, account);
+                              context: context,
+                              message: localization.enableReactApp,
+                              callback: (_) {
+                                final credentials = state.credentials;
+                                final account = state.account.rebuild(
+                                  (b) => b..setReactAsDefaultAP = true,
+                                );
+                                final url =
+                                    '${credentials.url}/accounts/${account.id}';
+                                final data = serializers.serializeWith(
+                                  AccountEntity.serializer,
+                                  account,
+                                );
 
-                                  store.dispatch(StartSaving());
-                                  WebClient()
-                                      .put(
-                                    url,
-                                    credentials.token,
-                                    data: json.encode(data),
-                                  )
-                                      .then((dynamic _) {
-                                    store.dispatch(StopSaving());
-                                    WebUtils.reloadBrowser();
-                                  }).catchError((Object error) {
-                                    store.dispatch(StopSaving());
-                                    showErrorDialog(message: error as String?);
-                                  });
-                                });
+                                store.dispatch(StartSaving());
+                                WebClient()
+                                    .put(
+                                      url,
+                                      credentials.token,
+                                      data: json.encode(data),
+                                    )
+                                    .then((dynamic _) {
+                                      store.dispatch(StopSaving());
+                                      WebUtils.reloadBrowser();
+                                    })
+                                    .catchError((Object error) {
+                                      store.dispatch(StopSaving());
+                                      showErrorDialog(
+                                        message: error as String?,
+                                      );
+                                    });
+                              },
+                            );
                           }
                         },
                       ),
@@ -161,13 +168,15 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         onPressed: () {
                           final layout =
                               widget.suggestedLayout == AppLayout.desktop
-                                  ? AppLayout.mobile
-                                  : AppLayout.desktop;
+                              ? AppLayout.mobile
+                              : AppLayout.desktop;
                           store.dispatch(
-                              UpdateUserPreferences(appLayout: layout));
+                            UpdateUserPreferences(appLayout: layout),
+                          );
                           AppBuilder.of(context)!.rebuild();
-                          WidgetsBinding.instance
-                              .addPostFrameCallback((duration) {
+                          WidgetsBinding.instance.addPostFrameCallback((
+                            duration,
+                          ) {
                             if (layout == AppLayout.mobile) {
                               store.dispatch(ViewDashboard());
                             } else {
@@ -191,9 +200,7 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
               ),
             ),
           ),
-          Expanded(
-            child: widget.child,
-          )
+          Expanded(child: widget.child),
         ],
       ),
     );

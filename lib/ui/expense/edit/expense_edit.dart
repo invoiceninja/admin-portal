@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
-  const ExpenseEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
 
@@ -35,8 +32,9 @@ class ExpenseEdit extends StatefulWidget {
 class _ExpenseEditState extends State<ExpenseEdit>
     with SingleTickerProviderStateMixin {
   TabController? _controller;
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_expenseEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_expenseEdit',
+  );
 
   @override
   void initState() {
@@ -80,21 +78,25 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final client = state.clientState.get(expense.clientId ?? '');
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
-    final footer = localization.expenseTotal +
+    final footer =
+        localization.expenseTotal +
         ': ' +
-        formatNumber(expense.grossAmount, context,
-            currencyId: expense.currencyId)!;
+        formatNumber(
+          expense.grossAmount,
+          context,
+          currencyId: expense.currencyId,
+        )!;
 
     return EditScaffold(
       isFullscreen: isFullscreen,
       entity: expense,
       title: expense.isRecurring
           ? (expense.isNew
-              ? localization.newRecurringExpense
-              : localization.editRecurringExpense)
+                ? localization.newRecurringExpense
+                : localization.editRecurringExpense)
           : (expense.isNew
-              ? localization.newExpense
-              : localization.editExpense),
+                ? localization.newExpense
+                : localization.editExpense),
       onCancelPressed: (context) => viewModel.onCancelPressed!(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: expense.getActions(
@@ -106,15 +108,9 @@ class _ExpenseEditState extends State<ExpenseEdit>
         controller: _controller,
         //isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
+          Tab(text: localization.details),
+          Tab(text: localization.notes),
+          Tab(text: localization.settings),
         ],
       ),
       body: Form(
@@ -128,15 +124,9 @@ class _ExpenseEditState extends State<ExpenseEdit>
                 key: ValueKey('__expense_${expense.id}_${expense.updatedAt}__'),
                 controller: _controller,
                 children: <Widget>[
-                  ExpenseEditDetails(
-                    viewModel: widget.viewModel,
-                  ),
-                  ExpenseEditNotes(
-                    viewModel: widget.viewModel,
-                  ),
-                  ExpenseEditSettings(
-                    viewModel: widget.viewModel,
-                  ),
+                  ExpenseEditDetails(viewModel: widget.viewModel),
+                  ExpenseEditNotes(viewModel: widget.viewModel),
+                  ExpenseEditSettings(viewModel: widget.viewModel),
                 ],
               ),
       ),
@@ -157,13 +147,16 @@ class _ExpenseEditState extends State<ExpenseEdit>
                         ? localization.sidebarEditor
                         : localization.fullscreenEditor,
                     child: InkWell(
-                      onTap: () => store
-                          .dispatch(ToggleEditorLayout(EntityType.expense)),
+                      onTap: () => store.dispatch(
+                        ToggleEditorLayout(EntityType.expense),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(isFullscreen
-                            ? Icons.chevron_right
-                            : Icons.chevron_left),
+                        child: Icon(
+                          isFullscreen
+                              ? Icons.chevron_right
+                              : Icons.chevron_left,
+                        ),
                       ),
                     ),
                   ),
@@ -174,15 +167,16 @@ class _ExpenseEditState extends State<ExpenseEdit>
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                          expense.number.isEmpty
-                              ? footer
-                              : '${expense.number} • $footer',
-                          style: TextStyle(
-                            color: viewModel.state!.prefState.enableDarkMode
-                                ? Colors.white
-                                : Colors.black,
-                            fontSize: 20.0,
-                          )),
+                        expense.number.isEmpty
+                            ? footer
+                            : '${expense.number} • $footer',
+                        style: TextStyle(
+                          color: viewModel.state!.prefState.enableDarkMode
+                              ? Colors.white
+                              : Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      ),
                     ),
                   ),
                 ),

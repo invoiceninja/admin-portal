@@ -20,6 +20,17 @@ add_executable(${BINARY_NAME} WIN32
 # that need different build settings.
 apply_standard_settings(${BINARY_NAME})
 
+# Emit a separate PDB for the runner in Release/Profile so native Windows crashes
+# (runner + statically-linked plugin code) can be symbolicated in Sentry and
+# Partner Center, without bloating the shipped exe. Scoped to this target only -
+# do NOT move these into APPLY_STANDARD_SETTINGS, which is applied to every plugin.
+target_compile_options(${BINARY_NAME} PRIVATE
+  "$<$<OR:$<CONFIG:Release>,$<CONFIG:Profile>>:/Zi>")
+target_link_options(${BINARY_NAME} PRIVATE
+  "$<$<OR:$<CONFIG:Release>,$<CONFIG:Profile>>:/DEBUG>"
+  "$<$<OR:$<CONFIG:Release>,$<CONFIG:Profile>>:/OPT:REF>"
+  "$<$<OR:$<CONFIG:Release>,$<CONFIG:Profile>>:/OPT:ICF>")
+
 # Add preprocessor definitions for the build version.
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION=\"${FLUTTER_VERSION}\"")
 target_compile_definitions(${BINARY_NAME} PRIVATE "FLUTTER_VERSION_MAJOR=${FLUTTER_VERSION_MAJOR}")

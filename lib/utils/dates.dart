@@ -39,24 +39,26 @@ DateTime addMonths(DateTime dateTime, int offset) {
   final newDay = min(dateTime.day, daysInMonth(newYear, newMonth));
   if (dateTime.isUtc) {
     return new DateTime.utc(
-        newYear,
-        newMonth,
-        newDay,
-        dateTime.hour,
-        dateTime.minute,
-        dateTime.second,
-        dateTime.millisecond,
-        dateTime.microsecond);
+      newYear,
+      newMonth,
+      newDay,
+      dateTime.hour,
+      dateTime.minute,
+      dateTime.second,
+      dateTime.millisecond,
+      dateTime.microsecond,
+    );
   } else {
     return new DateTime(
-        newYear,
-        newMonth,
-        newDay,
-        dateTime.hour,
-        dateTime.minute,
-        dateTime.second,
-        dateTime.millisecond,
-        dateTime.microsecond);
+      newYear,
+      newMonth,
+      newDay,
+      dateTime.hour,
+      dateTime.minute,
+      dateTime.second,
+      dateTime.millisecond,
+      dateTime.microsecond,
+    );
   }
 }
 
@@ -94,8 +96,10 @@ String? calculateStartDate({
       return convertDateTimeToSqlDate(date);
     case DateRange.lastQuarter:
       final monthOffset = (today.month - 1) % 3 * -1;
-      final date =
-          addMonths(firstDayOfMonth, ((offset + 1) * -3) + monthOffset);
+      final date = addMonths(
+        firstDayOfMonth,
+        ((offset + 1) * -3) + monthOffset,
+      );
       return convertDateTimeToSqlDate(date);
     case DateRange.thisYear:
       final date = addYears(firstDayOfYear, offset * -1);
@@ -114,7 +118,8 @@ String? calculateStartDate({
           : (DateTime.tryParse(customEndDate) ?? DateTime.now());
       final days = endDate.difference(startDate).inDays;
       return convertDateTimeToSqlDate(
-          startDate.subtract(Duration(days: days * offset)));
+        startDate.subtract(Duration(days: days * offset)),
+      );
   }
 }
 
@@ -141,31 +146,42 @@ String? calculateEndDate({
       final date = today.subtract(Duration(days: (365 * offset) + 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.thisMonth:
-      final date = addMonths(firstDayOfMonth, (offset - 1) * -1)
-          .subtract(Duration(days: 1));
+      final date = addMonths(
+        firstDayOfMonth,
+        (offset - 1) * -1,
+      ).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.lastMonth:
-      final date =
-          addMonths(firstDayOfMonth, offset * -1).subtract(Duration(days: 1));
+      final date = addMonths(
+        firstDayOfMonth,
+        offset * -1,
+      ).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.thisQuarter:
       final monthOffset = (today.month - 1) % 3 * -1;
-      final date = addMonths(firstDayOfMonth, (offset * -3) + monthOffset + 3)
-          .subtract(Duration(days: 1));
+      final date = addMonths(
+        firstDayOfMonth,
+        (offset * -3) + monthOffset + 3,
+      ).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.lastQuarter:
       final monthOffset = (today.month - 1) % 3 * -1;
-      final date =
-          addMonths(firstDayOfMonth, ((offset + 1) * -3) + monthOffset + 3)
-              .subtract(Duration(days: 1));
+      final date = addMonths(
+        firstDayOfMonth,
+        ((offset + 1) * -3) + monthOffset + 3,
+      ).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.thisYear:
-      final date = addYears(firstDayOfYear, (offset - 1) * -1)
-          .subtract(Duration(days: 1));
+      final date = addYears(
+        firstDayOfYear,
+        (offset - 1) * -1,
+      ).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.lastYear:
-      final date =
-          addYears(firstDayOfYear, offset * -1).subtract(Duration(days: 1));
+      final date = addYears(
+        firstDayOfYear,
+        offset * -1,
+      ).subtract(Duration(days: 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.allTime:
       return null;
@@ -178,6 +194,7 @@ String? calculateEndDate({
           : (DateTime.tryParse(customEndDate) ?? DateTime.now());
       final days = endDate.difference(startDate).inDays;
       return convertDateTimeToSqlDate(
-          endDate.subtract(Duration(days: days * offset)));
+        endDate.subtract(Duration(days: days * offset)),
+      );
   }
 }

@@ -71,7 +71,8 @@ class DeviceSettingsVM {
           showRefreshDataDialog(context: context, includeStatic: true),
       onLogoutTap: (BuildContext context) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.endedAllSessions);
+          AppLocalization.of(context)!.endedAllSessions,
+        );
         store.dispatch(UserLogoutAll(completer: completer));
       },
       onDarkModeChanged: (BuildContext context, String value) async {
@@ -80,7 +81,8 @@ class DeviceSettingsVM {
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
         store.dispatch(
-            UpdateUserPreferences(longPressSelectionIsDefault: value));
+          UpdateUserPreferences(longPressSelectionIsDefault: value),
+        );
       },
       onMenuModeChanged: (context, value) async {
         if (store.state.prefState.menuSidebarMode == value) {
@@ -158,12 +160,15 @@ class DeviceSettingsVM {
         bool authenticated = false;
         try {
           authenticated = await LocalAuthentication().authenticate(
-              localizedReason:
-                  AppLocalization.of(context)!.authenticateToChangeSetting,
-              options: const AuthenticationOptions(
-                  biometricOnly: true,
-                  useErrorDialogs: true,
-                  stickyAuth: false));
+            localizedReason: AppLocalization.of(
+              context,
+            )!.authenticateToChangeSetting,
+            options: const AuthenticationOptions(
+              biometricOnly: true,
+              useErrorDialogs: true,
+              stickyAuth: false,
+            ),
+          );
         } catch (e) {
           print(e);
         }
@@ -174,17 +179,15 @@ class DeviceSettingsVM {
       //authenticationSupported: LocalAuthentication().canCheckBiometrics,
       // TODO remove this once issue is resolved:
       // https://github.com/flutter/flutter/issues/24339
-      authenticationSupported: Future<bool>(
-        () async {
-          bool enable = false;
-          try {
-            enable = await LocalAuthentication().canCheckBiometrics;
-          } catch (e) {
-            // do nothing
-          }
-          return enable;
-        },
-      ),
+      authenticationSupported: Future<bool>(() async {
+        bool enable = false;
+        try {
+          enable = await LocalAuthentication().canCheckBiometrics;
+        } catch (e) {
+          // do nothing
+        }
+        return enable;
+      }),
       onCustomColorsChanged: (context, customColors) {
         if (store.state.prefState.enableDarkMode) {
           store.dispatch(UpdateUserPreferences(darkCustomColors: customColors));

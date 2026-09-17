@@ -18,20 +18,25 @@ class _$WebhookListResponseSerializer
   @override
   final Iterable<Type> types = const [
     WebhookListResponse,
-    _$WebhookListResponse
+    _$WebhookListResponse,
   ];
   @override
   final String wireName = 'WebhookListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, WebhookListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    WebhookListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(WebhookEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(WebhookEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$WebhookListResponseSerializer
 
   @override
   WebhookListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = WebhookListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$WebhookListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(WebhookEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(WebhookEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$WebhookItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     WebhookItemResponse,
-    _$WebhookItemResponse
+    _$WebhookItemResponse,
   ];
   @override
   final String wireName = 'WebhookItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, WebhookItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    WebhookItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(WebhookEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(WebhookEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$WebhookItemResponseSerializer
 
   @override
   WebhookItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = WebhookItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,8 +116,13 @@ class _$WebhookItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(WebhookEntity))! as WebhookEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(WebhookEntity),
+                )!
+                as WebhookEntity,
+          );
           break;
       }
     }
@@ -115,34 +138,55 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
   final String wireName = 'WebhookEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, WebhookEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    WebhookEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'event_id',
-      serializers.serialize(object.eventId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.eventId,
+        specifiedType: const FullType(String),
+      ),
       'target_url',
-      serializers.serialize(object.targetUrl,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.targetUrl,
+        specifiedType: const FullType(String),
+      ),
       'format',
-      serializers.serialize(object.format,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.format,
+        specifiedType: const FullType(String),
+      ),
       'rest_method',
-      serializers.serialize(object.restMethod,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.restMethod,
+        specifiedType: const FullType(String),
+      ),
       'headers',
-      serializers.serialize(object.headers,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+      serializers.serialize(
+        object.headers,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(String),
+        ]),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -152,36 +196,42 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   WebhookEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = WebhookEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -191,57 +241,111 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'event_id':
-          result.eventId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.eventId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'target_url':
-          result.targetUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.targetUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'format':
-          result.format = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.format =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'rest_method':
-          result.restMethod = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.restMethod =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'headers':
-          result.headers.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)]))!);
+          result.headers.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(String),
+              ]),
+            )!,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -254,15 +358,15 @@ class _$WebhookListResponse extends WebhookListResponse {
   @override
   final BuiltList<WebhookEntity> data;
 
-  factory _$WebhookListResponse(
-          [void Function(WebhookListResponseBuilder)? updates]) =>
-      (WebhookListResponseBuilder()..update(updates))._build();
+  factory _$WebhookListResponse([
+    void Function(WebhookListResponseBuilder)? updates,
+  ]) => (WebhookListResponseBuilder()..update(updates))._build();
 
   _$WebhookListResponse._({required this.data}) : super._();
   @override
   WebhookListResponse rebuild(
-          void Function(WebhookListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(WebhookListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   WebhookListResponseBuilder toBuilder() =>
@@ -286,9 +390,9 @@ class _$WebhookListResponse extends WebhookListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'WebhookListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'WebhookListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -328,10 +432,7 @@ class WebhookListResponseBuilder
   _$WebhookListResponse _build() {
     _$WebhookListResponse _$result;
     try {
-      _$result = _$v ??
-          _$WebhookListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$WebhookListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -339,7 +440,10 @@ class WebhookListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'WebhookListResponse', _$failedField, e.toString());
+          r'WebhookListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -352,15 +456,15 @@ class _$WebhookItemResponse extends WebhookItemResponse {
   @override
   final WebhookEntity data;
 
-  factory _$WebhookItemResponse(
-          [void Function(WebhookItemResponseBuilder)? updates]) =>
-      (WebhookItemResponseBuilder()..update(updates))._build();
+  factory _$WebhookItemResponse([
+    void Function(WebhookItemResponseBuilder)? updates,
+  ]) => (WebhookItemResponseBuilder()..update(updates))._build();
 
   _$WebhookItemResponse._({required this.data}) : super._();
   @override
   WebhookItemResponse rebuild(
-          void Function(WebhookItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(WebhookItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   WebhookItemResponseBuilder toBuilder() =>
@@ -384,9 +488,9 @@ class _$WebhookItemResponse extends WebhookItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'WebhookItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'WebhookItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -425,10 +529,7 @@ class WebhookItemResponseBuilder
   _$WebhookItemResponse _build() {
     _$WebhookItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$WebhookItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$WebhookItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -436,7 +537,10 @@ class WebhookItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'WebhookItemResponse', _$failedField, e.toString());
+          r'WebhookItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -476,21 +580,21 @@ class _$WebhookEntity extends WebhookEntity {
   factory _$WebhookEntity([void Function(WebhookEntityBuilder)? updates]) =>
       (WebhookEntityBuilder()..update(updates))._build();
 
-  _$WebhookEntity._(
-      {required this.eventId,
-      required this.targetUrl,
-      required this.format,
-      required this.restMethod,
-      required this.headers,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$WebhookEntity._({
+    required this.eventId,
+    required this.targetUrl,
+    required this.format,
+    required this.restMethod,
+    required this.headers,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   WebhookEntity rebuild(void Function(WebhookEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -659,29 +763,54 @@ class WebhookEntityBuilder
   _$WebhookEntity _build() {
     _$WebhookEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$WebhookEntity._(
             eventId: BuiltValueNullFieldError.checkNotNull(
-                eventId, r'WebhookEntity', 'eventId'),
+              eventId,
+              r'WebhookEntity',
+              'eventId',
+            ),
             targetUrl: BuiltValueNullFieldError.checkNotNull(
-                targetUrl, r'WebhookEntity', 'targetUrl'),
+              targetUrl,
+              r'WebhookEntity',
+              'targetUrl',
+            ),
             format: BuiltValueNullFieldError.checkNotNull(
-                format, r'WebhookEntity', 'format'),
+              format,
+              r'WebhookEntity',
+              'format',
+            ),
             restMethod: BuiltValueNullFieldError.checkNotNull(
-                restMethod, r'WebhookEntity', 'restMethod'),
+              restMethod,
+              r'WebhookEntity',
+              'restMethod',
+            ),
             headers: headers.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'WebhookEntity', 'createdAt'),
+              createdAt,
+              r'WebhookEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'WebhookEntity', 'updatedAt'),
+              updatedAt,
+              r'WebhookEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'WebhookEntity', 'archivedAt'),
+              archivedAt,
+              r'WebhookEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'WebhookEntity', 'id'),
+              id,
+              r'WebhookEntity',
+              'id',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -690,7 +819,10 @@ class WebhookEntityBuilder
         headers.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'WebhookEntity', _$failedField, e.toString());
+          r'WebhookEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

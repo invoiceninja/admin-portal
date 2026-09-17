@@ -22,42 +22,67 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
   final String wireName = 'TaxDataEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaxDataEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaxDataEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'geoPostalCode',
-      serializers.serialize(object.geoPostalCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.geoPostalCode,
+        specifiedType: const FullType(String),
+      ),
       'geoCity',
-      serializers.serialize(object.geoCity,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.geoCity,
+        specifiedType: const FullType(String),
+      ),
       'geoCounty',
-      serializers.serialize(object.geoCounty,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.geoCounty,
+        specifiedType: const FullType(String),
+      ),
       'geoState',
-      serializers.serialize(object.geoState,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.geoState,
+        specifiedType: const FullType(String),
+      ),
       'taxSales',
-      serializers.serialize(object.taxSales,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxSales,
+        specifiedType: const FullType(double),
+      ),
       'stateSalesTax',
-      serializers.serialize(object.stateSalesTax,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.stateSalesTax,
+        specifiedType: const FullType(double),
+      ),
       'citySalesTax',
-      serializers.serialize(object.citySalesTax,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.citySalesTax,
+        specifiedType: const FullType(double),
+      ),
       'cityTaxCode',
-      serializers.serialize(object.cityTaxCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.cityTaxCode,
+        specifiedType: const FullType(String),
+      ),
       'countySalesTax',
-      serializers.serialize(object.countySalesTax,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.countySalesTax,
+        specifiedType: const FullType(double),
+      ),
       'countyTaxCode',
-      serializers.serialize(object.countyTaxCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.countyTaxCode,
+        specifiedType: const FullType(String),
+      ),
       'districtSalesTax',
-      serializers.serialize(object.districtSalesTax,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.districtSalesTax,
+        specifiedType: const FullType(double),
+      ),
     ];
 
     return result;
@@ -65,8 +90,10 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
 
   @override
   TaxDataEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaxDataEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -76,48 +103,92 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'geoPostalCode':
-          result.geoPostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.geoPostalCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'geoCity':
-          result.geoCity = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.geoCity =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'geoCounty':
-          result.geoCounty = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.geoCounty =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'geoState':
-          result.geoState = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.geoState =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'taxSales':
-          result.taxSales = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxSales =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'stateSalesTax':
-          result.stateSalesTax = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.stateSalesTax =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'citySalesTax':
-          result.citySalesTax = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.citySalesTax =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'cityTaxCode':
-          result.cityTaxCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.cityTaxCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'countySalesTax':
-          result.countySalesTax = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.countySalesTax =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'countyTaxCode':
-          result.countyTaxCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.countyTaxCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'districtSalesTax':
-          result.districtSalesTax = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.districtSalesTax =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
       }
     }
@@ -134,27 +205,40 @@ class _$TaxConfigEntitySerializer
   final String wireName = 'TaxConfigEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaxConfigEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaxConfigEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'version',
-      serializers.serialize(object.version,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.version,
+        specifiedType: const FullType(String),
+      ),
       'seller_subregion',
-      serializers.serialize(object.sellerSubregion,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.sellerSubregion,
+        specifiedType: const FullType(String),
+      ),
       'acts_as_sender',
-      serializers.serialize(object.actsAsSender,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.actsAsSender,
+        specifiedType: const FullType(bool),
+      ),
       'acts_as_receiver',
-      serializers.serialize(object.actsAsReceiver,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.actsAsReceiver,
+        specifiedType: const FullType(bool),
+      ),
       'regions',
-      serializers.serialize(object.regions,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaxConfigRegionEntity)
-          ])),
+      serializers.serialize(
+        object.regions,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TaxConfigRegionEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -162,8 +246,10 @@ class _$TaxConfigEntitySerializer
 
   @override
   TaxConfigEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaxConfigEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -173,27 +259,47 @@ class _$TaxConfigEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'version':
-          result.version = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.version =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'seller_subregion':
-          result.sellerSubregion = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.sellerSubregion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'acts_as_sender':
-          result.actsAsSender = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.actsAsSender =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'acts_as_receiver':
-          result.actsAsReceiver = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.actsAsReceiver =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'regions':
-          result.regions.replace(serializers.deserialize(value,
+          result.regions.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TaxConfigRegionEntity)
-              ]))!);
+                const FullType(TaxConfigRegionEntity),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -207,30 +313,38 @@ class _$TaxConfigRegionEntitySerializer
   @override
   final Iterable<Type> types = const [
     TaxConfigRegionEntity,
-    _$TaxConfigRegionEntity
+    _$TaxConfigRegionEntity,
   ];
   @override
   final String wireName = 'TaxConfigRegionEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, TaxConfigRegionEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    TaxConfigRegionEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'has_sales_above_threshold',
-      serializers.serialize(object.hasSalesAboveThreshold,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hasSalesAboveThreshold,
+        specifiedType: const FullType(bool),
+      ),
       'tax_all_subregions',
       serializers.serialize(object.taxAll, specifiedType: const FullType(bool)),
       'tax_threshold',
-      serializers.serialize(object.taxThreshold,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxThreshold,
+        specifiedType: const FullType(double),
+      ),
       'subregions',
-      serializers.serialize(object.subregions,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(TaxConfigSubregionEntity)
-          ])),
+      serializers.serialize(
+        object.subregions,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(TaxConfigSubregionEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -238,8 +352,10 @@ class _$TaxConfigRegionEntitySerializer
 
   @override
   TaxConfigRegionEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaxConfigRegionEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -249,23 +365,39 @@ class _$TaxConfigRegionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'has_sales_above_threshold':
-          result.hasSalesAboveThreshold = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.hasSalesAboveThreshold =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'tax_all_subregions':
-          result.taxAll = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.taxAll =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'tax_threshold':
-          result.taxThreshold = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxThreshold =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'subregions':
-          result.subregions.replace(serializers.deserialize(value,
+          result.subregions.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(TaxConfigSubregionEntity)
-              ]))!);
+                const FullType(TaxConfigSubregionEntity),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -279,31 +411,43 @@ class _$TaxConfigSubregionEntitySerializer
   @override
   final Iterable<Type> types = const [
     TaxConfigSubregionEntity,
-    _$TaxConfigSubregionEntity
+    _$TaxConfigSubregionEntity,
   ];
   @override
   final String wireName = 'TaxConfigSubregionEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, TaxConfigSubregionEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    TaxConfigSubregionEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'apply_tax',
-      serializers.serialize(object.applyTax,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.applyTax,
+        specifiedType: const FullType(bool),
+      ),
       'tax_rate',
-      serializers.serialize(object.taxRate,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate,
+        specifiedType: const FullType(double),
+      ),
       'tax_name',
-      serializers.serialize(object.taxName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName,
+        specifiedType: const FullType(String),
+      ),
       'reduced_tax_rate',
-      serializers.serialize(object.reducedTaxRate,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.reducedTaxRate,
+        specifiedType: const FullType(double),
+      ),
       'vat_number',
-      serializers.serialize(object.vatNumber,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.vatNumber,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -311,8 +455,10 @@ class _$TaxConfigSubregionEntitySerializer
 
   @override
   TaxConfigSubregionEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaxConfigSubregionEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -322,24 +468,44 @@ class _$TaxConfigSubregionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'apply_tax':
-          result.applyTax = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.applyTax =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'tax_rate':
-          result.taxRate = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'tax_name':
-          result.taxName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'reduced_tax_rate':
-          result.reducedTaxRate = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.reducedTaxRate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'vat_number':
-          result.vatNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.vatNumber =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -375,19 +541,19 @@ class _$TaxDataEntity extends TaxDataEntity {
   factory _$TaxDataEntity([void Function(TaxDataEntityBuilder)? updates]) =>
       (TaxDataEntityBuilder()..update(updates))._build();
 
-  _$TaxDataEntity._(
-      {required this.geoPostalCode,
-      required this.geoCity,
-      required this.geoCounty,
-      required this.geoState,
-      required this.taxSales,
-      required this.stateSalesTax,
-      required this.citySalesTax,
-      required this.cityTaxCode,
-      required this.countySalesTax,
-      required this.countyTaxCode,
-      required this.districtSalesTax})
-      : super._();
+  _$TaxDataEntity._({
+    required this.geoPostalCode,
+    required this.geoCity,
+    required this.geoCounty,
+    required this.geoState,
+    required this.taxSales,
+    required this.stateSalesTax,
+    required this.citySalesTax,
+    required this.cityTaxCode,
+    required this.countySalesTax,
+    required this.countyTaxCode,
+    required this.districtSalesTax,
+  }) : super._();
   @override
   TaxDataEntity rebuild(void Function(TaxDataEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -538,30 +704,64 @@ class TaxDataEntityBuilder
   TaxDataEntity build() => _build();
 
   _$TaxDataEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TaxDataEntity._(
           geoPostalCode: BuiltValueNullFieldError.checkNotNull(
-              geoPostalCode, r'TaxDataEntity', 'geoPostalCode'),
+            geoPostalCode,
+            r'TaxDataEntity',
+            'geoPostalCode',
+          ),
           geoCity: BuiltValueNullFieldError.checkNotNull(
-              geoCity, r'TaxDataEntity', 'geoCity'),
+            geoCity,
+            r'TaxDataEntity',
+            'geoCity',
+          ),
           geoCounty: BuiltValueNullFieldError.checkNotNull(
-              geoCounty, r'TaxDataEntity', 'geoCounty'),
+            geoCounty,
+            r'TaxDataEntity',
+            'geoCounty',
+          ),
           geoState: BuiltValueNullFieldError.checkNotNull(
-              geoState, r'TaxDataEntity', 'geoState'),
+            geoState,
+            r'TaxDataEntity',
+            'geoState',
+          ),
           taxSales: BuiltValueNullFieldError.checkNotNull(
-              taxSales, r'TaxDataEntity', 'taxSales'),
+            taxSales,
+            r'TaxDataEntity',
+            'taxSales',
+          ),
           stateSalesTax: BuiltValueNullFieldError.checkNotNull(
-              stateSalesTax, r'TaxDataEntity', 'stateSalesTax'),
+            stateSalesTax,
+            r'TaxDataEntity',
+            'stateSalesTax',
+          ),
           citySalesTax: BuiltValueNullFieldError.checkNotNull(
-              citySalesTax, r'TaxDataEntity', 'citySalesTax'),
+            citySalesTax,
+            r'TaxDataEntity',
+            'citySalesTax',
+          ),
           cityTaxCode: BuiltValueNullFieldError.checkNotNull(
-              cityTaxCode, r'TaxDataEntity', 'cityTaxCode'),
+            cityTaxCode,
+            r'TaxDataEntity',
+            'cityTaxCode',
+          ),
           countySalesTax: BuiltValueNullFieldError.checkNotNull(
-              countySalesTax, r'TaxDataEntity', 'countySalesTax'),
+            countySalesTax,
+            r'TaxDataEntity',
+            'countySalesTax',
+          ),
           countyTaxCode: BuiltValueNullFieldError.checkNotNull(
-              countyTaxCode, r'TaxDataEntity', 'countyTaxCode'),
+            countyTaxCode,
+            r'TaxDataEntity',
+            'countyTaxCode',
+          ),
           districtSalesTax: BuiltValueNullFieldError.checkNotNull(
-              districtSalesTax, r'TaxDataEntity', 'districtSalesTax'),
+            districtSalesTax,
+            r'TaxDataEntity',
+            'districtSalesTax',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -583,13 +783,13 @@ class _$TaxConfigEntity extends TaxConfigEntity {
   factory _$TaxConfigEntity([void Function(TaxConfigEntityBuilder)? updates]) =>
       (TaxConfigEntityBuilder()..update(updates))._build();
 
-  _$TaxConfigEntity._(
-      {required this.version,
-      required this.sellerSubregion,
-      required this.actsAsSender,
-      required this.actsAsReceiver,
-      required this.regions})
-      : super._();
+  _$TaxConfigEntity._({
+    required this.version,
+    required this.sellerSubregion,
+    required this.actsAsSender,
+    required this.actsAsReceiver,
+    required this.regions,
+  }) : super._();
   @override
   TaxConfigEntity rebuild(void Function(TaxConfigEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -695,16 +895,29 @@ class TaxConfigEntityBuilder
   _$TaxConfigEntity _build() {
     _$TaxConfigEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TaxConfigEntity._(
             version: BuiltValueNullFieldError.checkNotNull(
-                version, r'TaxConfigEntity', 'version'),
+              version,
+              r'TaxConfigEntity',
+              'version',
+            ),
             sellerSubregion: BuiltValueNullFieldError.checkNotNull(
-                sellerSubregion, r'TaxConfigEntity', 'sellerSubregion'),
+              sellerSubregion,
+              r'TaxConfigEntity',
+              'sellerSubregion',
+            ),
             actsAsSender: BuiltValueNullFieldError.checkNotNull(
-                actsAsSender, r'TaxConfigEntity', 'actsAsSender'),
+              actsAsSender,
+              r'TaxConfigEntity',
+              'actsAsSender',
+            ),
             actsAsReceiver: BuiltValueNullFieldError.checkNotNull(
-                actsAsReceiver, r'TaxConfigEntity', 'actsAsReceiver'),
+              actsAsReceiver,
+              r'TaxConfigEntity',
+              'actsAsReceiver',
+            ),
             regions: regions.build(),
           );
     } catch (_) {
@@ -714,7 +927,10 @@ class TaxConfigEntityBuilder
         regions.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaxConfigEntity', _$failedField, e.toString());
+          r'TaxConfigEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -733,20 +949,20 @@ class _$TaxConfigRegionEntity extends TaxConfigRegionEntity {
   @override
   final BuiltMap<String, TaxConfigSubregionEntity> subregions;
 
-  factory _$TaxConfigRegionEntity(
-          [void Function(TaxConfigRegionEntityBuilder)? updates]) =>
-      (TaxConfigRegionEntityBuilder()..update(updates))._build();
+  factory _$TaxConfigRegionEntity([
+    void Function(TaxConfigRegionEntityBuilder)? updates,
+  ]) => (TaxConfigRegionEntityBuilder()..update(updates))._build();
 
-  _$TaxConfigRegionEntity._(
-      {required this.hasSalesAboveThreshold,
-      required this.taxAll,
-      required this.taxThreshold,
-      required this.subregions})
-      : super._();
+  _$TaxConfigRegionEntity._({
+    required this.hasSalesAboveThreshold,
+    required this.taxAll,
+    required this.taxThreshold,
+    required this.subregions,
+  }) : super._();
   @override
   TaxConfigRegionEntity rebuild(
-          void Function(TaxConfigRegionEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(TaxConfigRegionEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TaxConfigRegionEntityBuilder toBuilder() =>
@@ -841,16 +1057,24 @@ class TaxConfigRegionEntityBuilder
   _$TaxConfigRegionEntity _build() {
     _$TaxConfigRegionEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TaxConfigRegionEntity._(
             hasSalesAboveThreshold: BuiltValueNullFieldError.checkNotNull(
-                hasSalesAboveThreshold,
-                r'TaxConfigRegionEntity',
-                'hasSalesAboveThreshold'),
+              hasSalesAboveThreshold,
+              r'TaxConfigRegionEntity',
+              'hasSalesAboveThreshold',
+            ),
             taxAll: BuiltValueNullFieldError.checkNotNull(
-                taxAll, r'TaxConfigRegionEntity', 'taxAll'),
+              taxAll,
+              r'TaxConfigRegionEntity',
+              'taxAll',
+            ),
             taxThreshold: BuiltValueNullFieldError.checkNotNull(
-                taxThreshold, r'TaxConfigRegionEntity', 'taxThreshold'),
+              taxThreshold,
+              r'TaxConfigRegionEntity',
+              'taxThreshold',
+            ),
             subregions: subregions.build(),
           );
     } catch (_) {
@@ -860,7 +1084,10 @@ class TaxConfigRegionEntityBuilder
         subregions.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaxConfigRegionEntity', _$failedField, e.toString());
+          r'TaxConfigRegionEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -881,21 +1108,21 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
   @override
   final String vatNumber;
 
-  factory _$TaxConfigSubregionEntity(
-          [void Function(TaxConfigSubregionEntityBuilder)? updates]) =>
-      (TaxConfigSubregionEntityBuilder()..update(updates))._build();
+  factory _$TaxConfigSubregionEntity([
+    void Function(TaxConfigSubregionEntityBuilder)? updates,
+  ]) => (TaxConfigSubregionEntityBuilder()..update(updates))._build();
 
-  _$TaxConfigSubregionEntity._(
-      {required this.applyTax,
-      required this.taxRate,
-      required this.taxName,
-      required this.reducedTaxRate,
-      required this.vatNumber})
-      : super._();
+  _$TaxConfigSubregionEntity._({
+    required this.applyTax,
+    required this.taxRate,
+    required this.taxName,
+    required this.reducedTaxRate,
+    required this.vatNumber,
+  }) : super._();
   @override
   TaxConfigSubregionEntity rebuild(
-          void Function(TaxConfigSubregionEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(TaxConfigSubregionEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   TaxConfigSubregionEntityBuilder toBuilder() =>
@@ -995,18 +1222,34 @@ class TaxConfigSubregionEntityBuilder
   TaxConfigSubregionEntity build() => _build();
 
   _$TaxConfigSubregionEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TaxConfigSubregionEntity._(
           applyTax: BuiltValueNullFieldError.checkNotNull(
-              applyTax, r'TaxConfigSubregionEntity', 'applyTax'),
+            applyTax,
+            r'TaxConfigSubregionEntity',
+            'applyTax',
+          ),
           taxRate: BuiltValueNullFieldError.checkNotNull(
-              taxRate, r'TaxConfigSubregionEntity', 'taxRate'),
+            taxRate,
+            r'TaxConfigSubregionEntity',
+            'taxRate',
+          ),
           taxName: BuiltValueNullFieldError.checkNotNull(
-              taxName, r'TaxConfigSubregionEntity', 'taxName'),
+            taxName,
+            r'TaxConfigSubregionEntity',
+            'taxName',
+          ),
           reducedTaxRate: BuiltValueNullFieldError.checkNotNull(
-              reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate'),
+            reducedTaxRate,
+            r'TaxConfigSubregionEntity',
+            'reducedTaxRate',
+          ),
           vatNumber: BuiltValueNullFieldError.checkNotNull(
-              vatNumber, r'TaxConfigSubregionEntity', 'vatNumber'),
+            vatNumber,
+            r'TaxConfigSubregionEntity',
+            'vatNumber',
+          ),
         );
     replace(_$result);
     return _$result;

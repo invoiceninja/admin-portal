@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductEdit extends StatefulWidget {
-  const ProductEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ProductEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final ProductEditVM viewModel;
 
@@ -31,8 +28,9 @@ class ProductEdit extends StatefulWidget {
 }
 
 class _ProductEditState extends State<ProductEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_productEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_productEdit',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   final _productKeyController = TextEditingController();
@@ -70,18 +68,28 @@ class _ProductEditState extends State<ProductEdit> {
       _maxQuantityController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final product = widget.viewModel.product;
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
-    _priceController.text = formatNumber(product.price, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
-    _quantityController.text = formatNumber(product.quantity, context,
-        formatNumberType: FormatNumberType.inputAmount)!;
-    _costController.text = formatNumber(product.cost, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _priceController.text = formatNumber(
+      product.price,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
+    _quantityController.text = formatNumber(
+      product.quantity,
+      context,
+      formatNumberType: FormatNumberType.inputAmount,
+    )!;
+    _costController.text = formatNumber(
+      product.cost,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
     _custom3Controller.text = product.customValue3;
@@ -101,15 +109,16 @@ class _ProductEditState extends State<ProductEdit> {
     _imageUrlController.text = product.imageUrl;
     _notificationThresholdController.text =
         product.stockNotificationThreshold == 0
-            ? ''
-            : formatNumber(
-                product.stockNotificationThreshold.toDouble(),
-                context,
-                formatNumberType: FormatNumberType.int,
-              )!;
+        ? ''
+        : formatNumber(
+            product.stockNotificationThreshold.toDouble(),
+            context,
+            formatNumberType: FormatNumberType.int,
+          )!;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -126,21 +135,24 @@ class _ProductEditState extends State<ProductEdit> {
   }
 
   void _onChanged() {
-    final product = widget.viewModel.product.rebuild((b) => b
-      ..productKey = _productKeyController.text.trim()
-      ..notes = _notesController.text.trim()
-      ..price = parseDouble(_priceController.text)
-      ..quantity = parseDouble(_quantityController.text)
-      ..cost = parseDouble(_costController.text)
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim()
-      ..stockQuantity = parseInt(_stockQuantityController.text.trim())
-      ..stockNotificationThreshold =
-          parseInt(_notificationThresholdController.text.trim())
-      ..maxQuantity = parseInt(_maxQuantityController.text.trim())
-      ..imageUrl = _imageUrlController.text.trim());
+    final product = widget.viewModel.product.rebuild(
+      (b) => b
+        ..productKey = _productKeyController.text.trim()
+        ..notes = _notesController.text.trim()
+        ..price = parseDouble(_priceController.text)
+        ..quantity = parseDouble(_quantityController.text)
+        ..cost = parseDouble(_costController.text)
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
+        ..stockQuantity = parseInt(_stockQuantityController.text.trim())
+        ..stockNotificationThreshold = parseInt(
+          _notificationThresholdController.text.trim(),
+        )
+        ..maxQuantity = parseInt(_maxQuantityController.text.trim())
+        ..imageUrl = _imageUrlController.text.trim(),
+    );
 
     if (product != widget.viewModel.product) {
       _debouncer.run(() {
@@ -201,7 +213,9 @@ class _ProductEditState extends State<ProductEdit> {
                   label: localization.price,
                   controller: _priceController,
                   keyboardType: TextInputType.numberWithOptions(
-                      decimal: true, signed: true),
+                    decimal: true,
+                    signed: true,
+                  ),
                   onSavePressed: _onSavePressed,
                 ),
                 if (company.enableProductQuantity)
@@ -209,7 +223,9 @@ class _ProductEditState extends State<ProductEdit> {
                     label: localization.defaultQuantity,
                     controller: _quantityController,
                     keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
+                      decimal: true,
+                      signed: true,
+                    ),
                     onSavePressed: _onSavePressed,
                   ),
                 if (company.enableProductCost)
@@ -217,31 +233,43 @@ class _ProductEditState extends State<ProductEdit> {
                     label: localization.cost,
                     controller: _costController,
                     keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
+                      decimal: true,
+                      signed: true,
+                    ),
                     onSavePressed: _onSavePressed,
                   ),
                 if (company.calculateTaxes)
                   AppDropdownButton<String>(
-                      labelText: localization.taxCategory,
-                      value: product.taxCategoryId,
-                      onChanged: (dynamic taxCategoryId) {
-                        viewModel.onChanged(product
-                            .rebuild((b) => b..taxCategoryId = taxCategoryId));
-                      },
-                      items: kTaxCategories.keys
-                          .map((key) => DropdownMenuItem<String>(
-                                child: Text(
-                                    localization.lookup(kTaxCategories[key])),
-                                value: key,
-                              ))
-                          .toList()),
+                    labelText: localization.taxCategory,
+                    value: product.taxCategoryId,
+                    onChanged: (dynamic taxCategoryId) {
+                      viewModel.onChanged(
+                        product.rebuild(
+                          (b) => b..taxCategoryId = taxCategoryId,
+                        ),
+                      );
+                    },
+                    items: kTaxCategories.keys
+                        .map(
+                          (key) => DropdownMenuItem<String>(
+                            child: Text(
+                              localization.lookup(kTaxCategories[key]),
+                            ),
+                            value: key,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 if (company.enableFirstItemTaxRate ||
                     product.taxName1.isNotEmpty)
                   TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
+                    onSelected: (taxRate) => viewModel.onChanged(
+                      product.rebuild(
+                        (b) => b
                           ..taxRate1 = taxRate.rate
-                          ..taxName1 = taxRate.name)),
+                          ..taxName1 = taxRate.name,
+                      ),
+                    ),
                     labelText: localization.tax,
                     initialTaxName: product.taxName1,
                     initialTaxRate: product.taxRate1,
@@ -249,10 +277,13 @@ class _ProductEditState extends State<ProductEdit> {
                 if (company.enableSecondItemTaxRate ||
                     product.taxName2.isNotEmpty)
                   TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
+                    onSelected: (taxRate) => viewModel.onChanged(
+                      product.rebuild(
+                        (b) => b
                           ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name)),
+                          ..taxName2 = taxRate.name,
+                      ),
+                    ),
                     labelText: localization.tax,
                     initialTaxName: product.taxName2,
                     initialTaxRate: product.taxRate2,
@@ -260,10 +291,13 @@ class _ProductEditState extends State<ProductEdit> {
                 if (company.enableThirdItemTaxRate ||
                     product.taxName3.isNotEmpty)
                   TaxRateDropdown(
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(product.rebuild((b) => b
+                    onSelected: (taxRate) => viewModel.onChanged(
+                      product.rebuild(
+                        (b) => b
                           ..taxRate3 = taxRate.rate
-                          ..taxName3 = taxRate.name)),
+                          ..taxName3 = taxRate.name,
+                      ),
+                    ),
                     labelText: localization.tax,
                     initialTaxName: product.taxName3,
                     initialTaxRate: product.taxRate3,
@@ -310,13 +344,15 @@ class _ProductEditState extends State<ProductEdit> {
                       title: Text(localization.stockNotifications),
                       value: product.stockNotification,
                       onChanged: (value) => viewModel.onChanged(
-                          product.rebuild((b) => b..stockNotification = value)),
+                        product.rebuild((b) => b..stockNotification = value),
+                      ),
                     ),
                     if (product.stockNotification)
                       DecoratedFormField(
                         keyboardType: TextInputType.number,
                         controller: _notificationThresholdController,
-                        label: localization.notificationThreshold +
+                        label:
+                            localization.notificationThreshold +
                             ((company.stockNotification &&
                                     company.stockNotificationThreshold != 0)
                                 ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'
@@ -342,7 +378,7 @@ class _ProductEditState extends State<ProductEdit> {
                   onSavePressed: _onSavePressed,
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

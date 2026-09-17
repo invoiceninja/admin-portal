@@ -81,16 +81,23 @@ enum ClientReportFields {
   record_state,
 }
 
-var memoizedClientReport = memo6((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, GroupEntity> groupMap,
-  StaticState staticState,
-) =>
-    clientReport(userCompany!, reportsUIState, clientMap, userMap, groupMap,
-        staticState));
+var memoizedClientReport = memo6(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, GroupEntity> groupMap,
+    StaticState staticState,
+  ) => clientReport(
+    userCompany!,
+    reportsUIState,
+    clientMap,
+    userMap,
+    groupMap,
+    staticState,
+  ),
+);
 
 ReportResult clientReport(
   UserCompanyEntity userCompany,
@@ -122,10 +129,12 @@ ReportResult clientReport(
   ];
 
   if (clientReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(clientReportSettings.columns
-        .map((e) => EnumUtils.fromString(ClientReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      clientReportSettings.columns
+          .map((e) => EnumUtils.fromString(ClientReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -140,9 +149,11 @@ ReportResult clientReport(
     bool skip = false;
     final List<ReportElement> row = [];
 
-    final exchangeRate = getExchangeRate(staticState.currencyMap,
-        fromCurrencyId: client.currencyId,
-        toCurrencyId: userCompany.company.currencyId);
+    final exchangeRate = getExchangeRate(
+      staticState.currencyMap,
+      fromCurrencyId: client.currencyId,
+      toCurrencyId: userCompany.company.currencyId,
+    );
 
     for (var column in columns) {
       dynamic value = '';
@@ -244,8 +255,10 @@ ReportResult clientReport(
           value = client.shippingPostalCode;
           break;
         case ClientReportFields.shipping_country:
-          value = staticState
-                  .countryMap[client.shippingCountryId]?.listDisplayName ??
+          value =
+              staticState
+                  .countryMap[client.shippingCountryId]
+                  ?.listDisplayName ??
               '';
           break;
         case ClientReportFields.phone:
@@ -364,12 +377,14 @@ ReportResult clientReport(
           value = client.isTaxExempt;
           break;
         case ClientReportFields.classification:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(client.classification);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(client.classification);
           break;
         case ClientReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(client.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(client.entityState);
       }
 
       if (!ReportResult.matchField(
@@ -395,11 +410,13 @@ ReportResult clientReport(
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(client.getReportDouble(
-          value: value,
-          currencyId: currencyId,
-          exchangeRate: exchangeRate,
-        ));
+        row.add(
+          client.getReportDouble(
+            value: value,
+            currencyId: currencyId,
+            exchangeRate: exchangeRate,
+          ),
+        );
       } else {
         row.add(client.getReportString(value: '$value'));
       }
@@ -412,15 +429,19 @@ ReportResult clientReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) =>
+        sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!,
+  );
 
   return ReportResult(
-    allColumns:
-        ClientReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
+    allColumns: ClientReportFields.values
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

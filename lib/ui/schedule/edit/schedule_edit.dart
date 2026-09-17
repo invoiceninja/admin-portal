@@ -22,10 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
-  const ScheduleEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ScheduleEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final ScheduleEditVM viewModel;
 
@@ -34,8 +31,9 @@ class ScheduleEdit extends StatefulWidget {
 }
 
 class _ScheduleEditState extends State<ScheduleEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_scheduleEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_scheduleEdit',
+  );
   final _debouncer = Debouncer();
   String _clientClearedAt = '';
 
@@ -88,8 +86,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
 
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
       final entityType = EntityType.valueOf(schedule.parameters.entityType!);
-      final entity =
-          state.getEntityMap(entityType)![schedule.parameters.entityId];
+      final entity = state.getEntityMap(
+        entityType,
+      )![schedule.parameters.entityId];
 
       if (entity == null) {
         return;
@@ -119,29 +118,34 @@ class _ScheduleEditState extends State<ScheduleEdit> {
     );
 
     final quoteIds = memoizedDropdownQuoteList(
-        state.quoteState.map,
-        state.clientState.map,
-        state.vendorState.map,
-        state.quoteState.list,
-        '',
-        state.userState.map, []);
+      state.quoteState.map,
+      state.clientState.map,
+      state.vendorState.map,
+      state.quoteState.list,
+      '',
+      state.userState.map,
+      [],
+    );
 
     final creditIds = memoizedDropdownCreditList(
-        state.creditState.map,
-        state.clientState.map,
-        state.vendorState.map,
-        state.creditState.list,
-        '',
-        state.userState.map, []);
+      state.creditState.map,
+      state.clientState.map,
+      state.vendorState.map,
+      state.creditState.list,
+      '',
+      state.userState.map,
+      [],
+    );
 
     final purchaseOrderIds = memoizedDropdownPurchaseOrderList(
-        state.purchaseOrderState.map,
-        state.purchaseOrderState.list,
-        state.staticState,
-        state.userState.map,
-        state.clientState.map,
-        state.vendorState.map,
-        '');
+      state.purchaseOrderState.map,
+      state.purchaseOrderState.list,
+      state.staticState,
+      state.userState.map,
+      state.clientState.map,
+      state.vendorState.map,
+      '',
+    );
 
     return EditScaffold(
       title: schedule.isNew
@@ -159,36 +163,42 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                   isLast: schedule.template.isEmpty,
                   children: <Widget>[
                     AppDropdownButton<String>(
-                        labelText: localization.action,
-                        value: schedule.template,
-                        onChanged: (dynamic value) {
-                          if (schedule.template == value) {
-                            return;
-                          }
+                      labelText: localization.action,
+                      value: schedule.template,
+                      onChanged: (dynamic value) {
+                        if (schedule.template == value) {
+                          return;
+                        }
 
-                          viewModel.onChanged(
-                            schedule.rebuild((b) => b
+                        viewModel.onChanged(
+                          schedule.rebuild(
+                            (b) => b
                               ..template = value
                               //..frequencyId =
                               //    value == ScheduleEntity.TEMPLATE_EMAIL_RECORD
                               //        ? kFrequencyOnce
                               //        : schedule.frequencyId
-                              ..parameters.replace(ScheduleParameters(value))),
-                          );
-                        },
-                        items: ScheduleEntity.TEMPLATES
-                            .map((entry) => DropdownMenuItem(
-                                  value: entry,
-                                  child: Text(localization.lookup(entry)),
-                                ))
-                            .toList()),
+                              ..parameters.replace(ScheduleParameters(value)),
+                          ),
+                        );
+                      },
+                      items: ScheduleEntity.TEMPLATES
+                          .map(
+                            (entry) => DropdownMenuItem(
+                              value: entry,
+                              child: Text(localization.lookup(entry)),
+                            ),
+                          )
+                          .toList(),
+                    ),
                     DatePicker(
                       autofocus: true,
                       hint: localization.datePickerHint,
                       labelText: localization.nextRun,
                       onSelected: (date, _) {
                         viewModel.onChanged(
-                            schedule.rebuild((b) => b..nextRun = date));
+                          schedule.rebuild((b) => b..nextRun = date),
+                        );
                       },
                       selectedDate: schedule.nextRun,
                       firstDate: DateTime.now(),
@@ -199,47 +209,53 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                     if (schedule.template !=
                         ScheduleEntity.TEMPLATE_EMAIL_RECORD) ...[
                       AppDropdownButton<String>(
-                          labelText: localization.frequency,
-                          value: schedule.frequencyId,
-                          //showBlank: true,
-                          //blankLabel: localization.once,
-                          onChanged: (dynamic value) {
-                            viewModel.onChanged(
-                              schedule.rebuild((b) => b
+                        labelText: localization.frequency,
+                        value: schedule.frequencyId,
+                        //showBlank: true,
+                        //blankLabel: localization.once,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b
                                 ..frequencyId = value
                                 ..remainingCycles = value.isEmpty
                                     ? 1
                                     : schedule.frequencyId.isEmpty
-                                        ? -1
-                                        : schedule.remainingCycles),
-                            );
-                          },
-                          items: kFrequencies.entries
-                              .map((entry) => DropdownMenuItem(
-                                    value: entry.key,
-                                    child:
-                                        Text(localization.lookup(entry.value)),
-                                  ))
-                              .toList()),
+                                    ? -1
+                                    : schedule.remainingCycles,
+                            ),
+                          );
+                        },
+                        items: kFrequencies.entries
+                            .map(
+                              (entry) => DropdownMenuItem(
+                                value: entry.key,
+                                child: Text(localization.lookup(entry.value)),
+                              ),
+                            )
+                            .toList(),
+                      ),
                       if (schedule.frequencyId.isNotEmpty)
                         AppDropdownButton<int>(
                           labelText: localization.remainingCycles,
                           value: schedule.remainingCycles,
                           blankValue: null,
                           onChanged: (dynamic value) => viewModel.onChanged(
-                              schedule
-                                  .rebuild((b) => b..remainingCycles = value)),
+                            schedule.rebuild((b) => b..remainingCycles = value),
+                          ),
                           items: [
                             DropdownMenuItem(
                               child: Text(localization.endless),
                               value: -1,
                             ),
                             ...List<int>.generate(61, (i) => i)
-                                .map((value) => DropdownMenuItem(
-                                      child: Text('$value'),
-                                      value: value,
-                                    ))
-                                .toList()
+                                .map(
+                                  (value) => DropdownMenuItem(
+                                    child: Text('$value'),
+                                    value: value,
+                                  ),
+                                )
+                                .toList(),
                           ],
                         ),
                     ],
@@ -251,175 +267,234 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                     isLast: true,
                     children: [
                       AppDropdownButton<String>(
-                          value: schedule.parameters.reportName,
-                          labelText: localization.report,
-                          onChanged: (dynamic value) {
-                            setState(() {
-                              viewModel.onChanged(schedule.rebuild(
-                                  (b) => b..parameters.reportName = value));
-                            });
-                          },
-                          items: ExportType.values
-                              .map((importType) => DropdownMenuItem<String>(
-                                  value: importType.name,
-                                  child:
-                                      Text(localization.lookup('$importType'))))
-                              .toList()),
+                        value: schedule.parameters.reportName,
+                        labelText: localization.report,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.reportName = value,
+                              ),
+                            );
+                          });
+                        },
+                        items: ExportType.values
+                            .map(
+                              (importType) => DropdownMenuItem<String>(
+                                value: importType.name,
+                                child: Text(localization.lookup('$importType')),
+                              ),
+                            )
+                            .toList(),
+                      ),
                       AppDropdownButton<DateRange>(
                         labelText: localization.dateRange,
                         blankValue: null,
                         value: parameters.dateRange!.isNotEmpty
                             ? DateRange.valueOf(
-                                toCamelCase(parameters.dateRange!))
+                                toCamelCase(parameters.dateRange!),
+                              )
                             : null,
                         onChanged: (dynamic value) {
-                          viewModel.onChanged(schedule.rebuild((b) => b
-                            ..parameters.dateRange =
-                                (value as DateRange).snakeCase));
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b
+                                ..parameters.dateRange =
+                                    (value as DateRange).snakeCase,
+                            ),
+                          );
                         },
                         items: DateRange.values
                             .where((value) => value != DateRange.custom)
-                            .map((dateRange) => DropdownMenuItem<DateRange>(
-                                  child: Text(localization
-                                      .lookup(dateRange.toString())),
-                                  value: dateRange,
-                                ))
+                            .map(
+                              (dateRange) => DropdownMenuItem<DateRange>(
+                                child: Text(
+                                  localization.lookup(dateRange.toString()),
+                                ),
+                                value: dateRange,
+                              ),
+                            )
                             .toList(),
                       ),
                     ],
                   ),
                 ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) ...[
-                  FormCard(children: [
-                    AppDropdownButton<DateRange>(
-                      labelText: localization.dateRange,
-                      blankValue: null,
-                      value: parameters.dateRange!.isNotEmpty
-                          ? DateRange.valueOf(
-                              toCamelCase(parameters.dateRange!))
-                          : null,
-                      onChanged: (dynamic value) {
-                        viewModel.onChanged(schedule.rebuild((b) => b
-                          ..parameters.dateRange =
-                              (value as DateRange).snakeCase));
-                      },
-                      items: DateRange.values
-                          .where((value) => value != DateRange.custom)
-                          .map((dateRange) => DropdownMenuItem<DateRange>(
+                  FormCard(
+                    children: [
+                      AppDropdownButton<DateRange>(
+                        labelText: localization.dateRange,
+                        blankValue: null,
+                        value: parameters.dateRange!.isNotEmpty
+                            ? DateRange.valueOf(
+                                toCamelCase(parameters.dateRange!),
+                              )
+                            : null,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b
+                                ..parameters.dateRange =
+                                    (value as DateRange).snakeCase,
+                            ),
+                          );
+                        },
+                        items: DateRange.values
+                            .where((value) => value != DateRange.custom)
+                            .map(
+                              (dateRange) => DropdownMenuItem<DateRange>(
                                 child: Text(
-                                    localization.lookup(dateRange.toString())),
+                                  localization.lookup(dateRange.toString()),
+                                ),
                                 value: dateRange,
-                              ))
-                          .toList(),
-                    ),
-                    AppDropdownButton<String>(
-                      labelText: localization.status,
-                      blankValue: null,
-                      value: parameters.status,
-                      onChanged: (dynamic value) {
-                        viewModel.onChanged(schedule
-                            .rebuild((b) => b..parameters.status = value));
-                      },
-                      items: [
-                        kStatementStatusAll,
-                        kStatementStatusPaid,
-                        kStatementStatusUnpaid,
-                      ]
-                          .map((value) => DropdownMenuItem<String>(
-                                child: Text(localization.lookup(value)),
-                                value: value,
-                              ))
-                          .toList(),
-                    ),
-                    SizedBox(height: 20),
-                    BoolDropdownButton(
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      AppDropdownButton<String>(
+                        labelText: localization.status,
+                        blankValue: null,
+                        value: parameters.status,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.status = value,
+                            ),
+                          );
+                        },
+                        items:
+                            [
+                                  kStatementStatusAll,
+                                  kStatementStatusPaid,
+                                  kStatementStatusUnpaid,
+                                ]
+                                .map(
+                                  (value) => DropdownMenuItem<String>(
+                                    child: Text(localization.lookup(value)),
+                                    value: value,
+                                  ),
+                                )
+                                .toList(),
+                      ),
+                      SizedBox(height: 20),
+                      BoolDropdownButton(
                         label: localization.showAgingTable,
                         value: parameters.showAgingTable,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                              (b) => b..parameters.showAgingTable = value));
-                        }),
-                    BoolDropdownButton(
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.showAgingTable = value,
+                            ),
+                          );
+                        },
+                      ),
+                      BoolDropdownButton(
                         label: localization.showPaymentsTable,
                         value: parameters.showPaymentsTable,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                              (b) => b..parameters.showPaymentsTable = value));
-                        }),
-                    BoolDropdownButton(
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.showPaymentsTable = value,
+                            ),
+                          );
+                        },
+                      ),
+                      BoolDropdownButton(
                         label: localization.onlyClientsWithInvoices,
                         value: parameters.onlyClientsWithInvoices,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild((b) =>
-                              b..parameters.onlyClientsWithInvoices = value));
-                        }),
-                  ]),
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) =>
+                                  b..parameters.onlyClientsWithInvoices = value,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                   FormCard(
                     isLast: true,
                     children: [
                       ClientPicker(
-                          key: ValueKey(
-                              '__statement_client_picker_${_clientClearedAt}__'),
-                          isRequired: false,
-                          clientId: null,
-                          clientState: state.clientState,
-                          excludeIds: parameters.clients!.toList(),
-                          onSelected: (value) {
-                            if (value == null) {
-                              return;
-                            }
-                            if (!parameters.clients!.contains(value.id)) {
-                              viewModel.onChanged(schedule.rebuild(
-                                  (b) => b..parameters.clients.add(value.id)));
-                            }
-                            setState(() {
-                              _clientClearedAt =
-                                  DateTime.now().toIso8601String();
-                            });
-                          }),
+                        key: ValueKey(
+                          '__statement_client_picker_${_clientClearedAt}__',
+                        ),
+                        isRequired: false,
+                        clientId: null,
+                        clientState: state.clientState,
+                        excludeIds: parameters.clients!.toList(),
+                        onSelected: (value) {
+                          if (value == null) {
+                            return;
+                          }
+                          if (!parameters.clients!.contains(value.id)) {
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.clients.add(value.id),
+                              ),
+                            );
+                          }
+                          setState(() {
+                            _clientClearedAt = DateTime.now().toIso8601String();
+                          });
+                        },
+                      ),
                       SizedBox(height: 20),
                       if (parameters.clients!.isEmpty)
                         HelpText(localization.allClients),
                       for (var clientId in parameters.clients!)
                         ListTile(
-                          title:
-                              Text(state.clientState.get(clientId).displayName),
+                          title: Text(
+                            state.clientState.get(clientId).displayName,
+                          ),
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {
-                              viewModel.onChanged(schedule.rebuild((b) =>
-                                  b..parameters.clients.remove(clientId)));
+                              viewModel.onChanged(
+                                schedule.rebuild(
+                                  (b) => b..parameters.clients.remove(clientId),
+                                ),
+                              );
                             },
                           ),
                         ),
                     ],
-                  )
+                  ),
                 ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_EMAIL_RECORD) ...[
                   FormCard(
                     isLast: true,
                     children: [
                       AppDropdownButton<String>(
-                          labelText: localization.type,
-                          value: parameters.entityType,
-                          onChanged: (dynamic value) {
-                            viewModel.onChanged(schedule.rebuild((b) => b
-                              ..parameters.entityType = value
-                              ..parameters.entityId = ''));
-                          },
-                          items: [
-                            EntityType.invoice,
-                            EntityType.quote,
-                            EntityType.credit,
-                            EntityType.purchaseOrder
-                          ]
-                              .map((entityType) => DropdownMenuItem<String>(
+                        labelText: localization.type,
+                        value: parameters.entityType,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b
+                                ..parameters.entityType = value
+                                ..parameters.entityId = '',
+                            ),
+                          );
+                        },
+                        items:
+                            [
+                                  EntityType.invoice,
+                                  EntityType.quote,
+                                  EntityType.credit,
+                                  EntityType.purchaseOrder,
+                                ]
+                                .map(
+                                  (entityType) => DropdownMenuItem<String>(
                                     value: entityType.apiValue,
                                     child: Text(
                                       localization.lookup(entityType.apiValue),
                                     ),
-                                  ))
-                              .toList()),
+                                  ),
+                                )
+                                .toList(),
+                      ),
                       if (parameters.entityType == EntityType.invoice.apiValue)
                         EntityDropdown(
                           labelText: localization.invoice,
@@ -427,8 +502,11 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           entityList: invoiceIds,
                           entityId: parameters.entityId,
                           onSelected: (value) {
-                            viewModel.onChanged(schedule.rebuild((b) =>
-                                b..parameters.entityId = value?.id ?? ''));
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.entityId = value?.id ?? '',
+                              ),
+                            );
                           },
                         )
                       else if (parameters.entityType ==
@@ -439,8 +517,11 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           entityList: quoteIds,
                           entityId: parameters.entityId,
                           onSelected: (value) {
-                            viewModel.onChanged(schedule.rebuild((b) =>
-                                b..parameters.entityId = value?.id ?? ''));
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.entityId = value?.id ?? '',
+                              ),
+                            );
                           },
                         )
                       else if (parameters.entityType ==
@@ -451,8 +532,11 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           entityList: creditIds,
                           entityId: parameters.entityId,
                           onSelected: (value) {
-                            viewModel.onChanged(schedule.rebuild((b) =>
-                                b..parameters.entityId = value?.id ?? ''));
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.entityId = value?.id ?? '',
+                              ),
+                            );
                           },
                         )
                       else if (parameters.entityType ==
@@ -463,144 +547,186 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           entityList: purchaseOrderIds,
                           entityId: parameters.entityId,
                           onSelected: (value) {
-                            viewModel.onChanged(schedule.rebuild((b) =>
-                                b..parameters.entityId = value?.id ?? ''));
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.entityId = value?.id ?? '',
+                              ),
+                            );
                           },
                         ),
                       AppDropdownButton<String>(
-                          labelText: localization.template,
-                          value: parameters.template,
-                          onChanged: (value) {
-                            viewModel.onChanged(schedule.rebuild(
-                                (b) => b..parameters.template = value));
-                          },
-                          items: [
-                            if (parameters.entityType ==
-                                EntityType.invoice.toString()) ...[
-                              DropdownMenuItem(
-                                  child: Text(localization.initialEmail),
-                                  value: EmailTemplate.invoice.toString()),
-                              DropdownMenuItem(
-                                  child: Text(localization.firstReminder),
-                                  value: EmailTemplate.reminder1.toString()),
-                              DropdownMenuItem(
-                                  child: Text(localization.secondReminder),
-                                  value: EmailTemplate.reminder2.toString()),
-                              DropdownMenuItem(
-                                  child: Text(localization.thirdReminder),
-                                  value: EmailTemplate.reminder3.toString()),
-                            ] else if (parameters.entityType ==
-                                EntityType.quote.toString()) ...[
-                              DropdownMenuItem(
-                                  child: Text(localization.initialEmail),
-                                  value: EmailTemplate.quote.toString()),
-                              DropdownMenuItem(
-                                  child: Text(localization.firstReminder),
-                                  value:
-                                      EmailTemplate.quote_reminder1.toString()),
-                            ] else if (parameters.entityType ==
-                                EntityType.credit.toString())
-                              DropdownMenuItem(
-                                  child: Text(localization.initialEmail),
-                                  value: EmailTemplate.credit.toString())
-                            else if (parameters.entityType ==
-                                EntityType.purchaseOrder.toString())
-                              DropdownMenuItem(
-                                  child: Text(localization.initialEmail),
-                                  value:
-                                      EmailTemplate.purchase_order.toString()),
+                        labelText: localization.template,
+                        value: parameters.template,
+                        onChanged: (value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.template = value,
+                            ),
+                          );
+                        },
+                        items: [
+                          if (parameters.entityType ==
+                              EntityType.invoice.toString()) ...[
                             DropdownMenuItem(
-                                child: Text(localization.firstCustom),
-                                value: EmailTemplate.custom1.toString()),
+                              child: Text(localization.initialEmail),
+                              value: EmailTemplate.invoice.toString(),
+                            ),
                             DropdownMenuItem(
-                                child: Text(localization.secondCustom),
-                                value: EmailTemplate.custom2.toString()),
+                              child: Text(localization.firstReminder),
+                              value: EmailTemplate.reminder1.toString(),
+                            ),
                             DropdownMenuItem(
-                                child: Text(localization.thirdCustom),
-                                value: EmailTemplate.custom3.toString()),
-                          ]),
+                              child: Text(localization.secondReminder),
+                              value: EmailTemplate.reminder2.toString(),
+                            ),
+                            DropdownMenuItem(
+                              child: Text(localization.thirdReminder),
+                              value: EmailTemplate.reminder3.toString(),
+                            ),
+                          ] else if (parameters.entityType ==
+                              EntityType.quote.toString()) ...[
+                            DropdownMenuItem(
+                              child: Text(localization.initialEmail),
+                              value: EmailTemplate.quote.toString(),
+                            ),
+                            DropdownMenuItem(
+                              child: Text(localization.firstReminder),
+                              value: EmailTemplate.quote_reminder1.toString(),
+                            ),
+                          ] else if (parameters.entityType ==
+                              EntityType.credit.toString())
+                            DropdownMenuItem(
+                              child: Text(localization.initialEmail),
+                              value: EmailTemplate.credit.toString(),
+                            )
+                          else if (parameters.entityType ==
+                              EntityType.purchaseOrder.toString())
+                            DropdownMenuItem(
+                              child: Text(localization.initialEmail),
+                              value: EmailTemplate.purchase_order.toString(),
+                            ),
+                          DropdownMenuItem(
+                            child: Text(localization.firstCustom),
+                            value: EmailTemplate.custom1.toString(),
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.secondCustom),
+                            value: EmailTemplate.custom2.toString(),
+                          ),
+                          DropdownMenuItem(
+                            child: Text(localization.thirdCustom),
+                            value: EmailTemplate.custom3.toString(),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_INVOICE_OUTSTANDING_TASKS) ...[
-                  FormCard(children: [
-                    AppDropdownButton<DateRange>(
-                      labelText: localization.dateRange,
-                      blankValue: null,
-                      value: parameters.dateRange!.isNotEmpty
-                          ? DateRange.valueOf(
-                              toCamelCase(parameters.dateRange!))
-                          : null,
-                      onChanged: (dynamic value) {
-                        viewModel.onChanged(schedule.rebuild((b) => b
-                          ..parameters.dateRange =
-                              (value as DateRange).snakeCase));
-                      },
-                      items: DateRange.values
-                          .where((value) => value != DateRange.custom)
-                          .map((dateRange) => DropdownMenuItem<DateRange>(
+                  FormCard(
+                    children: [
+                      AppDropdownButton<DateRange>(
+                        labelText: localization.dateRange,
+                        blankValue: null,
+                        value: parameters.dateRange!.isNotEmpty
+                            ? DateRange.valueOf(
+                                toCamelCase(parameters.dateRange!),
+                              )
+                            : null,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b
+                                ..parameters.dateRange =
+                                    (value as DateRange).snakeCase,
+                            ),
+                          );
+                        },
+                        items: DateRange.values
+                            .where((value) => value != DateRange.custom)
+                            .map(
+                              (dateRange) => DropdownMenuItem<DateRange>(
                                 child: Text(
-                                    localization.lookup(dateRange.toString())),
+                                  localization.lookup(dateRange.toString()),
+                                ),
                                 value: dateRange,
-                              ))
-                          .toList(),
-                    ),
-                    SizedBox(height: 20),
-                    BoolDropdownButton(
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      SizedBox(height: 20),
+                      BoolDropdownButton(
                         label: localization.autoSend,
                         value: parameters.autoSend,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule
-                              .rebuild((b) => b..parameters.autoSend = value));
-                        }),
-                    BoolDropdownButton(
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.autoSend = value,
+                            ),
+                          );
+                        },
+                      ),
+                      BoolDropdownButton(
                         label: localization.includeProjectTasks,
                         value: parameters.includeProjectTasks,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild((b) =>
-                              b..parameters.includeProjectTasks = value));
-                        }),
-                  ]),
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.includeProjectTasks = value,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                   FormCard(
                     isLast: true,
                     children: [
                       ClientPicker(
-                          key: ValueKey(
-                              '__outstanding_tasks_client_picker_${_clientClearedAt}__'),
-                          isRequired: false,
-                          clientId: null,
-                          clientState: state.clientState,
-                          excludeIds: parameters.clients!.toList(),
-                          onSelected: (value) {
-                            if (value == null) {
-                              return;
-                            }
-                            if (!parameters.clients!.contains(value.id)) {
-                              viewModel.onChanged(schedule.rebuild(
-                                  (b) => b..parameters.clients.add(value.id)));
-                            }
-                            setState(() {
-                              _clientClearedAt =
-                                  DateTime.now().toIso8601String();
-                            });
-                          }),
+                        key: ValueKey(
+                          '__outstanding_tasks_client_picker_${_clientClearedAt}__',
+                        ),
+                        isRequired: false,
+                        clientId: null,
+                        clientState: state.clientState,
+                        excludeIds: parameters.clients!.toList(),
+                        onSelected: (value) {
+                          if (value == null) {
+                            return;
+                          }
+                          if (!parameters.clients!.contains(value.id)) {
+                            viewModel.onChanged(
+                              schedule.rebuild(
+                                (b) => b..parameters.clients.add(value.id),
+                              ),
+                            );
+                          }
+                          setState(() {
+                            _clientClearedAt = DateTime.now().toIso8601String();
+                          });
+                        },
+                      ),
                       SizedBox(height: 20),
                       if (parameters.clients!.isEmpty)
                         HelpText(localization.allClients),
                       for (var clientId in parameters.clients!)
                         ListTile(
-                          title:
-                              Text(state.clientState.get(clientId).displayName),
+                          title: Text(
+                            state.clientState.get(clientId).displayName,
+                          ),
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {
-                              viewModel.onChanged(schedule.rebuild((b) =>
-                                  b..parameters.clients.remove(clientId)));
+                              viewModel.onChanged(
+                                schedule.rebuild(
+                                  (b) => b..parameters.clients.remove(clientId),
+                                ),
+                              );
                             },
                           ),
                         ),
                     ],
-                  )
+                  ),
                 ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) ...[
                   FormCard(
@@ -612,18 +738,25 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         entityList: invoiceIds,
                         entityId: parameters.invoiceId,
                         onSelected: (value) {
-                          viewModel.onChanged(schedule.rebuild((b) =>
-                              b..parameters.invoiceId = value?.id ?? ''));
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.invoiceId = value?.id ?? '',
+                            ),
+                          );
                         },
                       ),
                       SizedBox(height: 20),
                       BoolDropdownButton(
-                          label: localization.autoBill,
-                          value: parameters.autoBill,
-                          onChanged: (value) {
-                            viewModel.onChanged(schedule.rebuild(
-                                (b) => b..parameters.autoBill = value));
-                          }),
+                        label: localization.autoBill,
+                        value: parameters.autoBill,
+                        onChanged: (value) {
+                          viewModel.onChanged(
+                            schedule.rebuild(
+                              (b) => b..parameters.autoBill = value,
+                            ),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],

@@ -64,18 +64,19 @@ class TaskListItem extends StatelessWidget {
     final statusLabel = task.isInvoiced
         ? localization!.invoiced
         : task.isRunning
-            ? localization!.running
-            : status.name.isNotEmpty
-                ? status.name
-                : localization!.logged;
+        ? localization!.running
+        : status.name.isNotEmpty
+        ? status.name
+        : localization!.logged;
     final statusColor = task.isInvoiced
         ? state.prefState.colorThemeModel!.colorSuccess
         : task.isRunning
-            ? state.prefState.colorThemeModel!.colorInfo
-            : status.color.isNotEmpty && status.color != '#fff'
-                ? convertHexStringToColor(status.color)
-                : TaskStatusColors(state.prefState.colorThemeModel)
-                    .colors[task.calculateStatusId];
+        ? state.prefState.colorThemeModel!.colorInfo
+        : status.color.isNotEmpty && status.color != '#fff'
+        ? convertHexStringToColor(status.color)
+        : TaskStatusColors(
+            state.prefState.colorThemeModel,
+          ).colors[task.calculateStatusId];
 
     String subtitle = client.displayName;
     if (task.projectId.isNotEmpty) {
@@ -86,8 +87,11 @@ class TaskListItem extends StatelessWidget {
     }
 
     final duration = LiveText(() {
-      return formatNumber(task.listDisplayAmount, context,
-          formatNumberType: FormatNumberType.duration);
+      return formatNumber(
+        task.listDisplayAmount,
+        context,
+        formatNumberType: FormatNumberType.duration,
+      );
     }, style: textStyle);
 
     final startStopButton = !isDismissible
@@ -96,21 +100,24 @@ class TaskListItem extends StatelessWidget {
             icon: task.isInvoiced
                 ? SizedBox()
                 : Icon(
-                    getEntityActionIcon(task.isRunning
-                        ? EntityAction.stop
-                        : EntityAction.start),
+                    getEntityActionIcon(
+                      task.isRunning ? EntityAction.stop : EntityAction.start,
+                    ),
                   ),
             onPressed: task.isInvoiced
                 ? null
-                : () => handleEntityAction(task,
-                    task.isRunning ? EntityAction.stop : EntityAction.start),
+                : () => handleEntityAction(
+                    task,
+                    task.isRunning ? EntityAction.stop : EntityAction.start,
+                  ),
             visualDensity: VisualDensity.compact,
           );
 
     return DismissibleEntity(
       showMultiselect: this.showCheckbox,
       isDismissible: isDismissible,
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           task.id ==
               (uiState.isEditing
                   ? taskUIState.editing!.id
@@ -118,159 +125,162 @@ class TaskListItem extends StatelessWidget {
       userCompany: store.state.userCompany,
       entity: task,
       child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return constraints.maxWidth > kTableListWidthCutoff
-            ? InkWell(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: task),
-                onLongPress: () => selectEntity(
-                  entity: task,
-                  longPress: true,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 16,
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: showCheckbox
-                            ? Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: IgnorePointer(
-                                  ignoring: listUIState.isInMultiselect(),
-                                  child: Checkbox(
-                                    value: isChecked,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) =>
-                                        onCheckboxChanged!(value),
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return constraints.maxWidth > kTableListWidthCutoff
+              ? InkWell(
+                  onTap: () =>
+                      onTap != null ? onTap!() : selectEntity(entity: task),
+                  onLongPress: () =>
+                      selectEntity(entity: task, longPress: true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 16,
+                      top: 4,
+                      bottom: 4,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: showCheckbox
+                              ? Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: IgnorePointer(
+                                    ignoring: listUIState.isInMultiselect(),
+                                    child: Checkbox(
+                                      value: isChecked,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (value) =>
+                                          onCheckboxChanged!(value),
+                                      activeColor: Theme.of(
+                                        context,
+                                      ).colorScheme.secondary,
+                                    ),
                                   ),
+                                )
+                              : ActionMenuButton(
+                                  entityActions: task.getActions(
+                                    userCompany: state.userCompany,
+                                    includeEdit: true,
+                                  ),
+                                  isSaving: false,
+                                  entity: task,
+                                  onSelected: (context, action) =>
+                                      handleEntityAction(task, action),
                                 ),
-                              )
-                            : ActionMenuButton(
-                                entityActions: task.getActions(
-                                  userCompany: state.userCompany,
-                                  includeEdit: true,
-                                ),
-                                isSaving: false,
-                                entity: task,
-                                onSelected: (context, action) =>
-                                    handleEntityAction(task, action),
-                              ),
-                      ),
-                      SizedBox(
-                        width: kListNumberWidth,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              task.number,
-                              style: textStyle,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            if (!task.isActive) EntityStateLabel(task)
-                          ],
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
+                        SizedBox(
+                          width: kListNumberWidth,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                task.number,
+                                style: textStyle,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              if (!task.isActive) EntityStateLabel(task),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
                                 task.description +
                                     (task.documents.isNotEmpty ? '  📎' : ''),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: textStyle),
+                                style: textStyle,
+                              ),
+                              Text(
+                                subtitle,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.titleSmall!
+                                    .copyWith(
+                                      color: textColor!.withValues(
+                                        alpha: kLighterOpacity,
+                                      ),
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        duration,
+                        SizedBox(width: 24),
+                        EntityStatusChip(entity: task),
+                        SizedBox(width: 8),
+                        startStopButton,
+                      ],
+                    ),
+                  ),
+                )
+              : ListTile(
+                  onTap: () =>
+                      onTap != null ? onTap!() : selectEntity(entity: task),
+                  onLongPress: () =>
+                      selectEntity(entity: task, longPress: true),
+                  leading: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged!(value),
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                          ),
+                        )
+                      : null,
+                  trailing: startStopButton,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            (task.description.isEmpty
+                                    ? task.number
+                                    : task.description) +
+                                (task.documents.isNotEmpty ? '  📎' : ''),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        duration,
+                      ],
+                    ),
+                  ),
+                  subtitle: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
                             Text(
-                              subtitle,
+                              filterMatch == null ? subtitle : filterMatch,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color: textColor!
-                                        .withValues(alpha: kLighterOpacity),
-                                  ),
                             ),
+                            EntityStateLabel(task),
                           ],
                         ),
                       ),
-                      SizedBox(width: 8),
-                      duration,
-                      SizedBox(width: 24),
-                      EntityStatusChip(entity: task),
-                      SizedBox(width: 8),
-                      startStopButton,
+                      Text(statusLabel, style: TextStyle(color: statusColor)),
                     ],
                   ),
-                ),
-              )
-            : ListTile(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: task),
-                onLongPress: () => selectEntity(entity: task, longPress: true),
-                leading: showCheckbox
-                    ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
-                        child: Checkbox(
-                          value: isChecked,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged!(value),
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                        ),
-                      )
-                    : null,
-                trailing: startStopButton,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          (task.description.isEmpty
-                                  ? task.number
-                                  : task.description) +
-                              (task.documents.isNotEmpty ? '  📎' : ''),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      duration,
-                    ],
-                  ),
-                ),
-                subtitle: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(filterMatch == null ? subtitle : filterMatch,
-                              maxLines: 3, overflow: TextOverflow.ellipsis),
-                          EntityStateLabel(task),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      statusLabel,
-                      style: TextStyle(color: statusColor),
-                    ),
-                  ],
-                ),
-              );
-      }),
+                );
+        },
+      ),
     );
   }
 }

@@ -41,9 +41,10 @@ class _ProjectViewState extends State<ProjectView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: 2,
-        initialIndex: widget.isFilter ? 0 : state.projectUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: widget.isFilter ? 0 : state.projectUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -89,9 +90,7 @@ class _ProjectViewState extends State<ProjectView>
               controller: _controller,
               isScrollable: false,
               tabs: [
-                Tab(
-                  text: localization!.overview,
-                ),
+                Tab(text: localization!.overview),
                 Tab(
                   text: documents.isEmpty
                       ? localization.documents
@@ -100,46 +99,48 @@ class _ProjectViewState extends State<ProjectView>
               ],
             )
           : null,
-      body: Builder(builder: (context) {
-        return Column(
-          children: <Widget>[
-            Expanded(
-              child: company.isModuleEnabled(EntityType.document)
-                  ? TabBarView(
-                      controller: _controller,
-                      children: <Widget>[
-                        RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
-                          child: ProjectOverview(
-                            viewModel: viewModel,
-                            isFilter: widget.isFilter,
+      body: Builder(
+        builder: (context) {
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: company.isModuleEnabled(EntityType.document)
+                    ? TabBarView(
+                        controller: _controller,
+                        children: <Widget>[
+                          RefreshIndicator(
+                            onRefresh: () => viewModel.onRefreshed(context),
+                            child: ProjectOverview(
+                              viewModel: viewModel,
+                              isFilter: widget.isFilter,
+                            ),
                           ),
-                        ),
-                        RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
-                          child: ProjectViewDocuments(
-                            viewModel: viewModel,
-                            key: ValueKey(viewModel.project.id),
+                          RefreshIndicator(
+                            onRefresh: () => viewModel.onRefreshed(context),
+                            child: ProjectViewDocuments(
+                              viewModel: viewModel,
+                              key: ValueKey(viewModel.project.id),
+                            ),
                           ),
+                        ],
+                      )
+                    : RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: ProjectOverview(
+                          viewModel: viewModel,
+                          isFilter: widget.isFilter,
                         ),
-                      ],
-                    )
-                  : RefreshIndicator(
-                      onRefresh: () => viewModel.onRefreshed(context),
-                      child: ProjectOverview(
-                        viewModel: viewModel,
-                        isFilter: widget.isFilter,
                       ),
-                    ),
-            ),
-            BottomButtons(
-              entity: project,
-              action1: EntityAction.newTask,
-              action2: EntityAction.invoiceProject,
-            ),
-          ],
-        );
-      }),
+              ),
+              BottomButtons(
+                entity: project,
+                action1: EntityAction.newTask,
+                action2: EntityAction.invoiceProject,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

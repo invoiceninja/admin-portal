@@ -33,8 +33,6 @@ class _ClientViewSystemLogsState extends State<ClientViewSystemLogs> {
       return LoadingIndicator();
     }
 
-    return SystemLogViewer(
-      systemLogs: client.systemLogs,
-    );
+    return SystemLogViewer(systemLogs: client.systemLogs);
   }
 }

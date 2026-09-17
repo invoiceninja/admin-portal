@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductScreen extends StatelessWidget {
-  const ProductScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ProductScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/product';
 
@@ -65,26 +62,38 @@ class ProductScreen extends StatelessWidget {
         entityType: EntityType.product,
         iconButtons: [
           IconButton(
-              icon: Icon(getEntityIcon(EntityType.settings)),
-              onPressed: () {
-                store.dispatch(ViewSettings(
+            icon: Icon(getEntityIcon(EntityType.settings)),
+            onPressed: () {
+              store.dispatch(
+                ViewSettings(
                   section: kSettingsProducts,
                   company: state.company,
-                ));
-              })
+                ),
+              );
+            },
+          ),
         ],
         tableColumns: ProductPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            ProductPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: ProductPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.product1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.product2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.product3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.product4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.product1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.product2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.product3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.product4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterProductsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -109,19 +118,19 @@ class ProductScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.product)
           ? FloatingActionButton(
               heroTag: 'product_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.product);
+                  context: context,
+                  entityType: EntityType.product,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newProduct,
             )
           : null,

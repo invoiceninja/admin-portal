@@ -111,20 +111,28 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
 }
 
 var memoizedDropdownProjectList = memo5(
-    (BuiltMap<String, ProjectEntity> projectMap,
-            BuiltList<String> projectList,
-            BuiltMap<String, ClientEntity> clientMap,
-            BuiltMap<String, UserEntity> userMap,
-            String? clientId) =>
-        dropdownProjectsSelector(
-            projectMap, projectList, clientMap, userMap, clientId));
-
-List<String> dropdownProjectsSelector(
+  (
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltList<String> projectList,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
-    String? clientId) {
+    String? clientId,
+  ) => dropdownProjectsSelector(
+    projectMap,
+    projectList,
+    clientMap,
+    userMap,
+    clientId,
+  ),
+);
+
+List<String> dropdownProjectsSelector(
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltList<String> projectList,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  String? clientId,
+) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
     if (clientId != null &&
@@ -144,28 +152,43 @@ List<String> dropdownProjectsSelector(
     final projectA = projectMap[projectAId]!;
     final projectB = projectMap[projectBId]!;
     return projectA.compareTo(
-        projectB, ProjectFields.name, true, userMap, clientMap);
+      projectB,
+      ProjectFields.name,
+      true,
+      userMap,
+      clientMap,
+    );
   });
 
   return list;
 }
 
-var memoizedFilteredProjectList = memo6((SelectionState selectionState,
-        BuiltMap<String, ProjectEntity> projectMap,
-        BuiltList<String> projectList,
-        ListUIState projectListState,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, UserEntity> userMap) =>
-    filteredProjectsSelector(selectionState, projectMap, projectList,
-        projectListState, clientMap, userMap));
-
-List<String> filteredProjectsSelector(
+var memoizedFilteredProjectList = memo6(
+  (
     SelectionState selectionState,
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltList<String> projectList,
     ListUIState projectListState,
     BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, UserEntity> userMap) {
+    BuiltMap<String, UserEntity> userMap,
+  ) => filteredProjectsSelector(
+    selectionState,
+    projectMap,
+    projectList,
+    projectListState,
+    clientMap,
+    userMap,
+  ),
+);
+
+List<String> filteredProjectsSelector(
+  SelectionState selectionState,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltList<String> projectList,
+  ListUIState projectListState,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
@@ -173,7 +196,8 @@ List<String> filteredProjectsSelector(
     final project = projectMap[projectId]!;
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
-    final user = userMap[project.assignedUserId] ??
+    final user =
+        userMap[project.assignedUserId] ??
         UserEntity(id: project.assignedUserId);
 
     if (project.id == selectionState.selectedId) {
@@ -224,8 +248,13 @@ List<String> filteredProjectsSelector(
   list.sort((projectAId, projectBId) {
     final projectA = projectMap[projectAId]!;
     final projectB = projectMap[projectBId]!;
-    return projectA.compareTo(projectB, projectListState.sortField,
-        projectListState.sortAscending, userMap, clientMap);
+    return projectA.compareTo(
+      projectB,
+      projectListState.sortField,
+      projectListState.sortAscending,
+      userMap,
+      clientMap,
+    );
   });
 
   return list;
@@ -245,11 +274,14 @@ Duration taskDurationForProject(
 }
 
 var memoizedProjectStatsForClient = memo2(
-    (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
-        projectStatsForClient(clientId, projectMap));
+  (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
+      projectStatsForClient(clientId, projectMap),
+);
 
 EntityStats projectStatsForClient(
-    String clientId, BuiltMap<String, ProjectEntity> projectMap) {
+  String clientId,
+  BuiltMap<String, ProjectEntity> projectMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   projectMap.forEach((projectId, project) {
@@ -266,11 +298,14 @@ EntityStats projectStatsForClient(
 }
 
 var memoizedProjectStatsForUser = memo2(
-    (String userId, BuiltMap<String, ProjectEntity> projectMap) =>
-        projectStatsForClient(userId, projectMap));
+  (String userId, BuiltMap<String, ProjectEntity> projectMap) =>
+      projectStatsForClient(userId, projectMap),
+);
 
 EntityStats projectStatsForUser(
-    String userId, BuiltMap<String, ProjectEntity> projectMap) {
+  String userId,
+  BuiltMap<String, ProjectEntity> projectMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   projectMap.forEach((projectId, project) {

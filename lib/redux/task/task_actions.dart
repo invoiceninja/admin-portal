@@ -23,32 +23,27 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewTaskList implements PersistUI {
-  ViewTaskList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewTaskList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewTask implements PersistUI, PersistPrefs {
-  ViewTask({
-    required this.taskId,
-    this.force = false,
-  });
+  ViewTask({required this.taskId, this.force = false});
 
   final String? taskId;
   final bool force;
 }
 
 class EditTask implements PersistUI, PersistPrefs {
-  EditTask(
-      {this.task,
-      this.taskTime,
-      this.completer,
-      this.force = false,
-      this.taskTimeIndex});
+  EditTask({
+    this.task,
+    this.taskTime,
+    this.completer,
+    this.force = false,
+    this.taskTimeIndex,
+  });
 
   final int? taskTimeIndex;
   final TaskEntity? task;
@@ -158,8 +153,12 @@ class LoadTasksSuccess implements StopLoading {
 }
 
 class SaveTaskRequest implements StartSaving {
-  SaveTaskRequest(
-      {this.completer, this.task, this.autoSelect = true, this.action});
+  SaveTaskRequest({
+    this.completer,
+    this.task,
+    this.autoSelect = true,
+    this.action,
+  });
 
   final Completer? completer;
   final TaskEntity? task;
@@ -355,7 +354,10 @@ class ClearTaskStatusFilter {}
 class UpdateKanban {}
 
 void handleTaskAction(
-    BuildContext? context, List<BaseEntity> tasks, EntityAction? action) async {
+  BuildContext? context,
+  List<BaseEntity> tasks,
+  EntityAction? action,
+) async {
   if (tasks.isEmpty) {
     return;
   }
@@ -375,20 +377,22 @@ void handleTaskAction(
     case EntityAction.resume:
       final message = taskIds.length > 1
           ? localization!.startedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.startedTask;
       store.dispatch(
-          StartTasksRequest(snackBarCompleter<Null>(message), taskIds));
+        StartTasksRequest(snackBarCompleter<Null>(message), taskIds),
+      );
       break;
     case EntityAction.stop:
       final message = taskIds.length > 1
           ? localization!.stoppedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.stoppedTask;
       store.dispatch(
-          StopTasksRequest(snackBarCompleter<Null>(message), taskIds));
+        StopTasksRequest(snackBarCompleter<Null>(message), taskIds),
+      );
       break;
     case EntityAction.invoiceTask:
     case EntityAction.addToInvoice:
@@ -442,26 +446,34 @@ void handleTaskAction(
       final items = <InvoiceItemEntity>[];
       TaskEntity? lastTask;
 
-      tasks.where((entity) {
-        final task = entity as TaskEntity;
-        return !task.isDeleted! && !task.isRunning && !task.isInvoiced;
-      }).forEach((task) {
-        items.add(convertTaskToInvoiceItem(
-            task: task as TaskEntity,
-            context: context,
-            includeProjectHeader: company.invoiceTaskProject &&
-                !company.hasCustomProductField(localization!.project) &&
-                task.projectId != lastTask?.projectId));
-        lastTask = task;
-      });
+      tasks
+          .where((entity) {
+            final task = entity as TaskEntity;
+            return !task.isDeleted! && !task.isRunning && !task.isInvoiced;
+          })
+          .forEach((task) {
+            items.add(
+              convertTaskToInvoiceItem(
+                task: task as TaskEntity,
+                context: context,
+                includeProjectHeader:
+                    company.invoiceTaskProject &&
+                    !company.hasCustomProductField(localization!.project) &&
+                    task.projectId != lastTask?.projectId,
+              ),
+            );
+            lastTask = task;
+          });
 
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceTask) {
           createEntity(
-              entity:
-                  InvoiceEntity(state: state, client: client).rebuild((b) => b
-                    ..lineItems.addAll(items)
-                    ..projectId = projectId));
+            entity: InvoiceEntity(state: state, client: client).rebuild(
+              (b) => b
+                ..lineItems.addAll(items)
+                ..projectId = projectId,
+            ),
+          );
         } else {
           addToInvoiceDialog(
             context: context,
@@ -480,29 +492,32 @@ void handleTaskAction(
     case EntityAction.restore:
       final message = taskIds.length > 1
           ? localization!.restoredTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.restoredTask;
       store.dispatch(
-          RestoreTaskRequest(snackBarCompleter<Null>(message), taskIds));
+        RestoreTaskRequest(snackBarCompleter<Null>(message), taskIds),
+      );
       break;
     case EntityAction.archive:
       final message = taskIds.length > 1
           ? localization!.archivedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.archivedTask;
       store.dispatch(
-          ArchiveTaskRequest(snackBarCompleter<Null>(message), taskIds));
+        ArchiveTaskRequest(snackBarCompleter<Null>(message), taskIds),
+      );
       break;
     case EntityAction.delete:
       final message = taskIds.length > 1
           ? localization!.deletedTasks
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', taskIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', taskIds.length.toString())
           : localization!.deletedTask;
       store.dispatch(
-          DeleteTaskRequest(snackBarCompleter<Null>(message), taskIds));
+        DeleteTaskRequest(snackBarCompleter<Null>(message), taskIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskListState.isInMultiselect()) {
@@ -522,9 +537,7 @@ void handleTaskAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [task],
-      );
+      showEntityActionsDialog(entities: [task]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -539,9 +552,7 @@ void handleTaskAction(
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }
@@ -550,20 +561,16 @@ void handleTaskAction(
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => RunTemplateDialog(
-          entityType: EntityType.task,
-          entities: tasks,
-        ),
+        builder: (context) =>
+            RunTemplateDialog(entityType: EntityType.task, entities: tasks),
       );
       break;
     case EntityAction.addComment:
       final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
-        builder: (context) => AddCommentDialog(
-          entityType: EntityType.task,
-          entityId: task.id,
-        ),
+        builder: (context) =>
+            AddCommentDialog(entityType: EntityType.task, entityId: task.id),
       );
       if (addedComment == true) {
         store.dispatch(LoadTask(taskId: task.id));

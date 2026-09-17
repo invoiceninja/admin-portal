@@ -16,10 +16,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookEdit extends StatefulWidget {
-  const WebhookEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const WebhookEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final WebhookEditVM viewModel;
 
@@ -32,8 +29,9 @@ class _WebhookEditState extends State<WebhookEdit> {
   final _headerKeyController = TextEditingController();
   final _headerValueController = TextEditingController();
 
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_webhookEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_webhookEdit',
+  );
   final _debouncer = Debouncer();
 
   List<TextEditingController> _controllers = [];
@@ -67,8 +65,9 @@ class _WebhookEditState extends State<WebhookEdit> {
   }
 
   void _onChanged() {
-    final webhook = widget.viewModel.webhook
-        .rebuild((b) => b..targetUrl = _targetUrlController.text.trim());
+    final webhook = widget.viewModel.webhook.rebuild(
+      (b) => b..targetUrl = _targetUrlController.text.trim(),
+    );
     if (webhook != widget.viewModel.webhook) {
       _debouncer.run(() {
         widget.viewModel.onChanged(webhook);
@@ -97,13 +96,15 @@ class _WebhookEditState extends State<WebhookEdit> {
 
     return EditScaffold(
       entity: webhook,
-      title:
-          webhook.isNew ? localization!.newWebhook : localization!.editWebhook,
+      title: webhook.isNew
+          ? localization!.newWebhook
+          : localization!.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
@@ -118,21 +119,27 @@ class _WebhookEditState extends State<WebhookEdit> {
                         keyboardType: TextInputType.url,
                         validator: (value) =>
                             value.isEmpty || value.trim().isEmpty
-                                ? localization.pleaseEnterAValue
-                                : null,
+                            ? localization.pleaseEnterAValue
+                            : null,
                       ),
                     ),
                     AppDropdownButton<String>(
                       labelText: localization.eventType,
                       value: webhook.eventId,
                       onChanged: (dynamic value) => viewModel.onChanged(
-                          webhook.rebuild((b) => b..eventId = value)),
+                        webhook.rebuild((b) => b..eventId = value),
+                      ),
                       items: WebhookEntity.EVENT_MAP.keys
-                          .map((eventId) => DropdownMenuItem(
-                                child: Text(localization
-                                    .lookup(WebhookEntity.EVENT_MAP[eventId])),
-                                value: eventId,
-                              ))
+                          .map(
+                            (eventId) => DropdownMenuItem(
+                              child: Text(
+                                localization.lookup(
+                                  WebhookEntity.EVENT_MAP[eventId],
+                                ),
+                              ),
+                              value: eventId,
+                            ),
+                          )
                           .toList(),
                     ),
                     AppDropdownButton<String>(
@@ -140,16 +147,11 @@ class _WebhookEditState extends State<WebhookEdit> {
                       labelText: localization.restMethod,
                       value: webhook.restMethod,
                       onChanged: (dynamic value) => viewModel.onChanged(
-                          webhook.rebuild((b) => b..restMethod = value)),
+                        webhook.rebuild((b) => b..restMethod = value),
+                      ),
                       items: [
-                        DropdownMenuItem(
-                          child: Text('POST'),
-                          value: 'post',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('PUT'),
-                          value: 'put',
-                        ),
+                        DropdownMenuItem(child: Text('POST'), value: 'post'),
+                        DropdownMenuItem(child: Text('PUT'), value: 'put'),
                       ],
                     ),
                     Row(
@@ -163,9 +165,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                             keyboardType: TextInputType.text,
                           ),
                         ),
-                        SizedBox(
-                          width: kTableColumnGap,
-                        ),
+                        SizedBox(width: kTableColumnGap),
                         Expanded(
                           child: DecoratedFormField(
                             label: localization.headerValue,
@@ -175,34 +175,34 @@ class _WebhookEditState extends State<WebhookEdit> {
                             keyboardType: TextInputType.text,
                           ),
                         ),
-                        SizedBox(
-                          width: kTableColumnGap,
-                        ),
+                        SizedBox(width: kTableColumnGap),
                         IconButton(
-                            tooltip: localization.addHeader,
-                            icon: Icon(Icons.add_circle_outline),
-                            onPressed: (key.isEmpty || value.isEmpty)
-                                ? null
-                                : () {
-                                    _headerKeyController.text = '';
-                                    _headerValueController.text = '';
+                          tooltip: localization.addHeader,
+                          icon: Icon(Icons.add_circle_outline),
+                          onPressed: (key.isEmpty || value.isEmpty)
+                              ? null
+                              : () {
+                                  _headerKeyController.text = '';
+                                  _headerValueController.text = '';
 
-                                    if (webhook.headers.containsKey(key)) {
-                                      return;
-                                    }
+                                  if (webhook.headers.containsKey(key)) {
+                                    return;
+                                  }
 
-                                    viewModel.onChanged(webhook.rebuild(
-                                        (b) => b..headers[key] = value));
-                                  })
+                                  viewModel.onChanged(
+                                    webhook.rebuild(
+                                      (b) => b..headers[key] = value,
+                                    ),
+                                  );
+                                },
+                        ),
                       ],
                     ),
                     SizedBox(height: 8),
                     if (webhook.headers.isEmpty)
                       Padding(
                         padding: const EdgeInsets.only(top: 16, bottom: 8),
-                        child: Center(
-                          child: HelpText(localization.noHeaders),
-                        ),
+                        child: Center(child: HelpText(localization.noHeaders)),
                       )
                     else
                       ...webhook.headers.keys.map(
@@ -210,30 +210,29 @@ class _WebhookEditState extends State<WebhookEdit> {
                           contentPadding: const EdgeInsets.all(0),
                           title: Row(
                             children: [
-                              Expanded(
-                                child: Text(key),
-                              ),
+                              Expanded(child: Text(key)),
                               SizedBox(width: kTableColumnGap),
-                              Expanded(
-                                child: Text(webhook.headers[key]!),
-                              )
+                              Expanded(child: Text(webhook.headers[key]!)),
                             ],
                           ),
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             tooltip: localization.removeHeader,
                             onPressed: () {
-                              viewModel.onChanged(webhook
-                                  .rebuild((b) => b..headers.remove(key)));
+                              viewModel.onChanged(
+                                webhook.rebuild((b) => b..headers.remove(key)),
+                              );
                             },
                           ),
                         ),
-                      )
+                      ),
                   ],
                 ),
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }

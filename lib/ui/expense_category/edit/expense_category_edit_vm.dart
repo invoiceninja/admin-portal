@@ -81,33 +81,44 @@ class ExpenseCategoryEditVM {
           final navigator = navigatorKey.currentState;
           final Completer<ExpenseCategoryEntity> completer =
               new Completer<ExpenseCategoryEntity>();
-          store.dispatch(SaveExpenseCategoryRequest(
-              completer: completer, expenseCategory: expenseCategory));
-          return completer.future.then((savedExpenseCategory) {
-            showToast(expenseCategory!.isNew
-                ? localization!.createdExpenseCategory
-                : localization!.updatedExpenseCategory);
+          store.dispatch(
+            SaveExpenseCategoryRequest(
+              completer: completer,
+              expenseCategory: expenseCategory,
+            ),
+          );
+          return completer.future
+              .then((savedExpenseCategory) {
+                showToast(
+                  expenseCategory!.isNew
+                      ? localization!.createdExpenseCategory
+                      : localization!.updatedExpenseCategory,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(
-                  UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
-              if (expenseCategory.isNew &&
-                  state.expenseCategoryUIState.saveCompleter == null) {
-                navigator!
-                    .pushReplacementNamed(ExpenseCategoryViewScreen.route);
-              } else {
-                navigator!.pop(savedExpenseCategory);
-              }
-            } else if (state.expenseCategoryUIState.saveCompleter == null) {
-              viewEntity(entity: savedExpenseCategory, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(ExpenseCategoryViewScreen.route),
+                  );
+                  if (expenseCategory.isNew &&
+                      state.expenseCategoryUIState.saveCompleter == null) {
+                    navigator!.pushReplacementNamed(
+                      ExpenseCategoryViewScreen.route,
+                    );
+                  } else {
+                    navigator!.pop(savedExpenseCategory);
+                  }
+                } else if (state.expenseCategoryUIState.saveCompleter == null) {
+                  viewEntity(entity: savedExpenseCategory, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

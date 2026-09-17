@@ -41,16 +41,19 @@ abstract class RecurringExpenseState
   }
 
   RecurringExpenseState loadRecurringExpenses(
-      BuiltList<ExpenseEntity> clients) {
+    BuiltList<ExpenseEntity> clients,
+  ) {
     final map = Map<String, ExpenseEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<RecurringExpenseState> get serializer =>
@@ -63,8 +66,9 @@ abstract class RecurringExpenseUIState extends Object
   factory RecurringExpenseUIState(PrefStateSortField? sortField) {
     return _$RecurringExpenseUIState._(
       listUIState: ListUIState(
-          sortField?.field ?? RecurringExpenseFields.number,
-          sortAscending: sortField?.ascending),
+        sortField?.field ?? RecurringExpenseFields.number,
+        sortAscending: sortField?.ascending,
+      ),
       editing: ExpenseEntity(entityType: EntityType.recurringExpense),
       selectedId: '',
       tabIndex: 0,

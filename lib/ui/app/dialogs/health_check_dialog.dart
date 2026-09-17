@@ -23,10 +23,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-enum _HealthCheckLevel {
-  Info,
-  Warning,
-}
+enum _HealthCheckLevel { Info, Warning }
 
 class HealthCheckDialog extends StatefulWidget {
   @override
@@ -54,8 +51,11 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final state = StoreProvider.of<AppState>(context).state;
 
     try {
-      await webClient.get('${state.account.defaultUrl}/update?secret=', '',
-          rawResponse: true);
+      await webClient.get(
+        '${state.account.defaultUrl}/update?secret=',
+        '',
+        rawResponse: true,
+      );
     } catch (e) {
       // do nothing
     }
@@ -63,18 +63,23 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final credentials = state.credentials;
     final url = '${credentials.url}/health_check';
 
-    webClient.get(url, credentials.token).then((dynamic response) {
-      if (!kReleaseMode) {
-        print('## response: $response');
-      }
-      setState(() {
-        _response = serializers.deserializeWith(
-            HealthCheckResponse.serializer, response);
-      });
-    }).catchError((dynamic error) {
-      Navigator.of(navigatorKey.currentContext!).pop();
-      showErrorDialog(message: error);
-    });
+    webClient
+        .get(url, credentials.token)
+        .then((dynamic response) {
+          if (!kReleaseMode) {
+            print('## response: $response');
+          }
+          setState(() {
+            _response = serializers.deserializeWith(
+              HealthCheckResponse.serializer,
+              response,
+            );
+          });
+        })
+        .catchError((dynamic error) {
+          Navigator.of(navigatorKey.currentContext!).pop();
+          showErrorDialog(message: error);
+        });
   }
 
   void clearCache() {
@@ -88,15 +93,21 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final credentials = state.credentials;
     final url = '${credentials.url}/ping?clear_cache=true';
 
-    webClient.get(url, credentials.token).then((dynamic response) {
-      store.dispatch(RefreshData(
-          completer: Completer<Null>()
-            ..future.then<Null>((_) {
-              runCheck();
-            })));
-    }).catchError((dynamic error) {
-      showErrorDialog(message: error);
-    });
+    webClient
+        .get(url, credentials.token)
+        .then((dynamic response) {
+          store.dispatch(
+            RefreshData(
+              completer: Completer<Null>()
+                ..future.then<Null>((_) {
+                  runCheck();
+                }),
+            ),
+          );
+        })
+        .catchError((dynamic error) {
+          showErrorDialog(message: error);
+        });
   }
 
   String _parseVersion(String version) {
@@ -115,10 +126,12 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final state = store.state;
     final account = state.account;
     final localization = AppLocalization.of(context);
-    final webPhpVersion =
-        _parseVersion(_response?.phpVersion.currentPHPVersion ?? '');
-    final cliPhpVersion =
-        _parseVersion(_response?.phpVersion.currentPHPCLIVersion ?? '');
+    final webPhpVersion = _parseVersion(
+      _response?.phpVersion.currentPHPVersion ?? '',
+    );
+    final cliPhpVersion = _parseVersion(
+      _response?.phpVersion.currentPHPCLIVersion ?? '',
+    );
     final phpMemoryLimit = _response?.phpVersion.memoryLimit ?? '';
     final phpMemoryLimitDouble = parseDouble(phpMemoryLimit);
 
@@ -148,8 +161,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     buttonLabel: 'View Last Error',
                     buttonCallback: () async {
                       showDialog(
-                          context: context,
-                          builder: (context) => _LastError(state: state));
+                        context: context,
+                        builder: (context) => _LastError(state: state),
+                      );
                     },
                   ),
                   _HealthListTile(
@@ -162,11 +176,13 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   _HealthListTile(
                     title: 'PHP Info',
                     // TODO move this logic to the backend
-                    isValid: _response!.phpVersion.isOkay &&
+                    isValid:
+                        _response!.phpVersion.isOkay &&
                         webPhpVersion.startsWith('v8') &&
                         (cliPhpVersion.startsWith('v8') ||
                             !cliPhpVersion.startsWith('v')),
-                    subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
+                    subtitle:
+                        'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
                         (phpMemoryLimit.isNotEmpty
                             ? '\nMemory Limit: $phpMemoryLimit'
                             : ''),
@@ -177,7 +193,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       isValid: _response!.queueData.failed == 0,
                       subtitle:
                           'Pending Jobs: ${_response!.queueData.pending}\nFailed Jobs: ${_response!.queueData.failed}',
-                      level: _response!.queueData.failed == 0 &&
+                      level:
+                          _response!.queueData.failed == 0 &&
                               _response!.queueData.pending > 0
                           ? _HealthCheckLevel.Warning
                           : null,
@@ -186,34 +203,38 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                           : null,
                       buttonCallback: () {
                         showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                title: Text('Last Queue Error'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      showToast(localization.copiedToClipboard
-                                          .replaceFirst(':value', ''));
-                                      Clipboard.setData(ClipboardData(
-                                          text:
-                                              _response!.queueData.lastError));
-                                    },
-                                    child: Text(
-                                      localization!.copy.toUpperCase(),
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Last Queue Error'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  showToast(
+                                    localization.copiedToClipboard.replaceFirst(
+                                      ':value',
+                                      '',
                                     ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      localization.close.toUpperCase(),
+                                  );
+                                  Clipboard.setData(
+                                    ClipboardData(
+                                      text: _response!.queueData.lastError,
                                     ),
-                                  ),
-                                ],
-                                content: SelectableText(
-                                  _response!.queueData.lastError,
-                                )));
+                                  );
+                                },
+                                child: Text(localization!.copy.toUpperCase()),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(localization.close.toUpperCase()),
+                              ),
+                            ],
+                            content: SelectableText(
+                              _response!.queueData.lastError,
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -315,7 +336,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
               TextButton(
                 child: Text(localization.close.toUpperCase()),
                 onPressed: () => Navigator.of(context).pop(),
-              )
+              ),
             ],
     );
   }
@@ -351,8 +372,8 @@ class _HealthListTile extends StatelessWidget {
             subtitle != null
                 ? subtitle!
                 : (level != null
-                    ? level.toString()
-                    : (isValid ? 'Passed' : 'Failed')),
+                      ? level.toString()
+                      : (isValid ? 'Passed' : 'Failed')),
           ),
           if (buttonLabel != null)
             Padding(
@@ -370,13 +391,13 @@ class _HealthListTile extends StatelessWidget {
         level == _HealthCheckLevel.Warning
             ? Icons.warning
             : level == _HealthCheckLevel.Info
-                ? Icons.info_outline
-                : (isValid ? Icons.check_circle_outline : Icons.warning),
+            ? Icons.info_outline
+            : (isValid ? Icons.check_circle_outline : Icons.warning),
         color: level == _HealthCheckLevel.Warning
             ? Colors.orange
             : level == _HealthCheckLevel.Info
-                ? Colors.blue
-                : (isValid ? Colors.green : Colors.red),
+            ? Colors.blue
+            : (isValid ? Colors.green : Colors.red),
       ),
       onTap: url != null ? () => launchUrl(Uri.parse(url!)) : null,
     );
@@ -384,9 +405,7 @@ class _HealthListTile extends StatelessWidget {
 }
 
 class _LastError extends StatefulWidget {
-  const _LastError({
-    required this.state,
-  });
+  const _LastError({required this.state});
 
   final AppState state;
 
@@ -408,7 +427,9 @@ class __LastErrorState extends State<_LastError> {
     webClient.get(url, credentials.token).then((dynamic response) {
       setState(() {
         _response = serializers.deserializeWith(
-            HealthCheckLastErrorResponse.serializer, response);
+          HealthCheckLastErrorResponse.serializer,
+          response,
+        );
       });
     });
   }
@@ -418,34 +439,32 @@ class __LastErrorState extends State<_LastError> {
     final localization = AppLocalization.of(context);
 
     return AlertDialog(
-        title: Text('Last Error'),
-        actions: [
-          if (_response != null && _response!.lastError.isNotEmpty)
-            TextButton(
-              onPressed: () {
-                showToast(
-                    localization.copiedToClipboard.replaceFirst(':value', ''));
-                Clipboard.setData(ClipboardData(text: _response!.lastError));
-              },
-              child: Text(
-                localization!.copy.toUpperCase(),
-              ),
-            ),
+      title: Text('Last Error'),
+      actions: [
+        if (_response != null && _response!.lastError.isNotEmpty)
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              showToast(
+                localization.copiedToClipboard.replaceFirst(':value', ''),
+              );
+              Clipboard.setData(ClipboardData(text: _response!.lastError));
             },
-            child: Text(
-              localization!.close.toUpperCase(),
-            ),
+            child: Text(localization!.copy.toUpperCase()),
           ),
-        ],
-        content: _response == null
-            ? LinearProgressIndicator()
-            : SelectableText(
-                _response!.lastError.isEmpty
-                    ? 'No errors found'
-                    : '${_response!.lastError}',
-              ));
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(localization!.close.toUpperCase()),
+        ),
+      ],
+      content: _response == null
+          ? LinearProgressIndicator()
+          : SelectableText(
+              _response!.lastError.isEmpty
+                  ? 'No errors found'
+                  : '${_response!.lastError}',
+            ),
+    );
   }
 }

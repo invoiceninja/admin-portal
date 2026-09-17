@@ -59,8 +59,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   //int _currentPage = 1;
 
   DateRange _dateRange = DateRange.thisQuarter;
-  String? _startDate =
-      convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
+  String? _startDate = convertDateTimeToSqlDate(
+    DateTime.now().subtract(Duration(days: 365)),
+  );
   String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
   //String? _designId;
@@ -83,33 +84,38 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       _isLoading = true;
     });
 
-    _loadPDF(sendEmail: sendEmail).then((response) {
-      setState(() {
-        if (sendEmail) {
-          if (response!.statusCode >= 200) {
-            showToast(localization!.emailedStatement);
-          }
-        } else {
-          _response = response;
-        }
+    _loadPDF(sendEmail: sendEmail)
+        .then((response) {
+          setState(() {
+            if (sendEmail) {
+              if (response!.statusCode >= 200) {
+                showToast(localization!.emailedStatement);
+              }
+            } else {
+              _response = response;
+            }
 
-        _isLoading = false;
-      });
-    }).catchError((Object error) {
-      setState(() {
-        _isLoading = false;
-      });
-
-      showDialog<void>(
-          context: navigatorKey.currentContext!,
-          builder: (BuildContext context) {
-            return ErrorDialog(error);
+            _isLoading = false;
           });
-    });
+        })
+        .catchError((Object error) {
+          setState(() {
+            _isLoading = false;
+          });
+
+          showDialog<void>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return ErrorDialog(error);
+            },
+          );
+        });
   }
 
-  Future<Response?> _loadPDF(
-      {bool sendEmail = false, String designId = ''}) async {
+  Future<Response?> _loadPDF({
+    bool sendEmail = false,
+    String designId = '',
+  }) async {
     final client = widget.viewModel.client!;
     http.Response? response;
 
@@ -129,15 +135,17 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     String? endDate = '';
 
     startDate = calculateStartDate(
-        company: state.company,
-        dateRange: _dateRange,
-        customStartDate: _startDate,
-        customEndDate: _endDate);
+      company: state.company,
+      dateRange: _dateRange,
+      customStartDate: _startDate,
+      customEndDate: _endDate,
+    );
     endDate = calculateEndDate(
-        company: state.company,
-        dateRange: _dateRange,
-        customStartDate: _startDate,
-        customEndDate: _endDate);
+      company: state.company,
+      dateRange: _dateRange,
+      customStartDate: _startDate,
+      customEndDate: _endDate,
+    );
 
     if (_dateRange != DateRange.custom) {
       _startDate = startDate;
@@ -209,59 +217,63 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         },
         items: DateRange.values
             .where((value) => value != DateRange.allTime)
-            .map((dateRange) => DropdownMenuItem<DateRange>(
-                  child: Text(localization.lookup(dateRange.toString())),
-                  value: dateRange,
-                ))
+            .map(
+              (dateRange) => DropdownMenuItem<DateRange>(
+                child: Text(localization.lookup(dateRange.toString())),
+                value: dateRange,
+              ),
+            )
             .toList(),
       ),
     );
 
     final statusPicker = Expanded(
       child: AppDropdownButton<String>(
-          labelText: localization.status,
-          blankValue: null,
-          value: _status,
-          onChanged: (dynamic value) {
-            setState(() {
-              _status = value;
-            });
-            loadPDF();
-          },
-          items: [
-            kStatementStatusAll,
-            kStatementStatusPaid,
-            kStatementStatusUnpaid,
-          ]
-              .map((value) => DropdownMenuItem<String>(
+        labelText: localization.status,
+        blankValue: null,
+        value: _status,
+        onChanged: (dynamic value) {
+          setState(() {
+            _status = value;
+          });
+          loadPDF();
+        },
+        items:
+            [kStatementStatusAll, kStatementStatusPaid, kStatementStatusUnpaid]
+                .map(
+                  (value) => DropdownMenuItem<String>(
                     child: Text(localization.lookup(value)),
                     value: value,
-                  ))
-              .toList()),
+                  ),
+                )
+                .toList(),
+      ),
     );
 
     final sectionPicker = Expanded(
-        child: DropDownMultiSelect(
-      onChanged: (List<dynamic> selected) {
-        //_selectedOptions = selected;
-        store.dispatch(UpdateUserPreferences(
-            statementIncludes: BuiltList<String>(selected)));
-        loadPDF();
-      },
-      selectedValues: state.prefState.statementIncludes.toList(),
-      menuItembuilder: (dynamic option) => Text(
-        localization.lookup(option),
-        style: TextStyle(fontSize: 14),
+      child: DropDownMultiSelect(
+        onChanged: (List<dynamic> selected) {
+          //_selectedOptions = selected;
+          store.dispatch(
+            UpdateUserPreferences(
+              statementIncludes: BuiltList<String>(selected),
+            ),
+          );
+          loadPDF();
+        },
+        selectedValues: state.prefState.statementIncludes.toList(),
+        menuItembuilder: (dynamic option) =>
+            Text(localization.lookup(option), style: TextStyle(fontSize: 14)),
+        isDense: true,
+        options: <String>[
+          kStatementIncludePayments,
+          kStatementIncludeCredits,
+          kStatementIncludeAging,
+        ],
+        whenEmpty: '',
+        height: 50,
       ),
-      isDense: true,
-      options: <String>[
-        kStatementIncludePayments,
-        kStatementIncludeCredits,
-        kStatementIncludeAging,
-      ],
-      whenEmpty: '',
-      height: 50,
-    ));
+    );
 
     /*
     final pageSelector = _pageCount == 1
@@ -337,66 +349,85 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                       : () async {
                           if (!client.hasEmailAddress) {
                             showMessageDialog(
-                                message: localization.clientEmailNotSet,
-                                secondaryActions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        editEntity(
-                                            entity: state.clientState
-                                                .get(client.id));
-                                      },
-                                      child: Text(localization.editClient
-                                          .toUpperCase()))
-                                ]);
+                              message: localization.clientEmailNotSet,
+                              secondaryActions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    editEntity(
+                                      entity: state.clientState.get(client.id),
+                                    );
+                                  },
+                                  child: Text(
+                                    localization.editClient.toUpperCase(),
+                                  ),
+                                ),
+                              ],
+                            );
                             return;
                           }
 
                           confirmCallback(
-                              message: localization.sendEmail,
-                              context: context,
-                              callback: (_) => loadPDF(sendEmail: true));
+                            message: localization.sendEmail,
+                            context: context,
+                            callback: (_) => loadPDF(sendEmail: true),
+                          );
                         },
                 ),
                 TextButton(
-                    onPressed: () {
-                      if (!state.isProPlan) {
-                        showMessageDialog(
-                            message: localization.upgradeToPaidPlanToSchedule,
-                            secondaryActions: [
-                              TextButton(
-                                  onPressed: () {
-                                    store.dispatch(ViewSettings(
-                                        section: kSettingsAccountManagement));
-                                    Navigator.of(context).pop();
-                                  },
-                                  child:
-                                      Text(localization.upgrade.toUpperCase())),
-                            ]);
-                        return;
-                      }
+                  onPressed: () {
+                    if (!state.isProPlan) {
+                      showMessageDialog(
+                        message: localization.upgradeToPaidPlanToSchedule,
+                        secondaryActions: [
+                          TextButton(
+                            onPressed: () {
+                              store.dispatch(
+                                ViewSettings(
+                                  section: kSettingsAccountManagement,
+                                ),
+                              );
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(localization.upgrade.toUpperCase()),
+                          ),
+                        ],
+                      );
+                      return;
+                    }
 
-                      final includes = state.prefState.statementIncludes;
-                      createEntity(
-                          entity: ScheduleEntity(
-                                  ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
-                              .rebuild((b) => b
-                                ..parameters.clients.add(client.id)
-                                ..parameters.showAgingTable =
-                                    includes.contains(localization.aging)
-                                ..parameters.showPaymentsTable =
-                                    includes.contains(localization.payments)
-                                ..parameters.showCreditsTable =
-                                    includes.contains(localization.credits)
-                                ..parameters.status = _status
-                                ..parameters.dateRange = _dateRange.snakeCase));
-                    },
-                    child: Text(localization.schedule,
-                        style: TextStyle(color: state.headerTextColor))),
+                    final includes = state.prefState.statementIncludes;
+                    createEntity(
+                      entity:
+                          ScheduleEntity(
+                            ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+                          ).rebuild(
+                            (b) => b
+                              ..parameters.clients.add(client.id)
+                              ..parameters.showAgingTable = includes.contains(
+                                localization.aging,
+                              )
+                              ..parameters.showPaymentsTable = includes
+                                  .contains(localization.payments)
+                              ..parameters.showCreditsTable = includes.contains(
+                                localization.credits,
+                              )
+                              ..parameters.status = _status
+                              ..parameters.dateRange = _dateRange.snakeCase,
+                          ),
+                    );
+                  },
+                  child: Text(
+                    localization.schedule,
+                    style: TextStyle(color: state.headerTextColor),
+                  ),
+                ),
                 if (isDesktop(context))
                   TextButton(
-                    child: Text(localization.close,
-                        style: TextStyle(color: state.headerTextColor)),
+                    child: Text(
+                      localization.close,
+                      style: TextStyle(color: state.headerTextColor),
+                    ),
                     onPressed: () {
                       viewEntity(entity: client);
                     },
@@ -491,7 +522,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             label: localization.loadPdf,
                             onPressed: () => loadPDF(),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],

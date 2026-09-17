@@ -16,26 +16,33 @@ class _$CompanyGatewayStateSerializer
   @override
   final Iterable<Type> types = const [
     CompanyGatewayState,
-    _$CompanyGatewayState
+    _$CompanyGatewayState,
   ];
   @override
   final String wireName = 'CompanyGatewayState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CompanyGatewayState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CompanyGatewayState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(CompanyGatewayEntity)
-          ])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(CompanyGatewayEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -43,8 +50,10 @@ class _$CompanyGatewayStateSerializer
 
   @override
   CompanyGatewayState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CompanyGatewayStateBuilder();
 
     final iterator = serialized.iterator;
@@ -54,17 +63,26 @@ class _$CompanyGatewayStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(CompanyGatewayEntity)
-              ]))!);
+                const FullType(CompanyGatewayEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -78,45 +96,58 @@ class _$CompanyGatewayUIStateSerializer
   @override
   final Iterable<Type> types = const [
     CompanyGatewayUIState,
-    _$CompanyGatewayUIState
+    _$CompanyGatewayUIState,
   ];
   @override
   final String wireName = 'CompanyGatewayUIState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CompanyGatewayUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CompanyGatewayUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(CompanyGatewayEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(CompanyGatewayEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   CompanyGatewayUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CompanyGatewayUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -126,21 +157,38 @@ class _$CompanyGatewayUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(CompanyGatewayEntity))!
-              as CompanyGatewayEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(CompanyGatewayEntity),
+                )!
+                as CompanyGatewayEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -155,15 +203,15 @@ class _$CompanyGatewayState extends CompanyGatewayState {
   @override
   final BuiltList<String> list;
 
-  factory _$CompanyGatewayState(
-          [void Function(CompanyGatewayStateBuilder)? updates]) =>
-      (CompanyGatewayStateBuilder()..update(updates))._build();
+  factory _$CompanyGatewayState([
+    void Function(CompanyGatewayStateBuilder)? updates,
+  ]) => (CompanyGatewayStateBuilder()..update(updates))._build();
 
   _$CompanyGatewayState._({required this.map, required this.list}) : super._();
   @override
   CompanyGatewayState rebuild(
-          void Function(CompanyGatewayStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CompanyGatewayStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayStateBuilder toBuilder() =>
@@ -238,11 +286,8 @@ class CompanyGatewayStateBuilder
   _$CompanyGatewayState _build() {
     _$CompanyGatewayState _$result;
     try {
-      _$result = _$v ??
-          _$CompanyGatewayState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result =
+          _$v ?? _$CompanyGatewayState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -252,7 +297,10 @@ class CompanyGatewayStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CompanyGatewayState', _$failedField, e.toString());
+          r'CompanyGatewayState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -277,23 +325,23 @@ class _$CompanyGatewayUIState extends CompanyGatewayUIState {
   @override
   final Completer<Null>? cancelCompleter;
 
-  factory _$CompanyGatewayUIState(
-          [void Function(CompanyGatewayUIStateBuilder)? updates]) =>
-      (CompanyGatewayUIStateBuilder()..update(updates))._build();
+  factory _$CompanyGatewayUIState([
+    void Function(CompanyGatewayUIStateBuilder)? updates,
+  ]) => (CompanyGatewayUIStateBuilder()..update(updates))._build();
 
-  _$CompanyGatewayUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$CompanyGatewayUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   CompanyGatewayUIState rebuild(
-          void Function(CompanyGatewayUIStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CompanyGatewayUIStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayUIStateBuilder toBuilder() =>
@@ -414,14 +462,18 @@ class CompanyGatewayUIStateBuilder
   _$CompanyGatewayUIState _build() {
     _$CompanyGatewayUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$CompanyGatewayUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'CompanyGatewayUIState', 'tabIndex'),
+              tabIndex,
+              r'CompanyGatewayUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -434,7 +486,10 @@ class CompanyGatewayUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CompanyGatewayUIState', _$failedField, e.toString());
+          r'CompanyGatewayUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

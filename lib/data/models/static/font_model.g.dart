@@ -15,8 +15,11 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
   final String wireName = 'FontEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, FontEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    FontEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -28,8 +31,11 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
   }
 
   @override
-  FontEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  FontEntity deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = FontEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -39,12 +45,20 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -133,10 +147,14 @@ class FontEntityBuilder implements Builder<FontEntity, FontEntityBuilder> {
   FontEntity build() => _build();
 
   _$FontEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$FontEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'FontEntity', 'name'),
+            name,
+            r'FontEntity',
+            'name',
+          ),
           id: BuiltValueNullFieldError.checkNotNull(id, r'FontEntity', 'id'),
         );
     replace(_$result);

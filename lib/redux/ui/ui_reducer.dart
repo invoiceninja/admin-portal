@@ -93,99 +93,138 @@ import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_reducer
 
 UIState uiReducer(UIState state, dynamic action) {
   final currentRoute = currentRouteReducer(state.currentRoute, action);
-  return state.rebuild((b) => b
-    ..filter = filterReducer(state.filter, action)
-    ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
-    ..lastActivityAt = lastActivityReducer(state.lastActivityAt, action)
-    ..dismissedFlutterWebWarning = dismissedFlutterWebWarningReducer(
-        state.dismissedFlutterWebWarning, action)
-    ..selectedCompanyIndex =
-        selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
-    ..previousRoute = state.currentRoute == currentRoute
-        ? state.previousRoute
-        : state.currentRoute.endsWith('edit')
-            ? state.previousRoute
-            : state.currentRoute
-    ..loadingEntityType =
-        loadingEntityTypeReducer(state.loadingEntityType, action)
-    ..currentRoute = currentRoute
-    ..previewStack.replace(previewStackReducer(state.previewStack, action))
-    ..filterStack.replace(filterStackReducer(state.filterStack, action))
-    ..productUIState.replace(
-        productUIReducer(state.productUIState, action) as ProductUIState)
-    ..clientUIState
-        .replace(clientUIReducer(state.clientUIState, action) as ClientUIState)
-    ..invoiceUIState.replace(
-        invoiceUIReducer(state.invoiceUIState, action) as InvoiceUIState)
-    ..dashboardUIState
-        .replace(dashboardUIReducer(state.dashboardUIState, action))
-    ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
-    // STARTER: reducer - do not remove comment
-    ..scheduleUIState.replace(
-        scheduleUIReducer(state.scheduleUIState, action) as ScheduleUIState)
-    ..transactionRuleUIState.replace(
+  return state.rebuild(
+    (b) => b
+      ..filter = filterReducer(state.filter, action)
+      ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
+      ..lastActivityAt = lastActivityReducer(state.lastActivityAt, action)
+      ..dismissedFlutterWebWarning = dismissedFlutterWebWarningReducer(
+        state.dismissedFlutterWebWarning,
+        action,
+      )
+      ..selectedCompanyIndex = selectedCompanyIndexReducer(
+        state.selectedCompanyIndex,
+        action,
+      )
+      ..previousRoute = state.currentRoute == currentRoute
+          ? state.previousRoute
+          : state.currentRoute.endsWith('edit')
+          ? state.previousRoute
+          : state.currentRoute
+      ..loadingEntityType = loadingEntityTypeReducer(
+        state.loadingEntityType,
+        action,
+      )
+      ..currentRoute = currentRoute
+      ..previewStack.replace(previewStackReducer(state.previewStack, action))
+      ..filterStack.replace(filterStackReducer(state.filterStack, action))
+      ..productUIState.replace(
+        productUIReducer(state.productUIState, action) as ProductUIState,
+      )
+      ..clientUIState.replace(
+        clientUIReducer(state.clientUIState, action) as ClientUIState,
+      )
+      ..invoiceUIState.replace(
+        invoiceUIReducer(state.invoiceUIState, action) as InvoiceUIState,
+      )
+      ..dashboardUIState.replace(
+        dashboardUIReducer(state.dashboardUIState, action),
+      )
+      ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
+      // STARTER: reducer - do not remove comment
+      ..scheduleUIState.replace(
+        scheduleUIReducer(state.scheduleUIState, action) as ScheduleUIState,
+      )
+      ..transactionRuleUIState.replace(
         transactionRuleUIReducer(state.transactionRuleUIState, action)
-            as TransactionRuleUIState)
-    ..transactionUIState.replace(
+            as TransactionRuleUIState,
+      )
+      ..transactionUIState.replace(
         transactionUIReducer(state.transactionUIState, action)
-            as TransactionUIState)
-    ..bankAccountUIState.replace(
+            as TransactionUIState,
+      )
+      ..bankAccountUIState.replace(
         bankAccountUIReducer(state.bankAccountUIState, action)
-            as BankAccountUIState)
-    ..purchaseOrderUIState.replace(
+            as BankAccountUIState,
+      )
+      ..purchaseOrderUIState.replace(
         purchaseOrderUIReducer(state.purchaseOrderUIState, action)
-            as PurchaseOrderUIState)
-    ..recurringExpenseUIState.replace(
+            as PurchaseOrderUIState,
+      )
+      ..recurringExpenseUIState.replace(
         recurringExpenseUIReducer(state.recurringExpenseUIState, action)
-            as RecurringExpenseUIState)
-    ..subscriptionUIState.replace(
+            as RecurringExpenseUIState,
+      )
+      ..subscriptionUIState.replace(
         subscriptionUIReducer(state.subscriptionUIState, action)
-            as SubscriptionUIState)
-    ..taskStatusUIState.replace(
+            as SubscriptionUIState,
+      )
+      ..taskStatusUIState.replace(
         taskStatusUIReducer(state.taskStatusUIState, action)
-            as TaskStatusUIState)
-    ..expenseCategoryUIState.replace(
+            as TaskStatusUIState,
+      )
+      ..expenseCategoryUIState.replace(
         expenseCategoryUIReducer(state.expenseCategoryUIState, action)
-            as ExpenseCategoryUIState)
-    ..recurringInvoiceUIState.replace(
+            as ExpenseCategoryUIState,
+      )
+      ..recurringInvoiceUIState.replace(
         recurringInvoiceUIReducer(state.recurringInvoiceUIState, action)
-            as RecurringInvoiceUIState)
-    ..webhookUIState.replace(
-        webhookUIReducer(state.webhookUIState, action) as WebhookUIState)
-    ..tokenUIState
-        .replace(tokenUIReducer(state.tokenUIState, action) as TokenUIState)
-    ..paymentTermUIState.replace(
+            as RecurringInvoiceUIState,
+      )
+      ..webhookUIState.replace(
+        webhookUIReducer(state.webhookUIState, action) as WebhookUIState,
+      )
+      ..tokenUIState.replace(
+        tokenUIReducer(state.tokenUIState, action) as TokenUIState,
+      )
+      ..paymentTermUIState.replace(
         paymentTermUIReducer(state.paymentTermUIState, action)
-            as PaymentTermUIState)
-    ..designUIState
-        .replace(designUIReducer(state.designUIState, action) as DesignUIState)
-    ..creditUIState
-        .replace(creditUIReducer(state.creditUIState, action) as CreditUIState)
-    ..userUIState
-        .replace(userUIReducer(state.userUIState, action) as UserUIState)
-    ..taxRateUIState.replace(
-        taxRateUIReducer(state.taxRateUIState, action) as TaxRateUIState)
-    ..companyGatewayUIState.replace(
+            as PaymentTermUIState,
+      )
+      ..designUIState.replace(
+        designUIReducer(state.designUIState, action) as DesignUIState,
+      )
+      ..creditUIState.replace(
+        creditUIReducer(state.creditUIState, action) as CreditUIState,
+      )
+      ..userUIState.replace(
+        userUIReducer(state.userUIState, action) as UserUIState,
+      )
+      ..taxRateUIState.replace(
+        taxRateUIReducer(state.taxRateUIState, action) as TaxRateUIState,
+      )
+      ..companyGatewayUIState.replace(
         companyGatewayUIReducer(state.companyGatewayUIState, action)
-            as CompanyGatewayUIState)
-    ..groupUIState
-        .replace(groupUIReducer(state.groupUIState, action) as GroupUIState)
-    ..documentUIState.replace(
-        documentUIReducer(state.documentUIState, action) as DocumentUIState)
-    ..expenseUIState.replace(
-        expenseUIReducer(state.expenseUIState, action) as ExpenseUIState)
-    ..vendorUIState
-        .replace(vendorUIReducer(state.vendorUIState, action) as VendorUIState)
-    ..taskUIState
-        .replace(taskUIReducer(state.taskUIState, action) as TaskUIState)
-    ..projectUIState.replace(
-        projectUIReducer(state.projectUIState, action) as ProjectUIState)
-    ..paymentUIState.replace(
-        paymentUIReducer(state.paymentUIState, action) as PaymentUIState)
-    ..quoteUIState
-        .replace(quoteUIReducer(state.quoteUIState, action) as QuoteUIState)
-    ..settingsUIState
-        .replace(settingsUIReducer(state.settingsUIState, action)));
+            as CompanyGatewayUIState,
+      )
+      ..groupUIState.replace(
+        groupUIReducer(state.groupUIState, action) as GroupUIState,
+      )
+      ..documentUIState.replace(
+        documentUIReducer(state.documentUIState, action) as DocumentUIState,
+      )
+      ..expenseUIState.replace(
+        expenseUIReducer(state.expenseUIState, action) as ExpenseUIState,
+      )
+      ..vendorUIState.replace(
+        vendorUIReducer(state.vendorUIState, action) as VendorUIState,
+      )
+      ..taskUIState.replace(
+        taskUIReducer(state.taskUIState, action) as TaskUIState,
+      )
+      ..projectUIState.replace(
+        projectUIReducer(state.projectUIState, action) as ProjectUIState,
+      )
+      ..paymentUIState.replace(
+        paymentUIReducer(state.paymentUIState, action) as PaymentUIState,
+      )
+      ..quoteUIState.replace(
+        quoteUIReducer(state.quoteUIState, action) as QuoteUIState,
+      )
+      ..settingsUIState.replace(
+        settingsUIReducer(state.settingsUIState, action),
+      ),
+  );
 }
 
 Reducer<int> lastActivityReducer = combineReducers([
@@ -298,16 +337,19 @@ Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
 
     return BuiltList(<EntityType?>[
       ...previewStack.where((entityType) => entityType != action.entityType),
-      action.entityType
+      action.entityType,
     ]);
   }),
-  TypedReducer<BuiltList<EntityType>, ClearPreviewStack>(
-      (previewStack, action) {
+  TypedReducer<BuiltList<EntityType>, ClearPreviewStack>((
+    previewStack,
+    action,
+  ) {
     return BuiltList(<EntityType>[]);
   }),
   TypedReducer<BuiltList<EntityType>, PopPreviewStack>((previewStack, action) {
-    return BuiltList(
-        <EntityType>[...previewStack.sublist(0, previewStack.length - 1)]);
+    return BuiltList(<EntityType>[
+      ...previewStack.sublist(0, previewStack.length - 1),
+    ]);
   }),
 ]);
 
@@ -324,11 +366,12 @@ Reducer<BuiltList<BaseEntity>> filterStackReducer = combineReducers([
     }
     return BuiltList(<BaseEntity?>[
       ...filterStack.where((entity) => entity.entityType != action.entityType),
-      action.entity
+      action.entity,
     ]);
   }),
   TypedReducer<BuiltList<BaseEntity>, PopFilterStack>((filterStack, action) {
-    return BuiltList(
-        <BaseEntity>[...filterStack.sublist(0, filterStack.length - 1)]);
+    return BuiltList(<BaseEntity>[
+      ...filterStack.sublist(0, filterStack.length - 1),
+    ]);
   }),
 ]);

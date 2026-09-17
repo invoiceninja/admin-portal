@@ -21,31 +21,26 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewRecurringExpenseList implements PersistUI {
-  ViewRecurringExpenseList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewRecurringExpenseList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewRecurringExpense implements PersistUI, PersistPrefs {
-  ViewRecurringExpense({
-    required this.recurringExpenseId,
-    this.force = false,
-  });
+  ViewRecurringExpense({required this.recurringExpenseId, this.force = false});
 
   final String? recurringExpenseId;
   final bool force;
 }
 
 class EditRecurringExpense implements PersistUI, PersistPrefs {
-  EditRecurringExpense(
-      {required this.recurringExpense,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditRecurringExpense({
+    required this.recurringExpense,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final ExpenseEntity recurringExpense;
   final Completer? completer;
@@ -356,8 +351,11 @@ class SaveRecurringExpenseDocumentFailure implements StopSaving {
   final Object error;
 }
 
-void handleRecurringExpenseAction(BuildContext? context,
-    List<BaseEntity> recurringExpenses, EntityAction? action) async {
+void handleRecurringExpenseAction(
+  BuildContext? context,
+  List<BaseEntity> recurringExpenses,
+  EntityAction? action,
+) async {
   if (recurringExpenses.isEmpty) {
     return;
   }
@@ -365,54 +363,73 @@ void handleRecurringExpenseAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final recurringExpense = recurringExpenses.first as ExpenseEntity;
-  final recurringExpenseIds =
-      recurringExpenses.map((recurringExpense) => recurringExpense.id).toList();
+  final recurringExpenseIds = recurringExpenses
+      .map((recurringExpense) => recurringExpense.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
       editEntity(entity: recurringExpense);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreRecurringExpensesRequest(
+      store.dispatch(
+        RestoreRecurringExpensesRequest(
           snackBarCompleter<Null>(localization!.restoredRecurringExpense),
-          recurringExpenseIds));
+          recurringExpenseIds,
+        ),
+      );
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveRecurringExpensesRequest(
+      store.dispatch(
+        ArchiveRecurringExpensesRequest(
           snackBarCompleter<Null>(localization!.archivedRecurringExpense),
-          recurringExpenseIds));
+          recurringExpenseIds,
+        ),
+      );
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteRecurringExpensesRequest(
+      store.dispatch(
+        DeleteRecurringExpensesRequest(
           snackBarCompleter<Null>(localization!.deletedRecurringExpense),
-          recurringExpenseIds));
+          recurringExpenseIds,
+        ),
+      );
       break;
     case EntityAction.start:
-      store.dispatch(StartRecurringExpensesRequest(
-        completer: snackBarCompleter<Null>(recurringExpense.lastSentDate.isEmpty
-            ? localization!.startedRecurringInvoice
-            : localization!.resumedRecurringInvoice),
-        expenseIds: recurringExpenseIds,
-      ));
+      store.dispatch(
+        StartRecurringExpensesRequest(
+          completer: snackBarCompleter<Null>(
+            recurringExpense.lastSentDate.isEmpty
+                ? localization!.startedRecurringInvoice
+                : localization!.resumedRecurringInvoice,
+          ),
+          expenseIds: recurringExpenseIds,
+        ),
+      );
       break;
     case EntityAction.stop:
-      store.dispatch(StopRecurringExpensesRequest(
-        completer:
-            snackBarCompleter<Null>(localization!.stoppedRecurringInvoice),
-        expenseIds: recurringExpenseIds,
-      ));
+      store.dispatch(
+        StopRecurringExpensesRequest(
+          completer: snackBarCompleter<Null>(
+            localization!.stoppedRecurringInvoice,
+          ),
+          expenseIds: recurringExpenseIds,
+        ),
+      );
       break;
     case EntityAction.cloneToExpense:
       createEntity(
-        entity: recurringExpense.clone
-            .rebuild((b) => b..entityType = EntityType.expense),
+        entity: recurringExpense.clone.rebuild(
+          (b) => b..entityType = EntityType.expense,
+        ),
       );
       break;
     case EntityAction.clone:
     case EntityAction.cloneToRecurring:
       createEntity(
-        entity: recurringExpense.clone
-            .rebuild((b) => b..entityType = EntityType.recurringExpense),
+        entity: recurringExpense.clone.rebuild(
+          (b) => b..entityType = EntityType.recurringExpense,
+        ),
       );
       break;
     case EntityAction.toggleMultiselect:
@@ -425,20 +442,21 @@ void handleRecurringExpenseAction(BuildContext? context,
       }
 
       for (final recurringExpense in recurringExpenses) {
-        if (!store.state.recurringExpenseListState
-            .isSelected(recurringExpense.id)) {
+        if (!store.state.recurringExpenseListState.isSelected(
+          recurringExpense.id,
+        )) {
           store.dispatch(
-              AddToRecurringExpenseMultiselect(entity: recurringExpense));
+            AddToRecurringExpenseMultiselect(entity: recurringExpense),
+          );
         } else {
           store.dispatch(
-              RemoveFromRecurringExpenseMultiselect(entity: recurringExpense));
+            RemoveFromRecurringExpenseMultiselect(entity: recurringExpense),
+          );
         }
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [recurringExpense],
-      );
+      showEntityActionsDialog(entities: [recurringExpense]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -453,9 +471,7 @@ void handleRecurringExpenseAction(BuildContext? context,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }
@@ -471,7 +487,8 @@ void handleRecurringExpenseAction(BuildContext? context,
       );
       if (addedComment == true) {
         store.dispatch(
-            LoadRecurringExpense(recurringExpenseId: recurringExpense.id));
+          LoadRecurringExpense(recurringExpenseId: recurringExpense.id),
+        );
       }
 
       break;

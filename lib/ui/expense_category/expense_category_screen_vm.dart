@@ -22,9 +22,7 @@ class ExpenseCategoryScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ExpenseCategoryScreenVM>(
       converter: ExpenseCategoryScreenVM.fromStore,
       builder: (context, vm) {
-        return ExpenseCategoryScreen(
-          viewModel: vm,
-        );
+        return ExpenseCategoryScreen(viewModel: vm);
       },
     );
   }
@@ -51,15 +49,19 @@ class ExpenseCategoryScreenVM {
     return ExpenseCategoryScreenVM(
       expenseCategoryMap: state.expenseCategoryState.map,
       expenseCategoryList: memoizedFilteredExpenseCategoryList(
-          state.getUISelection(EntityType.expenseCategory),
-          state.expenseCategoryState.map,
-          state.expenseCategoryState.list,
-          state.expenseCategoryListState),
+        state.getUISelection(EntityType.expenseCategory),
+        state.expenseCategoryState.map,
+        state.expenseCategoryState.list,
+        state.expenseCategoryListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.expenseCategoryListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> expenseCategories,
-              EntityAction action) =>
-          handleExpenseCategoryAction(context, expenseCategories, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> expenseCategories,
+            EntityAction action,
+          ) => handleExpenseCategoryAction(context, expenseCategories, action),
     );
   }
 }

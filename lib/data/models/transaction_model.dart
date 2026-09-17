@@ -13,9 +13,9 @@ part 'transaction_model.g.dart';
 
 abstract class TransactionListResponse
     implements Built<TransactionListResponse, TransactionListResponseBuilder> {
-  factory TransactionListResponse(
-          [void updates(TransactionListResponseBuilder b)]) =
-      _$TransactionListResponse;
+  factory TransactionListResponse([
+    void updates(TransactionListResponseBuilder b),
+  ]) = _$TransactionListResponse;
 
   TransactionListResponse._();
 
@@ -31,9 +31,9 @@ abstract class TransactionListResponse
 
 abstract class TransactionItemResponse
     implements Built<TransactionItemResponse, TransactionItemResponseBuilder> {
-  factory TransactionItemResponse(
-          [void updates(TransactionItemResponseBuilder b)]) =
-      _$TransactionItemResponse;
+  factory TransactionItemResponse([
+    void updates(TransactionItemResponseBuilder b),
+  ]) = _$TransactionItemResponse;
 
   TransactionItemResponse._();
 
@@ -196,11 +196,12 @@ abstract class TransactionEntity extends Object
   String get formattedDescription => description.replaceAll('\\n', ' ');
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && userCompany!.canEditEntity(this)) {
@@ -240,9 +241,9 @@ abstract class TransactionEntity extends Object
 
     switch (sortField) {
       case TransactionFields.description:
-        response = transactionA!.description
-            .toLowerCase()
-            .compareTo(transactionB!.description.toLowerCase());
+        response = transactionA!.description.toLowerCase().compareTo(
+          transactionB!.description.toLowerCase(),
+        );
         break;
       case TransactionFields.deposit:
       case TransactionFields.withdrawal:
@@ -256,9 +257,9 @@ abstract class TransactionEntity extends Object
         response = transactionA!.date.compareTo(transactionB!.date);
         break;
       case TransactionFields.defaultCategory:
-        response = transactionA!.category
-            .toLowerCase()
-            .compareTo(transactionB!.category.toLowerCase());
+        response = transactionA!.category.toLowerCase().compareTo(
+          transactionB!.category.toLowerCase(),
+        );
         break;
       case TransactionFields.accountType:
         final bankAccountA =
@@ -272,51 +273,53 @@ abstract class TransactionEntity extends Object
             invoiceMap[transactionA!.firstInvoiceId] ?? InvoiceEntity();
         final invoiceB =
             invoiceMap[transactionB!.firstInvoiceId] ?? InvoiceEntity();
-        response = invoiceA.listDisplayName
-            .toLowerCase()
-            .compareTo(invoiceB.listDisplayName.toLowerCase());
+        response = invoiceA.listDisplayName.toLowerCase().compareTo(
+          invoiceB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.expense:
         final expenseA = expenseMap[transactionA!.expenseId] ?? ExpenseEntity();
         final expenseB = expenseMap[transactionB!.expenseId] ?? ExpenseEntity();
-        response = expenseA.listDisplayName
-            .toLowerCase()
-            .compareTo(expenseB.listDisplayName.toLowerCase());
+        response = expenseA.listDisplayName.toLowerCase().compareTo(
+          expenseB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.vendor:
         final vendorA = vendorMap[transactionA!.vendorId] ?? VendorEntity();
         final vendorB = vendorMap[transactionB!.vendorId] ?? VendorEntity();
-        response = vendorA.listDisplayName
-            .toLowerCase()
-            .compareTo(vendorB.listDisplayName.toLowerCase());
+        response = vendorA.listDisplayName.toLowerCase().compareTo(
+          vendorB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.category:
-        final categoryA = expenseCategoryMap[transactionA!.categoryId] ??
+        final categoryA =
+            expenseCategoryMap[transactionA!.categoryId] ??
             ExpenseCategoryEntity();
-        final categoryB = expenseCategoryMap[transactionB!.categoryId] ??
+        final categoryB =
+            expenseCategoryMap[transactionB!.categoryId] ??
             ExpenseCategoryEntity();
-        response = categoryA.listDisplayName
-            .toLowerCase()
-            .compareTo(categoryB.listDisplayName.toLowerCase());
+        response = categoryA.listDisplayName.toLowerCase().compareTo(
+          categoryB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.bankAccount:
         final bankAccountA =
             bankAccountMap[transactionA!.bankAccountId] ?? BankAccountEntity();
         final bankAccountB =
             bankAccountMap[transactionB!.bankAccountId] ?? BankAccountEntity();
-        response = bankAccountA.listDisplayName
-            .toLowerCase()
-            .compareTo(bankAccountB.listDisplayName.toLowerCase());
+        response = bankAccountA.listDisplayName.toLowerCase().compareTo(
+          bankAccountB.listDisplayName.toLowerCase(),
+        );
         break;
       case TransactionFields.participant:
-        response = transactionA!.participant
-            .toLowerCase()
-            .compareTo(transactionB!.participant.toLowerCase());
+        response = transactionA!.participant.toLowerCase().compareTo(
+          transactionB!.participant.toLowerCase(),
+        );
         break;
       case TransactionFields.participantName:
-        response = transactionA!.participantName
-            .toLowerCase()
-            .compareTo(transactionB!.participantName.toLowerCase());
+        response = transactionA!.participantName.toLowerCase().compareTo(
+          transactionB!.participantName.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by transaction.$sortField is not implemented');
@@ -355,12 +358,7 @@ abstract class TransactionEntity extends Object
   @override
   bool matchesFilter(String? filter) {
     return matchesStrings(
-      haystacks: [
-        category,
-        description,
-        participant,
-        participantName,
-      ],
+      haystacks: [category, description, participant, participantName],
       needle: filter,
     );
   }
@@ -368,12 +366,7 @@ abstract class TransactionEntity extends Object
   @override
   String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
-      haystacks: [
-        category,
-        description,
-        participant,
-        participantName,
-      ],
+      haystacks: [category, description, participant, participantName],
       needle: filter,
     );
   }
@@ -419,10 +412,7 @@ abstract class TransactionStatusEntity extends Object
     with EntityStatus, SelectableEntity
     implements Built<TransactionStatusEntity, TransactionStatusEntityBuilder> {
   factory TransactionStatusEntity() {
-    return _$TransactionStatusEntity._(
-      id: '',
-      name: '',
-    );
+    return _$TransactionStatusEntity._(id: '', name: '');
   }
 
   TransactionStatusEntity._();

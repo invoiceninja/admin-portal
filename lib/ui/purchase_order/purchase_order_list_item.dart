@@ -50,7 +50,7 @@ class PurchaseOrderListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (purchaseOrder.matchesFilterValue(filter) ??
-            vendor!.matchesFilterValue(filter))
+              vendor!.matchesFilterValue(filter))
         : null;
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
@@ -60,32 +60,33 @@ class PurchaseOrderListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: purchaseOrder.id ==
+      isSelected:
+          purchaseOrder.id ==
           (uiState.isEditing
               ? purchaseOrderUIState.editing!.id
               : purchaseOrderUIState.selectedId),
       userCompany: state.userCompany,
       entity: purchaseOrder,
       child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return constraints.maxWidth > kTableListWidthCutoff
-            ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap!()
-                    : selectEntity(entity: purchaseOrder),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress!()
-                    : selectEntity(entity: purchaseOrder, longPress: true),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 28,
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return constraints.maxWidth > kTableListWidthCutoff
+              ? InkWell(
+                  onTap: () => onTap != null
+                      ? onTap!()
+                      : selectEntity(entity: purchaseOrder),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress!()
+                      : selectEntity(entity: purchaseOrder, longPress: true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 28,
+                      top: 4,
+                      bottom: 4,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
                           padding: const EdgeInsets.only(right: 16),
                           child: showCheckbox
                               ? IgnorePointer(
@@ -96,8 +97,9 @@ class PurchaseOrderListItem extends StatelessWidget {
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
                                         onCheckboxChanged!(value),
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
+                                    activeColor: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
                                   ),
                                 )
                               : ActionMenuButton(
@@ -109,146 +111,159 @@ class PurchaseOrderListItem extends StatelessWidget {
                                   entity: purchaseOrder,
                                   onSelected: (context, action) =>
                                       handleEntityAction(purchaseOrder, action),
-                                )),
-                      SizedBox(
-                        width: kListNumberWidth,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              purchaseOrder.number.isEmpty
-                                  ? localization!.pending
-                                  : purchaseOrder.number,
-                              style: textStyle,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            if (!purchaseOrder.isActive)
-                              EntityStateLabel(purchaseOrder)
-                          ],
+                                ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
+                        SizedBox(
+                          width: kListNumberWidth,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                purchaseOrder.number.isEmpty
+                                    ? localization!.pending
+                                    : purchaseOrder.number,
+                                style: textStyle,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              if (!purchaseOrder.isActive)
+                                EntityStateLabel(purchaseOrder),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
                                 vendor!.name +
                                     (purchaseOrder.documents.isNotEmpty
                                         ? '  📎'
                                         : ''),
-                                style: textStyle),
-                            Text(
-                              filterMatch ?? subtitle,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                    color: textColor!
-                                        .withValues(alpha: kLighterOpacity),
-                                  ),
-                            ),
-                          ],
+                                style: textStyle,
+                              ),
+                              Text(
+                                filterMatch ?? subtitle,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.titleSmall!
+                                    .copyWith(
+                                      color: textColor!.withValues(
+                                        alpha: kLighterOpacity,
+                                      ),
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        formatNumber(
-                          purchaseOrder.amount,
-                          context,
-                          vendorId: vendor!.id,
-                        )!,
-                        style: textStyle,
-                        textAlign: TextAlign.end,
-                      ),
-                      SizedBox(width: 25),
-                      EntityStatusChip(entity: purchaseOrder),
-                    ],
-                  ),
-                ),
-              )
-            : ListTile(
-                onTap: () => onTap != null
-                    ? onTap!()
-                    : selectEntity(entity: purchaseOrder),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress!()
-                    : selectEntity(entity: purchaseOrder, longPress: true),
-                leading: showCheckbox
-                    ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
-                        child: Checkbox(
-                          value: isChecked,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged!(value),
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                        ),
-                      )
-                    : null,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          vendor!.name,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Text(
+                        SizedBox(width: 10),
+                        Text(
                           formatNumber(
                             purchaseOrder.amount,
                             context,
                             vendorId: vendor!.id,
                           )!,
-                          style: Theme.of(context).textTheme.titleMedium),
-                    ],
+                          style: textStyle,
+                          textAlign: TextAlign.end,
+                        ),
+                        SizedBox(width: 25),
+                        EntityStatusChip(entity: purchaseOrder),
+                      ],
+                    ),
                   ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
+                )
+              : ListTile(
+                  onTap: () => onTap != null
+                      ? onTap!()
+                      : selectEntity(entity: purchaseOrder),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress!()
+                      : selectEntity(entity: purchaseOrder, longPress: true),
+                  leading: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged!(value),
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                          ),
+                        )
+                      : null,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
                       children: <Widget>[
                         Expanded(
-                          child: filterMatch == null
-                              ? Text(((purchaseOrder.number.isEmpty
-                                          ? localization!.pending
-                                          : purchaseOrder.number) +
-                                      ' • ' +
-                                      formatDate(purchaseOrder.date, context) +
-                                      (purchaseOrder.documents.isNotEmpty
-                                          ? '  📎'
-                                          : ''))
-                                  .trim())
-                              : Text(
-                                  filterMatch,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                          child: Text(
+                            vendor!.name,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
+                        SizedBox(width: 4),
                         Text(
-                            localization!.lookup(kPurchaseOrderStatuses[
-                                purchaseOrder.calculatedStatusId]),
+                          formatNumber(
+                            purchaseOrder.amount,
+                            context,
+                            vendorId: vendor!.id,
+                          )!,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: filterMatch == null
+                                ? Text(
+                                    ((purchaseOrder.number.isEmpty
+                                                ? localization!.pending
+                                                : purchaseOrder.number) +
+                                            ' • ' +
+                                            formatDate(
+                                              purchaseOrder.date,
+                                              context,
+                                            ) +
+                                            (purchaseOrder.documents.isNotEmpty
+                                                ? '  📎'
+                                                : ''))
+                                        .trim(),
+                                  )
+                                : Text(
+                                    filterMatch,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                          ),
+                          Text(
+                            localization!.lookup(
+                              kPurchaseOrderStatuses[purchaseOrder
+                                  .calculatedStatusId],
+                            ),
                             style: TextStyle(
                               color: !purchaseOrder.isSent
                                   ? textColor
                                   : PurchaseOrderStatusColors(
-                                          state.prefState.colorThemeModel)
-                                      .colors[purchaseOrder.calculatedStatusId],
-                            )),
-                      ],
-                    ),
-                    EntityStateLabel(purchaseOrder),
-                  ],
-                ),
-              );
-      }),
+                                      state.prefState.colorThemeModel,
+                                    ).colors[purchaseOrder.calculatedStatusId],
+                            ),
+                          ),
+                        ],
+                      ),
+                      EntityStateLabel(purchaseOrder),
+                    ],
+                  ),
+                );
+        },
+      ),
     );
   }
 }

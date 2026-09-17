@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'client_screen_vm.dart';
 
 class ClientScreen extends StatelessWidget {
-  const ClientScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/client';
 
@@ -81,14 +78,22 @@ class ClientScreen extends StatelessWidget {
             store.dispatch(StartClientMultiselect());
           }
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.client1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.client2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.client3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.client4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.client1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.client2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.client3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.client4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterClientsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -98,19 +103,19 @@ class ClientScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterClientsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
               heroTag: 'client_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.client);
+                  context: context,
+                  entityType: EntityType.client,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newClient,
             )
           : null,

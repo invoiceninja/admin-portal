@@ -117,11 +117,9 @@ abstract class VendorEntity extends Object
       customValue4: '',
       routingId: '',
       activities: BuiltList<ActivityEntity>(),
-      contacts: BuiltList<VendorContactEntity>(
-        <VendorContactEntity>[
-          VendorContactEntity().rebuild((b) => b..isPrimary = true)
-        ],
-      ),
+      contacts: BuiltList<VendorContactEntity>(<VendorContactEntity>[
+        VendorContactEntity().rebuild((b) => b..isPrimary = true),
+      ]),
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -141,12 +139,14 @@ abstract class VendorEntity extends Object
   @memoized
   int get hashCode;
 
-  VendorEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..number = ''
-    ..documents.clear()
-    ..isChanged = false
-    ..isDeleted = false);
+  VendorEntity get clone => rebuild(
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..number = ''
+      ..documents.clear()
+      ..isChanged = false
+      ..isDeleted = false,
+  );
 
   @BuiltValueField(compare: false)
   int? get loadedAt;
@@ -242,12 +242,13 @@ abstract class VendorEntity extends Object
   BuiltList<DocumentEntity> get documents;
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {
@@ -295,47 +296,54 @@ abstract class VendorEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(VendorEntity? vendor, String sortField, bool sortAscending,
-      BuiltMap<String, UserEntity> userMap, StaticState staticState) {
+  int compareTo(
+    VendorEntity? vendor,
+    String sortField,
+    bool sortAscending,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) {
     int response = 0;
     final VendorEntity? vendorA = sortAscending ? this : vendor;
     final VendorEntity? vendorB = sortAscending ? vendor : this;
 
     switch (sortField) {
       case VendorFields.name:
-        response = removeDiacritics(vendorA!.name)
-            .toLowerCase()
-            .compareTo(removeDiacritics(vendorB!.name).toLowerCase());
+        response = removeDiacritics(vendorA!.name).toLowerCase().compareTo(
+          removeDiacritics(vendorB!.name).toLowerCase(),
+        );
         break;
       case VendorFields.city:
-        response =
-            vendorA!.city.toLowerCase().compareTo(vendorB!.city.toLowerCase());
+        response = vendorA!.city.toLowerCase().compareTo(
+          vendorB!.city.toLowerCase(),
+        );
         break;
       case VendorFields.phone:
-        response = vendorA!.phone
-            .toLowerCase()
-            .compareTo(vendorB!.phone.toLowerCase());
+        response = vendorA!.phone.toLowerCase().compareTo(
+          vendorB!.phone.toLowerCase(),
+        );
         break;
       case EntityFields.state:
       case VendorFields.state:
         final stateA = EntityState.valueOf(vendorA!.entityState);
         final stateB = EntityState.valueOf(vendorB!.entityState);
-        response =
-            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        response = stateA.name.toLowerCase().compareTo(
+          stateB.name.toLowerCase(),
+        );
         break;
       case EntityFields.assignedTo:
         final userA = userMap[vendorA!.assignedUserId] ?? UserEntity();
         final userB = userMap[vendorB!.assignedUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.createdBy:
         final userA = userMap[vendorA!.createdUserId] ?? UserEntity();
         final userB = userMap[vendorB!.createdUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.createdAt:
         response = vendorA!.createdAt.compareTo(vendorB!.createdAt);
@@ -347,8 +355,9 @@ abstract class VendorEntity extends Object
         response = vendorA!.updatedAt.compareTo(vendorB!.updatedAt);
         break;
       case VendorFields.documents:
-        response =
-            vendorA!.documents.length.compareTo(vendorB!.documents.length);
+        response = vendorA!.documents.length.compareTo(
+          vendorB!.documents.length,
+        );
         break;
       case VendorFields.number:
         response = compareNatural(vendorA!.number, vendorB!.number);
@@ -385,9 +394,9 @@ abstract class VendorEntity extends Object
         break;
       case VendorFields.currencyId:
         final currencyMap = staticState.currencyMap;
-        response = currencyMap[vendorA!.currencyId]!
-            .listDisplayName
-            .compareTo(currencyMap[vendorB!.currencyId]!.listDisplayName);
+        response = currencyMap[vendorA!.currencyId]!.listDisplayName.compareTo(
+          currencyMap[vendorB!.currencyId]!.listDisplayName,
+        );
         break;
       case VendorFields.customValue1:
         response = vendorA!.customValue1.compareTo(vendorB!.customValue1);
@@ -520,9 +529,10 @@ abstract class VendorEntity extends Object
     return list.isEmpty ? [primaryContact] : list;
   }
 
-  VendorContactEntity get primaryContact =>
-      contacts.firstWhere((contact) => contact.isPrimary,
-          orElse: () => VendorContactEntity());
+  VendorContactEntity get primaryContact => contacts.firstWhere(
+    (contact) => contact.isPrimary,
+    orElse: () => VendorContactEntity(),
+  );
 
   bool get hasCurrency => currencyId.isNotEmpty;
 
@@ -540,9 +550,10 @@ abstract class VendorEntity extends Object
         contact.email.isNotEmpty;
   }
 
-  VendorContactEntity getContact(String? contactId) =>
-      contacts.firstWhere((contact) => contact.id == contactId,
-          orElse: () => VendorContactEntity());
+  VendorContactEntity getContact(String? contactId) => contacts.firstWhere(
+    (contact) => contact.id == contactId,
+    orElse: () => VendorContactEntity(),
+  );
 
   static void _initializeBuilder(VendorEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
@@ -670,11 +681,7 @@ abstract class VendorContactEntity extends Object
   @override
   bool matchesFilter(String? filter) {
     return matchesStrings(
-      haystacks: [
-        '$firstName $lastName',
-        email,
-        phone,
-      ],
+      haystacks: ['$firstName $lastName', email, phone],
       needle: filter,
     );
   }
@@ -682,11 +689,7 @@ abstract class VendorContactEntity extends Object
   @override
   String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
-      haystacks: [
-        '$firstName $lastName',
-        email,
-        phone,
-      ],
+      haystacks: ['$firstName $lastName', email, phone],
       needle: filter,
     );
   }

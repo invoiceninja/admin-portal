@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 
 class TaskViewDocuments extends StatelessWidget {
   const TaskViewDocuments({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final TaskViewVM viewModel;
 

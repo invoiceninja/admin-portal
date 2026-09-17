@@ -10,10 +10,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ConfirmEmail extends StatelessWidget {
-  const ConfirmEmail({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ConfirmEmail({Key? key, required this.viewModel}) : super(key: key);
 
   final ConfirmEmailVM viewModel;
 
@@ -32,10 +29,7 @@ class ConfirmEmail extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/icon.png',
-                    height: 80,
-                  ),
+                  Image.asset('assets/images/icon.png', height: 80),
                   SizedBox(height: 60),
                   Text(
                     localization!.confirmYourEmailAddress,
@@ -66,7 +60,11 @@ class ConfirmEmail extends StatelessWidget {
                                 fieldCallback(
                                   callback: (value) {
                                     viewModel.onChangeEmail!(
-                                        context, value, password, idToken);
+                                      context,
+                                      value,
+                                      password,
+                                      idToken,
+                                    );
                                   },
                                   field: localization.email,
                                   context: context,
@@ -106,7 +104,7 @@ class ConfirmEmail extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

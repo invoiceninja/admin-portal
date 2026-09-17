@@ -18,10 +18,12 @@ const EntityAction _$cloneToCredit = const EntityAction._('cloneToCredit');
 const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
 const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
 const EntityAction _$cloneToExpense = const EntityAction._('cloneToExpense');
-const EntityAction _$cloneToRecurring =
-    const EntityAction._('cloneToRecurring');
-const EntityAction _$cloneToPurchaseOrder =
-    const EntityAction._('cloneToPurchaseOrder');
+const EntityAction _$cloneToRecurring = const EntityAction._(
+  'cloneToRecurring',
+);
+const EntityAction _$cloneToPurchaseOrder = const EntityAction._(
+  'cloneToPurchaseOrder',
+);
 const EntityAction _$approve = const EntityAction._('approve');
 const EntityAction _$applyCredit = const EntityAction._('applyCredit');
 const EntityAction _$applyPayment = const EntityAction._('applyPayment');
@@ -35,20 +37,24 @@ const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$markPaid = const EntityAction._('markPaid');
 const EntityAction _$newClient = const EntityAction._('newClient');
 const EntityAction _$newInvoice = const EntityAction._('newInvoice');
-const EntityAction _$newRecurringInvoice =
-    const EntityAction._('newRecurringInvoice');
-const EntityAction _$newRecurringExpense =
-    const EntityAction._('newRecurringExpense');
-const EntityAction _$newRecurringQuote =
-    const EntityAction._('newRecurringQuote');
+const EntityAction _$newRecurringInvoice = const EntityAction._(
+  'newRecurringInvoice',
+);
+const EntityAction _$newRecurringExpense = const EntityAction._(
+  'newRecurringExpense',
+);
+const EntityAction _$newRecurringQuote = const EntityAction._(
+  'newRecurringQuote',
+);
 const EntityAction _$newQuote = const EntityAction._('newQuote');
 const EntityAction _$newCredit = const EntityAction._('newCredit');
 const EntityAction _$newExpense = const EntityAction._('newExpense');
 const EntityAction _$newProject = const EntityAction._('newProject');
 const EntityAction _$newTask = const EntityAction._('newTask');
 const EntityAction _$newVendor = const EntityAction._('newVendor');
-const EntityAction _$newPurchaseOrder =
-    const EntityAction._('newPurchaseOrder');
+const EntityAction _$newPurchaseOrder = const EntityAction._(
+  'newPurchaseOrder',
+);
 const EntityAction _$newTransaction = const EntityAction._('newTransaction');
 const EntityAction _$clientPortal = const EntityAction._('clientPortal');
 const EntityAction _$vendorPortal = const EntityAction._('vendorPortal');
@@ -63,8 +69,9 @@ const EntityAction _$printPdf = const EntityAction._('printPdf');
 const EntityAction _$start = const EntityAction._('start');
 const EntityAction _$resume = const EntityAction._('resume');
 const EntityAction _$stop = const EntityAction._('stop');
-const EntityAction _$toggleMultiselect =
-    const EntityAction._('toggleMultiselect');
+const EntityAction _$toggleMultiselect = const EntityAction._(
+  'toggleMultiselect',
+);
 const EntityAction _$reverse = const EntityAction._('reverse');
 const EntityAction _$cancelInvoice = const EntityAction._('cancelInvoice');
 const EntityAction _$copy = const EntityAction._('copy');
@@ -83,14 +90,18 @@ const EntityAction _$accept = const EntityAction._('accept');
 const EntityAction _$addToInventory = const EntityAction._('addToInventory');
 const EntityAction _$convert = const EntityAction._('convert');
 const EntityAction _$convertMatched = const EntityAction._('convertMatched');
-const EntityAction _$convertToExpense =
-    const EntityAction._('convertToExpense');
-const EntityAction _$convertToPayment =
-    const EntityAction._('convertToPayment');
-const EntityAction _$convertToInvoice =
-    const EntityAction._('convertToInvoice');
-const EntityAction _$convertToProject =
-    const EntityAction._('convertToProject');
+const EntityAction _$convertToExpense = const EntityAction._(
+  'convertToExpense',
+);
+const EntityAction _$convertToPayment = const EntityAction._(
+  'convertToPayment',
+);
+const EntityAction _$convertToInvoice = const EntityAction._(
+  'convertToInvoice',
+);
+const EntityAction _$convertToProject = const EntityAction._(
+  'convertToProject',
+);
 const EntityAction _$merge = const EntityAction._('merge');
 const EntityAction _$bulkPrint = const EntityAction._('bulkPrint');
 const EntityAction _$autoBill = const EntityAction._('autoBill');
@@ -300,98 +311,98 @@ EntityAction _$valueOf(String name) {
 
 final BuiltSet<EntityAction> _$values =
     BuiltSet<EntityAction>(const <EntityAction>[
-  _$edit,
-  _$archive,
-  _$delete,
-  _$purge,
-  _$restore,
-  _$remove,
-  _$clone,
-  _$cloneToOther,
-  _$cloneToCredit,
-  _$cloneToInvoice,
-  _$cloneToQuote,
-  _$cloneToExpense,
-  _$cloneToRecurring,
-  _$cloneToPurchaseOrder,
-  _$approve,
-  _$applyCredit,
-  _$applyPayment,
-  _$download,
-  _$documents,
-  _$bulkDownload,
-  _$sendEmail,
-  _$sendNow,
-  _$bulkSendEmail,
-  _$markSent,
-  _$markPaid,
-  _$newClient,
-  _$newInvoice,
-  _$newRecurringInvoice,
-  _$newRecurringExpense,
-  _$newRecurringQuote,
-  _$newQuote,
-  _$newCredit,
-  _$newExpense,
-  _$newProject,
-  _$newTask,
-  _$newVendor,
-  _$newPurchaseOrder,
-  _$newTransaction,
-  _$clientPortal,
-  _$vendorPortal,
-  _$newPayment,
-  _$settings,
-  _$refundPayment,
-  _$viewPdf,
-  _$viewStatement,
-  _$viewDocument,
-  _$more,
-  _$printPdf,
-  _$start,
-  _$resume,
-  _$stop,
-  _$toggleMultiselect,
-  _$reverse,
-  _$cancelInvoice,
-  _$copy,
-  _$invoiceTask,
-  _$invoiceExpense,
-  _$invoiceProject,
-  _$resendInvite,
-  _$disconnect,
-  _$viewInvoice,
-  _$viewExpense,
-  _$changeStatus,
-  _$addToInvoice,
-  _$back,
-  _$save,
-  _$accept,
-  _$addToInventory,
-  _$convert,
-  _$convertMatched,
-  _$convertToExpense,
-  _$convertToPayment,
-  _$convertToInvoice,
-  _$convertToProject,
-  _$merge,
-  _$bulkPrint,
-  _$autoBill,
-  _$schedule,
-  _$updatePrices,
-  _$increasePrices,
-  _$setTaxCategory,
-  _$eInvoice,
-  _$eQuote,
-  _$eCredit,
-  _$ePurchaseOrder,
-  _$unlink,
-  _$runTemplate,
-  _$bulkUpdate,
-  _$reconnect,
-  _$addComment,
-  _$assignGroup,
-]);
+      _$edit,
+      _$archive,
+      _$delete,
+      _$purge,
+      _$restore,
+      _$remove,
+      _$clone,
+      _$cloneToOther,
+      _$cloneToCredit,
+      _$cloneToInvoice,
+      _$cloneToQuote,
+      _$cloneToExpense,
+      _$cloneToRecurring,
+      _$cloneToPurchaseOrder,
+      _$approve,
+      _$applyCredit,
+      _$applyPayment,
+      _$download,
+      _$documents,
+      _$bulkDownload,
+      _$sendEmail,
+      _$sendNow,
+      _$bulkSendEmail,
+      _$markSent,
+      _$markPaid,
+      _$newClient,
+      _$newInvoice,
+      _$newRecurringInvoice,
+      _$newRecurringExpense,
+      _$newRecurringQuote,
+      _$newQuote,
+      _$newCredit,
+      _$newExpense,
+      _$newProject,
+      _$newTask,
+      _$newVendor,
+      _$newPurchaseOrder,
+      _$newTransaction,
+      _$clientPortal,
+      _$vendorPortal,
+      _$newPayment,
+      _$settings,
+      _$refundPayment,
+      _$viewPdf,
+      _$viewStatement,
+      _$viewDocument,
+      _$more,
+      _$printPdf,
+      _$start,
+      _$resume,
+      _$stop,
+      _$toggleMultiselect,
+      _$reverse,
+      _$cancelInvoice,
+      _$copy,
+      _$invoiceTask,
+      _$invoiceExpense,
+      _$invoiceProject,
+      _$resendInvite,
+      _$disconnect,
+      _$viewInvoice,
+      _$viewExpense,
+      _$changeStatus,
+      _$addToInvoice,
+      _$back,
+      _$save,
+      _$accept,
+      _$addToInventory,
+      _$convert,
+      _$convertMatched,
+      _$convertToExpense,
+      _$convertToPayment,
+      _$convertToInvoice,
+      _$convertToProject,
+      _$merge,
+      _$bulkPrint,
+      _$autoBill,
+      _$schedule,
+      _$updatePrices,
+      _$increasePrices,
+      _$setTaxCategory,
+      _$eInvoice,
+      _$eQuote,
+      _$eCredit,
+      _$ePurchaseOrder,
+      _$unlink,
+      _$runTemplate,
+      _$bulkUpdate,
+      _$reconnect,
+      _$addComment,
+      _$assignGroup,
+    ]);
 
 Serializer<EntityAction> _$entityActionSerializer = _$EntityActionSerializer();
 
@@ -402,14 +413,18 @@ class _$EntityActionSerializer implements PrimitiveSerializer<EntityAction> {
   final String wireName = 'EntityAction';
 
   @override
-  Object serialize(Serializers serializers, EntityAction object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    EntityAction object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  EntityAction deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      EntityAction.valueOf(serialized as String);
+  EntityAction deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => EntityAction.valueOf(serialized as String);
 }
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -59,88 +59,105 @@ class AccountManagementVM {
     final state = store.state;
 
     return AccountManagementVM(
-        state: state,
-        company: state.uiState.settingsUIState.company,
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onCompanyDelete: (context, password, idToken, reason) {
-          showDialog<AlertDialog>(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) => SimpleDialog(
-                    children: <Widget>[LoadingDialog()],
-                  ));
+      state: state,
+      company: state.uiState.settingsUIState.company,
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onCompanyDelete: (context, password, idToken, reason) {
+        showDialog<AlertDialog>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) =>
+              SimpleDialog(children: <Widget>[LoadingDialog()]),
+        );
 
-          final companyLength = state.companies.length;
-          final deleteCompleter = Completer<Null>()
-            ..future.then<Null>((_) {
-              final state = store.state;
-              if (companyLength == 1) {
-                store.dispatch(UserLogout());
-                if (state.user.isConnectedToGoogle) {
-                  GoogleOAuth.disconnect();
+        final companyLength = state.companies.length;
+        final deleteCompleter = Completer<Null>()
+          ..future
+              .then<Null>((_) {
+                final state = store.state;
+                if (companyLength == 1) {
+                  store.dispatch(UserLogout());
+                  if (state.user.isConnectedToGoogle) {
+                    GoogleOAuth.disconnect();
+                  }
+                } else {
+                  final selectedCompanyIndex =
+                      state.uiState.selectedCompanyIndex;
+                  final index = selectedCompanyIndex == 0 ? 1 : 0;
+                  store.dispatch(SelectCompany(companyIndex: index));
+                  final refreshCompleter = Completer<Null>()
+                    ..future.then<Null>((_) {
+                      store.dispatch(SelectCompany(companyIndex: 0));
+                      store.dispatch(ViewDashboard());
+                      AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
+
+                      if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                        Navigator.of(navigatorKey.currentContext!).pop();
+                      }
+                    });
+                  store.dispatch(
+                    RefreshData(clearData: true, completer: refreshCompleter),
+                  );
                 }
-              } else {
-                final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
-                final index = selectedCompanyIndex == 0 ? 1 : 0;
-                store.dispatch(SelectCompany(companyIndex: index));
-                final refreshCompleter = Completer<Null>()
-                  ..future.then<Null>((_) {
-                    store.dispatch(SelectCompany(companyIndex: 0));
-                    store.dispatch(ViewDashboard());
-                    AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
+              })
+              .catchError((Object error) {
+                if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                  Navigator.of(navigatorKey.currentContext!).pop();
+                }
 
-                    if (Navigator.of(navigatorKey.currentContext!).canPop()) {
-                      Navigator.of(navigatorKey.currentContext!).pop();
-                    }
-                  });
-                store.dispatch(
-                    RefreshData(clearData: true, completer: refreshCompleter));
-              }
-            }).catchError((Object error) {
-              if (Navigator.of(navigatorKey.currentContext!).canPop()) {
-                Navigator.of(navigatorKey.currentContext!).pop();
-              }
-
-              showDialog<ErrorDialog>(
+                showDialog<ErrorDialog>(
                   context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
-                  });
-            });
-          store.dispatch(DeleteCompanyRequest(
+                  },
+                );
+              });
+        store.dispatch(
+          DeleteCompanyRequest(
             completer: deleteCompleter,
             password: password,
             idToken: idToken,
             reason: reason,
-          ));
-        },
-        onSavePressed: (context) {
-          Debouncer.runOnComplete(() {
-            final settingsUIState = store.state.uiState.settingsUIState;
-            final completer = snackBarCompleter<Null>(
-                AppLocalization.of(context)!.savedSettings);
-            store.dispatch(SaveCompanyRequest(
-                completer: completer, company: settingsUIState.company));
-          });
-        },
-        onPurgeData: (context, password, idToken) {
+          ),
+        );
+      },
+      onSavePressed: (context) {
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
           final completer = snackBarCompleter<Null>(
-              AppLocalization.of(context)!.purgeSuccessful);
-          store.dispatch(PurgeDataRequest(
+            AppLocalization.of(context)!.savedSettings,
+          );
+          store.dispatch(
+            SaveCompanyRequest(
+              completer: completer,
+              company: settingsUIState.company,
+            ),
+          );
+        });
+      },
+      onPurgeData: (context, password, idToken) {
+        final completer = snackBarCompleter<Null>(
+          AppLocalization.of(context)!.purgeSuccessful,
+        );
+        store.dispatch(
+          PurgeDataRequest(
             completer: completer,
             password: password,
             idToken: idToken,
-          ));
-        },
-        onAppliedLicense: () {
-          store.dispatch(RefreshData());
-        },
-        onSetPrimaryCompany: (context) {
-          final completer = snackBarCompleter<Null>(
-              AppLocalization.of(context)!.updatedCompany);
-          store.dispatch(SetDefaultCompanyRequest(completer: completer));
-        });
+          ),
+        );
+      },
+      onAppliedLicense: () {
+        store.dispatch(RefreshData());
+      },
+      onSetPrimaryCompany: (context) {
+        final completer = snackBarCompleter<Null>(
+          AppLocalization.of(context)!.updatedCompany,
+        );
+        store.dispatch(SetDefaultCompanyRequest(completer: completer));
+      },
+    );
   }
 
   final AppState state;

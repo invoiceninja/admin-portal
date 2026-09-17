@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskSettings extends StatefulWidget {
-  const TaskSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TaskSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final TaskSettingsVM viewModel;
 
@@ -30,8 +27,9 @@ class TaskSettings extends StatefulWidget {
 }
 
 class _TaskSettingsState extends State<TaskSettings> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_taskSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_taskSettings',
+  );
   FocusScopeNode? _focusNode;
   final _taskRateController = TextEditingController();
   final _taskRoundToNearestController = TextEditingController();
@@ -48,22 +46,24 @@ class _TaskSettingsState extends State<TaskSettings> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _taskRateController,
-      _taskRoundToNearestController,
-    ];
+    _controllers = [_taskRateController, _taskRoundToNearestController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final settings = widget.viewModel.settings;
-    _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
-    _taskRoundToNearestController.text =
-        (settings.taskRoundToNearest ?? 0).toString();
+    _taskRateController.text = formatNumber(
+      settings.defaultTaskRate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
+    _taskRoundToNearestController.text = (settings.taskRoundToNearest ?? 0)
+        .toString();
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -83,10 +83,14 @@ class _TaskSettingsState extends State<TaskSettings> {
     final state = viewModel.state;
 
     final seconds = parseInt(_taskRoundToNearestController.text.trim());
-    final settings = viewModel.settings.rebuild((b) => b
-      ..defaultTaskRate = parseDouble(_taskRateController.text.trim(),
-          zeroIsNull: state.settingsUIState.isFiltered)
-      ..taskRoundToNearest = seconds == null ? null : seconds);
+    final settings = viewModel.settings.rebuild(
+      (b) => b
+        ..defaultTaskRate = parseDouble(
+          _taskRateController.text.trim(),
+          zeroIsNull: state.settingsUIState.isFiltered,
+        )
+        ..taskRoundToNearest = seconds == null ? null : seconds,
+    );
 
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
@@ -115,7 +119,9 @@ class _TaskSettingsState extends State<TaskSettings> {
                 onSavePressed: viewModel.onSavePressed,
                 isMoney: true,
                 keyboardType: TextInputType.numberWithOptions(
-                    decimal: true, signed: true),
+                  decimal: true,
+                  signed: true,
+                ),
               ),
               if (!viewModel.state.settingsUIState.isFiltered) ...[
                 SizedBox(height: 32),
@@ -125,7 +131,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.autoStartTasks,
                   subtitle: Text(localization.autoStartTasksHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..autoStartTasks = value)),
+                    company.rebuild((b) => b..autoStartTasks = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -133,23 +140,26 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.showTaskEndDate,
                   subtitle: Text(localization.showTaskEndDateHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..showTaskEndDate = value)),
+                    company.rebuild((b) => b..showTaskEndDate = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.showTaskItemDescription),
                   value: settings.showTaskItemDescription!,
                   subtitle: Text(localization.showTaskItemDescriptionHelp),
-                  onChanged: (value) => viewModel.onSettingsChanged(settings
-                      .rebuild((b) => b..showTaskItemDescription = value)),
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..showTaskItemDescription = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.showTaskBillable),
                   value: settings.allowBillableTaskItems!,
                   subtitle: Text(localization.allowBillableTaskItemsHelp),
-                  onChanged: (value) => viewModel.onSettingsChanged(settings
-                      .rebuild((b) => b..allowBillableTaskItems = value)),
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..allowBillableTaskItems = value),
+                  ),
                 ),
               ],
               if (supportsLatestFeatures('5.8.55'))
@@ -157,34 +167,37 @@ class _TaskSettingsState extends State<TaskSettings> {
                   label: localization.roundTasks,
                   value: settings.taskRoundingEnabled,
                   helpLabel: localization.roundTasksHelp,
-                  onChanged: (value) =>
-                      viewModel.onSettingsChanged(settings.rebuild(
-                    (b) => b
-                      ..taskRoundToNearest = value == true
-                          ? 60 * 15
-                          : value == false
-                              ? 1
-                              : null,
-                  )),
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                      (b) => b
+                        ..taskRoundToNearest = value == true
+                            ? 60 * 15
+                            : value == false
+                            ? 1
+                            : null,
+                    ),
+                  ),
                 ),
               if (settings.taskRoundingEnabled == true) ...[
                 BoolDropdownButton(
                   label: localization.direction,
                   value: settings.taskRoundUp,
                   onChanged: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b.taskRoundUp = value)),
+                    settings.rebuild((b) => b.taskRoundUp = value),
+                  ),
                   disabledLabel: localization.roundDown,
                   enabledLabel: localization.roundUp,
                 ),
                 AppDropdownButton<int>(
                   value:
                       settings.isTaskRoundingCustom || _showCustomTaskRounding
-                          ? 0
-                          : settings.taskRoundToNearest,
+                      ? 0
+                      : settings.taskRoundToNearest,
                   labelText: localization.taskRoundToNearest,
                   onChanged: (value) {
-                    final updated =
-                        settings.rebuild((b) => b..taskRoundToNearest = value);
+                    final updated = settings.rebuild(
+                      (b) => b..taskRoundToNearest = value,
+                    );
                     viewModel.onSettingsChanged(updated);
                     setState(() {
                       _showCustomTaskRounding = updated.isTaskRoundingCustom;
@@ -193,10 +206,12 @@ class _TaskSettingsState extends State<TaskSettings> {
                     });
                   },
                   items: kTaskRoundingOptions.keys
-                      .map((roundTo) => DropdownMenuItem(
-                            child: Text(localization.lookup(roundTo)),
-                            value: kTaskRoundingOptions[roundTo],
-                          ))
+                      .map(
+                        (roundTo) => DropdownMenuItem(
+                          child: Text(localization.lookup(roundTo)),
+                          value: kTaskRoundingOptions[roundTo],
+                        ),
+                      )
                       .toList(),
                 ),
                 if (_showCustomTaskRounding || settings.isTaskRoundingCustom)
@@ -211,7 +226,11 @@ class _TaskSettingsState extends State<TaskSettings> {
           if (!viewModel.state.settingsUIState.isFiltered)
             Padding(
               padding: const EdgeInsets.only(
-                  top: 0, bottom: 10, right: 16, left: 16),
+                top: 0,
+                bottom: 10,
+                right: 16,
+                left: 16,
+              ),
               child: AppButton(
                 iconData: Icons.settings,
                 label: localization.configureStatuses.toUpperCase(),
@@ -227,7 +246,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.invoiceTaskDatelog,
                   subtitle: Text(localization.invoiceTaskDatelogHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskDatelog = value)),
+                    company.rebuild((b) => b..invoiceTaskDatelog = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -235,7 +255,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.invoiceTaskTimelog,
                   subtitle: Text(localization.invoiceTaskTimelogHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskTimelog = value)),
+                    company.rebuild((b) => b..invoiceTaskTimelog = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -243,7 +264,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.invoiceTaskHours,
                   subtitle: Text(localization.invoiceTaskHoursHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskHours = value)),
+                    company.rebuild((b) => b..invoiceTaskHours = value),
+                  ),
                 ),
                 if (settings.showTaskItemDescription == true)
                   SwitchListTile(
@@ -251,8 +273,11 @@ class _TaskSettingsState extends State<TaskSettings> {
                     title: Text(localization.invoiceTaskItemDescription),
                     value: company.invoiceTaskItemDescription,
                     subtitle: Text(localization.invoiceTaskItemDescriptionHelp),
-                    onChanged: (value) => viewModel.onCompanyChanged(company
-                        .rebuild((b) => b..invoiceTaskItemDescription = value)),
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild(
+                        (b) => b..invoiceTaskItemDescription = value,
+                      ),
+                    ),
                   ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -260,27 +285,32 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.invoiceTaskProject,
                   subtitle: Text(localization.invoiceTaskProjectHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskProject = value)),
+                    company.rebuild((b) => b..invoiceTaskProject = value),
+                  ),
                 ),
                 if (company.invoiceTaskProject) ...[
                   SizedBox(height: 10),
                   AppDropdownButton<bool>(
-                      labelText: localization.projectLocation,
-                      value: company.invoiceTaskProjectHeader,
-                      onChanged: (dynamic value) {
-                        viewModel.onCompanyChanged(company.rebuild(
-                            (b) => b..invoiceTaskProjectHeader = value));
-                      },
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(localization.service),
-                          value: false,
+                    labelText: localization.projectLocation,
+                    value: company.invoiceTaskProjectHeader,
+                    onChanged: (dynamic value) {
+                      viewModel.onCompanyChanged(
+                        company.rebuild(
+                          (b) => b..invoiceTaskProjectHeader = value,
                         ),
-                        DropdownMenuItem(
-                          child: Text(localization.description),
-                          value: true,
-                        ),
-                      ]),
+                      );
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.service),
+                        value: false,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.description),
+                        value: true,
+                      ),
+                    ],
+                  ),
                 ],
               ],
             ],
@@ -294,7 +324,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.showTasksTable,
                   subtitle: Text(localization.showTasksTableHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..showTasksTable = value)),
+                    company.rebuild((b) => b..showTasksTable = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -302,7 +333,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.invoiceTaskLock,
                   subtitle: Text(localization.lockInvoicedTasksHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskLock = value)),
+                    company.rebuild((b) => b..invoiceTaskLock = value),
+                  ),
                 ),
                 SwitchListTile(
                   activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -310,7 +342,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                   value: company.invoiceTaskDocuments,
                   subtitle: Text(localization.addDocumentsToInvoiceHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..invoiceTaskDocuments = value)),
+                    company.rebuild((b) => b..invoiceTaskDocuments = value),
+                  ),
                 ),
               ],
             ),
@@ -322,7 +355,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                 value: settings.enablePortalTasks,
                 iconData: getSettingIcon(kSettingsClientPortal),
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enablePortalTasks = value)),
+                  settings.rebuild((b) => b..enablePortalTasks = value),
+                ),
               ),
               SizedBox(height: 10),
               AppDropdownButton<String>(
@@ -330,20 +364,24 @@ class _TaskSettingsState extends State<TaskSettings> {
                 value: settings.clientPortalTasks,
                 onChanged: ((settings.enablePortalTasks ?? false) != false)
                     ? (dynamic value) {
-                        viewModel.onSettingsChanged(settings
-                            .rebuild((b) => b..clientPortalTasks = value));
+                        viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..clientPortalTasks = value),
+                        );
                       }
                     : null,
-                items: [
-                  SettingsEntity.PORTAL_TASKS_INVOICED,
-                  SettingsEntity.PORTAL_TASKS_UNINVOICED,
-                  SettingsEntity.PORTAL_TASKS_ALL,
-                ]
-                    .map((value) => DropdownMenuItem(
-                          child: Text(localization.lookup(value)),
-                          value: value,
-                        ))
-                    .toList(),
+                items:
+                    [
+                          SettingsEntity.PORTAL_TASKS_INVOICED,
+                          SettingsEntity.PORTAL_TASKS_UNINVOICED,
+                          SettingsEntity.PORTAL_TASKS_ALL,
+                        ]
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: Text(localization.lookup(value)),
+                            value: value,
+                          ),
+                        )
+                        .toList(),
               ),
             ],
           ),

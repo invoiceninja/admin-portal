@@ -42,9 +42,11 @@ abstract class PurchaseOrderState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<PurchaseOrderState> get serializer =>

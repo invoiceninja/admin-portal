@@ -15,10 +15,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'transaction_rule_screen_vm.dart';
 
 class TransactionRuleScreen extends StatelessWidget {
-  const TransactionRuleScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TransactionRuleScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTransactionRules';
 
@@ -38,7 +36,8 @@ class TransactionRuleScreen extends StatelessWidget {
       onCancelSettingsSection: kSettingsBankAccounts,
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.transactionRuleListState.filterClearedAt}__'),
+          '__filter_${state.transactionRuleListState.filterClearedAt}__',
+        ),
         entityType: EntityType.transactionRule,
         entityIds: viewModel.transactionRuleList,
         filter: state.transactionRuleListState.filter,
@@ -60,14 +59,13 @@ class TransactionRuleScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.transactionRule,
         tableColumns: TransactionRulePresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            TransactionRulePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: TransactionRulePresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortTransactionRules(value));
         },
-        sortFields: [
-          TransactionRuleFields.name,
-        ],
+        sortFields: [TransactionRuleFields.name],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterTransactionRulesByState(state));
         },
@@ -87,19 +85,19 @@ class TransactionRuleScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTransactionRulesByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.transactionRule)
           ? FloatingActionButton(
               heroTag: 'transaction_rule_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.transactionRule);
+                  context: context,
+                  entityType: EntityType.transactionRule,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newTransactionRule,
             )
           : null,

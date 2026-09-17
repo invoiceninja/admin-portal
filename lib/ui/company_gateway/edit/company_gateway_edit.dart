@@ -34,10 +34,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
-  const CompanyGatewayEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const CompanyGatewayEdit({Key? key, required this.viewModel})
+    : super(key: key);
 
   final CompanyGatewayEditVM viewModel;
 
@@ -47,8 +45,9 @@ class CompanyGatewayEdit extends StatefulWidget {
 
 class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_companyGatewayEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_companyGatewayEdit',
+  );
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController? _controller;
@@ -67,12 +66,15 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     if (_gatewayTypeId.isEmpty) {
       final companyGateway = widget.viewModel.companyGateway;
       final gateway = widget
-          .viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
+          .viewModel
+          .state
+          .staticState
+          .gatewayMap[companyGateway.gatewayId];
 
       final enabledGatewayIds = (gateway?.options.keys ?? []).where(
-          (gatewayTypeId) => companyGateway
-              .getSettingsForGatewayTypeId(gatewayTypeId)
-              .isEnabled);
+        (gatewayTypeId) =>
+            companyGateway.getSettingsForGatewayTypeId(gatewayTypeId).isEnabled,
+      );
 
       if (enabledGatewayIds.isNotEmpty) {
         _gatewayTypeId = enabledGatewayIds.first;
@@ -101,8 +103,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final companyGateway = viewModel.companyGateway;
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
-    final accountId =
-        (companyGateway.parsedConfig!['account_id'] ?? '').toString();
+    final accountId = (companyGateway.parsedConfig!['account_id'] ?? '')
+        .toString();
 
     final connectGateways = [
       kGatewayStripeConnect,
@@ -111,14 +113,15 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       kGatewayGoCardlessOAuth,
     ];
 
-    final disableSave = (state.isHosted &&
+    final disableSave =
+        (state.isHosted &&
             connectGateways.contains(companyGateway.gatewayId) &&
             companyGateway.isNew) ||
         state.isDemo;
     final enabledGatewayIds = (gateway?.options.keys ?? []).where(
-        (gatewayTypeId) => companyGateway
-            .getSettingsForGatewayTypeId(gatewayTypeId)
-            .isEnabled);
+      (gatewayTypeId) =>
+          companyGateway.getSettingsForGatewayTypeId(gatewayTypeId).isEnabled,
+    );
 
     return EditScaffold(
       entity: companyGateway,
@@ -132,15 +135,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
         controller: _controller,
         isScrollable: isMobile(context),
         tabs: [
-          Tab(
-            text: localization.credentials,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.limitsAndFees,
-          ),
+          Tab(text: localization.credentials),
+          Tab(text: localization.settings),
+          Tab(text: localization.limitsAndFees),
         ],
       ),
       body: AppTabForm(
@@ -158,19 +155,23 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       autofocus: true,
                       entityType: EntityType.gateway,
                       entityList: memoizedGatewayList(
-                          state.staticState.gatewayMap, state.isHosted),
+                        state.staticState.gatewayMap,
+                        state.isHosted,
+                      ),
                       labelText: localization.provider,
                       entityId: companyGateway.gatewayId,
                       onSelected: (SelectableEntity? gateway) {
                         viewModel.onChanged(
-                          companyGateway.rebuild((b) => b
-                            ..feesAndLimitsMap[((gateway ?? GatewayEntity())
-                                        as GatewayEntity)
-                                    .defaultGatewayTypeId] =
-                                FeesAndLimitsSettings(isEnabled: true)
-                            ..gatewayId = gateway?.id ?? ''
-                            ..config = '{}'
-                            ..label = gateway?.listDisplayName ?? ''),
+                          companyGateway.rebuild(
+                            (b) => b
+                              ..feesAndLimitsMap[((gateway ?? GatewayEntity())
+                                          as GatewayEntity)
+                                      .defaultGatewayTypeId] =
+                                  FeesAndLimitsSettings(isEnabled: true)
+                              ..gatewayId = gateway?.id ?? ''
+                              ..config = '{}'
+                              ..label = gateway?.listDisplayName ?? '',
+                          ),
                         );
                       },
                     ),
@@ -186,7 +187,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                             : () {
                                 viewModel.onCancelPressed(context);
                                 viewModel.onGatewaySignUpPressed(
-                                    companyGateway.gatewayId);
+                                  companyGateway.gatewayId,
+                                );
                               },
                       ),
                       if (companyGateway.gatewayId == kGatewayStripeConnect)
@@ -206,8 +208,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         ),
                     ] else
                       GatewayConfigSettings(
-                        key:
-                            ValueKey('__connect_${companyGateway.gatewayId}__'),
+                        key: ValueKey(
+                          '__connect_${companyGateway.gatewayId}__',
+                        ),
                         companyGateway: companyGateway,
                         viewModel: viewModel,
                         disasbledFields: ['account_id'],
@@ -223,78 +226,104 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
             ],
           ),
           if (companyGateway.gatewayId == kGatewayCustom)
-            Center(
-              child: HelpText(localization.noPaymentTypesEnabled),
-            )
+            Center(child: HelpText(localization.noPaymentTypesEnabled))
           else
             ScrollableListView(
               children: <Widget>[
-                FormCard(children: <Widget>[
-                  DecoratedFormField(
-                    label: localization.label,
-                    initialValue: companyGateway.label,
-                    onChanged: (String value) => viewModel.onChanged(
-                        companyGateway.rebuild((b) => b..label = value.trim())),
-                    keyboardType: TextInputType.text,
-                  ),
-                  if (state.staticState.gatewayMap[companyGateway.gatewayId]
-                          ?.supportsTokenBilling ==
-                      true)
-                    AppDropdownButton<String>(
-                      labelText: localization.captureCard,
-                      value: companyGateway.tokenBilling,
-                      selectedItemBuilder: companyGateway.tokenBilling.isEmpty
-                          ? null
-                          : (context) => [
-                                SettingsEntity.AUTO_BILL_ALWAYS,
-                                SettingsEntity.AUTO_BILL_OPT_OUT,
-                                SettingsEntity.AUTO_BILL_OPT_IN,
-                                SettingsEntity.AUTO_BILL_OFF,
-                              ]
-                                  .map(
-                                      (type) => Text(localization.lookup(type)))
-                                  .toList(),
-                      onChanged: (dynamic value) => viewModel.onChanged(
-                          companyGateway
-                              .rebuild((b) => b..tokenBilling = value)),
-                      items: [
-                        SettingsEntity.AUTO_BILL_ALWAYS,
-                        SettingsEntity.AUTO_BILL_OPT_OUT,
-                        SettingsEntity.AUTO_BILL_OPT_IN,
-                        SettingsEntity.AUTO_BILL_OFF
-                      ]
-                          .map((value) => DropdownMenuItem(
-                                child: AutobillDropdownMenuItem(type: value),
-                                value: value,
-                              ))
-                          .toList(),
+                FormCard(
+                  children: <Widget>[
+                    DecoratedFormField(
+                      label: localization.label,
+                      initialValue: companyGateway.label,
+                      onChanged: (String value) => viewModel.onChanged(
+                        companyGateway.rebuild((b) => b..label = value.trim()),
+                      ),
+                      keyboardType: TextInputType.text,
                     ),
-                  SizedBox(height: 16),
-                  for (var gatewayTypeId in gateway?.options.keys ?? <String>[])
-                    SwitchListTile(
-                        title: Text(kGatewayTypes.containsKey(gatewayTypeId)
-                            ? localization
-                                .lookup(kGatewayTypes[gatewayTypeId] ?? '')
-                            : '$gatewayTypeId'),
-                        activeThumbColor:
-                            Theme.of(context).colorScheme.secondary,
+                    if (state
+                            .staticState
+                            .gatewayMap[companyGateway.gatewayId]
+                            ?.supportsTokenBilling ==
+                        true)
+                      AppDropdownButton<String>(
+                        labelText: localization.captureCard,
+                        value: companyGateway.tokenBilling,
+                        selectedItemBuilder: companyGateway.tokenBilling.isEmpty
+                            ? null
+                            : (context) =>
+                                  [
+                                        SettingsEntity.AUTO_BILL_ALWAYS,
+                                        SettingsEntity.AUTO_BILL_OPT_OUT,
+                                        SettingsEntity.AUTO_BILL_OPT_IN,
+                                        SettingsEntity.AUTO_BILL_OFF,
+                                      ]
+                                      .map(
+                                        (type) =>
+                                            Text(localization.lookup(type)),
+                                      )
+                                      .toList(),
+                        onChanged: (dynamic value) => viewModel.onChanged(
+                          companyGateway.rebuild(
+                            (b) => b..tokenBilling = value,
+                          ),
+                        ),
+                        items:
+                            [
+                                  SettingsEntity.AUTO_BILL_ALWAYS,
+                                  SettingsEntity.AUTO_BILL_OPT_OUT,
+                                  SettingsEntity.AUTO_BILL_OPT_IN,
+                                  SettingsEntity.AUTO_BILL_OFF,
+                                ]
+                                .map(
+                                  (value) => DropdownMenuItem(
+                                    child: AutobillDropdownMenuItem(
+                                      type: value,
+                                    ),
+                                    value: value,
+                                  ),
+                                )
+                                .toList(),
+                      ),
+                    SizedBox(height: 16),
+                    for (var gatewayTypeId
+                        in gateway?.options.keys ?? <String>[])
+                      SwitchListTile(
+                        title: Text(
+                          kGatewayTypes.containsKey(gatewayTypeId)
+                              ? localization.lookup(
+                                  kGatewayTypes[gatewayTypeId] ?? '',
+                                )
+                              : '$gatewayTypeId',
+                        ),
+                        activeThumbColor: Theme.of(
+                          context,
+                        ).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)
                             .isEnabled,
                         onChanged: (value) {
                           final settings = companyGateway
                               .getSettingsForGatewayTypeId(gatewayTypeId);
-                          viewModel.onChanged(companyGateway.rebuild((b) => b
-                            ..feesAndLimitsMap[gatewayTypeId] =
-                                settings.rebuild((b) => b..isEnabled = value)));
-                        }),
-                ]),
+                          viewModel.onChanged(
+                            companyGateway.rebuild(
+                              (b) => b
+                                ..feesAndLimitsMap[gatewayTypeId] = settings
+                                    .rebuild((b) => b..isEnabled = value),
+                            ),
+                          );
+                        },
+                      ),
+                  ],
+                ),
                 FormCard(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(left: 16, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        top: 16,
+                        bottom: 16,
+                      ),
                       child: Text(
                         localization.requiredFields,
                         style: Theme.of(context).textTheme.titleLarge,
@@ -304,80 +333,111 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.clientName),
                       value: companyGateway.requireClientName,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requireClientName = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requireClientName = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.clientPhone),
                       value: companyGateway.requireClientPhone,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requireClientPhone = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requireClientPhone = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.contactName),
                       value: companyGateway.requireContactName,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requireContactName = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requireContactName = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.contactEmail),
                       value: companyGateway.requireContactEmail,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requireContactEmail = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requireContactEmail = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     if (company.hasCustomField(CustomFieldType.client1))
                       CheckboxListTile(
                         activeColor: Theme.of(context).colorScheme.secondary,
-                        title: Text(company
-                            .getCustomFieldLabel(CustomFieldType.client1)),
+                        title: Text(
+                          company.getCustomFieldLabel(CustomFieldType.client1),
+                        ),
                         value: companyGateway.requireCustomValue1,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..requireCustomValue1 = value)),
+                        onChanged: (value) => viewModel.onChanged(
+                          companyGateway.rebuild(
+                            (b) => b..requireCustomValue1 = value,
+                          ),
+                        ),
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     if (company.hasCustomField(CustomFieldType.client2))
                       CheckboxListTile(
                         activeColor: Theme.of(context).colorScheme.secondary,
-                        title: Text(company
-                            .getCustomFieldLabel(CustomFieldType.client2)),
+                        title: Text(
+                          company.getCustomFieldLabel(CustomFieldType.client2),
+                        ),
                         value: companyGateway.requireCustomValue2,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..requireCustomValue2 = value)),
+                        onChanged: (value) => viewModel.onChanged(
+                          companyGateway.rebuild(
+                            (b) => b..requireCustomValue2 = value,
+                          ),
+                        ),
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     if (company.hasCustomField(CustomFieldType.client3))
                       CheckboxListTile(
                         activeColor: Theme.of(context).colorScheme.secondary,
-                        title: Text(company
-                            .getCustomFieldLabel(CustomFieldType.client3)),
+                        title: Text(
+                          company.getCustomFieldLabel(CustomFieldType.client3),
+                        ),
                         value: companyGateway.requireCustomValue3,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..requireCustomValue3 = value)),
+                        onChanged: (value) => viewModel.onChanged(
+                          companyGateway.rebuild(
+                            (b) => b..requireCustomValue3 = value,
+                          ),
+                        ),
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     if (company.hasCustomField(CustomFieldType.client4))
                       CheckboxListTile(
                         activeColor: Theme.of(context).colorScheme.secondary,
-                        title: Text(company
-                            .getCustomFieldLabel(CustomFieldType.client4)),
+                        title: Text(
+                          company.getCustomFieldLabel(CustomFieldType.client4),
+                        ),
                         value: companyGateway.requireCustomValue4,
-                        onChanged: (value) => viewModel.onChanged(companyGateway
-                            .rebuild((b) => b..requireCustomValue4 = value)),
+                        onChanged: (value) => viewModel.onChanged(
+                          companyGateway.rebuild(
+                            (b) => b..requireCustomValue4 = value,
+                          ),
+                        ),
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.postalCode),
                       value: companyGateway.requirePostalCode,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requirePostalCode = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requirePostalCode = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
@@ -385,23 +445,30 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       title: Text(localization.cvv),
                       value: companyGateway.requireCvv,
                       onChanged: (value) => viewModel.onChanged(
-                          companyGateway.rebuild((b) => b..requireCvv = value)),
+                        companyGateway.rebuild((b) => b..requireCvv = value),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.billingAddress),
                       value: companyGateway.requireBillingAddress,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requireBillingAddress = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requireBillingAddress = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     CheckboxListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.shippingAddress),
                       value: companyGateway.requireShippingAddress,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..requireShippingAddress = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..requireShippingAddress = value,
+                        ),
+                      ),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                     SizedBox(height: 16),
@@ -410,16 +477,20 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       title: Text(localization.alwaysShowRequiredFields),
                       subtitle: Text(localization.alwaysShowRequiredFieldsHelp),
                       value: companyGateway.alwaysShowRequiredFields,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..alwaysShowRequiredFields = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild(
+                          (b) => b..alwaysShowRequiredFields = value,
+                        ),
+                      ),
                     ),
                     SwitchListTile(
                       activeThumbColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.updateAddress),
                       subtitle: Text(localization.updateAddressHelp),
                       value: companyGateway.updateDetails,
-                      onChanged: (value) => viewModel.onChanged(companyGateway
-                          .rebuild((b) => b..updateDetails = value)),
+                      onChanged: (value) => viewModel.onChanged(
+                        companyGateway.rebuild((b) => b..updateDetails = value),
+                      ),
                     ),
                   ],
                 ),
@@ -468,9 +539,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               ],
             ),
           if (enabledGatewayIds.isEmpty)
-            Center(
-              child: HelpText(localization.noPaymentTypesEnabled),
-            )
+            Center(child: HelpText(localization.noPaymentTypesEnabled))
           else
             ScrollableListView(
               children: <Widget>[
@@ -480,11 +549,16 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       labelText: localization.paymentType,
                       value: _gatewayTypeId,
                       items: enabledGatewayIds
-                          .map((gatewayTypeId) => DropdownMenuItem(
-                                child: Text(localization.lookup(
-                                    kGatewayTypes[gatewayTypeId] ?? '')),
-                                value: gatewayTypeId,
-                              ))
+                          .map(
+                            (gatewayTypeId) => DropdownMenuItem(
+                              child: Text(
+                                localization.lookup(
+                                  kGatewayTypes[gatewayTypeId] ?? '',
+                                ),
+                              ),
+                              value: gatewayTypeId,
+                            ),
+                          )
                           .toList(),
                       onChanged: (dynamic value) {
                         setState(() {
@@ -533,9 +607,11 @@ class CardListTile extends StatelessWidget {
       activeColor: Theme.of(context).colorScheme.secondary,
       title: Text(staticState.paymentTypeMap[paymentType]?.name ?? ''),
       value: companyGateway.supportsCard(cardType!),
-      onChanged: (value) => viewModel!.onChanged(value!
-          ? companyGateway.addCard(cardType)
-          : companyGateway.removeCard(cardType)),
+      onChanged: (value) => viewModel!.onChanged(
+        value!
+            ? companyGateway.addCard(cardType)
+            : companyGateway.removeCard(cardType),
+      ),
     );
   }
 }
@@ -580,18 +656,21 @@ class GatewayConfigSettings extends StatelessWidget {
             ),
           ),
         ...gateway.parsedFields!.keys
-            .map((field) => GatewayConfigField(
-                  field: field,
-                  value: companyGateway!.parsedConfig![field],
-                  gateway: gateway,
-                  defaultValue: gateway.parsedFields![field],
-                  enabled: !disasbledFields.contains(field),
-                  onChanged: (dynamic value) {
-                    viewModel!
-                        .onChanged(companyGateway!.updateConfig(field, value));
-                  },
-                ))
-            .toList()
+            .map(
+              (field) => GatewayConfigField(
+                field: field,
+                value: companyGateway!.parsedConfig![field],
+                gateway: gateway,
+                defaultValue: gateway.parsedFields![field],
+                enabled: !disasbledFields.contains(field),
+                onChanged: (dynamic value) {
+                  viewModel!.onChanged(
+                    companyGateway!.updateConfig(field, value),
+                  );
+                },
+              ),
+            )
+            .toList(),
       ],
     );
   }
@@ -678,18 +757,20 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
       final dynamic value =
           (widget.value == null || widget.value == widget.defaultValue)
-              ? ''
-              : widget.value;
+          ? ''
+          : widget.value;
 
       return AppDropdownButton<String>(
         labelText: toTitleCase(widget.field),
         value: value,
         onChanged: (dynamic value) => widget.onChanged(value),
         items: options
-            .map((value) => DropdownMenuItem<String>(
-                  child: Text(value.trim()),
-                  value: value.trim(),
-                ))
+            .map(
+              (value) => DropdownMenuItem<String>(
+                child: Text(value.trim()),
+                value: value.trim(),
+              ),
+            )
             .toList(),
       );
     } else if (widget.field.toLowerCase().contains('color')) {
@@ -728,9 +809,12 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 }
 
 class LimitEditor extends StatefulWidget {
-  const LimitEditor(
-      {Key? key, this.companyGateway, this.viewModel, this.gatewayTypeId})
-      : super(key: key);
+  const LimitEditor({
+    Key? key,
+    this.companyGateway,
+    this.viewModel,
+    this.gatewayTypeId,
+  }) : super(key: key);
 
   final CompanyGatewayEntity? companyGateway;
   final CompanyGatewayEditVM? viewModel;
@@ -769,8 +853,9 @@ class _LimitEditorState extends State<LimitEditor> {
     _maxController!.removeListener(_onTextChange);
 
     final companyGateway = widget.companyGateway!;
-    final settings =
-        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final settings = companyGateway.getSettingsForGatewayTypeId(
+      widget.gatewayTypeId,
+    );
 
     if (settings.minLimit != -1) {
       _enableMin = true;
@@ -782,12 +867,18 @@ class _LimitEditorState extends State<LimitEditor> {
 
     _minController!.text = settings.minLimit == -1
         ? ''
-        : formatNumber(settings.minLimit.toDouble(), context,
-            formatNumberType: FormatNumberType.inputMoney)!;
+        : formatNumber(
+            settings.minLimit.toDouble(),
+            context,
+            formatNumberType: FormatNumberType.inputMoney,
+          )!;
     _maxController!.text = settings.maxLimit == -1
         ? ''
-        : formatNumber(settings.maxLimit.toDouble(), context,
-            formatNumberType: FormatNumberType.inputMoney)!;
+        : formatNumber(
+            settings.maxLimit.toDouble(),
+            context,
+            formatNumberType: FormatNumberType.inputMoney,
+          )!;
 
     _minController!.addListener(_onTextChange);
     _maxController!.addListener(_onTextChange);
@@ -798,16 +889,24 @@ class _LimitEditorState extends State<LimitEditor> {
   void _onChanged() {
     final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
-    final settings =
-        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final settings = companyGateway.getSettingsForGatewayTypeId(
+      widget.gatewayTypeId,
+    );
 
-    final updatedSettings = settings.rebuild((b) => b
-      ..minLimit = _enableMin! ? parseDouble(_minController!.text.trim()) : -1
-      ..maxLimit = _enableMax! ? parseDouble(_maxController!.text.trim()) : -1);
+    final updatedSettings = settings.rebuild(
+      (b) => b
+        ..minLimit = _enableMin! ? parseDouble(_minController!.text.trim()) : -1
+        ..maxLimit = _enableMax!
+            ? parseDouble(_maxController!.text.trim())
+            : -1,
+    );
 
     if (settings != updatedSettings) {
-      viewModel.onChanged(companyGateway.rebuild(
-          (b) => b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
+      viewModel.onChanged(
+        companyGateway.rebuild(
+          (b) => b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings,
+        ),
+      );
     }
   }
 
@@ -834,7 +933,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     enabled: _enableMin,
                     controller: _minController,
                     keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
+                      decimal: true,
+                      signed: true,
+                    ),
                     autocorrect: false,
                   ),
                   SizedBox(height: 10),
@@ -842,9 +943,11 @@ class _LimitEditorState extends State<LimitEditor> {
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: const EdgeInsets.all(0),
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(isDesktop(context)
-                        ? localization.enableMin
-                        : localization.enable),
+                    title: Text(
+                      isDesktop(context)
+                          ? localization.enableMin
+                          : localization.enable,
+                    ),
                     value: _enableMin,
                     onChanged: (value) {
                       setState(() {
@@ -855,7 +958,7 @@ class _LimitEditorState extends State<LimitEditor> {
                         }
                       });
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -869,7 +972,9 @@ class _LimitEditorState extends State<LimitEditor> {
                     enabled: _enableMax,
                     controller: _maxController,
                     keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
+                      decimal: true,
+                      signed: true,
+                    ),
                     autocorrect: false,
                   ),
                   SizedBox(height: 10),
@@ -877,9 +982,11 @@ class _LimitEditorState extends State<LimitEditor> {
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: const EdgeInsets.all(0),
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(isDesktop(context)
-                        ? localization.enableMax
-                        : localization.enable),
+                    title: Text(
+                      isDesktop(context)
+                          ? localization.enableMax
+                          : localization.enable,
+                    ),
                     value: _enableMax,
                     onChanged: (value) {
                       setState(() {
@@ -890,7 +997,7 @@ class _LimitEditorState extends State<LimitEditor> {
                         }
                       });
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -902,9 +1009,12 @@ class _LimitEditorState extends State<LimitEditor> {
 }
 
 class FeesEditor extends StatefulWidget {
-  const FeesEditor(
-      {Key? key, this.companyGateway, this.viewModel, this.gatewayTypeId})
-      : super(key: key);
+  const FeesEditor({
+    Key? key,
+    this.companyGateway,
+    this.viewModel,
+    this.gatewayTypeId,
+  }) : super(key: key);
 
   final CompanyGatewayEntity? companyGateway;
   final CompanyGatewayEditVM? viewModel;
@@ -934,28 +1044,36 @@ class _FeesEditorState extends State<FeesEditor> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _amountController,
-      _percentController,
-      _capController,
-    ];
+    _controllers = [_amountController, _percentController, _capController];
 
     final companyGateway = widget.companyGateway!;
-    final settings =
-        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final settings = companyGateway.getSettingsForGatewayTypeId(
+      widget.gatewayTypeId,
+    );
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
-    _amountController.text = formatNumber(settings.feeAmount, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
-    _percentController.text = formatNumber(settings.feePercent, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
-    _capController.text = formatNumber(settings.feeCap, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _amountController.text = formatNumber(
+      settings.feeAmount,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
+    _percentController.text = formatNumber(
+      settings.feePercent,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
+    _capController.text = formatNumber(
+      settings.feeCap,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -963,22 +1081,28 @@ class _FeesEditorState extends State<FeesEditor> {
   void _onChanged() {
     final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
-    final settings =
-        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final settings = companyGateway.getSettingsForGatewayTypeId(
+      widget.gatewayTypeId,
+    );
 
     final amount = parseDouble(_amountController.text.trim());
     final percent = parseDouble(_percentController.text.trim());
     final cap = parseDouble(_capController.text.trim());
 
-    final updatedSettings = settings.rebuild((b) => b
-      ..feeAmount = amount
-      ..feePercent = percent
-      ..feeCap = cap);
+    final updatedSettings = settings.rebuild(
+      (b) => b
+        ..feeAmount = amount
+        ..feePercent = percent
+        ..feeCap = cap,
+    );
 
     if (settings != updatedSettings) {
       _debouncer.run(() {
-        viewModel.onChanged(companyGateway.rebuild((b) =>
-            b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings));
+        viewModel.onChanged(
+          companyGateway.rebuild(
+            (b) => b..feesAndLimitsMap[widget.gatewayTypeId] = updatedSettings,
+          ),
+        );
       });
     }
   }
@@ -987,8 +1111,9 @@ class _FeesEditorState extends State<FeesEditor> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
-    final settings =
-        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final settings = companyGateway.getSettingsForGatewayTypeId(
+      widget.gatewayTypeId,
+    );
 
     const double amount = 100;
     final fee = settings.calculateSampleFee(100);
@@ -1004,8 +1129,9 @@ class _FeesEditorState extends State<FeesEditor> {
     final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
     final company = viewModel.state.company;
-    final settings =
-        companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
+    final settings = companyGateway.getSettingsForGatewayTypeId(
+      widget.gatewayTypeId,
+    );
 
     return FormCard(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1014,48 +1140,64 @@ class _FeesEditorState extends State<FeesEditor> {
           label: localization.feePercent,
           controller: _percentController,
           isPercent: true,
-          keyboardType:
-              TextInputType.numberWithOptions(decimal: true, signed: true),
+          keyboardType: TextInputType.numberWithOptions(
+            decimal: true,
+            signed: true,
+          ),
         ),
         DecoratedFormField(
           label: localization.feeAmount,
           controller: _amountController,
           isMoney: true,
-          keyboardType:
-              TextInputType.numberWithOptions(decimal: true, signed: true),
+          keyboardType: TextInputType.numberWithOptions(
+            decimal: true,
+            signed: true,
+          ),
         ),
         if (company.enableFirstItemTaxRate)
           TaxRateDropdown(
-            onSelected: (taxRate) => viewModel.onChanged(companyGateway.rebuild(
+            onSelected: (taxRate) => viewModel.onChanged(
+              companyGateway.rebuild(
                 (b) => b
-                  ..feesAndLimitsMap[widget.gatewayTypeId] =
-                      settings.rebuild((b) => b
-                        ..taxRate1 = taxRate.rate
-                        ..taxName1 = taxRate.name))),
+                  ..feesAndLimitsMap[widget.gatewayTypeId] = settings.rebuild(
+                    (b) => b
+                      ..taxRate1 = taxRate.rate
+                      ..taxName1 = taxRate.name,
+                  ),
+              ),
+            ),
             labelText: localization.tax,
             initialTaxName: settings.taxName1,
             initialTaxRate: settings.taxRate1,
           ),
         if (company.enableSecondItemTaxRate)
           TaxRateDropdown(
-            onSelected: (taxRate) => viewModel.onChanged(companyGateway.rebuild(
+            onSelected: (taxRate) => viewModel.onChanged(
+              companyGateway.rebuild(
                 (b) => b
-                  ..feesAndLimitsMap[widget.gatewayTypeId] =
-                      settings.rebuild((b) => b
-                        ..taxRate2 = taxRate.rate
-                        ..taxName2 = taxRate.name))),
+                  ..feesAndLimitsMap[widget.gatewayTypeId] = settings.rebuild(
+                    (b) => b
+                      ..taxRate2 = taxRate.rate
+                      ..taxName2 = taxRate.name,
+                  ),
+              ),
+            ),
             labelText: localization.tax,
             initialTaxName: settings.taxName2,
             initialTaxRate: settings.taxRate2,
           ),
         if (company.enableThirdItemTaxRate)
           TaxRateDropdown(
-            onSelected: (taxRate) => viewModel.onChanged(companyGateway.rebuild(
+            onSelected: (taxRate) => viewModel.onChanged(
+              companyGateway.rebuild(
                 (b) => b
-                  ..feesAndLimitsMap[widget.gatewayTypeId] =
-                      settings.rebuild((b) => b
-                        ..taxRate3 = taxRate.rate
-                        ..taxName3 = taxRate.name))),
+                  ..feesAndLimitsMap[widget.gatewayTypeId] = settings.rebuild(
+                    (b) => b
+                      ..taxRate3 = taxRate.rate
+                      ..taxName3 = taxRate.name,
+                  ),
+              ),
+            ),
             labelText: localization.tax,
             initialTaxName: settings.taxName3,
             initialTaxRate: settings.taxRate3,
@@ -1064,28 +1206,31 @@ class _FeesEditorState extends State<FeesEditor> {
           label: localization.feeCap,
           controller: _capController,
           isMoney: true,
-          keyboardType:
-              TextInputType.numberWithOptions(decimal: true, signed: true),
+          keyboardType: TextInputType.numberWithOptions(
+            decimal: true,
+            signed: true,
+          ),
         ),
         SizedBox(height: 16),
         LearnMoreUrl(
           url: kGatewayFeeHelpURL,
           child: SwitchListTile(
             value: settings.adjustFeePercent,
-            onChanged: (value) => viewModel.onChanged(companyGateway.rebuild(
+            onChanged: (value) => viewModel.onChanged(
+              companyGateway.rebuild(
                 (b) => b
-                  ..feesAndLimitsMap[widget.gatewayTypeId] =
-                      settings.rebuild((b) => b..adjustFeePercent = value))),
+                  ..feesAndLimitsMap[widget.gatewayTypeId] = settings.rebuild(
+                    (b) => b..adjustFeePercent = value,
+                  ),
+              ),
+            ),
             title: Text(localization.adjustFeePercent),
             activeThumbColor: Theme.of(context).colorScheme.secondary,
             subtitle: Text(localization.adjustFeePercentHelp),
           ),
         ),
         SizedBox(height: 16),
-        Text(
-          _sampleFee(),
-          style: TextStyle(color: Colors.grey),
-        )
+        Text(_sampleFee(), style: TextStyle(color: Colors.grey)),
       ],
     );
   }

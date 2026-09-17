@@ -21,9 +21,7 @@ class ClientScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ClientScreenVM>(
       converter: ClientScreenVM.fromStore,
       builder: (context, vm) {
-        return ClientScreen(
-          viewModel: vm,
-        );
+        return ClientScreen(viewModel: vm);
       },
     );
   }
@@ -48,13 +46,14 @@ class ClientScreenVM {
     return ClientScreenVM(
       clientMap: state.clientState.map,
       clientList: memoizedFilteredClientList(
-          state.getUISelection(EntityType.client),
-          state.clientState.map,
-          state.clientState.list,
-          state.groupState.map,
-          state.clientListState,
-          state.userState.map,
-          state.staticState),
+        state.getUISelection(EntityType.client),
+        state.clientState.map,
+        state.clientState.list,
+        state.groupState.map,
+        state.clientListState,
+        state.userState.map,
+        state.staticState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.clientListState.isInMultiselect(),
     );

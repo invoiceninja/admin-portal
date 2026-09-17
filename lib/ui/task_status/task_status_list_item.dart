@@ -72,8 +72,10 @@ class TaskStatusListItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Text(formatNumber(taskStatus!.listDisplayAmount, context)!,
-                style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              formatNumber(taskStatus!.listDisplayAmount, context)!,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ],
         ),
       ),
@@ -81,11 +83,7 @@ class TaskStatusListItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           subtitle != null && subtitle.isNotEmpty
-              ? Text(
-                  subtitle,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                )
+              ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
               : Container(),
           EntityStateLabel(taskStatus),
         ],

@@ -8,10 +8,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class InvoiceTaxDetails extends StatelessWidget {
-  const InvoiceTaxDetails({
-    Key? key,
-    required this.invoice,
-  }) : super(key: key);
+  const InvoiceTaxDetails({Key? key, required this.invoice}) : super(key: key);
 
   final InvoiceEntity invoice;
 
@@ -27,12 +24,10 @@ class InvoiceTaxDetails extends StatelessWidget {
       title: Text(localization.taxDetails),
       content: SizedBox(
         width: isDesktop(context) ? 500 : null,
-        child: (invoice.isPurchaseOrder && vendor.isTaxExempt) ||
+        child:
+            (invoice.isPurchaseOrder && vendor.isTaxExempt) ||
                 (!invoice.isPurchaseOrder && client.isTaxExempt)
-            ? SizedBox(
-                child: HelpText(localization.isTaxExempt),
-                height: 100,
-              )
+            ? SizedBox(child: HelpText(localization.isTaxExempt), height: 100)
             : DataTable(
                 columns: [
                   DataColumn(label: Text(localization.region)),
@@ -40,47 +35,63 @@ class InvoiceTaxDetails extends StatelessWidget {
                   DataColumn(label: Text(localization.tax)),
                 ],
                 rows: [
-                  DataRow(cells: [
-                    DataCell(Text(localization.state)),
-                    DataCell(Text(taxData.geoState)),
-                    DataCell(Text('${taxData.stateSalesTax}')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text(localization.county)),
-                    DataCell(Text(toTitleCase(taxData.geoCounty) +
-                        (taxData.countyTaxCode.isEmpty
-                            ? ''
-                            : ' • ${taxData.countyTaxCode}'))),
-                    DataCell(Text('${taxData.countySalesTax}')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text(localization.city)),
-                    DataCell(Text(toTitleCase(taxData.geoCity) +
-                        (taxData.cityTaxCode.isEmpty
-                            ? ''
-                            : ' • ${taxData.cityTaxCode}'))),
-                    DataCell(Text('${taxData.citySalesTax}')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text(localization.district)),
-                    DataCell(Text('')),
-                    DataCell(Text('${taxData.districtSalesTax}')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text(localization.total)),
-                    DataCell(Text('')),
-                    DataCell(Text('${taxData.taxSales}')),
-                  ]),
+                  DataRow(
+                    cells: [
+                      DataCell(Text(localization.state)),
+                      DataCell(Text(taxData.geoState)),
+                      DataCell(Text('${taxData.stateSalesTax}')),
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text(localization.county)),
+                      DataCell(
+                        Text(
+                          toTitleCase(taxData.geoCounty) +
+                              (taxData.countyTaxCode.isEmpty
+                                  ? ''
+                                  : ' • ${taxData.countyTaxCode}'),
+                        ),
+                      ),
+                      DataCell(Text('${taxData.countySalesTax}')),
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text(localization.city)),
+                      DataCell(
+                        Text(
+                          toTitleCase(taxData.geoCity) +
+                              (taxData.cityTaxCode.isEmpty
+                                  ? ''
+                                  : ' • ${taxData.cityTaxCode}'),
+                        ),
+                      ),
+                      DataCell(Text('${taxData.citySalesTax}')),
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text(localization.district)),
+                      DataCell(Text('')),
+                      DataCell(Text('${taxData.districtSalesTax}')),
+                    ],
+                  ),
+                  DataRow(
+                    cells: [
+                      DataCell(Text(localization.total)),
+                      DataCell(Text('')),
+                      DataCell(Text('${taxData.taxSales}')),
+                    ],
+                  ),
                 ],
               ),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            localization.close.toUpperCase(),
-          ),
-        )
+          child: Text(localization.close.toUpperCase()),
+        ),
       ],
     );
   }

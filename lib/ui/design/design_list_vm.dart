@@ -32,27 +32,28 @@ class DesignListBuilder extends StatelessWidget {
       converter: DesignListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.design,
-            //presenter: ClientPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.designList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final designId = viewModel.designList[index];
-              final design = viewModel.designMap[designId]!;
-              final listState = state.getListState(EntityType.design);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.design,
+          //presenter: ClientPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.designList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final designId = viewModel.designList[index];
+            final design = viewModel.designMap[designId]!;
+            final listState = state.getListState(EntityType.design);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return DesignListItem(
-                filter: viewModel.filter,
-                design: design,
-                isChecked: isInMultiselect && listState.isSelected(design.id),
-              );
-            });
+            return DesignListItem(
+              filter: viewModel.filter,
+              design: design,
+              isChecked: isInMultiselect && listState.isSelected(design.id),
+            );
+          },
+        );
       },
     );
   }
@@ -79,8 +80,9 @@ class DesignListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -92,13 +94,19 @@ class DesignListVM {
       userCompany: state.userCompany,
       listState: state.designListState,
       designList: memoizedFilteredDesignList(
-          state.designState.map, state.designState.list, state.designListState),
+        state.designState.map,
+        state.designState.list,
+        state.designListState,
+      ),
       designMap: state.designState.map,
       isLoading: state.isLoading,
       filter: state.designUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> designs,
-              EntityAction action) =>
-          handleDesignAction(context, designs, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> designs,
+            EntityAction action,
+          ) => handleDesignAction(context, designs, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: DesignPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortDesigns(field)),

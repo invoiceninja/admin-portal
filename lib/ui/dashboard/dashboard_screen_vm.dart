@@ -45,7 +45,8 @@ class DashboardScreenBuilder extends StatelessWidget {
         return DashboardScreen(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${company.enabledModules}_${state.prefState.isDesktop}__'),
+            '__${company.id}_${company.enabledModules}_${state.prefState.isDesktop}__',
+          ),
         );
       },
     );
@@ -76,8 +77,9 @@ class DashboardVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
 
       // TODO just reload activities
       store.dispatch(RefreshData(completer: completer));
@@ -104,10 +106,12 @@ class DashboardVM {
       onGroupByChanged: (value) =>
           store.dispatch(UpdateDashboardSettings(groupBy: value)),
       onSelectionChanged: (entityType, entityIds) {
-        store.dispatch(UpdateDashboardSelection(
-          entityType: entityType,
-          entityIds: entityIds,
-        ));
+        store.dispatch(
+          UpdateDashboardSelection(
+            entityType: entityType,
+            entityIds: entityIds,
+          ),
+        );
       },
       onOffsetChanged: (offset) =>
           store.dispatch(UpdateDashboardSettings(offset: offset)),

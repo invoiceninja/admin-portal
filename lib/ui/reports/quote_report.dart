@@ -80,17 +80,25 @@ enum QuoteReportFields {
   record_state,
 }
 
-var memoizedQuoteReport = memo7((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    quoteReport(userCompany!, reportsUIState, quoteMap, clientMap, vendorMap,
-        userMap, staticState));
+var memoizedQuoteReport = memo7(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => quoteReport(
+    userCompany!,
+    reportsUIState,
+    quoteMap,
+    clientMap,
+    vendorMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult quoteReport(
   UserCompanyEntity userCompany,
@@ -119,10 +127,12 @@ ReportResult quoteReport(
   ];
 
   if (quoteReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(quoteReportSettings.columns
-        .map((e) => EnumUtils.fromString(QuoteReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      quoteReportSettings.columns
+          .map((e) => EnumUtils.fromString(QuoteReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -355,8 +365,9 @@ ReportResult quoteReport(
           value = client.idNumber;
           break;
         case QuoteReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(quote.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(quote.entityState);
           break;
       }
 
@@ -373,16 +384,16 @@ ReportResult quoteReport(
         row.add(quote.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         String? currencyId = client.currencyId;
-        if ([
-          QuoteReportFields.converted_amount,
-        ].contains(column)) {
+        if ([QuoteReportFields.converted_amount].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(quote.getReportDouble(
-          value: value,
-          currencyId: currencyId,
-          exchangeRate: quote.exchangeRate,
-        ));
+        row.add(
+          quote.getReportDouble(
+            value: value,
+            currencyId: currencyId,
+            exchangeRate: quote.exchangeRate,
+          ),
+        );
       } else {
         row.add(quote.getReportString(value: value));
       }
@@ -395,15 +406,19 @@ ReportResult quoteReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) =>
+        sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns)!,
+  );
 
   return ReportResult(
-    allColumns:
-        QuoteReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: QuoteReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

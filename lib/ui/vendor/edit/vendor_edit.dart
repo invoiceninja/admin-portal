@@ -16,10 +16,7 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEdit extends StatefulWidget {
-  const VendorEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const VendorEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final VendorEditVM viewModel;
 
@@ -30,8 +27,9 @@ class VendorEdit extends StatefulWidget {
 class _VendorEditState extends State<VendorEdit>
     with SingleTickerProviderStateMixin {
   TabController? _controller;
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_vendorEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_vendorEdit',
+  );
 
   @override
   void initState() {
@@ -78,21 +76,11 @@ class _VendorEditState extends State<VendorEdit>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.address,
-          ),
+          Tab(text: localization.details),
+          Tab(text: localization.contacts),
+          Tab(text: localization.notes),
+          Tab(text: localization.settings),
+          Tab(text: localization.address),
         ],
       ),
       body: Form(
@@ -107,33 +95,17 @@ class _VendorEditState extends State<VendorEdit>
                 controller: _controller,
                 children: <Widget>[
                   ScrollableListView(
-                    children: [
-                      VendorEditDetails(
-                        viewModel: widget.viewModel,
-                      ),
-                    ],
+                    children: [VendorEditDetails(viewModel: widget.viewModel)],
                   ),
-                  VendorEditContactsScreen(
-                    viewModel: widget.viewModel,
+                  VendorEditContactsScreen(viewModel: widget.viewModel),
+                  ScrollableListView(
+                    children: [VendorEditNotes(viewModel: widget.viewModel)],
                   ),
                   ScrollableListView(
-                    children: [
-                      VendorEditNotes(
-                        viewModel: widget.viewModel,
-                      ),
-                    ],
+                    children: [VendorEditSettings(viewModel: viewModel)],
                   ),
                   ScrollableListView(
-                    children: [
-                      VendorEditSettings(viewModel: viewModel),
-                    ],
-                  ),
-                  ScrollableListView(
-                    children: [
-                      VendorEditAddress(
-                        viewModel: widget.viewModel,
-                      ),
-                    ],
+                    children: [VendorEditAddress(viewModel: widget.viewModel)],
                   ),
                 ],
               ),

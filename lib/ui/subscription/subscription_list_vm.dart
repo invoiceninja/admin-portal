@@ -32,29 +32,30 @@ class SubscriptionListBuilder extends StatelessWidget {
       converter: SubscriptionListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.paymentLink,
-            presenter: SubscriptionPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.subscriptionList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final subscriptionId = viewModel.subscriptionList[index];
-              final subscription = viewModel.subscriptionMap[subscriptionId]!;
-              final listState = state.getListState(EntityType.paymentLink);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.paymentLink,
+          presenter: SubscriptionPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.subscriptionList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final subscriptionId = viewModel.subscriptionList[index];
+            final subscription = viewModel.subscriptionMap[subscriptionId]!;
+            final listState = state.getListState(EntityType.paymentLink);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return SubscriptionListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                subscription: subscription,
-                isChecked:
-                    isInMultiselect && listState.isSelected(subscription.id),
-              );
-            });
+            return SubscriptionListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              subscription: subscription,
+              isChecked:
+                  isInMultiselect && listState.isSelected(subscription.id),
+            );
+          },
+        );
       },
     );
   }
@@ -81,8 +82,9 @@ class SubscriptionListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -102,13 +104,16 @@ class SubscriptionListVM {
       subscriptionMap: state.subscriptionState.map,
       isLoading: state.isLoading,
       filter: state.subscriptionUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> subscriptions,
-              EntityAction action) =>
-          handleSubscriptionAction(context, subscriptions, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> subscriptions,
+            EntityAction action,
+          ) => handleSubscriptionAction(context, subscriptions, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.paymentLink) ??
-              SubscriptionPresenter.getDefaultTableFields(state.userCompany),
+          SubscriptionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
       onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),
     );

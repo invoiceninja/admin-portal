@@ -17,10 +17,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEdit extends StatefulWidget {
-  const ClientEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -31,8 +28,9 @@ class ClientEdit extends StatefulWidget {
 class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
   TabController? _controller;
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_clientEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_clientEdit',
+  );
 
   @override
   void initState() {
@@ -76,24 +74,12 @@ class _ClientEditState extends State<ClientEdit>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.billingAddress,
-          ),
-          Tab(
-            text: localization.shippingAddress,
-          ),
+          Tab(text: localization.details),
+          Tab(text: localization.contacts),
+          Tab(text: localization.notes),
+          Tab(text: localization.settings),
+          Tab(text: localization.billingAddress),
+          Tab(text: localization.shippingAddress),
         ],
       ),
       body: Form(
@@ -108,32 +94,20 @@ class _ClientEditState extends State<ClientEdit>
                 controller: _controller,
                 children: <Widget>[
                   ScrollableListView(
-                    children: [
-                      ClientEditDetails(viewModel: viewModel),
-                    ],
+                    children: [ClientEditDetails(viewModel: viewModel)],
                   ),
-                  ClientEditContactsScreen(
-                    viewModel: viewModel,
+                  ClientEditContactsScreen(viewModel: viewModel),
+                  ScrollableListView(
+                    children: [ClientEditNotes(viewModel: viewModel)],
                   ),
                   ScrollableListView(
-                    children: [
-                      ClientEditNotes(viewModel: viewModel),
-                    ],
+                    children: [ClientEditSettings(viewModel: viewModel)],
                   ),
                   ScrollableListView(
-                    children: [
-                      ClientEditSettings(viewModel: viewModel),
-                    ],
+                    children: [ClientEditBillingAddress(viewModel: viewModel)],
                   ),
                   ScrollableListView(
-                    children: [
-                      ClientEditBillingAddress(viewModel: viewModel),
-                    ],
-                  ),
-                  ScrollableListView(
-                    children: [
-                      ClientEditShippingAddress(viewModel: viewModel),
-                    ],
+                    children: [ClientEditShippingAddress(viewModel: viewModel)],
                   ),
                 ],
               ),

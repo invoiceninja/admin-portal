@@ -16,21 +16,19 @@ class ViewTransactionRuleList implements PersistUI {
 }
 
 class ViewTransactionRule implements PersistUI, PersistPrefs {
-  ViewTransactionRule({
-    required this.transactionRuleId,
-    this.force = false,
-  });
+  ViewTransactionRule({required this.transactionRuleId, this.force = false});
 
   final String? transactionRuleId;
   final bool force;
 }
 
 class EditTransactionRule implements PersistUI, PersistPrefs {
-  EditTransactionRule(
-      {required this.transactionRule,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditTransactionRule({
+    required this.transactionRule,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final TransactionRuleEntity transactionRule;
   final Completer? completer;
@@ -262,8 +260,11 @@ class UpdateTransactionRuleTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleTransactionRuleAction(BuildContext? context,
-    List<BaseEntity> transactionRules, EntityAction? action) {
+void handleTransactionRuleAction(
+  BuildContext? context,
+  List<BaseEntity> transactionRules,
+  EntityAction? action,
+) {
   if (transactionRules.isEmpty) {
     return;
   }
@@ -271,27 +272,37 @@ void handleTransactionRuleAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final transactionRule = transactionRules.first as TransactionRuleEntity;
-  final transactionRuleIds =
-      transactionRules.map((transactionRule) => transactionRule.id).toList();
+  final transactionRuleIds = transactionRules
+      .map((transactionRule) => transactionRule.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
       editEntity(entity: transactionRule);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreTransactionRulesRequest(
+      store.dispatch(
+        RestoreTransactionRulesRequest(
           snackBarCompleter<Null>(localization!.restoredTransactionRule),
-          transactionRuleIds));
+          transactionRuleIds,
+        ),
+      );
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveTransactionRulesRequest(
+      store.dispatch(
+        ArchiveTransactionRulesRequest(
           snackBarCompleter<Null>(localization!.archivedTransactionRule),
-          transactionRuleIds));
+          transactionRuleIds,
+        ),
+      );
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteTransactionRulesRequest(
+      store.dispatch(
+        DeleteTransactionRulesRequest(
           snackBarCompleter<Null>(localization!.deletedTransactionRule),
-          transactionRuleIds));
+          transactionRuleIds,
+        ),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.transactionRuleListState.isInMultiselect()) {
@@ -303,20 +314,21 @@ void handleTransactionRuleAction(BuildContext? context,
       }
 
       for (final transactionRule in transactionRules) {
-        if (!store.state.transactionRuleListState
-            .isSelected(transactionRule.id)) {
+        if (!store.state.transactionRuleListState.isSelected(
+          transactionRule.id,
+        )) {
           store.dispatch(
-              AddToTransactionRuleMultiselect(entity: transactionRule));
+            AddToTransactionRuleMultiselect(entity: transactionRule),
+          );
         } else {
           store.dispatch(
-              RemoveFromTransactionRuleMultiselect(entity: transactionRule));
+            RemoveFromTransactionRuleMultiselect(entity: transactionRule),
+          );
         }
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [transactionRule],
-      );
+      showEntityActionsDialog(entities: [transactionRule]);
       break;
     default:
       print('## ERROR: unhandled action $action in transaction_rule_actions');

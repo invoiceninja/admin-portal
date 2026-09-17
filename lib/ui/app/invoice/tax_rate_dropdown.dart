@@ -38,11 +38,14 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     final taxRates = taxState.list.map((id) => taxState.map[id]).toList();
 
     _selectedTaxRate = taxRates.firstWhere(
-        (taxRate) =>
-            taxRate!.name == widget.initialTaxName &&
-            taxRate.rate == widget.initialTaxRate,
-        orElse: () => TaxRateEntity(
-            name: widget.initialTaxName, rate: widget.initialTaxRate));
+      (taxRate) =>
+          taxRate!.name == widget.initialTaxName &&
+          taxRate.rate == widget.initialTaxRate,
+      orElse: () => TaxRateEntity(
+        name: widget.initialTaxName,
+        rate: widget.initialTaxRate,
+      ),
+    );
 
     if (_selectedTaxRate!.rate != 0) {
       _textController.text = _formatTaxRate(_selectedTaxRate!);
@@ -75,42 +78,44 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
     }
 
     final taxRate = taxRates.firstWhere(
-        (taxRate) =>
-            taxRate!.name == widget.initialTaxName &&
-            taxRate.rate == widget.initialTaxRate,
-        orElse: () => TaxRateEntity(
-            name: widget.initialTaxName, rate: widget.initialTaxRate))!;
+      (taxRate) =>
+          taxRate!.name == widget.initialTaxName &&
+          taxRate.rate == widget.initialTaxRate,
+      orElse: () => TaxRateEntity(
+        name: widget.initialTaxName,
+        rate: widget.initialTaxRate,
+      ),
+    )!;
 
     return InputDecorator(
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-      ),
+      decoration: InputDecoration(labelText: widget.labelText),
       isEmpty: taxRate.isEmpty,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<TaxRateEntity>(
-            value: taxRate,
-            isExpanded: true,
-            isDense: true,
-            onChanged: (rate) => widget.onSelected(rate!),
-            items: [
-              if (!taxRate.isEmpty)
-                DropdownMenuItem(
-                  child: Text(''),
-                  value: TaxRateEntity(),
-                ),
-              if (taxRate.isNew)
-                DropdownMenuItem(
-                  child: Text(taxRate.isEmpty ? '' : _formatTaxRate(taxRate)),
-                  value: taxRate,
-                ),
-              ...taxRates
-                  .map((taxRate) => DropdownMenuItem(
-                        child: Text(
-                            taxRate!.isEmpty ? '' : _formatTaxRate(taxRate)),
-                        value: taxRate,
-                      ))
-                  .toList()
-            ]),
+          value: taxRate,
+          isExpanded: true,
+          isDense: true,
+          onChanged: (rate) => widget.onSelected(rate!),
+          items: [
+            if (!taxRate.isEmpty)
+              DropdownMenuItem(child: Text(''), value: TaxRateEntity()),
+            if (taxRate.isNew)
+              DropdownMenuItem(
+                child: Text(taxRate.isEmpty ? '' : _formatTaxRate(taxRate)),
+                value: taxRate,
+              ),
+            ...taxRates
+                .map(
+                  (taxRate) => DropdownMenuItem(
+                    child: Text(
+                      taxRate!.isEmpty ? '' : _formatTaxRate(taxRate),
+                    ),
+                    value: taxRate,
+                  ),
+                )
+                .toList(),
+          ],
+        ),
       ),
     );
   }

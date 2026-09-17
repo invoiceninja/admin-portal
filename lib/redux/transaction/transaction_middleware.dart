@@ -46,9 +46,11 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
     TypedMiddleware<AppState, ConvertTransactionsRequest>(convertTransactions),
     TypedMiddleware<AppState, UnlinkTransactionsRequest>(unlinkTransactions),
     TypedMiddleware<AppState, ConvertTransactionToPaymentRequest>(
-        convertToPayment),
+      convertToPayment,
+    ),
     TypedMiddleware<AppState, ConvertTransactionsToExpensesRequest>(
-        convertToExpense),
+      convertToExpense,
+    ),
     TypedMiddleware<AppState, LinkTransactionToPaymentRequest>(linkToPayment),
     TypedMiddleware<AppState, LinkTransactionToExpenseRequest>(linkToExpense),
   ];
@@ -69,8 +71,11 @@ Middleware<AppState> _editTransaction() {
 }
 
 Middleware<AppState> _viewTransaction() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewTransaction?;
 
     next(action);
@@ -97,7 +102,9 @@ Middleware<AppState> _viewTransactionList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          TransactionScreen.route, (Route<dynamic> route) => false);
+        TransactionScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
@@ -109,16 +116,20 @@ Middleware<AppState> _archiveTransaction(TransactionRepository repository) {
         .map((id) => store.state.transactionState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.transactionIds,
-            EntityAction.archive)
+        .bulkAction(
+          store.state.credentials,
+          action.transactionIds,
+          EntityAction.archive,
+        )
         .then((List<TransactionEntity> transactions) {
-      store.dispatch(ArchiveTransactionsSuccess(transactions));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveTransactionsFailure(prevTransactions));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveTransactionsSuccess(transactions));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveTransactionsFailure(prevTransactions));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -132,15 +143,19 @@ Middleware<AppState> _deleteTransaction(TransactionRepository repository) {
         .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.transactionIds, EntityAction.delete)
+          store.state.credentials,
+          action.transactionIds,
+          EntityAction.delete,
+        )
         .then((List<TransactionEntity> transactions) {
-      store.dispatch(DeleteTransactionsSuccess(transactions));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteTransactionsFailure(prevTransactions));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteTransactionsSuccess(transactions));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteTransactionsFailure(prevTransactions));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -153,16 +168,20 @@ Middleware<AppState> _restoreTransaction(TransactionRepository repository) {
         .map((id) => store.state.transactionState.map[id])
         .toList();
     repository
-        .bulkAction(store.state.credentials, action.transactionIds,
-            EntityAction.restore)
+        .bulkAction(
+          store.state.credentials,
+          action.transactionIds,
+          EntityAction.restore,
+        )
         .then((List<TransactionEntity> transactions) {
-      store.dispatch(RestoreTransactionsSuccess(transactions));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreTransactionsFailure(prevTransactions));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreTransactionsSuccess(transactions));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreTransactionsFailure(prevTransactions));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -172,18 +191,25 @@ Middleware<AppState> _convertTransactions(TransactionRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ConvertTransactionsRequest;
     repository
-        .bulkAction(store.state.credentials, action.transactionIds,
-            EntityAction.convertMatched)
+        .bulkAction(
+          store.state.credentials,
+          action.transactionIds,
+          EntityAction.convertMatched,
+        )
         .then((List<TransactionEntity> transactions) {
-      store.dispatch(ConvertTransactionsSuccess(
-          BuiltList<TransactionEntity>(transactions)));
-      store.dispatch(RefreshData());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ConvertTransactionsFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(
+            ConvertTransactionsSuccess(
+              BuiltList<TransactionEntity>(transactions),
+            ),
+          );
+          store.dispatch(RefreshData());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ConvertTransactionsFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -194,17 +220,24 @@ Middleware<AppState> _unlinkTransactions(TransactionRepository repository) {
     final action = dynamicAction as UnlinkTransactionsRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.transactionIds, EntityAction.unlink)
+          store.state.credentials,
+          action.transactionIds,
+          EntityAction.unlink,
+        )
         .then((List<TransactionEntity> transactions) {
-      store.dispatch(UnlinkTransactionsSuccess(
-          BuiltList<TransactionEntity>(transactions)));
-      store.dispatch(RefreshData());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(UnlinkTransactionsFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(
+            UnlinkTransactionsSuccess(
+              BuiltList<TransactionEntity>(transactions),
+            ),
+          );
+          store.dispatch(RefreshData());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(UnlinkTransactionsFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -215,19 +248,20 @@ Middleware<AppState> _convertToPayment(TransactionRepository repository) {
     final action = dynamicAction as ConvertTransactionToPaymentRequest;
     repository
         .convertToPayment(
-      store.state.credentials,
-      action.transactionId,
-      action.invoiceIds,
-    )
+          store.state.credentials,
+          action.transactionId,
+          action.invoiceIds,
+        )
         .then((TransactionEntity transaction) {
-      store.dispatch(ConvertTransactionToPaymentSuccess(transaction));
-      store.dispatch(RefreshData());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ConvertTransactionToPaymentFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ConvertTransactionToPaymentSuccess(transaction));
+          store.dispatch(RefreshData());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ConvertTransactionToPaymentFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -238,20 +272,21 @@ Middleware<AppState> _convertToExpense(TransactionRepository repository) {
     final action = dynamicAction as ConvertTransactionsToExpensesRequest;
     repository
         .convertToExpense(
-      store.state.credentials,
-      action.transactionIds,
-      action.vendorId,
-      action.categoryId,
-    )
+          store.state.credentials,
+          action.transactionIds,
+          action.vendorId,
+          action.categoryId,
+        )
         .then((BuiltList<TransactionEntity> transactions) {
-      store.dispatch(ConvertTransactionsToExpensesSuccess(transactions));
-      store.dispatch(RefreshData());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ConvertTransactionsToExpensesFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ConvertTransactionsToExpensesSuccess(transactions));
+          store.dispatch(RefreshData());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ConvertTransactionsToExpensesFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -262,19 +297,20 @@ Middleware<AppState> _linkToPayment(TransactionRepository repository) {
     final action = dynamicAction as LinkTransactionToPaymentRequest;
     repository
         .linkToPayment(
-      store.state.credentials,
-      action.transactionId,
-      action.paymentId,
-    )
+          store.state.credentials,
+          action.transactionId,
+          action.paymentId,
+        )
         .then((TransactionEntity transaction) {
-      store.dispatch(LinkTransactionToPaymentSuccess(transaction));
-      store.dispatch(RefreshData());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LinkTransactionToPaymentFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(LinkTransactionToPaymentSuccess(transaction));
+          store.dispatch(RefreshData());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LinkTransactionToPaymentFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -285,19 +321,20 @@ Middleware<AppState> _linkToExpense(TransactionRepository repository) {
     final action = dynamicAction as LinkTransactionToExpenseRequest;
     repository
         .linkToExpense(
-      store.state.credentials,
-      action.transactionId,
-      action.expenseId,
-    )
+          store.state.credentials,
+          action.transactionId,
+          action.expenseId,
+        )
         .then((TransactionEntity transaction) {
-      store.dispatch(LinkTransactionToExpenseSuccess(transaction));
-      store.dispatch(RefreshData());
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LinkTransactionToExpenseFailure(error));
-      action.completer.completeError(error);
-    });
+          store.dispatch(LinkTransactionToExpenseSuccess(transaction));
+          store.dispatch(RefreshData());
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LinkTransactionToExpenseFailure(error));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -309,19 +346,20 @@ Middleware<AppState> _saveTransaction(TransactionRepository repository) {
     repository
         .saveData(store.state.credentials, action.transaction!)
         .then((TransactionEntity transaction) {
-      if (action.transaction!.isNew) {
-        store.dispatch(AddTransactionSuccess(transaction));
-      } else {
-        store.dispatch(SaveTransactionSuccess(transaction));
-      }
-      store.dispatch(RefreshData());
-      action.completer!.complete(transaction);
-    }).catchError((Object error) {
-      //store.dispatch(AddTransactionSuccess(action.transaction.rebuild((b) => b..id = '1')));
-      print(error);
-      store.dispatch(SaveTransactionFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.transaction!.isNew) {
+            store.dispatch(AddTransactionSuccess(transaction));
+          } else {
+            store.dispatch(SaveTransactionSuccess(transaction));
+          }
+          store.dispatch(RefreshData());
+          action.completer!.complete(transaction);
+        })
+        .catchError((Object error) {
+          //store.dispatch(AddTransactionSuccess(action.transaction.rebuild((b) => b..id = '1')));
+          print(error);
+          store.dispatch(SaveTransactionFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -336,18 +374,19 @@ Middleware<AppState> _loadTransaction(TransactionRepository repository) {
     repository
         .loadItem(state.credentials, action.transactionId)
         .then((transaction) {
-      store.dispatch(LoadTransactionSuccess(transaction));
+          store.dispatch(LoadTransactionSuccess(transaction));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTransactionFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTransactionFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -360,32 +399,31 @@ Middleware<AppState> _loadTransactions(TransactionRepository repository) {
 
     store.dispatch(LoadTransactionsRequest());
     repository
-        .loadList(
-      state.credentials,
-      action.page,
-      state.createdAtLimit,
-    )
+        .loadList(state.credentials, action.page, state.createdAtLimit)
         .then((data) {
-      store.dispatch(LoadTransactionsSuccess(data));
+          store.dispatch(LoadTransactionsSuccess(data));
 
-      if (data.length == kMaxRecordsPerPage) {
-        store.dispatch(LoadTransactions(
-          completer: action.completer,
-          page: action.page + 1,
-        ));
-      } else {
-        if (action.completer != null) {
-          action.completer!.complete(null);
-        }
-        store.dispatch(PersistData());
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTransactionsFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (data.length == kMaxRecordsPerPage) {
+            store.dispatch(
+              LoadTransactions(
+                completer: action.completer,
+                page: action.page + 1,
+              ),
+            );
+          } else {
+            if (action.completer != null) {
+              action.completer!.complete(null);
+            }
+            store.dispatch(PersistData());
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTransactionsFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

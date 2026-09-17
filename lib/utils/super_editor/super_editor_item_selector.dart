@@ -129,38 +129,40 @@ class _SuperEditorDemoTextItemSelectorState
     return SuperEditorPopoverButton(
       padding: const EdgeInsets.only(left: 16.0, right: 24),
       onTap: () => _popoverController.open(),
-      child: widget.id == null //
+      child:
+          widget.id ==
+              null //
           ? const SizedBox()
           : Text(
               widget.id!.label,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-              ),
+              style: const TextStyle(color: Colors.black, fontSize: 12),
             ),
     );
   }
 
-  Widget _buildPopoverListItem(BuildContext context,
-      SuperEditorDemoTextItem item, bool isActive, VoidCallback onTap) {
+  Widget _buildPopoverListItem(
+    BuildContext context,
+    SuperEditorDemoTextItem item,
+    bool isActive,
+    VoidCallback onTap,
+  ) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color:
-            isActive ? Colors.grey.withValues(alpha: 0.2) : Colors.transparent,
+        color: isActive
+            ? Colors.grey.withValues(alpha: 0.2)
+            : Colors.transparent,
       ),
       child: InkWell(
         onTap: onTap,
         child: Container(
-          constraints:
-              const BoxConstraints(minHeight: kMinInteractiveDimension),
+          constraints: const BoxConstraints(
+            minHeight: kMinInteractiveDimension,
+          ),
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             item.label,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 12,
-            ),
+            style: const TextStyle(color: Colors.black, fontSize: 12),
           ),
         ),
       ),
@@ -172,10 +174,7 @@ class _SuperEditorDemoTextItemSelectorState
 ///
 /// Two [SuperEditorDemoTextItem]s are considered to be equal if they have the same [id].
 class SuperEditorDemoTextItem {
-  const SuperEditorDemoTextItem({
-    required this.id,
-    required this.label,
-  });
+  const SuperEditorDemoTextItem({required this.id, required this.label});
 
   /// The value that identifies this item.
   final String id;
@@ -310,18 +309,24 @@ class _SuperEditorDemoIconItemSelectorState
     );
   }
 
-  Widget _buildItem(BuildContext context, SuperEditorDemoIconItem item,
-      bool isActive, VoidCallback onTap) {
+  Widget _buildItem(
+    BuildContext context,
+    SuperEditorDemoIconItem item,
+    bool isActive,
+    VoidCallback onTap,
+  ) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color:
-            isActive ? Colors.grey.withValues(alpha: 0.2) : Colors.transparent,
+        color: isActive
+            ? Colors.grey.withValues(alpha: 0.2)
+            : Colors.transparent,
       ),
       child: InkWell(
         onTap: onTap,
         child: Container(
-          constraints:
-              const BoxConstraints(minHeight: kMinInteractiveDimension),
+          constraints: const BoxConstraints(
+            minHeight: kMinInteractiveDimension,
+          ),
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Icon(item.icon),
@@ -334,7 +339,9 @@ class _SuperEditorDemoIconItemSelectorState
     return SuperEditorPopoverButton(
       onTap: () => _popoverController.open(),
       padding: const EdgeInsets.only(left: 8.0, right: 24),
-      child: widget.value == null //
+      child:
+          widget.value ==
+              null //
           ? const SizedBox()
           : Icon(widget.value!.icon),
     );
@@ -350,10 +357,7 @@ class _SuperEditorDemoIconItemSelectorState
 ///
 /// Two [SuperEditorDemoIconItem]s are considered to be equal if they have the same [id].
 class SuperEditorDemoIconItem {
-  const SuperEditorDemoIconItem({
-    required this.id,
-    required this.icon,
-  });
+  const SuperEditorDemoIconItem({required this.id, required this.icon});
 
   /// The value that identifies this item.
   final String id;
@@ -403,14 +407,8 @@ class SuperEditorPopoverButton extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             if (child != null) //
-              Padding(
-                padding: padding ?? EdgeInsets.zero,
-                child: child,
-              ),
-            const Positioned(
-              right: 0,
-              child: Icon(Icons.arrow_drop_down),
-            ),
+              Padding(padding: padding ?? EdgeInsets.zero, child: child),
+            const Positioned(right: 0, child: Icon(Icons.arrow_drop_down)),
           ],
         ),
       ),

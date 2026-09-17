@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsList extends StatefulWidget {
-  const SettingsList({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const SettingsList({Key? key, required this.viewModel}) : super(key: key);
 
   final SettingsListVM viewModel;
 
@@ -262,10 +259,7 @@ class _SettingsListState extends State<SettingsList> {
 }
 
 class SettingsListTile extends StatefulWidget {
-  const SettingsListTile({
-    required this.section,
-    required this.viewModel,
-  });
+  const SettingsListTile({required this.section, required this.viewModel});
 
   final String section;
   final SettingsListVM viewModel;
@@ -292,11 +286,13 @@ class _SettingsListTileState extends State<SettingsListTile> {
 
     final isSelected =
         widget.viewModel.state.uiState.containsRoute('/${widget.section}') &&
-            isDesktop(context);
+        isDesktop(context);
 
-    final hoverColor = convertHexStringToColor(state.prefState.enableDarkMode
-        ? kDefaultDarkSelectedColorMenu
-        : kDefaultLightSelectedColorMenu);
+    final hoverColor = convertHexStringToColor(
+      state.prefState.enableDarkMode
+          ? kDefaultDarkSelectedColorMenu
+          : kDefaultLightSelectedColorMenu,
+    );
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -314,8 +310,9 @@ class _SettingsListTileState extends State<SettingsListTile> {
             ),
             title: Text(
               localization.lookup(widget.section),
-              style:
-                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge!.copyWith(fontSize: 14),
             ),
             onTap: () =>
                 widget.viewModel.loadSection(context, widget.section, 0),
@@ -357,16 +354,10 @@ class SettingsSearch extends StatelessWidget {
           if (company.hasCustomField(CustomFieldType.company3))
             company.getCustomFieldLabel(CustomFieldType.company3),
           if (company.hasCustomField(CustomFieldType.company4))
-            company.getCustomFieldLabel(CustomFieldType.company4)
+            company.getCustomFieldLabel(CustomFieldType.company4),
         ],
-        [
-          'address',
-          'postal_code',
-          'country',
-        ],
-        [
-          'logo',
-        ],
+        ['address', 'postal_code', 'country'],
+        ['logo'],
         [
           'defaults',
           'invoice_terms',
@@ -376,9 +367,7 @@ class SettingsSearch extends StatelessWidget {
           'credit_terms',
           'credit_footer',
         ],
-        [
-          'default_documents',
-        ]
+        ['default_documents'],
       ],
       kSettingsUserDetails: [
         [
@@ -409,9 +398,7 @@ class SettingsSearch extends StatelessWidget {
           'first_month_of_the_year',
           'rappen_rounding#2024-04-08',
         ],
-        [
-          'custom_labels',
-        ],
+        ['custom_labels'],
       ],
       kSettingsPaymentSettings: [
         [
@@ -427,10 +414,7 @@ class SettingsSearch extends StatelessWidget {
           'use_available_payments#2024-02-19',
           'one_page_checkout#2024-08-19',
         ],
-        [
-          'payment_type',
-          'payment_terms',
-        ],
+        ['payment_type', 'payment_terms'],
         [
           'online_payment_email',
           'manual_payment_email',
@@ -438,16 +422,10 @@ class SettingsSearch extends StatelessWidget {
         ],
       ],
       kSettingsTaxSettings: [
-        [
-          'tax_settings',
-          'inclusive_taxes',
-          'calculate_taxes#2023-06-11',
-        ],
+        ['tax_settings', 'inclusive_taxes', 'calculate_taxes#2023-06-11'],
       ],
       kSettingsTaxRates: [
-        [
-          'tax_rates',
-        ],
+        ['tax_rates'],
       ],
       kSettingsProducts: [
         [
@@ -475,9 +453,7 @@ class SettingsSearch extends StatelessWidget {
         ],
       ],
       kSettingsTaskStatuses: [
-        [
-          'task_statuses',
-        ],
+        ['task_statuses'],
       ],
       kSettingsExpenses: [
         [
@@ -489,9 +465,7 @@ class SettingsSearch extends StatelessWidget {
         ],
       ],
       kSettingsExpenseCategories: [
-        [
-          'expense_categories',
-        ],
+        ['expense_categories'],
       ],
       kSettingsWorkflowSettings: [
         [
@@ -501,18 +475,11 @@ class SettingsSearch extends StatelessWidget {
           'auto_archive_cancelled_invoices',
           'lock_invoices',
         ],
-        [
-          'auto_convert',
-          'use_quote_terms#2022-05-17',
-        ],
+        ['auto_convert', 'use_quote_terms#2022-05-17'],
       ],
       kSettingsImportExport: [
-        [
-          'import',
-        ],
-        [
-          'export',
-        ],
+        ['import'],
+        ['export'],
       ],
       kSettingsDeviceSettings: [
         [
@@ -523,12 +490,9 @@ class SettingsSearch extends StatelessWidget {
           'show_pdf_preview',
           'pdf_preview_location#2022-10-24',
           'refresh_data',
-          if (!kIsWeb) 'downloads_folder#2023-10-29'
+          if (!kIsWeb) 'downloads_folder#2023-10-29',
         ],
-        [
-          'dark_mode',
-          'custom_colors',
-        ],
+        ['dark_mode', 'custom_colors'],
       ],
       kSettingsAccountManagement: [
         [
@@ -541,20 +505,10 @@ class SettingsSearch extends StatelessWidget {
           'purge_data',
           'delete_company',
         ],
-        [
-          'enabled_modules',
-        ],
-        [
-          'google_analytics',
-          'matomo_id#2022-12-12',
-        ],
-        [
-          'password_timeout',
-          'web_session_timeout',
-        ],
-        [
-          'referral_program#2024-06-21',
-        ],
+        ['enabled_modules'],
+        ['google_analytics', 'matomo_id#2022-12-12'],
+        ['password_timeout', 'web_session_timeout'],
+        ['referral_program#2024-06-21'],
       ],
       kSettingsInvoiceDesign: [
         [
@@ -579,14 +533,10 @@ class SettingsSearch extends StatelessWidget {
         ],
       ],
       kSettingsCustomDesigns: [
-        [
-          'custom_designs',
-        ],
+        ['custom_designs'],
       ],
       kSettingsCustomFields: [
-        [
-          'custom_fields',
-        ],
+        ['custom_fields'],
       ],
       kSettingsGeneratedNumbers: [
         [
@@ -614,9 +564,7 @@ class SettingsSearch extends StatelessWidget {
           'enable_client_profile_update#2025-04-28',
           'preference_product_notes_for_html_view#2025-04-29',
         ],
-        [
-          'client_registration',
-        ],
+        ['client_registration'],
         [
           'enable_portal_password',
           'show_accept_invoice_terms',
@@ -624,9 +572,7 @@ class SettingsSearch extends StatelessWidget {
           'require_invoice_signature',
           'require_quote_signature',
         ],
-        [
-          'messages',
-        ],
+        ['messages'],
         [
           'header',
           'footer',
@@ -655,48 +601,29 @@ class SettingsSearch extends StatelessWidget {
         ],
       ],
       kSettingsTemplatesAndReminders: [
-        [
-          'template',
-          'send_reminders',
-          'late_fees',
-        ]
+        ['template', 'send_reminders', 'late_fees'],
       ],
       kSettingsBankAccounts: [
-        [
-          'bank_accounts#2022-09-13',
-        ],
+        ['bank_accounts#2022-09-13'],
       ],
       kSettingsEInvoiceSettings: [
-        [
-          'e_invoice_settings#2024-05-20',
-          'merge_to_pdf#2024-07-03',
-        ],
+        ['e_invoice_settings#2024-05-20', 'merge_to_pdf#2024-07-03'],
       ],
       kSettingsTransactionRules: [
-        [
-          'transaction_rules#2022-11-21',
-        ],
+        ['transaction_rules#2022-11-21'],
       ],
       kSettingsGroupSettings: [
-        [
-          'groups',
-        ],
+        ['groups'],
       ],
       kSettingsPaymentLinks: [
-        [
-          'payment_links',
-        ],
+        ['payment_links'],
       ],
       kSettingsSchedules: [
-        [
-          'schedules#2023-02-15',
-        ],
+        ['schedules#2023-02-15'],
       ],
       kSettingsUserManagement: [
-        [
-          'users',
-        ],
-      ]
+        ['users'],
+      ],
     };
 
     if (store.state.settingsUIState.showNewSettings) {
@@ -706,8 +633,9 @@ class SettingsSearch extends StatelessWidget {
           final fields = map[section]![tab];
           for (var field in fields) {
             final List<String> parts = field.split('#');
-            final dateAdded =
-                parts.length == 1 ? '' : convertSqlDateToDateTime(parts[1]);
+            final dateAdded = parts.length == 1
+                ? ''
+                : convertSqlDateToDateTime(parts[1]);
             sections.add('$dateAdded#${parts[0]}#$section#$tab');
           }
         }
@@ -725,31 +653,33 @@ class SettingsSearch extends StatelessWidget {
         return b.compareTo(a);
       });
 
-      return ScrollableListView(children: [
-        for (var parts
-            in sections.map((section) => section.split('#').toList()))
-          if ((filter ?? '').trim().isEmpty ||
-              localization
-                  .lookup(parts[1])
-                  .toLowerCase()
-                  .contains(filter!.toLowerCase()))
-            ListTile(
-              title: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(localization.lookup(parts[1])),
-                        Text(
-                          localization.lookup(parts[2]),
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
+      return ScrollableListView(
+        children: [
+          for (var parts in sections.map(
+            (section) => section.split('#').toList(),
+          ))
+            if ((filter ?? '').trim().isEmpty ||
+                localization
+                    .lookup(parts[1])
+                    .toLowerCase()
+                    .contains(filter!.toLowerCase()))
+              ListTile(
+                title: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(localization.lookup(parts[1])),
+                          Text(
+                            localization.lookup(parts[2]),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  /*
+                    /*
                   SizedBox(width: 8),
                   if (parts[0].isNotEmpty)
                     Flexible(
@@ -758,16 +688,20 @@ class SettingsSearch extends StatelessWidget {
                                 localeSelector(store.state, twoLetter: true) +
                                     '_short'))),
                                     */
-                ],
+                  ],
+                ),
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 6, top: 10),
+                  child: Icon(getSettingIcon(parts[2]), size: 22),
+                ),
+                onTap: () => viewModel!.loadSection(
+                  context,
+                  parts[2],
+                  parseInt(parts[3]),
+                ),
               ),
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 6, top: 10),
-                child: Icon(getSettingIcon(parts[2]), size: 22),
-              ),
-              onTap: () =>
-                  viewModel!.loadSection(context, parts[2], parseInt(parts[3])),
-            ),
-      ]);
+        ],
+      );
     } else {
       return ScrollableListView(
         children: [

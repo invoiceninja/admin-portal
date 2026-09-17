@@ -226,10 +226,7 @@ class UpdateUserPreferences implements PersistPrefs {
 }
 
 class LoadAccountSuccess implements StopLoading {
-  LoadAccountSuccess({
-    required this.completer,
-    required this.loginResponse,
-  });
+  LoadAccountSuccess({required this.completer, required this.loginResponse});
 
   final Completer completer;
   final LoginResponse loginResponse;
@@ -273,10 +270,7 @@ class RefreshDataFailure implements StopLoading {
 }
 
 class PreviewEntity {
-  const PreviewEntity({
-    this.entityType,
-    this.entityId,
-  });
+  const PreviewEntity({this.entityType, this.entityId});
 
   final String? entityId;
   final EntityType? entityType;
@@ -303,10 +297,7 @@ class ClearEntitySelection {
 }
 
 class FilterByEntity implements PersistUI {
-  FilterByEntity({
-    required this.entity,
-    this.clearSelection = false,
-  });
+  FilterByEntity({required this.entity, this.clearSelection = false});
 
   final BaseEntity? entity;
   final bool clearSelection;
@@ -322,9 +313,7 @@ class FilterCompany implements PersistUI {
   final String? filter;
 }
 
-void filterByEntity({
-  required BaseEntity entity,
-}) {
+void filterByEntity({required BaseEntity entity}) {
   if (entity.isNew) {
     return;
   }
@@ -344,145 +333,146 @@ void viewEntitiesByType({
   dynamic action;
 
   checkForChanges(
-      store: store,
-      callback: () {
-        if (filterEntity != null) {
-          if (uiState.filterEntityType != filterEntity.entityType ||
-              uiState.filterEntityId != filterEntity.id) {
-            store.dispatch(ClearEntitySelection(entityType: entityType));
-            store.dispatch(FilterByEntity(entity: filterEntity));
-          }
-        } else if (uiState.filterEntityType != null) {
-          store.dispatch(ClearEntityFilter());
+    store: store,
+    callback: () {
+      if (filterEntity != null) {
+        if (uiState.filterEntityType != filterEntity.entityType ||
+            uiState.filterEntityId != filterEntity.id) {
+          store.dispatch(ClearEntitySelection(entityType: entityType));
+          store.dispatch(FilterByEntity(entity: filterEntity));
         }
+      } else if (uiState.filterEntityType != null) {
+        store.dispatch(ClearEntityFilter());
+      }
 
-        if (uiState.previewStack.isNotEmpty) {
-          store.dispatch(ClearPreviewStack());
-        }
+      if (uiState.previewStack.isNotEmpty) {
+        store.dispatch(ClearPreviewStack());
+      }
 
-        if (store.state.prefState.isPreviewVisible &&
-            store.state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(TogglePreviewSidebar());
-        }
+      if (store.state.prefState.isPreviewVisible &&
+          store.state.prefState.moduleLayout == ModuleLayout.table) {
+        store.dispatch(TogglePreviewSidebar());
+      }
 
-        switch (entityType) {
-          case EntityType.dashboard:
-            action = ViewDashboard();
-            break;
-          case EntityType.reports:
-            action = ViewReports();
-            break;
-          case EntityType.settings:
-            action = ViewSettings(
-              company: store.state.company,
-              user: store.state.user,
-              clearFilter: true,
-              section: store.state.prefState.isMobile
-                  ? null
-                  : kSettingsCompanyDetails,
-            );
-            break;
-          case EntityType.client:
-            action = ViewClientList(page: page);
-            break;
-          case EntityType.user:
-            action = ViewUserList();
-            break;
-          case EntityType.project:
-            action = ViewProjectList(page: page);
-            break;
-          case EntityType.taxRate:
-            action = ViewTaxRateList();
-            break;
-          case EntityType.companyGateway:
-            action = ViewCompanyGatewayList();
-            break;
-          case EntityType.invoice:
-            action = ViewInvoiceList(page: page);
-            break;
-          case EntityType.quote:
-            action = ViewQuoteList(page: page);
-            break;
-          case EntityType.vendor:
-            action = ViewVendorList(page: page);
-            break;
-          case EntityType.product:
-            action = ViewProductList(page: page);
-            break;
-          case EntityType.task:
-            action = ViewTaskList(page: page);
-            break;
-          case EntityType.expense:
-            action = ViewExpenseList(page: page);
-            break;
-          case EntityType.payment:
-            action = ViewPaymentList(page: page);
-            break;
-          case EntityType.group:
-            action = ViewGroupList();
-            break;
-          // STARTER: view list - do not remove comment
-          case EntityType.schedule:
-            action = ViewScheduleList();
-            break;
-          case EntityType.transactionRule:
-            action = ViewTransactionRuleList();
-            break;
-          case EntityType.transaction:
-            action = ViewTransactionList(page: page);
-            break;
-          case EntityType.bankAccount:
-            action = ViewBankAccountList();
-            break;
-          case EntityType.purchaseOrder:
-            action = ViewPurchaseOrderList(page: page);
-            break;
-          case EntityType.recurringExpense:
-            action = ViewRecurringExpenseList(page: page);
-            break;
-          case EntityType.paymentLink:
-            action = ViewSubscriptionList();
-            break;
-          case EntityType.taskStatus:
-            action = ViewTaskStatusList();
-            break;
-          case EntityType.expenseCategory:
-            action = ViewExpenseCategoryList();
-            break;
-          case EntityType.recurringInvoice:
-            action = ViewRecurringInvoiceList(page: page);
-            break;
-          case EntityType.webhook:
-            action = ViewWebhookList();
-            break;
-          case EntityType.token:
-            action = ViewTokenList();
-            break;
-          case EntityType.paymentTerm:
-            action = ViewPaymentTermList();
-            break;
-          case EntityType.design:
-            action = ViewDesignList();
-            break;
-          case EntityType.credit:
-            action = ViewCreditList(page: page);
-            break;
-          case EntityType.document:
-            action = ViewDocumentList();
-            break;
-          default:
-            print('## viewEntitiesByTyp not handled for $entityType');
-            break;
-        }
+      switch (entityType) {
+        case EntityType.dashboard:
+          action = ViewDashboard();
+          break;
+        case EntityType.reports:
+          action = ViewReports();
+          break;
+        case EntityType.settings:
+          action = ViewSettings(
+            company: store.state.company,
+            user: store.state.user,
+            clearFilter: true,
+            section: store.state.prefState.isMobile
+                ? null
+                : kSettingsCompanyDetails,
+          );
+          break;
+        case EntityType.client:
+          action = ViewClientList(page: page);
+          break;
+        case EntityType.user:
+          action = ViewUserList();
+          break;
+        case EntityType.project:
+          action = ViewProjectList(page: page);
+          break;
+        case EntityType.taxRate:
+          action = ViewTaxRateList();
+          break;
+        case EntityType.companyGateway:
+          action = ViewCompanyGatewayList();
+          break;
+        case EntityType.invoice:
+          action = ViewInvoiceList(page: page);
+          break;
+        case EntityType.quote:
+          action = ViewQuoteList(page: page);
+          break;
+        case EntityType.vendor:
+          action = ViewVendorList(page: page);
+          break;
+        case EntityType.product:
+          action = ViewProductList(page: page);
+          break;
+        case EntityType.task:
+          action = ViewTaskList(page: page);
+          break;
+        case EntityType.expense:
+          action = ViewExpenseList(page: page);
+          break;
+        case EntityType.payment:
+          action = ViewPaymentList(page: page);
+          break;
+        case EntityType.group:
+          action = ViewGroupList();
+          break;
+        // STARTER: view list - do not remove comment
+        case EntityType.schedule:
+          action = ViewScheduleList();
+          break;
+        case EntityType.transactionRule:
+          action = ViewTransactionRuleList();
+          break;
+        case EntityType.transaction:
+          action = ViewTransactionList(page: page);
+          break;
+        case EntityType.bankAccount:
+          action = ViewBankAccountList();
+          break;
+        case EntityType.purchaseOrder:
+          action = ViewPurchaseOrderList(page: page);
+          break;
+        case EntityType.recurringExpense:
+          action = ViewRecurringExpenseList(page: page);
+          break;
+        case EntityType.paymentLink:
+          action = ViewSubscriptionList();
+          break;
+        case EntityType.taskStatus:
+          action = ViewTaskStatusList();
+          break;
+        case EntityType.expenseCategory:
+          action = ViewExpenseCategoryList();
+          break;
+        case EntityType.recurringInvoice:
+          action = ViewRecurringInvoiceList(page: page);
+          break;
+        case EntityType.webhook:
+          action = ViewWebhookList();
+          break;
+        case EntityType.token:
+          action = ViewTokenList();
+          break;
+        case EntityType.paymentTerm:
+          action = ViewPaymentTermList();
+          break;
+        case EntityType.design:
+          action = ViewDesignList();
+          break;
+        case EntityType.credit:
+          action = ViewCreditList(page: page);
+          break;
+        case EntityType.document:
+          action = ViewDocumentList();
+          break;
+        default:
+          print('## viewEntitiesByTyp not handled for $entityType');
+          break;
+      }
 
-        if (action != null) {
-          store.dispatch(action);
-        }
+      if (action != null) {
+        store.dispatch(action);
+      }
 
-        if (filterEntity != null) {
-          store.dispatch(PopLastHistory());
-        }
-      });
+      if (filterEntity != null) {
+        store.dispatch(PopLastHistory());
+      }
+    },
+  );
 }
 
 void viewEntity({
@@ -490,14 +480,13 @@ void viewEntity({
   bool force = false,
   bool addToStack = false,
   BaseEntity? filterEntity,
-}) =>
-    viewEntityById(
-      entityId: entity.id,
-      entityType: entity.entityType,
-      force: force,
-      addToStack: addToStack,
-      filterEntity: filterEntity,
-    );
+}) => viewEntityById(
+  entityId: entity.id,
+  entityType: entity.entityType,
+  force: force,
+  addToStack: addToStack,
+  filterEntity: filterEntity,
+);
 
 void viewEntityById({
   required String? entityId,
@@ -512,256 +501,192 @@ void viewEntityById({
   final uiState = store.state.uiState;
 
   checkForChanges(
-      store: store,
-      force: force,
-      callback: () {
-        if (addToStack) {
-          store.dispatch(PreviewEntity(
-            entityId: entityId,
-            entityType: entityType,
-          ));
+    store: store,
+    force: force,
+    callback: () {
+      if (addToStack) {
+        store.dispatch(
+          PreviewEntity(entityId: entityId, entityType: entityType),
+        );
+        return;
+      } else if (state.uiState.previewStack.isNotEmpty) {
+        store.dispatch(ClearPreviewStack());
+      }
+
+      if (state.prefState.isDesktop && !state.prefState.isPreviewVisible) {
+        store.dispatch(TogglePreviewSidebar());
+      }
+
+      if (filterEntity != null &&
+          (uiState.filterEntityType != filterEntity.entityType ||
+              uiState.filterEntityId != filterEntity.id)) {
+        store.dispatch(ClearEntitySelection(entityType: entityType));
+        store.dispatch(FilterByEntity(entity: filterEntity));
+        // If the user selects a different entity of the same type as the current
+        // filter then we clear the selection so new records are auto-selected
+      } else if (uiState.filterEntityType != null &&
+          uiState.filterEntityId != entityId &&
+          uiState.filterEntityType == entityType) {
+        store.dispatch(
+          FilterByEntity(entity: uiState.filterEntity, clearSelection: true),
+        );
+      }
+
+      if (entityId != null &&
+          !store.state.getEntityMap(entityType)!.containsKey(entityId)) {
+        if (showError) {
+          final localization = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!;
+          showErrorDialog(message: localization.failedToFindRecord);
+        }
+        return;
+      }
+
+      if (isDesktop(navigatorKey.currentContext!) &&
+          entityType!.hasFullWidthViewer) {
+        if (!state.prefState.isViewerFullScreen(entityType))
+          store.dispatch(ToggleViewerLayout(entityType));
+        final filterEntity =
+            store.state.getEntityMap(entityType)![entityId] as BaseEntity;
+        final entityTypes = filterEntity.entityType!.relatedTypes.where(
+          (entityType) => state.company.isModuleEnabled(entityType),
+        );
+        if (entityTypes.isNotEmpty) {
+          viewEntitiesByType(
+            entityType: entityTypes.first,
+            filterEntity: filterEntity,
+          );
           return;
-        } else if (state.uiState.previewStack.isNotEmpty) {
-          store.dispatch(ClearPreviewStack());
         }
+      }
 
-        if (state.prefState.isDesktop && !state.prefState.isPreviewVisible) {
-          store.dispatch(TogglePreviewSidebar());
-        }
+      switch (entityType) {
+        case EntityType.client:
+          store.dispatch(ViewClient(clientId: entityId, force: force));
+          break;
+        case EntityType.user:
+          store.dispatch(ViewUser(userId: entityId, force: force));
+          break;
+        case EntityType.project:
+          store.dispatch(ViewProject(projectId: entityId, force: force));
+          break;
+        case EntityType.taxRate:
+          store.dispatch(ViewTaxRate(taxRateId: entityId, force: force));
+          break;
+        case EntityType.companyGateway:
+          store.dispatch(
+            ViewCompanyGateway(companyGatewayId: entityId, force: force),
+          );
+          break;
+        case EntityType.invoice:
+          store.dispatch(ViewInvoice(invoiceId: entityId, force: force));
+          break;
+        //case EntityType.recurringInvoice:
+        //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId));
+        //break;
+        case EntityType.quote:
+          store.dispatch(ViewQuote(quoteId: entityId, force: force));
+          break;
+        case EntityType.vendor:
+          store.dispatch(ViewVendor(vendorId: entityId, force: force));
+          break;
+        case EntityType.product:
+          store.dispatch(ViewProduct(productId: entityId, force: force));
+          break;
+        case EntityType.task:
+          store.dispatch(ViewTask(taskId: entityId, force: force));
+          break;
+        case EntityType.expense:
+          store.dispatch(ViewExpense(expenseId: entityId, force: force));
+          break;
+        //case EntityType.expenseCategory:
+        //store.dispatch(ViewExpenseCategory(taxRateId: entityId));
+        //break;
+        case EntityType.payment:
+          store.dispatch(ViewPayment(paymentId: entityId, force: force));
+          break;
+        case EntityType.group:
+          store.dispatch(ViewGroup(groupId: entityId, force: force));
+          break;
+        // STARTER: view - do not remove comment
+        case EntityType.schedule:
+          store.dispatch(ViewSchedule(scheduleId: entityId, force: force));
+          break;
 
-        if (filterEntity != null &&
-            (uiState.filterEntityType != filterEntity.entityType ||
-                uiState.filterEntityId != filterEntity.id)) {
-          store.dispatch(ClearEntitySelection(entityType: entityType));
-          store.dispatch(FilterByEntity(entity: filterEntity));
-          // If the user selects a different entity of the same type as the current
-          // filter then we clear the selection so new records are auto-selected
-        } else if (uiState.filterEntityType != null &&
-            uiState.filterEntityId != entityId &&
-            uiState.filterEntityType == entityType) {
-          store.dispatch(FilterByEntity(
-            entity: uiState.filterEntity,
-            clearSelection: true,
-          ));
-        }
+        case EntityType.transactionRule:
+          store.dispatch(
+            ViewTransactionRule(transactionRuleId: entityId, force: force),
+          );
+          break;
 
-        if (entityId != null &&
-            !store.state.getEntityMap(entityType)!.containsKey(entityId)) {
-          if (showError) {
-            final localization =
-                AppLocalization.of(navigatorKey.currentContext!)!;
-            showErrorDialog(message: localization.failedToFindRecord);
-          }
-          return;
-        }
+        case EntityType.transaction:
+          store.dispatch(
+            ViewTransaction(transactionId: entityId, force: force),
+          );
+          break;
 
-        if (isDesktop(navigatorKey.currentContext!) &&
-            entityType!.hasFullWidthViewer) {
-          if (!state.prefState.isViewerFullScreen(entityType))
-            store.dispatch(ToggleViewerLayout(entityType));
-          final filterEntity =
-              store.state.getEntityMap(entityType)![entityId] as BaseEntity;
-          final entityTypes = filterEntity.entityType!.relatedTypes
-              .where((entityType) => state.company.isModuleEnabled(entityType));
-          if (entityTypes.isNotEmpty) {
-            viewEntitiesByType(
-                entityType: entityTypes.first, filterEntity: filterEntity);
-            return;
-          }
-        }
+        case EntityType.bankAccount:
+          store.dispatch(
+            ViewBankAccount(bankAccountId: entityId, force: force),
+          );
+          break;
 
-        switch (entityType) {
-          case EntityType.client:
-            store.dispatch(ViewClient(
-              clientId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.user:
-            store.dispatch(ViewUser(
-              userId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.project:
-            store.dispatch(ViewProject(
-              projectId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.taxRate:
-            store.dispatch(ViewTaxRate(
-              taxRateId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.companyGateway:
-            store.dispatch(ViewCompanyGateway(
-              companyGatewayId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.invoice:
-            store.dispatch(ViewInvoice(
-              invoiceId: entityId,
-              force: force,
-            ));
-            break;
-          //case EntityType.recurringInvoice:
-          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId));
-          //break;
-          case EntityType.quote:
-            store.dispatch(ViewQuote(
-              quoteId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.vendor:
-            store.dispatch(ViewVendor(
-              vendorId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.product:
-            store.dispatch(ViewProduct(
-              productId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.task:
-            store.dispatch(ViewTask(
-              taskId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.expense:
-            store.dispatch(ViewExpense(
-              expenseId: entityId,
-              force: force,
-            ));
-            break;
-          //case EntityType.expenseCategory:
-          //store.dispatch(ViewExpenseCategory(taxRateId: entityId));
-          //break;
-          case EntityType.payment:
-            store.dispatch(ViewPayment(
-              paymentId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.group:
-            store.dispatch(ViewGroup(
-              groupId: entityId,
-              force: force,
-            ));
-            break;
-          // STARTER: view - do not remove comment
-          case EntityType.schedule:
-            store.dispatch(ViewSchedule(
-              scheduleId: entityId,
-              force: force,
-            ));
-            break;
+        case EntityType.purchaseOrder:
+          store.dispatch(
+            ViewPurchaseOrder(purchaseOrderId: entityId, force: force),
+          );
+          break;
 
-          case EntityType.transactionRule:
-            store.dispatch(ViewTransactionRule(
-              transactionRuleId: entityId,
-              force: force,
-            ));
-            break;
-
-          case EntityType.transaction:
-            store.dispatch(ViewTransaction(
-              transactionId: entityId,
-              force: force,
-            ));
-            break;
-
-          case EntityType.bankAccount:
-            store.dispatch(ViewBankAccount(
-              bankAccountId: entityId,
-              force: force,
-            ));
-            break;
-
-          case EntityType.purchaseOrder:
-            store.dispatch(ViewPurchaseOrder(
-              purchaseOrderId: entityId,
-              force: force,
-            ));
-            break;
-
-          case EntityType.recurringExpense:
-            store.dispatch(ViewRecurringExpense(
-              recurringExpenseId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.paymentLink:
-            store.dispatch(ViewSubscription(
-              subscriptionId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.taskStatus:
-            store.dispatch(ViewTaskStatus(
-              taskStatusId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.expenseCategory:
-            store.dispatch(ViewExpenseCategory(
-              expenseCategoryId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.recurringInvoice:
-            store.dispatch(ViewRecurringInvoice(
-              recurringInvoiceId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.webhook:
-            store.dispatch(ViewWebhook(
-              webhookId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.token:
-            store.dispatch(ViewToken(
-              tokenId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.paymentTerm:
-            store.dispatch(ViewPaymentTerm(
-              paymentTermId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.design:
-            store.dispatch(ViewDesign(
-              designId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.credit:
-            store.dispatch(ViewCredit(
-              creditId: entityId,
-              force: force,
-            ));
-            break;
-          case EntityType.document:
-            store.dispatch(ViewDocument(
-              documentId: entityId,
-              force: force,
-            ));
-            break;
-          default:
-            print('## viewEntity not implemented for $entityType');
-            break;
-        }
-      });
+        case EntityType.recurringExpense:
+          store.dispatch(
+            ViewRecurringExpense(recurringExpenseId: entityId, force: force),
+          );
+          break;
+        case EntityType.paymentLink:
+          store.dispatch(
+            ViewSubscription(subscriptionId: entityId, force: force),
+          );
+          break;
+        case EntityType.taskStatus:
+          store.dispatch(ViewTaskStatus(taskStatusId: entityId, force: force));
+          break;
+        case EntityType.expenseCategory:
+          store.dispatch(
+            ViewExpenseCategory(expenseCategoryId: entityId, force: force),
+          );
+          break;
+        case EntityType.recurringInvoice:
+          store.dispatch(
+            ViewRecurringInvoice(recurringInvoiceId: entityId, force: force),
+          );
+          break;
+        case EntityType.webhook:
+          store.dispatch(ViewWebhook(webhookId: entityId, force: force));
+          break;
+        case EntityType.token:
+          store.dispatch(ViewToken(tokenId: entityId, force: force));
+          break;
+        case EntityType.paymentTerm:
+          store.dispatch(
+            ViewPaymentTerm(paymentTermId: entityId, force: force),
+          );
+          break;
+        case EntityType.design:
+          store.dispatch(ViewDesign(designId: entityId, force: force));
+          break;
+        case EntityType.credit:
+          store.dispatch(ViewCredit(creditId: entityId, force: force));
+          break;
+        case EntityType.document:
+          store.dispatch(ViewDocument(documentId: entityId, force: force));
+          break;
+        default:
+          print('## viewEntity not implemented for $entityType');
+          break;
+      }
+    },
+  );
 }
 
 void createEntityByType({
@@ -778,118 +703,131 @@ void createEntityByType({
   }
 
   checkForChanges(
-      store: store,
-      force: force,
-      callback: () {
-        if (state.uiState.previewStack.isNotEmpty) {
-          store.dispatch(ClearPreviewStack());
-        }
+    store: store,
+    force: force,
+    callback: () {
+      if (state.uiState.previewStack.isNotEmpty) {
+        store.dispatch(ClearPreviewStack());
+      }
 
-        if (state.prefState.isDesktop &&
-            !state.prefState.isEditorFullScreen(entityType)) {
-          store.dispatch(ToggleEditorLayout(entityType));
-        }
+      if (state.prefState.isDesktop &&
+          !state.prefState.isEditorFullScreen(entityType)) {
+        store.dispatch(ToggleEditorLayout(entityType));
+      }
 
-        final filterEntityId = state.uiState.filterEntityId;
-        final filterEntityType = state.uiState.filterEntityType;
-        ClientEntity? client;
-        ProjectEntity? project;
-        VendorEntity? vendor;
-        UserEntity? user;
-        GroupEntity? group;
+      final filterEntityId = state.uiState.filterEntityId;
+      final filterEntityType = state.uiState.filterEntityType;
+      ClientEntity? client;
+      ProjectEntity? project;
+      VendorEntity? vendor;
+      UserEntity? user;
+      GroupEntity? group;
 
-        if (applyFilter && filterEntityType != null) {
-          switch (filterEntityType) {
-            case EntityType.client:
-              client = state.clientState.get(filterEntityId!);
-              break;
-            case EntityType.project:
-              project = state.projectState.get(filterEntityId!);
-              client = state.clientState.get(project.clientId);
-              break;
-            case EntityType.vendor:
-              vendor = state.vendorState.get(filterEntityId!);
-              break;
-            case EntityType.user:
-              user = state.userState.get(filterEntityId!);
-              break;
-            case EntityType.group:
-              group = state.groupState.get(filterEntityId!);
-              break;
-          }
-        }
-
-        switch (entityType) {
+      if (applyFilter && filterEntityType != null) {
+        switch (filterEntityType) {
           case EntityType.client:
-            store.dispatch(EditClient(
-                client: ClientEntity(
-                  state: state,
-                  user: user,
-                  group: group,
-                ),
-                force: force));
+            client = state.clientState.get(filterEntityId!);
+            break;
+          case EntityType.project:
+            project = state.projectState.get(filterEntityId!);
+            client = state.clientState.get(project.clientId);
+            break;
+          case EntityType.vendor:
+            vendor = state.vendorState.get(filterEntityId!);
             break;
           case EntityType.user:
-            store.dispatch(EditUser(
+            user = state.userState.get(filterEntityId!);
+            break;
+          case EntityType.group:
+            group = state.groupState.get(filterEntityId!);
+            break;
+        }
+      }
+
+      switch (entityType) {
+        case EntityType.client:
+          store.dispatch(
+            EditClient(
+              client: ClientEntity(state: state, user: user, group: group),
+              force: force,
+            ),
+          );
+          break;
+        case EntityType.user:
+          store.dispatch(
+            EditUser(
               force: force,
               user: UserEntity(
                 state: state,
                 userCompany: UserCompanyEntity(false),
               ),
-            ));
-            break;
-          case EntityType.project:
-            store.dispatch(EditProject(
-                force: force,
-                project: ProjectEntity(
-                  state: state,
-                  client: client,
-                  user: user,
-                )));
-            break;
-          case EntityType.taxRate:
-            store.dispatch(EditTaxRate(
-                force: force, taxRate: TaxRateEntity(state: state)));
-            break;
-          case EntityType.companyGateway:
-            store.dispatch(EditCompanyGateway(
-                force: force,
-                companyGateway: CompanyGatewayEntity(state: state)));
-            break;
-          case EntityType.invoice:
-            store.dispatch(EditInvoice(
+            ),
+          );
+          break;
+        case EntityType.project:
+          store.dispatch(
+            EditProject(
               force: force,
-              invoice: InvoiceEntity(
+              project: ProjectEntity(state: state, client: client, user: user),
+            ),
+          );
+          break;
+        case EntityType.taxRate:
+          store.dispatch(
+            EditTaxRate(
+              force: force,
+              taxRate: TaxRateEntity(state: state),
+            ),
+          );
+          break;
+        case EntityType.companyGateway:
+          store.dispatch(
+            EditCompanyGateway(
+              force: force,
+              companyGateway: CompanyGatewayEntity(state: state),
+            ),
+          );
+          break;
+        case EntityType.invoice:
+          store.dispatch(
+            EditInvoice(
+              force: force,
+              invoice: InvoiceEntity(state: state, client: client, user: user),
+            ),
+          );
+          break;
+        case EntityType.quote:
+          store.dispatch(
+            EditQuote(
+              force: force,
+              quote: InvoiceEntity(
                 state: state,
+                entityType: EntityType.quote,
                 client: client,
                 user: user,
               ),
-            ));
-            break;
-          case EntityType.quote:
-            store.dispatch(EditQuote(
-                force: force,
-                quote: InvoiceEntity(
-                  state: state,
-                  entityType: EntityType.quote,
-                  client: client,
-                  user: user,
-                )));
-            break;
-          case EntityType.vendor:
-            store.dispatch(EditVendor(
-                force: force,
-                vendor: VendorEntity(
-                  state: state,
-                  user: user,
-                )));
-            break;
-          case EntityType.product:
-            store.dispatch(EditProduct(
-                force: force, product: ProductEntity(state: state)));
-            break;
-          case EntityType.task:
-            store.dispatch(EditTask(
+            ),
+          );
+          break;
+        case EntityType.vendor:
+          store.dispatch(
+            EditVendor(
+              force: force,
+              vendor: VendorEntity(state: state, user: user),
+            ),
+          );
+          break;
+        case EntityType.product:
+          store.dispatch(
+            EditProduct(
+              force: force,
+              product: ProductEntity(state: state),
+            ),
+          );
+          break;
+        case EntityType.task:
+          store.dispatch(
+            EditTask(
               force: force,
               task: TaskEntity(
                 state: state,
@@ -897,97 +835,123 @@ void createEntityByType({
                 project: project,
                 user: user,
               ),
-            ));
-            break;
-          case EntityType.expense:
-            store.dispatch(EditExpense(
-                force: force,
-                expense: ExpenseEntity(
-                  state: state,
-                  client: client,
-                  vendor: vendor,
-                  user: user,
-                  project: project,
-                )));
-            break;
-          case EntityType.payment:
-            store.dispatch(EditPayment(
-                force: force,
-                payment: PaymentEntity(
-                  state: state,
-                  client: client,
-                )));
-            break;
-          case EntityType.group:
-            store.dispatch(EditGroup(
+            ),
+          );
+          break;
+        case EntityType.expense:
+          store.dispatch(
+            EditExpense(
+              force: force,
+              expense: ExpenseEntity(
+                state: state,
+                client: client,
+                vendor: vendor,
+                user: user,
+                project: project,
+              ),
+            ),
+          );
+          break;
+        case EntityType.payment:
+          store.dispatch(
+            EditPayment(
+              force: force,
+              payment: PaymentEntity(state: state, client: client),
+            ),
+          );
+          break;
+        case EntityType.group:
+          store.dispatch(
+            EditGroup(
               force: force,
               group: GroupEntity(state: state),
-            ));
-            break;
-          // STARTER: create type - do not remove comment
-          case EntityType.schedule:
-            store.dispatch(EditSchedule(
+            ),
+          );
+          break;
+        // STARTER: create type - do not remove comment
+        case EntityType.schedule:
+          store.dispatch(
+            EditSchedule(
               force: force,
-              schedule: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
-                  state: state),
-            ));
-            break;
-          case EntityType.transactionRule:
-            store.dispatch(EditTransactionRule(
+              schedule: ScheduleEntity(
+                ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+                state: state,
+              ),
+            ),
+          );
+          break;
+        case EntityType.transactionRule:
+          store.dispatch(
+            EditTransactionRule(
               force: force,
               transactionRule: TransactionRuleEntity(state: state),
-            ));
-            break;
-          case EntityType.transaction:
-            store.dispatch(EditTransaction(
+            ),
+          );
+          break;
+        case EntityType.transaction:
+          store.dispatch(
+            EditTransaction(
               force: force,
               transaction: TransactionEntity(state: state),
-            ));
-            break;
+            ),
+          );
+          break;
 
-          case EntityType.purchaseOrder:
-            store.dispatch(EditPurchaseOrder(
+        case EntityType.purchaseOrder:
+          store.dispatch(
+            EditPurchaseOrder(
               force: force,
               purchaseOrder: InvoiceEntity(
                 state: state,
                 entityType: EntityType.purchaseOrder,
                 vendor: vendor,
               ),
-            ));
-            break;
+            ),
+          );
+          break;
 
-          case EntityType.recurringExpense:
-            store.dispatch(EditRecurringExpense(
+        case EntityType.recurringExpense:
+          store.dispatch(
+            EditRecurringExpense(
               force: force,
               recurringExpense: ExpenseEntity(
-                  state: state,
-                  client: client,
-                  project: project,
-                  user: user,
-                  vendor: vendor,
-                  entityType: EntityType.recurringExpense),
-            ));
-            break;
-          case EntityType.paymentLink:
-            store.dispatch(EditSubscription(
+                state: state,
+                client: client,
+                project: project,
+                user: user,
+                vendor: vendor,
+                entityType: EntityType.recurringExpense,
+              ),
+            ),
+          );
+          break;
+        case EntityType.paymentLink:
+          store.dispatch(
+            EditSubscription(
               force: force,
               subscription: SubscriptionEntity(state: state),
-            ));
-            break;
-          case EntityType.taskStatus:
-            store.dispatch(EditTaskStatus(
+            ),
+          );
+          break;
+        case EntityType.taskStatus:
+          store.dispatch(
+            EditTaskStatus(
               force: force,
               taskStatus: TaskStatusEntity(state: state),
-            ));
-            break;
-          case EntityType.expenseCategory:
-            store.dispatch(EditExpenseCategory(
+            ),
+          );
+          break;
+        case EntityType.expenseCategory:
+          store.dispatch(
+            EditExpenseCategory(
               force: force,
               expenseCategory: ExpenseCategoryEntity(state: state),
-            ));
-            break;
-          case EntityType.recurringInvoice:
-            store.dispatch(EditRecurringInvoice(
+            ),
+          );
+          break;
+        case EntityType.recurringInvoice:
+          store.dispatch(
+            EditRecurringInvoice(
               force: force,
               recurringInvoice: InvoiceEntity(
                 state: state,
@@ -995,34 +959,44 @@ void createEntityByType({
                 client: client,
                 user: user,
               ),
-            ));
-            break;
-          case EntityType.webhook:
-            store.dispatch(EditWebhook(
+            ),
+          );
+          break;
+        case EntityType.webhook:
+          store.dispatch(
+            EditWebhook(
               force: force,
               webhook: WebhookEntity(state: state),
-            ));
-            break;
-          case EntityType.token:
-            store.dispatch(EditToken(
+            ),
+          );
+          break;
+        case EntityType.token:
+          store.dispatch(
+            EditToken(
               force: force,
               token: TokenEntity(state: state),
-            ));
-            break;
-          case EntityType.paymentTerm:
-            store.dispatch(EditPaymentTerm(
+            ),
+          );
+          break;
+        case EntityType.paymentTerm:
+          store.dispatch(
+            EditPaymentTerm(
               force: force,
               paymentTerm: PaymentTermEntity(state: state),
-            ));
-            break;
-          case EntityType.design:
-            store.dispatch(EditDesign(
+            ),
+          );
+          break;
+        case EntityType.design:
+          store.dispatch(
+            EditDesign(
               force: force,
               design: DesignEntity(state: state),
-            ));
-            break;
-          case EntityType.credit:
-            store.dispatch(EditCredit(
+            ),
+          );
+          break;
+        case EntityType.credit:
+          store.dispatch(
+            EditCredit(
               force: force,
               credit: InvoiceEntity(
                 state: state,
@@ -1030,18 +1004,22 @@ void createEntityByType({
                 user: user,
                 client: client,
               ),
-            ));
-            break;
-          case EntityType.bankAccount:
-            store.dispatch(EditBankAccount(
+            ),
+          );
+          break;
+        case EntityType.bankAccount:
+          store.dispatch(
+            EditBankAccount(
               force: force,
               bankAccount: BankAccountEntity(state: state),
-            ));
-            break;
-          default:
-            print('## Create by type not handled for $entityType');
-        }
-      });
+            ),
+          );
+          break;
+        default:
+          print('## Create by type not handled for $entityType');
+      }
+    },
+  );
 }
 
 void createEntity({
@@ -1061,235 +1039,292 @@ void createEntity({
   }
 
   checkForChanges(
-      store: store,
-      force: force,
-      callback: () {
-        if (uiState.previewStack.isNotEmpty) {
-          store.dispatch(ClearPreviewStack());
-        }
+    store: store,
+    force: force,
+    callback: () {
+      if (uiState.previewStack.isNotEmpty) {
+        store.dispatch(ClearPreviewStack());
+      }
 
-        if (state.prefState.isDesktop &&
-            !state.prefState.isEditorFullScreen(entity.entityType)) {
-          store.dispatch(ToggleEditorLayout(entity.entityType));
-        }
+      if (state.prefState.isDesktop &&
+          !state.prefState.isEditorFullScreen(entity.entityType)) {
+        store.dispatch(ToggleEditorLayout(entity.entityType));
+      }
 
-        if (filterEntity != null) {
-          if (uiState.filterEntityType != filterEntity.entityType ||
-              uiState.filterEntityId != filterEntity.id) {
-            store.dispatch(ClearEntitySelection(entityType: entity.entityType));
-            store.dispatch(FilterByEntity(entity: filterEntity));
-          }
+      if (filterEntity != null) {
+        if (uiState.filterEntityType != filterEntity.entityType ||
+            uiState.filterEntityId != filterEntity.id) {
+          store.dispatch(ClearEntitySelection(entityType: entity.entityType));
+          store.dispatch(FilterByEntity(entity: filterEntity));
         }
+      }
 
-        switch (entity.entityType) {
-          case EntityType.client:
-            store.dispatch(EditClient(
+      switch (entity.entityType) {
+        case EntityType.client:
+          store.dispatch(
+            EditClient(
               client: entity as ClientEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
-            ));
-            break;
-          case EntityType.user:
-            store.dispatch(EditUser(
+            ),
+          );
+          break;
+        case EntityType.user:
+          store.dispatch(
+            EditUser(
               user: entity as UserEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.project:
-            store.dispatch(EditProject(
+            ),
+          );
+          break;
+        case EntityType.project:
+          store.dispatch(
+            EditProject(
               project: entity as ProjectEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
-            ));
-            break;
-          case EntityType.taxRate:
-            store.dispatch(EditTaxRate(
+            ),
+          );
+          break;
+        case EntityType.taxRate:
+          store.dispatch(
+            EditTaxRate(
               taxRate: entity as TaxRateEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.companyGateway:
-            store.dispatch(EditCompanyGateway(
+            ),
+          );
+          break;
+        case EntityType.companyGateway:
+          store.dispatch(
+            EditCompanyGateway(
               companyGateway: entity as CompanyGatewayEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.invoice:
-            store.dispatch(EditInvoice(
+            ),
+          );
+          break;
+        case EntityType.invoice:
+          store.dispatch(
+            EditInvoice(
               invoice: entity as InvoiceEntity?,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.quote:
-            store.dispatch(EditQuote(
+            ),
+          );
+          break;
+        case EntityType.quote:
+          store.dispatch(
+            EditQuote(
               quote: entity as InvoiceEntity?,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.vendor:
-            store.dispatch(EditVendor(
+            ),
+          );
+          break;
+        case EntityType.vendor:
+          store.dispatch(
+            EditVendor(
               vendor: entity as VendorEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
-            ));
-            break;
-          case EntityType.product:
-            store.dispatch(EditProduct(
+            ),
+          );
+          break;
+        case EntityType.product:
+          store.dispatch(
+            EditProduct(
               product: entity as ProductEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.task:
-            store.dispatch(EditTask(
+            ),
+          );
+          break;
+        case EntityType.task:
+          store.dispatch(
+            EditTask(
               task: entity as TaskEntity?,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.expense:
-            store.dispatch(EditExpense(
+            ),
+          );
+          break;
+        case EntityType.expense:
+          store.dispatch(
+            EditExpense(
               expense: entity as ExpenseEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.payment:
-            store.dispatch(EditPayment(
+            ),
+          );
+          break;
+        case EntityType.payment:
+          store.dispatch(
+            EditPayment(
               payment: entity as PaymentEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.group:
-            store.dispatch(EditGroup(
+            ),
+          );
+          break;
+        case EntityType.group:
+          store.dispatch(
+            EditGroup(
               group: entity as GroupEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          // STARTER: create - do not remove comment
-          case EntityType.schedule:
-            store.dispatch(EditSchedule(
+            ),
+          );
+          break;
+        // STARTER: create - do not remove comment
+        case EntityType.schedule:
+          store.dispatch(
+            EditSchedule(
               schedule: entity as ScheduleEntity,
               force: force,
               completer: completer,
-            ));
-            break;
+            ),
+          );
+          break;
 
-          case EntityType.transactionRule:
-            store.dispatch(EditTransactionRule(
+        case EntityType.transactionRule:
+          store.dispatch(
+            EditTransactionRule(
               transactionRule: entity as TransactionRuleEntity,
               force: force,
               completer: completer,
-            ));
-            break;
+            ),
+          );
+          break;
 
-          case EntityType.transaction:
-            store.dispatch(EditTransaction(
+        case EntityType.transaction:
+          store.dispatch(
+            EditTransaction(
               transaction: entity as TransactionEntity,
               force: force,
               completer: completer,
-            ));
-            break;
+            ),
+          );
+          break;
 
-          case EntityType.purchaseOrder:
-            store.dispatch(EditPurchaseOrder(
+        case EntityType.purchaseOrder:
+          store.dispatch(
+            EditPurchaseOrder(
               purchaseOrder: entity as InvoiceEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.recurringExpense:
-            store.dispatch(EditRecurringExpense(
+            ),
+          );
+          break;
+        case EntityType.recurringExpense:
+          store.dispatch(
+            EditRecurringExpense(
               recurringExpense: entity as ExpenseEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.paymentLink:
-            store.dispatch(EditSubscription(
+            ),
+          );
+          break;
+        case EntityType.paymentLink:
+          store.dispatch(
+            EditSubscription(
               subscription: entity as SubscriptionEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.taskStatus:
-            store.dispatch(EditTaskStatus(
+            ),
+          );
+          break;
+        case EntityType.taskStatus:
+          store.dispatch(
+            EditTaskStatus(
               taskStatus: entity as TaskStatusEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.expenseCategory:
-            store.dispatch(EditExpenseCategory(
+            ),
+          );
+          break;
+        case EntityType.expenseCategory:
+          store.dispatch(
+            EditExpenseCategory(
               expenseCategory: entity as ExpenseCategoryEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
-            ));
-            break;
-          case EntityType.recurringInvoice:
-            store.dispatch(EditRecurringInvoice(
+            ),
+          );
+          break;
+        case EntityType.recurringInvoice:
+          store.dispatch(
+            EditRecurringInvoice(
               recurringInvoice: entity as InvoiceEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.webhook:
-            store.dispatch(EditWebhook(
+            ),
+          );
+          break;
+        case EntityType.webhook:
+          store.dispatch(
+            EditWebhook(
               webhook: entity as WebhookEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.token:
-            store.dispatch(EditToken(
+            ),
+          );
+          break;
+        case EntityType.token:
+          store.dispatch(
+            EditToken(
               token: entity as TokenEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.paymentTerm:
-            store.dispatch(EditPaymentTerm(
+            ),
+          );
+          break;
+        case EntityType.paymentTerm:
+          store.dispatch(
+            EditPaymentTerm(
               paymentTerm: entity as PaymentTermEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.design:
-            store.dispatch(EditDesign(
+            ),
+          );
+          break;
+        case EntityType.design:
+          store.dispatch(
+            EditDesign(
               design: entity as DesignEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.credit:
-            store.dispatch(EditCredit(
+            ),
+          );
+          break;
+        case EntityType.credit:
+          store.dispatch(
+            EditCredit(
               credit: entity as InvoiceEntity?,
               force: force,
               completer: completer,
-            ));
-            break;
-          case EntityType.bankAccount:
-            store.dispatch(EditBankAccount(
+            ),
+          );
+          break;
+        case EntityType.bankAccount:
+          store.dispatch(
+            EditBankAccount(
               bankAccount: entity as BankAccountEntity,
               force: force,
               completer: completer,
-            ));
-            break;
-          default:
-            print('## createEntity not handled for ${entity.entityType}');
-        }
-      });
+            ),
+          );
+          break;
+        default:
+          print('## createEntity not handled for ${entity.entityType}');
+      }
+    },
+  );
 }
 
 void editEntity({
@@ -1306,223 +1341,262 @@ void editEntity({
   final entityType = entity.entityType;
 
   checkForChanges(
-      store: store,
-      force: force,
-      callback: () {
-        if (state.prefState.isDesktop) {
-          final isFullScreen = state.prefState.isEditorFullScreen(entityType);
-          if (isFullScreen && !fullScreen || !isFullScreen && fullScreen) {
-            store.dispatch(ToggleEditorLayout(entityType));
-          }
+    store: store,
+    force: force,
+    callback: () {
+      if (state.prefState.isDesktop) {
+        final isFullScreen = state.prefState.isEditorFullScreen(entityType);
+        if (isFullScreen && !fullScreen || !isFullScreen && fullScreen) {
+          store.dispatch(ToggleEditorLayout(entityType));
         }
+      }
 
-        switch (entityType) {
-          case EntityType.client:
-            store.dispatch(EditClient(
-              client: entity as ClientEntity,
+      switch (entityType) {
+        case EntityType.client:
+          store.dispatch(
+            EditClient(client: entity as ClientEntity, completer: completer),
+          );
+          break;
+        case EntityType.user:
+          store.dispatch(
+            EditUser(user: entity as UserEntity, completer: completer),
+          );
+          break;
+        case EntityType.project:
+          store.dispatch(
+            EditProject(project: entity as ProjectEntity, completer: completer),
+          );
+          break;
+        case EntityType.taxRate:
+          store.dispatch(
+            EditTaxRate(taxRate: entity as TaxRateEntity, completer: completer),
+          );
+          break;
+        case EntityType.companyGateway:
+          store.dispatch(
+            EditCompanyGateway(
+              companyGateway: entity as CompanyGatewayEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.user:
-            store.dispatch(EditUser(
-              user: entity as UserEntity,
-              completer: completer,
-            ));
-            break;
-          case EntityType.project:
-            store.dispatch(EditProject(
-                project: entity as ProjectEntity, completer: completer));
-            break;
-          case EntityType.taxRate:
-            store.dispatch(EditTaxRate(
-                taxRate: entity as TaxRateEntity, completer: completer));
-            break;
-          case EntityType.companyGateway:
-            store.dispatch(EditCompanyGateway(
-                companyGateway: entity as CompanyGatewayEntity,
-                completer: completer));
-            break;
-          case EntityType.invoice:
-            final invoice = entity as InvoiceEntity;
-            final client = state.clientState.get(invoice.clientId);
-            final settings = getClientSettings(state, client);
+            ),
+          );
+          break;
+        case EntityType.invoice:
+          final invoice = entity as InvoiceEntity;
+          final client = state.clientState.get(invoice.clientId);
+          final settings = getClientSettings(state, client);
 
-            final today = DateTime.now();
-            final todayValue = '${today.year}-${today.month}';
-            final date = convertSqlDateToDateTime(invoice.date);
-            final dateValue = '${date.year}-${date.month}';
+          final today = DateTime.now();
+          final todayValue = '${today.year}-${today.month}';
+          final date = convertSqlDateToDateTime(invoice.date);
+          final dateValue = '${date.year}-${date.month}';
 
-            if (settings.lockInvoices ==
-                    SettingsEntity.LOCK_INVOICES_WHEN_PAID &&
-                (invoice.isPaid || invoice.isPartial)) {
-              showMessageDialog(message: localization!.paidInvoicesArelocked);
-            } else if (settings.lockInvoices ==
-                    SettingsEntity.LOCK_INVOICES_WHEN_SENT &&
-                invoice.isSent) {
-              showMessageDialog(message: localization!.sentInvoicesArelocked);
-            } else if (settings.lockInvoices ==
-                    SettingsEntity.LOCK_INVOICES_END_OF_MONTH &&
-                dateValue != todayValue) {
-              showMessageDialog(
-                  message: localization!.invoicesLockedEndOfMonth);
-            } else {
-              store.dispatch(EditInvoice(
+          if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_WHEN_PAID &&
+              (invoice.isPaid || invoice.isPartial)) {
+            showMessageDialog(message: localization!.paidInvoicesArelocked);
+          } else if (settings.lockInvoices ==
+                  SettingsEntity.LOCK_INVOICES_WHEN_SENT &&
+              invoice.isSent) {
+            showMessageDialog(message: localization!.sentInvoicesArelocked);
+          } else if (settings.lockInvoices ==
+                  SettingsEntity.LOCK_INVOICES_END_OF_MONTH &&
+              dateValue != todayValue) {
+            showMessageDialog(message: localization!.invoicesLockedEndOfMonth);
+          } else {
+            store.dispatch(
+              EditInvoice(
                 invoice: entity,
                 completer: completer,
                 invoiceItemIndex: subIndex,
-              ));
-            }
-            break;
-          case EntityType.quote:
-            store.dispatch(EditQuote(
+              ),
+            );
+          }
+          break;
+        case EntityType.quote:
+          store.dispatch(
+            EditQuote(
               quote: entity as InvoiceEntity?,
               completer: completer,
               quoteItemIndex: subIndex,
-            ));
-            break;
-          case EntityType.vendor:
-            store.dispatch(EditVendor(
-              vendor: entity as VendorEntity,
-              completer: completer,
-            ));
-            break;
-          case EntityType.product:
-            store.dispatch(EditProduct(
-                product: entity as ProductEntity, completer: completer));
-            break;
-          case EntityType.task:
-            if (!state.company.invoiceTaskLock ||
-                !(entity as TaskEntity).isInvoiced)
-              store.dispatch(EditTask(
+            ),
+          );
+          break;
+        case EntityType.vendor:
+          store.dispatch(
+            EditVendor(vendor: entity as VendorEntity, completer: completer),
+          );
+          break;
+        case EntityType.product:
+          store.dispatch(
+            EditProduct(product: entity as ProductEntity, completer: completer),
+          );
+          break;
+        case EntityType.task:
+          if (!state.company.invoiceTaskLock ||
+              !(entity as TaskEntity).isInvoiced)
+            store.dispatch(
+              EditTask(
                 task: entity as TaskEntity?,
                 taskTimeIndex: subIndex,
                 completer: completer,
-              ));
-            break;
-          case EntityType.expense:
-            store.dispatch(
-              EditExpense(
-                  expense: entity as ExpenseEntity, completer: completer),
+              ),
             );
-            break;
-          case EntityType.payment:
-            store.dispatch(EditPayment(
-              payment: entity as PaymentEntity,
+          break;
+        case EntityType.expense:
+          store.dispatch(
+            EditExpense(expense: entity as ExpenseEntity, completer: completer),
+          );
+          break;
+        case EntityType.payment:
+          store.dispatch(
+            EditPayment(payment: entity as PaymentEntity, completer: completer),
+          );
+          break;
+        case EntityType.group:
+          store.dispatch(
+            EditGroup(group: entity as GroupEntity, completer: completer),
+          );
+          break;
+        // STARTER: edit - do not remove comment
+        case EntityType.schedule:
+          store.dispatch(
+            EditSchedule(
+              schedule: entity as ScheduleEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.group:
-            store.dispatch(EditGroup(
-              group: entity as GroupEntity,
+            ),
+          );
+          break;
+
+        case EntityType.transactionRule:
+          store.dispatch(
+            EditTransactionRule(
+              transactionRule: entity as TransactionRuleEntity,
               completer: completer,
-            ));
-            break;
-          // STARTER: edit - do not remove comment
-          case EntityType.schedule:
-            store.dispatch(EditSchedule(
-                schedule: entity as ScheduleEntity, completer: completer));
-            break;
+            ),
+          );
+          break;
 
-          case EntityType.transactionRule:
-            store.dispatch(EditTransactionRule(
-                transactionRule: entity as TransactionRuleEntity,
-                completer: completer));
-            break;
+        case EntityType.transaction:
+          store.dispatch(
+            EditTransaction(
+              transaction: entity as TransactionEntity,
+              completer: completer,
+            ),
+          );
+          break;
 
-          case EntityType.transaction:
-            store.dispatch(EditTransaction(
-                transaction: entity as TransactionEntity,
-                completer: completer));
-            break;
+        case EntityType.purchaseOrder:
+          store.dispatch(
+            EditPurchaseOrder(
+              purchaseOrder: entity as InvoiceEntity,
+              completer: completer,
+            ),
+          );
+          break;
 
-          case EntityType.purchaseOrder:
-            store.dispatch(EditPurchaseOrder(
-                purchaseOrder: entity as InvoiceEntity, completer: completer));
-            break;
-
-          case EntityType.recurringExpense:
-            store.dispatch(EditRecurringExpense(
-                recurringExpense: entity as ExpenseEntity,
-                completer: completer));
-            break;
-          case EntityType.paymentLink:
-            store.dispatch(EditSubscription(
-                subscription: entity as SubscriptionEntity,
-                completer: completer));
-            break;
-          case EntityType.taskStatus:
-            store.dispatch(EditTaskStatus(
+        case EntityType.recurringExpense:
+          store.dispatch(
+            EditRecurringExpense(
+              recurringExpense: entity as ExpenseEntity,
+              completer: completer,
+            ),
+          );
+          break;
+        case EntityType.paymentLink:
+          store.dispatch(
+            EditSubscription(
+              subscription: entity as SubscriptionEntity,
+              completer: completer,
+            ),
+          );
+          break;
+        case EntityType.taskStatus:
+          store.dispatch(
+            EditTaskStatus(
               taskStatus: entity as TaskStatusEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.expenseCategory:
-            store.dispatch(EditExpenseCategory(
+            ),
+          );
+          break;
+        case EntityType.expenseCategory:
+          store.dispatch(
+            EditExpenseCategory(
               expenseCategory: entity as ExpenseCategoryEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.recurringInvoice:
-            store.dispatch(EditRecurringInvoice(
+            ),
+          );
+          break;
+        case EntityType.recurringInvoice:
+          store.dispatch(
+            EditRecurringInvoice(
               recurringInvoice: entity as InvoiceEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.webhook:
-            store.dispatch(EditWebhook(
-              webhook: entity as WebhookEntity,
-              completer: completer,
-            ));
-            break;
-          case EntityType.token:
-            store.dispatch(EditToken(
-              token: entity as TokenEntity,
-              completer: completer,
-            ));
-            break;
-          case EntityType.paymentTerm:
-            store.dispatch(EditPaymentTerm(
+            ),
+          );
+          break;
+        case EntityType.webhook:
+          store.dispatch(
+            EditWebhook(webhook: entity as WebhookEntity, completer: completer),
+          );
+          break;
+        case EntityType.token:
+          store.dispatch(
+            EditToken(token: entity as TokenEntity, completer: completer),
+          );
+          break;
+        case EntityType.paymentTerm:
+          store.dispatch(
+            EditPaymentTerm(
               paymentTerm: entity as PaymentTermEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.design:
-            store.dispatch(EditDesign(
-              design: entity as DesignEntity,
-              completer: completer,
-            ));
-            break;
-          case EntityType.credit:
-            store.dispatch(EditCredit(
-              credit: entity as InvoiceEntity?,
-              completer: completer,
-            ));
-            break;
-          case EntityType.bankAccount:
-            store.dispatch(EditBankAccount(
+            ),
+          );
+          break;
+        case EntityType.design:
+          store.dispatch(
+            EditDesign(design: entity as DesignEntity, completer: completer),
+          );
+          break;
+        case EntityType.credit:
+          store.dispatch(
+            EditCredit(credit: entity as InvoiceEntity?, completer: completer),
+          );
+          break;
+        case EntityType.bankAccount:
+          store.dispatch(
+            EditBankAccount(
               bankAccount: entity as BankAccountEntity,
               completer: completer,
-            ));
-            break;
-          case EntityType.document:
-            store.dispatch(EditDocument(
+            ),
+          );
+          break;
+        case EntityType.document:
+          store.dispatch(
+            EditDocument(
               document: entity as DocumentEntity?,
               completer: completer,
-            ));
-            break;
-          default:
-            print('## Edit not handled for $entityType');
-        }
-      });
+            ),
+          );
+          break;
+        default:
+          print('## Edit not handled for $entityType');
+      }
+    },
+  );
 }
 
-void handleEntityAction(BaseEntity entity, EntityAction? action,
-    {bool autoPop = false}) {
+void handleEntityAction(
+  BaseEntity entity,
+  EntityAction? action, {
+  bool autoPop = false,
+}) {
   handleEntitiesActions([entity], action, autoPop: autoPop);
 }
 
-void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
-    {bool autoPop = false}) {
+void handleEntitiesActions(
+  List<BaseEntity> entities,
+  EntityAction? action, {
+  bool autoPop = false,
+}) {
   if (entities.isEmpty) {
     return;
   }
@@ -1582,7 +1656,8 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
           break;
         default:
           print(
-              '## ERROR: ${entities.first.entityType} entity type not supported');
+            '## ERROR: ${entities.first.entityType} entity type not supported',
+          );
       }
     }
   }
@@ -1684,7 +1759,8 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
       break;
     default:
       print(
-          'Error: unhandled type ${entities.first.entityType} in handleEntitiesActions');
+        'Error: unhandled type ${entities.first.entityType} in handleEntitiesActions',
+      );
   }
 }
 
@@ -1699,13 +1775,14 @@ void selectEntity({
   final state = store.state;
   final uiState = state.uiState;
   final entityUIState = state.getUIState(entity.entityType);
-  final isInMultiselect =
-      state.getListState(entity.entityType).isInMultiselect();
+  final isInMultiselect = state
+      .getListState(entity.entityType)
+      .isInMultiselect();
 
   if (longPress == true) {
     final longPressIsSelection =
         (state.prefState.longPressSelectionIsDefault) ||
-            state.prefState.moduleLayout == ModuleLayout.table;
+        state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
       handleEntityAction(entity, EntityAction.toggleMultiselect);
@@ -1744,10 +1821,7 @@ void selectEntity({
   }
 }
 
-void inspectEntity({
-  required BaseEntity entity,
-  bool longPress = false,
-}) {
+void inspectEntity({required BaseEntity entity, bool longPress = false}) {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
   final previewStack = state.uiState.previewStack;
@@ -1785,16 +1859,20 @@ void checkForChanges({
     callback();
   } else if (store.state.hasChanges() && !isMobile(context!)) {
     showDialog<MessageDialog>(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          final localization = AppLocalization.of(context)!;
-          return MessageDialog(localization.errorUnsavedChanges,
-              dismissLabel: localization.continueEditing, onDiscard: () {
+      context: context,
+      builder: (BuildContext dialogContext) {
+        final localization = AppLocalization.of(context)!;
+        return MessageDialog(
+          localization.errorUnsavedChanges,
+          dismissLabel: localization.continueEditing,
+          onDiscard: () {
             store.dispatch(DiscardChanges());
             store.dispatch(ResetSettings());
             callback();
-          });
-        });
+          },
+        );
+      },
+    );
   } else {
     callback();
   }

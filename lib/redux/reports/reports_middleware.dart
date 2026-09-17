@@ -15,9 +15,7 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 List<Middleware<AppState>> createStoreReportsMiddleware() {
   final viewReports = _viewReports();
 
-  return [
-    TypedMiddleware<AppState, ViewReports>(viewReports),
-  ];
+  return [TypedMiddleware<AppState, ViewReports>(viewReports)];
 }
 
 Middleware<AppState> _viewReports() {
@@ -25,23 +23,26 @@ Middleware<AppState> _viewReports() {
     final action = dynamicAction as ViewReports;
 
     checkForChanges(
-        store: store,
-        force: action.force,
-        callback: () {
-          const route = ReportsScreen.route;
+      store: store,
+      force: action.force,
+      callback: () {
+        const route = ReportsScreen.route;
 
-          store.dispatch(UpdateCurrentRoute(route));
+        store.dispatch(UpdateCurrentRoute(route));
 
-          next(action);
+        next(action);
 
-          if (store.state.prefState.isMobile) {
-            if (action.report == null) {
-              navigatorKey.currentState!.pushNamedAndRemoveUntil(
-                  ReportsScreen.route, (Route<dynamic> route) => false);
-            } else {
-              navigatorKey.currentState!.pushNamed(route);
-            }
+        if (store.state.prefState.isMobile) {
+          if (action.report == null) {
+            navigatorKey.currentState!.pushNamedAndRemoveUntil(
+              ReportsScreen.route,
+              (Route<dynamic> route) => false,
+            );
+          } else {
+            navigatorKey.currentState!.pushNamed(route);
           }
-        });
+        }
+      },
+    );
   };
 }

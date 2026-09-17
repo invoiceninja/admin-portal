@@ -21,9 +21,7 @@ class DocumentScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, DocumentScreenVM>(
       converter: DocumentScreenVM.fromStore,
       builder: (context, vm) {
-        return DocumentScreen(
-          viewModel: vm,
-        );
+        return DocumentScreen(viewModel: vm);
       },
     );
   }

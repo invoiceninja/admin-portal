@@ -24,9 +24,7 @@ class TaxRateScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, TaxRateScreenVM>(
       converter: TaxRateScreenVM.fromStore,
       builder: (context, vm) {
-        return TaxRateSettingsScreen(
-          viewModel: vm,
-        );
+        return TaxRateSettingsScreen(viewModel: vm);
       },
     );
   }
@@ -53,10 +51,11 @@ class TaxRateScreenVM {
     return TaxRateScreenVM(
       taxRateMap: state.taxRateState.map,
       taxRateList: memoizedFilteredTaxRateList(
-          state.getUISelection(EntityType.taxRate),
-          state.taxRateState.map,
-          state.taxRateState.list,
-          state.taxRateListState),
+        state.getUISelection(EntityType.taxRate),
+        state.taxRateState.map,
+        state.taxRateState.list,
+        state.taxRateListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.taxRateListState.isInMultiselect(),
       onBackPressed: (context) {

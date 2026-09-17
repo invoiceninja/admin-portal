@@ -36,10 +36,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const LoginView({Key? key, required this.viewModel}) : super(key: key);
 
   final LoginVM viewModel;
 
@@ -48,8 +45,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginView> {
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_login');
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_login',
+  );
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -179,38 +177,43 @@ class _LoginState extends State<LoginView> {
     if (_createAccount && (!_termsChecked! || !_privacyChecked!)) {
       _buttonController.reset();
       showDialog<AlertDialog>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(!_termsChecked!
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              !_termsChecked!
                   ? localization!.termsOfService
-                  : localization!.privacyPolicy),
-              content: Text(localization.pleaseAgreeToTermsAndPrivacy),
-              actions: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: TextButton(
-                    child: Text(AppLocalization.of(context)!.close),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                )
-              ],
-            );
-          });
+                  : localization!.privacyPolicy,
+            ),
+            content: Text(localization.pleaseAgreeToTermsAndPrivacy),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: TextButton(
+                  child: Text(AppLocalization.of(context)!.close),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future.then<Null>((_) {
-      setState(() {
-        _loginError = '';
-      });
-    }).catchError((Object error) {
-      setState(() {
-        _buttonController.reset();
-        _loginError = error.toString();
-      });
-    });
+    completer.future
+        .then<Null>((_) {
+          setState(() {
+            _loginError = '';
+          });
+        })
+        .catchError((Object error) {
+          setState(() {
+            _buttonController.reset();
+            _loginError = error.toString();
+          });
+        });
 
     if (_loginType == LOGIN_TYPE_EMAIL) {
       viewModel.onSignUpPressed(
@@ -242,27 +245,31 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future.then<Null>((_) {
-      setState(() {
-        _loginError = '';
-        if (_recoverPassword) {
-          _recoverPassword = false;
-          _disable2FA = false;
-          _buttonController.reset();
-          showDialog<MessageDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return MessageDialog(
-                    AppLocalization.of(context)!.recoverPasswordEmailSent);
-              });
-        }
-      });
-    }).catchError((Object error) {
-      setState(() {
-        _buttonController.reset();
-        _loginError = error.toString();
-      });
-    });
+    completer.future
+        .then<Null>((_) {
+          setState(() {
+            _loginError = '';
+            if (_recoverPassword) {
+              _recoverPassword = false;
+              _disable2FA = false;
+              _buttonController.reset();
+              showDialog<MessageDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return MessageDialog(
+                    AppLocalization.of(context)!.recoverPasswordEmailSent,
+                  );
+                },
+              );
+            }
+          });
+        })
+        .catchError((Object error) {
+          setState(() {
+            _buttonController.reset();
+            _loginError = error.toString();
+          });
+        });
 
     final url = _getUrl();
 
@@ -274,9 +281,8 @@ class _LoginState extends State<LoginView> {
           _recoverPassword = false;
           showDialog<void>(
             context: context,
-            builder: (BuildContext context) => UserSmsVerification(
-              email: _emailController.text.trim(),
-            ),
+            builder: (BuildContext context) =>
+                UserSmsVerification(email: _emailController.text.trim()),
           );
         } else {
           viewModel.onRecoverPressed(
@@ -299,20 +305,29 @@ class _LoginState extends State<LoginView> {
         );
       }
     } else if (_loginType == LOGIN_TYPE_MICROSOFT) {
-      viewModel.onMicrosoftLoginPressed(context, completer,
-          url: url,
-          secret: _isSelfHosted ? _secretController.text : '',
-          oneTimePassword: _oneTimePasswordController.text);
+      viewModel.onMicrosoftLoginPressed(
+        context,
+        completer,
+        url: url,
+        secret: _isSelfHosted ? _secretController.text : '',
+        oneTimePassword: _oneTimePasswordController.text,
+      );
     } else if (_loginType == LOGIN_TYPE_APPLE) {
-      viewModel.onAppleLoginPressed(context, completer,
-          url: url,
-          secret: _isSelfHosted ? _secretController.text : '',
-          oneTimePassword: _oneTimePasswordController.text);
+      viewModel.onAppleLoginPressed(
+        context,
+        completer,
+        url: url,
+        secret: _isSelfHosted ? _secretController.text : '',
+        oneTimePassword: _oneTimePasswordController.text,
+      );
     } else {
-      viewModel.onGoogleLoginPressed(context, completer,
-          url: url,
-          secret: _isSelfHosted ? _secretController.text : '',
-          oneTimePassword: _oneTimePasswordController.text);
+      viewModel.onGoogleLoginPressed(
+        context,
+        completer,
+        url: url,
+        secret: _isSelfHosted ? _secretController.text : '',
+        oneTimePassword: _oneTimePasswordController.text,
+      );
     }
   }
 
@@ -344,8 +359,9 @@ class _LoginState extends State<LoginView> {
 
     final ThemeData themeData = Theme.of(context);
     final TextStyle? aboutTextStyle = themeData.textTheme.bodyMedium;
-    final TextStyle linkStyle = themeData.textTheme.bodyMedium!
-        .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
+    final TextStyle linkStyle = themeData.textTheme.bodyMedium!.copyWith(
+      color: convertHexStringToColor(kDefaultAccentColor),
+    );
 
     final double horizontalPadding =
         calculateLayout(context) == AppLayout.desktop ? 40 : 16;
@@ -369,10 +385,11 @@ class _LoginState extends State<LoginView> {
                 child: InkWell(
                   // TODO correct this
                   child: Image.asset(
-                      state.prefState.enableDarkMode
-                          ? 'assets/images/logo_dark.png'
-                          : 'assets/images/logo_light.png',
-                      height: 50),
+                    state.prefState.enableDarkMode
+                        ? 'assets/images/logo_dark.png'
+                        : 'assets/images/logo_light.png',
+                    height: 50,
+                  ),
                   onTap: () => launchUrl(Uri.parse(kSiteUrl)),
                   onLongPress: () {
                     if (kReleaseMode) {
@@ -399,10 +416,13 @@ class _LoginState extends State<LoginView> {
                   label: localization.submit.toUpperCase(),
                   onPressed: () {
                     final Completer<Null> completer = Completer<Null>();
-                    viewModel.onTokenLoginPressed(context, completer,
-                        token: _tokenController.text);
+                    viewModel.onTokenLoginPressed(
+                      context,
+                      completer,
+                      token: _tokenController.text,
+                    );
                   },
-                )
+                ),
               ],
             ),
           AnimatedOpacity(
@@ -456,11 +476,12 @@ class _LoginState extends State<LoginView> {
                                 });
                               },
                             ),
-                          )
+                          ),
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: horizontalPadding),
+                            horizontal: horizontalPadding,
+                          ),
                           child: Column(
                             children: [
                               if (_loginType == LOGIN_TYPE_EMAIL)
@@ -470,8 +491,8 @@ class _LoginState extends State<LoginView> {
                                   label: localization!.email,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
-                                          ? localization.pleaseEnterYourEmail
-                                          : null,
+                                      ? localization.pleaseEnterYourEmail
+                                      : null,
                                   autofillHints: [AutofillHints.username],
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
@@ -496,8 +517,8 @@ class _LoginState extends State<LoginView> {
                                   label: localization!.url,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
-                                          ? localization.pleaseEnterYourUrl
-                                          : null,
+                                      ? localization.pleaseEnterYourUrl
+                                      : null,
                                   keyboardType: TextInputType.url,
                                   onSavePressed: (_) => _submitForm(),
                                 ),
@@ -516,11 +537,13 @@ class _LoginState extends State<LoginView> {
                                     children: <Widget>[
                                       CheckboxListTile(
                                         onChanged: (value) => setState(
-                                            () => _termsChecked = value),
+                                          () => _termsChecked = value,
+                                        ),
                                         controlAffinity:
                                             ListTileControlAffinity.leading,
                                         activeColor: convertHexStringToColor(
-                                            kDefaultAccentColor),
+                                          kDefaultAccentColor,
+                                        ),
                                         value: _termsChecked,
                                         title: RichText(
                                           text: TextSpan(
@@ -529,7 +552,7 @@ class _LoginState extends State<LoginView> {
                                                 style: aboutTextStyle,
                                                 text:
                                                     localization!.iAgreeToThe +
-                                                        ' ',
+                                                    ' ',
                                               ),
                                               LinkTextSpan(
                                                 style: linkStyle,
@@ -543,18 +566,21 @@ class _LoginState extends State<LoginView> {
                                       ),
                                       CheckboxListTile(
                                         onChanged: (value) => setState(
-                                            () => _privacyChecked = value),
+                                          () => _privacyChecked = value,
+                                        ),
                                         controlAffinity:
                                             ListTileControlAffinity.leading,
                                         activeColor: convertHexStringToColor(
-                                            kDefaultAccentColor),
+                                          kDefaultAccentColor,
+                                        ),
                                         value: _privacyChecked,
                                         title: RichText(
                                           text: TextSpan(
                                             children: <TextSpan>[
                                               TextSpan(
                                                 style: aboutTextStyle,
-                                                text: localization.iAgreeToThe +
+                                                text:
+                                                    localization.iAgreeToThe +
                                                     ' ',
                                               ),
                                               LinkTextSpan(
@@ -579,41 +605,49 @@ class _LoginState extends State<LoginView> {
                         !_loginError.contains(OTP_ERROR))
                       Container(
                         padding: EdgeInsets.only(
-                            top: 20,
-                            left: horizontalPadding,
-                            right: horizontalPadding),
+                          top: 20,
+                          left: horizontalPadding,
+                          right: horizontalPadding,
+                        ),
                         child: Row(
                           children: [
                             Expanded(
                               child: SelectableText(
                                 _loginError,
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
+                                style: TextStyle(color: Colors.red),
                               ),
                             ),
                             IconButton(
-                                icon: Icon(Icons.content_copy),
-                                tooltip: localization!.copyError,
-                                onPressed: () {
-                                  Clipboard.setData(
-                                      ClipboardData(text: _loginError));
-                                }),
+                              icon: Icon(Icons.content_copy),
+                              tooltip: localization!.copyError,
+                              onPressed: () {
+                                Clipboard.setData(
+                                  ClipboardData(text: _loginError),
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 20, bottom: 10, left: 16, right: 16),
+                        top: 20,
+                        bottom: 10,
+                        left: 16,
+                        right: 16,
+                      ),
                       child: _loginType == LOGIN_TYPE_APPLE
                           ? Padding(
                               padding:
                                   calculateLayout(context) == AppLayout.desktop
-                                      ? const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 3)
-                                      : const EdgeInsets.all(0),
-                              child:
-                                  SignInWithAppleButton(onPressed: _submitForm),
+                                  ? const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 3,
+                                    )
+                                  : const EdgeInsets.all(0),
+                              child: SignInWithAppleButton(
+                                onPressed: _submitForm,
+                              ),
                             )
                           : RoundedLoadingButton(
                               height: 50,
@@ -630,45 +664,44 @@ class _LoginState extends State<LoginView> {
                                   else if (_loginType == LOGIN_TYPE_EMAIL)
                                     Icon(Icons.mail, color: Colors.white)
                                   else if (_loginType == LOGIN_TYPE_MICROSOFT)
-                                    Icon(MdiIcons.microsoft,
-                                        color: Colors.white)
+                                    Icon(
+                                      MdiIcons.microsoft,
+                                      color: Colors.white,
+                                    )
                                   else if (_loginType == LOGIN_TYPE_APPLE)
                                     Icon(MdiIcons.apple, color: Colors.white)
                                   else
                                     ClipOval(
                                       child: Image.asset(
-                                          'assets/images/google_logo.png',
-                                          width: 30,
-                                          height: 30),
+                                        'assets/images/google_logo.png',
+                                        width: 30,
+                                        height: 30,
+                                      ),
                                     ),
                                   SizedBox(width: 10),
                                   Text(
                                     _disable2FA
                                         ? localization!.sendCode
                                         : _recoverPassword
-                                            ? localization!.recoverPassword
-                                            : _createAccount
-                                                ? (_loginType ==
-                                                        LOGIN_TYPE_EMAIL
-                                                    ? localization!.emailSignUp
-                                                    : _loginType ==
-                                                            LOGIN_TYPE_MICROSOFT
-                                                        ? localization!
-                                                            .microsoftSignUp
-                                                        : localization!
-                                                            .googleSignUp)
-                                                : (_loginType ==
-                                                        LOGIN_TYPE_EMAIL
-                                                    ? localization!.emailSignIn
-                                                    : _loginType ==
-                                                            LOGIN_TYPE_MICROSOFT
-                                                        ? localization!
-                                                            .microsoftSignIn
-                                                        : localization!
-                                                            .googleSignIn),
+                                        ? localization!.recoverPassword
+                                        : _createAccount
+                                        ? (_loginType == LOGIN_TYPE_EMAIL
+                                              ? localization!.emailSignUp
+                                              : _loginType ==
+                                                    LOGIN_TYPE_MICROSOFT
+                                              ? localization!.microsoftSignUp
+                                              : localization!.googleSignUp)
+                                        : (_loginType == LOGIN_TYPE_EMAIL
+                                              ? localization!.emailSignIn
+                                              : _loginType ==
+                                                    LOGIN_TYPE_MICROSOFT
+                                              ? localization!.microsoftSignIn
+                                              : localization!.googleSignIn),
                                     style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
-                                  )
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -677,21 +710,22 @@ class _LoginState extends State<LoginView> {
                         !_recoverPassword &&
                         (!kIsWeb || state.authState.isHosted))
                       Padding(
-                          padding: const EdgeInsets.only(top: 6, bottom: 10),
-                          child: TextButton(
-                            child: Text(
-                              _createAccount
-                                  ? localization!.loginLabel
-                                  : localization!.registerLabel,
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _createAccount = !_createAccount;
-                                _loginError = '';
-                              });
-                            },
-                          )),
+                        padding: const EdgeInsets.only(top: 6, bottom: 10),
+                        child: TextButton(
+                          child: Text(
+                            _createAccount
+                                ? localization!.loginLabel
+                                : localization!.registerLabel,
+                            textAlign: TextAlign.center,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _createAccount = !_createAccount;
+                              _loginError = '';
+                            });
+                          },
+                        ),
+                      ),
                     SizedBox(height: 8),
                   ],
                 ),
@@ -721,13 +755,14 @@ class _LoginState extends State<LoginView> {
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(Icons.lock, size: 16),
-                                SizedBox(width: 8),
-                                Text(localization!.disable2fa),
-                              ]),
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(Icons.lock, size: 16),
+                              SizedBox(width: 8),
+                              Text(localization!.disable2fa),
+                            ],
+                          ),
                         ),
                       ),
                     InkWell(
@@ -743,13 +778,14 @@ class _LoginState extends State<LoginView> {
                       child: Padding(
                         padding: const EdgeInsets.all(14),
                         child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(Icons.cancel, size: 16),
-                              SizedBox(width: 8),
-                              Text(localization!.cancel),
-                            ]),
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.cancel, size: 16),
+                            SizedBox(width: 8),
+                            Text(localization!.cancel),
+                          ],
+                        ),
                       ),
                     ),
                   ] else ...[
@@ -763,16 +799,19 @@ class _LoginState extends State<LoginView> {
                         child: Padding(
                           padding: const EdgeInsets.all(14),
                           child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                if (!_recoverPassword)
-                                  Icon(MdiIcons.lock, size: 16),
-                                SizedBox(width: 8),
-                                Text(_recoverPassword
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              if (!_recoverPassword)
+                                Icon(MdiIcons.lock, size: 16),
+                              SizedBox(width: 8),
+                              Text(
+                                _recoverPassword
                                     ? localization!.cancel
-                                    : localization!.recoverPassword),
-                              ]),
+                                    : localization!.recoverPassword,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     if (!_recoverPassword && !_isSelfHosted)
@@ -788,7 +827,7 @@ class _LoginState extends State<LoginView> {
                             children: [
                               Icon(Icons.security, size: 16),
                               SizedBox(width: 8),
-                              Text(localization!.checkStatus)
+                              Text(localization!.checkStatus),
                             ],
                           ),
                         ),
@@ -806,7 +845,7 @@ class _LoginState extends State<LoginView> {
                               children: [
                                 Icon(getNativeAppIcon(platform), size: 16),
                                 SizedBox(width: 8),
-                                Text('$platform ${localization!.app}')
+                                Text('$platform ${localization!.app}'),
                               ],
                             ),
                           ),
@@ -824,12 +863,12 @@ class _LoginState extends State<LoginView> {
                               children: [
                                 Icon(Icons.settings, size: 16),
                                 SizedBox(width: 8),
-                                Text(localization!.settings)
+                                Text(localization!.settings),
                               ],
                             ),
                           ),
-                        )
-                  ]
+                        ),
+                  ],
                 ],
               ),
             ],
@@ -842,7 +881,9 @@ class _LoginState extends State<LoginView> {
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: horizontalPadding, vertical: 16),
+                    horizontal: horizontalPadding,
+                    vertical: 16,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -865,7 +906,7 @@ class _LoginState extends State<LoginView> {
               ],
             ),
             SizedBox(height: 20),
-          ]
+          ],
         ],
       ),
     );
@@ -901,10 +942,7 @@ class RuledText extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               text!,
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 15,
-              ),
+              style: TextStyle(color: Colors.grey, fontSize: 15),
             ),
           ),
           Expanded(

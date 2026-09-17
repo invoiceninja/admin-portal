@@ -5,14 +5,12 @@ import 'package:memoize/memoize.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
-var memoizedUpcomingInvoices = memo2((
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _upcomingInvoices(
-      invoiceMap: invoiceMap,
-      clientMap: clientMap,
-    ));
+var memoizedUpcomingInvoices = memo2(
+  (
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _upcomingInvoices(invoiceMap: invoiceMap, clientMap: clientMap),
+);
 
 List<InvoiceEntity?> _upcomingInvoices({
   required BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -31,20 +29,20 @@ List<InvoiceEntity?> _upcomingInvoices({
     }
   });
 
-  invoices.sort((invoiceA, invoiceB) =>
-      invoiceA!.primaryDate.compareTo(invoiceB!.primaryDate));
+  invoices.sort(
+    (invoiceA, invoiceB) =>
+        invoiceA!.primaryDate.compareTo(invoiceB!.primaryDate),
+  );
 
   return invoices;
 }
 
-var memoizedPastDueInvoices = memo2((
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _pastDueInvoices(
-      invoiceMap: invoiceMap,
-      clientMap: clientMap,
-    ));
+var memoizedPastDueInvoices = memo2(
+  (
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _pastDueInvoices(invoiceMap: invoiceMap, clientMap: clientMap),
+);
 
 List<InvoiceEntity?> _pastDueInvoices({
   required BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -63,20 +61,20 @@ List<InvoiceEntity?> _pastDueInvoices({
     }
   });
 
-  invoices.sort((invoiceA, invoiceB) =>
-      invoiceA!.primaryDate.compareTo(invoiceB!.primaryDate));
+  invoices.sort(
+    (invoiceA, invoiceB) =>
+        invoiceA!.primaryDate.compareTo(invoiceB!.primaryDate),
+  );
 
   return invoices;
 }
 
-var memoizedRecentPayments = memo2((
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _recentPayments(
-      paymentMap: paymentMap,
-      clientMap: clientMap,
-    ));
+var memoizedRecentPayments = memo2(
+  (
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _recentPayments(paymentMap: paymentMap, clientMap: clientMap),
+);
 
 List<PaymentEntity?> _recentPayments({
   required BuiltMap<String, PaymentEntity> paymentMap,
@@ -108,14 +106,12 @@ List<PaymentEntity?> _recentPayments({
   return payments;
 }
 
-var memoizedUpcomingQuotes = memo2((
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _upcomingQuotes(
-      quoteMap: quoteMap,
-      clientMap: clientMap,
-    ));
+var memoizedUpcomingQuotes = memo2(
+  (
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _upcomingQuotes(quoteMap: quoteMap, clientMap: clientMap),
+);
 
 List<InvoiceEntity?> _upcomingQuotes({
   required BuiltMap<String, InvoiceEntity> quoteMap,
@@ -133,19 +129,18 @@ List<InvoiceEntity?> _upcomingQuotes({
   });
 
   quotes.sort(
-      (quoteA, quoteB) => quoteA!.primaryDate.compareTo(quoteB!.primaryDate));
+    (quoteA, quoteB) => quoteA!.primaryDate.compareTo(quoteB!.primaryDate),
+  );
 
   return quotes;
 }
 
-var memoizedExpiredQuotes = memo2((
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _expiredQuotes(
-      quoteMap: quoteMap,
-      clientMap: clientMap,
-    ));
+var memoizedExpiredQuotes = memo2(
+  (
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _expiredQuotes(quoteMap: quoteMap, clientMap: clientMap),
+);
 
 List<InvoiceEntity?> _expiredQuotes({
   required BuiltMap<String, InvoiceEntity> quoteMap,
@@ -163,19 +158,18 @@ List<InvoiceEntity?> _expiredQuotes({
   });
 
   quotes.sort(
-      (quoteA, quoteB) => quoteA!.primaryDate.compareTo(quoteB!.primaryDate));
+    (quoteA, quoteB) => quoteA!.primaryDate.compareTo(quoteB!.primaryDate),
+  );
 
   return quotes;
 }
 
-var memoizedRunningTasks = memo2((
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _runningTasks(
-      taskMap: taskMap,
-      clientMap: clientMap,
-    ));
+var memoizedRunningTasks = memo2(
+  (
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _runningTasks(taskMap: taskMap, clientMap: clientMap),
+);
 
 List<TaskEntity?> _runningTasks({
   required BuiltMap<String, TaskEntity> taskMap,
@@ -196,14 +190,12 @@ List<TaskEntity?> _runningTasks({
   return tasks;
 }
 
-var memoizedRecentTasks = memo2((
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _recentTasks(
-      taskMap: taskMap,
-      clientMap: clientMap,
-    ));
+var memoizedRecentTasks = memo2(
+  (
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _recentTasks(taskMap: taskMap, clientMap: clientMap),
+);
 
 List<TaskEntity> _recentTasks({
   required BuiltMap<String, TaskEntity> taskMap,
@@ -256,14 +248,12 @@ List<ExpenseEntity> _upcomingExpenses({
 }
 */
 
-var memoizedRecentExpenses = memo2((
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _recentExpenses(
-      expenseMap: expenseMap,
-      clientMap: clientMap,
-    ));
+var memoizedRecentExpenses = memo2(
+  (
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _recentExpenses(expenseMap: expenseMap, clientMap: clientMap),
+);
 
 List<ExpenseEntity?> _recentExpenses({
   required BuiltMap<String, ExpenseEntity> expenseMap,

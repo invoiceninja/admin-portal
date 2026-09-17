@@ -49,7 +49,8 @@ class TokenListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: token,
-      isSelected: token.id ==
+      isSelected:
+          token.id ==
           (uiState.isEditing
               ? tokenUIState.editing!.id
               : tokenUIState.selectedId),
@@ -69,20 +70,13 @@ class TokenListItem extends StatelessWidget {
                 ),
               )
             : null,
-        title: Text(
-          token.name,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: Text(token.name, style: Theme.of(context).textTheme.titleMedium),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(user.listDisplayName),
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(token),
           ],

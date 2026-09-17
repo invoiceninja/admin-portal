@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.194';
+const String kClientVersion = '5.0.197';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -104,14 +104,7 @@ const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 const String kGoogleAnalyticsUrl =
     'https://support.google.com/analytics/answer/1037249?hl=en';
 
-enum AppEnvironment {
-  hosted,
-  selfhosted,
-  testing,
-  demo,
-  staging,
-  develop,
-}
+enum AppEnvironment { hosted, selfhosted, testing, demo, staging, develop }
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefUrl = 'url';
@@ -312,6 +305,14 @@ const kEQuoteTypes = [
   kEQuoteTypeOrderX_Comfort,
   kEQuoteTypeOrderX_Basic,
   kEQuoteType,
+];
+
+const String kFranceReportingScheduleTenDay = 'ten_day';
+const String kFranceReportingScheduleMonthly = 'monthly';
+
+const kFranceReportingSchedules = [
+  kFranceReportingScheduleTenDay,
+  kFranceReportingScheduleMonthly,
 ];
 
 const kPaymentMeansCodes = <String, String>{
@@ -1377,3 +1378,12 @@ const String kActivityVerifactuInvoiceSentFailure = '155';
 const String kActivityVerifactuCancellationSent = '156';
 const String kActivityVerifactuCancellationSentFailure = '157';
 const String kActivityQuoteRejected = '158';
+const String kActivityInvoiceDocumentSigned = '159';
+const String kActivityQuoteDocumentSigned = '160';
+const String kActivityCreditDocumentSigned = '161';
+const String kActivityPurchaseOrderDocumentSigned = '162';
+const String kActivityCustomDocumentSigned = '163';
+const String kActivityQuickbooksPushFailure = '164';
+const String kActivityQuickbooksPushSuccess = '165';
+const String kActivityPurgeUser = '166';
+const String kActivityEInvoiceStatusUpdated = '167';

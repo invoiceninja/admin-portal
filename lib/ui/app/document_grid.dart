@@ -79,87 +79,80 @@ class _DocumentGridState extends State<DocumentGrid> {
       children: [
         if (state.isEnterprisePlan) ...[
           if (kIsWeb || isDesktopOS())
-            LayoutBuilder(builder: (context, constraints) {
-              final child = InkWell(
-                onTap: () async {
-                  final files = await pickFiles(
-                    allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
-                  );
-                  if (files != null && files.isNotEmpty) {
-                    widget.onUploadDocument(files, _isPrivate);
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: DropTarget(
-                    onDragDone: (detail) async {
-                      final List<MultipartFile> multipartFiles = [];
-                      for (var index = 0;
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final child = InkWell(
+                  onTap: () async {
+                    final files = await pickFiles(
+                      allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                    );
+                    if (files != null && files.isNotEmpty) {
+                      widget.onUploadDocument(files, _isPrivate);
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: DropTarget(
+                      onDragDone: (detail) async {
+                        final List<MultipartFile> multipartFiles = [];
+                        for (
+                          var index = 0;
                           index < detail.files.length;
-                          index++) {
-                        final file = detail.files[index];
-                        final bytes = await file.readAsBytes();
-                        final multipartFile = MultipartFile.fromBytes(
-                            'documents[$index]', bytes,
-                            filename: file.name);
-                        multipartFiles.add(multipartFile);
-                      }
+                          index++
+                        ) {
+                          final file = detail.files[index];
+                          final bytes = await file.readAsBytes();
+                          final multipartFile = MultipartFile.fromBytes(
+                            'documents[$index]',
+                            bytes,
+                            filename: file.name,
+                          );
+                          multipartFiles.add(multipartFile);
+                        }
 
-                      widget.onUploadDocument(multipartFiles, _isPrivate);
-                    },
-                    onDragEntered: (detail) {
-                      setState(() => _dragging = true);
-                    },
-                    onDragExited: (detail) {
-                      setState(() => _dragging = false);
-                    },
-                    child: Stack(
-                      children: [
-                        Container(
-                          height: 75,
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(localization.clickOrDropFilesHere),
+                        widget.onUploadDocument(multipartFiles, _isPrivate);
+                      },
+                      onDragEntered: (detail) {
+                        setState(() => _dragging = true);
+                      },
+                      onDragExited: (detail) {
+                        setState(() => _dragging = false);
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 75,
+                            width: double.infinity,
+                            child: Center(
+                              child: Text(localization.clickOrDropFilesHere),
+                            ),
+                            color: _dragging
+                                ? Colors.blue.withValues(alpha: 0.4)
+                                : Theme.of(context).scaffoldBackgroundColor,
                           ),
-                          color: _dragging
-                              ? Colors.blue.withValues(alpha: 0.4)
-                              : Theme.of(context).scaffoldBackgroundColor,
-                        ),
-                        DashedRect(
-                          color: Colors.grey,
-                        ),
-                      ],
+                          DashedRect(color: Colors.grey),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
 
-              if (Version.parse(state.account.currentVersion) <
-                      Version.parse('5.6.32') &&
-                  kReleaseMode) {
-                return child;
-              } else if (constraints.maxWidth > 500) {
-                return Row(
-                  children: [
-                    Expanded(
-                      child: child,
-                      flex: 3,
-                    ),
-                    Expanded(
-                      child: privateSwitch,
-                      flex: 2,
-                    )
-                  ],
-                );
-              } else {
-                return Column(
-                  children: [
-                    privateSwitch,
-                    child,
-                  ],
-                );
-              }
-            }),
+                if (Version.parse(state.account.currentVersion) <
+                        Version.parse('5.6.32') &&
+                    kReleaseMode) {
+                  return child;
+                } else if (constraints.maxWidth > 500) {
+                  return Row(
+                    children: [
+                      Expanded(child: child, flex: 3),
+                      Expanded(child: privateSwitch, flex: 2),
+                    ],
+                  );
+                } else {
+                  return Column(children: [privateSwitch, child]);
+                }
+              },
+            ),
           if (isMobileOS())
             Padding(
               padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
@@ -175,15 +168,19 @@ class _DocumentGridState extends State<DocumentGrid> {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
                           final multipartFiles = <MultipartFile>[];
-                          final image = await ImagePicker()
-                              .pickImage(source: ImageSource.camera);
+                          final image = await ImagePicker().pickImage(
+                            source: ImageSource.camera,
+                          );
                           if (image != null) {
-                            final croppedFile = (await ImageCropper()
-                                .cropImage(sourcePath: image.path))!;
+                            final croppedFile = (await ImageCropper().cropImage(
+                              sourcePath: image.path,
+                            ))!;
                             final bytes = await croppedFile.readAsBytes();
                             final multipartFile = MultipartFile.fromBytes(
-                                'documents[0]', bytes,
-                                filename: image.path.split('/').last);
+                              'documents[0]',
+                              bytes,
+                              filename: image.path.split('/').last,
+                            );
                             multipartFiles.add(multipartFile);
                             widget.onUploadDocument(multipartFiles, _isPrivate);
                           }
@@ -244,23 +241,27 @@ class _DocumentGridState extends State<DocumentGrid> {
             ),
           ),
         ListDivider(),
-        LayoutBuilder(builder: (context, constraints) {
-          return GridView.count(
-            physics: NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.all(6),
-            childAspectRatio: ((constraints.maxWidth / 2) - 8) / 200,
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            children: widget.documents
-                .map((document) => DocumentTile(
+        LayoutBuilder(
+          builder: (context, constraints) {
+            return GridView.count(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(6),
+              childAspectRatio: ((constraints.maxWidth / 2) - 8) / 200,
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              children: widget.documents
+                  .map(
+                    (document) => DocumentTile(
                       documentId: document.id,
                       onViewExpense: widget.onViewExpense,
                       onRenamedDocument: widget.onRenamedDocument,
                       isFromExpense: false,
-                    ))
-                .toList(),
-          );
-        }),
+                    ),
+                  )
+                  .toList(),
+            );
+          },
+        ),
       ],
     );
   }
@@ -302,16 +303,14 @@ class DocumentTile extends StatelessWidget {
               children: <Widget>[
                 InkWell(
                   onTap: (document.isImage || document.isPdf)
-                      ? () => handleDocumentAction(
-                          context, [document], EntityAction.viewDocument)
+                      ? () => handleDocumentAction(context, [
+                          document,
+                        ], EntityAction.viewDocument)
                       : null,
                   child: Stack(
                     alignment: Alignment.topLeft,
                     children: [
-                      DocumentPreview(
-                        document,
-                        height: 110,
-                      ),
+                      DocumentPreview(document, height: 110),
                       if (!document.isPublic)
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -351,14 +350,17 @@ class DocumentTile extends StatelessWidget {
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
                               if (value == localization!.view) {
-                                handleDocumentAction(context, [document],
-                                    EntityAction.viewDocument);
+                                handleDocumentAction(context, [
+                                  document,
+                                ], EntityAction.viewDocument);
                               } else if (value == localization.download) {
-                                handleDocumentAction(
-                                    context, [document], EntityAction.download);
+                                handleDocumentAction(context, [
+                                  document,
+                                ], EntityAction.download);
                               } else if (value == localization.delete) {
-                                handleDocumentAction(
-                                    context, [document], EntityAction.delete);
+                                handleDocumentAction(context, [
+                                  document,
+                                ], EntityAction.delete);
                               } else if (value == localization.viewExpense) {
                                 onViewExpense!(document);
                               } else if (value == localization.rename) {
@@ -371,14 +373,17 @@ class DocumentTile extends StatelessWidget {
                                   callback: (name) {
                                     store.dispatch(
                                       SaveDocumentRequest(
-                                          completer:
-                                              snackBarCompleter<DocumentEntity>(
-                                                  localization.renamedDocument)
-                                                ..future.then((value) {
-                                                  onRenamedDocument();
-                                                }),
-                                          document: document
-                                              .rebuild((b) => b..name = name)),
+                                        completer:
+                                            snackBarCompleter<DocumentEntity>(
+                                                localization.renamedDocument,
+                                              )
+                                              ..future.then((value) {
+                                                onRenamedDocument();
+                                              }),
+                                        document: document.rebuild(
+                                          (b) => b..name = name,
+                                        ),
+                                      ),
                                     );
                                   },
                                 );
@@ -422,7 +427,7 @@ class DocumentTile extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -452,12 +457,13 @@ class DocumentPreview extends StatelessWidget {
         );
       } else {
         return Image.network(
-            '${cleanApiUrl(state.credentials.url)}/documents/${document.hash}',
-            key: ValueKey(document.preview),
-            width: double.infinity,
-            height: height,
-            fit: BoxFit.cover,
-            headers: {'X-API-TOKEN': state.credentials.token});
+          '${cleanApiUrl(state.credentials.url)}/documents/${document.hash}',
+          key: ValueKey(document.preview),
+          width: double.infinity,
+          height: height,
+          fit: BoxFit.cover,
+          headers: {'X-API-TOKEN': state.credentials.token},
+        );
       }
     }
 

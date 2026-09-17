@@ -45,19 +45,25 @@ class ProductSettingsVM {
     final state = store.state;
 
     return ProductSettingsVM(
-        state: state,
-        company: state.uiState.settingsUIState.company,
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onSavePressed: (context) {
-          Debouncer.runOnComplete(() {
-            final settingsUIState = store.state.uiState.settingsUIState;
-            final completer = snackBarCompleter<Null>(
-                AppLocalization.of(context)!.savedSettings);
-            store.dispatch(SaveCompanyRequest(
-                completer: completer, company: settingsUIState.company));
-          });
+      state: state,
+      company: state.uiState.settingsUIState.company,
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onSavePressed: (context) {
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          final completer = snackBarCompleter<Null>(
+            AppLocalization.of(context)!.savedSettings,
+          );
+          store.dispatch(
+            SaveCompanyRequest(
+              completer: completer,
+              company: settingsUIState.company,
+            ),
+          );
         });
+      },
+    );
   }
 
   final AppState state;

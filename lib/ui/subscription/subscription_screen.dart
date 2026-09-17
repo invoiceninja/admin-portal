@@ -19,10 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'subscription_screen_vm.dart';
 
 class SubscriptionScreen extends StatelessWidget {
-  const SubscriptionScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const SubscriptionScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsPaymentLinks';
 
@@ -41,7 +39,8 @@ class SubscriptionScreen extends StatelessWidget {
           store.dispatch(StartSubscriptionMultiselect()),
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.subscriptionListState.filterClearedAt}__'),
+          '__filter_${state.subscriptionListState.filterClearedAt}__',
+        ),
         entityType: EntityType.paymentLink,
         entityIds: viewModel.subscriptionList,
         filter: state.subscriptionListState.filter,
@@ -63,8 +62,9 @@ class SubscriptionScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.paymentLink,
         tableColumns: SubscriptionPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            SubscriptionPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: SubscriptionPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortSubscriptions(value));
         },
@@ -91,19 +91,19 @@ class SubscriptionScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterSubscriptionsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.paymentLink)
           ? FloatingActionButton(
               heroTag: 'subscription_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.paymentLink);
+                  context: context,
+                  entityType: EntityType.paymentLink,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newPaymentLink,
             )
           : null,

@@ -16,10 +16,8 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
-  const RecurringInvoiceEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const RecurringInvoiceEdit({Key? key, required this.viewModel})
+    : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
 
@@ -29,8 +27,9 @@ class RecurringInvoiceEdit extends StatefulWidget {
 
 class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_recurringInvoiceEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_recurringInvoiceEdit',
+  );
   TabController? _controller;
 
   static const kDetailsScreen = 0;
@@ -48,10 +47,14 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final showEInvoice =
         invoice.isOld && state.company.settings.enableEInvoice == true;
 
-    final index =
-        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+    final index = viewModel.invoiceItemIndex != null
+        ? kItemScreen
+        : kDetailsScreen;
     _controller = TabController(
-        vsync: this, length: showEInvoice ? 6 : 5, initialIndex: index);
+      vsync: this,
+      length: showEInvoice ? 6 : 5,
+      initialIndex: index,
+    );
   }
 
   @override
@@ -115,47 +118,29 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.details,
-          ),
-          Tab(
-            text: localization.contacts,
-          ),
-          Tab(
-            text: localization.items,
-          ),
-          Tab(
-            text: localization.notes,
-          ),
-          Tab(
-            text: localization.pdf,
-          ),
-          if (showEInvoice)
-            Tab(
-              text: localization.eInvoice,
-            ),
+          Tab(text: localization.details),
+          Tab(text: localization.contacts),
+          Tab(text: localization.items),
+          Tab(text: localization.notes),
+          Tab(text: localization.pdf),
+          if (showEInvoice) Tab(text: localization.eInvoice),
         ],
       ),
       body: Form(
         key: _formKey,
         child: isFullscreen
-            ? RecurringInvoiceEditDetailsScreen(
-                viewModel: widget.viewModel,
-              )
+            ? RecurringInvoiceEditDetailsScreen(viewModel: widget.viewModel)
             : TabBarView(
                 key: ValueKey(
-                    '__recurring_invoice_${invoice.id}_${invoice.updatedAt}__'),
+                  '__recurring_invoice_${invoice.id}_${invoice.updatedAt}__',
+                ),
                 controller: _controller,
                 children: <Widget>[
                   RecurringInvoiceEditDetailsScreen(
                     viewModel: widget.viewModel,
                   ),
-                  InvoiceEditContactsScreen(
-                    entityType: invoice.entityType,
-                  ),
-                  RecurringInvoiceEditItemsScreen(
-                    viewModel: widget.viewModel,
-                  ),
+                  InvoiceEditContactsScreen(entityType: invoice.entityType),
+                  RecurringInvoiceEditItemsScreen(viewModel: widget.viewModel),
                   RecurringInvoiceEditNotesScreen(),
                   RecurringInvoiceEditPDFScreen(),
                   if (showEInvoice) RecurringInvoiceEditEInvoiceScreen(),
@@ -168,27 +153,30 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
         backgroundColor: Theme.of(context).primaryColorDark,
         onPressed: () {
           showDialog<InvoiceItemSelector>(
-              context: context,
-              builder: (BuildContext context) {
-                return InvoiceItemSelector(
-                  invoice: invoice,
-                  showTasksAndExpenses: false,
-                  excluded: invoice.lineItems
-                      .where((item) => item.isTask || item.isExpense)
-                      .map((item) => item.isTask
+            context: context,
+            builder: (BuildContext context) {
+              return InvoiceItemSelector(
+                invoice: invoice,
+                showTasksAndExpenses: false,
+                excluded: invoice.lineItems
+                    .where((item) => item.isTask || item.isExpense)
+                    .map(
+                      (item) => item.isTask
                           ? viewModel.state!.taskState.map[item.taskId]
-                          : viewModel.state!.expenseState.map[item.expenseId])
-                      .whereType<BaseEntity>()
-                      .toList(),
-                  clientId: invoice.clientId,
-                  onItemsSelected: (items, [clientId, projectId]) {
-                    viewModel.onItemsAdded!(items, clientId, projectId);
-                    if (!isFullscreen) {
-                      _controller!.animateTo(kItemScreen);
-                    }
-                  },
-                );
-              });
+                          : viewModel.state!.expenseState.map[item.expenseId],
+                    )
+                    .whereType<BaseEntity>()
+                    .toList(),
+                clientId: invoice.clientId,
+                onItemsSelected: (items, [clientId, projectId]) {
+                  viewModel.onItemsAdded!(items, clientId, projectId);
+                  if (!isFullscreen) {
+                    _controller!.animateTo(kItemScreen);
+                  }
+                },
+              );
+            },
+          );
         },
         child: const Icon(Icons.add, color: Colors.white),
         tooltip: localization.addItem,

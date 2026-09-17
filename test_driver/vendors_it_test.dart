@@ -82,8 +82,10 @@ void runTestSuite({bool batchMode = false}) {
       if (await isMobile(driver!)) {
         print('Select vendor: $name');
         await driver!.scrollUntilVisible(
-            find.byType('ListView'), find.text(name),
-            dyScroll: -300);
+          find.byType('ListView'),
+          find.text(name),
+          dyScroll: -300,
+        );
         await driver!.tap(find.text(name));
       }
 
@@ -98,11 +100,12 @@ void runTestSuite({bool batchMode = false}) {
     // Archive the edited vendor
     test('Archieve/delete vendor test', () async {
       await testArchiveAndDelete(
-          driver: driver!,
-          rowText: updatedName,
-          archivedMessage: localization.archivedVendor,
-          deletedMessage: localization.deletedVendor,
-          restoredMessage: localization.restoredVendor);
+        driver: driver!,
+        rowText: updatedName,
+        archivedMessage: localization.archivedVendor,
+        deletedMessage: localization.deletedVendor,
+        restoredMessage: localization.restoredVendor,
+      );
 
       if (await isMobile(driver!)) {
         await driver!.tap(find.pageBack());

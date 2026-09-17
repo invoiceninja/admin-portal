@@ -36,25 +36,23 @@ class _WebSessionTimeoutState extends State<WebSessionTimeout> {
       return;
     }
 
-    _timer = Timer.periodic(
-      Duration(minutes: 1),
-      (Timer timer) {
-        final store = StoreProvider.of<AppState>(context);
-        final state = store.state;
-        final sessionTimeout = state.company.sessionTimeout;
+    _timer = Timer.periodic(Duration(minutes: 1), (Timer timer) {
+      final store = StoreProvider.of<AppState>(context);
+      final state = store.state;
+      final sessionTimeout = state.company.sessionTimeout;
 
-        if (sessionTimeout == 0) {
-          return;
-        }
+      if (sessionTimeout == 0) {
+        return;
+      }
 
-        final sessionLength = DateTime.now().millisecondsSinceEpoch -
-            state.userCompanyState.lastUpdated;
+      final sessionLength =
+          DateTime.now().millisecondsSinceEpoch -
+          state.userCompanyState.lastUpdated;
 
-        if (sessionLength > sessionTimeout) {
-          store.dispatch(UserLogout());
-        }
-      },
-    );
+      if (sessionLength > sessionTimeout) {
+        store.dispatch(UserLogout());
+      }
+    });
   }
 
   @override

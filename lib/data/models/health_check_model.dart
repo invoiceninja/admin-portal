@@ -139,11 +139,7 @@ abstract class HealthCheckQueueResponse
     implements
         Built<HealthCheckQueueResponse, HealthCheckQueueResponseBuilder> {
   factory HealthCheckQueueResponse() {
-    return _$HealthCheckQueueResponse._(
-      failed: 0,
-      pending: 0,
-      lastError: '',
-    );
+    return _$HealthCheckQueueResponse._(failed: 0, pending: 0, lastError: '');
   }
 
   HealthCheckQueueResponse._();
@@ -165,12 +161,12 @@ abstract class HealthCheckQueueResponse
 
 abstract class HealthCheckLastErrorResponse
     implements
-        Built<HealthCheckLastErrorResponse,
-            HealthCheckLastErrorResponseBuilder> {
+        Built<
+          HealthCheckLastErrorResponse,
+          HealthCheckLastErrorResponseBuilder
+        > {
   factory HealthCheckLastErrorResponse() {
-    return _$HealthCheckLastErrorResponse._(
-      lastError: '',
-    );
+    return _$HealthCheckLastErrorResponse._(lastError: '');
   }
 
   HealthCheckLastErrorResponse._();

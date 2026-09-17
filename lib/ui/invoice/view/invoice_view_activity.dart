@@ -41,10 +41,7 @@ class _InvoiceViewActivityState extends State<InvoiceViewActivity> {
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
         final activity = activities[index];
-        return ActivityListTile(
-          activity: activity,
-          enableNavigation: false,
-        );
+        return ActivityListTile(activity: activity, enableNavigation: false);
       },
     );
   }

@@ -92,7 +92,8 @@ void initiatePurchase() {
         IosOpenSubscriptionsSettings.openSubscriptionsSettings();
       } else if (isAndroid()) {
         launchUrl(
-            Uri.parse('https://play.google.com/store/account/subscriptions'));
+          Uri.parse('https://play.google.com/store/account/subscriptions'),
+        );
       } else {
         // TODO support viewing plans on macOS
         launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
@@ -100,10 +101,7 @@ void initiatePurchase() {
     } else if (state.isProPlan) {
       launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
     } else {
-      showDialog<void>(
-        context: context,
-        builder: (context) => UpgradeDialog(),
-      );
+      showDialog<void>(context: context, builder: (context) => UpgradeDialog());
     }
   } else {
     launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));

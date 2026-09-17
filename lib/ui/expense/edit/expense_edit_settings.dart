@@ -24,10 +24,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
-  const ExpenseEditSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseEditSettings({Key? key, required this.viewModel})
+    : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
 
@@ -48,21 +46,23 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _transactionReferenceController,
-      _exchangeRateController,
-    ];
+    _controllers = [_transactionReferenceController, _exchangeRateController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final expense = widget.viewModel.expense!;
     _transactionReferenceController.text = expense.transactionReference;
-    _exchangeRateController.text = formatNumber(expense.exchangeRate, context,
-        formatNumberType: FormatNumberType.inputAmount)!;
+    _exchangeRateController.text = formatNumber(
+      expense.exchangeRate,
+      context,
+      formatNumberType: FormatNumberType.inputAmount,
+    )!;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     _showPaymentFields = expense.paymentDate.isNotEmpty;
     _showConvertCurrencyFields =
@@ -88,9 +88,11 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense!.rebuild((b) => b
-      ..transactionReference = _transactionReferenceController.text.trim()
-      ..exchangeRate = parseDouble(_exchangeRateController.text));
+    final expense = viewModel.expense!.rebuild(
+      (b) => b
+        ..transactionReference = _transactionReferenceController.text.trim()
+        ..exchangeRate = parseDouble(_exchangeRateController.text),
+    );
     if (expense != viewModel.expense) {
       _debouncer.run(() {
         viewModel.onChanged!(expense);
@@ -104,17 +106,27 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
 
     final exchangeRate = currency == null
         ? 1.0
-        : getExchangeRate(viewModel.state!.staticState.currencyMap,
-            fromCurrencyId: expense.currencyId, toCurrencyId: currency.id);
+        : getExchangeRate(
+            viewModel.state!.staticState.currencyMap,
+            fromCurrencyId: expense.currencyId,
+            toCurrencyId: currency.id,
+          );
 
-    viewModel.onChanged!(expense.rebuild((b) => b
-      ..invoiceCurrencyId = currency?.id ?? ''
-      ..exchangeRate = exchangeRate));
+    viewModel.onChanged!(
+      expense.rebuild(
+        (b) => b
+          ..invoiceCurrencyId = currency?.id ?? ''
+          ..exchangeRate = exchangeRate,
+      ),
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _exchangeRateController.removeListener(_onChanged);
-      _exchangeRateController.text = formatNumber(exchangeRate, context,
-          formatNumberType: FormatNumberType.inputAmount)!;
+      _exchangeRateController.text = formatNumber(
+        exchangeRate,
+        context,
+        formatNumberType: FormatNumberType.inputAmount,
+      )!;
       _exchangeRateController.addListener(_onChanged);
     });
   }
@@ -130,12 +142,16 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     final exchangeRate = _convertedAmount! / amount;
 
     _exchangeRateController.removeListener(_onChanged);
-    _exchangeRateController.text = formatNumber(exchangeRate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _exchangeRateController.text = formatNumber(
+      exchangeRate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _exchangeRateController.addListener(_onChanged);
 
-    viewModel
-        .onChanged!(expense.rebuild((b) => b..exchangeRate = exchangeRate));
+    viewModel.onChanged!(
+      expense.rebuild((b) => b..exchangeRate = exchangeRate),
+    );
     _convertedAmount = 0;
   }
 
@@ -169,7 +185,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     value: expense.shouldBeInvoiced,
                     onChanged: (value) {
                       viewModel.onChanged!(
-                          expense.rebuild((b) => b..shouldBeInvoiced = value));
+                        expense.rebuild((b) => b..shouldBeInvoiced = value),
+                      );
                     },
                   ),
             SwitchListTile(
@@ -180,14 +197,21 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               onChanged: (value) {
                 if (value) {
                   if (expense.paymentDate.isEmpty) {
-                    viewModel.onChanged!(expense.rebuild(
-                        (b) => b..paymentDate = convertDateTimeToSqlDate()));
+                    viewModel.onChanged!(
+                      expense.rebuild(
+                        (b) => b..paymentDate = convertDateTimeToSqlDate(),
+                      ),
+                    );
                   }
                 } else {
-                  viewModel.onChanged!(expense.rebuild((b) => b
-                    ..paymentDate = ''
-                    ..paymentTypeId = ''
-                    ..transactionReference = ''));
+                  viewModel.onChanged!(
+                    expense.rebuild(
+                      (b) => b
+                        ..paymentDate = ''
+                        ..paymentTypeId = ''
+                        ..transactionReference = '',
+                    ),
+                  );
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _transactionReferenceController.text = '';
                   });
@@ -201,13 +225,16 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                       SizedBox(height: 8),
                       EntityDropdown(
                         entityType: EntityType.paymentType,
-                        entityList:
-                            memoizedPaymentTypeList(staticState.paymentTypeMap),
+                        entityList: memoizedPaymentTypeList(
+                          staticState.paymentTypeMap,
+                        ),
                         labelText: localization.paymentType,
                         entityId: expense.paymentTypeId,
                         onSelected: (paymentType) => viewModel.onChanged!(
-                            expense.rebuild((b) =>
-                                b..paymentTypeId = paymentType?.id ?? '')),
+                          expense.rebuild(
+                            (b) => b..paymentTypeId = paymentType?.id ?? '',
+                          ),
+                        ),
                       ),
                       if (!expense.isRecurring)
                         DatePicker(
@@ -215,7 +242,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                           selectedDate: expense.paymentDate,
                           onSelected: (date, _) {
                             viewModel.onChanged!(
-                                expense.rebuild((b) => b..paymentDate = date));
+                              expense.rebuild((b) => b..paymentDate = date),
+                            );
                           },
                         ),
                       DecoratedFormField(
@@ -238,10 +266,12 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 setState(() => _showConvertCurrencyFields = value);
                 if (value) {
                   _setCurrency(
-                      staticState.currencyMap[expense.invoiceCurrencyId]);
+                    staticState.currencyMap[expense.invoiceCurrencyId],
+                  );
                 } else {
-                  viewModel
-                      .onChanged!(expense.rebuild((b) => b..exchangeRate = 1));
+                  viewModel.onChanged!(
+                    expense.rebuild((b) => b..exchangeRate = 1),
+                  );
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _exchangeRateController.text = '';
                   });
@@ -262,7 +292,9 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 key: ValueKey('__rate_${expense.invoiceCurrencyId}__'),
                 controller: _exchangeRateController,
                 keyboardType: TextInputType.numberWithOptions(
-                    decimal: true, signed: true),
+                  decimal: true,
+                  signed: true,
+                ),
                 label: localization.exchangeRate,
                 isPercent: true,
               ),
@@ -270,16 +302,21 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 onFocusChange: (hasFocus) => _calculateExchangeRate(),
                 child: DecoratedFormField(
                   key: ValueKey(
-                      '__expense_amount_${expense.grossAmount}_${expense.exchangeRate}__'),
-                  initialValue: expense.exchangeRate != 1 &&
-                          expense.exchangeRate != 0
+                    '__expense_amount_${expense.grossAmount}_${expense.exchangeRate}__',
+                  ),
+                  initialValue:
+                      expense.exchangeRate != 1 && expense.exchangeRate != 0
                       ? formatNumber(
-                          expense.grossAmount * expense.exchangeRate, context,
-                          formatNumberType: FormatNumberType.inputMoney)
+                          expense.grossAmount * expense.exchangeRate,
+                          context,
+                          formatNumberType: FormatNumberType.inputMoney,
+                        )
                       : '',
                   label: localization.convertedAmount,
                   keyboardType: TextInputType.numberWithOptions(
-                      decimal: true, signed: true),
+                    decimal: true,
+                    signed: true,
+                  ),
                   isMoney: true,
                   onChanged: (value) {
                     _convertedAmount = parseDouble(value);
@@ -293,14 +330,16 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               SizedBox(height: 16),
             ],
             SwitchListTile(
-                activeThumbColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.addDocumentsToInvoice),
-                subtitle: Text(localization.addDocumentsToInvoiceHelp),
-                value: expense.invoiceDocuments,
-                onChanged: (value) {
-                  viewModel.onChanged!(
-                      expense.rebuild((b) => b..invoiceDocuments = value));
-                })
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
+              title: Text(localization.addDocumentsToInvoice),
+              subtitle: Text(localization.addDocumentsToInvoiceHelp),
+              value: expense.invoiceDocuments,
+              onChanged: (value) {
+                viewModel.onChanged!(
+                  expense.rebuild((b) => b..invoiceDocuments = value),
+                );
+              },
+            ),
           ],
         ),
         FormCard(
@@ -318,14 +357,16 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: [
                       Flexible(child: Text(localization.expenseTaxHelp)),
                       OutlinedButton(
-                          onPressed: () {
-                            final store = StoreProvider.of<AppState>(context);
-                            store.dispatch(
-                                ViewSettings(section: kSettingsTaxSettings));
-                          },
-                          child: Text(localization.settings))
+                        onPressed: () {
+                          final store = StoreProvider.of<AppState>(context);
+                          store.dispatch(
+                            ViewSettings(section: kSettingsTaxSettings),
+                          );
+                        },
+                        child: Text(localization.settings),
+                      ),
                     ],
-                  )
+                  ),
                 ]
               : [
                   BoolDropdownButton(
@@ -333,8 +374,9 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     enabledLabel: localization.byAmount,
                     disabledLabel: localization.byRate,
                     value: expense.calculateTaxByAmount ?? false,
-                    onChanged: (value) => viewModel.onChanged!(expense
-                        .rebuild((b) => b..calculateTaxByAmount = value)),
+                    onChanged: (value) => viewModel.onChanged!(
+                      expense.rebuild((b) => b..calculateTaxByAmount = value),
+                    ),
                     minWidth: 80,
                   ),
                   SizedBox(height: 16),
@@ -343,9 +385,11 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     title: Text(localization.inclusiveTaxes),
                     value: expense.usesInclusiveTaxes,
                     subtitle: Text(
-                        '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                      '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
+                    ),
                     onChanged: (value) => viewModel.onChanged!(
-                        expense.rebuild((b) => b..usesInclusiveTaxes = value)),
+                      expense.rebuild((b) => b..usesInclusiveTaxes = value),
+                    ),
                   ),
                 ],
         ),

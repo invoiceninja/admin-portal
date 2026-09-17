@@ -16,84 +16,133 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
   final String wireName = 'AccountEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, AccountEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    AccountEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'key',
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'trial_started',
-      serializers.serialize(object.trialStarted,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.trialStarted,
+        specifiedType: const FullType(String),
+      ),
       'default_url',
-      serializers.serialize(object.defaultUrl,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.defaultUrl,
+        specifiedType: const FullType(String),
+      ),
       'report_errors',
-      serializers.serialize(object.reportErrors,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.reportErrors,
+        specifiedType: const FullType(bool),
+      ),
       'plan',
       serializers.serialize(object.plan, specifiedType: const FullType(String)),
       'plan_expires',
-      serializers.serialize(object.planExpires,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.planExpires,
+        specifiedType: const FullType(String),
+      ),
       'latest_version',
-      serializers.serialize(object.latestVersion,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.latestVersion,
+        specifiedType: const FullType(String),
+      ),
       'current_version',
-      serializers.serialize(object.currentVersion,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.currentVersion,
+        specifiedType: const FullType(String),
+      ),
       'debug_enabled',
-      serializers.serialize(object.debugEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.debugEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'is_docker',
-      serializers.serialize(object.isDocker,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isDocker,
+        specifiedType: const FullType(bool),
+      ),
       'is_migrated',
-      serializers.serialize(object.isMigrated,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isMigrated,
+        specifiedType: const FullType(bool),
+      ),
       'is_hosted',
-      serializers.serialize(object.isHosted,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isHosted,
+        specifiedType: const FullType(bool),
+      ),
       'is_scheduler_running',
-      serializers.serialize(object.isSchedulerRunning,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isSchedulerRunning,
+        specifiedType: const FullType(bool),
+      ),
       'disable_auto_update',
-      serializers.serialize(object.disableAutoUpdate,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.disableAutoUpdate,
+        specifiedType: const FullType(bool),
+      ),
       'default_company_id',
-      serializers.serialize(object.defaultCompanyId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.defaultCompanyId,
+        specifiedType: const FullType(String),
+      ),
       'hosted_client_count',
-      serializers.serialize(object.hostedClientCount,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.hostedClientCount,
+        specifiedType: const FullType(int),
+      ),
       'hosted_company_count',
-      serializers.serialize(object.hostedCompanyCount,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.hostedCompanyCount,
+        specifiedType: const FullType(int),
+      ),
       'set_react_as_default_ap',
-      serializers.serialize(object.setReactAsDefaultAP,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.setReactAsDefaultAP,
+        specifiedType: const FullType(bool),
+      ),
       'account_sms_verified',
-      serializers.serialize(object.accountSmsVerified,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.accountSmsVerified,
+        specifiedType: const FullType(bool),
+      ),
       'trial_days_left',
-      serializers.serialize(object.trialDaysLeft,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.trialDaysLeft,
+        specifiedType: const FullType(int),
+      ),
       'has_iap_plan',
-      serializers.serialize(object.hasIapPlan,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hasIapPlan,
+        specifiedType: const FullType(bool),
+      ),
       'payment_id',
-      serializers.serialize(object.paymentId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.paymentId,
+        specifiedType: const FullType(String),
+      ),
       'tax_api_enabled',
-      serializers.serialize(object.taxApiEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.taxApiEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'nordigen_enabled',
-      serializers.serialize(object.nordigenEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.nordigenEnabled,
+        specifiedType: const FullType(bool),
+      ),
       'upload_extensions',
-      serializers.serialize(object.uploadExtensions,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.uploadExtensions,
+        specifiedType: const FullType(String),
+      ),
     ];
 
     return result;
@@ -101,8 +150,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
 
   @override
   AccountEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = AccountEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -112,108 +163,212 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'key':
-          result.key = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.key =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'trial_started':
-          result.trialStarted = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.trialStarted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'default_url':
-          result.defaultUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.defaultUrl =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'report_errors':
-          result.reportErrors = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.reportErrors =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'plan':
-          result.plan = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.plan =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'plan_expires':
-          result.planExpires = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.planExpires =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'latest_version':
-          result.latestVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.latestVersion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'current_version':
-          result.currentVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.currentVersion =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'debug_enabled':
-          result.debugEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.debugEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_docker':
-          result.isDocker = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isDocker =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_migrated':
-          result.isMigrated = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isMigrated =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_hosted':
-          result.isHosted = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isHosted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_scheduler_running':
-          result.isSchedulerRunning = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isSchedulerRunning =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'disable_auto_update':
-          result.disableAutoUpdate = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.disableAutoUpdate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'default_company_id':
-          result.defaultCompanyId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.defaultCompanyId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'hosted_client_count':
-          result.hostedClientCount = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.hostedClientCount =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'hosted_company_count':
-          result.hostedCompanyCount = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.hostedCompanyCount =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'set_react_as_default_ap':
-          result.setReactAsDefaultAP = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.setReactAsDefaultAP =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'account_sms_verified':
-          result.accountSmsVerified = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.accountSmsVerified =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'trial_days_left':
-          result.trialDaysLeft = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.trialDaysLeft =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'has_iap_plan':
-          result.hasIapPlan = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.hasIapPlan =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'payment_id':
-          result.paymentId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.paymentId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'tax_api_enabled':
-          result.taxApiEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.taxApiEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'nordigen_enabled':
-          result.nordigenEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.nordigenEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'upload_extensions':
-          result.uploadExtensions = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.uploadExtensions =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -279,34 +434,34 @@ class _$AccountEntity extends AccountEntity {
   factory _$AccountEntity([void Function(AccountEntityBuilder)? updates]) =>
       (AccountEntityBuilder()..update(updates))._build();
 
-  _$AccountEntity._(
-      {required this.id,
-      required this.key,
-      required this.trialStarted,
-      required this.defaultUrl,
-      required this.reportErrors,
-      required this.plan,
-      required this.planExpires,
-      required this.latestVersion,
-      required this.currentVersion,
-      required this.debugEnabled,
-      required this.isDocker,
-      required this.isMigrated,
-      required this.isHosted,
-      required this.isSchedulerRunning,
-      required this.disableAutoUpdate,
-      required this.defaultCompanyId,
-      required this.hostedClientCount,
-      required this.hostedCompanyCount,
-      required this.setReactAsDefaultAP,
-      required this.accountSmsVerified,
-      required this.trialDaysLeft,
-      required this.hasIapPlan,
-      required this.paymentId,
-      required this.taxApiEnabled,
-      required this.nordigenEnabled,
-      required this.uploadExtensions})
-      : super._();
+  _$AccountEntity._({
+    required this.id,
+    required this.key,
+    required this.trialStarted,
+    required this.defaultUrl,
+    required this.reportErrors,
+    required this.plan,
+    required this.planExpires,
+    required this.latestVersion,
+    required this.currentVersion,
+    required this.debugEnabled,
+    required this.isDocker,
+    required this.isMigrated,
+    required this.isHosted,
+    required this.isSchedulerRunning,
+    required this.disableAutoUpdate,
+    required this.defaultCompanyId,
+    required this.hostedClientCount,
+    required this.hostedCompanyCount,
+    required this.setReactAsDefaultAP,
+    required this.accountSmsVerified,
+    required this.trialDaysLeft,
+    required this.hasIapPlan,
+    required this.paymentId,
+    required this.taxApiEnabled,
+    required this.nordigenEnabled,
+    required this.uploadExtensions,
+  }) : super._();
   @override
   AccountEntity rebuild(void Function(AccountEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -587,59 +742,135 @@ class AccountEntityBuilder
   AccountEntity build() => _build();
 
   _$AccountEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$AccountEntity._(
           id: BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id'),
           key: BuiltValueNullFieldError.checkNotNull(
-              key, r'AccountEntity', 'key'),
+            key,
+            r'AccountEntity',
+            'key',
+          ),
           trialStarted: BuiltValueNullFieldError.checkNotNull(
-              trialStarted, r'AccountEntity', 'trialStarted'),
+            trialStarted,
+            r'AccountEntity',
+            'trialStarted',
+          ),
           defaultUrl: BuiltValueNullFieldError.checkNotNull(
-              defaultUrl, r'AccountEntity', 'defaultUrl'),
+            defaultUrl,
+            r'AccountEntity',
+            'defaultUrl',
+          ),
           reportErrors: BuiltValueNullFieldError.checkNotNull(
-              reportErrors, r'AccountEntity', 'reportErrors'),
+            reportErrors,
+            r'AccountEntity',
+            'reportErrors',
+          ),
           plan: BuiltValueNullFieldError.checkNotNull(
-              plan, r'AccountEntity', 'plan'),
+            plan,
+            r'AccountEntity',
+            'plan',
+          ),
           planExpires: BuiltValueNullFieldError.checkNotNull(
-              planExpires, r'AccountEntity', 'planExpires'),
+            planExpires,
+            r'AccountEntity',
+            'planExpires',
+          ),
           latestVersion: BuiltValueNullFieldError.checkNotNull(
-              latestVersion, r'AccountEntity', 'latestVersion'),
+            latestVersion,
+            r'AccountEntity',
+            'latestVersion',
+          ),
           currentVersion: BuiltValueNullFieldError.checkNotNull(
-              currentVersion, r'AccountEntity', 'currentVersion'),
+            currentVersion,
+            r'AccountEntity',
+            'currentVersion',
+          ),
           debugEnabled: BuiltValueNullFieldError.checkNotNull(
-              debugEnabled, r'AccountEntity', 'debugEnabled'),
+            debugEnabled,
+            r'AccountEntity',
+            'debugEnabled',
+          ),
           isDocker: BuiltValueNullFieldError.checkNotNull(
-              isDocker, r'AccountEntity', 'isDocker'),
+            isDocker,
+            r'AccountEntity',
+            'isDocker',
+          ),
           isMigrated: BuiltValueNullFieldError.checkNotNull(
-              isMigrated, r'AccountEntity', 'isMigrated'),
+            isMigrated,
+            r'AccountEntity',
+            'isMigrated',
+          ),
           isHosted: BuiltValueNullFieldError.checkNotNull(
-              isHosted, r'AccountEntity', 'isHosted'),
+            isHosted,
+            r'AccountEntity',
+            'isHosted',
+          ),
           isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(
-              isSchedulerRunning, r'AccountEntity', 'isSchedulerRunning'),
+            isSchedulerRunning,
+            r'AccountEntity',
+            'isSchedulerRunning',
+          ),
           disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(
-              disableAutoUpdate, r'AccountEntity', 'disableAutoUpdate'),
+            disableAutoUpdate,
+            r'AccountEntity',
+            'disableAutoUpdate',
+          ),
           defaultCompanyId: BuiltValueNullFieldError.checkNotNull(
-              defaultCompanyId, r'AccountEntity', 'defaultCompanyId'),
+            defaultCompanyId,
+            r'AccountEntity',
+            'defaultCompanyId',
+          ),
           hostedClientCount: BuiltValueNullFieldError.checkNotNull(
-              hostedClientCount, r'AccountEntity', 'hostedClientCount'),
+            hostedClientCount,
+            r'AccountEntity',
+            'hostedClientCount',
+          ),
           hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(
-              hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount'),
+            hostedCompanyCount,
+            r'AccountEntity',
+            'hostedCompanyCount',
+          ),
           setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(
-              setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP'),
+            setReactAsDefaultAP,
+            r'AccountEntity',
+            'setReactAsDefaultAP',
+          ),
           accountSmsVerified: BuiltValueNullFieldError.checkNotNull(
-              accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
+            accountSmsVerified,
+            r'AccountEntity',
+            'accountSmsVerified',
+          ),
           trialDaysLeft: BuiltValueNullFieldError.checkNotNull(
-              trialDaysLeft, r'AccountEntity', 'trialDaysLeft'),
+            trialDaysLeft,
+            r'AccountEntity',
+            'trialDaysLeft',
+          ),
           hasIapPlan: BuiltValueNullFieldError.checkNotNull(
-              hasIapPlan, r'AccountEntity', 'hasIapPlan'),
+            hasIapPlan,
+            r'AccountEntity',
+            'hasIapPlan',
+          ),
           paymentId: BuiltValueNullFieldError.checkNotNull(
-              paymentId, r'AccountEntity', 'paymentId'),
+            paymentId,
+            r'AccountEntity',
+            'paymentId',
+          ),
           taxApiEnabled: BuiltValueNullFieldError.checkNotNull(
-              taxApiEnabled, r'AccountEntity', 'taxApiEnabled'),
+            taxApiEnabled,
+            r'AccountEntity',
+            'taxApiEnabled',
+          ),
           nordigenEnabled: BuiltValueNullFieldError.checkNotNull(
-              nordigenEnabled, r'AccountEntity', 'nordigenEnabled'),
+            nordigenEnabled,
+            r'AccountEntity',
+            'nordigenEnabled',
+          ),
           uploadExtensions: BuiltValueNullFieldError.checkNotNull(
-              uploadExtensions, r'AccountEntity', 'uploadExtensions'),
+            uploadExtensions,
+            r'AccountEntity',
+            'uploadExtensions',
+          ),
         );
     replace(_$result);
     return _$result;

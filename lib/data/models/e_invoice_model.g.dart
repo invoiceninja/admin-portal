@@ -15,7 +15,7 @@ Serializer<EInvoiceEntity> _$eInvoiceEntitySerializer =
 Serializer<EInvoiceInvoiceEntity> _$eInvoiceInvoiceEntitySerializer =
     _$EInvoiceInvoiceEntitySerializer();
 Serializer<EInvoiceInvoicePeriodEntity>
-    _$eInvoiceInvoicePeriodEntitySerializer =
+_$eInvoiceInvoicePeriodEntitySerializer =
     _$EInvoiceInvoicePeriodEntitySerializer();
 Serializer<EInvoiceDeliveryEntity> _$eInvoiceDeliveryEntitySerializer =
     _$EInvoiceDeliveryEntitySerializer();
@@ -24,21 +24,21 @@ Serializer<EInvoicePaymentMeansEntity> _$eInvoicePaymentMeansEntitySerializer =
 Serializer<EInvoiceValueEntity> _$eInvoiceValueEntitySerializer =
     _$EInvoiceValueEntitySerializer();
 Serializer<EInvoicePayeeFinancialAccountEntity>
-    _$eInvoicePayeeFinancialAccountEntitySerializer =
+_$eInvoicePayeeFinancialAccountEntitySerializer =
     _$EInvoicePayeeFinancialAccountEntitySerializer();
 Serializer<EInvoiceFinancialInstitutionBranchEntity>
-    _$eInvoiceFinancialInstitutionBranchEntitySerializer =
+_$eInvoiceFinancialInstitutionBranchEntitySerializer =
     _$EInvoiceFinancialInstitutionBranchEntitySerializer();
 Serializer<EInvoiceFinancialInstitutionEntity>
-    _$eInvoiceFinancialInstitutionEntitySerializer =
+_$eInvoiceFinancialInstitutionEntitySerializer =
     _$EInvoiceFinancialInstitutionEntitySerializer();
 Serializer<EInvoiceCreditNoteEntity> _$eInvoiceCreditNoteEntitySerializer =
     _$EInvoiceCreditNoteEntitySerializer();
 Serializer<EInvoiceBillingReferenceEntity>
-    _$eInvoiceBillingReferenceEntitySerializer =
+_$eInvoiceBillingReferenceEntitySerializer =
     _$EInvoiceBillingReferenceEntitySerializer();
 Serializer<EInvoiceDocumentReferenceEntity>
-    _$eInvoiceDocumentReferenceEntitySerializer =
+_$eInvoiceDocumentReferenceEntitySerializer =
     _$EInvoiceDocumentReferenceEntitySerializer();
 
 class _$EInvoiceFieldEntitySerializer
@@ -46,30 +46,37 @@ class _$EInvoiceFieldEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceFieldEntity,
-    _$EInvoiceFieldEntity
+    _$EInvoiceFieldEntity,
   ];
   @override
   final String wireName = 'EInvoiceFieldEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceFieldEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceFieldEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'type',
       serializers.serialize(object.type, specifiedType: const FullType(String)),
       'help',
       serializers.serialize(object.help, specifiedType: const FullType(String)),
       'choices',
-      serializers.serialize(object.choices,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.choices,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'elements',
-      serializers.serialize(object.elements,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(EInvoiceElementEntity)
-          ])),
+      serializers.serialize(
+        object.elements,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(EInvoiceElementEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -77,8 +84,10 @@ class _$EInvoiceFieldEntitySerializer
 
   @override
   EInvoiceFieldEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceFieldEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -88,25 +97,42 @@ class _$EInvoiceFieldEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'help':
-          result.help = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.help =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'choices':
-          result.choices.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.choices.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'elements':
-          result.elements.replace(serializers.deserialize(value,
+          result.elements.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(EInvoiceElementEntity)
-              ]))!);
+                const FullType(EInvoiceElementEntity),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -120,31 +146,42 @@ class _$EInvoiceElementEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceElementEntity,
-    _$EInvoiceElementEntity
+    _$EInvoiceElementEntity,
   ];
   @override
   final String wireName = 'EInvoiceElementEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceElementEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceElementEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'base_type',
-      serializers.serialize(object.baseType,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.baseType,
+        specifiedType: const FullType(String),
+      ),
       'resource',
-      serializers.serialize(object.resource,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.resource,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'min_occurs',
-      serializers.serialize(object.minOccurs,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.minOccurs,
+        specifiedType: const FullType(int),
+      ),
       'max_occurs',
-      serializers.serialize(object.maxOccurs,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.maxOccurs,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.minLength;
@@ -163,23 +200,27 @@ class _$EInvoiceElementEntitySerializer
     if (value != null) {
       result
         ..add('pattern')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.help;
     if (value != null) {
       result
         ..add('help')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceElementEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceElementEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -189,42 +230,73 @@ class _$EInvoiceElementEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'base_type':
-          result.baseType = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.baseType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'resource':
-          result.resource.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.resource.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'min_length':
-          result.minLength = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.minLength =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'max_length':
-          result.maxLength = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.maxLength =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'min_occurs':
-          result.minOccurs = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.minOccurs =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'max_occurs':
-          result.maxOccurs = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.maxOccurs =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'pattern':
-          result.pattern = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.pattern =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'help':
-          result.help = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.help =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
       }
     }
@@ -241,31 +313,44 @@ class _$EInvoiceEntitySerializer
   final String wireName = 'EInvoiceEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, EInvoiceEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    EInvoiceEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.invoice;
     if (value != null) {
       result
         ..add('Invoice')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceInvoiceEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceInvoiceEntity),
+          ),
+        );
     }
     value = object.creditNote;
     if (value != null) {
       result
         ..add('CreditNote')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceCreditNoteEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceCreditNoteEntity),
+          ),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -275,14 +360,22 @@ class _$EInvoiceEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'Invoice':
-          result.invoice.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(EInvoiceInvoiceEntity))!
-              as EInvoiceInvoiceEntity);
+          result.invoice.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(EInvoiceInvoiceEntity),
+                )!
+                as EInvoiceInvoiceEntity,
+          );
           break;
         case 'CreditNote':
-          result.creditNote.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(EInvoiceCreditNoteEntity))!
-              as EInvoiceCreditNoteEntity);
+          result.creditNote.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(EInvoiceCreditNoteEntity),
+                )!
+                as EInvoiceCreditNoteEntity,
+          );
           break;
       }
     }
@@ -296,28 +389,39 @@ class _$EInvoiceInvoiceEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceInvoiceEntity,
-    _$EInvoiceInvoiceEntity
+    _$EInvoiceInvoiceEntity,
   ];
   @override
   final String wireName = 'EInvoiceInvoiceEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceInvoiceEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceInvoiceEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'InvoicePeriod',
-      serializers.serialize(object.invoicePeriod,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(EInvoiceInvoicePeriodEntity)])),
+      serializers.serialize(
+        object.invoicePeriod,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(EInvoiceInvoicePeriodEntity),
+        ]),
+      ),
       'Delivery',
-      serializers.serialize(object.delivery,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(EInvoiceDeliveryEntity)])),
+      serializers.serialize(
+        object.delivery,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(EInvoiceDeliveryEntity),
+        ]),
+      ),
       'PaymentMeans',
-      serializers.serialize(object.paymentMeans,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(EInvoicePaymentMeansEntity)])),
+      serializers.serialize(
+        object.paymentMeans,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(EInvoicePaymentMeansEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -325,8 +429,10 @@ class _$EInvoiceInvoiceEntitySerializer
 
   @override
   EInvoiceInvoiceEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceInvoiceEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -336,22 +442,37 @@ class _$EInvoiceInvoiceEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'InvoicePeriod':
-          result.invoicePeriod.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(EInvoiceInvoicePeriodEntity)
-              ]))! as BuiltList<Object?>);
+          result.invoicePeriod.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EInvoiceInvoicePeriodEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'Delivery':
-          result.delivery.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(EInvoiceDeliveryEntity)
-              ]))! as BuiltList<Object?>);
+          result.delivery.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EInvoiceDeliveryEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'PaymentMeans':
-          result.paymentMeans.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(EInvoicePaymentMeansEntity)
-              ]))! as BuiltList<Object?>);
+          result.paymentMeans.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EInvoicePaymentMeansEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -365,45 +486,52 @@ class _$EInvoiceInvoicePeriodEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceInvoicePeriodEntity,
-    _$EInvoiceInvoicePeriodEntity
+    _$EInvoiceInvoicePeriodEntity,
   ];
   @override
   final String wireName = 'EInvoiceInvoicePeriodEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceInvoicePeriodEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceInvoicePeriodEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.startDate;
     if (value != null) {
       result
         ..add('StartDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.endDate;
     if (value != null) {
       result
         ..add('EndDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.description;
     if (value != null) {
       result
         ..add('Description')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceInvoicePeriodEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceInvoicePeriodEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -413,16 +541,28 @@ class _$EInvoiceInvoicePeriodEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'StartDate':
-          result.startDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.startDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'EndDate':
-          result.endDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.endDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'Description':
-          result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.description =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
       }
     }
@@ -436,31 +576,36 @@ class _$EInvoiceDeliveryEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceDeliveryEntity,
-    _$EInvoiceDeliveryEntity
+    _$EInvoiceDeliveryEntity,
   ];
   @override
   final String wireName = 'EInvoiceDeliveryEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceDeliveryEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceDeliveryEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.actualDeliveryDate;
     if (value != null) {
       result
         ..add('ActualDeliveryDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceDeliveryEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceDeliveryEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -470,8 +615,12 @@ class _$EInvoiceDeliveryEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'ActualDeliveryDate':
-          result.actualDeliveryDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.actualDeliveryDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
       }
     }
@@ -485,39 +634,50 @@ class _$EInvoicePaymentMeansEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoicePaymentMeansEntity,
-    _$EInvoicePaymentMeansEntity
+    _$EInvoicePaymentMeansEntity,
   ];
   @override
   final String wireName = 'EInvoicePaymentMeansEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoicePaymentMeansEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoicePaymentMeansEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.paymentMeansCode;
     if (value != null) {
       result
         ..add('PaymentMeansCode')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceValueEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceValueEntity),
+          ),
+        );
     }
     value = object.payeeFinancialAccount;
     if (value != null) {
       result
         ..add('PayeeFinancialAccount')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(EInvoicePayeeFinancialAccountEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoicePayeeFinancialAccountEntity),
+          ),
+        );
     }
     return result;
   }
 
   @override
   EInvoicePaymentMeansEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoicePaymentMeansEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -527,15 +687,24 @@ class _$EInvoicePaymentMeansEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'PaymentMeansCode':
-          result.paymentMeansCode.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(EInvoiceValueEntity))!
-              as EInvoiceValueEntity);
+          result.paymentMeansCode.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(EInvoiceValueEntity),
+                )!
+                as EInvoiceValueEntity,
+          );
           break;
         case 'PayeeFinancialAccount':
-          result.payeeFinancialAccount.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(EInvoicePayeeFinancialAccountEntity))!
-              as EInvoicePayeeFinancialAccountEntity);
+          result.payeeFinancialAccount.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(
+                    EInvoicePayeeFinancialAccountEntity,
+                  ),
+                )!
+                as EInvoicePayeeFinancialAccountEntity,
+          );
           break;
       }
     }
@@ -549,31 +718,36 @@ class _$EInvoiceValueEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceValueEntity,
-    _$EInvoiceValueEntity
+    _$EInvoiceValueEntity,
   ];
   @override
   final String wireName = 'EInvoiceValueEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceValueEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceValueEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.value;
     if (value != null) {
       result
         ..add('value')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceValueEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceValueEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -583,8 +757,12 @@ class _$EInvoiceValueEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'value':
-          result.value = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.value =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
       }
     }
@@ -598,46 +776,60 @@ class _$EInvoicePayeeFinancialAccountEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoicePayeeFinancialAccountEntity,
-    _$EInvoicePayeeFinancialAccountEntity
+    _$EInvoicePayeeFinancialAccountEntity,
   ];
   @override
   final String wireName = 'EInvoicePayeeFinancialAccountEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoicePayeeFinancialAccountEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoicePayeeFinancialAccountEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.id;
     if (value != null) {
       result
         ..add('ID')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceValueEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceValueEntity),
+          ),
+        );
     }
     value = object.name;
     if (value != null) {
       result
         ..add('Name')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.financialInstitutionBranch;
     if (value != null) {
       result
         ..add('FinancialInstitutionBranch')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(EInvoiceFinancialInstitutionBranchEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(
+              EInvoiceFinancialInstitutionBranchEntity,
+            ),
+          ),
+        );
     }
     return result;
   }
 
   @override
   EInvoicePayeeFinancialAccountEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoicePayeeFinancialAccountEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -647,20 +839,32 @@ class _$EInvoicePayeeFinancialAccountEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'ID':
-          result.id.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(EInvoiceValueEntity))!
-              as EInvoiceValueEntity);
+          result.id.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(EInvoiceValueEntity),
+                )!
+                as EInvoiceValueEntity,
+          );
           break;
         case 'Name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'FinancialInstitutionBranch':
-          result.financialInstitutionBranch.replace(serializers.deserialize(
+          result.financialInstitutionBranch.replace(
+            serializers.deserialize(
                   value,
-                  specifiedType:
-                      const FullType(EInvoiceFinancialInstitutionBranchEntity))!
-              as EInvoiceFinancialInstitutionBranchEntity);
+                  specifiedType: const FullType(
+                    EInvoiceFinancialInstitutionBranchEntity,
+                  ),
+                )!
+                as EInvoiceFinancialInstitutionBranchEntity,
+          );
           break;
       }
     }
@@ -674,31 +878,39 @@ class _$EInvoiceFinancialInstitutionBranchEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceFinancialInstitutionBranchEntity,
-    _$EInvoiceFinancialInstitutionBranchEntity
+    _$EInvoiceFinancialInstitutionBranchEntity,
   ];
   @override
   final String wireName = 'EInvoiceFinancialInstitutionBranchEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceFinancialInstitutionBranchEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceFinancialInstitutionBranchEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.financialInstitution;
     if (value != null) {
       result
         ..add('FinancialInstitution')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceFinancialInstitutionEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceFinancialInstitutionEntity),
+          ),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceFinancialInstitutionBranchEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceFinancialInstitutionBranchEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -708,10 +920,15 @@ class _$EInvoiceFinancialInstitutionBranchEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'FinancialInstitution':
-          result.financialInstitution.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(EInvoiceFinancialInstitutionEntity))!
-              as EInvoiceFinancialInstitutionEntity);
+          result.financialInstitution.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(
+                    EInvoiceFinancialInstitutionEntity,
+                  ),
+                )!
+                as EInvoiceFinancialInstitutionEntity,
+          );
           break;
       }
     }
@@ -725,31 +942,39 @@ class _$EInvoiceFinancialInstitutionEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceFinancialInstitutionEntity,
-    _$EInvoiceFinancialInstitutionEntity
+    _$EInvoiceFinancialInstitutionEntity,
   ];
   @override
   final String wireName = 'EInvoiceFinancialInstitutionEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceFinancialInstitutionEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceFinancialInstitutionEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.id;
     if (value != null) {
       result
         ..add('ID')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceValueEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceValueEntity),
+          ),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceFinancialInstitutionEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceFinancialInstitutionEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -759,9 +984,13 @@ class _$EInvoiceFinancialInstitutionEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'ID':
-          result.id.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(EInvoiceValueEntity))!
-              as EInvoiceValueEntity);
+          result.id.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(EInvoiceValueEntity),
+                )!
+                as EInvoiceValueEntity,
+          );
           break;
       }
     }
@@ -775,20 +1004,25 @@ class _$EInvoiceCreditNoteEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceCreditNoteEntity,
-    _$EInvoiceCreditNoteEntity
+    _$EInvoiceCreditNoteEntity,
   ];
   @override
   final String wireName = 'EInvoiceCreditNoteEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceCreditNoteEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceCreditNoteEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'BillingReference',
-      serializers.serialize(object.billingReference,
-          specifiedType: const FullType(BuiltList,
-              const [const FullType(EInvoiceBillingReferenceEntity)])),
+      serializers.serialize(
+        object.billingReference,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(EInvoiceBillingReferenceEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -796,8 +1030,10 @@ class _$EInvoiceCreditNoteEntitySerializer
 
   @override
   EInvoiceCreditNoteEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceCreditNoteEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -807,10 +1043,15 @@ class _$EInvoiceCreditNoteEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'BillingReference':
-          result.billingReference.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(EInvoiceBillingReferenceEntity)
-              ]))! as BuiltList<Object?>);
+          result.billingReference.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(EInvoiceBillingReferenceEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -824,31 +1065,39 @@ class _$EInvoiceBillingReferenceEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceBillingReferenceEntity,
-    _$EInvoiceBillingReferenceEntity
+    _$EInvoiceBillingReferenceEntity,
   ];
   @override
   final String wireName = 'EInvoiceBillingReferenceEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceBillingReferenceEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceBillingReferenceEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.invoiceDocumentReference;
     if (value != null) {
       result
         ..add('InvoiceDocumentReference')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EInvoiceDocumentReferenceEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EInvoiceDocumentReferenceEntity),
+          ),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceBillingReferenceEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceBillingReferenceEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -858,10 +1107,15 @@ class _$EInvoiceBillingReferenceEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'InvoiceDocumentReference':
-          result.invoiceDocumentReference.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(EInvoiceDocumentReferenceEntity))!
-              as EInvoiceDocumentReferenceEntity);
+          result.invoiceDocumentReference.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(
+                    EInvoiceDocumentReferenceEntity,
+                  ),
+                )!
+                as EInvoiceDocumentReferenceEntity,
+          );
           break;
       }
     }
@@ -875,38 +1129,44 @@ class _$EInvoiceDocumentReferenceEntitySerializer
   @override
   final Iterable<Type> types = const [
     EInvoiceDocumentReferenceEntity,
-    _$EInvoiceDocumentReferenceEntity
+    _$EInvoiceDocumentReferenceEntity,
   ];
   @override
   final String wireName = 'EInvoiceDocumentReferenceEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, EInvoiceDocumentReferenceEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    EInvoiceDocumentReferenceEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[];
     Object? value;
     value = object.id;
     if (value != null) {
       result
         ..add('ID')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.issueDate;
     if (value != null) {
       result
         ..add('IssueDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   EInvoiceDocumentReferenceEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = EInvoiceDocumentReferenceEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -916,12 +1176,20 @@ class _$EInvoiceDocumentReferenceEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'ID':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'IssueDate':
-          result.issueDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.issueDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
       }
     }
@@ -940,20 +1208,20 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
   @override
   final BuiltMap<String, EInvoiceElementEntity> elements;
 
-  factory _$EInvoiceFieldEntity(
-          [void Function(EInvoiceFieldEntityBuilder)? updates]) =>
-      (EInvoiceFieldEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceFieldEntity([
+    void Function(EInvoiceFieldEntityBuilder)? updates,
+  ]) => (EInvoiceFieldEntityBuilder()..update(updates))._build();
 
-  _$EInvoiceFieldEntity._(
-      {required this.type,
-      required this.help,
-      required this.choices,
-      required this.elements})
-      : super._();
+  _$EInvoiceFieldEntity._({
+    required this.type,
+    required this.help,
+    required this.choices,
+    required this.elements,
+  }) : super._();
   @override
   EInvoiceFieldEntity rebuild(
-          void Function(EInvoiceFieldEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceFieldEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceFieldEntityBuilder toBuilder() =>
@@ -1045,12 +1313,19 @@ class EInvoiceFieldEntityBuilder
   _$EInvoiceFieldEntity _build() {
     _$EInvoiceFieldEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceFieldEntity._(
             type: BuiltValueNullFieldError.checkNotNull(
-                type, r'EInvoiceFieldEntity', 'type'),
+              type,
+              r'EInvoiceFieldEntity',
+              'type',
+            ),
             help: BuiltValueNullFieldError.checkNotNull(
-                help, r'EInvoiceFieldEntity', 'help'),
+              help,
+              r'EInvoiceFieldEntity',
+              'help',
+            ),
             choices: choices.build(),
             elements: elements.build(),
           );
@@ -1063,7 +1338,10 @@ class EInvoiceFieldEntityBuilder
         elements.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceFieldEntity', _$failedField, e.toString());
+          r'EInvoiceFieldEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1092,25 +1370,25 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
   @override
   final String? help;
 
-  factory _$EInvoiceElementEntity(
-          [void Function(EInvoiceElementEntityBuilder)? updates]) =>
-      (EInvoiceElementEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceElementEntity([
+    void Function(EInvoiceElementEntityBuilder)? updates,
+  ]) => (EInvoiceElementEntityBuilder()..update(updates))._build();
 
-  _$EInvoiceElementEntity._(
-      {required this.name,
-      required this.baseType,
-      required this.resource,
-      this.minLength,
-      this.maxLength,
-      required this.minOccurs,
-      required this.maxOccurs,
-      this.pattern,
-      this.help})
-      : super._();
+  _$EInvoiceElementEntity._({
+    required this.name,
+    required this.baseType,
+    required this.resource,
+    this.minLength,
+    this.maxLength,
+    required this.minOccurs,
+    required this.maxOccurs,
+    this.pattern,
+    this.help,
+  }) : super._();
   @override
   EInvoiceElementEntity rebuild(
-          void Function(EInvoiceElementEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceElementEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceElementEntityBuilder toBuilder() =>
@@ -1241,19 +1519,32 @@ class EInvoiceElementEntityBuilder
   _$EInvoiceElementEntity _build() {
     _$EInvoiceElementEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceElementEntity._(
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'EInvoiceElementEntity', 'name'),
+              name,
+              r'EInvoiceElementEntity',
+              'name',
+            ),
             baseType: BuiltValueNullFieldError.checkNotNull(
-                baseType, r'EInvoiceElementEntity', 'baseType'),
+              baseType,
+              r'EInvoiceElementEntity',
+              'baseType',
+            ),
             resource: resource.build(),
             minLength: minLength,
             maxLength: maxLength,
             minOccurs: BuiltValueNullFieldError.checkNotNull(
-                minOccurs, r'EInvoiceElementEntity', 'minOccurs'),
+              minOccurs,
+              r'EInvoiceElementEntity',
+              'minOccurs',
+            ),
             maxOccurs: BuiltValueNullFieldError.checkNotNull(
-                maxOccurs, r'EInvoiceElementEntity', 'maxOccurs'),
+              maxOccurs,
+              r'EInvoiceElementEntity',
+              'maxOccurs',
+            ),
             pattern: pattern,
             help: help,
           );
@@ -1264,7 +1555,10 @@ class EInvoiceElementEntityBuilder
         resource.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceElementEntity', _$failedField, e.toString());
+          r'EInvoiceElementEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1362,7 +1656,8 @@ class EInvoiceEntityBuilder
   _$EInvoiceEntity _build() {
     _$EInvoiceEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceEntity._(
             invoice: _invoice?.build(),
             creditNote: _creditNote?.build(),
@@ -1376,7 +1671,10 @@ class EInvoiceEntityBuilder
         _creditNote?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceEntity', _$failedField, e.toString());
+          r'EInvoiceEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1393,19 +1691,19 @@ class _$EInvoiceInvoiceEntity extends EInvoiceInvoiceEntity {
   @override
   final BuiltList<EInvoicePaymentMeansEntity> paymentMeans;
 
-  factory _$EInvoiceInvoiceEntity(
-          [void Function(EInvoiceInvoiceEntityBuilder)? updates]) =>
-      (EInvoiceInvoiceEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceInvoiceEntity([
+    void Function(EInvoiceInvoiceEntityBuilder)? updates,
+  ]) => (EInvoiceInvoiceEntityBuilder()..update(updates))._build();
 
-  _$EInvoiceInvoiceEntity._(
-      {required this.invoicePeriod,
-      required this.delivery,
-      required this.paymentMeans})
-      : super._();
+  _$EInvoiceInvoiceEntity._({
+    required this.invoicePeriod,
+    required this.delivery,
+    required this.paymentMeans,
+  }) : super._();
   @override
   EInvoiceInvoiceEntity rebuild(
-          void Function(EInvoiceInvoiceEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceInvoiceEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceInvoiceEntityBuilder toBuilder() =>
@@ -1493,7 +1791,8 @@ class EInvoiceInvoiceEntityBuilder
   _$EInvoiceInvoiceEntity _build() {
     _$EInvoiceInvoiceEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceInvoiceEntity._(
             invoicePeriod: invoicePeriod.build(),
             delivery: delivery.build(),
@@ -1510,7 +1809,10 @@ class EInvoiceInvoiceEntityBuilder
         paymentMeans.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceInvoiceEntity', _$failedField, e.toString());
+          r'EInvoiceInvoiceEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1527,17 +1829,19 @@ class _$EInvoiceInvoicePeriodEntity extends EInvoiceInvoicePeriodEntity {
   @override
   final String? description;
 
-  factory _$EInvoiceInvoicePeriodEntity(
-          [void Function(EInvoiceInvoicePeriodEntityBuilder)? updates]) =>
-      (EInvoiceInvoicePeriodEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceInvoicePeriodEntity([
+    void Function(EInvoiceInvoicePeriodEntityBuilder)? updates,
+  ]) => (EInvoiceInvoicePeriodEntityBuilder()..update(updates))._build();
 
-  _$EInvoiceInvoicePeriodEntity._(
-      {this.startDate, this.endDate, this.description})
-      : super._();
+  _$EInvoiceInvoicePeriodEntity._({
+    this.startDate,
+    this.endDate,
+    this.description,
+  }) : super._();
   @override
   EInvoiceInvoicePeriodEntity rebuild(
-          void Function(EInvoiceInvoicePeriodEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceInvoicePeriodEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceInvoicePeriodEntityBuilder toBuilder() =>
@@ -1576,8 +1880,10 @@ class _$EInvoiceInvoicePeriodEntity extends EInvoiceInvoicePeriodEntity {
 
 class EInvoiceInvoicePeriodEntityBuilder
     implements
-        Builder<EInvoiceInvoicePeriodEntity,
-            EInvoiceInvoicePeriodEntityBuilder> {
+        Builder<
+          EInvoiceInvoicePeriodEntity,
+          EInvoiceInvoicePeriodEntityBuilder
+        > {
   _$EInvoiceInvoicePeriodEntity? _$v;
 
   String? _startDate;
@@ -1619,7 +1925,8 @@ class EInvoiceInvoicePeriodEntityBuilder
   EInvoiceInvoicePeriodEntity build() => _build();
 
   _$EInvoiceInvoicePeriodEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$EInvoiceInvoicePeriodEntity._(
           startDate: startDate,
           endDate: endDate,
@@ -1634,15 +1941,15 @@ class _$EInvoiceDeliveryEntity extends EInvoiceDeliveryEntity {
   @override
   final String? actualDeliveryDate;
 
-  factory _$EInvoiceDeliveryEntity(
-          [void Function(EInvoiceDeliveryEntityBuilder)? updates]) =>
-      (EInvoiceDeliveryEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceDeliveryEntity([
+    void Function(EInvoiceDeliveryEntityBuilder)? updates,
+  ]) => (EInvoiceDeliveryEntityBuilder()..update(updates))._build();
 
   _$EInvoiceDeliveryEntity._({this.actualDeliveryDate}) : super._();
   @override
   EInvoiceDeliveryEntity rebuild(
-          void Function(EInvoiceDeliveryEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceDeliveryEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceDeliveryEntityBuilder toBuilder() =>
@@ -1667,9 +1974,9 @@ class _$EInvoiceDeliveryEntity extends EInvoiceDeliveryEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'EInvoiceDeliveryEntity')
-          ..add('actualDeliveryDate', actualDeliveryDate))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'EInvoiceDeliveryEntity',
+    )..add('actualDeliveryDate', actualDeliveryDate)).toString();
   }
 }
 
@@ -1707,10 +2014,9 @@ class EInvoiceDeliveryEntityBuilder
   EInvoiceDeliveryEntity build() => _build();
 
   _$EInvoiceDeliveryEntity _build() {
-    final _$result = _$v ??
-        _$EInvoiceDeliveryEntity._(
-          actualDeliveryDate: actualDeliveryDate,
-        );
+    final _$result =
+        _$v ??
+        _$EInvoiceDeliveryEntity._(actualDeliveryDate: actualDeliveryDate);
     replace(_$result);
     return _$result;
   }
@@ -1722,17 +2028,18 @@ class _$EInvoicePaymentMeansEntity extends EInvoicePaymentMeansEntity {
   @override
   final EInvoicePayeeFinancialAccountEntity? payeeFinancialAccount;
 
-  factory _$EInvoicePaymentMeansEntity(
-          [void Function(EInvoicePaymentMeansEntityBuilder)? updates]) =>
-      (EInvoicePaymentMeansEntityBuilder()..update(updates))._build();
+  factory _$EInvoicePaymentMeansEntity([
+    void Function(EInvoicePaymentMeansEntityBuilder)? updates,
+  ]) => (EInvoicePaymentMeansEntityBuilder()..update(updates))._build();
 
-  _$EInvoicePaymentMeansEntity._(
-      {this.paymentMeansCode, this.payeeFinancialAccount})
-      : super._();
+  _$EInvoicePaymentMeansEntity._({
+    this.paymentMeansCode,
+    this.payeeFinancialAccount,
+  }) : super._();
   @override
   EInvoicePaymentMeansEntity rebuild(
-          void Function(EInvoicePaymentMeansEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoicePaymentMeansEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoicePaymentMeansEntityBuilder toBuilder() =>
@@ -1782,8 +2089,8 @@ class EInvoicePaymentMeansEntityBuilder
       _$this._payeeFinancialAccount ??=
           EInvoicePayeeFinancialAccountEntityBuilder();
   set payeeFinancialAccount(
-          EInvoicePayeeFinancialAccountEntityBuilder? payeeFinancialAccount) =>
-      _$this._payeeFinancialAccount = payeeFinancialAccount;
+    EInvoicePayeeFinancialAccountEntityBuilder? payeeFinancialAccount,
+  ) => _$this._payeeFinancialAccount = payeeFinancialAccount;
 
   EInvoicePaymentMeansEntityBuilder();
 
@@ -1813,7 +2120,8 @@ class EInvoicePaymentMeansEntityBuilder
   _$EInvoicePaymentMeansEntity _build() {
     _$EInvoicePaymentMeansEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoicePaymentMeansEntity._(
             paymentMeansCode: _paymentMeansCode?.build(),
             payeeFinancialAccount: _payeeFinancialAccount?.build(),
@@ -1827,7 +2135,10 @@ class EInvoicePaymentMeansEntityBuilder
         _payeeFinancialAccount?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoicePaymentMeansEntity', _$failedField, e.toString());
+          r'EInvoicePaymentMeansEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1840,15 +2151,15 @@ class _$EInvoiceValueEntity extends EInvoiceValueEntity {
   @override
   final String? value;
 
-  factory _$EInvoiceValueEntity(
-          [void Function(EInvoiceValueEntityBuilder)? updates]) =>
-      (EInvoiceValueEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceValueEntity([
+    void Function(EInvoiceValueEntityBuilder)? updates,
+  ]) => (EInvoiceValueEntityBuilder()..update(updates))._build();
 
   _$EInvoiceValueEntity._({this.value}) : super._();
   @override
   EInvoiceValueEntity rebuild(
-          void Function(EInvoiceValueEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceValueEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceValueEntityBuilder toBuilder() =>
@@ -1872,9 +2183,9 @@ class _$EInvoiceValueEntity extends EInvoiceValueEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'EInvoiceValueEntity')
-          ..add('value', value))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'EInvoiceValueEntity',
+    )..add('value', value)).toString();
   }
 }
 
@@ -1911,10 +2222,7 @@ class EInvoiceValueEntityBuilder
   EInvoiceValueEntity build() => _build();
 
   _$EInvoiceValueEntity _build() {
-    final _$result = _$v ??
-        _$EInvoiceValueEntity._(
-          value: value,
-        );
+    final _$result = _$v ?? _$EInvoiceValueEntity._(value: value);
     replace(_$result);
     return _$result;
   }
@@ -1929,18 +2237,20 @@ class _$EInvoicePayeeFinancialAccountEntity
   @override
   final EInvoiceFinancialInstitutionBranchEntity? financialInstitutionBranch;
 
-  factory _$EInvoicePayeeFinancialAccountEntity(
-          [void Function(EInvoicePayeeFinancialAccountEntityBuilder)?
-              updates]) =>
+  factory _$EInvoicePayeeFinancialAccountEntity([
+    void Function(EInvoicePayeeFinancialAccountEntityBuilder)? updates,
+  ]) =>
       (EInvoicePayeeFinancialAccountEntityBuilder()..update(updates))._build();
 
-  _$EInvoicePayeeFinancialAccountEntity._(
-      {this.id, this.name, this.financialInstitutionBranch})
-      : super._();
+  _$EInvoicePayeeFinancialAccountEntity._({
+    this.id,
+    this.name,
+    this.financialInstitutionBranch,
+  }) : super._();
   @override
   EInvoicePayeeFinancialAccountEntity rebuild(
-          void Function(EInvoicePayeeFinancialAccountEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoicePayeeFinancialAccountEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoicePayeeFinancialAccountEntityBuilder toBuilder() =>
@@ -1979,8 +2289,10 @@ class _$EInvoicePayeeFinancialAccountEntity
 
 class EInvoicePayeeFinancialAccountEntityBuilder
     implements
-        Builder<EInvoicePayeeFinancialAccountEntity,
-            EInvoicePayeeFinancialAccountEntityBuilder> {
+        Builder<
+          EInvoicePayeeFinancialAccountEntity,
+          EInvoicePayeeFinancialAccountEntityBuilder
+        > {
   _$EInvoicePayeeFinancialAccountEntity? _$v;
 
   EInvoiceValueEntityBuilder? _id;
@@ -1994,12 +2306,11 @@ class EInvoicePayeeFinancialAccountEntityBuilder
 
   EInvoiceFinancialInstitutionBranchEntityBuilder? _financialInstitutionBranch;
   EInvoiceFinancialInstitutionBranchEntityBuilder
-      get financialInstitutionBranch => _$this._financialInstitutionBranch ??=
-          EInvoiceFinancialInstitutionBranchEntityBuilder();
+  get financialInstitutionBranch => _$this._financialInstitutionBranch ??=
+      EInvoiceFinancialInstitutionBranchEntityBuilder();
   set financialInstitutionBranch(
-          EInvoiceFinancialInstitutionBranchEntityBuilder?
-              financialInstitutionBranch) =>
-      _$this._financialInstitutionBranch = financialInstitutionBranch;
+    EInvoiceFinancialInstitutionBranchEntityBuilder? financialInstitutionBranch,
+  ) => _$this._financialInstitutionBranch = financialInstitutionBranch;
 
   EInvoicePayeeFinancialAccountEntityBuilder();
 
@@ -2021,7 +2332,8 @@ class EInvoicePayeeFinancialAccountEntityBuilder
 
   @override
   void update(
-      void Function(EInvoicePayeeFinancialAccountEntityBuilder)? updates) {
+    void Function(EInvoicePayeeFinancialAccountEntityBuilder)? updates,
+  ) {
     if (updates != null) updates(this);
   }
 
@@ -2031,7 +2343,8 @@ class EInvoicePayeeFinancialAccountEntityBuilder
   _$EInvoicePayeeFinancialAccountEntity _build() {
     _$EInvoicePayeeFinancialAccountEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoicePayeeFinancialAccountEntity._(
             id: _id?.build(),
             name: name,
@@ -2046,8 +2359,11 @@ class EInvoicePayeeFinancialAccountEntityBuilder
         _$failedField = 'financialInstitutionBranch';
         _financialInstitutionBranch?.build();
       } catch (e) {
-        throw BuiltValueNestedFieldError(r'EInvoicePayeeFinancialAccountEntity',
-            _$failedField, e.toString());
+        throw BuiltValueNestedFieldError(
+          r'EInvoicePayeeFinancialAccountEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2061,19 +2377,17 @@ class _$EInvoiceFinancialInstitutionBranchEntity
   @override
   final EInvoiceFinancialInstitutionEntity? financialInstitution;
 
-  factory _$EInvoiceFinancialInstitutionBranchEntity(
-          [void Function(EInvoiceFinancialInstitutionBranchEntityBuilder)?
-              updates]) =>
-      (EInvoiceFinancialInstitutionBranchEntityBuilder()..update(updates))
-          ._build();
+  factory _$EInvoiceFinancialInstitutionBranchEntity([
+    void Function(EInvoiceFinancialInstitutionBranchEntityBuilder)? updates,
+  ]) => (EInvoiceFinancialInstitutionBranchEntityBuilder()..update(updates))
+      ._build();
 
   _$EInvoiceFinancialInstitutionBranchEntity._({this.financialInstitution})
-      : super._();
+    : super._();
   @override
   EInvoiceFinancialInstitutionBranchEntity rebuild(
-          void Function(EInvoiceFinancialInstitutionBranchEntityBuilder)
-              updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceFinancialInstitutionBranchEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceFinancialInstitutionBranchEntityBuilder toBuilder() =>
@@ -2099,16 +2413,17 @@ class _$EInvoiceFinancialInstitutionBranchEntity
   @override
   String toString() {
     return (newBuiltValueToStringHelper(
-            r'EInvoiceFinancialInstitutionBranchEntity')
-          ..add('financialInstitution', financialInstitution))
-        .toString();
+      r'EInvoiceFinancialInstitutionBranchEntity',
+    )..add('financialInstitution', financialInstitution)).toString();
   }
 }
 
 class EInvoiceFinancialInstitutionBranchEntityBuilder
     implements
-        Builder<EInvoiceFinancialInstitutionBranchEntity,
-            EInvoiceFinancialInstitutionBranchEntityBuilder> {
+        Builder<
+          EInvoiceFinancialInstitutionBranchEntity,
+          EInvoiceFinancialInstitutionBranchEntityBuilder
+        > {
   _$EInvoiceFinancialInstitutionBranchEntity? _$v;
 
   EInvoiceFinancialInstitutionEntityBuilder? _financialInstitution;
@@ -2116,8 +2431,8 @@ class EInvoiceFinancialInstitutionBranchEntityBuilder
       _$this._financialInstitution ??=
           EInvoiceFinancialInstitutionEntityBuilder();
   set financialInstitution(
-          EInvoiceFinancialInstitutionEntityBuilder? financialInstitution) =>
-      _$this._financialInstitution = financialInstitution;
+    EInvoiceFinancialInstitutionEntityBuilder? financialInstitution,
+  ) => _$this._financialInstitution = financialInstitution;
 
   EInvoiceFinancialInstitutionBranchEntityBuilder();
 
@@ -2137,7 +2452,8 @@ class EInvoiceFinancialInstitutionBranchEntityBuilder
 
   @override
   void update(
-      void Function(EInvoiceFinancialInstitutionBranchEntityBuilder)? updates) {
+    void Function(EInvoiceFinancialInstitutionBranchEntityBuilder)? updates,
+  ) {
     if (updates != null) updates(this);
   }
 
@@ -2147,7 +2463,8 @@ class EInvoiceFinancialInstitutionBranchEntityBuilder
   _$EInvoiceFinancialInstitutionBranchEntity _build() {
     _$EInvoiceFinancialInstitutionBranchEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceFinancialInstitutionBranchEntity._(
             financialInstitution: _financialInstitution?.build(),
           );
@@ -2158,9 +2475,10 @@ class EInvoiceFinancialInstitutionBranchEntityBuilder
         _financialInstitution?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceFinancialInstitutionBranchEntity',
-            _$failedField,
-            e.toString());
+          r'EInvoiceFinancialInstitutionBranchEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2174,16 +2492,15 @@ class _$EInvoiceFinancialInstitutionEntity
   @override
   final EInvoiceValueEntity? id;
 
-  factory _$EInvoiceFinancialInstitutionEntity(
-          [void Function(EInvoiceFinancialInstitutionEntityBuilder)?
-              updates]) =>
-      (EInvoiceFinancialInstitutionEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceFinancialInstitutionEntity([
+    void Function(EInvoiceFinancialInstitutionEntityBuilder)? updates,
+  ]) => (EInvoiceFinancialInstitutionEntityBuilder()..update(updates))._build();
 
   _$EInvoiceFinancialInstitutionEntity._({this.id}) : super._();
   @override
   EInvoiceFinancialInstitutionEntity rebuild(
-          void Function(EInvoiceFinancialInstitutionEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceFinancialInstitutionEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceFinancialInstitutionEntityBuilder toBuilder() =>
@@ -2207,16 +2524,18 @@ class _$EInvoiceFinancialInstitutionEntity
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'EInvoiceFinancialInstitutionEntity')
-          ..add('id', id))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'EInvoiceFinancialInstitutionEntity',
+    )..add('id', id)).toString();
   }
 }
 
 class EInvoiceFinancialInstitutionEntityBuilder
     implements
-        Builder<EInvoiceFinancialInstitutionEntity,
-            EInvoiceFinancialInstitutionEntityBuilder> {
+        Builder<
+          EInvoiceFinancialInstitutionEntity,
+          EInvoiceFinancialInstitutionEntityBuilder
+        > {
   _$EInvoiceFinancialInstitutionEntity? _$v;
 
   EInvoiceValueEntityBuilder? _id;
@@ -2242,7 +2561,8 @@ class EInvoiceFinancialInstitutionEntityBuilder
 
   @override
   void update(
-      void Function(EInvoiceFinancialInstitutionEntityBuilder)? updates) {
+    void Function(EInvoiceFinancialInstitutionEntityBuilder)? updates,
+  ) {
     if (updates != null) updates(this);
   }
 
@@ -2252,10 +2572,8 @@ class EInvoiceFinancialInstitutionEntityBuilder
   _$EInvoiceFinancialInstitutionEntity _build() {
     _$EInvoiceFinancialInstitutionEntity _$result;
     try {
-      _$result = _$v ??
-          _$EInvoiceFinancialInstitutionEntity._(
-            id: _id?.build(),
-          );
+      _$result =
+          _$v ?? _$EInvoiceFinancialInstitutionEntity._(id: _id?.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -2263,7 +2581,10 @@ class EInvoiceFinancialInstitutionEntityBuilder
         _id?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceFinancialInstitutionEntity', _$failedField, e.toString());
+          r'EInvoiceFinancialInstitutionEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2276,15 +2597,15 @@ class _$EInvoiceCreditNoteEntity extends EInvoiceCreditNoteEntity {
   @override
   final BuiltList<EInvoiceBillingReferenceEntity> billingReference;
 
-  factory _$EInvoiceCreditNoteEntity(
-          [void Function(EInvoiceCreditNoteEntityBuilder)? updates]) =>
-      (EInvoiceCreditNoteEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceCreditNoteEntity([
+    void Function(EInvoiceCreditNoteEntityBuilder)? updates,
+  ]) => (EInvoiceCreditNoteEntityBuilder()..update(updates))._build();
 
   _$EInvoiceCreditNoteEntity._({required this.billingReference}) : super._();
   @override
   EInvoiceCreditNoteEntity rebuild(
-          void Function(EInvoiceCreditNoteEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceCreditNoteEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceCreditNoteEntityBuilder toBuilder() =>
@@ -2309,9 +2630,9 @@ class _$EInvoiceCreditNoteEntity extends EInvoiceCreditNoteEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'EInvoiceCreditNoteEntity')
-          ..add('billingReference', billingReference))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'EInvoiceCreditNoteEntity',
+    )..add('billingReference', billingReference)).toString();
   }
 }
 
@@ -2325,8 +2646,8 @@ class EInvoiceCreditNoteEntityBuilder
       _$this._billingReference ??=
           ListBuilder<EInvoiceBillingReferenceEntity>();
   set billingReference(
-          ListBuilder<EInvoiceBillingReferenceEntity>? billingReference) =>
-      _$this._billingReference = billingReference;
+    ListBuilder<EInvoiceBillingReferenceEntity>? billingReference,
+  ) => _$this._billingReference = billingReference;
 
   EInvoiceCreditNoteEntityBuilder();
 
@@ -2355,7 +2676,8 @@ class EInvoiceCreditNoteEntityBuilder
   _$EInvoiceCreditNoteEntity _build() {
     _$EInvoiceCreditNoteEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceCreditNoteEntity._(
             billingReference: billingReference.build(),
           );
@@ -2366,7 +2688,10 @@ class EInvoiceCreditNoteEntityBuilder
         billingReference.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceCreditNoteEntity', _$failedField, e.toString());
+          r'EInvoiceCreditNoteEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2379,16 +2704,16 @@ class _$EInvoiceBillingReferenceEntity extends EInvoiceBillingReferenceEntity {
   @override
   final EInvoiceDocumentReferenceEntity? invoiceDocumentReference;
 
-  factory _$EInvoiceBillingReferenceEntity(
-          [void Function(EInvoiceBillingReferenceEntityBuilder)? updates]) =>
-      (EInvoiceBillingReferenceEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceBillingReferenceEntity([
+    void Function(EInvoiceBillingReferenceEntityBuilder)? updates,
+  ]) => (EInvoiceBillingReferenceEntityBuilder()..update(updates))._build();
 
   _$EInvoiceBillingReferenceEntity._({this.invoiceDocumentReference})
-      : super._();
+    : super._();
   @override
   EInvoiceBillingReferenceEntity rebuild(
-          void Function(EInvoiceBillingReferenceEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceBillingReferenceEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceBillingReferenceEntityBuilder toBuilder() =>
@@ -2413,16 +2738,18 @@ class _$EInvoiceBillingReferenceEntity extends EInvoiceBillingReferenceEntity {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'EInvoiceBillingReferenceEntity')
-          ..add('invoiceDocumentReference', invoiceDocumentReference))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'EInvoiceBillingReferenceEntity',
+    )..add('invoiceDocumentReference', invoiceDocumentReference)).toString();
   }
 }
 
 class EInvoiceBillingReferenceEntityBuilder
     implements
-        Builder<EInvoiceBillingReferenceEntity,
-            EInvoiceBillingReferenceEntityBuilder> {
+        Builder<
+          EInvoiceBillingReferenceEntity,
+          EInvoiceBillingReferenceEntityBuilder
+        > {
   _$EInvoiceBillingReferenceEntity? _$v;
 
   EInvoiceDocumentReferenceEntityBuilder? _invoiceDocumentReference;
@@ -2430,8 +2757,8 @@ class EInvoiceBillingReferenceEntityBuilder
       _$this._invoiceDocumentReference ??=
           EInvoiceDocumentReferenceEntityBuilder();
   set invoiceDocumentReference(
-          EInvoiceDocumentReferenceEntityBuilder? invoiceDocumentReference) =>
-      _$this._invoiceDocumentReference = invoiceDocumentReference;
+    EInvoiceDocumentReferenceEntityBuilder? invoiceDocumentReference,
+  ) => _$this._invoiceDocumentReference = invoiceDocumentReference;
 
   EInvoiceBillingReferenceEntityBuilder();
 
@@ -2460,7 +2787,8 @@ class EInvoiceBillingReferenceEntityBuilder
   _$EInvoiceBillingReferenceEntity _build() {
     _$EInvoiceBillingReferenceEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$EInvoiceBillingReferenceEntity._(
             invoiceDocumentReference: _invoiceDocumentReference?.build(),
           );
@@ -2471,7 +2799,10 @@ class EInvoiceBillingReferenceEntityBuilder
         _invoiceDocumentReference?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'EInvoiceBillingReferenceEntity', _$failedField, e.toString());
+          r'EInvoiceBillingReferenceEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -2487,15 +2818,15 @@ class _$EInvoiceDocumentReferenceEntity
   @override
   final String? issueDate;
 
-  factory _$EInvoiceDocumentReferenceEntity(
-          [void Function(EInvoiceDocumentReferenceEntityBuilder)? updates]) =>
-      (EInvoiceDocumentReferenceEntityBuilder()..update(updates))._build();
+  factory _$EInvoiceDocumentReferenceEntity([
+    void Function(EInvoiceDocumentReferenceEntityBuilder)? updates,
+  ]) => (EInvoiceDocumentReferenceEntityBuilder()..update(updates))._build();
 
   _$EInvoiceDocumentReferenceEntity._({this.id, this.issueDate}) : super._();
   @override
   EInvoiceDocumentReferenceEntity rebuild(
-          void Function(EInvoiceDocumentReferenceEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(EInvoiceDocumentReferenceEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   EInvoiceDocumentReferenceEntityBuilder toBuilder() =>
@@ -2531,8 +2862,10 @@ class _$EInvoiceDocumentReferenceEntity
 
 class EInvoiceDocumentReferenceEntityBuilder
     implements
-        Builder<EInvoiceDocumentReferenceEntity,
-            EInvoiceDocumentReferenceEntityBuilder> {
+        Builder<
+          EInvoiceDocumentReferenceEntity,
+          EInvoiceDocumentReferenceEntityBuilder
+        > {
   _$EInvoiceDocumentReferenceEntity? _$v;
 
   String? _id;
@@ -2569,11 +2902,9 @@ class EInvoiceDocumentReferenceEntityBuilder
   EInvoiceDocumentReferenceEntity build() => _build();
 
   _$EInvoiceDocumentReferenceEntity _build() {
-    final _$result = _$v ??
-        _$EInvoiceDocumentReferenceEntity._(
-          id: id,
-          issueDate: issueDate,
-        );
+    final _$result =
+        _$v ??
+        _$EInvoiceDocumentReferenceEntity._(id: id, issueDate: issueDate);
     replace(_$result);
     return _$result;
   }

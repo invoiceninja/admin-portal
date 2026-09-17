@@ -23,10 +23,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceViewScreen extends StatelessWidget {
-  const RecurringInvoiceViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const RecurringInvoiceViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
   static const String route = '/recurring_invoice/view';
   final bool isFilter;
 
@@ -64,34 +62,42 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext, DocumentEntity)? onViewExpense,
     Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          client: client,
-          isSaving: isSaving,
-          isDirty: isDirty,
-          onActionSelected: onEntityAction,
-          onEditPressed: onEditPressed,
-          onPaymentsPressed: onPaymentsPressed,
-          onRefreshed: onRefreshed,
-          onUploadDocuments: onUploadDocuments,
-          onViewExpense: onViewExpense,
-          onViewPdf: onViewPdf,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         client: client,
+         isSaving: isSaving,
+         isDirty: isDirty,
+         onActionSelected: onEntityAction,
+         onEditPressed: onEditPressed,
+         onPaymentsPressed: onPaymentsPressed,
+         onRefreshed: onRefreshed,
+         onUploadDocuments: onUploadDocuments,
+         onViewExpense: onViewExpense,
+         onViewPdf: onViewPdf,
+       );
 
   factory RecurringInvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoice = state.recurringInvoiceState
-            .map[state.recurringInvoiceUIState.selectedId] ??
+    final invoice =
+        state.recurringInvoiceState.map[state
+            .recurringInvoiceUIState
+            .selectedId] ??
         InvoiceEntity(id: state.recurringInvoiceUIState.selectedId);
-    final client = store.state.clientState.map[invoice.clientId] ??
+    final client =
+        store.state.clientState.map[invoice.clientId] ??
         ClientEntity(id: invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
-      store.dispatch(LoadRecurringInvoice(
-          completer: completer, recurringInvoiceId: invoice.id));
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
+      store.dispatch(
+        LoadRecurringInvoice(
+          completer: completer,
+          recurringInvoiceId: invoice.id,
+        ),
+      );
       return completer.future;
     }
 
@@ -104,36 +110,56 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
       client: client,
       onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
-            entity: invoice,
-            subIndex: index,
-            completer: snackBarCompleter<InvoiceEntity>(
-                AppLocalization.of(context)!.updatedRecurringInvoice));
+          entity: invoice,
+          subIndex: index,
+          completer: snackBarCompleter<InvoiceEntity>(
+            AppLocalization.of(context)!.updatedRecurringInvoice,
+          ),
+        );
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([invoice], action, autoPop: true),
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveRecurringInvoiceDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFiles: multipartFiles,
-            invoice: invoice,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveRecurringInvoiceDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFiles: multipartFiles,
+                invoice: invoice,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
       onViewPdf: (context, invoice, [activityId]) {
-        store.dispatch(ShowPdfRecurringInvoice(
-            context: context, invoice: invoice, activityId: activityId));
+        store.dispatch(
+          ShowPdfRecurringInvoice(
+            context: context,
+            invoice: invoice,
+            activityId: activityId,
+          ),
+        );
       },
     );
   }

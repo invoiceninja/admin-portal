@@ -78,58 +78,63 @@ class MenuDrawerVM {
           return;
         }
         confirmCallback(
-            message: AppLocalization.of(context)!.logout,
-            context: context,
-            callback: (_) async {
-              store.dispatch(UserLogout());
+          message: AppLocalization.of(context)!.logout,
+          context: context,
+          callback: (_) async {
+            store.dispatch(UserLogout());
 
-              final user = store.state.user;
-              if (user.isConnectedToGoogle) {
-                GoogleOAuth.signOut();
-              }
-            });
+            final user = store.state.user;
+            if (user.isConnectedToGoogle) {
+              GoogleOAuth.signOut();
+            }
+          },
+        );
       },
       onCompanyChanged:
           (BuildContext context, int index, CompanyEntity company) {
-        if (index == state.uiState.selectedCompanyIndex) {
-          return;
-        }
+            if (index == state.uiState.selectedCompanyIndex) {
+              return;
+            }
 
-        checkForChanges(
-            store: store,
-            callback: () {
-              SharedPreferences.getInstance().then(
-                  (prefs) => prefs.setString(kSharedPrefCompanyId, company.id));
+            checkForChanges(
+              store: store,
+              callback: () {
+                SharedPreferences.getInstance().then(
+                  (prefs) => prefs.setString(kSharedPrefCompanyId, company.id),
+                );
 
-              // Task status id's change by company so need to be cleared
-              store.dispatch(ClearTaskStatusFilter());
+                // Task status id's change by company so need to be cleared
+                store.dispatch(ClearTaskStatusFilter());
 
-              store.dispatch(ClearEntityFilter());
-              store.dispatch(DiscardChanges());
-              store.dispatch(SelectCompany(companyIndex: index));
-              if (store.state.company.isLarge && !store.state.isLoaded) {
-                store.dispatch(LoadClients());
-              } else if (store.state.isStale) {
-                store.dispatch(RefreshData());
-              }
-              AppBuilder.of(context)!.rebuild();
+                store.dispatch(ClearEntityFilter());
+                store.dispatch(DiscardChanges());
+                store.dispatch(SelectCompany(companyIndex: index));
+                if (store.state.company.isLarge && !store.state.isLoaded) {
+                  store.dispatch(LoadClients());
+                } else if (store.state.isStale) {
+                  store.dispatch(RefreshData());
+                }
+                AppBuilder.of(context)!.rebuild();
 
-              final uiState = state.uiState;
-              if (uiState.isInSettings) {
-                store.dispatch(ViewSettings(
-                  company: company,
-                  user: store.state.user,
-                  section: uiState.subRoute,
-                  force: true,
-                ));
-              } else if (uiState.isEditing ||
-                  uiState.isViewing ||
-                  uiState.isEmailing ||
-                  uiState.isPDF) {
-                store.dispatch(UpdateCurrentRoute(uiState.baseRoute));
-              }
-            });
-      },
+                final uiState = state.uiState;
+                if (uiState.isInSettings) {
+                  store.dispatch(
+                    ViewSettings(
+                      company: company,
+                      user: store.state.user,
+                      section: uiState.subRoute,
+                      force: true,
+                    ),
+                  );
+                } else if (uiState.isEditing ||
+                    uiState.isViewing ||
+                    uiState.isEmailing ||
+                    uiState.isPDF) {
+                  store.dispatch(UpdateCurrentRoute(uiState.baseRoute));
+                }
+              },
+            );
+          },
       onAddCompany: (BuildContext context) {
         if (state.isHosted &&
             !state.isPaidAccount &&
@@ -141,26 +146,28 @@ class MenuDrawerVM {
         }
 
         confirmCallback(
-            context: context,
-            message: AppLocalization.of(context)!.addCompany,
-            callback: (_) async {
-              final completer = snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.addedCompany,
-                  shouldPop: true)
-                ..future.then<Null>((_) {
-                  AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
-                });
+          context: context,
+          message: AppLocalization.of(context)!.addCompany,
+          callback: (_) async {
+            final completer =
+                snackBarCompleter<Null>(
+                    AppLocalization.of(context)!.addedCompany,
+                    shouldPop: true,
+                  )
+                  ..future.then<Null>((_) {
+                    AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
+                  });
 
-              store
-                  .dispatch(AddCompany(context: context, completer: completer));
+            store.dispatch(AddCompany(context: context, completer: completer));
 
-              await showDialog<AlertDialog>(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) => SimpleDialog(
-                        children: <Widget>[LoadingDialog()],
-                      ));
-            });
+            await showDialog<AlertDialog>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) =>
+                  SimpleDialog(children: <Widget>[LoadingDialog()]),
+            );
+          },
+        );
       },
     );
   }

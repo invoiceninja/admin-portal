@@ -70,7 +70,7 @@ abstract class EmailEntityVM {
   final ClientEntity? client;
   final VendorEntity? vendor;
   final Function(BuildContext, EmailTemplate, String, String, String)?
-      onSendPressed;
+  onSendPressed;
 }
 
 class EmailInvoiceVM extends EmailEntityVM {
@@ -83,20 +83,22 @@ class EmailInvoiceVM extends EmailEntityVM {
     ClientEntity? client,
     VendorEntity? vendor,
     Function(BuildContext, EmailTemplate, String, String, String)?
-        onSendPressed,
+    onSendPressed,
   }) : super(
-          state: state,
-          isLoading: isLoading,
-          isSaving: isSaving,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onSendPressed: onSendPressed,
-        );
+         state: state,
+         isLoading: isLoading,
+         isSaving: isSaving,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onSendPressed: onSendPressed,
+       );
 
   factory EmailInvoiceVM.fromStore(
-      Store<AppState> store, InvoiceEntity invoice) {
+    Store<AppState> store,
+    InvoiceEntity invoice,
+  ) {
     final state = store.state;
 
     return EmailInvoiceVM(
@@ -105,25 +107,29 @@ class EmailInvoiceVM extends EmailEntityVM {
       isSaving: state.isSaving,
       company: state.company,
       invoice: invoice,
-      client: state.clientState.map[invoice.clientId] ??
+      client:
+          state.clientState.map[invoice.clientId] ??
           ClientEntity(id: invoice.clientId),
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.emailedInvoice,
-            shouldPop: isMobile(context));
+          AppLocalization.of(context)!.emailedInvoice,
+          shouldPop: isMobile(context),
+        );
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {
             viewEntity(entity: invoice);
           });
         }
-        store.dispatch(EmailInvoiceRequest(
-          completer: completer,
-          invoiceId: invoice.id,
-          template: template,
-          subject: subject,
-          body: body,
-          ccEmail: ccEmail,
-        ));
+        store.dispatch(
+          EmailInvoiceRequest(
+            completer: completer,
+            invoiceId: invoice.id,
+            template: template,
+            subject: subject,
+            body: body,
+            ccEmail: ccEmail,
+          ),
+        );
       },
     );
   }

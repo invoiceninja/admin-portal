@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserViewScreen extends StatelessWidget {
-  const UserViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const UserViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
   static const String route = '/$kSettings/$kSettingsUserManagementView';
 
@@ -35,10 +32,7 @@ class UserViewScreen extends StatelessWidget {
         return UserViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return UserView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return UserView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -59,12 +53,14 @@ class UserViewVM {
 
   factory UserViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user = state.userState.map[state.userUIState.selectedId] ??
+    final user =
+        state.userState.map[state.userUIState.selectedId] ??
         UserEntity(id: state.userUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadUser(completer: completer, userId: user.id));
       return completer.future;
     }

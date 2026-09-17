@@ -46,21 +46,25 @@ class ScheduleListItem extends StatelessWidget {
     String title = localization.lookup(schedule.template);
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
       final entityType = EntityType.valueOf(schedule.parameters.entityType!);
-      final entity =
-          state.getEntityMap(entityType)![schedule.parameters.entityId];
+      final entity = state.getEntityMap(
+        entityType,
+      )![schedule.parameters.entityId];
 
       if (entity != null) {
         if (entityType == EntityType.purchaseOrder) {
-          final vendor =
-              state.vendorState.get((entity as BelongsToVendor).vendorId);
+          final vendor = state.vendorState.get(
+            (entity as BelongsToVendor).vendorId,
+          );
           title += ': ' + vendor.name;
         } else {
-          final client =
-              state.clientState.get((entity as BelongsToClient).clientId!);
+          final client = state.clientState.get(
+            (entity as BelongsToClient).clientId!,
+          );
           title += ': ' + client.displayName;
         }
 
-        subtitle += ' • ' +
+        subtitle +=
+            ' • ' +
             localization.lookup(schedule.parameters.entityType) +
             ' ' +
             entity.listDisplayName;
@@ -95,7 +99,8 @@ class ScheduleListItem extends StatelessWidget {
     } else if (schedule.template == ScheduleEntity.TEMPLATE_PAYMENT_SCHEDULE) {
       if (schedule.parameters.invoiceId != null &&
           schedule.parameters.invoiceId!.isNotEmpty) {
-        title += ': ' +
+        title +=
+            ': ' +
             state.invoiceState
                 .get(schedule.parameters.invoiceId!)
                 .listDisplayName;
@@ -107,7 +112,8 @@ class ScheduleListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: schedule,
-      isSelected: schedule.id ==
+      isSelected:
+          schedule.id ==
           (uiState.isEditing
               ? scheduleUIState.editing!.id
               : scheduleUIState.selectedId),
@@ -131,11 +137,13 @@ class ScheduleListItem extends StatelessWidget {
                 )
               : null,
           title: Text(title),
-          trailing: Text(timeago.format(
-            convertSqlDateToDateTime(schedule.nextRun),
-            locale: localeSelector(state, twoLetter: true),
-            allowFromNow: true,
-          )),
+          trailing: Text(
+            timeago.format(
+              convertSqlDateToDateTime(schedule.nextRun),
+              locale: localeSelector(state, twoLetter: true),
+              allowFromNow: true,
+            ),
+          ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

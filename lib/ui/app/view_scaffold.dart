@@ -74,9 +74,10 @@ class ViewScaffold extends StatelessWidget {
         }
       } else if (state.uiState.previewStack.isNotEmpty) {
         leading = IconButton(
-            tooltip: localization!.back,
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => store.dispatch(PopPreviewStack()));
+          tooltip: localization!.back,
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => store.dispatch(PopPreviewStack()),
+        );
       } else if (isDesktop(context) &&
           !entity.entityType!.isSetting &&
           state.prefState.isModuleTable) {
@@ -96,42 +97,44 @@ class ViewScaffold extends StatelessWidget {
           centerTitle: false,
           leading: leading,
           automaticallyImplyLeading: isMobile(context),
-          title: CopyToClipboard(
-            value: appBarTitle,
-            child: Text(appBarTitle!),
-          ),
+          title: CopyToClipboard(value: appBarTitle, child: Text(appBarTitle!)),
           bottom: appBarBottom as PreferredSizeWidget?,
           actions: entity.isNew
               ? []
               : [
                   if (isSettings && isDesktop(context) && !isFilter)
                     TextButton(
-                        onPressed: () {
-                          onBackPressed != null
-                              ? onBackPressed!()
-                              : store.dispatch(UpdateCurrentRoute(
-                                  state.uiState.previousRoute));
-                        },
-                        child: Text(
-                          localization!.back,
-                          style: TextStyle(color: state.headerTextColor),
-                        )),
+                      onPressed: () {
+                        onBackPressed != null
+                            ? onBackPressed!()
+                            : store.dispatch(
+                                UpdateCurrentRoute(state.uiState.previousRoute),
+                              );
+                      },
+                      child: Text(
+                        localization!.back,
+                        style: TextStyle(color: state.headerTextColor),
+                      ),
+                    ),
                   if (isEditable && userCompany.canEditEntity(entity))
-                    Builder(builder: (context) {
-                      final isDisabled = state.uiState.isEditing &&
-                          state.uiState.mainRoute ==
-                              state.uiState.filterEntityType.toString();
+                    Builder(
+                      builder: (context) {
+                        final isDisabled =
+                            state.uiState.isEditing &&
+                            state.uiState.mainRoute ==
+                                state.uiState.filterEntityType.toString();
 
-                      return AppTextButton(
-                        label: localization!.edit,
-                        isInHeader: true,
-                        onPressed: isDisabled
-                            ? null
-                            : () {
-                                editEntity(entity: entity);
-                              },
-                      );
-                    }),
+                        return AppTextButton(
+                          label: localization!.edit,
+                          isInHeader: true,
+                          onPressed: isDisabled
+                              ? null
+                              : () {
+                                  editEntity(entity: entity);
+                                },
+                        );
+                      },
+                    ),
                   ViewActionMenuButton(
                     isSaving: state.isSaving && !isFilter,
                     entity: entity,
@@ -140,16 +143,17 @@ class ViewScaffold extends StatelessWidget {
                     entityActions: entity.getActions(
                       userCompany: userCompany,
                       client: entity is BelongsToClient
-                          ? state.clientState
-                              .map[(entity as BelongsToClient).clientId]
+                          ? state.clientState.map[(entity as BelongsToClient)
+                                .clientId]
                           : null,
                     ),
                   ),
                 ],
         ),
         body: SafeArea(
-          child:
-              entity.isNew ? BlankScreen(localization!.noRecordSelected) : body,
+          child: entity.isNew
+              ? BlankScreen(localization!.noRecordSelected)
+              : body,
         ),
       ),
     );

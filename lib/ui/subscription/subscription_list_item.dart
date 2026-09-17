@@ -49,7 +49,8 @@ class SubscriptionListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: subscription,
-      isSelected: subscription.id ==
+      isSelected:
+          subscription.id ==
           (uiState.isEditing
               ? subscriptionUIState.editing!.id
               : subscriptionUIState.selectedId),
@@ -80,8 +81,10 @@ class SubscriptionListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(subscription.price, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                formatNumber(subscription.price, context)!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
         ),
@@ -89,11 +92,7 @@ class SubscriptionListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(subscription),
           ],

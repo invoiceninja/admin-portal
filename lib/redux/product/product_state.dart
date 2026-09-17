@@ -48,9 +48,11 @@ abstract class ProductState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<ProductState> get serializer => _$productStateSerializer;
@@ -61,8 +63,10 @@ abstract class ProductUIState extends Object
     implements Built<ProductUIState, ProductUIStateBuilder> {
   factory ProductUIState(PrefStateSortField? sortField) {
     return _$ProductUIState._(
-      listUIState: ListUIState(sortField?.field ?? ProductFields.productKey,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? ProductFields.productKey,
+        sortAscending: sortField?.ascending,
+      ),
       editing: ProductEntity(),
       selectedId: '',
       tabIndex: 0,

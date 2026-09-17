@@ -25,10 +25,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GeneratedNumbers extends StatefulWidget {
-  const GeneratedNumbers({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const GeneratedNumbers({Key? key, required this.viewModel}) : super(key: key);
 
   final GeneratedNumbersVM viewModel;
 
@@ -38,8 +35,9 @@ class GeneratedNumbers extends StatefulWidget {
 
 class _GeneratedNumbersState extends State<GeneratedNumbers>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_generatedNumbers');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_generatedNumbers',
+  );
 
   FocusScopeNode? _focusNode;
   TabController? _controller;
@@ -80,7 +78,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: tabs,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -103,26 +104,28 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _recurringPrefixController,
-    ];
+    _controllers = [_recurringPrefixController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final settings = widget.viewModel.settings;
     _recurringPrefixController.text = settings.recurringNumberPrefix ?? '';
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
 
   void _onChanged() {
     _debouncer.run(() {
-      final settings = widget.viewModel.settings.rebuild((b) =>
-          b..recurringNumberPrefix = _recurringPrefixController.text.trim());
+      final settings = widget.viewModel.settings.rebuild(
+        (b) =>
+            b..recurringNumberPrefix = _recurringPrefixController.text.trim(),
+      );
 
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
@@ -153,7 +156,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     values.forEach((value) {
       value ??= '';
       final containsSubCounter = value.contains('{\$client_counter}');
-      final containsCounterOrId = value.contains('{\$client_id_number}') ||
+      final containsCounterOrId =
+          value.contains('{\$client_id_number}') ||
           value.contains('{\$client_number}') ||
           value.contains('{\$counter}');
 
@@ -164,12 +168,15 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
     if (!isValid) {
       showDialog<ErrorDialog>(
-          context: context,
-          builder: (BuildContext context) {
-            return ErrorDialog(AppLocalization.of(context)!
-                .counterPatternError
-                .replaceAll(':', '\$'));
-          });
+        context: context,
+        builder: (BuildContext context) {
+          return ErrorDialog(
+            AppLocalization.of(
+              context,
+            )!.counterPatternError.replaceAll(':', '\$'),
+          );
+        },
+      );
 
       return;
     }
@@ -193,56 +200,30 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.clients,
-          ),
+          Tab(text: localization.settings),
+          Tab(text: localization.clients),
           if (company.isModuleEnabled(EntityType.invoice))
-            Tab(
-              text: localization.invoices,
-            ),
+            Tab(text: localization.invoices),
           if (company.isModuleEnabled(EntityType.recurringInvoice))
-            Tab(
-              text: localization.recurringInvoices,
-            ),
+            Tab(text: localization.recurringInvoices),
           if (company.isModuleEnabled(EntityType.payment))
-            Tab(
-              text: localization.payments,
-            ),
+            Tab(text: localization.payments),
           if (company.isModuleEnabled(EntityType.quote))
-            Tab(
-              text: localization.quotes,
-            ),
+            Tab(text: localization.quotes),
           if (company.isModuleEnabled(EntityType.credit))
-            Tab(
-              text: localization.credits,
-            ),
+            Tab(text: localization.credits),
           if (company.isModuleEnabled(EntityType.project))
-            Tab(
-              text: localization.projects,
-            ),
+            Tab(text: localization.projects),
           if (company.isModuleEnabled(EntityType.task))
-            Tab(
-              text: localization.tasks,
-            ),
+            Tab(text: localization.tasks),
           if (company.isModuleEnabled(EntityType.vendor))
-            Tab(
-              text: localization.vendors,
-            ),
+            Tab(text: localization.vendors),
           if (company.isModuleEnabled(EntityType.purchaseOrder))
-            Tab(
-              text: localization.purchaseOrders,
-            ),
+            Tab(text: localization.purchaseOrders),
           if (company.isModuleEnabled(EntityType.expense))
-            Tab(
-              text: localization.expenses,
-            ),
+            Tab(text: localization.expenses),
           if (company.isModuleEnabled(EntityType.recurringExpense))
-            Tab(
-              text: localization.recurringExpenses,
-            ),
+            Tab(text: localization.recurringExpenses),
         ],
       ),
       body: AppTabForm(
@@ -260,20 +241,23 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     value: settings.counterPadding,
                     blankValue: null,
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..counterPadding = value)),
+                      settings.rebuild((b) => b..counterPadding = value),
+                    ),
                     items: List<int>.generate(10, (i) => i + 1)
-                        .map((value) => DropdownMenuItem(
-                              child: Text('${'0' * (value - 1)}1'),
-                              value: value,
-                            ))
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: Text('${'0' * (value - 1)}1'),
+                            value: value,
+                          ),
+                        )
                         .toList(),
                   ),
                   AppDropdownButton<String>(
                     labelText: localization.generateNumber,
                     value: settings.counterNumberApplied,
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                        settings
-                            .rebuild((b) => b..counterNumberApplied = value)),
+                      settings.rebuild((b) => b..counterNumberApplied = value),
+                    ),
                     items: [
                       DropdownMenuItem(
                         child: Text(localization.whenSaved),
@@ -289,23 +273,28 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                        settings.rebuild(
-                            (b) => b..resetCounterFrequencyId = value)),
+                      settings.rebuild(
+                        (b) => b..resetCounterFrequencyId = value,
+                      ),
+                    ),
                     items: [
                       DropdownMenuItem<String>(
                         child: Text(localization.never),
                         value: '0',
                       ),
                       ...kFrequencies
-                          .map((id, frequency) =>
-                              MapEntry<String, DropdownMenuItem<String>>(
+                          .map(
+                            (id, frequency) =>
+                                MapEntry<String, DropdownMenuItem<String>>(
                                   id,
                                   DropdownMenuItem<String>(
                                     child: Text(localization.lookup(frequency)),
                                     value: id,
-                                  )))
+                                  ),
+                                ),
+                          )
                           .values
-                          .toList()
+                          .toList(),
                     ],
                   ),
                   if ((int.tryParse(settings.resetCounterFrequencyId ?? '0') ??
@@ -315,7 +304,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       labelText: localization.nextReset,
                       selectedDate: settings.resetCounterDate,
                       onSelected: (value, _) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..resetCounterDate = value)),
+                        settings.rebuild((b) => b..resetCounterDate = value),
+                      ),
                     ),
                   if (company.isModuleEnabled(EntityType.recurringInvoice))
                     DecoratedFormField(
@@ -330,8 +320,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       label: localization.sharedInvoiceQuoteCounter,
                       value: settings.sharedInvoiceQuoteCounter,
                       onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..sharedInvoiceQuoteCounter = value)),
+                        settings.rebuild(
+                          (b) => b..sharedInvoiceQuoteCounter = value,
+                        ),
+                      ),
                     ),
                   if (company.isModuleEnabled(EntityType.credit))
                     BoolDropdownButton(
@@ -339,8 +331,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       label: localization.sharedInvoiceCreditCounter,
                       value: settings.sharedInvoiceCreditCounter,
                       onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild(
-                              (b) => b..sharedInvoiceCreditCounter = value)),
+                        settings.rebuild(
+                          (b) => b..sharedInvoiceCreditCounter = value,
+                        ),
+                      ),
                     ),
                 ],
               ),
@@ -350,94 +344,124 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             showClientFields: false,
             counterValue: settings.clientNumberCounter,
             patternValue: settings.clientNumberPattern,
-            onChanged: (counter, pattern) =>
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
+            onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+              settings.rebuild(
+                (b) => b
                   ..clientNumberCounter = counter
-                  ..clientNumberPattern = pattern)),
+                  ..clientNumberPattern = pattern,
+              ),
+            ),
           ),
           if (company.isModuleEnabled(EntityType.invoice))
             EntityNumberSettings(
               counterValue: settings.invoiceNumberCounter,
               patternValue: settings.invoiceNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..invoiceNumberCounter = counter
-                    ..invoiceNumberPattern = pattern)),
+                    ..invoiceNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.recurringInvoice))
             EntityNumberSettings(
               counterValue: settings.recurringInvoiceNumberCounter,
               patternValue: settings.recurringInvoiceNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..recurringInvoiceNumberCounter = counter
-                    ..recurringInvoiceNumberPattern = pattern)),
+                    ..recurringInvoiceNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.payment))
             EntityNumberSettings(
               counterValue: settings.paymentNumberCounter,
               patternValue: settings.paymentNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..paymentNumberCounter = counter
-                    ..paymentNumberPattern = pattern)),
+                    ..paymentNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.quote))
             EntityNumberSettings(
               counterValue: settings.quoteNumberCounter,
               patternValue: settings.quoteNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..quoteNumberCounter = counter
-                    ..quoteNumberPattern = pattern)),
+                    ..quoteNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.credit))
             EntityNumberSettings(
               counterValue: settings.creditNumberCounter,
               patternValue: settings.creditNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..creditNumberCounter = counter
-                    ..creditNumberPattern = pattern)),
+                    ..creditNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.project))
             EntityNumberSettings(
               counterValue: settings.projectNumberCounter,
               patternValue: settings.projectNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..projectNumberCounter = counter
-                    ..projectNumberPattern = pattern)),
+                    ..projectNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.task))
             EntityNumberSettings(
               showClientFields: false,
               counterValue: settings.taskNumberCounter,
               patternValue: settings.taskNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..taskNumberCounter = counter
-                    ..taskNumberPattern = pattern)),
+                    ..taskNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.vendor))
             EntityNumberSettings(
               showClientFields: false,
               counterValue: settings.vendorNumberCounter,
               patternValue: settings.vendorNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..vendorNumberCounter = counter
-                    ..vendorNumberPattern = pattern)),
+                    ..vendorNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.purchaseOrder))
             EntityNumberSettings(
               showClientFields: false,
               counterValue: settings.purchaseOrderNumberCounter,
               patternValue: settings.purchaseOrderNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..purchaseOrderNumberCounter = counter
-                    ..purchaseOrderNumberPattern = pattern)),
+                    ..purchaseOrderNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.expense))
             EntityNumberSettings(
@@ -445,10 +469,13 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
               showVendorFields: false,
               counterValue: settings.expenseNumberCounter,
               patternValue: settings.expenseNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..expenseNumberCounter = counter
-                    ..expenseNumberPattern = pattern)),
+                    ..expenseNumberPattern = pattern,
+                ),
+              ),
             ),
           if (company.isModuleEnabled(EntityType.recurringExpense))
             EntityNumberSettings(
@@ -456,10 +483,13 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
               showVendorFields: false,
               counterValue: settings.recurringExpenseNumberCounter,
               patternValue: settings.recurringExpenseNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
+              onChanged: (counter, pattern) => viewModel.onSettingsChanged(
+                settings.rebuild(
+                  (b) => b
                     ..recurringExpenseNumberCounter = counter
-                    ..recurringExpenseNumberPattern = pattern)),
+                    ..recurringExpenseNumberPattern = pattern,
+                ),
+              ),
             ),
         ],
       ),
@@ -504,27 +534,28 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _counterController,
-      _patternController,
-    ];
+    _controllers = [_counterController, _patternController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     _counterController.text = '${widget.counterValue ?? ''}';
     _patternController.text = widget.patternValue ?? '';
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
 
   void _onChanged() {
     _debouncer.run(() {
-      final int? counter =
-          parseInt(_counterController.text.trim(), zeroIsNull: true);
+      final int? counter = parseInt(
+        _counterController.text.trim(),
+        zeroIsNull: true,
+      );
       final String pattern = _patternController.text.trim();
 
       if (counter != widget.counterValue || pattern != widget.patternValue) {
@@ -554,8 +585,12 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
           ],
         ),
         Padding(
-          padding:
-              const EdgeInsets.only(left: 16, top: 20, right: 16, bottom: 8),
+          padding: const EdgeInsets.only(
+            left: 16,
+            top: 20,
+            right: 16,
+            bottom: 8,
+          ),
           child: OutlinedButton(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -576,7 +611,8 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
             if (offset >= 0) {
               final currentValue = _patternController.text;
-              newValue = currentValue.substring(0, offset) +
+              newValue =
+                  currentValue.substring(0, offset) +
                   field +
                   currentValue.substring(offset);
               newOffset = offset + field.length;
@@ -587,8 +623,9 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
             _patternController.text = newValue;
 
             if (offset >= 0) {
-              _patternController.selection =
-                  TextSelection.fromPosition(TextPosition(offset: newOffset));
+              _patternController.selection = TextSelection.fromPosition(
+                TextPosition(offset: newOffset),
+              );
             }
           },
         ),
@@ -636,21 +673,26 @@ class HelpPanel extends StatelessWidget {
     ];
 
     return FormCard(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        isLast: true,
-        children: fields
-            .where((field) => showVendorFields || !field.startsWith('vendor'))
-            .where((field) =>
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      isLast: true,
+      children: fields
+          .where((field) => showVendorFields || !field.startsWith('vendor'))
+          .where(
+            (field) =>
                 showClientFields ||
-                (!field.startsWith('client') && !field.startsWith('group')))
-            .map((field) => '\{\$$field\}')
-            .map((field) => InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: Text(field),
-                  ),
-                  onTap: () => onFieldPressed(field),
-                ))
-            .toList());
+                (!field.startsWith('client') && !field.startsWith('group')),
+          )
+          .map((field) => '\{\$$field\}')
+          .map(
+            (field) => InkWell(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Text(field),
+              ),
+              onTap: () => onFieldPressed(field),
+            ),
+          )
+          .toList(),
+    );
   }
 }

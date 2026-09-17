@@ -1,12 +1,12 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.194+194
+version: 5.0.197+197
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: '>=3.9.0 <4.0.0'
 
 flutter_icons:
   android: true
@@ -23,7 +23,7 @@ dependencies:
   web: ^1.0.0
   google_sign_in: ^7.2.0
   in_app_review: ^2.0.4
-  in_app_purchase: ^3.2.3
+  in_app_purchase: ^3.3.0
   pinput: ^3.0.1
   flutter_redux: ^0.10.0
   redux_logging: ^0.5.0
@@ -31,7 +31,7 @@ dependencies:
   path_provider: ^2.0.2
   shared_preferences: ^2.0.6
   material_design_icons_flutter: ^7.0.7296
-  built_value: ^8.1.2
+  built_value: ^8.12.2
   built_collection: ^5.1.0
   memoize: ^3.0.0
   url_launcher: ^6.3.1
@@ -70,7 +70,7 @@ dependencies:
   diacritic: ^0.1.3
   states_rebuilder: ^6.2.0
   html2md: ^1.2.6
-  printing: ^5.11.0
+  printing: ^5.14.3
   image_cropper: ^11.0.0
   msal_js: ^2.14.0
   sign_in_with_apple: ^7.0.1
@@ -88,7 +88,13 @@ dependencies:
   device_info_plus: ^12.2.0
   ios_open_subscriptions_settings: ^0.0.4
   redux: any
-  in_app_purchase_android: any
+  # Pinned: 0.5.0 is the newest release that still resolves on the Flutter
+  # version this repo pins (3.41.9 / Dart 3.11.5 — set in BOTH codemagic.yaml
+  # and .flutter-version); 0.5.0+1 and later require Dart ^3.12 / Flutter
+  # >=3.44. 0.5.0 already carries Google Play Billing Library 8.0.0, which
+  # Play requires for uploads from 2026-08-31.
+  # Relax back to `any` once both Flutter pins move to 3.44+.
+  in_app_purchase_android: 0.5.0
   in_app_purchase_storekit: any
   overlord: any
   super_editor: any
@@ -130,7 +136,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.1.0
-  built_value_generator: ^8.1.1
+  built_value_generator: ^8.12.2
   faker: ^2.0.0
   msix: ^3.5.1
   import_sorter: ^4.6.0

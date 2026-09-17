@@ -16,25 +16,38 @@ class _$UserStateSerializer implements StructuredSerializer<UserState> {
   final String wireName = 'UserState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(UserEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(UserEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  UserState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  UserState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserStateBuilder();
 
     final iterator = serialized.iterator;
@@ -44,17 +57,26 @@ class _$UserStateSerializer implements StructuredSerializer<UserState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(UserEntity)
-              ]))!);
+                const FullType(UserEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -70,37 +92,52 @@ class _$UserUIStateSerializer implements StructuredSerializer<UserUIState> {
   final String wireName = 'UserUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, UserUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    UserUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(UserEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(UserEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  UserUIState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  UserUIState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = UserUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -110,20 +147,38 @@ class _$UserUIStateSerializer implements StructuredSerializer<UserUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserEntity))! as UserEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UserEntity),
+                )!
+                as UserEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -215,11 +270,7 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
   _$UserState _build() {
     _$UserState _$result;
     try {
-      _$result = _$v ??
-          _$UserState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$UserState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -229,7 +280,10 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserState', _$failedField, e.toString());
+          r'UserState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -257,15 +311,15 @@ class _$UserUIState extends UserUIState {
   factory _$UserUIState([void Function(UserUIStateBuilder)? updates]) =>
       (UserUIStateBuilder()..update(updates))._build();
 
-  _$UserUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$UserUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   UserUIState rebuild(void Function(UserUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -385,14 +439,18 @@ class UserUIStateBuilder implements Builder<UserUIState, UserUIStateBuilder> {
   _$UserUIState _build() {
     _$UserUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$UserUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'UserUIState', 'tabIndex'),
+              tabIndex,
+              r'UserUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -405,7 +463,10 @@ class UserUIStateBuilder implements Builder<UserUIState, UserUIStateBuilder> {
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'UserUIState', _$failedField, e.toString());
+          r'UserUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

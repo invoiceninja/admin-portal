@@ -14,15 +14,17 @@ class _$InvoiceStatusEntitySerializer
   @override
   final Iterable<Type> types = const [
     InvoiceStatusEntity,
-    _$InvoiceStatusEntity
+    _$InvoiceStatusEntity,
   ];
   @override
   final String wireName = 'InvoiceStatusEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, InvoiceStatusEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    InvoiceStatusEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
@@ -35,8 +37,10 @@ class _$InvoiceStatusEntitySerializer
 
   @override
   InvoiceStatusEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = InvoiceStatusEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -46,12 +50,20 @@ class _$InvoiceStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -66,15 +78,15 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   @override
   final String name;
 
-  factory _$InvoiceStatusEntity(
-          [void Function(InvoiceStatusEntityBuilder)? updates]) =>
-      (InvoiceStatusEntityBuilder()..update(updates))._build();
+  factory _$InvoiceStatusEntity([
+    void Function(InvoiceStatusEntityBuilder)? updates,
+  ]) => (InvoiceStatusEntityBuilder()..update(updates))._build();
 
   _$InvoiceStatusEntity._({required this.id, required this.name}) : super._();
   @override
   InvoiceStatusEntity rebuild(
-          void Function(InvoiceStatusEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(InvoiceStatusEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   InvoiceStatusEntityBuilder toBuilder() =>
@@ -144,12 +156,19 @@ class InvoiceStatusEntityBuilder
   InvoiceStatusEntity build() => _build();
 
   _$InvoiceStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$InvoiceStatusEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'InvoiceStatusEntity', 'id'),
+            id,
+            r'InvoiceStatusEntity',
+            'id',
+          ),
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'InvoiceStatusEntity', 'name'),
+            name,
+            r'InvoiceStatusEntity',
+            'name',
+          ),
         );
     replace(_$result);
     return _$result;

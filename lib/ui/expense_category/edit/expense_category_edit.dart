@@ -12,10 +12,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryEdit extends StatefulWidget {
-  const ExpenseCategoryEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseCategoryEdit({Key? key, required this.viewModel})
+    : super(key: key);
 
   final ExpenseCategoryEditVM viewModel;
 
@@ -24,8 +22,9 @@ class ExpenseCategoryEdit extends StatefulWidget {
 }
 
 class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_expenseCategoryEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_expenseCategoryEdit',
+  );
   final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
@@ -61,8 +60,9 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
   }
 
   void _onChanged() {
-    final expenseCategory = widget.viewModel.expenseCategory
-        .rebuild((b) => b..name = _nameController.text.trim());
+    final expenseCategory = widget.viewModel.expenseCategory.rebuild(
+      (b) => b..name = _nameController.text.trim(),
+    );
     if (expenseCategory != widget.viewModel.expenseCategory) {
       _debouncer.run(() {
         widget.viewModel.onChanged(expenseCategory);
@@ -94,8 +94,9 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (_) => _onSavePressed(),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
@@ -114,13 +115,16 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
                     FormColorPicker(
                       initialValue: expenseCategory.color,
                       onSelected: (value) => viewModel.onChanged(
-                          expenseCategory.rebuild((b) => b..color = value)),
+                        expenseCategory.rebuild((b) => b..color = value),
+                      ),
                     ),
                   ],
                 ),
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }

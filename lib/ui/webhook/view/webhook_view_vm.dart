@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookViewScreen extends StatelessWidget {
-  const WebhookViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const WebhookViewScreen({Key? key, this.isFilter = false}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsWebhookView';
   final bool isFilter;
@@ -36,10 +33,7 @@ class WebhookViewScreen extends StatelessWidget {
         return WebhookViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return WebhookView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return WebhookView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -60,12 +54,14 @@ class WebhookViewVM {
 
   factory WebhookViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final webhook = state.webhookState.map[state.webhookUIState.selectedId] ??
+    final webhook =
+        state.webhookState.map[state.webhookUIState.selectedId] ??
         WebhookEntity(id: state.webhookUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadWebhook(completer: completer, webhookId: webhook.id));
       return completer.future;
     }

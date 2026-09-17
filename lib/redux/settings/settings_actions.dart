@@ -85,10 +85,7 @@ class UploadLogoFailure implements StopSaving {
 }
 
 class SaveUserSettingsRequest implements StartSaving {
-  SaveUserSettingsRequest({
-    required this.completer,
-    required this.user,
-  });
+  SaveUserSettingsRequest({required this.completer, required this.user});
 
   final Completer completer;
   final UserEntity user;

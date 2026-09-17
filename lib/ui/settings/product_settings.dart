@@ -13,10 +13,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductSettings extends StatefulWidget {
-  const ProductSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ProductSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final ProductSettingsVM viewModel;
 
@@ -25,8 +22,9 @@ class ProductSettings extends StatefulWidget {
 }
 
 class _ProductSettingsState extends State<ProductSettings> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_productSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_productSettings',
+  );
   FocusScopeNode? _focusNode;
   final _debouncer = Debouncer();
   final _stockThresholdController = TextEditingController();
@@ -42,8 +40,9 @@ class _ProductSettingsState extends State<ProductSettings> {
   void didChangeDependencies() {
     _controllers = [_stockThresholdController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final viewModel = widget.viewModel;
     final company = viewModel.state.company;
@@ -56,8 +55,9 @@ class _ProductSettingsState extends State<ProductSettings> {
             formatNumberType: FormatNumberType.int,
           )!;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -73,9 +73,12 @@ class _ProductSettingsState extends State<ProductSettings> {
   }
 
   void _onChanged() {
-    final company = widget.viewModel.company.rebuild((b) => b
-      ..stockNotificationThreshold =
-          parseInt(_stockThresholdController.text.trim()));
+    final company = widget.viewModel.company.rebuild(
+      (b) => b
+        ..stockNotificationThreshold = parseInt(
+          _stockThresholdController.text.trim(),
+        ),
+    );
     if (company != widget.viewModel.company) {
       _debouncer.run(() {
         widget.viewModel.onCompanyChanged(company);
@@ -104,7 +107,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.trackInventory,
                 subtitle: Text(localization.trackInventoryHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..trackInventory = value)),
+                  company.rebuild((b) => b..trackInventory = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -112,7 +116,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.stockNotification,
                 subtitle: Text(localization.stockNotificationsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..stockNotification = value)),
+                  company.rebuild((b) => b..stockNotification = value),
+                ),
               ),
               if (company.trackInventory && company.stockNotification)
                 DecoratedFormField(
@@ -130,7 +135,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.enableProductDiscount,
                 subtitle: Text(localization.showProductDiscountHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..enableProductDiscount = value)),
+                  company.rebuild((b) => b..enableProductDiscount = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -138,7 +144,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.enableProductCost,
                 subtitle: Text(localization.showCostHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..enableProductCost = value)),
+                  company.rebuild((b) => b..enableProductCost = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -146,7 +153,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.enableProductQuantity,
                 subtitle: Text(localization.showProductQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..enableProductQuantity = value)),
+                  company.rebuild((b) => b..enableProductQuantity = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -154,7 +162,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.defaultQuantity,
                 subtitle: Text(localization.defaultQuantityHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..defaultQuantity = value)),
+                  company.rebuild((b) => b..defaultQuantity = value),
+                ),
               ),
             ],
           ),
@@ -167,7 +176,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.showProductDetails,
                 subtitle: Text(localization.showProductDescriptionHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..showProductDetails = value)),
+                  company.rebuild((b) => b..showProductDetails = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -175,7 +185,8 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.fillProducts,
                 subtitle: Text(localization.fillProductsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..fillProducts = value)),
+                  company.rebuild((b) => b..fillProducts = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -183,15 +194,17 @@ class _ProductSettingsState extends State<ProductSettings> {
                 value: company.updateProducts,
                 subtitle: Text(localization.updateProductsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..updateProducts = value)),
+                  company.rebuild((b) => b..updateProducts = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertProducts),
                 value: company.convertProductExchangeRate,
                 subtitle: Text(localization.convertProductsHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(company
-                    .rebuild((b) => b..convertProductExchangeRate = value)),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..convertProductExchangeRate = value),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -204,7 +217,7 @@ class _ProductSettingsState extends State<ProductSettings> {
                   enabledLabel: localization.clientCurrency,
                   disabledLabel: localization.companyCurrency,
                 ),
-              )
+              ),
             ],
           ),
         ],

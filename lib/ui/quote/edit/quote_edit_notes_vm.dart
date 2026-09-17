@@ -22,9 +22,7 @@ class QuoteEditNotesScreen extends StatelessWidget {
         return QuoteEditNotesVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditNotes(
-          viewModel: viewModel,
-        );
+        return InvoiceEditNotes(viewModel: viewModel);
       },
     );
   }
@@ -37,11 +35,11 @@ class QuoteEditNotesVM extends EntityEditNotesVM {
     Function(InvoiceEntity)? onChanged,
     AppState? state,
   }) : super(
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          state: state,
-        );
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         state: state,
+       );
 
   factory QuoteEditNotesVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

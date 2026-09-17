@@ -14,10 +14,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditBillingAddress extends StatefulWidget {
-  const ClientEditBillingAddress({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ClientEditBillingAddress({Key? key, required this.viewModel})
+    : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -46,8 +44,9 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
       _postalCodeController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final client = widget.viewModel.client;
     _address1Controller.text = client.address1;
@@ -56,8 +55,9 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     _stateController.text = client.state;
     _postalCodeController.text = client.postalCode;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -74,12 +74,14 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..address1 = _address1Controller.text.trim()
-      ..address2 = _address2Controller.text.trim()
-      ..city = _cityController.text.trim()
-      ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim());
+    final client = viewModel.client.rebuild(
+      (b) => b
+        ..address1 = _address1Controller.text.trim()
+        ..address2 = _address2Controller.text.trim()
+        ..city = _cityController.text.trim()
+        ..state = _stateController.text.trim()
+        ..postalCode = _postalCodeController.text.trim(),
+    );
     if (client != viewModel.client) {
       _debouncer.run(() {
         viewModel.onChanged(client);
@@ -92,8 +94,9 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final client = viewModel.client;
-    final isFullscreen =
-        viewModel.state.prefState.isEditorFullScreen(EntityType.client);
+    final isFullscreen = viewModel.state.prefState.isEditorFullScreen(
+      EntityType.client,
+    );
 
     return FormCard(
       isLast: true,
@@ -148,7 +151,8 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           labelText: localization.country,
           entityId: client.countryId,
           onSelected: (SelectableEntity? country) => viewModel.onChanged(
-              client.rebuild((b) => b..countryId = country?.id ?? '')),
+            client.rebuild((b) => b..countryId = country?.id ?? ''),
+          ),
         ),
         if (client.hasShippingAddress && client.areAddressesDifferent)
           AppButton(
@@ -159,7 +163,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
                 didChangeDependencies();
               });
             },
-          )
+          ),
       ],
     );
   }

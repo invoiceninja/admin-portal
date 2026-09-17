@@ -20,10 +20,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WorkflowSettings extends StatefulWidget {
-  const WorkflowSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const WorkflowSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final WorkflowSettingsVM viewModel;
 
@@ -33,8 +30,9 @@ class WorkflowSettings extends StatefulWidget {
 
 class _WorkflowSettingsState extends State<WorkflowSettings>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_workflowSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_workflowSettings',
+  );
 
   FocusScopeNode? _focusNode;
   TabController? _controller;
@@ -46,7 +44,10 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: 2,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -78,29 +79,27 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
         tabs: [
-          Tab(
-            text: localization.invoices,
-          ),
-          Tab(
-            text: localization.quotes,
-          ),
+          Tab(text: localization.invoices),
+          Tab(text: localization.quotes),
         ],
       ),
       body: AppTabForm(
-          tabController: _controller,
-          formKey: _formKey,
-          focusNode: _focusNode,
-          children: <Widget>[
-            ScrollableListView(
-              primary: true,
-              children: <Widget>[
-                FormCard(children: <Widget>[
+        tabController: _controller,
+        formKey: _formKey,
+        focusNode: _focusNode,
+        children: <Widget>[
+          ScrollableListView(
+            primary: true,
+            children: <Widget>[
+              FormCard(
+                children: <Widget>[
                   BoolDropdownButton(
                     label: localization.autoEmailInvoice,
                     helpLabel: localization.autoEmailInvoiceHelp,
                     value: settings.autoEmailInvoice,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..autoEmailInvoice = value)),
+                      settings.rebuild((b) => b..autoEmailInvoice = value),
+                    ),
                     iconData: Icons.email,
                   ),
                   if (!state.settingsUIState.isFiltered)
@@ -108,18 +107,24 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       label: localization.stopOnUnpaid,
                       helpLabel: localization.stopOnUnpaidHelp,
                       value: company.stopOnUnpaidRecurring,
-                      onChanged: (value) => viewModel.onCompanyChanged(company
-                          .rebuild((b) => b..stopOnUnpaidRecurring = value)),
+                      onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild(
+                          (b) => b..stopOnUnpaidRecurring = value,
+                        ),
+                      ),
                       iconData: Icons.stop_circle,
                     ),
-                ]),
-                FormCard(children: <Widget>[
+                ],
+              ),
+              FormCard(
+                children: <Widget>[
                   BoolDropdownButton(
                     label: localization.autoArchivePaidInvoices,
                     helpLabel: localization.autoArchivePaidInvoices,
                     value: settings.autoArchiveInvoice,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..autoArchiveInvoice = value)),
+                      settings.rebuild((b) => b..autoArchiveInvoice = value),
+                    ),
                     iconData: Icons.archive,
                   ),
                   BoolDropdownButton(
@@ -127,72 +132,84 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     helpLabel: localization.autoArchiveCancelledInvoicesHelp,
                     value: settings.autoArchiveInvoiceCancelled,
                     onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild(
-                            (b) => b..autoArchiveInvoiceCancelled = value)),
+                      settings.rebuild(
+                        (b) => b..autoArchiveInvoiceCancelled = value,
+                      ),
+                    ),
                     iconData: Icons.archive,
                   ),
-                ]),
-                FormCard(
-                  isLast: true,
-                  children: <Widget>[
-                    AppDropdownButton<String>(
-                      value: settings.lockInvoices,
-                      onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..lockInvoices = value)),
-                      labelText: localization.lockInvoices,
-                      items: [
-                        SettingsEntity.LOCK_INVOICES_OFF,
-                        SettingsEntity.LOCK_INVOICES_WHEN_SENT,
-                        SettingsEntity.LOCK_INVOICES_WHEN_PAID,
-                        SettingsEntity.LOCK_INVOICES_END_OF_MONTH,
-                      ]
-                          .map((option) => DropdownMenuItem(
+                ],
+              ),
+              FormCard(
+                isLast: true,
+                children: <Widget>[
+                  AppDropdownButton<String>(
+                    value: settings.lockInvoices,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..lockInvoices = value),
+                    ),
+                    labelText: localization.lockInvoices,
+                    items:
+                        [
+                              SettingsEntity.LOCK_INVOICES_OFF,
+                              SettingsEntity.LOCK_INVOICES_WHEN_SENT,
+                              SettingsEntity.LOCK_INVOICES_WHEN_PAID,
+                              SettingsEntity.LOCK_INVOICES_END_OF_MONTH,
+                            ]
+                            .map(
+                              (option) => DropdownMenuItem(
                                 child: Text(localization.lookup(option)),
                                 value: option,
-                              ))
-                          .toList(),
+                              ),
+                            )
+                            .toList(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          ScrollableListView(
+            primary: true,
+            children: <Widget>[
+              FormCard(
+                isLast: true,
+                children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.autoConvertQuote,
+                    helpLabel: localization.autoConvertQuoteHelp,
+                    value: settings.autoConvertQuote,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..autoConvertQuote = value),
                     ),
-                  ],
-                ),
-              ],
-            ),
-            ScrollableListView(
-              primary: true,
-              children: <Widget>[
-                FormCard(
-                  isLast: true,
-                  children: <Widget>[
+                    iconData: getEntityIcon(EntityType.quote),
+                  ),
+                  BoolDropdownButton(
+                    label: localization.autoArchiveQuote,
+                    helpLabel: localization.autoArchiveQuoteHelp,
+                    value: settings.autoArchiveQuote,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..autoArchiveQuote = value),
+                    ),
+                    iconData: Icons.archive,
+                  ),
+                  if (!state.settingsUIState.isFiltered)
                     BoolDropdownButton(
-                      label: localization.autoConvertQuote,
-                      helpLabel: localization.autoConvertQuoteHelp,
-                      value: settings.autoConvertQuote,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..autoConvertQuote = value)),
+                      value: company.useQuoteTermsOnConversion,
+                      onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild(
+                          (b) => b..useQuoteTermsOnConversion = value,
+                        ),
+                      ),
+                      label: localization.useQuoteTerms,
+                      helpLabel: localization.useQuoteTermsHelp,
                       iconData: getEntityIcon(EntityType.quote),
                     ),
-                    BoolDropdownButton(
-                      label: localization.autoArchiveQuote,
-                      helpLabel: localization.autoArchiveQuoteHelp,
-                      value: settings.autoArchiveQuote,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..autoArchiveQuote = value)),
-                      iconData: Icons.archive,
-                    ),
-                    if (!state.settingsUIState.isFiltered)
-                      BoolDropdownButton(
-                        value: company.useQuoteTermsOnConversion,
-                        onChanged: (value) => viewModel.onCompanyChanged(
-                            company.rebuild(
-                                (b) => b..useQuoteTermsOnConversion = value)),
-                        label: localization.useQuoteTerms,
-                        helpLabel: localization.useQuoteTermsHelp,
-                        iconData: getEntityIcon(EntityType.quote),
-                      ),
-                  ],
-                ),
-              ],
-            ),
-          ]),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 
 class VendorEditContactsScreen extends StatelessWidget {
   const VendorEditContactsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final VendorEditVM viewModel;
 
@@ -25,10 +25,7 @@ class VendorEditContactsScreen extends StatelessWidget {
         return VendorEditContactsVM.fromStore(store);
       },
       builder: (context, vm) {
-        return VendorEditContacts(
-          viewModel: vm,
-          vendorViewModel: viewModel,
-        );
+        return VendorEditContacts(viewModel: vm, vendorViewModel: viewModel);
       },
     );
   }
@@ -50,20 +47,21 @@ class VendorEditContactsVM {
     final vendor = state.vendorUIState.editing;
 
     return VendorEditContactsVM(
-        company: state.company,
-        vendor: vendor,
-        contact: state.vendorUIState.editingContact,
-        onAddContactPressed: () {
-          final contact = VendorContactEntity();
-          store.dispatch(AddVendorContact(contact));
-          store.dispatch(EditVendorContact(contact));
-        },
-        onRemoveContactPressed: (index) =>
-            store.dispatch(DeleteVendorContact(index)),
-        onDoneContactPressed: () => store.dispatch(EditVendorContact()),
-        onChangedContact: (contact, index) {
-          store.dispatch(UpdateVendorContact(contact: contact, index: index));
-        });
+      company: state.company,
+      vendor: vendor,
+      contact: state.vendorUIState.editingContact,
+      onAddContactPressed: () {
+        final contact = VendorContactEntity();
+        store.dispatch(AddVendorContact(contact));
+        store.dispatch(EditVendorContact(contact));
+      },
+      onRemoveContactPressed: (index) =>
+          store.dispatch(DeleteVendorContact(index)),
+      onDoneContactPressed: () => store.dispatch(EditVendorContact()),
+      onChangedContact: (contact, index) {
+        store.dispatch(UpdateVendorContact(contact: contact, index: index));
+      },
+    );
   }
 
   final CompanyEntity? company;

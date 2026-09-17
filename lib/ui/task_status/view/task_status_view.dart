@@ -35,7 +35,9 @@ class _TaskStatusViewState extends State<TaskStatusView> {
     final taskStatus = viewModel.taskStatus;
     final localization = AppLocalization.of(context)!;
     final amount = memoizedCalculateTaskStatusAmount(
-        taskStatus.id, viewModel.state.taskState.map);
+      taskStatus.id,
+      viewModel.state.taskState.map,
+    );
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -44,9 +46,10 @@ class _TaskStatusViewState extends State<TaskStatusView> {
       body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
-              entity: taskStatus,
-              label: localization.total,
-              value: formatDuration(Duration(seconds: amount))),
+            entity: taskStatus,
+            label: localization.total,
+            value: formatDuration(Duration(seconds: amount)),
+          ),
           ListDivider(),
           EntitiesListTile(
             entity: taskStatus,
@@ -54,8 +57,9 @@ class _TaskStatusViewState extends State<TaskStatusView> {
             entityType: EntityType.task,
             title: localization.tasks,
             subtitle: memoizedTaskStatsForTaskStatus(
-                    taskStatus.id, state.taskState.map)
-                .present(localization.active, localization.archived),
+              taskStatus.id,
+              state.taskState.map,
+            ).present(localization.active, localization.archived),
           ),
         ],
       ),

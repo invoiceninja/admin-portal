@@ -35,7 +35,7 @@ class EntityListTile extends StatefulWidget {
   final bool isFilter;
   final ClientEntity? client;
   final Function(BuildContext, BaseEntity?, EntityAction)?
-      onEntityActionSelected;
+  onEntityActionSelected;
 
   @override
   _EntityListTileState createState() => _EntityListTileState();
@@ -52,26 +52,30 @@ class _EntityListTileState extends State<EntityListTile> {
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final isFilteredBy = state.uiState.filterEntityId == widget.entity.id &&
+    final isFilteredBy =
+        state.uiState.filterEntityId == widget.entity.id &&
         state.uiState.filterEntityType == widget.entity.entityType;
 
-    final entityClient = widget.client ??
+    final entityClient =
+        widget.client ??
         (widget.entity is BelongsToClient
             ? state.clientState.map[(widget.entity as BelongsToClient).clientId]
             : null);
     final isHovered =
         (!RendererBinding.instance.mouseTracker.mouseIsConnected &&
-                isFilteredBy) ||
-            _isHovered;
+            isFilteredBy) ||
+        _isHovered;
 
     final leading = ActionMenuButton(
-      iconData:
-          isHovered ? Icons.more_vert : getEntityIcon(widget.entity.entityType),
+      iconData: isHovered
+          ? Icons.more_vert
+          : getEntityIcon(widget.entity.entityType),
       iconSize: isHovered ? null : 18,
       entityActions: widget.entity.getActions(
-          userCompany: state.userCompany,
-          includeEdit: true,
-          client: entityClient),
+        userCompany: state.userCompany,
+        includeEdit: true,
+        client: entityClient,
+      ),
       isSaving: false,
       entity: widget.entity,
       onSelected: (context, action) => widget.onEntityActionSelected != null
@@ -84,17 +88,20 @@ class _EntityListTileState extends State<EntityListTile> {
     final trailing = widget.entity.createdAt == 0
         ? null
         : IgnorePointer(
-            ignoring: !isHovered ||
+            ignoring:
+                !isHovered ||
                 widget.isFilter ||
                 widget.entity.entityType == EntityType.company,
             child: IconButton(
-              icon: Icon(widget.entity.entityType != EntityType.company &&
-                      (isHovered ||
-                          widget.isFilter ||
-                          isMobile(context) ||
-                          state.uiState.previewStack.isNotEmpty)
-                  ? Icons.chevron_right
-                  : Icons.filter_list),
+              icon: Icon(
+                widget.entity.entityType != EntityType.company &&
+                        (isHovered ||
+                            widget.isFilter ||
+                            isMobile(context) ||
+                            state.uiState.previewStack.isNotEmpty)
+                    ? Icons.chevron_right
+                    : Icons.filter_list,
+              ),
               onPressed: () => viewEntity(
                 entity: widget.entity,
                 addToStack: isDesktop(context) && !widget.isFilter,
@@ -108,23 +115,23 @@ class _EntityListTileState extends State<EntityListTile> {
     if (entity is InvoiceEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, clientId: entity.clientId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     } else if (entity is PaymentEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, clientId: entity.clientId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     } else if (entity is ExpenseEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, currencyId: entity.currencyId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     } else if (entity is TransactionEntity) {
       defaultSubtitle =
           formatNumber(entity.amount, context, currencyId: entity.currencyId)! +
-              ' • ' +
-              formatDate(entity.date, context);
+          ' • ' +
+          formatDate(entity.date, context);
     }
 
     return MouseRegion(
@@ -139,8 +146,9 @@ class _EntityListTileState extends State<EntityListTile> {
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               onTap: () {
-                if (state.prefState
-                    .isViewerFullScreen(widget.entity.entityType))
+                if (state.prefState.isViewerFullScreen(
+                  widget.entity.entityType,
+                ))
                   store.dispatch(ToggleViewerLayout(widget.entity.entityType));
                 inspectEntity(entity: widget.entity);
               },
@@ -151,7 +159,8 @@ class _EntityListTileState extends State<EntityListTile> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              subtitle: ((widget.subtitle ?? '').isNotEmpty ||
+              subtitle:
+                  ((widget.subtitle ?? '').isNotEmpty ||
                       defaultSubtitle.isNotEmpty ||
                       !entity.isActive)
                   ? Column(
@@ -203,7 +212,9 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
   bool _isHovered = false;
 
   void _onTap(BuildContext context) => viewEntitiesByType(
-      entityType: widget.entityType, filterEntity: widget.entity);
+    entityType: widget.entityType,
+    filterEntity: widget.entity,
+  );
 
   void _onLongPress() {
     if (widget.entity.isDeleted!) {
@@ -242,10 +253,13 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               title: Text(widget.title ?? ''),
-              subtitle: Text((widget.subtitle ?? '').isEmpty
-                  ? AppLocalization.of(context)!.none
-                  : widget.subtitle!),
-              leading: _isHovered &&
+              subtitle: Text(
+                (widget.subtitle ?? '').isEmpty
+                    ? AppLocalization.of(context)!.none
+                    : widget.subtitle!,
+              ),
+              leading:
+                  _isHovered &&
                       !widget.hideNew &&
                       !widget.entity.isDeleted! &&
                       state.userCompany.canCreate(widget.entityType)
@@ -255,8 +269,10 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
                     )
                   : IgnorePointer(
                       child: IconButton(
-                        icon:
-                            Icon(getEntityIcon(widget.entityType), size: 18.0),
+                        icon: Icon(
+                          getEntityIcon(widget.entityType),
+                          size: 18.0,
+                        ),
                         onPressed: () => _onTap(context),
                       ),
                     ),

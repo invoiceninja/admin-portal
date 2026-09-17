@@ -39,28 +39,29 @@ enum ProfitAndLossReportFields {
   converted_amount,
 }
 
-var memoizedProfitAndLossReport = memo9((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    profitAndLossReport(
-      userCompany!,
-      reportsUIState,
-      clientMap,
-      paymentMap,
-      expenseMap,
-      expenseCategoryMap,
-      vendorMap,
-      userMap,
-      staticState,
-    ));
+var memoizedProfitAndLossReport = memo9(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => profitAndLossReport(
+    userCompany!,
+    reportsUIState,
+    clientMap,
+    paymentMap,
+    expenseMap,
+    expenseCategoryMap,
+    vendorMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult profitAndLossReport(
   UserCompanyEntity userCompany,
@@ -79,8 +80,8 @@ ReportResult profitAndLossReport(
   final reportSettings = userCompany.settings.reportSettings;
   final profitAndLossReportSettings =
       reportSettings.containsKey(kReportProfitAndLoss)
-          ? reportSettings[kReportProfitAndLoss]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportProfitAndLoss]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ProfitAndLossReportFields.type,
@@ -93,10 +94,12 @@ ReportResult profitAndLossReport(
   ];
 
   if (profitAndLossReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(profitAndLossReportSettings.columns
-        .map((e) => EnumUtils.fromString(ProfitAndLossReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      profitAndLossReportSettings.columns
+          .map((e) => EnumUtils.fromString(ProfitAndLossReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -177,8 +180,9 @@ ReportResult profitAndLossReport(
           value = payment.transactionReference;
           break;
         case ProfitAndLossReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(payment.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(payment.entityState);
           break;
         case ProfitAndLossReportFields.converted_amount:
           value = payment.convertedAmount;
@@ -199,11 +203,16 @@ ReportResult profitAndLossReport(
       } else if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
       } else if (column == ProfitAndLossReportFields.converted_amount) {
-        row.add(payment.getReportDouble(
-            value: value, currencyId: userCompany.company.currencyId));
+        row.add(
+          payment.getReportDouble(
+            value: value,
+            currencyId: userCompany.company.currencyId,
+          ),
+        );
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(payment.getReportDouble(
-            value: value, currencyId: client.currencyId));
+        row.add(
+          payment.getReportDouble(value: value, currencyId: client.currencyId),
+        );
       } else {
         row.add(payment.getReportString(value: value));
       }
@@ -290,8 +299,9 @@ ReportResult profitAndLossReport(
           value = expense.transactionReference;
           break;
         case ProfitAndLossReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(expense.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(expense.entityState);
           break;
         case ProfitAndLossReportFields.converted_amount:
           value = -expense.convertedAmount;
@@ -312,11 +322,16 @@ ReportResult profitAndLossReport(
       } else if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
       } else if (column == ProfitAndLossReportFields.converted_amount) {
-        row.add(expense.getReportDouble(
-            value: value, currencyId: userCompany.company.currencyId));
+        row.add(
+          expense.getReportDouble(
+            value: value,
+            currencyId: userCompany.company.currencyId,
+          ),
+        );
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(expense.getReportDouble(
-            value: value, currencyId: expense.currencyId));
+        row.add(
+          expense.getReportDouble(value: value, currencyId: expense.currencyId),
+        );
       } else {
         row.add(expense.getReportString(value: value));
       }
@@ -328,16 +343,23 @@ ReportResult profitAndLossReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, profitAndLossReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      profitAndLossReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
     allColumns: ProfitAndLossReportFields.values
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

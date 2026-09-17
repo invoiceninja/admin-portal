@@ -14,15 +14,17 @@ class _$DocumentStatusEntitySerializer
   @override
   final Iterable<Type> types = const [
     DocumentStatusEntity,
-    _$DocumentStatusEntity
+    _$DocumentStatusEntity,
   ];
   @override
   final String wireName = 'DocumentStatusEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DocumentStatusEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DocumentStatusEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
@@ -35,8 +37,10 @@ class _$DocumentStatusEntitySerializer
 
   @override
   DocumentStatusEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DocumentStatusEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -46,12 +50,20 @@ class _$DocumentStatusEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -66,15 +78,15 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
   @override
   final String name;
 
-  factory _$DocumentStatusEntity(
-          [void Function(DocumentStatusEntityBuilder)? updates]) =>
-      (DocumentStatusEntityBuilder()..update(updates))._build();
+  factory _$DocumentStatusEntity([
+    void Function(DocumentStatusEntityBuilder)? updates,
+  ]) => (DocumentStatusEntityBuilder()..update(updates))._build();
 
   _$DocumentStatusEntity._({required this.id, required this.name}) : super._();
   @override
   DocumentStatusEntity rebuild(
-          void Function(DocumentStatusEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DocumentStatusEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DocumentStatusEntityBuilder toBuilder() =>
@@ -146,12 +158,19 @@ class DocumentStatusEntityBuilder
   DocumentStatusEntity build() => _build();
 
   _$DocumentStatusEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DocumentStatusEntity._(
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'DocumentStatusEntity', 'id'),
+            id,
+            r'DocumentStatusEntity',
+            'id',
+          ),
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'DocumentStatusEntity', 'name'),
+            name,
+            r'DocumentStatusEntity',
+            'name',
+          ),
         );
     replace(_$result);
     return _$result;

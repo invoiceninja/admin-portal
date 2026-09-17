@@ -23,13 +23,18 @@ class _$VendorListResponseSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, VendorListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    VendorListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(VendorEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(VendorEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -37,8 +42,10 @@ class _$VendorListResponseSerializer
 
   @override
   VendorListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = VendorListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -48,10 +55,15 @@ class _$VendorListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(VendorEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(VendorEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -69,12 +81,16 @@ class _$VendorItemResponseSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, VendorItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    VendorItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(VendorEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(VendorEntity),
+      ),
     ];
 
     return result;
@@ -82,8 +98,10 @@ class _$VendorItemResponseSerializer
 
   @override
   VendorItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = VendorItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -93,8 +111,13 @@ class _$VendorItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(VendorEntity))! as VendorEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(VendorEntity),
+                )!
+                as VendorEntity,
+          );
           break;
       }
     }
@@ -110,103 +133,167 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
   final String wireName = 'VendorEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, VendorEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    VendorEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'display_name',
-      serializers.serialize(object.displayName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.displayName,
+        specifiedType: const FullType(String),
+      ),
       'address1',
-      serializers.serialize(object.address1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.address1,
+        specifiedType: const FullType(String),
+      ),
       'address2',
-      serializers.serialize(object.address2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.address2,
+        specifiedType: const FullType(String),
+      ),
       'city',
       serializers.serialize(object.city, specifiedType: const FullType(String)),
       'state',
-      serializers.serialize(object.state,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.state,
+        specifiedType: const FullType(String),
+      ),
       'postal_code',
-      serializers.serialize(object.postalCode,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.postalCode,
+        specifiedType: const FullType(String),
+      ),
       'country_id',
-      serializers.serialize(object.countryId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.countryId,
+        specifiedType: const FullType(String),
+      ),
       'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.languageId,
+        specifiedType: const FullType(String),
+      ),
       'phone',
-      serializers.serialize(object.phone,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.phone,
+        specifiedType: const FullType(String),
+      ),
       'private_notes',
-      serializers.serialize(object.privateNotes,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.privateNotes,
+        specifiedType: const FullType(String),
+      ),
       'public_notes',
-      serializers.serialize(object.publicNotes,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.publicNotes,
+        specifiedType: const FullType(String),
+      ),
       'website',
-      serializers.serialize(object.website,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.website,
+        specifiedType: const FullType(String),
+      ),
       'number',
-      serializers.serialize(object.number,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.number,
+        specifiedType: const FullType(String),
+      ),
       'vat_number',
-      serializers.serialize(object.vatNumber,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.vatNumber,
+        specifiedType: const FullType(String),
+      ),
       'id_number',
-      serializers.serialize(object.idNumber,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.idNumber,
+        specifiedType: const FullType(String),
+      ),
       'currency_id',
-      serializers.serialize(object.currencyId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.currencyId,
+        specifiedType: const FullType(String),
+      ),
       'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue1,
+        specifiedType: const FullType(String),
+      ),
       'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue2,
+        specifiedType: const FullType(String),
+      ),
       'custom_value3',
-      serializers.serialize(object.customValue3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue3,
+        specifiedType: const FullType(String),
+      ),
       'custom_value4',
-      serializers.serialize(object.customValue4,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue4,
+        specifiedType: const FullType(String),
+      ),
       'routing_id',
-      serializers.serialize(object.routingId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.routingId,
+        specifiedType: const FullType(String),
+      ),
       'is_tax_exempt',
-      serializers.serialize(object.isTaxExempt,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isTaxExempt,
+        specifiedType: const FullType(bool),
+      ),
       'last_login',
-      serializers.serialize(object.lastLogin,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.lastLogin,
+        specifiedType: const FullType(int),
+      ),
       'classification',
-      serializers.serialize(object.classification,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.classification,
+        specifiedType: const FullType(String),
+      ),
       'contacts',
-      serializers.serialize(object.contacts,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(VendorContactEntity)])),
+      serializers.serialize(
+        object.contacts,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(VendorContactEntity),
+        ]),
+      ),
       'activities',
-      serializers.serialize(object.activities,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(ActivityEntity)])),
+      serializers.serialize(
+        object.activities,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(ActivityEntity),
+        ]),
+      ),
       'documents',
-      serializers.serialize(object.documents,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DocumentEntity)])),
+      serializers.serialize(
+        object.documents,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DocumentEntity),
+        ]),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -222,36 +309,42 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   VendorEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = VendorEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -261,158 +354,306 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'loadedAt':
-          result.loadedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.loadedAt =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'display_name':
-          result.displayName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.displayName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'address1':
-          result.address1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.address1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'address2':
-          result.address2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.address2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'city':
-          result.city = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.city =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'state':
-          result.state = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.state =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'postal_code':
-          result.postalCode = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.postalCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'country_id':
-          result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.countryId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.languageId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'phone':
-          result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.phone =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'private_notes':
-          result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.privateNotes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'public_notes':
-          result.publicNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.publicNotes =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'website':
-          result.website = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.website =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'number':
-          result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.number =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'vat_number':
-          result.vatNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.vatNumber =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'id_number':
-          result.idNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.idNumber =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'currency_id':
-          result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.currencyId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'routing_id':
-          result.routingId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.routingId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'is_tax_exempt':
-          result.isTaxExempt = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isTaxExempt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'last_login':
-          result.lastLogin = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.lastLogin =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'classification':
-          result.classification = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.classification =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'contacts':
-          result.contacts.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(VendorContactEntity)]))!
-              as BuiltList<Object?>);
+          result.contacts.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(VendorContactEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'activities':
-          result.activities.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(ActivityEntity)]))!
-              as BuiltList<Object?>);
+          result.activities.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(ActivityEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'documents':
-          result.documents.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))!
-              as BuiltList<Object?>);
+          result.documents.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -426,62 +667,92 @@ class _$VendorContactEntitySerializer
   @override
   final Iterable<Type> types = const [
     VendorContactEntity,
-    _$VendorContactEntity
+    _$VendorContactEntity,
   ];
   @override
   final String wireName = 'VendorContactEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, VendorContactEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    VendorContactEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'first_name',
-      serializers.serialize(object.firstName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.firstName,
+        specifiedType: const FullType(String),
+      ),
       'last_name',
-      serializers.serialize(object.lastName,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.lastName,
+        specifiedType: const FullType(String),
+      ),
       'email',
-      serializers.serialize(object.email,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.email,
+        specifiedType: const FullType(String),
+      ),
       'is_primary',
-      serializers.serialize(object.isPrimary,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isPrimary,
+        specifiedType: const FullType(bool),
+      ),
       'send_email',
-      serializers.serialize(object.sendEmail,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.sendEmail,
+        specifiedType: const FullType(bool),
+      ),
       'phone',
-      serializers.serialize(object.phone,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.phone,
+        specifiedType: const FullType(String),
+      ),
       'password',
-      serializers.serialize(object.password,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.password,
+        specifiedType: const FullType(String),
+      ),
       'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue1,
+        specifiedType: const FullType(String),
+      ),
       'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue2,
+        specifiedType: const FullType(String),
+      ),
       'custom_value3',
-      serializers.serialize(object.customValue3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue3,
+        specifiedType: const FullType(String),
+      ),
       'custom_value4',
-      serializers.serialize(object.customValue4,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue4,
+        specifiedType: const FullType(String),
+      ),
       'link',
       serializers.serialize(object.link, specifiedType: const FullType(String)),
       'cc_only',
       serializers.serialize(object.ccOnly, specifiedType: const FullType(bool)),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -491,36 +762,42 @@ class _$VendorContactEntitySerializer
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   VendorContactEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = VendorContactEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -530,88 +807,172 @@ class _$VendorContactEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'first_name':
-          result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.firstName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'last_name':
-          result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.lastName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'email':
-          result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.email =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'is_primary':
-          result.isPrimary = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isPrimary =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'send_email':
-          result.sendEmail = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.sendEmail =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'phone':
-          result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.phone =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'password':
-          result.password = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.password =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'link':
-          result.link = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.link =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'cc_only':
-          result.ccOnly = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.ccOnly =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -624,15 +985,15 @@ class _$VendorListResponse extends VendorListResponse {
   @override
   final BuiltList<VendorEntity> data;
 
-  factory _$VendorListResponse(
-          [void Function(VendorListResponseBuilder)? updates]) =>
-      (VendorListResponseBuilder()..update(updates))._build();
+  factory _$VendorListResponse([
+    void Function(VendorListResponseBuilder)? updates,
+  ]) => (VendorListResponseBuilder()..update(updates))._build();
 
   _$VendorListResponse._({required this.data}) : super._();
   @override
   VendorListResponse rebuild(
-          void Function(VendorListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(VendorListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   VendorListResponseBuilder toBuilder() =>
@@ -656,9 +1017,9 @@ class _$VendorListResponse extends VendorListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'VendorListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'VendorListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -698,10 +1059,7 @@ class VendorListResponseBuilder
   _$VendorListResponse _build() {
     _$VendorListResponse _$result;
     try {
-      _$result = _$v ??
-          _$VendorListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$VendorListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -709,7 +1067,10 @@ class VendorListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'VendorListResponse', _$failedField, e.toString());
+          r'VendorListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -722,15 +1083,15 @@ class _$VendorItemResponse extends VendorItemResponse {
   @override
   final VendorEntity data;
 
-  factory _$VendorItemResponse(
-          [void Function(VendorItemResponseBuilder)? updates]) =>
-      (VendorItemResponseBuilder()..update(updates))._build();
+  factory _$VendorItemResponse([
+    void Function(VendorItemResponseBuilder)? updates,
+  ]) => (VendorItemResponseBuilder()..update(updates))._build();
 
   _$VendorItemResponse._({required this.data}) : super._();
   @override
   VendorItemResponse rebuild(
-          void Function(VendorItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(VendorItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   VendorItemResponseBuilder toBuilder() =>
@@ -754,9 +1115,9 @@ class _$VendorItemResponse extends VendorItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'VendorItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'VendorItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -795,10 +1156,7 @@ class VendorItemResponseBuilder
   _$VendorItemResponse _build() {
     _$VendorItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$VendorItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$VendorItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -806,7 +1164,10 @@ class VendorItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'VendorItemResponse', _$failedField, e.toString());
+          r'VendorItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -894,45 +1255,45 @@ class _$VendorEntity extends VendorEntity {
   factory _$VendorEntity([void Function(VendorEntityBuilder)? updates]) =>
       (VendorEntityBuilder()..update(updates))._build();
 
-  _$VendorEntity._(
-      {this.loadedAt,
-      required this.name,
-      required this.displayName,
-      required this.address1,
-      required this.address2,
-      required this.city,
-      required this.state,
-      required this.postalCode,
-      required this.countryId,
-      required this.languageId,
-      required this.phone,
-      required this.privateNotes,
-      required this.publicNotes,
-      required this.website,
-      required this.number,
-      required this.vatNumber,
-      required this.idNumber,
-      required this.currencyId,
-      required this.customValue1,
-      required this.customValue2,
-      required this.customValue3,
-      required this.customValue4,
-      required this.routingId,
-      required this.isTaxExempt,
-      required this.lastLogin,
-      required this.classification,
-      required this.contacts,
-      required this.activities,
-      required this.documents,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$VendorEntity._({
+    this.loadedAt,
+    required this.name,
+    required this.displayName,
+    required this.address1,
+    required this.address2,
+    required this.city,
+    required this.state,
+    required this.postalCode,
+    required this.countryId,
+    required this.languageId,
+    required this.phone,
+    required this.privateNotes,
+    required this.publicNotes,
+    required this.website,
+    required this.number,
+    required this.vatNumber,
+    required this.idNumber,
+    required this.currencyId,
+    required this.customValue1,
+    required this.customValue2,
+    required this.customValue3,
+    required this.customValue4,
+    required this.routingId,
+    required this.isTaxExempt,
+    required this.lastLogin,
+    required this.classification,
+    required this.contacts,
+    required this.activities,
+    required this.documents,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   VendorEntity rebuild(void Function(VendorEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -1297,74 +1658,162 @@ class VendorEntityBuilder
   _$VendorEntity _build() {
     _$VendorEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$VendorEntity._(
             loadedAt: loadedAt,
             name: BuiltValueNullFieldError.checkNotNull(
-                name, r'VendorEntity', 'name'),
+              name,
+              r'VendorEntity',
+              'name',
+            ),
             displayName: BuiltValueNullFieldError.checkNotNull(
-                displayName, r'VendorEntity', 'displayName'),
+              displayName,
+              r'VendorEntity',
+              'displayName',
+            ),
             address1: BuiltValueNullFieldError.checkNotNull(
-                address1, r'VendorEntity', 'address1'),
+              address1,
+              r'VendorEntity',
+              'address1',
+            ),
             address2: BuiltValueNullFieldError.checkNotNull(
-                address2, r'VendorEntity', 'address2'),
+              address2,
+              r'VendorEntity',
+              'address2',
+            ),
             city: BuiltValueNullFieldError.checkNotNull(
-                city, r'VendorEntity', 'city'),
+              city,
+              r'VendorEntity',
+              'city',
+            ),
             state: BuiltValueNullFieldError.checkNotNull(
-                state, r'VendorEntity', 'state'),
+              state,
+              r'VendorEntity',
+              'state',
+            ),
             postalCode: BuiltValueNullFieldError.checkNotNull(
-                postalCode, r'VendorEntity', 'postalCode'),
+              postalCode,
+              r'VendorEntity',
+              'postalCode',
+            ),
             countryId: BuiltValueNullFieldError.checkNotNull(
-                countryId, r'VendorEntity', 'countryId'),
+              countryId,
+              r'VendorEntity',
+              'countryId',
+            ),
             languageId: BuiltValueNullFieldError.checkNotNull(
-                languageId, r'VendorEntity', 'languageId'),
+              languageId,
+              r'VendorEntity',
+              'languageId',
+            ),
             phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'VendorEntity', 'phone'),
+              phone,
+              r'VendorEntity',
+              'phone',
+            ),
             privateNotes: BuiltValueNullFieldError.checkNotNull(
-                privateNotes, r'VendorEntity', 'privateNotes'),
+              privateNotes,
+              r'VendorEntity',
+              'privateNotes',
+            ),
             publicNotes: BuiltValueNullFieldError.checkNotNull(
-                publicNotes, r'VendorEntity', 'publicNotes'),
+              publicNotes,
+              r'VendorEntity',
+              'publicNotes',
+            ),
             website: BuiltValueNullFieldError.checkNotNull(
-                website, r'VendorEntity', 'website'),
+              website,
+              r'VendorEntity',
+              'website',
+            ),
             number: BuiltValueNullFieldError.checkNotNull(
-                number, r'VendorEntity', 'number'),
+              number,
+              r'VendorEntity',
+              'number',
+            ),
             vatNumber: BuiltValueNullFieldError.checkNotNull(
-                vatNumber, r'VendorEntity', 'vatNumber'),
+              vatNumber,
+              r'VendorEntity',
+              'vatNumber',
+            ),
             idNumber: BuiltValueNullFieldError.checkNotNull(
-                idNumber, r'VendorEntity', 'idNumber'),
+              idNumber,
+              r'VendorEntity',
+              'idNumber',
+            ),
             currencyId: BuiltValueNullFieldError.checkNotNull(
-                currencyId, r'VendorEntity', 'currencyId'),
+              currencyId,
+              r'VendorEntity',
+              'currencyId',
+            ),
             customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'VendorEntity', 'customValue1'),
+              customValue1,
+              r'VendorEntity',
+              'customValue1',
+            ),
             customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, r'VendorEntity', 'customValue2'),
+              customValue2,
+              r'VendorEntity',
+              'customValue2',
+            ),
             customValue3: BuiltValueNullFieldError.checkNotNull(
-                customValue3, r'VendorEntity', 'customValue3'),
+              customValue3,
+              r'VendorEntity',
+              'customValue3',
+            ),
             customValue4: BuiltValueNullFieldError.checkNotNull(
-                customValue4, r'VendorEntity', 'customValue4'),
+              customValue4,
+              r'VendorEntity',
+              'customValue4',
+            ),
             routingId: BuiltValueNullFieldError.checkNotNull(
-                routingId, r'VendorEntity', 'routingId'),
+              routingId,
+              r'VendorEntity',
+              'routingId',
+            ),
             isTaxExempt: BuiltValueNullFieldError.checkNotNull(
-                isTaxExempt, r'VendorEntity', 'isTaxExempt'),
+              isTaxExempt,
+              r'VendorEntity',
+              'isTaxExempt',
+            ),
             lastLogin: BuiltValueNullFieldError.checkNotNull(
-                lastLogin, r'VendorEntity', 'lastLogin'),
+              lastLogin,
+              r'VendorEntity',
+              'lastLogin',
+            ),
             classification: BuiltValueNullFieldError.checkNotNull(
-                classification, r'VendorEntity', 'classification'),
+              classification,
+              r'VendorEntity',
+              'classification',
+            ),
             contacts: contacts.build(),
             activities: activities.build(),
             documents: documents.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'VendorEntity', 'createdAt'),
+              createdAt,
+              r'VendorEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'VendorEntity', 'updatedAt'),
+              updatedAt,
+              r'VendorEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'VendorEntity', 'archivedAt'),
+              archivedAt,
+              r'VendorEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'VendorEntity', 'id'),
+              id,
+              r'VendorEntity',
+              'id',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -1377,7 +1826,10 @@ class VendorEntityBuilder
         documents.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'VendorEntity', _$failedField, e.toString());
+          r'VendorEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1430,37 +1882,37 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String id;
 
-  factory _$VendorContactEntity(
-          [void Function(VendorContactEntityBuilder)? updates]) =>
-      (VendorContactEntityBuilder()..update(updates))._build();
+  factory _$VendorContactEntity([
+    void Function(VendorContactEntityBuilder)? updates,
+  ]) => (VendorContactEntityBuilder()..update(updates))._build();
 
-  _$VendorContactEntity._(
-      {required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.isPrimary,
-      required this.sendEmail,
-      required this.phone,
-      required this.password,
-      required this.customValue1,
-      required this.customValue2,
-      required this.customValue3,
-      required this.customValue4,
-      required this.link,
-      required this.ccOnly,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$VendorContactEntity._({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.isPrimary,
+    required this.sendEmail,
+    required this.phone,
+    required this.password,
+    required this.customValue1,
+    required this.customValue2,
+    required this.customValue3,
+    required this.customValue4,
+    required this.link,
+    required this.ccOnly,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   VendorContactEntity rebuild(
-          void Function(VendorContactEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(VendorContactEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   VendorContactEntityBuilder toBuilder() =>
@@ -1688,46 +2140,98 @@ class VendorContactEntityBuilder
   VendorContactEntity build() => _build();
 
   _$VendorContactEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$VendorContactEntity._(
           firstName: BuiltValueNullFieldError.checkNotNull(
-              firstName, r'VendorContactEntity', 'firstName'),
+            firstName,
+            r'VendorContactEntity',
+            'firstName',
+          ),
           lastName: BuiltValueNullFieldError.checkNotNull(
-              lastName, r'VendorContactEntity', 'lastName'),
+            lastName,
+            r'VendorContactEntity',
+            'lastName',
+          ),
           email: BuiltValueNullFieldError.checkNotNull(
-              email, r'VendorContactEntity', 'email'),
+            email,
+            r'VendorContactEntity',
+            'email',
+          ),
           isPrimary: BuiltValueNullFieldError.checkNotNull(
-              isPrimary, r'VendorContactEntity', 'isPrimary'),
+            isPrimary,
+            r'VendorContactEntity',
+            'isPrimary',
+          ),
           sendEmail: BuiltValueNullFieldError.checkNotNull(
-              sendEmail, r'VendorContactEntity', 'sendEmail'),
+            sendEmail,
+            r'VendorContactEntity',
+            'sendEmail',
+          ),
           phone: BuiltValueNullFieldError.checkNotNull(
-              phone, r'VendorContactEntity', 'phone'),
+            phone,
+            r'VendorContactEntity',
+            'phone',
+          ),
           password: BuiltValueNullFieldError.checkNotNull(
-              password, r'VendorContactEntity', 'password'),
+            password,
+            r'VendorContactEntity',
+            'password',
+          ),
           customValue1: BuiltValueNullFieldError.checkNotNull(
-              customValue1, r'VendorContactEntity', 'customValue1'),
+            customValue1,
+            r'VendorContactEntity',
+            'customValue1',
+          ),
           customValue2: BuiltValueNullFieldError.checkNotNull(
-              customValue2, r'VendorContactEntity', 'customValue2'),
+            customValue2,
+            r'VendorContactEntity',
+            'customValue2',
+          ),
           customValue3: BuiltValueNullFieldError.checkNotNull(
-              customValue3, r'VendorContactEntity', 'customValue3'),
+            customValue3,
+            r'VendorContactEntity',
+            'customValue3',
+          ),
           customValue4: BuiltValueNullFieldError.checkNotNull(
-              customValue4, r'VendorContactEntity', 'customValue4'),
+            customValue4,
+            r'VendorContactEntity',
+            'customValue4',
+          ),
           link: BuiltValueNullFieldError.checkNotNull(
-              link, r'VendorContactEntity', 'link'),
+            link,
+            r'VendorContactEntity',
+            'link',
+          ),
           ccOnly: BuiltValueNullFieldError.checkNotNull(
-              ccOnly, r'VendorContactEntity', 'ccOnly'),
+            ccOnly,
+            r'VendorContactEntity',
+            'ccOnly',
+          ),
           isChanged: isChanged,
           createdAt: BuiltValueNullFieldError.checkNotNull(
-              createdAt, r'VendorContactEntity', 'createdAt'),
+            createdAt,
+            r'VendorContactEntity',
+            'createdAt',
+          ),
           updatedAt: BuiltValueNullFieldError.checkNotNull(
-              updatedAt, r'VendorContactEntity', 'updatedAt'),
+            updatedAt,
+            r'VendorContactEntity',
+            'updatedAt',
+          ),
           archivedAt: BuiltValueNullFieldError.checkNotNull(
-              archivedAt, r'VendorContactEntity', 'archivedAt'),
+            archivedAt,
+            r'VendorContactEntity',
+            'archivedAt',
+          ),
           isDeleted: isDeleted,
           createdUserId: createdUserId,
           assignedUserId: assignedUserId,
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'VendorContactEntity', 'id'),
+            id,
+            r'VendorContactEntity',
+            'id',
+          ),
         );
     replace(_$result);
     return _$result;

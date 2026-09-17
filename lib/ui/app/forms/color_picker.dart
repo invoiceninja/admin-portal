@@ -77,13 +77,15 @@ class _FormColorPickerState extends State<FormColorPicker> {
   void didChangeDependencies() {
     _controllers = [_textController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     _selectedColor = _textController.text = widget.initialValue ?? '';
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -186,9 +188,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
                   color: _selectedColor == null
                       ? Colors.grey
                       : convertHexStringToColor(_selectedColor) ?? Colors.grey,
-                  border: Border.all(
-                    color: Colors.black38,
-                  ),
+                  border: Border.all(color: Colors.black38),
                 ),
                 width: isMobile(context) ? 25 : 100,
                 height: 25,
@@ -204,12 +204,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
                 },
               )
             else
-              IconButton(
-                icon: Icon(
-                  Icons.color_lens,
-                ),
-                onPressed: _showPicker,
-              )
+              IconButton(icon: Icon(Icons.color_lens), onPressed: _showPicker),
           ],
         ),
       ],

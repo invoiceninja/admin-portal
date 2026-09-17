@@ -65,7 +65,8 @@ class TransactionRuleListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: transactionRule,
-      isSelected: transactionRule.id ==
+      isSelected:
+          transactionRule.id ==
           (uiState.isEditing
               ? transactionRuleUIState.editing!.id
               : transactionRuleUIState.selectedId),
@@ -96,8 +97,10 @@ class TransactionRuleListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(transactionRule.listDisplayAmount, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                formatNumber(transactionRule.listDisplayAmount, context)!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
         ),
@@ -105,11 +108,7 @@ class TransactionRuleListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(transactionRule),
           ],

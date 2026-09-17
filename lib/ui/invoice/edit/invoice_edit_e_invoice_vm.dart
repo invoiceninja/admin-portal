@@ -21,9 +21,7 @@ class InvoiceEditEInvoiceScreen extends StatelessWidget {
         return InvoiceEditEInvoiceVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditEInvoice(
-          viewModel: viewModel,
-        );
+        return InvoiceEditEInvoice(viewModel: viewModel);
       },
     );
   }
@@ -50,11 +48,11 @@ class InvoiceEditEInvoiceVM extends EntityEditEInvoiceVM {
     required Function(InvoiceEntity) onChanged,
     required AppState state,
   }) : super(
-          company: company,
-          invoice: invoice,
-          onChanged: onChanged,
-          state: state,
-        );
+         company: company,
+         invoice: invoice,
+         onChanged: onChanged,
+         state: state,
+       );
 
   factory InvoiceEditEInvoiceVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

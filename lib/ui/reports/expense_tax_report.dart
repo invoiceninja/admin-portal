@@ -26,17 +26,25 @@ enum ExpenseTaxReportFields {
   currency,
 }
 
-var memoizedExpenseTaxReport = memo7((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  StaticState staticState,
-) =>
-    expenseTaxReport(userCompany!, reportsUIState, expenseMap,
-        expenseCategoryMap, clientMap, vendorMap, staticState));
+var memoizedExpenseTaxReport = memo7(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    StaticState staticState,
+  ) => expenseTaxReport(
+    userCompany!,
+    reportsUIState,
+    expenseMap,
+    expenseCategoryMap,
+    clientMap,
+    vendorMap,
+    staticState,
+  ),
+);
 
 ReportResult expenseTaxReport(
   UserCompanyEntity userCompany,
@@ -65,10 +73,12 @@ ReportResult expenseTaxReport(
   ];
 
   if (expenseTaxReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(expenseTaxReportSettings.columns
-        .map((e) => EnumUtils.fromString(ExpenseTaxReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      expenseTaxReportSettings.columns
+          .map((e) => EnumUtils.fromString(ExpenseTaxReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -169,8 +179,12 @@ ReportResult expenseTaxReport(
         if (value.runtimeType == bool) {
           row.add(expense.getReportBool(value: value));
         } else if (value.runtimeType == double || value.runtimeType == int) {
-          row.add(expense.getReportDouble(
-              value: value, currencyId: expense.currencyId));
+          row.add(
+            expense.getReportDouble(
+              value: value,
+              currencyId: expense.currencyId,
+            ),
+          );
         } else {
           row.add(expense.getReportString(value: value));
         }
@@ -183,15 +197,23 @@ ReportResult expenseTaxReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, expenseTaxReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      expenseTaxReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        ExpenseTaxReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: ExpenseTaxReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: columns.map((item) => EnumUtils.parse(item)).toList(),
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

@@ -49,11 +49,7 @@ abstract class LanguageEntity extends Object
     with SelectableEntity
     implements Built<LanguageEntity, LanguageEntityBuilder> {
   factory LanguageEntity() {
-    return _$LanguageEntity._(
-      id: '',
-      name: '',
-      locale: '',
-    );
+    return _$LanguageEntity._(id: '', name: '', locale: '');
   }
   LanguageEntity._();
 

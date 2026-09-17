@@ -62,18 +62,18 @@ class CreditEditItemsVM extends EntityEditItemsVM {
     Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
     Function(int, int)? onMovedInvoiceItem,
   }) : super(
-          state: state,
-          company: company,
-          invoice: invoice,
-          addLineItem: addLineItem,
-          cloneLineItem: cloneLineItem,
-          deleteLineItem: deleteLineItem,
-          invoiceItemIndex: invoiceItemIndex,
-          onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
-          clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
-          onChangedInvoiceItem: onChangedInvoiceItem,
-          onMovedInvoiceItem: onMovedInvoiceItem,
-        );
+         state: state,
+         company: company,
+         invoice: invoice,
+         addLineItem: addLineItem,
+         cloneLineItem: cloneLineItem,
+         deleteLineItem: deleteLineItem,
+         invoiceItemIndex: invoiceItemIndex,
+         onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
+         clearSelectedInvoiceItem: onDoneInvoiceItemPressed,
+         onChangedInvoiceItem: onChangedInvoiceItem,
+         onMovedInvoiceItem: onMovedInvoiceItem,
+       );
 
   factory CreditEditItemsVM.fromStore(Store<AppState> store, bool isTasks) {
     final state = store.state;
@@ -94,27 +94,28 @@ class CreditEditItemsVM extends EntityEditItemsVM {
       onChangedInvoiceItem: (creditItem, index) {
         final credit = store.state.creditUIState.editing!;
         if (index == credit.lineItems.length) {
-          store.dispatch(AddCreditItem(
-              creditItem: creditItem.rebuild((b) => b
-                ..typeId = isTasks
-                    ? InvoiceItemEntity.TYPE_TASK
-                    : InvoiceItemEntity.TYPE_STANDARD)));
+          store.dispatch(
+            AddCreditItem(
+              creditItem: creditItem.rebuild(
+                (b) => b
+                  ..typeId = isTasks
+                      ? InvoiceItemEntity.TYPE_TASK
+                      : InvoiceItemEntity.TYPE_STANDARD,
+              ),
+            ),
+          );
         } else {
-          store
-              .dispatch(UpdateCreditItem(creditItem: creditItem, index: index));
+          store.dispatch(
+            UpdateCreditItem(creditItem: creditItem, index: index),
+          );
         }
       },
       onMovedInvoiceItem: (oldIndex, newIndex) {
-        store.dispatch(
-          MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex),
-        );
+        store.dispatch(MoveCreditItem(oldIndex: oldIndex, newIndex: newIndex));
       },
       addLineItem: ([int? index]) {
         store.dispatch(
-          AddCreditItem(
-            index: index,
-            creditItem: InvoiceItemEntity(),
-          ),
+          AddCreditItem(index: index, creditItem: InvoiceItemEntity()),
         );
       },
       cloneLineItem: (int? index) {

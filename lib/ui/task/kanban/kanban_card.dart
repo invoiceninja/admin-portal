@@ -114,20 +114,23 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           ? null
                           : () {
                               final completer = snackBarCompleter<TaskEntity>(
-                                  localization.updatedTask);
+                                localization.updatedTask,
+                              );
                               completer.future.then((value) {
                                 setState(() {
                                   _isEditing = false;
                                 });
                               });
                               widget.onSavePressed(
-                                  completer, _description.trim());
+                                completer,
+                                _description.trim(),
+                              );
                             },
                       child: Text(localization.save),
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -137,8 +140,8 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     final startLabel = task.isRunning
         ? localization!.stop
         : task.getTaskTimes().isEmpty
-            ? localization!.start
-            : localization!.resume;
+        ? localization!.start
+        : localization!.resume;
 
     return MouseRegion(
       onHover: (event) {
@@ -154,10 +157,11 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
           child: Card(
             shape: RoundedRectangleBorder(
               side: BorderSide(
-                  color: widget.isSelected && state.prefState.isDesktop
-                      ? state.accentColor!
-                      : Colors.transparent,
-                  width: 1),
+                color: widget.isSelected && state.prefState.isDesktop
+                    ? state.accentColor!
+                    : Colors.transparent,
+                width: 1,
+              ),
               borderRadius: BorderRadius.circular(kBorderRadius),
             ),
             color: Theme.of(context).colorScheme.surface,
@@ -210,9 +214,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                                   if (state.taskUIState.selectedId == task.id &&
                                       !state.uiState.isEditing) {
                                     viewEntityById(
-                                        entityId: '',
-                                        entityType: EntityType.task,
-                                        showError: false);
+                                      entityId: '',
+                                      entityType: EntityType.task,
+                                      showError: false,
+                                    );
                                   } else {
                                     viewEntity(entity: task);
                                   }
@@ -241,10 +246,11 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                         child: InkWell(
                           onTap: () {
                             handleEntityAction(
-                                task,
-                                task.isRunning
-                                    ? EntityAction.stop
-                                    : EntityAction.start);
+                              task,
+                              task.isRunning
+                                  ? EntityAction.stop
+                                  : EntityAction.start,
+                            );
                           },
                           child: Container(
                             height: 24,
@@ -261,8 +267,11 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                   )
                 else
                   Padding(
-                    padding:
-                        const EdgeInsets.only(left: 8, bottom: 12, right: 8),
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                      bottom: 12,
+                      right: 8,
+                    ),
                     child: Row(
                       children: [
                         Expanded(
@@ -276,40 +285,41 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                             },
                             style: TextStyle(
                               fontSize: 12,
-                              color:
-                                  textColor!.withValues(alpha: kLighterOpacity),
+                              color: textColor!.withValues(
+                                alpha: kLighterOpacity,
+                              ),
                             ),
                           ),
                         ),
                         if (task.documents.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
-                            child: Icon(
-                              MdiIcons.paperclip,
-                              size: 16,
-                            ),
+                            child: Icon(MdiIcons.paperclip, size: 16),
                           ),
                         if (state.prefState.isMobile)
                           PopupMenuButton<String>(
                             itemBuilder: (BuildContext context) {
                               return [
-                                localization.view,
-                                localization.edit,
-                                startLabel,
-                              ]
-                                  .map((value) => PopupMenuItem<String>(
-                                        child: Text(localization.lookup(value)),
-                                        value: value,
-                                      ))
+                                    localization.view,
+                                    localization.edit,
+                                    startLabel,
+                                  ]
+                                  .map(
+                                    (value) => PopupMenuItem<String>(
+                                      child: Text(localization.lookup(value)),
+                                      value: value,
+                                    ),
+                                  )
                                   .toList();
                             },
                             onSelected: (value) {
                               if (value == startLabel) {
                                 handleEntityAction(
-                                    task,
-                                    task.isRunning
-                                        ? EntityAction.stop
-                                        : EntityAction.start);
+                                  task,
+                                  task.isRunning
+                                      ? EntityAction.stop
+                                      : EntityAction.start,
+                                );
                               } else if (value == localization.view) {
                                 viewEntity(entity: task);
                               } else if (value == localization.edit) {

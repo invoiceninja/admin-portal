@@ -21,10 +21,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusViewScreen extends StatelessWidget {
-  const TaskStatusViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const TaskStatusViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
   static const String route = '/$kSettings/$kSettingsTaskStatusView';
   final bool isFilter;
 
@@ -35,10 +33,7 @@ class TaskStatusViewScreen extends StatelessWidget {
         return TaskStatusViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return TaskStatusView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return TaskStatusView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -61,13 +56,15 @@ class TaskStatusViewVM {
     final state = store.state;
     final taskStatus =
         state.taskStatusState.map[state.taskStatusUIState.selectedId] ??
-            TaskStatusEntity(id: state.taskStatusUIState.selectedId);
+        TaskStatusEntity(id: state.taskStatusUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(
-          LoadTaskStatus(completer: completer, taskStatusId: taskStatus.id));
+        LoadTaskStatus(completer: completer, taskStatusId: taskStatus.id),
+      );
       return completer.future;
     }
 

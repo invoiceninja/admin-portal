@@ -53,10 +53,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class MenuDrawer extends StatefulWidget {
-  const MenuDrawer({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const MenuDrawer({Key? key, required this.viewModel}) : super(key: key);
 
   final MenuDrawerVM viewModel;
   static const LOGO_WIDTH = 38.0;
@@ -75,8 +72,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
     final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final company = widget.viewModel.selectedCompany;
-    final inactiveColor = state.prefState.activeCustomColors[
-            PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+    final inactiveColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
 
     if (company == null) {
@@ -92,8 +90,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
             width: MenuDrawer.LOGO_WIDTH,
             url: state.credentials.url + '/companies/' + company.id + '/logo',
             apiToken: state.userCompanyStates
-                .firstWhere((userCompanyState) =>
-                    userCompanyState.company.id == company.id)
+                .firstWhere(
+                  (userCompanyState) =>
+                      userCompanyState.company.id == company.id,
+                )
                 .token
                 .token,
           );
@@ -104,8 +104,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
           );
         }
       } else {
-        return Image.asset('assets/images/icon.png',
-            width: MenuDrawer.LOGO_WIDTH);
+        return Image.asset(
+          'assets/images/icon.png',
+          width: MenuDrawer.LOGO_WIDTH,
+        );
       }
     }
 
@@ -115,7 +117,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
     }) {
       final userCompany = state.userCompanyStates
           .firstWhere(
-              (userCompanyState) => userCompanyState.company.id == company.id)
+            (userCompanyState) => userCompanyState.company.id == company.id,
+          )
           .userCompany;
       return MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
@@ -143,18 +146,21 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 store.dispatch(ViewReports());
                                 break;
                               case EntityType.settings:
-                                store.dispatch(ViewSettings(
-                                  section: history.id,
-                                  company: state.company,
-                                  user: state.user,
-                                  tabIndex: 0,
-                                ));
+                                store.dispatch(
+                                  ViewSettings(
+                                    section: history.id,
+                                    company: state.company,
+                                    user: state.user,
+                                    tabIndex: 0,
+                                  ),
+                                );
                                 break;
                               default:
                                 if ((history.id ?? '').isEmpty) {
                                   viewEntitiesByType(
-                                      entityType: history.entityType,
-                                      page: history.page);
+                                    entityType: history.entityType,
+                                    page: history.page,
+                                  );
                                 } else {
                                   viewEntityById(
                                     entityId: history.id,
@@ -164,7 +170,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 }
                             }
                           },
-                    icon: Icon(MdiIcons.arrowLeftCircleOutline))
+                    icon: Icon(MdiIcons.arrowLeftCircleOutline),
+                  )
                 : Padding(
                     padding: const EdgeInsets.only(right: 2),
                     child: _companyLogo(company),
@@ -185,9 +192,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
               Container(
                 padding: const EdgeInsets.only(right: 2),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: convertHexStringToColor(
-                        userCompany.settings.accentColor)),
+                  shape: BoxShape.circle,
+                  color: convertHexStringToColor(
+                    userCompany.settings.accentColor,
+                  ),
+                ),
                 width: 10,
                 height: 10,
                 //color: Colors.red,
@@ -207,10 +216,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
       color: Theme.of(context).cardColor,
       itemBuilder: (BuildContext context) => [
         ...widget.viewModel.state.companies
-            .map((company) => PopupMenuItem<String>(
-                  child: _companyListItem(company),
-                  value: company.id,
-                ))
+            .map(
+              (company) => PopupMenuItem<String>(
+                child: _companyListItem(company),
+                value: company.id,
+              ),
+            )
             .toList(),
         if (state.canAddCompany)
           PopupMenuItem<String>(
@@ -257,8 +268,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
         } else if (companyId == 'company') {
           widget.viewModel.onAddCompany(context);
         } else {
-          final company =
-              state.companies.firstWhere((company) => company.id == companyId);
+          final company = state.companies.firstWhere(
+            (company) => company.id == companyId,
+          );
           final index = state.companies.indexOf(company);
           widget.viewModel.onCompanyChanged(context, index, company);
         }
@@ -273,14 +285,19 @@ class _MenuDrawerState extends State<MenuDrawer> {
               key: ValueKey(kSelectCompanyDropdownKey),
               value: widget.viewModel.selectedCompanyIndex,
               selectedItemBuilder: (context) => state.companies
-                  .map((company) =>
-                      _companyListItem(company, showAccentColor: false))
+                  .map(
+                    (company) =>
+                        _companyListItem(company, showAccentColor: false),
+                  )
                   .toList(),
               items: [
                 ...state.companies
-                    .map((CompanyEntity company) => DropdownMenuItem<String>(
+                    .map(
+                      (CompanyEntity company) => DropdownMenuItem<String>(
                         value: state.companies.indexOf(company).toString(),
-                        child: _companyListItem(company)))
+                        child: _companyListItem(company),
+                      ),
+                    )
                     .toList(),
                 if (state.canAddCompany)
                   DropdownMenuItem<String>(
@@ -328,8 +345,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   widget.viewModel.onAddCompany(context);
                 } else {
                   final index = int.parse(value);
-                  widget.viewModel
-                      .onCompanyChanged(context, index, state.companies[index]);
+                  widget.viewModel.onCompanyChanged(
+                    context,
+                    index,
+                    state.companies[index],
+                  );
                 }
               },
             ),
@@ -340,8 +360,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
         width: state.isMenuCollapsed
             ? 65
             : isDesktop(context)
-                ? kDrawerWidthDesktop
-                : kDrawerWidthMobile,
+            ? kDrawerWidthDesktop
+            : kDrawerWidthMobile,
         child: Drawer(
           child: SafeArea(
             child: Column(
@@ -352,18 +372,22 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 state.credentials.token.isEmpty
                     ? Expanded(child: SizedBox())
                     : Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 3,
+                        ),
                         color: enableDarkMode
                             ? Colors.white10
                             : Theme.of(context).cardColor,
                         child: state.isMenuCollapsed
                             ? _collapsedCompanySelector
-                            : _expandedCompanySelector),
+                            : _expandedCompanySelector,
+                      ),
                 state.credentials.token.isEmpty
                     ? SizedBox()
                     : Theme(
-                        data: state.prefState.enableDarkMode ||
+                        data:
+                            state.prefState.enableDarkMode ||
                                 (state.prefState.activeCustomColors[PrefState
                                             .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
                                         '')
@@ -382,12 +406,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     Tooltip(
                                       message: localization.debugModeIsEnabled,
                                       child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 20),
+                                        contentPadding: const EdgeInsets.only(
+                                          left: 20,
+                                        ),
                                         onTap: () =>
                                             launchUrl(Uri.parse(kDebugModeUrl)),
-                                        leading: Icon(Icons.warning,
-                                            color: Colors.red),
+                                        leading: Icon(
+                                          Icons.warning,
+                                          color: Colors.red,
+                                        ),
                                       ),
                                     )
                                   else
@@ -395,14 +422,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.red.shade800,
                                         title: Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 6),
+                                          padding: const EdgeInsets.only(
+                                            bottom: 6,
+                                          ),
                                           child: IconText(
                                             icon: Icons.warning,
                                             text:
                                                 localization.debugModeIsEnabled,
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                         subtitle: Text(
@@ -420,8 +449,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       message:
                                           localization.verifyPhoneNumberHelp,
                                       child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 12),
+                                        contentPadding: const EdgeInsets.only(
+                                          left: 12,
+                                        ),
                                         leading: IconButton(
                                           onPressed: () {
                                             showDialog<void>(
@@ -430,8 +460,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                                   AccountSmsVerification(),
                                             );
                                           },
-                                          icon: Icon(Icons.warning,
-                                              color: Colors.orange),
+                                          icon: Icon(
+                                            Icons.warning,
+                                            color: Colors.orange,
+                                          ),
                                         ),
                                       ),
                                     )
@@ -460,20 +492,23 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       message:
                                           localization.verifyPhoneNumber2faHelp,
                                       child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 12),
+                                        contentPadding: const EdgeInsets.only(
+                                          left: 12,
+                                        ),
                                         leading: IconButton(
                                           onPressed: () {
                                             showDialog<void>(
                                               context: context,
                                               builder: (BuildContext context) =>
                                                   UserSmsVerification(
-                                                showChangeNumber: true,
-                                              ),
+                                                    showChangeNumber: true,
+                                                  ),
                                             );
                                           },
-                                          icon: Icon(Icons.warning,
-                                              color: Colors.orange),
+                                          icon: Icon(
+                                            Icons.warning,
+                                            color: Colors.orange,
+                                          ),
                                         ),
                                       ),
                                     )
@@ -501,16 +536,21 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       message:
                                           localization.companyDisabledWarning,
                                       child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 12),
+                                        contentPadding: const EdgeInsets.only(
+                                          left: 12,
+                                        ),
                                         leading: IconButton(
-                                          onPressed: () =>
-                                              store.dispatch(ViewSettings(
-                                            section: kSettingsAccountManagement,
-                                            company: company,
-                                          )),
-                                          icon: Icon(Icons.warning,
-                                              color: Colors.orange),
+                                          onPressed: () => store.dispatch(
+                                            ViewSettings(
+                                              section:
+                                                  kSettingsAccountManagement,
+                                              company: company,
+                                            ),
+                                          ),
+                                          icon: Icon(
+                                            Icons.warning,
+                                            color: Colors.orange,
+                                          ),
                                         ),
                                       ),
                                     )
@@ -519,13 +559,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.orange.shade800,
                                         title: Padding(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 6),
+                                          padding: const EdgeInsets.only(
+                                            bottom: 6,
+                                          ),
                                           child: IconText(
                                             icon: Icons.warning,
                                             text: localization.warning,
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
                                           ),
                                         ),
                                         subtitle: Text(
@@ -533,10 +575,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {
-                                          store.dispatch(ViewSettings(
-                                            section: kSettingsAccountManagement,
-                                            company: company,
-                                          ));
+                                          store.dispatch(
+                                            ViewSettings(
+                                              section:
+                                                  kSettingsAccountManagement,
+                                              company: company,
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
@@ -551,17 +596,20 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                           : '',
                                       child: ListTile(
                                         dense: true,
-                                        contentPadding:
-                                            const EdgeInsets.only(left: 12),
+                                        contentPadding: const EdgeInsets.only(
+                                          left: 12,
+                                        ),
                                         tileColor: Colors.green,
                                         leading: IconButton(
                                           onPressed: () => store.dispatch(
-                                              ViewSettings(
-                                                  clearFilter: true,
-                                                  company: company,
-                                                  user: state.user,
-                                                  section:
-                                                      kSettingsAccountManagement)),
+                                            ViewSettings(
+                                              clearFilter: true,
+                                              company: company,
+                                              user: state.user,
+                                              section:
+                                                  kSettingsAccountManagement,
+                                            ),
+                                          ),
                                           icon: Icon(
                                             Icons.arrow_circle_up,
                                             color: Colors.white,
@@ -580,12 +628,15 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                                     ),
                                               ),
                                         onTap: () {
-                                          store.dispatch(ViewSettings(
+                                          store.dispatch(
+                                            ViewSettings(
                                               clearFilter: true,
                                               company: company,
                                               user: state.user,
                                               section:
-                                                  kSettingsAccountManagement));
+                                                  kSettingsAccountManagement,
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
@@ -596,9 +647,11 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     icon: getEntityIcon(EntityType.dashboard),
                                     title: localization.dashboard,
                                     onTap: () => viewEntitiesByType(
-                                        entityType: EntityType.dashboard),
-                                    onLongPress: () => store
-                                        .dispatch(ViewDashboard(filter: '')),
+                                      entityType: EntityType.dashboard,
+                                    ),
+                                    onLongPress: () => store.dispatch(
+                                      ViewDashboard(filter: ''),
+                                    ),
                                   ),
                                 DrawerTile(
                                   company: company,
@@ -625,7 +678,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   company: company,
                                   entityType: EntityType.recurringInvoice,
                                   icon: getEntityIcon(
-                                      EntityType.recurringInvoice),
+                                    EntityType.recurringInvoice,
+                                  ),
                                   title: localization.recurringInvoices,
                                   iconTooltip: localization.newRecurringInvoice,
                                 ),
@@ -689,7 +743,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   company: company,
                                   entityType: EntityType.recurringExpense,
                                   icon: getEntityIcon(
-                                      EntityType.recurringExpense),
+                                    EntityType.recurringExpense,
+                                  ),
                                   title: localization.recurringExpenses,
                                 ),
                                 DrawerTile(
@@ -711,14 +766,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                     icon: getEntityIcon(EntityType.reports),
                                     title: localization.reports,
                                     onTap: () => viewEntitiesByType(
-                                        entityType: EntityType.reports),
+                                      entityType: EntityType.reports,
+                                    ),
                                   ),
                                 DrawerTile(
                                   company: company,
                                   icon: getEntityIcon(EntityType.settings),
                                   title: localization.settings,
                                   onTap: () => viewEntitiesByType(
-                                      entityType: EntityType.settings),
+                                    entityType: EntityType.settings,
+                                  ),
                                 ),
                               ],
                             ),
@@ -808,40 +865,45 @@ class _DrawerTileState extends State<DrawerTile> {
 
     // Workaround to show clients/vendors as selected when
     // viewing their sub-entities
-    final isSelected = uiState.filterEntityType != null &&
+    final isSelected =
+        uiState.filterEntityType != null &&
             prefState.isViewerFullScreen(uiState.filterEntityType) &&
             !uiState.isEditing &&
             (prefState.isPreviewVisible || uiState.isList)
         ? widget.entityType == uiState.filterEntityType
         : uiState.currentRoute.startsWith('/${toSnakeCase(route)}');
 
-    final inactiveColor = prefState.activeCustomColors[
-            PrefState.THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
+    final inactiveColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_INACTIVE_BACKGROUND_COLOR] ??
         '';
-    final inactiveFontColor = prefState
-            .activeCustomColors[PrefState.THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
+    final inactiveFontColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_INACTIVE_FONT_COLOR] ??
         '';
-    final activeColor = prefState.activeCustomColors[
-            PrefState.THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
+    final activeColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_ACTIVE_BACKGROUND_COLOR] ??
         '';
-    final activeFontColor = prefState
-            .activeCustomColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ??
+    final activeFontColor =
+        prefState.activeCustomColors[PrefState
+            .THEME_SIDEBAR_ACTIVE_FONT_COLOR] ??
         '';
 
     Color? color = Colors.transparent;
-    Color? textColor = Theme.of(context)
-        .textTheme
-        .bodyLarge!
-        .color!
-        .withValues(alpha: isSelected ? 1 : .7);
+    Color? textColor = Theme.of(
+      context,
+    ).textTheme.bodyLarge!.color!.withValues(alpha: isSelected ? 1 : .7);
 
     if (isSelected) {
       if (activeColor.isNotEmpty) {
         color = convertHexStringToColor(activeColor);
       } else {
-        color = convertHexStringToColor(enableDarkMode
-            ? kDefaultDarkSelectedColorMenu
-            : kDefaultLightSelectedColorMenu);
+        color = convertHexStringToColor(
+          enableDarkMode
+              ? kDefaultDarkSelectedColorMenu
+              : kDefaultLightSelectedColorMenu,
+        );
       }
       if (activeFontColor.isNotEmpty) {
         textColor = convertHexStringToColor(activeFontColor);
@@ -851,9 +913,11 @@ class _DrawerTileState extends State<DrawerTile> {
         if (activeColor.isNotEmpty) {
           color = convertHexStringToColor(activeColor);
         } else {
-          color = convertHexStringToColor(enableDarkMode
-              ? kDefaultDarkSelectedColorMenu
-              : kDefaultLightSelectedColorMenu);
+          color = convertHexStringToColor(
+            enableDarkMode
+                ? kDefaultDarkSelectedColorMenu
+                : kDefaultLightSelectedColorMenu,
+          );
         }
       } else if (inactiveColor.isNotEmpty) {
         color = convertHexStringToColor(inactiveColor);
@@ -865,9 +929,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     final onTap = () {
       if (widget.entityType != null) {
-        viewEntitiesByType(
-          entityType: widget.entityType,
-        );
+        viewEntitiesByType(entityType: widget.entityType);
       } else {
         widget.onTap!();
       }
@@ -893,15 +955,13 @@ class _DrawerTileState extends State<DrawerTile> {
           child: Opacity(
             opacity: isSelected ? 1 : .8,
             child: InkWell(
-                onTap: onTap,
-                onLongPress: onLongPress,
-                child: SizedBox(
-                  height: 40,
-                  child: Icon(
-                    widget.icon,
-                    color: textColor,
-                  ),
-                )),
+              onTap: onTap,
+              onLongPress: onLongPress,
+              child: SizedBox(
+                height: 40,
+                child: Icon(widget.icon, color: textColor),
+              ),
+            ),
           ),
         ),
       );
@@ -913,19 +973,19 @@ class _DrawerTileState extends State<DrawerTile> {
       localization.settings,
     ].contains(widget.title)) {
       iconWidget = IconButton(
-        icon: Icon(
-          Icons.search,
-          color: textColor,
-        ),
+        icon: Icon(Icons.search, color: textColor),
         onPressed: () {
           if (isMobile(context)) {
             navigator.pop();
           }
           if (widget.title == localization.dashboard) {
-            store.dispatch(ViewDashboard(
+            store.dispatch(
+              ViewDashboard(
                 filter: uiState.mainRoute == 'dashboard' && uiState.filter == ''
                     ? null
-                    : ''));
+                    : '',
+              ),
+            );
           } else if (widget.title == localization.settings) {
             store.dispatch(ViewSettings(company: state.company));
             store.dispatch(FilterSettings(''));
@@ -940,10 +1000,7 @@ class _DrawerTileState extends State<DrawerTile> {
     } else if (userCompany.canCreate(widget.entityType)) {
       iconWidget = IconButton(
         tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
-        icon: Icon(
-          Icons.add_circle_outline,
-          color: textColor,
-        ),
+        icon: Icon(Icons.add_circle_outline, color: textColor),
         onPressed: () {
           if (isMobile(context)) {
             navigator.pop();
@@ -974,34 +1031,28 @@ class _DrawerTileState extends State<DrawerTile> {
           leading: _isHovered && isDesktop(context) && iconWidget != null
               ? iconWidget
               : isLoading
-                  ? Padding(
-                      padding: const EdgeInsets.only(
-                        left: 10,
-                        right: 8,
-                      ),
-                      child: SizedBox(
-                        child: CircularProgressIndicator(
-                          color: state.accentColor,
-                        ),
-                        width: 22,
-                        height: 22,
-                      ),
-                    )
-                  : FocusTraversalGroup(
-                      descendantsAreFocusable: false,
-                      child: IconButton(
-                        icon: Icon(widget.icon),
-                        color: textColor,
-                        onPressed: onTap,
-                      ),
-                    ),
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 8),
+                  child: SizedBox(
+                    child: CircularProgressIndicator(color: state.accentColor),
+                    width: 22,
+                    height: 22,
+                  ),
+                )
+              : FocusTraversalGroup(
+                  descendantsAreFocusable: false,
+                  child: IconButton(
+                    icon: Icon(widget.icon),
+                    color: textColor,
+                    onPressed: onTap,
+                  ),
+                ),
           title: Text(
             widget.title!,
             key: ValueKey('menu_${widget.title}'),
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontSize: 14,
-                  color: textColor,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge!.copyWith(fontSize: 14, color: textColor),
           ),
           onTap: onTap,
           onLongPress: onLongPress,
@@ -1052,7 +1103,7 @@ class SidebarFooter extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           if (state.isMenuCollapsed) ...[
-            Expanded(child: SizedBox())
+            Expanded(child: SizedBox()),
           ] else ...[
             if (!Config.DEMO_MODE && !state.isDemo && account.isOld)
               if (state.isSelfHosted &&
@@ -1060,38 +1111,31 @@ class SidebarFooter extends StatelessWidget {
                   state.userCompany.isAdmin)
                 IconButton(
                   tooltip: prefState.enableTooltips ? localization!.error : '',
-                  icon: Icon(
-                    Icons.warning,
-                    color: Colors.red,
-                  ),
+                  icon: Icon(Icons.warning, color: Colors.red),
                   onPressed: () => showMessageDialog(
-                      message: localization!.cronsNotEnabled,
-                      secondaryActions: [
-                        TextButton(
-                          child: Text(localization.learnMore.toUpperCase()),
-                          onPressed: () {
-                            launchUrl(Uri.parse(kCronsHelpUrl));
-                          },
-                        ),
-                        TextButton(
-                          child: Text(localization.refreshData.toUpperCase()),
-                          onPressed: () {
-                            store.dispatch(RefreshData());
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ]),
+                    message: localization!.cronsNotEnabled,
+                    secondaryActions: [
+                      TextButton(
+                        child: Text(localization.learnMore.toUpperCase()),
+                        onPressed: () {
+                          launchUrl(Uri.parse(kCronsHelpUrl));
+                        },
+                      ),
+                      TextButton(
+                        child: Text(localization.refreshData.toUpperCase()),
+                        onPressed: () {
+                          store.dispatch(RefreshData());
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
                 )
               else if (state.credentials.token.isEmpty)
                 IconButton(
                   tooltip: prefState.enableTooltips ? localization!.error : '',
-                  icon: Icon(
-                    Icons.warning,
-                    color: Colors.red,
-                  ),
-                  onPressed: () => showErrorDialog(
-                    clearErrorOnDismiss: true,
-                  ),
+                  icon: Icon(Icons.warning, color: Colors.red),
+                  onPressed: () => showErrorDialog(clearErrorOnDismiss: true),
                 )
               else if (state.isSelfHosted &&
                   !state.account.disableAutoUpdate &&
@@ -1110,10 +1154,7 @@ class SidebarFooter extends StatelessWidget {
               else if (state.isHosted && hasUnconnectedStripeAccount(state))
                 IconButton(
                   onPressed: () => _showConnectStripe(context),
-                  icon: Icon(
-                    Icons.warning,
-                    color: Colors.orange,
-                  ),
+                  icon: Icon(Icons.warning, color: Colors.orange),
                 ),
             IconButton(
               icon: Icon(Icons.mail),
@@ -1123,8 +1164,9 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.forum),
               onPressed: () => launchUrl(Uri.parse(kForumUrl)),
-              tooltip:
-                  prefState.enableTooltips ? localization!.supportForum : '',
+              tooltip: prefState.enableTooltips
+                  ? localization!.supportForum
+                  : '',
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
@@ -1174,19 +1216,17 @@ class SidebarFooter extends StatelessWidget {
              */
             if (!kReleaseMode && state.lastError.isNotEmpty)
               IconButton(
-                icon: Icon(
-                  Icons.warning,
-                  color: Colors.red,
-                ),
+                icon: Icon(Icons.warning, color: Colors.red),
                 tooltip: prefState.enableTooltips ? localization!.error : '',
                 onPressed: () => showDialog<ErrorDialog>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ErrorDialog(
-                        state.lastError,
-                        clearErrorOnDismiss: true,
-                      );
-                    }),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(
+                      state.lastError,
+                      clearErrorOnDismiss: true,
+                    );
+                  },
+                ),
               ),
             Spacer(),
             if (isNotMobile(context) &&
@@ -1194,11 +1234,13 @@ class SidebarFooter extends StatelessWidget {
               AppBorder(
                 isLeft: true,
                 child: Tooltip(
-                  message:
-                      prefState.enableTooltips ? localization!.hideMenu : '',
+                  message: prefState.enableTooltips
+                      ? localization!.hideMenu
+                      : '',
                   child: InkWell(
                     onTap: () => store.dispatch(
-                        UpdateUserPreferences(sidebar: AppSidebar.menu)),
+                      UpdateUserPreferences(sidebar: AppSidebar.menu),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Icon(Icons.chevron_left),
@@ -1226,12 +1268,15 @@ class SidebarFooterCollapsed extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       color: Theme.of(context).cardColor,
-      child: state.uiState.filterEntityType != null &&
+      child:
+          state.uiState.filterEntityType != null &&
               state.prefState.isFilterVisible
           ? PopupMenuButton<String>(
               icon: state.isUpdateAvailable
-                  ? Icon(Icons.warning,
-                      color: Theme.of(context).colorScheme.secondary)
+                  ? Icon(
+                      Icons.warning,
+                      color: Theme.of(context).colorScheme.secondary,
+                    )
                   : Icon(Icons.info_outline),
               onSelected: (value) {
                 if (value == localization!.updateAvailable) {
@@ -1318,19 +1363,20 @@ void _showUpdate(BuildContext context) {
 void _showConnectStripe(BuildContext context) {
   final localization = AppLocalization.of(context)!;
   showMessageDialog(
-      message: localization.unauthorizedStripeWarning,
-      secondaryActions: [
-        TextButton(
-          child: Text(localization.viewSettings.toUpperCase()),
-          onPressed: () {
-            final context = navigatorKey.currentContext!;
-            Navigator.of(context).pop();
-            final store = StoreProvider.of<AppState>(context);
-            final gateway = getUnconnectedStripeAccount(store.state)!;
-            editEntity(entity: gateway);
-          },
-        ),
-      ]);
+    message: localization.unauthorizedStripeWarning,
+    secondaryActions: [
+      TextButton(
+        child: Text(localization.viewSettings.toUpperCase()),
+        onPressed: () {
+          final context = navigatorKey.currentContext!;
+          Navigator.of(context).pop();
+          final store = StoreProvider.of<AppState>(context);
+          final gateway = getUnconnectedStripeAccount(store.state)!;
+          editEntity(entity: gateway);
+        },
+      ),
+    ],
+  );
 }
 
 void _showAbout(BuildContext context) async {
@@ -1348,8 +1394,9 @@ void _showAbout(BuildContext context) async {
 
   final userCompany = state.userCompany;
   String subtitle = state.appVersion + '\n';
-  subtitle +=
-      state.isSelfHosted ? localization!.selfhosted : localization!.hosted;
+  subtitle += state.isSelfHosted
+      ? localization!.selfhosted
+      : localization!.hosted;
   if (userCompany.isOwner) {
     subtitle += ' • ' + localization.owner;
   } else if (userCompany.isAdmin) {
@@ -1357,302 +1404,316 @@ void _showAbout(BuildContext context) async {
   }
 
   showDialog<Null>(
-      context: context,
-      builder: (BuildContext context) {
-        return PointerInterceptor(
-          child: AlertDialog(
-            actions: [
-              TextButton(
-                child: Text(localization.viewLicenses.toUpperCase()),
-                onPressed: () => showLicensePage(
-                  context: context,
-                  applicationName: 'Invoice Ninja v5',
-                  applicationIcon: apppIcon,
-                  applicationLegalese: appLegalese,
-                  applicationVersion: state.appVersion,
+    context: context,
+    builder: (BuildContext context) {
+      return PointerInterceptor(
+        child: AlertDialog(
+          actions: [
+            TextButton(
+              child: Text(localization.viewLicenses.toUpperCase()),
+              onPressed: () => showLicensePage(
+                context: context,
+                applicationName: 'Invoice Ninja v5',
+                applicationIcon: apppIcon,
+                applicationLegalese: appLegalese,
+                applicationVersion: state.appVersion,
+              ),
+            ),
+            TextButton(
+              child: Text(localization.close.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ListTile(
+                  leading: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: apppIcon,
+                  ),
+                  title: Text(
+                    'Invoice Ninja',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  subtitle: Text(subtitle),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: state.appVersion));
+                    showToast(
+                      localization.copiedToClipboard.replaceFirst(
+                        ':value',
+                        state.appVersion,
+                      ),
+                    );
+                  },
+                  onLongPress: () async {
+                    if (!kReleaseMode && supportsInAppPurchase()) {
+                      showDialog<void>(
+                        context: context,
+                        builder: (context) => UpgradeDialog(),
+                      );
+                    } else {
+                      final directory =
+                          await getApplicationDocumentsDirectory();
+                      showMessageDialog(
+                        message:
+                            FLUTTER_VERSION['channel']!.toUpperCase() +
+                            ' • ' +
+                            FLUTTER_VERSION['frameworkVersion']! +
+                            '\n\n${directory.path}' +
+                            Platform.pathSeparator +
+                            'invoiceninja',
+                        secondaryActions: [
+                          TextButton(
+                            child: Text(localization.logout.toUpperCase()),
+                            onPressed: () => store.dispatch(UserLogout()),
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 ),
-              ),
-              TextButton(
-                child: Text(localization.close.toUpperCase()),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ListTile(
-                    leading: Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: apppIcon,
-                    ),
-                    title: Text(
-                      'Invoice Ninja',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    subtitle: Text(subtitle),
-                    onTap: () {
-                      Clipboard.setData(ClipboardData(text: state.appVersion));
-                      showToast(localization.copiedToClipboard
-                          .replaceFirst(':value', state.appVersion));
-                    },
-                    onLongPress: () async {
-                      if (!kReleaseMode && supportsInAppPurchase()) {
-                        showDialog<void>(
+                SizedBox(height: 8),
+                ListTile(
+                  contentPadding: const EdgeInsets.all(0),
+                  title: Text(state.user.fullName),
+                  subtitle: Text(state.user.email),
+                ),
+                if (!isApple())
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: AppButton(
+                      label: localization.appPlatforms.toUpperCase(),
+                      iconData: MdiIcons.desktopClassic,
+                      onPressed: () {
+                        showDialog<AlertDialog>(
                           context: context,
-                          builder: (context) => UpgradeDialog(),
-                        );
-                      } else {
-                        final directory =
-                            await getApplicationDocumentsDirectory();
-                        showMessageDialog(
-                            message: FLUTTER_VERSION['channel']!.toUpperCase() +
-                                ' • ' +
-                                FLUTTER_VERSION['frameworkVersion']! +
-                                '\n\n${directory.path}' +
-                                Platform.pathSeparator +
-                                'invoiceninja',
-                            secondaryActions: [
-                              TextButton(
-                                child: Text(localization.logout.toUpperCase()),
-                                onPressed: () => store.dispatch(UserLogout()),
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              actions: [
+                                TextButton(
+                                  child: Text(
+                                    localization.sourceCode.toUpperCase(),
+                                  ),
+                                  onPressed: () {
+                                    showDialog<AlertDialog>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          actions: [
+                                            TextButton(
+                                              child: Text(
+                                                localization.close
+                                                    .toUpperCase(),
+                                              ),
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                            ),
+                                          ],
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              Text('Backend'),
+                                              AppButton(
+                                                label: 'Laravel/PHP',
+                                                iconData: MdiIcons.server,
+                                                onPressed: () => launchUrl(
+                                                  Uri.parse(kSourceCodeBackend),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 30,
+                                                ),
+                                                child: Text('Frontend'),
+                                              ),
+                                              AppButton(
+                                                label: 'Flutter/Dart',
+                                                iconData:
+                                                    MdiIcons.desktopClassic,
+                                                onPressed: () => launchUrl(
+                                                  Uri.parse(
+                                                    kSourceCodeFrontend,
+                                                  ),
+                                                ),
+                                              ),
+                                              AppButton(
+                                                label: 'Storefront SDK',
+                                                iconData: MdiIcons.tools,
+                                                onPressed: () => launchUrl(
+                                                  Uri.parse(
+                                                    kSourceCodeFrontendSDK,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(localization.close.toUpperCase()),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                              ],
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(localization.desktop),
+                                  AppButton(
+                                    label: 'Windows',
+                                    iconData: MdiIcons.microsoftWindows,
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(kWindowsUrl)),
+                                  ),
+                                  AppButton(
+                                    label: 'macOS',
+                                    iconData: MdiIcons.apple,
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(kMacOSUrl)),
+                                  ),
+                                  AppButton(
+                                    label: 'Linux',
+                                    iconData: MdiIcons.linux,
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(kLinuxUrl)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: Text(localization.mobile),
+                                  ),
+                                  AppButton(
+                                    label: 'iOS',
+                                    iconData: MdiIcons.apple,
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(kAppleStoreUrl)),
+                                  ),
+                                  AppButton(
+                                    label: 'Android',
+                                    iconData: MdiIcons.android,
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(kGoogleStoreUrl)),
+                                  ),
+                                  AppButton(
+                                    label: 'F-Droid',
+                                    iconData: MdiIcons.android,
+                                    onPressed: () =>
+                                        launchUrl(Uri.parse(kGoogleFDroidUrl)),
+                                  ),
+                                ],
                               ),
-                            ]);
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                AppButton(
+                  label: localization.releaseNotes.toUpperCase(),
+                  iconData: MdiIcons.note,
+                  color: Colors.cyan,
+                  onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
+                ),
+                if (state.userCompany.isAdmin) ...[
+                  if (state.isSelfHosted || !kReleaseMode) ...[
+                    AppButton(
+                      label: localization.healthCheck.toUpperCase(),
+                      iconData: MdiIcons.shieldHalfFull,
+                      color: Colors.green,
+                      onPressed: () {
+                        showDialog<HealthCheckDialog>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return HealthCheckDialog();
+                          },
+                        );
+                      },
+                    ),
+                    if (!state.account.disableAutoUpdate &&
+                        (!state.account.isDocker || state.isUpdateAvailable))
+                      AppButton(
+                        label:
+                            (state.isUpdateAvailable
+                                    ? localization.updateApp
+                                    : localization.forceUpdate)
+                                .toUpperCase(),
+                        iconData: MdiIcons.cloudDownload,
+                        color: Colors.orange,
+                        onPressed: () => _showUpdate(context),
+                      ),
+                  ],
+                ],
+                if (state.company.daysActive > 30)
+                  AppButton(
+                    label: localization.reviewApp.toUpperCase(),
+                    iconData: Icons.star,
+                    color: Colors.purple,
+                    onPressed: () {
+                      if (kIsWeb || isLinux()) {
+                        launchUrl(Uri.parse(getRateAppURL(context)));
+                      } else {
+                        AppReview.openStoreListing();
                       }
                     },
                   ),
-                  SizedBox(height: 8),
-                  ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    title: Text(state.user.fullName),
-                    subtitle: Text(state.user.email),
-                  ),
-                  if (!isApple())
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: AppButton(
-                        label: localization.appPlatforms.toUpperCase(),
-                        iconData: MdiIcons.desktopClassic,
-                        onPressed: () {
-                          showDialog<AlertDialog>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  actions: [
-                                    TextButton(
-                                      child: Text(localization.sourceCode
-                                          .toUpperCase()),
-                                      onPressed: () {
-                                        showDialog<AlertDialog>(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              actions: [
-                                                TextButton(
-                                                  child: Text(localization.close
-                                                      .toUpperCase()),
-                                                  onPressed: () =>
-                                                      Navigator.of(context)
-                                                          .pop(),
-                                                ),
-                                              ],
-                                              content: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  Text('Backend'),
-                                                  AppButton(
-                                                    label: 'Laravel/PHP',
-                                                    iconData: MdiIcons.server,
-                                                    onPressed: () => launchUrl(
-                                                        Uri.parse(
-                                                            kSourceCodeBackend)),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 30),
-                                                    child: Text('Frontend'),
-                                                  ),
-                                                  AppButton(
-                                                    label: 'Flutter/Dart',
-                                                    iconData:
-                                                        MdiIcons.desktopClassic,
-                                                    onPressed: () => launchUrl(
-                                                        Uri.parse(
-                                                            kSourceCodeFrontend)),
-                                                  ),
-                                                  AppButton(
-                                                    label: 'Storefront SDK',
-                                                    iconData: MdiIcons.tools,
-                                                    onPressed: () => launchUrl(
-                                                        Uri.parse(
-                                                            kSourceCodeFrontendSDK)),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: Text(
-                                          localization.close.toUpperCase()),
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                    ),
-                                  ],
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Text(localization.desktop),
-                                      AppButton(
-                                        label: 'Windows',
-                                        iconData: MdiIcons.microsoftWindows,
-                                        onPressed: () =>
-                                            launchUrl(Uri.parse(kWindowsUrl)),
-                                      ),
-                                      AppButton(
-                                        label: 'macOS',
-                                        iconData: MdiIcons.apple,
-                                        onPressed: () =>
-                                            launchUrl(Uri.parse(kMacOSUrl)),
-                                      ),
-                                      AppButton(
-                                        label: 'Linux',
-                                        iconData: MdiIcons.linux,
-                                        onPressed: () =>
-                                            launchUrl(Uri.parse(kLinuxUrl)),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 30),
-                                        child: Text(localization.mobile),
-                                      ),
-                                      AppButton(
-                                        label: 'iOS',
-                                        iconData: MdiIcons.apple,
-                                        onPressed: () => launchUrl(
-                                            Uri.parse(kAppleStoreUrl)),
-                                      ),
-                                      AppButton(
-                                        label: 'Android',
-                                        iconData: MdiIcons.android,
-                                        onPressed: () => launchUrl(
-                                            Uri.parse(kGoogleStoreUrl)),
-                                      ),
-                                      AppButton(
-                                        label: 'F-Droid',
-                                        iconData: MdiIcons.android,
-                                        onPressed: () => launchUrl(
-                                            Uri.parse(kGoogleFDroidUrl)),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                      ),
-                    ),
-                  AppButton(
-                    label: localization.releaseNotes.toUpperCase(),
-                    iconData: MdiIcons.note,
-                    color: Colors.cyan,
-                    onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
-                  ),
-                  if (state.userCompany.isAdmin) ...[
-                    if (state.isSelfHosted || !kReleaseMode) ...[
-                      AppButton(
-                        label: localization.healthCheck.toUpperCase(),
-                        iconData: MdiIcons.shieldHalfFull,
-                        color: Colors.green,
-                        onPressed: () {
-                          showDialog<HealthCheckDialog>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return HealthCheckDialog();
-                              });
-                        },
-                      ),
-                      if (!state.account.disableAutoUpdate &&
-                          (!state.account.isDocker || state.isUpdateAvailable))
-                        AppButton(
-                          label: (state.isUpdateAvailable
-                                  ? localization.updateApp
-                                  : localization.forceUpdate)
-                              .toUpperCase(),
-                          iconData: MdiIcons.cloudDownload,
-                          color: Colors.orange,
-                          onPressed: () => _showUpdate(context),
-                        ),
-                    ],
-                  ],
-                  if (state.company.daysActive > 30)
-                    AppButton(
-                      label: localization.reviewApp.toUpperCase(),
-                      iconData: Icons.star,
-                      color: Colors.purple,
-                      onPressed: () {
-                        if (kIsWeb || isLinux()) {
-                          launchUrl(Uri.parse(getRateAppURL(context)));
-                        } else {
-                          AppReview.openStoreListing();
-                        }
+                AppButton(
+                  label: localization.logout.toUpperCase(),
+                  iconData: Icons.logout,
+                  color: Colors.red,
+                  onPressed: () {
+                    confirmCallback(
+                      context: context,
+                      callback: (_) {
+                        store.dispatch(UserLogout());
                       },
+                    );
+                  },
+                ),
+                SizedBox(height: 22),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  children: [
+                    IconButton(
+                      tooltip: 'Twitter',
+                      onPressed: () => launchUrl(Uri.parse(kTwitterUrl)),
+                      icon: Icon(MdiIcons.twitter),
                     ),
-                  AppButton(
-                    label: localization.logout.toUpperCase(),
-                    iconData: Icons.logout,
-                    color: Colors.red,
-                    onPressed: () {
-                      confirmCallback(
-                          context: context,
-                          callback: (_) {
-                            store.dispatch(UserLogout());
-                          });
-                    },
-                  ),
-                  SizedBox(height: 22),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      IconButton(
-                        tooltip: 'Twitter',
-                        onPressed: () => launchUrl(Uri.parse(kTwitterUrl)),
-                        icon: Icon(MdiIcons.twitter),
-                      ),
-                      IconButton(
-                        tooltip: 'Facebook',
-                        onPressed: () => launchUrl(Uri.parse(kFacebookUrl)),
-                        icon: Icon(MdiIcons.facebook),
-                      ),
-                      IconButton(
-                        tooltip: 'GitHub',
-                        onPressed: () => launchUrl(Uri.parse(kGitHubUrl)),
-                        icon: Icon(MdiIcons.github),
-                      ),
-                      IconButton(
-                        tooltip: 'YouTube',
-                        onPressed: () => launchUrl(Uri.parse(kYouTubeUrl)),
-                        icon: Icon(MdiIcons.youtube),
-                      ),
-                      IconButton(
-                        tooltip: 'Slack',
-                        onPressed: () => launchUrl(Uri.parse(kSlackUrl)),
-                        icon: Icon(MdiIcons.slack),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                    IconButton(
+                      tooltip: 'Facebook',
+                      onPressed: () => launchUrl(Uri.parse(kFacebookUrl)),
+                      icon: Icon(MdiIcons.facebook),
+                    ),
+                    IconButton(
+                      tooltip: 'GitHub',
+                      onPressed: () => launchUrl(Uri.parse(kGitHubUrl)),
+                      icon: Icon(MdiIcons.github),
+                    ),
+                    IconButton(
+                      tooltip: 'YouTube',
+                      onPressed: () => launchUrl(Uri.parse(kYouTubeUrl)),
+                      icon: Icon(MdiIcons.youtube),
+                    ),
+                    IconButton(
+                      tooltip: 'Slack',
+                      onPressed: () => launchUrl(Uri.parse(kSlackUrl)),
+                      icon: Icon(MdiIcons.slack),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
-        );
-      });
+        ),
+      );
+    },
+  );
 }
 
 class ContactUsDialog extends StatefulWidget {
@@ -1675,27 +1736,31 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
 
     setState(() => _isSaving = true);
     WebClient()
-        .post(state.credentials.url + '/support/messages/send',
-            state.credentials.token,
-            data: json.encode({
-              'message': _message,
-              'send_logs': _includeLogs ? 'true' : '',
-              'platform': getPlatformLetter(),
-              'version': state.appVersion,
-            }))
+        .post(
+          state.credentials.url + '/support/messages/send',
+          state.credentials.token,
+          data: json.encode({
+            'message': _message,
+            'send_logs': _includeLogs ? 'true' : '',
+            'platform': getPlatformLetter(),
+            'version': state.appVersion,
+          }),
+        )
         .then((dynamic response) async {
-      setState(() => _isSaving = false);
-      await showDialog<MessageDialog>(
-          context: navigatorKey.currentContext!,
-          builder: (BuildContext context) {
-            return MessageDialog(localization!.yourMessageHasBeenReceived);
-          });
-      Navigator.pop(navigatorKey.currentContext!);
-    }).catchError((dynamic error) {
-      print('## ERROR: $error');
-      setState(() => _isSaving = false);
-      showErrorDialog(message: '$error');
-    });
+          setState(() => _isSaving = false);
+          await showDialog<MessageDialog>(
+            context: navigatorKey.currentContext!,
+            builder: (BuildContext context) {
+              return MessageDialog(localization!.yourMessageHasBeenReceived);
+            },
+          );
+          Navigator.pop(navigatorKey.currentContext!);
+        })
+        .catchError((dynamic error) {
+          print('## ERROR: $error');
+          setState(() => _isSaving = false);
+          showErrorDialog(message: '$error');
+        });
   }
 
   @override
@@ -1729,39 +1794,36 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
           child: Container(
             width: isMobile(context) ? null : 500,
             child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      labelText: localization.from,
-                    ),
-                    initialValue: '${user.fullName} • ${user.email}',
-                  ),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  enabled: false,
+                  decoration: InputDecoration(labelText: localization.from),
+                  initialValue: '${user.fullName} • ${user.email}',
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  autofocus: true,
+                  decoration: InputDecoration(labelText: localization.message),
+                  minLines: 4,
+                  maxLines: 4,
+                  onChanged: (value) => _message = value,
+                  keyboardType: TextInputType.multiline,
+                ),
+                if (state.isSelfHosted) ...[
                   SizedBox(height: 10),
-                  TextFormField(
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      labelText: localization.message,
-                    ),
-                    minLines: 4,
-                    maxLines: 4,
-                    onChanged: (value) => _message = value,
-                    keyboardType: TextInputType.multiline,
+                  SwitchListTile(
+                    value: _includeLogs,
+                    onChanged: (value) {
+                      setState(() => _includeLogs = value);
+                    },
+                    title: Text(localization.includeRecentErrors),
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                   ),
-                  if (state.isSelfHosted) ...[
-                    SizedBox(height: 10),
-                    SwitchListTile(
-                      value: _includeLogs,
-                      onChanged: (value) {
-                        setState(() => _includeLogs = value);
-                      },
-                      title: Text(localization.includeRecentErrors),
-                      activeThumbColor: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ]
-                ]),
+                ],
+              ],
+            ),
           ),
         ),
       ),

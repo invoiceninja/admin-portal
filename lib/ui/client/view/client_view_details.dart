@@ -61,57 +61,77 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         }
         if (company.hasCustomField(CustomFieldType.contact1) &&
             contact.customValue1.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.contact1, contact.customValue1));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.contact1,
+              contact.customValue1,
+            ),
+          );
         }
         if (company.hasCustomField(CustomFieldType.contact2) &&
             contact.customValue2.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.contact2, contact.customValue2));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.contact2,
+              contact.customValue2,
+            ),
+          );
         }
         if (company.hasCustomField(CustomFieldType.contact3) &&
             contact.customValue3.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.contact3, contact.customValue3));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.contact3,
+              contact.customValue3,
+            ),
+          );
         }
         if (company.hasCustomField(CustomFieldType.contact4) &&
             contact.customValue4.isNotEmpty) {
-          subtitleParts.add(company.formatCustomFieldValue(
-              CustomFieldType.contact4, contact.customValue4));
+          subtitleParts.add(
+            company.formatCustomFieldValue(
+              CustomFieldType.contact4,
+              contact.customValue4,
+            ),
+          );
         }
 
-        listTiles.add(AppListTile(
-          buttonRow: PortalLinks(
-            viewLink: contact.silentLink,
-            copyLink: contact.link,
-            client: client,
-          ),
-          icon: Icons.email,
-          title: contact.fullName.isEmpty
-              ? localization!.blankContact
-              : contact.fullName,
-          subtitle: subtitleParts.join('\n'),
-          copyValue: contact.email,
-          onLongPress: () => setState(() {
-            if (contact.email.isEmpty) {
-              return;
-            }
+        listTiles.add(
+          AppListTile(
+            buttonRow: PortalLinks(
+              viewLink: contact.silentLink,
+              copyLink: contact.link,
+              client: client,
+            ),
+            icon: Icons.email,
+            title: contact.fullName.isEmpty
+                ? localization!.blankContact
+                : contact.fullName,
+            subtitle: subtitleParts.join('\n'),
+            copyValue: contact.email,
+            onLongPress: () => setState(() {
+              if (contact.email.isEmpty) {
+                return;
+              }
 
-            _launched = _launchURL(context, 'mailto:' + contact.email);
-          }),
-        ));
+              _launched = _launchURL(context, 'mailto:' + contact.email);
+            }),
+          ),
+        );
 
         if (contact.phone.isNotEmpty) {
-          listTiles.add(AppListTile(
-            icon: Icons.phone,
-            title: (contact.fullName.isEmpty
-                    ? localization!.blankContact
-                    : contact.fullName) +
-                '\n' +
-                contact.phone,
-            copyValue: contact.phone,
-            subtitle: localization!.phone,
-            /*
+          listTiles.add(
+            AppListTile(
+              icon: Icons.phone,
+              title:
+                  (contact.fullName.isEmpty
+                      ? localization!.blankContact
+                      : contact.fullName) +
+                  '\n' +
+                  contact.phone,
+              copyValue: contact.phone,
+              subtitle: localization!.phone,
+              /*
             trailing: isApple() || isAndroid()
                 ? IconButton(
                     onPressed: () async {
@@ -125,32 +145,38 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                     icon: Icon(MdiIcons.dialpad))
                 : null,
                 */
-            onLongPress: () => setState(() {
-              _launched =
-                  _launchURL(context, 'sms:' + cleanPhoneNumber(contact.phone));
-              //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
-            }),
-          ));
+              onLongPress: () => setState(() {
+                _launched = _launchURL(
+                  context,
+                  'sms:' + cleanPhoneNumber(contact.phone),
+                );
+                //_launched = _launchURL('tel:' + cleanPhoneNumber(contact.phone));
+              }),
+            ),
+          );
         }
       });
 
       if (client.website.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.link,
-          title: client.website,
-          subtitle: localization!.website,
-          onLongPress: () => setState(() {
-            _launched = _launchURL(context, formatURL(client.website));
-          }),
-        ));
+        listTiles.add(
+          AppListTile(
+            icon: Icons.link,
+            title: client.website,
+            subtitle: localization!.website,
+            onLongPress: () => setState(() {
+              _launched = _launchURL(context, formatURL(client.website));
+            }),
+          ),
+        );
       }
 
       if (client.phone.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.phone,
-          title: client.phone,
-          subtitle: localization!.phone,
-          /*
+        listTiles.add(
+          AppListTile(
+            icon: Icons.phone,
+            title: client.phone,
+            subtitle: localization!.phone,
+            /*
           trailing: isApple() || isAndroid()
               ? IconButton(
                   onPressed: () async {
@@ -164,12 +190,15 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
                   icon: Icon(MdiIcons.dialpad))
               : null,
               */
-          onLongPress: () => setState(() {
-            _launched =
-                _launchURL(context, 'sms:' + cleanPhoneNumber(client.phone));
-            //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
-          }),
-        ));
+            onLongPress: () => setState(() {
+              _launched = _launchURL(
+                context,
+                'sms:' + cleanPhoneNumber(client.phone),
+              );
+              //_launched = _launchURL('tel:' + cleanPhoneNumber(client.workPhone));
+            }),
+          ),
+        );
       }
 
       /*
@@ -184,65 +213,87 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       */
 
       if (client.vatNumber.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.location_city,
-          title: client.vatNumber,
-          subtitle: localization!.vatNumber,
-        ));
+        listTiles.add(
+          AppListTile(
+            icon: Icons.location_city,
+            title: client.vatNumber,
+            subtitle: localization!.vatNumber,
+          ),
+        );
       }
 
       if (client.idNumber.isNotEmpty) {
-        listTiles.add(AppListTile(
-          icon: Icons.business,
-          title: client.idNumber,
-          subtitle: localization!.idNumber,
-        ));
+        listTiles.add(
+          AppListTile(
+            icon: Icons.business,
+            title: client.idNumber,
+            subtitle: localization!.idNumber,
+          ),
+        );
       }
 
       final store = StoreProvider.of<AppState>(context);
       final state = store.state;
       final billingAddress = formatAddress(state, object: client);
-      final shippingAddress =
-          formatAddress(state, object: client, isShipping: true);
+      final shippingAddress = formatAddress(
+        state,
+        object: client,
+        isShipping: true,
+      );
 
       if (billingAddress.isNotEmpty) {
-        listTiles.add(AppListTile(
+        listTiles.add(
+          AppListTile(
             icon: Icons.pin_drop,
             title: billingAddress,
             subtitle: localization!.billingAddress,
             onLongPress: () {
               _launched = _launchURL(
-                  context,
-                  getMapURL(context) +
-                      Uri.encodeFull(formatAddress(state,
-                          object: client, delimiter: ',')));
-            }));
+                context,
+                getMapURL(context) +
+                    Uri.encodeFull(
+                      formatAddress(state, object: client, delimiter: ','),
+                    ),
+              );
+            },
+          ),
+        );
       }
 
       if (shippingAddress.isNotEmpty) {
-        listTiles.add(AppListTile(
+        listTiles.add(
+          AppListTile(
             icon: Icons.pin_drop,
             title: shippingAddress,
             subtitle: localization!.shippingAddress,
             onLongPress: () {
               _launched = _launchURL(
-                  context,
-                  getMapURL(context) +
-                      Uri.encodeFull(formatAddress(state,
-                          object: client, delimiter: ',', isShipping: true)));
-            }));
+                context,
+                getMapURL(context) +
+                    Uri.encodeFull(
+                      formatAddress(
+                        state,
+                        object: client,
+                        delimiter: ',',
+                        isShipping: true,
+                      ),
+                    ),
+              );
+            },
+          ),
+        );
       }
 
-      listTiles.add(Padding(
-        padding: const EdgeInsets.all(16),
-        child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
-      ));
+      listTiles.add(
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
+        ),
+      );
 
       return listTiles;
     }
 
-    return ScrollableListView(
-      children: _buildDetailsList(),
-    );
+    return ScrollableListView(children: _buildDetailsList());
   }
 }

@@ -16,25 +16,38 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
   final String wireName = 'GroupState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GroupState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    GroupState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(GroupEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(GroupEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  GroupState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  GroupState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = GroupStateBuilder();
 
     final iterator = serialized.iterator;
@@ -44,17 +57,26 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(GroupEntity)
-              ]))!);
+                const FullType(GroupEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -70,38 +92,52 @@ class _$GroupUIStateSerializer implements StructuredSerializer<GroupUIState> {
   final String wireName = 'GroupUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GroupUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    GroupUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(GroupEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(GroupEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   GroupUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = GroupUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -111,20 +147,38 @@ class _$GroupUIStateSerializer implements StructuredSerializer<GroupUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GroupEntity))! as GroupEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(GroupEntity),
+                )!
+                as GroupEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -216,11 +270,7 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
   _$GroupState _build() {
     _$GroupState _$result;
     try {
-      _$result = _$v ??
-          _$GroupState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$GroupState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -230,7 +280,10 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'GroupState', _$failedField, e.toString());
+          r'GroupState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -258,15 +311,15 @@ class _$GroupUIState extends GroupUIState {
   factory _$GroupUIState([void Function(GroupUIStateBuilder)? updates]) =>
       (GroupUIStateBuilder()..update(updates))._build();
 
-  _$GroupUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$GroupUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   GroupUIState rebuild(void Function(GroupUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -387,14 +440,18 @@ class GroupUIStateBuilder
   _$GroupUIState _build() {
     _$GroupUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$GroupUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'GroupUIState', 'tabIndex'),
+              tabIndex,
+              r'GroupUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -407,7 +464,10 @@ class GroupUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'GroupUIState', _$failedField, e.toString());
+          r'GroupUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

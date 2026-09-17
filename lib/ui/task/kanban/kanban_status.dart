@@ -42,8 +42,9 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
 
   void _onSavePressed() {
     final localization = AppLocalization.of(context)!;
-    final completer =
-        snackBarCompleter<TaskStatusEntity>(localization.updatedTaskStatus);
+    final completer = snackBarCompleter<TaskStatusEntity>(
+      localization.updatedTaskStatus,
+    );
     completer.future.then((value) {
       setState(() {
         _isEditing = false;
@@ -92,7 +93,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       );

@@ -55,21 +55,21 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
     bool? isSaving,
     ExpenseEntity? origExpense,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddClientPressed,
+    onAddClientPressed,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
-        onAddVendorPressed,
+    onAddVendorPressed,
     Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
   }) : super(
-          state: state,
-          expense: expense,
-          onChanged: onChanged,
-          onSavePressed: onSavePressed,
-          onCancelPressed: onCancelPressed,
-          origExpense: origExpense,
-          onAddClientPressed: onAddClientPressed,
-          onAddVendorPressed: onAddVendorPressed,
-          onUploadDocument: onUploadDocuments,
-        );
+         state: state,
+         expense: expense,
+         onChanged: onChanged,
+         onSavePressed: onSavePressed,
+         onCancelPressed: onCancelPressed,
+         origExpense: origExpense,
+         onAddClientPressed: onAddClientPressed,
+         onAddVendorPressed: onAddVendorPressed,
+         onUploadDocument: onUploadDocuments,
+       );
 
   factory RecurringExpenseEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
@@ -86,36 +86,41 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            entity: ClientEntity(),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(
-                    UpdateCurrentRoute(RecurringExpenseEditScreen.route));
-              }));
+          entity: ClientEntity(),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(
+                UpdateCurrentRoute(RecurringExpenseEditScreen.route),
+              );
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(RecurringExpenseEditScreen.route));
         });
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            entity: VendorEntity(),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(
-                    UpdateCurrentRoute(RecurringExpenseEditScreen.route));
-              }));
+          entity: VendorEntity(),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(
+                UpdateCurrentRoute(RecurringExpenseEditScreen.route),
+              );
+            }),
+        );
         completer.future.then((SelectableEntity expense) {
           store.dispatch(UpdateCurrentRoute(RecurringExpenseEditScreen.route));
         });
       },
       onCancelPressed: (BuildContext context) {
         createEntity(
-            entity: ExpenseEntity(entityType: EntityType.recurringExpense),
-            force: true);
+          entity: ExpenseEntity(entityType: EntityType.recurringExpense),
+          force: true,
+        );
         if (state.recurringExpenseUIState.cancelCompleter != null) {
           state.recurringExpenseUIState.cancelCompleter!.complete();
         } else {
@@ -134,73 +139,98 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           } else {
             final Completer<ExpenseEntity> completer =
                 new Completer<ExpenseEntity>();
-            store.dispatch(SaveRecurringExpenseRequest(
-              completer: completer,
-              recurringExpense: recurringExpense,
-              action: action,
-            ));
-            return completer.future.then((savedRecurringExpense) {
-              showToast(recurringExpense.isNew
-                  ? localization!.createdRecurringExpense
-                  : localization!.updatedRecurringExpense);
-              if (state.prefState.isMobile) {
-                store.dispatch(
-                    UpdateCurrentRoute(RecurringExpenseViewScreen.route));
-                if (recurringExpense.isNew) {
-                  Navigator.of(navigatorKey.currentContext!)
-                      .pushReplacementNamed(RecurringExpenseViewScreen.route);
-                } else {
-                  Navigator.of(navigatorKey.currentContext!)
-                      .pop(savedRecurringExpense);
-                }
-              } else {
-                if (!state.prefState.isPreviewVisible) {
-                  store.dispatch(TogglePreviewSidebar());
-                }
+            store.dispatch(
+              SaveRecurringExpenseRequest(
+                completer: completer,
+                recurringExpense: recurringExpense,
+                action: action,
+              ),
+            );
+            return completer.future
+                .then((savedRecurringExpense) {
+                  showToast(
+                    recurringExpense.isNew
+                        ? localization!.createdRecurringExpense
+                        : localization!.updatedRecurringExpense,
+                  );
+                  if (state.prefState.isMobile) {
+                    store.dispatch(
+                      UpdateCurrentRoute(RecurringExpenseViewScreen.route),
+                    );
+                    if (recurringExpense.isNew) {
+                      Navigator.of(
+                        navigatorKey.currentContext!,
+                      ).pushReplacementNamed(RecurringExpenseViewScreen.route);
+                    } else {
+                      Navigator.of(
+                        navigatorKey.currentContext!,
+                      ).pop(savedRecurringExpense);
+                    }
+                  } else {
+                    if (!state.prefState.isPreviewVisible) {
+                      store.dispatch(TogglePreviewSidebar());
+                    }
 
-                viewEntity(entity: savedRecurringExpense);
+                    viewEntity(entity: savedRecurringExpense);
 
-                if (state.prefState.isEditorFullScreen(EntityType.expense) &&
-                    state.prefState.editAfterSaving) {
-                  editEntity(entity: savedRecurringExpense);
-                }
-              }
+                    if (state.prefState.isEditorFullScreen(
+                          EntityType.expense,
+                        ) &&
+                        state.prefState.editAfterSaving) {
+                      editEntity(entity: savedRecurringExpense);
+                    }
+                  }
 
-              if (action != null && action.isClientSide) {
-                handleEntityAction(savedRecurringExpense, action);
-              } else if (action != null && action.requiresSecondRequest) {
-                handleEntityAction(savedRecurringExpense, action);
-                viewEntity(entity: savedRecurringExpense, force: true);
-              }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext!,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+                  if (action != null && action.isClientSide) {
+                    handleEntityAction(savedRecurringExpense, action);
+                  } else if (action != null && action.requiresSecondRequest) {
+                    handleEntityAction(savedRecurringExpense, action);
+                    viewEntity(entity: savedRecurringExpense, force: true);
+                  }
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
           }
         });
       },
-      onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
-        final completer = Completer<List<DocumentEntity>>();
-        store.dispatch(SaveRecurringExpenseDocumentRequest(
-            isPrivate: isPrivate,
-            multipartFile: multipartFiles,
-            expense: recurringExpense,
-            completer: completer));
-        completer.future.then((client) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .uploadedDocument);
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+      onUploadDocuments:
+          (
+            BuildContext context,
+            List<MultipartFile> multipartFiles,
+            bool isPrivate,
+          ) {
+            final completer = Completer<List<DocumentEntity>>();
+            store.dispatch(
+              SaveRecurringExpenseDocumentRequest(
+                isPrivate: isPrivate,
+                multipartFile: multipartFiles,
+                expense: recurringExpense,
+                completer: completer,
+              ),
+            );
+            completer.future
+                .then((client) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.uploadedDocument,
+                  );
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 }

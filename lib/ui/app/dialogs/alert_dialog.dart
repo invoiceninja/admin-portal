@@ -49,10 +49,12 @@ class MessageDialog extends StatelessWidget {
                         if (secondaryActions != null)
                           Row(
                             children: secondaryActions!
-                                .map((action) => Padding(
-                                      padding: const EdgeInsets.only(right: 16),
-                                      child: action,
-                                    ))
+                                .map(
+                                  (action) => Padding(
+                                    padding: const EdgeInsets.only(right: 16),
+                                    child: action,
+                                  ),
+                                )
                                 .toList(),
                           ),
                         Padding(
@@ -64,19 +66,23 @@ class MessageDialog extends StatelessWidget {
                                 onDismiss!();
                               }
                             },
-                            child: Text((dismissLabel ?? localization!.dismiss)
-                                .toUpperCase()),
+                            child: Text(
+                              (dismissLabel ?? localization!.dismiss)
+                                  .toUpperCase(),
+                            ),
                           ),
                         ),
                         if (onDiscard != null)
                           TextButton(
-                              autofocus: true,
-                              child: Text(
-                                  localization!.discardChanges.toUpperCase()),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                onDiscard!();
-                              }),
+                            autofocus: true,
+                            child: Text(
+                              localization!.discardChanges.toUpperCase(),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              onDiscard!();
+                            },
+                          ),
                       ],
                     ),
                   ],

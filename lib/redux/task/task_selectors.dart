@@ -57,52 +57,79 @@ InvoiceItemEntity convertTaskToInvoiceItem({
 
     task
         .getTaskTimes()
-        .where((time) =>
-            time.startDate != null && time.endDate != null && time.isBillable)
+        .where(
+          (time) =>
+              time.startDate != null && time.endDate != null && time.isBillable,
+        )
         .forEach((time) {
-      final hours = round(time.duration.inSeconds / 3600, 3);
-      final duration = formatNumber(hours, context,
-          formatNumberType: FormatNumberType.double);
-      final hoursStr = hours == 1
-          ? ' • 1 ${localization.hour}'
-          : ' • $duration ${localization.hours}';
+          final hours = round(time.duration.inSeconds / 3600, 3);
+          final duration = formatNumber(
+            hours,
+            context,
+            formatNumberType: FormatNumberType.double,
+          );
+          final hoursStr = hours == 1
+              ? ' • 1 ${localization.hour}'
+              : ' • $duration ${localization.hours}';
 
-      if (company.invoiceTaskDatelog && company.invoiceTaskTimelog) {
-        final start = formatDate(time.startDate!.toIso8601String(), context,
-            showTime: true);
-        final end = formatDate(time.endDate!.toIso8601String(), context,
-            showTime: true, showDate: false, showSeconds: true);
-        notes += '$start - $end';
-        if (company.invoiceTaskHours) {
-          notes += hoursStr;
-        }
-        notes += lineBreak;
-        if (time.description.isNotEmpty && company.invoiceTaskItemDescription) {
-          notes += time.description + lineBreak;
-        }
-      } else if (company.invoiceTaskDatelog) {
-        final date = formatDate(time.startDate!.toIso8601String(), context,
-            showTime: false);
-        if (dates.containsKey(date)) {
-          dates[date] = dates[date]! + hours;
-        } else {
-          dates[date] = hours;
-        }
-      } else if (company.invoiceTaskTimelog) {
-        final start = formatDate(time.startDate!.toIso8601String(), context,
-            showTime: true, showDate: false);
-        final end = formatDate(time.endDate!.toIso8601String(), context,
-            showTime: true, showDate: false, showSeconds: true);
-        notes += '$start - $end';
-        if (company.invoiceTaskHours) {
-          notes += hoursStr;
-        }
-        notes += lineBreak;
-        if (time.description.isNotEmpty && company.invoiceTaskItemDescription) {
-          notes += time.description + lineBreak;
-        }
-      }
-    });
+          if (company.invoiceTaskDatelog && company.invoiceTaskTimelog) {
+            final start = formatDate(
+              time.startDate!.toIso8601String(),
+              context,
+              showTime: true,
+            );
+            final end = formatDate(
+              time.endDate!.toIso8601String(),
+              context,
+              showTime: true,
+              showDate: false,
+              showSeconds: true,
+            );
+            notes += '$start - $end';
+            if (company.invoiceTaskHours) {
+              notes += hoursStr;
+            }
+            notes += lineBreak;
+            if (time.description.isNotEmpty &&
+                company.invoiceTaskItemDescription) {
+              notes += time.description + lineBreak;
+            }
+          } else if (company.invoiceTaskDatelog) {
+            final date = formatDate(
+              time.startDate!.toIso8601String(),
+              context,
+              showTime: false,
+            );
+            if (dates.containsKey(date)) {
+              dates[date] = dates[date]! + hours;
+            } else {
+              dates[date] = hours;
+            }
+          } else if (company.invoiceTaskTimelog) {
+            final start = formatDate(
+              time.startDate!.toIso8601String(),
+              context,
+              showTime: true,
+              showDate: false,
+            );
+            final end = formatDate(
+              time.endDate!.toIso8601String(),
+              context,
+              showTime: true,
+              showDate: false,
+              showSeconds: true,
+            );
+            notes += '$start - $end';
+            if (company.invoiceTaskHours) {
+              notes += hoursStr;
+            }
+            notes += lineBreak;
+            if (time.description.isNotEmpty &&
+                company.invoiceTaskItemDescription) {
+              notes += time.description + lineBreak;
+            }
+          }
+        });
 
     if (company.invoiceTaskDatelog && !company.invoiceTaskTimelog) {
       final sortedDates = dates.keys.toList()..sort((a, b) => b.compareTo(a));
@@ -110,8 +137,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       for (var date in sortedDates) {
         if (company.invoiceTaskHours) {
           final hours = round(dates[date], 3);
-          final duration = formatNumber(hours, context,
-              formatNumberType: FormatNumberType.double);
+          final duration = formatNumber(
+            hours,
+            context,
+            formatNumberType: FormatNumberType.double,
+          );
           final hoursStr = hours == 1
               ? ' • 1 ${localization.hour}'
               : ' • $duration ${localization.hours}';
@@ -164,42 +194,50 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     }
   }
 
-  return InvoiceItemEntity().rebuild((b) => b
-    ..typeId = InvoiceItemEntity.TYPE_TASK
-    ..taskId = task.id
-    ..productKey =
-        company.invoiceTaskProject && !company.invoiceTaskProjectHeader
-            ? project.name
-            : ''
-    ..notes = notes
-    ..cost = taskRateSelector(
-      company: company,
-      project: project,
-      client: client,
-      task: task,
-      group: group,
-    )
-    ..quantity =
-        round(task.calculateDuration(onlyBillable: true).inSeconds / 3600, 3)
-    ..customValue1 = customValue1
-    ..customValue2 = customValue2
-    ..customValue3 = customValue3
-    ..customValue4 = customValue4);
+  return InvoiceItemEntity().rebuild(
+    (b) => b
+      ..typeId = InvoiceItemEntity.TYPE_TASK
+      ..taskId = task.id
+      ..productKey =
+          company.invoiceTaskProject && !company.invoiceTaskProjectHeader
+          ? project.name
+          : ''
+      ..notes = notes
+      ..cost = taskRateSelector(
+        company: company,
+        project: project,
+        client: client,
+        task: task,
+        group: group,
+      )
+      ..quantity = round(
+        task.calculateDuration(onlyBillable: true).inSeconds / 3600,
+        3,
+      )
+      ..customValue1 = customValue1
+      ..customValue2 = customValue2
+      ..customValue3 = customValue3
+      ..customValue4 = customValue4,
+  );
 }
 
-var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
-        String? clientId,
-        BuiltMap<String, UserEntity> userMap,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, ProjectEntity> projectMap) =>
-    taskList(taskMap, clientId, userMap, clientMap, projectMap));
-
-List<String?> taskList(
+var memoizedTaskList = memo5(
+  (
     BuiltMap<String, TaskEntity> taskMap,
     String? clientId,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, ProjectEntity> projectMap) {
+    BuiltMap<String, ProjectEntity> projectMap,
+  ) => taskList(taskMap, clientId, userMap, clientMap, projectMap),
+);
+
+List<String?> taskList(
+  BuiltMap<String, TaskEntity> taskMap,
+  String? clientId,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
     if ((clientId ?? '').isNotEmpty &&
@@ -210,30 +248,33 @@ List<String?> taskList(
     return task!.isActive && task.isStopped && !task.isInvoiced;
   }).toList();
 
-  list.sort((idA, idB) =>
-      taskMap[idA]!.listDisplayName.compareTo(taskMap[idB]!.listDisplayName));
+  list.sort(
+    (idA, idB) =>
+        taskMap[idA]!.listDisplayName.compareTo(taskMap[idB]!.listDisplayName),
+  );
 
   return list;
 }
 
-var memoizedDropdownTaskList = memo7((
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltList<String> taskList,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, TaskStatusEntity> taskStatusMap,
-) =>
-    dropdownTasksSelector(
-      taskMap,
-      taskList,
-      userMap,
-      clientMap,
-      invoiceMap,
-      projectMap,
-      taskStatusMap,
-    ));
+var memoizedDropdownTaskList = memo7(
+  (
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltList<String> taskList,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, TaskStatusEntity> taskStatusMap,
+  ) => dropdownTasksSelector(
+    taskMap,
+    taskList,
+    userMap,
+    clientMap,
+    invoiceMap,
+    projectMap,
+    taskStatusMap,
+  ),
+);
 
 List<String> dropdownTasksSelector(
   BuiltMap<String, TaskEntity> taskMap,
@@ -264,19 +305,8 @@ List<String> dropdownTasksSelector(
   return list;
 }
 
-var memoizedKanbanTaskList = memo9((SelectionState selectionState,
-        BuiltMap<String, TaskEntity> taskMap,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, UserEntity> userMap,
-        BuiltMap<String, ProjectEntity> projectMap,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, TaskStatusEntity> taskStatusMap,
-        BuiltList<String> taskList,
-        ListUIState taskListState) =>
-    kanbanTasksSelector(selectionState, taskMap, clientMap, userMap, projectMap,
-        invoiceMap, taskStatusMap, taskList, taskListState));
-
-List<String> kanbanTasksSelector(
+var memoizedKanbanTaskList = memo9(
+  (
     SelectionState selectionState,
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -285,7 +315,31 @@ List<String> kanbanTasksSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, TaskStatusEntity> taskStatusMap,
     BuiltList<String> taskList,
-    ListUIState taskListState) {
+    ListUIState taskListState,
+  ) => kanbanTasksSelector(
+    selectionState,
+    taskMap,
+    clientMap,
+    userMap,
+    projectMap,
+    invoiceMap,
+    taskStatusMap,
+    taskList,
+    taskListState,
+  ),
+);
+
+List<String> kanbanTasksSelector(
+  SelectionState selectionState,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, TaskStatusEntity> taskStatusMap,
+  BuiltList<String> taskList,
+  ListUIState taskListState,
+) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
@@ -323,7 +377,31 @@ List<String> kanbanTasksSelector(
   return list;
 }
 
-var memoizedFilteredTaskList = memo9((
+var memoizedFilteredTaskList = memo9(
+  (
+    SelectionState selectionState,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, TaskStatusEntity> taskStatusMap,
+    BuiltList<String> taskList,
+    ListUIState taskListState,
+  ) => filteredTasksSelector(
+    selectionState,
+    taskMap,
+    clientMap,
+    userMap,
+    projectMap,
+    invoiceMap,
+    taskStatusMap,
+    taskList,
+    taskListState,
+  ),
+);
+
+List<String> filteredTasksSelector(
   SelectionState selectionState,
   BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -333,29 +411,7 @@ var memoizedFilteredTaskList = memo9((
   BuiltMap<String, TaskStatusEntity> taskStatusMap,
   BuiltList<String> taskList,
   ListUIState taskListState,
-) =>
-    filteredTasksSelector(
-      selectionState,
-      taskMap,
-      clientMap,
-      userMap,
-      projectMap,
-      invoiceMap,
-      taskStatusMap,
-      taskList,
-      taskListState,
-    ));
-
-List<String> filteredTasksSelector(
-    SelectionState selectionState,
-    BuiltMap<String, TaskEntity> taskMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, UserEntity> userMap,
-    BuiltMap<String, ProjectEntity> projectMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, TaskStatusEntity> taskStatusMap,
-    BuiltList<String> taskList,
-    ListUIState taskListState) {
+) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
@@ -469,11 +525,14 @@ double? taskRateSelector({
 }
 
 var memoizedTaskStatsForClient = memo2(
-    (String clientId, BuiltMap<String, TaskEntity> taskMap) =>
-        taskStatsForClient(clientId, taskMap));
+  (String clientId, BuiltMap<String, TaskEntity> taskMap) =>
+      taskStatsForClient(clientId, taskMap),
+);
 
 EntityStats taskStatsForClient(
-    String clientId, BuiltMap<String, TaskEntity> taskMap) {
+  String clientId,
+  BuiltMap<String, TaskEntity> taskMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -489,14 +548,15 @@ EntityStats taskStatsForClient(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedTaskStatsForProject = memo2((
-  String projectId,
-  BuiltMap<String, TaskEntity> taskMap,
-) =>
-    taskStatsForProject(projectId, taskMap));
+var memoizedTaskStatsForProject = memo2(
+  (String projectId, BuiltMap<String, TaskEntity> taskMap) =>
+      taskStatsForProject(projectId, taskMap),
+);
 
 EntityStats taskStatsForProject(
-    String projectId, BuiltMap<String, TaskEntity> taskMap) {
+  String projectId,
+  BuiltMap<String, TaskEntity> taskMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -512,14 +572,15 @@ EntityStats taskStatsForProject(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedTaskStatsForUser = memo2((
-  String userId,
-  BuiltMap<String, TaskEntity> taskMap,
-) =>
-    taskStatsForProject(userId, taskMap));
+var memoizedTaskStatsForUser = memo2(
+  (String userId, BuiltMap<String, TaskEntity> taskMap) =>
+      taskStatsForProject(userId, taskMap),
+);
 
 EntityStats taskStatsForUser(
-    String userId, BuiltMap<String, TaskEntity> taskMap) {
+  String userId,
+  BuiltMap<String, TaskEntity> taskMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {

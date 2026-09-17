@@ -37,16 +37,23 @@ enum ProductReportFields {
   record_state,
 }
 
-var memoizedProductReport = memo6((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    productReport(userCompany!, reportsUIState, productMap, vendorMap, userMap,
-        staticState));
+var memoizedProductReport = memo6(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ProductEntity> productMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => productReport(
+    userCompany!,
+    reportsUIState,
+    productMap,
+    vendorMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult productReport(
   UserCompanyEntity userCompany,
@@ -74,10 +81,12 @@ ReportResult productReport(
   ];
 
   if (productReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(productReportSettings.columns
-        .map((e) => EnumUtils.fromString(ProductReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      productReportSettings.columns
+          .map((e) => EnumUtils.fromString(ProductReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -156,7 +165,9 @@ ReportResult productReport(
           break;
         case ProductReportFields.notification_threshold:
           value = productNotificationThreshold(
-              product: product, company: userCompany.company);
+            product: product,
+            company: userCompany.company,
+          );
           break;
         case ProductReportFields.updated_at:
           value = convertTimestampToDateString(product.updatedAt);
@@ -165,8 +176,9 @@ ReportResult productReport(
           value = convertTimestampToDateString(product.createdAt);
           break;
         case ProductReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(product.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(product.entityState);
           break;
       }
 
@@ -183,20 +195,24 @@ ReportResult productReport(
         row.add(product.getReportBool(value: value));
       } else if ([
         ProductReportFields.quantity,
-        ProductReportFields.stock_quantity
+        ProductReportFields.stock_quantity,
       ].contains(column)) {
-        row.add(product.getReportDouble(
-          value: value,
-          currencyId: userCompany.company.currencyId,
-          formatNumberType: FormatNumberType.double,
-        ));
+        row.add(
+          product.getReportDouble(
+            value: value,
+            currencyId: userCompany.company.currencyId,
+            formatNumberType: FormatNumberType.double,
+          ),
+        );
       } else if (column == ProductReportFields.notification_threshold) {
-        row.add(product.getReportInt(
-          value: value,
-        ));
+        row.add(product.getReportInt(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(product.getReportDouble(
-            value: value, currencyId: userCompany.company.currencyId));
+        row.add(
+          product.getReportDouble(
+            value: value,
+            currencyId: userCompany.company.currencyId,
+          ),
+        );
       } else {
         row.add(product.getReportString(value: value));
       }
@@ -209,15 +225,23 @@ ReportResult productReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      productReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        ProductReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: ProductReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

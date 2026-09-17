@@ -58,8 +58,11 @@ Middleware<AppState> _editTaxRate() {
 }
 
 Middleware<AppState> _viewTaxRate() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewTaxRate?;
 
     next(action);
@@ -86,7 +89,9 @@ Middleware<AppState> _viewTaxRateList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          TaxRateSettingsScreen.route, (Route<dynamic> route) => false);
+        TaxRateSettingsScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
@@ -100,15 +105,19 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.taxRateIds, EntityAction.archive)
+          store.state.credentials,
+          action.taxRateIds,
+          EntityAction.archive,
+        )
         .then((List<TaxRateEntity> taxRates) {
-      store.dispatch(ArchiveTaxRatesSuccess(taxRates));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(ArchiveTaxRateFailure(prevTaxRates));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveTaxRatesSuccess(taxRates));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(ArchiveTaxRateFailure(prevTaxRates));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -123,15 +132,19 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.taxRateIds, EntityAction.delete)
+          store.state.credentials,
+          action.taxRateIds,
+          EntityAction.delete,
+        )
         .then((List<TaxRateEntity> taxRates) {
-      store.dispatch(DeleteTaxRatesSuccess(taxRates));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteTaxRateFailure(prevTaxRates));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteTaxRatesSuccess(taxRates));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteTaxRateFailure(prevTaxRates));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -146,15 +159,19 @@ Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.taxRateIds, EntityAction.restore)
+          store.state.credentials,
+          action.taxRateIds,
+          EntityAction.restore,
+        )
         .then((List<TaxRateEntity> taxRates) {
-      store.dispatch(RestoreTaxRatesSuccess(taxRates));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreTaxRateFailure(prevTaxRates));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreTaxRatesSuccess(taxRates));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreTaxRateFailure(prevTaxRates));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -166,17 +183,18 @@ Middleware<AppState> _saveTaxRate(TaxRateRepository repository) {
     repository
         .saveData(store.state.credentials, action.taxRate!)
         .then((TaxRateEntity taxRate) {
-      if (action.taxRate!.isNew) {
-        store.dispatch(AddTaxRateSuccess(taxRate));
-      } else {
-        store.dispatch(SaveTaxRateSuccess(taxRate));
-      }
-      action.completer!.complete(taxRate);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveTaxRateFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.taxRate!.isNew) {
+            store.dispatch(AddTaxRateSuccess(taxRate));
+          } else {
+            store.dispatch(SaveTaxRateSuccess(taxRate));
+          }
+          action.completer!.complete(taxRate);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveTaxRateFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -188,19 +206,22 @@ Middleware<AppState> _loadTaxRate(TaxRateRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadTaxRateRequest());
-    repository.loadItem(state.credentials, action.taxRateId).then((taxRate) {
-      store.dispatch(LoadTaxRateSuccess(taxRate));
+    repository
+        .loadItem(state.credentials, action.taxRateId)
+        .then((taxRate) {
+          store.dispatch(LoadTaxRateSuccess(taxRate));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTaxRateFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTaxRateFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -212,24 +233,27 @@ Middleware<AppState> _loadTaxRates(TaxRateRepository repository) {
     final AppState state = store.state;
 
     store.dispatch(LoadTaxRatesRequest());
-    repository.loadList(state.credentials).then((data) {
-      store.dispatch(LoadTaxRatesSuccess(data));
+    repository
+        .loadList(state.credentials)
+        .then((data) {
+          store.dispatch(LoadTaxRatesSuccess(data));
 
-      if (action!.completer != null) {
-        action.completer!.complete(null);
-      }
-      /*
+          if (action!.completer != null) {
+            action.completer!.complete(null);
+          }
+          /*
       if (state.taxRateState.isStale) {
         store.dispatch(LoadTaxRates());
       }
       */
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadTaxRatesFailure(error));
-      if (action!.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadTaxRatesFailure(error));
+          if (action!.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };

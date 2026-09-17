@@ -48,8 +48,9 @@ void runTestSuite({bool batchMode = false}) {
       await driver!.tap(find.text(localization.save));
 
       print('Check for error');
-      await driver!
-          .waitFor(find.text(localization.pleaseEnterAClientOrContactName));
+      await driver!.waitFor(
+        find.text(localization.pleaseEnterAClientOrContactName),
+      );
 
       if (await isMobile(driver!)) {
         print('Click back');
@@ -83,8 +84,10 @@ void runTestSuite({bool batchMode = false}) {
       if (await isMobile(driver!)) {
         print('Select client: $name');
         await driver!.scrollUntilVisible(
-            find.byType('ListView'), find.text(name),
-            dyScroll: -300);
+          find.byType('ListView'),
+          find.text(name),
+          dyScroll: -300,
+        );
         await driver!.tap(find.text(name));
       }
 
@@ -99,11 +102,12 @@ void runTestSuite({bool batchMode = false}) {
     // Archive the edited client
     test('Archive/delete client test', () async {
       await testArchiveAndDelete(
-          driver: driver!,
-          rowText: updatedName,
-          archivedMessage: localization.archivedClient,
-          deletedMessage: localization.deletedClient,
-          restoredMessage: localization.restoredClient);
+        driver: driver!,
+        rowText: updatedName,
+        archivedMessage: localization.archivedClient,
+        deletedMessage: localization.deletedClient,
+        restoredMessage: localization.restoredClient,
+      );
 
       if (await isMobile(driver!)) {
         await driver!.tap(find.pageBack());

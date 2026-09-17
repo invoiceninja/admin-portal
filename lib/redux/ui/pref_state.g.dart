@@ -39,11 +39,9 @@ ModuleLayout _$moduleLayoutValueOf(String name) {
   }
 }
 
-final BuiltSet<ModuleLayout> _$moduleLayoutValues =
-    BuiltSet<ModuleLayout>(const <ModuleLayout>[
-  _$list,
-  _$table,
-]);
+final BuiltSet<ModuleLayout> _$moduleLayoutValues = BuiltSet<ModuleLayout>(
+  const <ModuleLayout>[_$list, _$table],
+);
 
 const AppSidebar _$menu = const AppSidebar._('menu');
 const AppSidebar _$history = const AppSidebar._('history');
@@ -59,11 +57,9 @@ AppSidebar _$valueOfSidebar(String name) {
   }
 }
 
-final BuiltSet<AppSidebar> _$valuesSidebar =
-    BuiltSet<AppSidebar>(const <AppSidebar>[
-  _$menu,
-  _$history,
-]);
+final BuiltSet<AppSidebar> _$valuesSidebar = BuiltSet<AppSidebar>(
+  const <AppSidebar>[_$menu, _$history],
+);
 
 const AppSidebarMode _$float = const AppSidebarMode._('float');
 const AppSidebarMode _$visible = const AppSidebarMode._('visible');
@@ -82,12 +78,9 @@ AppSidebarMode _$valueOfSidebarMode(String name) {
   }
 }
 
-final BuiltSet<AppSidebarMode> _$valuesSidebarMode =
-    BuiltSet<AppSidebarMode>(const <AppSidebarMode>[
-  _$float,
-  _$visible,
-  _$collapse,
-]);
+final BuiltSet<AppSidebarMode> _$valuesSidebarMode = BuiltSet<AppSidebarMode>(
+  const <AppSidebarMode>[_$float, _$visible, _$collapse],
+);
 
 Serializer<PrefState> _$prefStateSerializer = _$PrefStateSerializer();
 Serializer<PrefStateSortField> _$prefStateSortFieldSerializer =
@@ -109,145 +102,238 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
   final String wireName = 'PrefState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, PrefState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    PrefState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'appLayout',
-      serializers.serialize(object.appLayout,
-          specifiedType: const FullType(AppLayout)),
+      serializers.serialize(
+        object.appLayout,
+        specifiedType: const FullType(AppLayout),
+      ),
       'moduleLayout',
-      serializers.serialize(object.moduleLayout,
-          specifiedType: const FullType(ModuleLayout)),
+      serializers.serialize(
+        object.moduleLayout,
+        specifiedType: const FullType(ModuleLayout),
+      ),
       'menuSidebarMode',
-      serializers.serialize(object.menuSidebarMode,
-          specifiedType: const FullType(AppSidebarMode)),
+      serializers.serialize(
+        object.menuSidebarMode,
+        specifiedType: const FullType(AppSidebarMode),
+      ),
       'historySidebarMode',
-      serializers.serialize(object.historySidebarMode,
-          specifiedType: const FullType(AppSidebarMode)),
+      serializers.serialize(
+        object.historySidebarMode,
+        specifiedType: const FullType(AppSidebarMode),
+      ),
       'useSidebarEditor',
-      serializers.serialize(object.useSidebarEditor,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(EntityType), const FullType(bool)])),
+      serializers.serialize(
+        object.useSidebarEditor,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(EntityType),
+          const FullType(bool),
+        ]),
+      ),
       'useSidebarViewer',
-      serializers.serialize(object.useSidebarViewer,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(EntityType), const FullType(bool)])),
+      serializers.serialize(
+        object.useSidebarViewer,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(EntityType),
+          const FullType(bool),
+        ]),
+      ),
       'customColors',
-      serializers.serialize(object.customColors,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+      serializers.serialize(
+        object.customColors,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(String),
+        ]),
+      ),
       'darkCustomColors',
-      serializers.serialize(object.darkCustomColors,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+      serializers.serialize(
+        object.darkCustomColors,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(String),
+        ]),
+      ),
       'statementIncludes',
-      serializers.serialize(object.statementIncludes,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.statementIncludes,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
       'isPreviewVisible',
-      serializers.serialize(object.isPreviewVisible,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isPreviewVisible,
+        specifiedType: const FullType(bool),
+      ),
       'isMenuVisible',
-      serializers.serialize(object.isMenuVisible,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isMenuVisible,
+        specifiedType: const FullType(bool),
+      ),
       'showKanban',
-      serializers.serialize(object.showKanban,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.showKanban,
+        specifiedType: const FullType(bool),
+      ),
       'showPdfPreview',
-      serializers.serialize(object.showPdfPreview,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.showPdfPreview,
+        specifiedType: const FullType(bool),
+      ),
       'showPdfPreviewSideBySide',
-      serializers.serialize(object.showPdfPreviewSideBySide,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.showPdfPreviewSideBySide,
+        specifiedType: const FullType(bool),
+      ),
       'enableTouchEvents',
-      serializers.serialize(object.enableTouchEvents,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.enableTouchEvents,
+        specifiedType: const FullType(bool),
+      ),
       'enableFlexibleSearch',
-      serializers.serialize(object.enableFlexibleSearch,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.enableFlexibleSearch,
+        specifiedType: const FullType(bool),
+      ),
       'isHistoryVisible',
-      serializers.serialize(object.isHistoryVisible,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isHistoryVisible,
+        specifiedType: const FullType(bool),
+      ),
       'darkModeType',
-      serializers.serialize(object.darkModeType,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.darkModeType,
+        specifiedType: const FullType(String),
+      ),
       'enableDarkModeSystem',
-      serializers.serialize(object.enableDarkModeSystem,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.enableDarkModeSystem,
+        specifiedType: const FullType(bool),
+      ),
       'isFilterVisible',
-      serializers.serialize(object.isFilterVisible,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isFilterVisible,
+        specifiedType: const FullType(bool),
+      ),
       'persistData',
-      serializers.serialize(object.persistData,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.persistData,
+        specifiedType: const FullType(bool),
+      ),
       'longPressSelectionIsDefault',
-      serializers.serialize(object.longPressSelectionIsDefault,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.longPressSelectionIsDefault,
+        specifiedType: const FullType(bool),
+      ),
       'requireAuthentication',
-      serializers.serialize(object.requireAuthentication,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireAuthentication,
+        specifiedType: const FullType(bool),
+      ),
       'tapSelectedToEdit',
-      serializers.serialize(object.tapSelectedToEdit,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.tapSelectedToEdit,
+        specifiedType: const FullType(bool),
+      ),
       'rowsPerPage',
-      serializers.serialize(object.rowsPerPage,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.rowsPerPage,
+        specifiedType: const FullType(int),
+      ),
       'enableTooltips',
-      serializers.serialize(object.enableTooltips,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.enableTooltips,
+        specifiedType: const FullType(bool),
+      ),
       'colorTheme',
-      serializers.serialize(object.colorTheme,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.colorTheme,
+        specifiedType: const FullType(String),
+      ),
       'darkColorTheme',
-      serializers.serialize(object.darkColorTheme,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.darkColorTheme,
+        specifiedType: const FullType(String),
+      ),
       'hideGatewayWarning',
-      serializers.serialize(object.hideGatewayWarning,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hideGatewayWarning,
+        specifiedType: const FullType(bool),
+      ),
       'hideReviewApp',
-      serializers.serialize(object.hideReviewApp,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hideReviewApp,
+        specifiedType: const FullType(bool),
+      ),
       'hideOneYearReviewApp',
-      serializers.serialize(object.hideOneYearReviewApp,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hideOneYearReviewApp,
+        specifiedType: const FullType(bool),
+      ),
       'hideTwoYearReviewApp',
-      serializers.serialize(object.hideTwoYearReviewApp,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hideTwoYearReviewApp,
+        specifiedType: const FullType(bool),
+      ),
       'hideTaskExtensionBanner',
-      serializers.serialize(object.hideTaskExtensionBanner,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.hideTaskExtensionBanner,
+        specifiedType: const FullType(bool),
+      ),
       'editAfterSaving',
-      serializers.serialize(object.editAfterSaving,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.editAfterSaving,
+        specifiedType: const FullType(bool),
+      ),
       'enableNativeBrowser',
-      serializers.serialize(object.enableNativeBrowser,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.enableNativeBrowser,
+        specifiedType: const FullType(bool),
+      ),
       'textScaleFactor',
-      serializers.serialize(object.textScaleFactor,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.textScaleFactor,
+        specifiedType: const FullType(double),
+      ),
       'donwloadsFolder',
-      serializers.serialize(object.donwloadsFolder,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.donwloadsFolder,
+        specifiedType: const FullType(String),
+      ),
       'sortFields',
-      serializers.serialize(object.sortFields,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(EntityType),
-            const FullType(PrefStateSortField)
-          ])),
+      serializers.serialize(
+        object.sortFields,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(EntityType),
+          const FullType(PrefStateSortField),
+        ]),
+      ),
       'companyPrefs',
-      serializers.serialize(object.companyPrefs,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(CompanyPrefState)
-          ])),
+      serializers.serialize(
+        object.companyPrefs,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(CompanyPrefState),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  PrefState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  PrefState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PrefStateBuilder();
 
     final iterator = serialized.iterator;
@@ -257,172 +343,337 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'appLayout':
-          result.appLayout = serializers.deserialize(value,
-              specifiedType: const FullType(AppLayout))! as AppLayout;
+          result.appLayout =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AppLayout),
+                  )!
+                  as AppLayout;
           break;
         case 'moduleLayout':
-          result.moduleLayout = serializers.deserialize(value,
-              specifiedType: const FullType(ModuleLayout))! as ModuleLayout;
+          result.moduleLayout =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(ModuleLayout),
+                  )!
+                  as ModuleLayout;
           break;
         case 'menuSidebarMode':
-          result.menuSidebarMode = serializers.deserialize(value,
-              specifiedType: const FullType(AppSidebarMode))! as AppSidebarMode;
+          result.menuSidebarMode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AppSidebarMode),
+                  )!
+                  as AppSidebarMode;
           break;
         case 'historySidebarMode':
-          result.historySidebarMode = serializers.deserialize(value,
-              specifiedType: const FullType(AppSidebarMode))! as AppSidebarMode;
+          result.historySidebarMode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(AppSidebarMode),
+                  )!
+                  as AppSidebarMode;
           break;
         case 'useSidebarEditor':
-          result.useSidebarEditor.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(EntityType), const FullType(bool)]))!);
-          break;
-        case 'useSidebarViewer':
-          result.useSidebarViewer.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(EntityType), const FullType(bool)]))!);
-          break;
-        case 'customColors':
-          result.customColors.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)]))!);
-          break;
-        case 'darkCustomColors':
-          result.darkCustomColors.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)]))!);
-          break;
-        case 'statementIncludes':
-          result.statementIncludes.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
-          break;
-        case 'isPreviewVisible':
-          result.isPreviewVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'isMenuVisible':
-          result.isMenuVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'showKanban':
-          result.showKanban = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'showPdfPreview':
-          result.showPdfPreview = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'showPdfPreviewSideBySide':
-          result.showPdfPreviewSideBySide = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'enableTouchEvents':
-          result.enableTouchEvents = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'enableFlexibleSearch':
-          result.enableFlexibleSearch = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'isHistoryVisible':
-          result.isHistoryVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'darkModeType':
-          result.darkModeType = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'enableDarkModeSystem':
-          result.enableDarkModeSystem = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'isFilterVisible':
-          result.isFilterVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'persistData':
-          result.persistData = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'longPressSelectionIsDefault':
-          result.longPressSelectionIsDefault = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'requireAuthentication':
-          result.requireAuthentication = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'tapSelectedToEdit':
-          result.tapSelectedToEdit = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'rowsPerPage':
-          result.rowsPerPage = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
-          break;
-        case 'enableTooltips':
-          result.enableTooltips = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'colorTheme':
-          result.colorTheme = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'darkColorTheme':
-          result.darkColorTheme = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'hideGatewayWarning':
-          result.hideGatewayWarning = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'hideReviewApp':
-          result.hideReviewApp = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'hideOneYearReviewApp':
-          result.hideOneYearReviewApp = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'hideTwoYearReviewApp':
-          result.hideTwoYearReviewApp = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'hideTaskExtensionBanner':
-          result.hideTaskExtensionBanner = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'editAfterSaving':
-          result.editAfterSaving = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'enableNativeBrowser':
-          result.enableNativeBrowser = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'textScaleFactor':
-          result.textScaleFactor = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
-          break;
-        case 'donwloadsFolder':
-          result.donwloadsFolder = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'sortFields':
-          result.sortFields.replace(serializers.deserialize(value,
+          result.useSidebarEditor.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(EntityType),
-                const FullType(PrefStateSortField)
-              ]))!);
+                const FullType(bool),
+              ]),
+            )!,
+          );
           break;
-        case 'companyPrefs':
-          result.companyPrefs.replace(serializers.deserialize(value,
+        case 'useSidebarViewer':
+          result.useSidebarViewer.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(bool),
+              ]),
+            )!,
+          );
+          break;
+        case 'customColors':
+          result.customColors.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(CompanyPrefState)
-              ]))!);
+                const FullType(String),
+              ]),
+            )!,
+          );
+          break;
+        case 'darkCustomColors':
+          result.darkCustomColors.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(String),
+              ]),
+            )!,
+          );
+          break;
+        case 'statementIncludes':
+          result.statementIncludes.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
+          break;
+        case 'isPreviewVisible':
+          result.isPreviewVisible =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'isMenuVisible':
+          result.isMenuVisible =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'showKanban':
+          result.showKanban =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'showPdfPreview':
+          result.showPdfPreview =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'showPdfPreviewSideBySide':
+          result.showPdfPreviewSideBySide =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'enableTouchEvents':
+          result.enableTouchEvents =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'enableFlexibleSearch':
+          result.enableFlexibleSearch =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'isHistoryVisible':
+          result.isHistoryVisible =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'darkModeType':
+          result.darkModeType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
+          break;
+        case 'enableDarkModeSystem':
+          result.enableDarkModeSystem =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'isFilterVisible':
+          result.isFilterVisible =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'persistData':
+          result.persistData =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'longPressSelectionIsDefault':
+          result.longPressSelectionIsDefault =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'requireAuthentication':
+          result.requireAuthentication =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'tapSelectedToEdit':
+          result.tapSelectedToEdit =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'rowsPerPage':
+          result.rowsPerPage =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
+          break;
+        case 'enableTooltips':
+          result.enableTooltips =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'colorTheme':
+          result.colorTheme =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
+          break;
+        case 'darkColorTheme':
+          result.darkColorTheme =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
+          break;
+        case 'hideGatewayWarning':
+          result.hideGatewayWarning =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'hideReviewApp':
+          result.hideReviewApp =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'hideOneYearReviewApp':
+          result.hideOneYearReviewApp =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'hideTwoYearReviewApp':
+          result.hideTwoYearReviewApp =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'hideTaskExtensionBanner':
+          result.hideTaskExtensionBanner =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'editAfterSaving':
+          result.editAfterSaving =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'enableNativeBrowser':
+          result.enableNativeBrowser =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
+          break;
+        case 'textScaleFactor':
+          result.textScaleFactor =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
+          break;
+        case 'donwloadsFolder':
+          result.donwloadsFolder =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
+          break;
+        case 'sortFields':
+          result.sortFields.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(PrefStateSortField),
+              ]),
+            )!,
+          );
+          break;
+        case 'companyPrefs':
+          result.companyPrefs.replace(
+            serializers.deserialize(
+              value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(CompanyPrefState),
+              ]),
+            )!,
+          );
           break;
       }
     }
@@ -440,15 +691,21 @@ class _$PrefStateSortFieldSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, PrefStateSortField object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    PrefStateSortField object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'field',
-      serializers.serialize(object.field,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.field,
+        specifiedType: const FullType(String),
+      ),
       'ascending',
-      serializers.serialize(object.ascending,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.ascending,
+        specifiedType: const FullType(bool),
+      ),
     ];
 
     return result;
@@ -456,8 +713,10 @@ class _$PrefStateSortFieldSerializer
 
   @override
   PrefStateSortField deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = PrefStateSortFieldBuilder();
 
     final iterator = serialized.iterator;
@@ -467,12 +726,20 @@ class _$PrefStateSortFieldSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'field':
-          result.field = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.field =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'ascending':
-          result.ascending = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.ascending =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
       }
     }
@@ -489,13 +756,19 @@ class _$CompanyPrefStateSerializer
   final String wireName = 'CompanyPrefState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, CompanyPrefState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    CompanyPrefState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'historyList',
-      serializers.serialize(object.historyList,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(HistoryRecord)])),
+      serializers.serialize(
+        object.historyList,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(HistoryRecord),
+        ]),
+      ),
     ];
 
     return result;
@@ -503,8 +776,10 @@ class _$CompanyPrefStateSerializer
 
   @override
   CompanyPrefState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CompanyPrefStateBuilder();
 
     final iterator = serialized.iterator;
@@ -514,10 +789,15 @@ class _$CompanyPrefStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'historyList':
-          result.historyList.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(HistoryRecord)]))!
-              as BuiltList<Object?>);
+          result.historyList.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(HistoryRecord),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -533,14 +813,18 @@ class _$AppLayoutSerializer implements PrimitiveSerializer<AppLayout> {
   final String wireName = 'AppLayout';
 
   @override
-  Object serialize(Serializers serializers, AppLayout object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    AppLayout object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  AppLayout deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      AppLayout.valueOf(serialized as String);
+  AppLayout deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AppLayout.valueOf(serialized as String);
 }
 
 class _$ModuleLayoutSerializer implements PrimitiveSerializer<ModuleLayout> {
@@ -550,14 +834,18 @@ class _$ModuleLayoutSerializer implements PrimitiveSerializer<ModuleLayout> {
   final String wireName = 'ModuleLayout';
 
   @override
-  Object serialize(Serializers serializers, ModuleLayout object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    ModuleLayout object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  ModuleLayout deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      ModuleLayout.valueOf(serialized as String);
+  ModuleLayout deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => ModuleLayout.valueOf(serialized as String);
 }
 
 class _$AppSidebarSerializer implements PrimitiveSerializer<AppSidebar> {
@@ -567,14 +855,18 @@ class _$AppSidebarSerializer implements PrimitiveSerializer<AppSidebar> {
   final String wireName = 'AppSidebar';
 
   @override
-  Object serialize(Serializers serializers, AppSidebar object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    AppSidebar object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  AppSidebar deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      AppSidebar.valueOf(serialized as String);
+  AppSidebar deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AppSidebar.valueOf(serialized as String);
 }
 
 class _$AppSidebarModeSerializer
@@ -585,14 +877,18 @@ class _$AppSidebarModeSerializer
   final String wireName = 'AppSidebarMode';
 
   @override
-  Object serialize(Serializers serializers, AppSidebarMode object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    AppSidebarMode object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  AppSidebarMode deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      AppSidebarMode.valueOf(serialized as String);
+  AppSidebarMode deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => AppSidebarMode.valueOf(serialized as String);
 }
 
 class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
@@ -602,23 +898,31 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
   final String wireName = 'HistoryRecord';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, HistoryRecord object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    HistoryRecord object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'entityType',
-      serializers.serialize(object.entityType,
-          specifiedType: const FullType(EntityType)),
+      serializers.serialize(
+        object.entityType,
+        specifiedType: const FullType(EntityType),
+      ),
       'timestamp',
-      serializers.serialize(object.timestamp,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.timestamp,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.id;
     if (value != null) {
       result
         ..add('id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.page;
     if (value != null) {
@@ -631,8 +935,10 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
 
   @override
   HistoryRecord deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = HistoryRecordBuilder();
 
     final iterator = serialized.iterator;
@@ -642,20 +948,33 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'entityType':
-          result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType))! as EntityType;
+          result.entityType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )!
+                  as EntityType;
           break;
         case 'page':
-          result.page = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.page =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'timestamp':
-          result.timestamp = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.timestamp =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -747,47 +1066,47 @@ class _$PrefState extends PrefState {
   factory _$PrefState([void Function(PrefStateBuilder)? updates]) =>
       (PrefStateBuilder()..update(updates))._build();
 
-  _$PrefState._(
-      {required this.appLayout,
-      required this.moduleLayout,
-      required this.menuSidebarMode,
-      required this.historySidebarMode,
-      required this.useSidebarEditor,
-      required this.useSidebarViewer,
-      required this.customColors,
-      required this.darkCustomColors,
-      required this.statementIncludes,
-      required this.isPreviewVisible,
-      required this.isMenuVisible,
-      required this.showKanban,
-      required this.showPdfPreview,
-      required this.showPdfPreviewSideBySide,
-      required this.enableTouchEvents,
-      required this.enableFlexibleSearch,
-      required this.isHistoryVisible,
-      required this.darkModeType,
-      required this.enableDarkModeSystem,
-      required this.isFilterVisible,
-      required this.persistData,
-      required this.longPressSelectionIsDefault,
-      required this.requireAuthentication,
-      required this.tapSelectedToEdit,
-      required this.rowsPerPage,
-      required this.enableTooltips,
-      required this.colorTheme,
-      required this.darkColorTheme,
-      required this.hideGatewayWarning,
-      required this.hideReviewApp,
-      required this.hideOneYearReviewApp,
-      required this.hideTwoYearReviewApp,
-      required this.hideTaskExtensionBanner,
-      required this.editAfterSaving,
-      required this.enableNativeBrowser,
-      required this.textScaleFactor,
-      required this.donwloadsFolder,
-      required this.sortFields,
-      required this.companyPrefs})
-      : super._();
+  _$PrefState._({
+    required this.appLayout,
+    required this.moduleLayout,
+    required this.menuSidebarMode,
+    required this.historySidebarMode,
+    required this.useSidebarEditor,
+    required this.useSidebarViewer,
+    required this.customColors,
+    required this.darkCustomColors,
+    required this.statementIncludes,
+    required this.isPreviewVisible,
+    required this.isMenuVisible,
+    required this.showKanban,
+    required this.showPdfPreview,
+    required this.showPdfPreviewSideBySide,
+    required this.enableTouchEvents,
+    required this.enableFlexibleSearch,
+    required this.isHistoryVisible,
+    required this.darkModeType,
+    required this.enableDarkModeSystem,
+    required this.isFilterVisible,
+    required this.persistData,
+    required this.longPressSelectionIsDefault,
+    required this.requireAuthentication,
+    required this.tapSelectedToEdit,
+    required this.rowsPerPage,
+    required this.enableTooltips,
+    required this.colorTheme,
+    required this.darkColorTheme,
+    required this.hideGatewayWarning,
+    required this.hideReviewApp,
+    required this.hideOneYearReviewApp,
+    required this.hideTwoYearReviewApp,
+    required this.hideTaskExtensionBanner,
+    required this.editAfterSaving,
+    required this.enableNativeBrowser,
+    required this.textScaleFactor,
+    required this.donwloadsFolder,
+    required this.sortFields,
+    required this.companyPrefs,
+  }) : super._();
   @override
   PrefState rebuild(void Function(PrefStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -1200,83 +1519,174 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   _$PrefState _build() {
     _$PrefState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$PrefState._(
             appLayout: BuiltValueNullFieldError.checkNotNull(
-                appLayout, r'PrefState', 'appLayout'),
+              appLayout,
+              r'PrefState',
+              'appLayout',
+            ),
             moduleLayout: BuiltValueNullFieldError.checkNotNull(
-                moduleLayout, r'PrefState', 'moduleLayout'),
+              moduleLayout,
+              r'PrefState',
+              'moduleLayout',
+            ),
             menuSidebarMode: BuiltValueNullFieldError.checkNotNull(
-                menuSidebarMode, r'PrefState', 'menuSidebarMode'),
+              menuSidebarMode,
+              r'PrefState',
+              'menuSidebarMode',
+            ),
             historySidebarMode: BuiltValueNullFieldError.checkNotNull(
-                historySidebarMode, r'PrefState', 'historySidebarMode'),
+              historySidebarMode,
+              r'PrefState',
+              'historySidebarMode',
+            ),
             useSidebarEditor: useSidebarEditor.build(),
             useSidebarViewer: useSidebarViewer.build(),
             customColors: customColors.build(),
             darkCustomColors: darkCustomColors.build(),
             statementIncludes: statementIncludes.build(),
             isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
-                isPreviewVisible, r'PrefState', 'isPreviewVisible'),
+              isPreviewVisible,
+              r'PrefState',
+              'isPreviewVisible',
+            ),
             isMenuVisible: BuiltValueNullFieldError.checkNotNull(
-                isMenuVisible, r'PrefState', 'isMenuVisible'),
+              isMenuVisible,
+              r'PrefState',
+              'isMenuVisible',
+            ),
             showKanban: BuiltValueNullFieldError.checkNotNull(
-                showKanban, r'PrefState', 'showKanban'),
+              showKanban,
+              r'PrefState',
+              'showKanban',
+            ),
             showPdfPreview: BuiltValueNullFieldError.checkNotNull(
-                showPdfPreview, r'PrefState', 'showPdfPreview'),
+              showPdfPreview,
+              r'PrefState',
+              'showPdfPreview',
+            ),
             showPdfPreviewSideBySide: BuiltValueNullFieldError.checkNotNull(
-                showPdfPreviewSideBySide,
-                r'PrefState',
-                'showPdfPreviewSideBySide'),
+              showPdfPreviewSideBySide,
+              r'PrefState',
+              'showPdfPreviewSideBySide',
+            ),
             enableTouchEvents: BuiltValueNullFieldError.checkNotNull(
-                enableTouchEvents, r'PrefState', 'enableTouchEvents'),
+              enableTouchEvents,
+              r'PrefState',
+              'enableTouchEvents',
+            ),
             enableFlexibleSearch: BuiltValueNullFieldError.checkNotNull(
-                enableFlexibleSearch, r'PrefState', 'enableFlexibleSearch'),
+              enableFlexibleSearch,
+              r'PrefState',
+              'enableFlexibleSearch',
+            ),
             isHistoryVisible: BuiltValueNullFieldError.checkNotNull(
-                isHistoryVisible, r'PrefState', 'isHistoryVisible'),
+              isHistoryVisible,
+              r'PrefState',
+              'isHistoryVisible',
+            ),
             darkModeType: BuiltValueNullFieldError.checkNotNull(
-                darkModeType, r'PrefState', 'darkModeType'),
+              darkModeType,
+              r'PrefState',
+              'darkModeType',
+            ),
             enableDarkModeSystem: BuiltValueNullFieldError.checkNotNull(
-                enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem'),
+              enableDarkModeSystem,
+              r'PrefState',
+              'enableDarkModeSystem',
+            ),
             isFilterVisible: BuiltValueNullFieldError.checkNotNull(
-                isFilterVisible, r'PrefState', 'isFilterVisible'),
+              isFilterVisible,
+              r'PrefState',
+              'isFilterVisible',
+            ),
             persistData: BuiltValueNullFieldError.checkNotNull(
-                persistData, r'PrefState', 'persistData'),
+              persistData,
+              r'PrefState',
+              'persistData',
+            ),
             longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(
-                longPressSelectionIsDefault,
-                r'PrefState',
-                'longPressSelectionIsDefault'),
+              longPressSelectionIsDefault,
+              r'PrefState',
+              'longPressSelectionIsDefault',
+            ),
             requireAuthentication: BuiltValueNullFieldError.checkNotNull(
-                requireAuthentication, r'PrefState', 'requireAuthentication'),
+              requireAuthentication,
+              r'PrefState',
+              'requireAuthentication',
+            ),
             tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(
-                tapSelectedToEdit, r'PrefState', 'tapSelectedToEdit'),
+              tapSelectedToEdit,
+              r'PrefState',
+              'tapSelectedToEdit',
+            ),
             rowsPerPage: BuiltValueNullFieldError.checkNotNull(
-                rowsPerPage, r'PrefState', 'rowsPerPage'),
+              rowsPerPage,
+              r'PrefState',
+              'rowsPerPage',
+            ),
             enableTooltips: BuiltValueNullFieldError.checkNotNull(
-                enableTooltips, r'PrefState', 'enableTooltips'),
+              enableTooltips,
+              r'PrefState',
+              'enableTooltips',
+            ),
             colorTheme: BuiltValueNullFieldError.checkNotNull(
-                colorTheme, r'PrefState', 'colorTheme'),
+              colorTheme,
+              r'PrefState',
+              'colorTheme',
+            ),
             darkColorTheme: BuiltValueNullFieldError.checkNotNull(
-                darkColorTheme, r'PrefState', 'darkColorTheme'),
+              darkColorTheme,
+              r'PrefState',
+              'darkColorTheme',
+            ),
             hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(
-                hideGatewayWarning, r'PrefState', 'hideGatewayWarning'),
+              hideGatewayWarning,
+              r'PrefState',
+              'hideGatewayWarning',
+            ),
             hideReviewApp: BuiltValueNullFieldError.checkNotNull(
-                hideReviewApp, r'PrefState', 'hideReviewApp'),
+              hideReviewApp,
+              r'PrefState',
+              'hideReviewApp',
+            ),
             hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(
-                hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),
+              hideOneYearReviewApp,
+              r'PrefState',
+              'hideOneYearReviewApp',
+            ),
             hideTwoYearReviewApp: BuiltValueNullFieldError.checkNotNull(
-                hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp'),
+              hideTwoYearReviewApp,
+              r'PrefState',
+              'hideTwoYearReviewApp',
+            ),
             hideTaskExtensionBanner: BuiltValueNullFieldError.checkNotNull(
-                hideTaskExtensionBanner,
-                r'PrefState',
-                'hideTaskExtensionBanner'),
+              hideTaskExtensionBanner,
+              r'PrefState',
+              'hideTaskExtensionBanner',
+            ),
             editAfterSaving: BuiltValueNullFieldError.checkNotNull(
-                editAfterSaving, r'PrefState', 'editAfterSaving'),
+              editAfterSaving,
+              r'PrefState',
+              'editAfterSaving',
+            ),
             enableNativeBrowser: BuiltValueNullFieldError.checkNotNull(
-                enableNativeBrowser, r'PrefState', 'enableNativeBrowser'),
+              enableNativeBrowser,
+              r'PrefState',
+              'enableNativeBrowser',
+            ),
             textScaleFactor: BuiltValueNullFieldError.checkNotNull(
-                textScaleFactor, r'PrefState', 'textScaleFactor'),
+              textScaleFactor,
+              r'PrefState',
+              'textScaleFactor',
+            ),
             donwloadsFolder: BuiltValueNullFieldError.checkNotNull(
-                donwloadsFolder, r'PrefState', 'donwloadsFolder'),
+              donwloadsFolder,
+              r'PrefState',
+              'donwloadsFolder',
+            ),
             sortFields: sortFields.build(),
             companyPrefs: companyPrefs.build(),
           );
@@ -1300,7 +1710,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
         companyPrefs.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'PrefState', _$failedField, e.toString());
+          r'PrefState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1315,16 +1728,16 @@ class _$PrefStateSortField extends PrefStateSortField {
   @override
   final bool ascending;
 
-  factory _$PrefStateSortField(
-          [void Function(PrefStateSortFieldBuilder)? updates]) =>
-      (PrefStateSortFieldBuilder()..update(updates))._build();
+  factory _$PrefStateSortField([
+    void Function(PrefStateSortFieldBuilder)? updates,
+  ]) => (PrefStateSortFieldBuilder()..update(updates))._build();
 
   _$PrefStateSortField._({required this.field, required this.ascending})
-      : super._();
+    : super._();
   @override
   PrefStateSortField rebuild(
-          void Function(PrefStateSortFieldBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(PrefStateSortFieldBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   PrefStateSortFieldBuilder toBuilder() =>
@@ -1396,12 +1809,19 @@ class PrefStateSortFieldBuilder
   PrefStateSortField build() => _build();
 
   _$PrefStateSortField _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$PrefStateSortField._(
           field: BuiltValueNullFieldError.checkNotNull(
-              field, r'PrefStateSortField', 'field'),
+            field,
+            r'PrefStateSortField',
+            'field',
+          ),
           ascending: BuiltValueNullFieldError.checkNotNull(
-              ascending, r'PrefStateSortField', 'ascending'),
+            ascending,
+            r'PrefStateSortField',
+            'ascending',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -1412,9 +1832,9 @@ class _$CompanyPrefState extends CompanyPrefState {
   @override
   final BuiltList<HistoryRecord> historyList;
 
-  factory _$CompanyPrefState(
-          [void Function(CompanyPrefStateBuilder)? updates]) =>
-      (CompanyPrefStateBuilder()..update(updates))._build();
+  factory _$CompanyPrefState([
+    void Function(CompanyPrefStateBuilder)? updates,
+  ]) => (CompanyPrefStateBuilder()..update(updates))._build();
 
   _$CompanyPrefState._({required this.historyList}) : super._();
   @override
@@ -1443,9 +1863,9 @@ class _$CompanyPrefState extends CompanyPrefState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CompanyPrefState')
-          ..add('historyList', historyList))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'CompanyPrefState',
+    )..add('historyList', historyList)).toString();
   }
 }
 
@@ -1486,10 +1906,7 @@ class CompanyPrefStateBuilder
   _$CompanyPrefState _build() {
     _$CompanyPrefState _$result;
     try {
-      _$result = _$v ??
-          _$CompanyPrefState._(
-            historyList: historyList.build(),
-          );
+      _$result = _$v ?? _$CompanyPrefState._(historyList: historyList.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -1497,7 +1914,10 @@ class CompanyPrefStateBuilder
         historyList.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CompanyPrefState', _$failedField, e.toString());
+          r'CompanyPrefState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1519,9 +1939,12 @@ class _$HistoryRecord extends HistoryRecord {
   factory _$HistoryRecord([void Function(HistoryRecordBuilder)? updates]) =>
       (HistoryRecordBuilder()..update(updates))._build();
 
-  _$HistoryRecord._(
-      {this.id, required this.entityType, this.page, required this.timestamp})
-      : super._();
+  _$HistoryRecord._({
+    this.id,
+    required this.entityType,
+    this.page,
+    required this.timestamp,
+  }) : super._();
   @override
   HistoryRecord rebuild(void Function(HistoryRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -1611,14 +2034,21 @@ class HistoryRecordBuilder
   HistoryRecord build() => _build();
 
   _$HistoryRecord _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$HistoryRecord._(
           id: id,
           entityType: BuiltValueNullFieldError.checkNotNull(
-              entityType, r'HistoryRecord', 'entityType'),
+            entityType,
+            r'HistoryRecord',
+            'entityType',
+          ),
           page: page,
           timestamp: BuiltValueNullFieldError.checkNotNull(
-              timestamp, r'HistoryRecord', 'timestamp'),
+            timestamp,
+            r'HistoryRecord',
+            'timestamp',
+          ),
         );
     replace(_$result);
     return _$result;

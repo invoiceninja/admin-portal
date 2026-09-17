@@ -42,16 +42,19 @@ abstract class ExpenseCategoryState
   BuiltList<String> get list;
 
   ExpenseCategoryState loadExpenseCategories(
-      BuiltList<ExpenseCategoryEntity> clients) {
+    BuiltList<ExpenseCategoryEntity> clients,
+  ) {
     final map = Map<String, ExpenseCategoryEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<ExpenseCategoryState> get serializer =>
@@ -63,8 +66,10 @@ abstract class ExpenseCategoryUIState extends Object
     implements Built<ExpenseCategoryUIState, ExpenseCategoryUIStateBuilder> {
   factory ExpenseCategoryUIState(PrefStateSortField? sortField) {
     return _$ExpenseCategoryUIState._(
-      listUIState: ListUIState(sortField?.field ?? ExpenseCategoryFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? ExpenseCategoryFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: ExpenseCategoryEntity(),
       selectedId: '',
       tabIndex: 0,

@@ -29,10 +29,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HistoryDrawer extends StatelessWidget {
-  const HistoryDrawer({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const HistoryDrawer({Key? key, required this.viewModel}) : super(key: key);
 
   final AppDrawerVM viewModel;
 
@@ -44,9 +41,7 @@ class HistoryDrawer extends StatelessWidget {
 
     final widgets = <Widget>[];
     for (var history in state.historyList) {
-      widgets.add(HistoryListTile(
-        history: history,
-      ));
+      widgets.add(HistoryListTile(history: history));
     }
 
     return SizedBox(
@@ -72,17 +67,16 @@ class HistoryDrawer extends StatelessWidget {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     store.dispatch(
-                        UpdateUserPreferences(sidebar: AppSidebar.history));
+                      UpdateUserPreferences(sidebar: AppSidebar.history),
+                    );
                   },
-                )
+                ),
             ],
           ),
           body: FocusTraversalGroup(
             child: ColoredBox(
               color: Theme.of(context).cardColor,
-              child: ScrollableListView(
-                children: widgets,
-              ),
+              child: ScrollableListView(children: widgets),
             ),
           ),
         ),
@@ -147,11 +141,16 @@ class _HistoryListTileState extends State<HistoryListTile> {
         clientId = (entity as BelongsToClient).clientId;
       }
 
-      title = Text(entity.listDisplayName.isEmpty
-          ? formatNumber(entity.listDisplayAmount, context,
-              formatNumberType: entity.listDisplayAmountType,
-              clientId: clientId)!
-          : entity.listDisplayName);
+      title = Text(
+        entity.listDisplayName.isEmpty
+            ? formatNumber(
+                entity.listDisplayAmount,
+                context,
+                formatNumberType: entity.listDisplayAmountType,
+                clientId: clientId,
+              )!
+            : entity.listDisplayName,
+      );
 
       subtitle = Text(
         localization!.lookup('${history.entityType}'),
@@ -169,21 +168,22 @@ class _HistoryListTileState extends State<HistoryListTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                title,
-                subtitle,
-              ],
-            )),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [title, subtitle],
+              ),
+            ),
             SizedBox(width: 8),
             Flexible(
-                child: LiveText(
-              () => timeago.format(history.dateTime,
-                  locale: localeSelector(state, twoLetter: true) + '_short'),
-              duration: Duration(minutes: 1),
-              maxLines: 2,
-            ))
+              child: LiveText(
+                () => timeago.format(
+                  history.dateTime,
+                  locale: localeSelector(state, twoLetter: true) + '_short',
+                ),
+                duration: Duration(minutes: 1),
+                maxLines: 2,
+              ),
+            ),
           ],
         ),
         /*
@@ -238,11 +238,13 @@ class _HistoryListTileState extends State<HistoryListTile> {
               store.dispatch(ViewReports());
               break;
             case EntityType.settings:
-              store.dispatch(ViewSettings(
-                section: history.id,
-                company: state.company,
-                tabIndex: 0,
-              ));
+              store.dispatch(
+                ViewSettings(
+                  section: history.id,
+                  company: state.company,
+                  tabIndex: 0,
+                ),
+              );
               break;
             default:
               if (history.id == null) {
@@ -262,9 +264,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
                   entities: [entity!],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
-                        ..future.then<Null>((_) {
-                          Navigator.pop(navigatorKey.currentContext!);
-                        }))
+                          ..future.then<Null>((_) {
+                            Navigator.pop(navigatorKey.currentContext!);
+                          }))
                       : null,
                 );
               },

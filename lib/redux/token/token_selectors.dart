@@ -8,12 +8,19 @@ import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownTokenList = memo3((BuiltMap<String, TokenEntity> tokenMap,
-        BuiltList<String> tokenList, String clientId) =>
-    dropdownTokensSelector(tokenMap, tokenList, clientId));
+var memoizedDropdownTokenList = memo3(
+  (
+    BuiltMap<String, TokenEntity> tokenMap,
+    BuiltList<String> tokenList,
+    String clientId,
+  ) => dropdownTokensSelector(tokenMap, tokenList, clientId),
+);
 
-List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
-    BuiltList<String> tokenList, String clientId) {
+List<String> dropdownTokensSelector(
+  BuiltMap<String, TokenEntity> tokenMap,
+  BuiltList<String> tokenList,
+  String clientId,
+) {
   final list = tokenList.where((tokenId) {
     final token = tokenMap[tokenId]!;
     return token.isActive;
@@ -28,18 +35,19 @@ List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
   return list;
 }
 
-var memoizedFilteredTokenList = memo4((
-  SelectionState selectionState,
-  BuiltMap<String?, TokenEntity?> tokenMap,
-  BuiltList<String> tokenList,
-  ListUIState tokenListState,
-) =>
-    filteredTokensSelector(
-      selectionState,
-      tokenMap,
-      tokenList,
-      tokenListState,
-    ));
+var memoizedFilteredTokenList = memo4(
+  (
+    SelectionState selectionState,
+    BuiltMap<String?, TokenEntity?> tokenMap,
+    BuiltList<String> tokenList,
+    ListUIState tokenListState,
+  ) => filteredTokensSelector(
+    selectionState,
+    tokenMap,
+    tokenList,
+    tokenListState,
+  ),
+);
 
 List<String> filteredTokensSelector(
   SelectionState selectionState,
@@ -71,7 +79,10 @@ List<String> filteredTokensSelector(
     final tokenA = tokenMap[tokenAId]!;
     final tokenB = tokenMap[tokenBId];
     return tokenA.compareTo(
-        tokenB, tokenListState.sortField, tokenListState.sortAscending);
+      tokenB,
+      tokenListState.sortField,
+      tokenListState.sortAscending,
+    );
   });
 
   return list;

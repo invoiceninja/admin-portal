@@ -35,9 +35,7 @@ class TaskEditDetailsScreen extends StatelessWidget {
             //key: ValueKey('__task_${viewModel.task.id}__'),
           );
         } else {
-          return TaskEditDetails(
-            viewModel: viewModel,
-          );
+          return TaskEditDetails(viewModel: viewModel);
         }
       },
     );
@@ -77,13 +75,14 @@ class TaskEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            entity: ClientEntity(),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
-              }));
+          entity: ClientEntity(),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
         });
@@ -100,13 +99,14 @@ class TaskEditDetailsVM {
       },
       onAddProjectPressed: (context, completer) {
         createEntity(
-            entity: ProjectEntity().rebuild((b) => b..clientId = task.clientId),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
-              }));
+          entity: ProjectEntity().rebuild((b) => b..clientId = task.clientId),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
         });
@@ -123,9 +123,9 @@ class TaskEditDetailsVM {
   final TaskEntity? origTask;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
+  onAddClientPressed;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddProjectPressed;
+  onAddProjectPressed;
   final Function(TaskTime, int) onUpdatedTaskTime;
   final Function(int) onRemoveTaskTime;
 }

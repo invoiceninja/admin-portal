@@ -42,7 +42,8 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, LoadProduct>(loadProduct),
     TypedMiddleware<AppState, SetTaxCategoryProductsRequest>(
-        setTaxCategoryProducts),
+      setTaxCategoryProducts,
+    ),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
     TypedMiddleware<AppState, ArchiveProductsRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductsRequest>(deleteProduct),
@@ -66,8 +67,11 @@ Middleware<AppState> _editProduct() {
 }
 
 Middleware<AppState> _viewProduct() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (
+    Store<AppState> store,
+    dynamic dynamicAction,
+    NextDispatcher next,
+  ) async {
     final action = dynamicAction as ViewProduct?;
 
     next(action);
@@ -94,7 +98,9 @@ Middleware<AppState> _viewProductList() {
 
     if (store.state.prefState.isMobile) {
       navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          ProductScreen.route, (Route<dynamic> route) => false);
+        ProductScreen.route,
+        (Route<dynamic> route) => false,
+      );
     }
   };
 }
@@ -107,15 +113,19 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
         .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.productIds, EntityAction.archive)
+          store.state.credentials,
+          action.productIds,
+          EntityAction.archive,
+        )
         .then((List<ProductEntity> products) {
-      store.dispatch(ArchiveProductsSuccess(products));
-      action.completer.complete(null);
-    }).catchError((dynamic error) {
-      print(error);
-      store.dispatch(ArchiveProductsFailure(prevProducts));
-      action.completer.completeError(error);
-    });
+          store.dispatch(ArchiveProductsSuccess(products));
+          action.completer.complete(null);
+        })
+        .catchError((dynamic error) {
+          print(error);
+          store.dispatch(ArchiveProductsFailure(prevProducts));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -125,21 +135,25 @@ Middleware<AppState> _setTaxCategoryProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SetTaxCategoryProductsRequest;
     repository
-        .bulkAction(store.state.credentials, action.productIds!,
-            EntityAction.setTaxCategory,
-            taxCategoryId: action.taxCategoryId!)
+        .bulkAction(
+          store.state.credentials,
+          action.productIds!,
+          EntityAction.setTaxCategory,
+          taxCategoryId: action.taxCategoryId!,
+        )
         .then((List<ProductEntity> products) {
-      store.dispatch(SetTaxCategoryProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((dynamic error) {
-      print(error);
-      store.dispatch(SetTaxCategoryProductsFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          store.dispatch(SetTaxCategoryProductsSuccess(products));
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((dynamic error) {
+          print(error);
+          store.dispatch(SetTaxCategoryProductsFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -153,15 +167,19 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
         .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.productIds, EntityAction.delete)
+          store.state.credentials,
+          action.productIds,
+          EntityAction.delete,
+        )
         .then((List<ProductEntity> products) {
-      store.dispatch(DeleteProductsSuccess(products));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(DeleteProductsFailure(prevProducts));
-      action.completer.completeError(error);
-    });
+          store.dispatch(DeleteProductsSuccess(products));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(DeleteProductsFailure(prevProducts));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -175,15 +193,19 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
         .toList();
     repository
         .bulkAction(
-            store.state.credentials, action.productIds, EntityAction.restore)
+          store.state.credentials,
+          action.productIds,
+          EntityAction.restore,
+        )
         .then((List<ProductEntity> products) {
-      store.dispatch(RestoreProductsSuccess(products));
-      action.completer.complete(null);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(RestoreProductsFailure(prevProducts));
-      action.completer.completeError(error);
-    });
+          store.dispatch(RestoreProductsSuccess(products));
+          action.completer.complete(null);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(RestoreProductsFailure(prevProducts));
+          action.completer.completeError(error);
+        });
 
     next(action);
   };
@@ -198,23 +220,20 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
     final changedStock = product.stockQuantity != origProduct.stockQuantity;
 
     repository
-        .saveData(
-      store.state.credentials,
-      product,
-      changedStock: changedStock,
-    )
+        .saveData(store.state.credentials, product, changedStock: changedStock)
         .then((ProductEntity product) {
-      if (action.product!.isNew) {
-        store.dispatch(AddProductSuccess(product));
-      } else {
-        store.dispatch(SaveProductSuccess(product));
-      }
-      action.completer!.complete(product);
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(SaveProductFailure(error));
-      action.completer!.completeError(error);
-    });
+          if (action.product!.isNew) {
+            store.dispatch(AddProductSuccess(product));
+          } else {
+            store.dispatch(SaveProductSuccess(product));
+          }
+          action.completer!.complete(product);
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(SaveProductFailure(error));
+          action.completer!.completeError(error);
+        });
 
     next(action);
   };
@@ -233,18 +252,19 @@ Middleware<AppState> _loadProduct(ProductRepository repository) {
     repository
         .loadItem(store.state.credentials, action!.productId)
         .then((product) {
-      store.dispatch(LoadProductSuccess(product));
+          store.dispatch(LoadProductSuccess(product));
 
-      if (action.completer != null) {
-        action.completer!.complete(null);
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadProductFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
+          if (action.completer != null) {
+            action.completer!.complete(null);
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadProductFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
+        });
 
     next(action);
   };
@@ -256,37 +276,43 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
     final state = store.state;
 
     store.dispatch(LoadProductsRequest());
-    repository.loadList(state.credentials, action.page).then((data) {
-      store.dispatch(LoadProductsSuccess(data));
+    repository
+        .loadList(state.credentials, action.page)
+        .then((data) {
+          store.dispatch(LoadProductsSuccess(data));
 
-      final documents = <DocumentEntity>[];
-      data.forEach((product) {
-        product.documents.forEach((document) {
-          documents.add(document.rebuild((b) => b
-            ..parentId = product.id
-            ..parentType = EntityType.product));
+          final documents = <DocumentEntity>[];
+          data.forEach((product) {
+            product.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = product.id
+                    ..parentType = EntityType.product,
+                ),
+              );
+            });
+          });
+          store.dispatch(LoadDocumentsSuccess(documents));
+
+          if (data.length == kMaxRecordsPerPage) {
+            store.dispatch(
+              LoadProducts(completer: action.completer, page: action.page + 1),
+            );
+          } else {
+            if (action.completer != null) {
+              action.completer!.complete(null);
+            }
+            store.dispatch(LoadInvoices());
+          }
+        })
+        .catchError((Object error) {
+          print(error);
+          store.dispatch(LoadProductsFailure(error));
+          if (action.completer != null) {
+            action.completer!.completeError(error);
+          }
         });
-      });
-      store.dispatch(LoadDocumentsSuccess(documents));
-
-      if (data.length == kMaxRecordsPerPage) {
-        store.dispatch(LoadProducts(
-          completer: action.completer,
-          page: action.page + 1,
-        ));
-      } else {
-        if (action.completer != null) {
-          action.completer!.complete(null);
-        }
-        store.dispatch(LoadInvoices());
-      }
-    }).catchError((Object error) {
-      print(error);
-      store.dispatch(LoadProductsFailure(error));
-      if (action.completer != null) {
-        action.completer!.completeError(error);
-      }
-    });
 
     next(action);
   };
@@ -298,27 +324,32 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-        store.state.credentials,
-        action!.product,
-        action.multipartFiles,
-        action.isPrivate,
-      )
+            store.state.credentials,
+            action!.product,
+            action.multipartFiles,
+            action.isPrivate,
+          )
           .then((product) {
-        store.dispatch(SaveProductSuccess(product));
+            store.dispatch(SaveProductSuccess(product));
 
-        final documents = <DocumentEntity>[];
-        product.documents.forEach((document) {
-          documents.add(document.rebuild((b) => b
-            ..parentId = product.id
-            ..parentType = EntityType.product));
-        });
-        store.dispatch(LoadDocumentsSuccess(documents));
-        action.completer.complete(documents);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveProductDocumentFailure(error));
-        action.completer.completeError(error);
-      });
+            final documents = <DocumentEntity>[];
+            product.documents.forEach((document) {
+              documents.add(
+                document.rebuild(
+                  (b) => b
+                    ..parentId = product.id
+                    ..parentType = EntityType.product,
+                ),
+              );
+            });
+            store.dispatch(LoadDocumentsSuccess(documents));
+            action.completer.complete(documents);
+          })
+          .catchError((Object error) {
+            print(error);
+            store.dispatch(SaveProductDocumentFailure(error));
+            action.completer.completeError(error);
+          });
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveProductDocumentFailure(error));

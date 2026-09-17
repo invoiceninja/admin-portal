@@ -12,9 +12,9 @@ part 'task_status_model.g.dart';
 
 abstract class TaskStatusListResponse
     implements Built<TaskStatusListResponse, TaskStatusListResponseBuilder> {
-  factory TaskStatusListResponse(
-          [void updates(TaskStatusListResponseBuilder b)]) =
-      _$TaskStatusListResponse;
+  factory TaskStatusListResponse([
+    void updates(TaskStatusListResponseBuilder b),
+  ]) = _$TaskStatusListResponse;
 
   TaskStatusListResponse._();
 
@@ -30,9 +30,9 @@ abstract class TaskStatusListResponse
 
 abstract class TaskStatusItemResponse
     implements Built<TaskStatusItemResponse, TaskStatusItemResponseBuilder> {
-  factory TaskStatusItemResponse(
-          [void updates(TaskStatusItemResponseBuilder b)]) =
-      _$TaskStatusItemResponse;
+  factory TaskStatusItemResponse([
+    void updates(TaskStatusItemResponseBuilder b),
+  ]) = _$TaskStatusItemResponse;
 
   TaskStatusItemResponse._();
 
@@ -93,12 +93,13 @@ abstract class TaskStatusEntity extends Object
   int? get statusOrder;
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! &&
@@ -129,8 +130,9 @@ abstract class TaskStatusEntity extends Object
         response = taskStatusA!.name.compareTo(taskStatusB!.name);
         break;
       case TaskStatusFields.order:
-        response = (taskStatusA!.statusOrder ?? 99999)
-            .compareTo(taskStatusB!.statusOrder ?? 99999);
+        response = (taskStatusA!.statusOrder ?? 99999).compareTo(
+          taskStatusB!.statusOrder ?? 99999,
+        );
         break;
       case TaskStatusFields.updatedAt:
         response = taskStatusA!.updatedAt.compareTo(taskStatusB!.updatedAt);
@@ -145,22 +147,12 @@ abstract class TaskStatusEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [name], needle: filter);
   }
 
   @override

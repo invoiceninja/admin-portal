@@ -108,8 +108,9 @@ abstract class GroupEntity extends Object
 
     switch (sortField) {
       case GroupFields.name:
-        response =
-            groupA!.name.toLowerCase().compareTo(groupB!.name.toLowerCase());
+        response = groupA!.name.toLowerCase().compareTo(
+          groupB!.name.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by group.$sortField is not implemented');
@@ -121,29 +122,22 @@ abstract class GroupEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [], needle: filter);
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {

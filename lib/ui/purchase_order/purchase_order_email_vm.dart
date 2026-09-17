@@ -42,9 +42,7 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
         return EmailPurchaseOrderVM.fromStore(store, purchaseOrder);
       },
       builder: (context, viewModel) {
-        return InvoiceEmailView(
-          viewModel: viewModel,
-        );
+        return InvoiceEmailView(viewModel: viewModel);
       },
     );
   }
@@ -60,20 +58,22 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
     required ClientEntity? client,
     required VendorEntity? vendor,
     required Function(BuildContext, EmailTemplate, String, String, String)
-        onSendPressed,
+    onSendPressed,
   }) : super(
-          state: state,
-          isLoading: isLoading,
-          isSaving: isSaving,
-          company: company,
-          invoice: invoice,
-          client: client,
-          vendor: vendor,
-          onSendPressed: onSendPressed,
-        );
+         state: state,
+         isLoading: isLoading,
+         isSaving: isSaving,
+         company: company,
+         invoice: invoice,
+         client: client,
+         vendor: vendor,
+         onSendPressed: onSendPressed,
+       );
 
   factory EmailPurchaseOrderVM.fromStore(
-      Store<AppState> store, InvoiceEntity purchaseOrder) {
+    Store<AppState> store,
+    InvoiceEntity purchaseOrder,
+  ) {
     final state = store.state;
 
     return EmailPurchaseOrderVM(
@@ -86,21 +86,24 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
       vendor: state.vendorState.map[purchaseOrder.vendorId],
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            AppLocalization.of(context)!.emailedPurchaseOrder,
-            shouldPop: isMobile(context));
+          AppLocalization.of(context)!.emailedPurchaseOrder,
+          shouldPop: isMobile(context),
+        );
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {
             viewEntity(entity: purchaseOrder);
           });
         }
-        store.dispatch(EmailPurchaseOrderRequest(
-          completer: completer,
-          purchaseOrderId: purchaseOrder.id,
-          template: template,
-          subject: subject,
-          body: body,
-          ccEmail: ccEmail,
-        ));
+        store.dispatch(
+          EmailPurchaseOrderRequest(
+            completer: completer,
+            purchaseOrderId: purchaseOrder.id,
+            template: template,
+            subject: subject,
+            body: body,
+            ccEmail: ccEmail,
+          ),
+        );
       },
     );
   }

@@ -28,35 +28,34 @@ class FieldGrid extends StatelessWidget {
         );
 
         if (value.contains('\n')) {
-          text = Tooltip(
-            message: value,
-            child: text,
-          );
+          text = Tooltip(message: value, child: text);
         }
 
         if (value.isNotEmpty) {
-          fieldWidgets.add(Material(
-            color: Colors.transparent,
-            child: CopyToClipboard(
-              value: value,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Flexible(
-                    child: Text(
-                      localization!.lookup(field),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: textColor!.withValues(alpha: .65),
+          fieldWidgets.add(
+            Material(
+              color: Colors.transparent,
+              child: CopyToClipboard(
+                value: value,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        localization!.lookup(field),
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: textColor!.withValues(alpha: .65),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 4),
-                  text,
-                ],
+                    SizedBox(height: 4),
+                    text,
+                  ],
+                ),
               ),
             ),
-          ));
+          );
         }
       }
     });
@@ -72,16 +71,18 @@ class FieldGrid extends StatelessWidget {
           color: Theme.of(context).cardColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: LayoutBuilder(builder: (context, constraints) {
-              return GridView.count(
-                physics: NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 12,
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                children: fieldWidgets,
-                childAspectRatio: ((constraints.maxWidth / 2) - 8) / 54,
-              );
-            }),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: 12,
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  children: fieldWidgets,
+                  childAspectRatio: ((constraints.maxWidth / 2) - 8) / 54,
+                );
+              },
+            ),
           ),
         ),
         ListDivider(),

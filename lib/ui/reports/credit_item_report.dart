@@ -47,16 +47,23 @@ enum CreditItemReportFields {
   record_state,
 }
 
-var memoizedCreditItemReport = memo6((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  StaticState staticState,
-) =>
-    lineItemReport(userCompany!, reportsUIState, productMap, creditMap,
-        clientMap, staticState));
+var memoizedCreditItemReport = memo6(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, ProductEntity> productMap,
+    BuiltMap<String, InvoiceEntity> creditMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    StaticState staticState,
+  ) => lineItemReport(
+    userCompany!,
+    reportsUIState,
+    productMap,
+    creditMap,
+    clientMap,
+    staticState,
+  ),
+);
 
 ReportResult lineItemReport(
   UserCompanyEntity userCompany,
@@ -83,10 +90,12 @@ ReportResult lineItemReport(
   ];
 
   if (lineItemReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(lineItemReportSettings.columns
-        .map((e) => EnumUtils.fromString(CreditItemReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      lineItemReportSettings.columns
+          .map((e) => EnumUtils.fromString(CreditItemReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -141,7 +150,8 @@ ReportResult lineItemReport(
             } else {
               cost = productId == null ? 0.0 : productMap[productId]!.cost;
             }
-            value = (lineItem.netTotal(credit, precision) *
+            value =
+                (lineItem.netTotal(credit, precision) *
                     1 /
                     credit.exchangeRate) -
                 cost;
@@ -168,7 +178,7 @@ ReportResult lineItemReport(
             value = credit.usesInclusiveTaxes
                 ? lineItem.total(credit, precision)
                 : lineItem.total(credit, precision) +
-                    lineItem.taxAmount(credit, precision);
+                      lineItem.taxAmount(credit, precision);
             break;
           case CreditItemReportFields.productKey:
             value = lineItem.productKey;
@@ -211,7 +221,7 @@ ReportResult lineItemReport(
           case CreditItemReportFields.currency:
             value =
                 staticState.currencyMap[client.currencyId]?.listDisplayName ??
-                    '';
+                '';
             break;
           case CreditItemReportFields.clientNumber:
             value = client.number;
@@ -220,8 +230,9 @@ ReportResult lineItemReport(
             value = client.idNumber;
             break;
           case CreditItemReportFields.record_state:
-            value = AppLocalization.of(navigatorKey.currentContext!)!
-                .lookup(credit.entityState);
+            value = AppLocalization.of(
+              navigatorKey.currentContext!,
+            )!.lookup(credit.entityState);
             break;
         }
 
@@ -237,14 +248,17 @@ ReportResult lineItemReport(
         if (value.runtimeType == bool) {
           row.add(credit.getReportBool(value: value));
         } else if (value.runtimeType == double || value.runtimeType == int) {
-          row.add(credit.getReportDouble(
+          row.add(
+            credit.getReportDouble(
               value: value,
               currencyId: column == CreditItemReportFields.quantity
                   ? null
                   : column == CreditItemReportFields.profit ||
-                          column == CreditItemReportFields.cost
-                      ? userCompany.company.currencyId
-                      : client.currencyId));
+                        column == CreditItemReportFields.cost
+                  ? userCompany.company.currencyId
+                  : client.currencyId,
+            ),
+          );
         } else {
           row.add(credit.getReportString(value: value));
         }
@@ -257,19 +271,28 @@ ReportResult lineItemReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, lineItemReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      lineItemReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
     allColumns: CreditItemReportFields.values
-        .where((field) =>
-            field != CreditItemReportFields.discount ||
-            userCompany.company.enableProductDiscount)
+        .where(
+          (field) =>
+              field != CreditItemReportFields.discount ||
+              userCompany.company.enableProductDiscount,
+        )
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
   );
 }

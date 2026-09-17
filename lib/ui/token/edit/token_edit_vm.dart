@@ -82,41 +82,49 @@ class TokenEditVM {
         Debouncer.runOnComplete(() {
           final token = store.state.tokenUIState.editing;
           passwordCallback(
-              context: context,
-              callback: (password, idToken) {
-                final localization = navigatorKey.localization;
-                final navigator = navigatorKey.currentState;
-                final Completer<TokenEntity> completer =
-                    new Completer<TokenEntity>();
-                store.dispatch(SaveTokenRequest(
+            context: context,
+            callback: (password, idToken) {
+              final localization = navigatorKey.localization;
+              final navigator = navigatorKey.currentState;
+              final Completer<TokenEntity> completer =
+                  new Completer<TokenEntity>();
+              store.dispatch(
+                SaveTokenRequest(
                   completer: completer,
                   token: token,
                   password: password,
                   idToken: idToken,
-                ));
-                return completer.future.then((savedToken) {
-                  showToast(token!.isNew
-                      ? localization!.createdToken
-                      : localization!.updatedToken);
+                ),
+              );
+              return completer.future
+                  .then((savedToken) {
+                    showToast(
+                      token!.isNew
+                          ? localization!.createdToken
+                          : localization!.updatedToken,
+                    );
 
-                  if (state.prefState.isMobile) {
-                    store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
-                    if (token.isNew) {
-                      navigator!.pushReplacementNamed(TokenViewScreen.route);
+                    if (state.prefState.isMobile) {
+                      store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
+                      if (token.isNew) {
+                        navigator!.pushReplacementNamed(TokenViewScreen.route);
+                      } else {
+                        navigator!.pop(savedToken);
+                      }
                     } else {
-                      navigator!.pop(savedToken);
+                      viewEntity(entity: savedToken, force: true);
                     }
-                  } else {
-                    viewEntity(entity: savedToken, force: true);
-                  }
-                }).catchError((Object error) {
-                  showDialog<ErrorDialog>(
+                  })
+                  .catchError((Object error) {
+                    showDialog<ErrorDialog>(
                       context: navigatorKey.currentContext!,
                       builder: (BuildContext context) {
                         return ErrorDialog(error);
-                      });
-                });
-              });
+                      },
+                    );
+                  });
+            },
+          );
         });
       },
     );

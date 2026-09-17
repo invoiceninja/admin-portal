@@ -100,11 +100,7 @@ class WebClient {
 
       final client = http.Client();
       response = await client
-          .post(
-            Uri.parse(url),
-            body: data,
-            headers: headers,
-          )
+          .post(Uri.parse(url), body: data, headers: headers)
           .timeout(
             Duration(
               seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
@@ -145,19 +141,19 @@ class WebClient {
     http.Response response;
 
     if (multipartFile != null) {
-      response = await _uploadFiles(url, token, [multipartFile],
-          data: data, method: 'PUT');
+      response = await _uploadFiles(
+        url,
+        token,
+        [multipartFile],
+        data: data,
+        method: 'PUT',
+      );
     } else {
       final client = http.Client();
       response = await client.put(
         Uri.parse(url),
         body: data,
-        headers: _getHeaders(
-          url,
-          token,
-          password: password,
-          idToken: idToken,
-        ),
+        headers: _getHeaders(url, token, password: password, idToken: idToken),
       );
       client.close();
     }
@@ -185,12 +181,7 @@ class WebClient {
     final client = http.Client();
     final http.Response response = await client.delete(
       Uri.parse(url),
-      headers: _getHeaders(
-        url,
-        token,
-        password: password,
-        idToken: idToken,
-      ),
+      headers: _getHeaders(url, token, password: password, idToken: idToken),
       body: data,
     );
     client.close();
@@ -247,7 +238,10 @@ class WebClient {
 
     if (response.statusCode >= 500) {
       throw _parseError(
-          response.statusCode, response.body, response.reasonPhrase);
+        response.statusCode,
+        response.body,
+        response.reasonPhrase,
+      );
     } else if (serverVersion == null) {
       throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
     } else if (Version.parse(kClientVersion) <
@@ -258,7 +252,10 @@ class WebClient {
       throw 'Error: server not supported, please update to the latest version [Current v$serverVersion < Minimum v$kMinServerVersion]';
     } else if (response.statusCode >= 400) {
       throw _parseError(
-          response.statusCode, response.body, response.reasonPhrase);
+        response.statusCode,
+        response.body,
+        response.reasonPhrase,
+      );
     }
   }
 
@@ -306,8 +303,9 @@ class WebClient {
         message += '\n';
         try {
           jsonResponse['errors'].forEach((String field, dynamic errors) {
-            (errors as List<dynamic>)
-                .forEach((dynamic error) => message += '\n • $error');
+            (errors as List<dynamic>).forEach(
+              (dynamic error) => message += '\n • $error',
+            );
           });
         } catch (error) {
           print('Failed to parse error: $error');
@@ -321,14 +319,19 @@ class WebClient {
   }
 
   Future<http.Response> _uploadFiles(
-      String url, String? token, List<MultipartFile> multipartFiles,
-      {String method = 'POST', dynamic data}) async {
+    String url,
+    String? token,
+    List<MultipartFile> multipartFiles, {
+    String method = 'POST',
+    dynamic data,
+  }) async {
     final request = http.MultipartRequest(method, Uri.parse(url))
       ..fields.addAll(data ?? {})
       ..headers.addAll(_getHeaders(url, token))
       ..files.addAll(multipartFiles);
 
-    return await http.Response.fromStream(await request.send())
-        .timeout(const Duration(minutes: 10));
+    return await http.Response.fromStream(
+      await request.send(),
+    ).timeout(const Duration(minutes: 10));
   }
 }

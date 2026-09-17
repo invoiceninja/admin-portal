@@ -21,10 +21,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SubscriptionViewScreen extends StatelessWidget {
-  const SubscriptionViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const SubscriptionViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
   static const String route = '/$kSettings/$kSettingsPaymentLinksView';
   final bool isFilter;
 
@@ -35,10 +33,7 @@ class SubscriptionViewScreen extends StatelessWidget {
         return SubscriptionViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return SubscriptionView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return SubscriptionView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -61,13 +56,15 @@ class SubscriptionViewVM {
     final state = store.state;
     final subscription =
         state.subscriptionState.map[state.subscriptionUIState.selectedId] ??
-            SubscriptionEntity(id: state.subscriptionUIState.selectedId);
+        SubscriptionEntity(id: state.subscriptionUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
-      store.dispatch(LoadSubscription(
-          completer: completer, subscriptionId: subscription.id));
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
+      store.dispatch(
+        LoadSubscription(completer: completer, subscriptionId: subscription.id),
+      );
       return completer.future;
     }
 

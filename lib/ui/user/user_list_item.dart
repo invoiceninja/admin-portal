@@ -75,8 +75,10 @@ class UserListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(user.listDisplayAmount, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                formatNumber(user.listDisplayAmount, context)!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ],
           ),
         ),
@@ -84,11 +86,7 @@ class UserListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
+                ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
                 : Container(),
             EntityStateLabel(user),
           ],

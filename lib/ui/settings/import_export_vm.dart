@@ -27,16 +27,12 @@ class ImportExportScreen extends StatelessWidget {
 }
 
 class ImportExportVM {
-  ImportExportVM({
-    required this.state,
-  });
+  ImportExportVM({required this.state});
 
   static ImportExportVM fromStore(Store<AppState> store) {
     final state = store.state;
 
-    return ImportExportVM(
-      state: state,
-    );
+    return ImportExportVM(state: state);
   }
 
   final AppState state;

@@ -35,16 +35,19 @@ abstract class TransactionRuleState
   }
 
   TransactionRuleState loadTransactionRules(
-      BuiltList<TransactionRuleEntity> clients) {
+    BuiltList<TransactionRuleEntity> clients,
+  ) {
     final map = Map<String, TransactionRuleEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<TransactionRuleState> get serializer =>
@@ -56,8 +59,10 @@ abstract class TransactionRuleUIState extends Object
     implements Built<TransactionRuleUIState, TransactionRuleUIStateBuilder> {
   factory TransactionRuleUIState(PrefStateSortField? sortField) {
     return _$TransactionRuleUIState._(
-      listUIState: ListUIState(sortField?.field ?? TransactionRuleFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? TransactionRuleFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: TransactionRuleEntity(),
       selectedId: '',
       tabIndex: 0,

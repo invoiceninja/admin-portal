@@ -86,30 +86,40 @@ class PaymentRefundVM {
       },
       onRefundPressed:
           (BuildContext context, Completer<PaymentEntity> completer) {
-        store.dispatch(
-            RefundPaymentRequest(completer: completer, payment: payment));
-        return completer.future.then((savedPayment) {
-          showToast(AppLocalization.of(navigatorKey.currentContext!)!
-              .refundedPayment);
-          if (isMobile(navigatorKey.currentContext!)) {
-            store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
-            if (payment.isNew) {
-              Navigator.of(navigatorKey.currentContext!)
-                  .pushReplacementNamed(PaymentViewScreen.route);
-            } else {
-              Navigator.of(navigatorKey.currentContext!).pop(savedPayment);
-            }
-          } else {
-            viewEntity(entity: savedPayment, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext!,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
-              });
-        });
-      },
+            store.dispatch(
+              RefundPaymentRequest(completer: completer, payment: payment),
+            );
+            return completer.future
+                .then((savedPayment) {
+                  showToast(
+                    AppLocalization.of(
+                      navigatorKey.currentContext!,
+                    )!.refundedPayment,
+                  );
+                  if (isMobile(navigatorKey.currentContext!)) {
+                    store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
+                    if (payment.isNew) {
+                      Navigator.of(
+                        navigatorKey.currentContext!,
+                      ).pushReplacementNamed(PaymentViewScreen.route);
+                    } else {
+                      Navigator.of(
+                        navigatorKey.currentContext!,
+                      ).pop(savedPayment);
+                    }
+                  } else {
+                    viewEntity(entity: savedPayment, force: true);
+                  }
+                })
+                .catchError((Object error) {
+                  showDialog<ErrorDialog>(
+                    context: navigatorKey.currentContext!,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    },
+                  );
+                });
+          },
     );
   }
 

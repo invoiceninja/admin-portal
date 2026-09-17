@@ -11,9 +11,9 @@ part 'date_format_model.g.dart';
 
 abstract class DateFormatListResponse
     implements Built<DateFormatListResponse, DateFormatListResponseBuilder> {
-  factory DateFormatListResponse(
-          [void updates(DateFormatListResponseBuilder b)]) =
-      _$DateFormatListResponse;
+  factory DateFormatListResponse([
+    void updates(DateFormatListResponseBuilder b),
+  ]) = _$DateFormatListResponse;
 
   DateFormatListResponse._();
 
@@ -29,9 +29,9 @@ abstract class DateFormatListResponse
 
 abstract class DateFormatItemResponse
     implements Built<DateFormatItemResponse, DateFormatItemResponseBuilder> {
-  factory DateFormatItemResponse(
-          [void updates(DateFormatItemResponseBuilder b)]) =
-      _$DateFormatItemResponse;
+  factory DateFormatItemResponse([
+    void updates(DateFormatItemResponseBuilder b),
+  ]) = _$DateFormatItemResponse;
 
   DateFormatItemResponse._();
 
@@ -53,10 +53,7 @@ abstract class DateFormatEntity extends Object
     with SelectableEntity
     implements Built<DateFormatEntity, DateFormatEntityBuilder> {
   factory DateFormatEntity() {
-    return _$DateFormatEntity._(
-      id: '',
-      format: '',
-    );
+    return _$DateFormatEntity._(id: '', format: '');
   }
 
   DateFormatEntity._();

@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 
 class ClientEditContactsScreen extends StatelessWidget {
   const ClientEditContactsScreen({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final ClientEditVM viewModel;
 
@@ -25,10 +25,7 @@ class ClientEditContactsScreen extends StatelessWidget {
         return ClientEditContactsVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ClientEditContacts(
-          viewModel: vm,
-          clientViewModel: viewModel,
-        );
+        return ClientEditContacts(viewModel: vm, clientViewModel: viewModel);
       },
     );
   }
@@ -50,21 +47,22 @@ class ClientEditContactsVM {
     final client = state.clientUIState.editing;
 
     return ClientEditContactsVM(
-        company: state.company,
-        client: client,
-        contact: state.clientUIState.editingContact,
-        onAddContactPressed: () {
-          final contact = ClientContactEntity();
-          store.dispatch(AddContact(contact));
-          store.dispatch(EditContact(contact));
-        },
-        onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
-        onDoneContactPressed: (_) {
-          store.dispatch(EditContact());
-        },
-        onChangedContact: (contact, index) {
-          store.dispatch(UpdateContact(contact: contact, index: index));
-        });
+      company: state.company,
+      client: client,
+      contact: state.clientUIState.editingContact,
+      onAddContactPressed: () {
+        final contact = ClientContactEntity();
+        store.dispatch(AddContact(contact));
+        store.dispatch(EditContact(contact));
+      },
+      onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
+      onDoneContactPressed: (_) {
+        store.dispatch(EditContact());
+      },
+      onChangedContact: (contact, index) {
+        store.dispatch(UpdateContact(contact: contact, index: index));
+      },
+    );
   }
 
   final CompanyEntity? company;
