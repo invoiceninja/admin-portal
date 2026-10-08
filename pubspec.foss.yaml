@@ -145,6 +145,7 @@ flutter:
     - assets/images/logo_dark.png
     - assets/images/google_logo.png
     - assets/images/payment_types/
+    - assets/images/beta/
 
   fonts:
     - family: Roboto

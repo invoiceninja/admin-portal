@@ -35,6 +35,10 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selec
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_entry.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -641,6 +645,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       ),
                                     ),
                                   ),
+                                BetaPromoSidebarTile(),
                                 if (state.userCompany.canViewDashboard)
                                   DrawerTile(
                                     company: company,
@@ -1481,6 +1486,18 @@ void _showAbout(BuildContext context) async {
                   title: Text(state.user.fullName),
                   subtitle: Text(state.user.email),
                 ),
+                if (BetaPromoController.isAvailable)
+                  AppButton(
+                    label: BetaPromoStrings(
+                      localization.localeCode,
+                    ).get(BetaStr.entryTitle).toUpperCase(),
+                    iconData: Icons.rocket_launch,
+                    color: Colors.indigo,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showBetaPromoDialog(isManual: true);
+                    },
+                  ),
                 if (!isApple())
                   Padding(
                     padding: const EdgeInsets.only(top: 4),

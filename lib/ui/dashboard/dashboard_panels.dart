@@ -16,6 +16,8 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_entry.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -482,7 +484,12 @@ class DashboardPanels extends StatelessWidget {
                 case DashboardSections.messages:
                   return Column(
                     children: [
-                      if (state.showReviewApp ||
+                      // Takes the place of the request to rate this app, the
+                      // two would pull in opposite directions
+                      if (isMobile(context) &&
+                          BetaPromoController.instance.showsEntryFor(state))
+                        BetaPromoDashboardCard()
+                      else if (state.showReviewApp ||
                           state.showOneYearReviewApp ||
                           state.showTwoYearReviewApp)
                         ReviewApp(),
