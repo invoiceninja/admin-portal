@@ -29,10 +29,7 @@ class CachedImage extends StatelessWidget {
 
     // TODO remove this workaround
     if (state.isTesting || (url ?? '').isEmpty) {
-      return SizedBox(
-        width: width,
-        height: height,
-      );
+      return SizedBox(width: width, height: height);
     }
 
     return Image.network(

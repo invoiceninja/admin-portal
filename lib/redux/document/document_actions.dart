@@ -37,10 +37,7 @@ import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
 
 class ViewDocumentList implements PersistUI {
-  ViewDocumentList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewDocumentList({this.force = false, this.page = 0});
 
   final bool force;
   final int page;
@@ -54,10 +51,7 @@ class ViewDocument implements PersistUI {
 }
 
 class EditDocument implements PersistUI {
-  EditDocument({
-    this.document,
-    this.completer,
-  });
+  EditDocument({this.document, this.completer});
 
   final DocumentEntity? document;
   final Completer? completer;
@@ -147,10 +141,7 @@ class LoadDocumentsSuccess implements StopLoading {
 }
 
 class SaveDocumentRequest implements StartSaving {
-  SaveDocumentRequest({
-    required this.completer,
-    required this.document,
-  });
+  SaveDocumentRequest({required this.completer, required this.document});
 
   final Completer completer;
   final DocumentEntity? document;
@@ -230,8 +221,8 @@ class DeleteDocumentSuccess
 
   final String? documentId;
 
-//DeleteDocumentSuccess(this.documents);
-//final List<DocumentEntity> documents;
+  //DeleteDocumentSuccess(this.documents);
+  //final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentFailure implements StopSaving {
@@ -307,7 +298,10 @@ class FilterDocumentsByCustom4 implements PersistUI {
 }
 
 void handleDocumentAction(
-    BuildContext? context, List<BaseEntity> documents, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> documents,
+  EntityAction? action,
+) {
   if (documents.isEmpty) {
     return;
   }
@@ -324,20 +318,22 @@ void handleDocumentAction(
     case EntityAction.restore:
       final message = documentIds.length > 1
           ? localization.restoredDocuments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', documentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', documentIds.length.toString())
           : localization.restoredDocument;
-      store.dispatch(RestoreDocumentRequest(
-          snackBarCompleter<Null>(message), documentIds));
+      store.dispatch(
+        RestoreDocumentRequest(snackBarCompleter<Null>(message), documentIds),
+      );
       break;
     case EntityAction.archive:
       final message = documentIds.length > 1
           ? localization.archivedDocuments
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', documentIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', documentIds.length.toString())
           : localization.archivedDocument;
-      store.dispatch(ArchiveDocumentRequest(
-          snackBarCompleter<Null>(message), documentIds));
+      store.dispatch(
+        ArchiveDocumentRequest(snackBarCompleter<Null>(message), documentIds),
+      );
       break;
     /*
     case EntityAction.delete:
@@ -369,56 +365,55 @@ void handleDocumentAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [document],
-      );
+      showEntityActionsDialog(entities: [document]);
       break;
     case EntityAction.bulkDownload:
       store.dispatch(
         DownloadDocumentsRequest(
           documentIds: documentIds,
-          completer: snackBarCompleter<Null>(
-            localization.exportedData,
-          ),
+          completer: snackBarCompleter<Null>(localization.exportedData),
         ),
       );
       break;
     case EntityAction.viewDocument:
       void showDocument() {
         showDialog<void>(
-            context: navigatorKey.currentContext!,
-            builder: (context) {
-              final DocumentEntity document =
-                  store.state.documentState.map[documentIds.first]!;
-              return AlertDialog(
-                actions: [
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(localization.close.toUpperCase())),
-                ],
-                content: document.isImage
-                    ? PinchZoom(
-                        child: Image.memory(document.data!),
-                      )
-                    : SizedBox(
-                        width: 600,
-                        child: PdfPreview(
-                          build: (format) => document.data!,
-                          canChangeOrientation: false,
-                          canChangePageFormat: false,
-                          allowPrinting: false,
-                          allowSharing: false,
-                          canDebug: false,
-                        ),
+          context: navigatorKey.currentContext!,
+          builder: (context) {
+            final DocumentEntity document =
+                store.state.documentState.map[documentIds.first]!;
+            return AlertDialog(
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(localization.close.toUpperCase()),
+                ),
+              ],
+              content: document.isImage
+                  ? PinchZoom(child: Image.memory(document.data!))
+                  : SizedBox(
+                      width: 600,
+                      child: PdfPreview(
+                        build: (format) => document.data!,
+                        canChangeOrientation: false,
+                        canChangePageFormat: false,
+                        allowPrinting: false,
+                        allowSharing: false,
+                        canDebug: false,
                       ),
-              );
-            });
+                    ),
+            );
+          },
+        );
       }
       if (document.data == null) {
-        store.dispatch(LoadDocumentData(
+        store.dispatch(
+          LoadDocumentData(
             documentId: document.id,
             completer: Completer<void>()
-              ..future.then((value) => showDocument())));
+              ..future.then((value) => showDocument()),
+          ),
+        );
       } else {
         showDocument();
       }
@@ -430,98 +425,142 @@ void handleDocumentAction(
         saveDownloadedFile(document!.data!, document.name);
       }
       if (document.data == null) {
-        store.dispatch(LoadDocumentData(
+        store.dispatch(
+          LoadDocumentData(
             documentId: document.id,
             completer: Completer<void>()
-              ..future.then((value) => downloadDocument())));
+              ..future.then((value) => downloadDocument()),
+          ),
+        );
       } else {
         downloadDocument();
       }
       break;
     case EntityAction.delete:
       confirmCallback(
-          context: context,
-          callback: (_) {
-            passwordCallback(
-                context: context,
-                callback: (password, idToken) {
-                  final completer = snackBarCompleter<Null>(
-                      AppLocalization.of(context)!.deletedDocument);
-                  switch (document.parentType) {
-                    case EntityType.client:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadClient(clientId: document.parentId)));
-                      break;
-                    case EntityType.credit:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadCredit(creditId: document.parentId)));
-                      break;
-                    case EntityType.expense:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadExpense(expenseId: document.parentId)));
-                      break;
-                    case EntityType.group:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadGroup(groupId: document.parentId)));
-                      break;
-                    case EntityType.invoice:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadInvoice(invoiceId: document.parentId)));
-                      break;
-                    case EntityType.product:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadProduct(productId: document.parentId)));
-                      break;
-                    case EntityType.project:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadProject(projectId: document.parentId)));
-                      break;
-                    case EntityType.purchaseOrder:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadPurchaseOrder(
-                              purchaseOrderId: document.parentId)));
-                      break;
-                    case EntityType.quote:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadQuote(quoteId: document.parentId)));
-                      break;
-                    case EntityType.recurringExpense:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadRecurringExpense(
-                              recurringExpenseId: document.parentId)));
-                      break;
-                    case EntityType.recurringInvoice:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadRecurringInvoice(
-                              recurringInvoiceId: document.parentId)));
-                      break;
-                    case EntityType.task:
-                      completer.future.then<Null>((_) =>
-                          store.dispatch(LoadTask(taskId: document.parentId)));
-                      break;
-                    case EntityType.vendor:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadVendor(vendorId: document.parentId)));
-                      break;
-                    case EntityType.payment:
-                      completer.future.then<Null>((_) => store
-                          .dispatch(LoadPayment(paymentId: document.parentId)));
-                      break;
-                    default:
-                      completer.future
-                          .then<Null>((_) => store.dispatch(RefreshData()));
-                  }
+        context: context,
+        callback: (_) {
+          passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              final completer = snackBarCompleter<Null>(
+                AppLocalization.of(context)!.deletedDocument,
+              );
+              switch (document.parentType) {
+                case EntityType.client:
+                  completer.future.then<Null>(
+                    (_) =>
+                        store.dispatch(LoadClient(clientId: document.parentId)),
+                  );
+                  break;
+                case EntityType.credit:
+                  completer.future.then<Null>(
+                    (_) =>
+                        store.dispatch(LoadCredit(creditId: document.parentId)),
+                  );
+                  break;
+                case EntityType.expense:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadExpense(expenseId: document.parentId),
+                    ),
+                  );
+                  break;
+                case EntityType.group:
+                  completer.future.then<Null>(
+                    (_) =>
+                        store.dispatch(LoadGroup(groupId: document.parentId)),
+                  );
+                  break;
+                case EntityType.invoice:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadInvoice(invoiceId: document.parentId),
+                    ),
+                  );
+                  break;
+                case EntityType.product:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadProduct(productId: document.parentId),
+                    ),
+                  );
+                  break;
+                case EntityType.project:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadProject(projectId: document.parentId),
+                    ),
+                  );
+                  break;
+                case EntityType.purchaseOrder:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadPurchaseOrder(purchaseOrderId: document.parentId),
+                    ),
+                  );
+                  break;
+                case EntityType.quote:
+                  completer.future.then<Null>(
+                    (_) =>
+                        store.dispatch(LoadQuote(quoteId: document.parentId)),
+                  );
+                  break;
+                case EntityType.recurringExpense:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadRecurringExpense(
+                        recurringExpenseId: document.parentId,
+                      ),
+                    ),
+                  );
+                  break;
+                case EntityType.recurringInvoice:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadRecurringInvoice(
+                        recurringInvoiceId: document.parentId,
+                      ),
+                    ),
+                  );
+                  break;
+                case EntityType.task:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(LoadTask(taskId: document.parentId)),
+                  );
+                  break;
+                case EntityType.vendor:
+                  completer.future.then<Null>(
+                    (_) =>
+                        store.dispatch(LoadVendor(vendorId: document.parentId)),
+                  );
+                  break;
+                case EntityType.payment:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(
+                      LoadPayment(paymentId: document.parentId),
+                    ),
+                  );
+                  break;
+                default:
+                  completer.future.then<Null>(
+                    (_) => store.dispatch(RefreshData()),
+                  );
+              }
 
-                  completer.future
-                      .then<Null>((_) => store.dispatch(RefreshData()));
-                  store.dispatch(DeleteDocumentRequest(
-                    completer: completer,
-                    documentIds: [document.id],
-                    password: password,
-                    idToken: idToken,
-                  ));
-                });
-          });
+              completer.future.then<Null>((_) => store.dispatch(RefreshData()));
+              store.dispatch(
+                DeleteDocumentRequest(
+                  completer: completer,
+                  documentIds: [document.id],
+                  password: password,
+                  idToken: idToken,
+                ),
+              );
+            },
+          );
+        },
+      );
       break;
     default:
       print('## ERROR: unhandled action $action in document_actions');

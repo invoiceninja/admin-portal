@@ -15,10 +15,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'schedule_screen_vm.dart';
 
 class ScheduleScreen extends StatelessWidget {
-  const ScheduleScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ScheduleScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsSchedules';
 
@@ -57,15 +54,13 @@ class ScheduleScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.schedule,
         tableColumns: SchedulePresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            SchedulePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: SchedulePresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortSchedules(value));
         },
-        sortFields: [
-          ScheduleFields.template,
-          ScheduleFields.nextRun,
-        ],
+        sortFields: [ScheduleFields.template, ScheduleFields.nextRun],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterSchedulesByState(state));
         },
@@ -85,19 +80,19 @@ class ScheduleScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterSchedulesByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.schedule)
           ? FloatingActionButton(
               heroTag: 'schedule_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.schedule);
+                  context: context,
+                  entityType: EntityType.schedule,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newSchedule,
             )
           : null,

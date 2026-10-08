@@ -15,10 +15,7 @@ abstract class DocumentStatusEntity extends Object
     with EntityStatus, SelectableEntity
     implements Built<DocumentStatusEntity, DocumentStatusEntityBuilder> {
   factory DocumentStatusEntity() {
-    return _$DocumentStatusEntity._(
-      id: '',
-      name: '',
-    );
+    return _$DocumentStatusEntity._(id: '', name: '');
   }
 
   DocumentStatusEntity._();

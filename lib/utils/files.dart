@@ -79,8 +79,9 @@ Future<List<MultipartFile>?> _pickFiles({
 }) async {
   final result = await FilePicker.platform.pickFiles(
     type: fileType ?? FileType.custom,
-    allowedExtensions:
-        fileType == FileType.image ? [] : allowedExtensions ?? [],
+    allowedExtensions: fileType == FileType.image
+        ? []
+        : allowedExtensions ?? [],
     withData: true,
     allowMultiple: allowMultiple,
   );
@@ -89,9 +90,13 @@ Future<List<MultipartFile>?> _pickFiles({
     final multipartFiles = <MultipartFile>[];
     for (var index = 0; index < result.files.length; index++) {
       final file = result.files[index];
-      multipartFiles.add(MultipartFile.fromBytes(
-          allowMultiple ? 'documents[$index]' : fileIndex!, file.bytes!,
-          filename: file.name));
+      multipartFiles.add(
+        MultipartFile.fromBytes(
+          allowMultiple ? 'documents[$index]' : fileIndex!,
+          file.bytes!,
+          filename: file.name,
+        ),
+      );
     }
 
     return multipartFiles;
@@ -109,12 +114,14 @@ void saveDownloadedFile(
   if (prefix != null) {
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-    final effectiveLanguageId =
-        languageId.isNotEmpty ? languageId : store.state.company.languageId;
+    final effectiveLanguageId = languageId.isNotEmpty
+        ? languageId
+        : store.state.company.languageId;
     final localeCode =
         store.state.staticState.languageMap[effectiveLanguageId]!.locale;
 
-    fileName = localization.lookup(prefix, overrideLocaleCode: localeCode) +
+    fileName =
+        localization.lookup(prefix, overrideLocaleCode: localeCode) +
         '_' +
         fileName;
   }
@@ -129,20 +136,22 @@ void saveDownloadedFile(
       if (file.File(filePath).existsSync()) {
         final extension = fileName.split('.').last;
         final timestamp = DateTime.now().millisecondsSinceEpoch;
-        filePath =
-            filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+        filePath = filePath.replaceFirst(
+          '.$extension',
+          '_$timestamp.$extension',
+        );
       }
 
       await File(filePath).writeAsBytes(data);
 
       if (isDesktopOS()) {
-        showToast(AppLocalization.of(navigatorKey.currentContext!)!
-            .fileSavedInPath
-            .replaceFirst(':path', directory));
+        showToast(
+          AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.fileSavedInPath.replaceFirst(':path', directory),
+        );
       } else {
-        await SharePlus.instance.share(ShareParams(
-          files: [XFile(filePath)],
-        ));
+        await SharePlus.instance.share(ShareParams(files: [XFile(filePath)]));
       }
     }
   }
@@ -174,9 +183,10 @@ Future<String?> getAppDownloadDirectory() async {
 
   if (!Directory(path).existsSync()) {
     showErrorDialog(
-        message: AppLocalization.of(navigatorKey.currentContext!)!
-            .downloadsFolderDoesNotExist
-            .replaceFirst(':value', path));
+      message: AppLocalization.of(
+        navigatorKey.currentContext!,
+      )!.downloadsFolderDoesNotExist.replaceFirst(':value', path),
+    );
 
     return null;
   }

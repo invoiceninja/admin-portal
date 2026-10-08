@@ -82,10 +82,7 @@ abstract class EInvoiceElementEntity
 abstract class EInvoiceEntity
     implements Built<EInvoiceEntity, EInvoiceEntityBuilder> {
   factory EInvoiceEntity() {
-    return _$EInvoiceEntity._(
-      invoice: null,
-      creditNote: null,
-    );
+    return _$EInvoiceEntity._(invoice: null, creditNote: null);
   }
 
   EInvoiceEntity._();
@@ -224,8 +221,10 @@ abstract class EInvoiceValueEntity
 
 abstract class EInvoicePayeeFinancialAccountEntity
     implements
-        Built<EInvoicePayeeFinancialAccountEntity,
-            EInvoicePayeeFinancialAccountEntityBuilder> {
+        Built<
+          EInvoicePayeeFinancialAccountEntity,
+          EInvoicePayeeFinancialAccountEntityBuilder
+        > {
   factory EInvoicePayeeFinancialAccountEntity() {
     return _$EInvoicePayeeFinancialAccountEntity._(
       id: null,
@@ -255,8 +254,10 @@ abstract class EInvoicePayeeFinancialAccountEntity
 
 abstract class EInvoiceFinancialInstitutionBranchEntity
     implements
-        Built<EInvoiceFinancialInstitutionBranchEntity,
-            EInvoiceFinancialInstitutionBranchEntityBuilder> {
+        Built<
+          EInvoiceFinancialInstitutionBranchEntity,
+          EInvoiceFinancialInstitutionBranchEntityBuilder
+        > {
   factory EInvoiceFinancialInstitutionBranchEntity() {
     return _$EInvoiceFinancialInstitutionBranchEntity._(
       financialInstitution: null,
@@ -278,12 +279,12 @@ abstract class EInvoiceFinancialInstitutionBranchEntity
 
 abstract class EInvoiceFinancialInstitutionEntity
     implements
-        Built<EInvoiceFinancialInstitutionEntity,
-            EInvoiceFinancialInstitutionEntityBuilder> {
+        Built<
+          EInvoiceFinancialInstitutionEntity,
+          EInvoiceFinancialInstitutionEntityBuilder
+        > {
   factory EInvoiceFinancialInstitutionEntity() {
-    return _$EInvoiceFinancialInstitutionEntity._(
-      id: null,
-    );
+    return _$EInvoiceFinancialInstitutionEntity._(id: null);
   }
 
   EInvoiceFinancialInstitutionEntity._();
@@ -323,12 +324,12 @@ abstract class EInvoiceCreditNoteEntity
 
 abstract class EInvoiceBillingReferenceEntity
     implements
-        Built<EInvoiceBillingReferenceEntity,
-            EInvoiceBillingReferenceEntityBuilder> {
+        Built<
+          EInvoiceBillingReferenceEntity,
+          EInvoiceBillingReferenceEntityBuilder
+        > {
   factory EInvoiceBillingReferenceEntity() {
-    return _$EInvoiceBillingReferenceEntity._(
-      invoiceDocumentReference: null,
-    );
+    return _$EInvoiceBillingReferenceEntity._(invoiceDocumentReference: null);
   }
 
   EInvoiceBillingReferenceEntity._();
@@ -346,8 +347,10 @@ abstract class EInvoiceBillingReferenceEntity
 
 abstract class EInvoiceDocumentReferenceEntity
     implements
-        Built<EInvoiceDocumentReferenceEntity,
-            EInvoiceDocumentReferenceEntityBuilder> {
+        Built<
+          EInvoiceDocumentReferenceEntity,
+          EInvoiceDocumentReferenceEntityBuilder
+        > {
   factory EInvoiceDocumentReferenceEntity() {
     return _$EInvoiceDocumentReferenceEntity._();
   }

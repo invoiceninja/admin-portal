@@ -25,10 +25,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'company_gateway_screen_vm.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
-  const CompanyGatewayScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const CompanyGatewayScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsCompanyGateways';
 
@@ -64,8 +62,10 @@ class CompanyGatewayScreen extends StatelessWidget {
                 ? null
                 : (context) async {
                     final companyGateways = listUIState.selectedIds!
-                        .map<CompanyGatewayEntity>((companyGatewayId) =>
-                            viewModel.companyGatewayMap[companyGatewayId]!)
+                        .map<CompanyGatewayEntity>(
+                          (companyGatewayId) =>
+                              viewModel.companyGatewayMap[companyGatewayId]!,
+                        )
                         .whereType<CompanyGatewayEntity>()
                         .toList();
 
@@ -73,8 +73,10 @@ class CompanyGatewayScreen extends StatelessWidget {
                       entities: companyGateways,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then<Null>((_) =>
-                            store.dispatch(ClearCompanyGatewayMultiselect())),
+                        ..future.then<Null>(
+                          (_) =>
+                              store.dispatch(ClearCompanyGatewayMultiselect()),
+                        ),
                     );
                   },
             onCancelPressed: (context) =>
@@ -83,11 +85,14 @@ class CompanyGatewayScreen extends StatelessWidget {
         else ...[
           if (settingsUIState.isFiltered && !state.isSaving)
             TextButton(
-              child: Text(localization.reset,
-                  style: TextStyle(color: store.state.headerTextColor)),
+              child: Text(
+                localization.reset,
+                style: TextStyle(color: store.state.headerTextColor),
+              ),
               onPressed: () {
-                final settings = settingsUIState.settings
-                    .rebuild((b) => b..companyGatewayIds = '');
+                final settings = settingsUIState.settings.rebuild(
+                  (b) => b..companyGatewayIds = '',
+                );
                 store.dispatch(UpdateSettings(settings: settings));
               },
             ),
@@ -103,10 +108,11 @@ class CompanyGatewayScreen extends StatelessWidget {
                       store.dispatch(ResetSettings());
                     } else {
                       store.dispatch(
-                          ViewSettings(section: kSettingsPaymentSettings));
+                        ViewSettings(section: kSettingsPaymentSettings),
+                      );
                     }
                   },
-          )
+          ),
         ],
       ],
       body: CompanyGatewayListBuilder(),
@@ -135,24 +141,22 @@ class CompanyGatewayScreen extends StatelessWidget {
       ),
       floatingActionButton:
           state.prefState.isMobile && state.userCompany.isAdmin
-              ? FloatingActionButton(
-                  heroTag: 'company_gateway_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    if (settingsUIState.isFiltered) {
-                    } else {
-                      createEntityByType(
-                          context: context,
-                          entityType: EntityType.companyGateway);
-                    }
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newCompanyGateway,
-                )
-              : null,
+          ? FloatingActionButton(
+              heroTag: 'company_gateway_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                if (settingsUIState.isFiltered) {
+                } else {
+                  createEntityByType(
+                    context: context,
+                    entityType: EntityType.companyGateway,
+                  );
+                }
+              },
+              child: Icon(Icons.add, color: Colors.white),
+              tooltip: localization.newCompanyGateway,
+            )
+          : null,
     );
   }
 }

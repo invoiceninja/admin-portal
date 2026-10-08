@@ -30,10 +30,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EmailSettings extends StatefulWidget {
-  const EmailSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const EmailSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final EmailSettingsVM viewModel;
 
@@ -42,8 +39,9 @@ class EmailSettings extends StatefulWidget {
 }
 
 class _EmailSettingsState extends State<EmailSettings> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_emailSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_emailSettings',
+  );
 
   FocusScopeNode? _focusNode;
 
@@ -114,8 +112,9 @@ class _EmailSettingsState extends State<EmailSettings> {
       _sesFromAddressController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final viewModel = widget.viewModel;
     final company = viewModel.company;
@@ -143,8 +142,9 @@ class _EmailSettingsState extends State<EmailSettings> {
     _sesTopicArnController.text = settings.sesTopicArn ?? '';
     _sesFromAddressController.text = settings.sesFromAddress ?? '';
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -169,41 +169,59 @@ class _EmailSettingsState extends State<EmailSettings> {
 
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
-    final settings = viewModel.settings.rebuild((b) => b
-      ..emailFromName =
-          isFiltered && emailFromName.isEmpty ? null : emailFromName
-      ..replyToEmail = isFiltered && replyToEmail.isEmpty ? null : replyToEmail
-      ..replyToName = isFiltered && replyToName.isEmpty ? null : replyToName
-      ..bccEmail = isFiltered && bccEmail.isEmpty ? null : bccEmail
-      ..emailStyleCustom =
-          isFiltered && emailStyleCustom.isEmpty ? null : emailStyleCustom
-      ..emailSignature =
-          isFiltered && emailSignature.isEmpty ? null : emailSignature
-      ..postmarkSecret =
-          isFiltered && postmarkSecret.isEmpty ? null : postmarkSecret
-      ..brevoSecret = isFiltered && brevoSecret.isEmpty ? null : brevoSecret
-      ..mailgunSecret =
-          isFiltered && mailgunSecret.isEmpty ? null : mailgunSecret
-      ..mailgunDomain =
-          isFiltered && mailgunDomain.isEmpty ? null : mailgunDomain
-      ..customSendingEmail =
-          isFiltered && customSendingEmail.isEmpty ? null : customSendingEmail
-      ..sesAccessKey = isFiltered && sesAccessKey.isEmpty ? null : sesAccessKey
-      ..sesSecretKey = isFiltered && sesSecretKey.isEmpty ? null : sesSecretKey
-      ..sesRegion = isFiltered && sesRegion.isEmpty ? null : sesRegion
-      ..sesTopicArn = isFiltered && sesTopicArn.isEmpty ? null : sesTopicArn
-      ..sesFromAddress =
-          isFiltered && sesFromAddress.isEmpty ? null : sesFromAddress);
+    final settings = viewModel.settings.rebuild(
+      (b) => b
+        ..emailFromName = isFiltered && emailFromName.isEmpty
+            ? null
+            : emailFromName
+        ..replyToEmail = isFiltered && replyToEmail.isEmpty
+            ? null
+            : replyToEmail
+        ..replyToName = isFiltered && replyToName.isEmpty ? null : replyToName
+        ..bccEmail = isFiltered && bccEmail.isEmpty ? null : bccEmail
+        ..emailStyleCustom = isFiltered && emailStyleCustom.isEmpty
+            ? null
+            : emailStyleCustom
+        ..emailSignature = isFiltered && emailSignature.isEmpty
+            ? null
+            : emailSignature
+        ..postmarkSecret = isFiltered && postmarkSecret.isEmpty
+            ? null
+            : postmarkSecret
+        ..brevoSecret = isFiltered && brevoSecret.isEmpty ? null : brevoSecret
+        ..mailgunSecret = isFiltered && mailgunSecret.isEmpty
+            ? null
+            : mailgunSecret
+        ..mailgunDomain = isFiltered && mailgunDomain.isEmpty
+            ? null
+            : mailgunDomain
+        ..customSendingEmail = isFiltered && customSendingEmail.isEmpty
+            ? null
+            : customSendingEmail
+        ..sesAccessKey = isFiltered && sesAccessKey.isEmpty
+            ? null
+            : sesAccessKey
+        ..sesSecretKey = isFiltered && sesSecretKey.isEmpty
+            ? null
+            : sesSecretKey
+        ..sesRegion = isFiltered && sesRegion.isEmpty ? null : sesRegion
+        ..sesTopicArn = isFiltered && sesTopicArn.isEmpty ? null : sesTopicArn
+        ..sesFromAddress = isFiltered && sesFromAddress.isEmpty
+            ? null
+            : sesFromAddress,
+    );
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
 
-    final company = viewModel.company.rebuild((b) => b
-      ..smtpHost = _smtpHostController.text.trim()
-      ..smtpPort = parseInt(_smtpPortController.text.trim())
-      ..smtpUsername = _smtpUsernameController.text.trim()
-      ..smtpPassword = _smtpPasswordController.text.trim()
-      ..smtpLocalDomain = _smtpLocalDomainController.text.trim());
+    final company = viewModel.company.rebuild(
+      (b) => b
+        ..smtpHost = _smtpHostController.text.trim()
+        ..smtpPort = parseInt(_smtpPortController.text.trim())
+        ..smtpUsername = _smtpUsernameController.text.trim()
+        ..smtpPassword = _smtpPasswordController.text.trim()
+        ..smtpLocalDomain = _smtpLocalDomainController.text.trim(),
+    );
     if (company != viewModel.company) {
       viewModel.onCompanyChanged(company);
     }
@@ -227,13 +245,15 @@ class _EmailSettingsState extends State<EmailSettings> {
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
-    final microsoftUserIds =
-        memoizedMicrosoftUserList(viewModel.state.userState.map);
+    final microsoftUserIds = memoizedMicrosoftUserList(
+      viewModel.state.userState.map,
+    );
 
     final gmailSendingUserId = settings.gmailSendingUserId ?? '';
-    final disableSave = [
+    final disableSave =
+        [
           SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
-          SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT
+          SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT,
         ].contains(settings.emailSendingMethod) &&
         (gmailSendingUserId.isEmpty || gmailSendingUserId == '0');
 
@@ -253,50 +273,61 @@ class _EmailSettingsState extends State<EmailSettings> {
                 value: settings.emailSendingMethod,
                 onChanged: (dynamic value) {
                   viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..emailSendingMethod = value));
+                    settings.rebuild((b) => b..emailSendingMethod = value),
+                  );
                 },
                 items: [
                   if (state.isHosted) ...[
                     DropdownMenuItem(
-                        child: Text('Postmark (invoicing.co)'),
-                        value: SettingsEntity
-                            .EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
+                      child: Text('Postmark (invoicing.co)'),
+                      value:
+                          SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
+                    ),
                     DropdownMenuItem(
-                        child: Text('Mailgun (invoicing.co)'),
-                        value:
-                            SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
+                      child: Text('Mailgun (invoicing.co)'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED,
+                    ),
                     DropdownMenuItem(
-                        child: Text('Amazon SES (invoicing.co)'),
-                        value: SettingsEntity.EMAIL_SENDING_METHOD_SES_HOSTED),
+                      child: Text('Amazon SES (invoicing.co)'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_SES_HOSTED,
+                    ),
                   ] else
                     DropdownMenuItem(
-                        child: Text(''),
-                        value: SettingsEntity
-                            .EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
+                      child: Text(''),
+                      value:
+                          SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
+                    ),
                   if (state.isProPlan)
                     DropdownMenuItem(
-                        child: Text('SMTP'),
-                        value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
+                      child: Text('SMTP'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP,
+                    ),
                   if (viewModel.state.isHosted) ...[
                     DropdownMenuItem(
-                        child: Text('Gmail'),
-                        value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
+                      child: Text('Gmail'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
+                    ),
                   ],
                   DropdownMenuItem(
-                      child: Text('Microsoft'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
+                    child: Text('Microsoft'),
+                    value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT,
+                  ),
                   DropdownMenuItem(
-                      child: Text('Postmark'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK),
+                    child: Text('Postmark'),
+                    value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
+                  ),
                   DropdownMenuItem(
-                      child: Text('Mailgun'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN),
+                    child: Text('Mailgun'),
+                    value: SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN,
+                  ),
                   DropdownMenuItem(
-                      child: Text('Amazon SES'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_SES),
+                    child: Text('Amazon SES'),
+                    value: SettingsEntity.EMAIL_SENDING_METHOD_SES,
+                  ),
                   DropdownMenuItem(
-                      child: Text('Brevo'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_BREVO),
+                    child: Text('Brevo'),
+                    value: SettingsEntity.EMAIL_SENDING_METHOD_BREVO,
+                  ),
                 ],
               ),
               if (settings.emailSendingMethod ==
@@ -313,19 +344,21 @@ class _EmailSettingsState extends State<EmailSettings> {
                       child: Text(localization.connectGmail.toUpperCase()),
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
-                        store.dispatch(ViewSettings(
-                          section: kSettingsUserDetails,
-                          force: true,
-                        ));
+                        store.dispatch(
+                          ViewSettings(
+                            section: kSettingsUserDetails,
+                            force: true,
+                          ),
+                        );
                       },
-                    )
+                    ),
                 ] else
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: DynamicSelector(
                       onChanged: (userId) => viewModel.onSettingsChanged(
-                          settings
-                              .rebuild((b) => b..gmailSendingUserId = userId)),
+                        settings.rebuild((b) => b..gmailSendingUserId = userId),
+                      ),
                       entityType: EntityType.user,
                       entityId: settings.gmailSendingUserId,
                       entityIds: gmailUserIds,
@@ -349,19 +382,21 @@ class _EmailSettingsState extends State<EmailSettings> {
                       child: Text(localization.connectMicrosoft.toUpperCase()),
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
-                        store.dispatch(ViewSettings(
-                          section: kSettingsUserDetails,
-                          force: true,
-                        ));
+                        store.dispatch(
+                          ViewSettings(
+                            section: kSettingsUserDetails,
+                            force: true,
+                          ),
+                        );
                       },
-                    )
+                    ),
                 ] else
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: DynamicSelector(
                       onChanged: (userId) => viewModel.onSettingsChanged(
-                          settings
-                              .rebuild((b) => b..gmailSendingUserId = userId)),
+                        settings.rebuild((b) => b..gmailSendingUserId = userId),
+                      ),
                       entityType: EntityType.user,
                       entityId: settings.gmailSendingUserId,
                       entityIds: microsoftUserIds,
@@ -403,21 +438,26 @@ class _EmailSettingsState extends State<EmailSettings> {
                       : null,
                 ),
                 AppDropdownButton<String>(
-                    labelText: localization.endpoint,
-                    value: settings.mailgunEndpoint,
-                    onChanged: (dynamic value) {
-                      viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..mailgunEndpoint = value));
-                    },
-                    items: [
-                      SettingsEntity.MAILGUN_ENDPOINT_US,
-                      SettingsEntity.MAILGUN_ENDPOINT_EU
-                    ]
-                        .map((endpoint) => DropdownMenuItem<String>(
+                  labelText: localization.endpoint,
+                  value: settings.mailgunEndpoint,
+                  onChanged: (dynamic value) {
+                    viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..mailgunEndpoint = value),
+                    );
+                  },
+                  items:
+                      [
+                            SettingsEntity.MAILGUN_ENDPOINT_US,
+                            SettingsEntity.MAILGUN_ENDPOINT_EU,
+                          ]
+                          .map(
+                            (endpoint) => DropdownMenuItem<String>(
                               child: Text(endpoint),
                               value: endpoint,
-                            ))
-                        .toList())
+                            ),
+                          )
+                          .toList(),
+                ),
               ] else if (settings.emailSendingMethod ==
                   SettingsEntity.EMAIL_SENDING_METHOD_BREVO) ...[
                 DecoratedFormField(
@@ -492,22 +532,26 @@ class _EmailSettingsState extends State<EmailSettings> {
                       : null,
                 ),
                 AppDropdownButton<String>(
-                    labelText: localization.encryption,
-                    value: viewModel.company.smtpEncryption,
-                    onChanged: (value) {
-                      viewModel.onCompanyChanged(viewModel.company
-                          .rebuild((b) => b..smtpEncryption = value));
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(CompanyEntity.SMTP_ENCRYPTION_TLS),
-                        value: CompanyEntity.SMTP_ENCRYPTION_TLS,
+                  labelText: localization.encryption,
+                  value: viewModel.company.smtpEncryption,
+                  onChanged: (value) {
+                    viewModel.onCompanyChanged(
+                      viewModel.company.rebuild(
+                        (b) => b..smtpEncryption = value,
                       ),
-                      DropdownMenuItem(
-                        child: Text(CompanyEntity.SMTP_ENCRYPTION_STARTTLS),
-                        value: CompanyEntity.SMTP_ENCRYPTION_STARTTLS,
-                      ),
-                    ]),
+                    );
+                  },
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(CompanyEntity.SMTP_ENCRYPTION_TLS),
+                      value: CompanyEntity.SMTP_ENCRYPTION_TLS,
+                    ),
+                    DropdownMenuItem(
+                      child: Text(CompanyEntity.SMTP_ENCRYPTION_STARTTLS),
+                      value: CompanyEntity.SMTP_ENCRYPTION_STARTTLS,
+                    ),
+                  ],
+                ),
                 DecoratedFormField(
                   label: localization.username,
                   controller: _smtpUsernameController,
@@ -535,47 +579,54 @@ class _EmailSettingsState extends State<EmailSettings> {
                 ),
                 SizedBox(height: 10),
                 BoolDropdownButton(
-                    label: localization.verifyPeer,
-                    value: viewModel.company.smtpVerifyPeer,
-                    onChanged: (value) {
-                      viewModel.onCompanyChanged(viewModel.company.rebuild(
+                  label: localization.verifyPeer,
+                  value: viewModel.company.smtpVerifyPeer,
+                  onChanged: (value) {
+                    viewModel.onCompanyChanged(
+                      viewModel.company.rebuild(
                         (b) => b..smtpVerifyPeer = value,
-                      ));
-                    }),
+                      ),
+                    );
+                  },
+                ),
                 SizedBox(height: 20),
                 OutlinedButton(
-                    onPressed: () async {
-                      final credentials = state.credentials;
-                      final url = '${credentials.url}/smtp/check';
-                      final company = viewModel.company;
+                  onPressed: () async {
+                    final credentials = state.credentials;
+                    final url = '${credentials.url}/smtp/check';
+                    final company = viewModel.company;
 
-                      final data = {
-                        'smtp_host': company.smtpHost,
-                        'smtp_port': company.smtpPort,
-                        'smtp_encryption': company.smtpEncryption,
-                        'smtp_username': company.smtpUsername,
-                        'smtp_password': company.smtpPassword,
-                        'smtp_local_domain': company.smtpLocalDomain,
-                        'smtp_verify_peer': company.smtpVerifyPeer,
-                      };
+                    final data = {
+                      'smtp_host': company.smtpHost,
+                      'smtp_port': company.smtpPort,
+                      'smtp_encryption': company.smtpEncryption,
+                      'smtp_username': company.smtpUsername,
+                      'smtp_password': company.smtpPassword,
+                      'smtp_local_domain': company.smtpLocalDomain,
+                      'smtp_verify_peer': company.smtpVerifyPeer,
+                    };
 
-                      final store = StoreProvider.of<AppState>(context);
-                      store.dispatch(StartSaving());
+                    final store = StoreProvider.of<AppState>(context);
+                    store.dispatch(StartSaving());
 
-                      try {
-                        await WebClient().post(url, credentials.token,
-                            data: json.encode(data));
-                        store.dispatch(StopSaving());
-                        showMessageDialog(message: localization.testEmailSent);
-                      } catch (error) {
-                        store.dispatch(StopSaving());
-                        showErrorDialog(message: '$error');
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Text(localization.sendTestEmail.toUpperCase()),
-                    )),
+                    try {
+                      await WebClient().post(
+                        url,
+                        credentials.token,
+                        data: json.encode(data),
+                      );
+                      store.dispatch(StopSaving());
+                      showMessageDialog(message: localization.testEmailSent);
+                    } catch (error) {
+                      store.dispatch(StopSaving());
+                      showErrorDialog(message: '$error');
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(localization.sendTestEmail.toUpperCase()),
+                  ),
+                ),
               ],
             ],
           ),
@@ -620,35 +671,34 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onSavePressed: _onSavePressed,
               ),
               AppDropdownButton<int>(
-                  showBlank: true,
-                  labelText: localization.sendTime,
-                  value: settings.entitySendTime,
-                  blankValue: null,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..entitySendTime = value)),
-                  items: List<int>.generate(24, (i) => i).map((value) {
-                    final hour = value + 1;
-                    String timeLabel;
-                    if (viewModel.state.company.settings.enableMilitaryTime!) {
-                      timeLabel = '$hour:00';
+                showBlank: true,
+                labelText: localization.sendTime,
+                value: settings.entitySendTime,
+                blankValue: null,
+                onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                  settings.rebuild((b) => b..entitySendTime = value),
+                ),
+                items: List<int>.generate(24, (i) => i).map((value) {
+                  final hour = value + 1;
+                  String timeLabel;
+                  if (viewModel.state.company.settings.enableMilitaryTime!) {
+                    timeLabel = '$hour:00';
+                  } else {
+                    if (hour > 12) {
+                      timeLabel = '${hour - 12}:00 ';
                     } else {
-                      if (hour > 12) {
-                        timeLabel = '${hour - 12}:00 ';
-                      } else {
-                        timeLabel = '$hour:00 ';
-                      }
-
-                      if (hour < 12 || hour == 24) {
-                        timeLabel += 'AM';
-                      } else {
-                        timeLabel += 'PM';
-                      }
+                      timeLabel = '$hour:00 ';
                     }
-                    return DropdownMenuItem(
-                      child: Text(timeLabel),
-                      value: hour,
-                    );
-                  }).toList()),
+
+                    if (hour < 12 || hour == 24) {
+                      timeLabel += 'AM';
+                    } else {
+                      timeLabel += 'PM';
+                    }
+                  }
+                  return DropdownMenuItem(child: Text(timeLabel), value: hour);
+                }).toList(),
+              ),
               /*
               SizedBox(height: 10),
               BoolDropdownButton(
@@ -668,7 +718,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                 labelText: localization.emailDesign,
                 value: viewModel.settings.emailStyle,
                 onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..emailStyle = value)),
+                  settings.rebuild((b) => b..emailStyle = value),
+                ),
                 items: [
                   DropdownMenuItem(
                     child: Text(localization.plain),
@@ -693,7 +744,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                 labelText: localization.emailAlignment,
                 value: viewModel.settings.emailAlignment,
                 onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..emailAlignment = value)),
+                  settings.rebuild((b) => b..emailAlignment = value),
+                ),
                 items: [
                   DropdownMenuItem(
                     child: Text(localization.left),
@@ -716,8 +768,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                   controller: _emailStyleCustomController,
                   maxLines: 6,
                   keyboardType: TextInputType.multiline,
-                  hint: localization.addBodyVariableMessage
-                      .replaceFirst(':body', '\$body'),
+                  hint: localization.addBodyVariableMessage.replaceFirst(
+                    ':body',
+                    '\$body',
+                  ),
                 ),
               ],
               DecoratedFormField(
@@ -734,7 +788,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                     : (settings.showEmailFooter ?? true),
                 iconData: MdiIcons.textBox,
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..showEmailFooter = value)),
+                  settings.rebuild((b) => b..showEmailFooter = value),
+                ),
               ),
             ],
           ),
@@ -747,21 +802,24 @@ class _EmailSettingsState extends State<EmailSettings> {
                 value: settings.pdfEmailAttachment,
                 iconData: MdiIcons.filePdfBox,
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..pdfEmailAttachment = value)),
+                  settings.rebuild((b) => b..pdfEmailAttachment = value),
+                ),
               ),
               BoolDropdownButton(
                 label: localization.attachDocuments,
                 value: settings.documentEmailAttachment,
                 iconData: MdiIcons.fileImage,
-                onChanged: (value) => viewModel.onSettingsChanged(settings
-                    .rebuild((b) => b..documentEmailAttachment = value)),
+                onChanged: (value) => viewModel.onSettingsChanged(
+                  settings.rebuild((b) => b..documentEmailAttachment = value),
+                ),
               ),
               BoolDropdownButton(
                 label: localization.attachUbl,
                 value: settings.ublEmailAttachment,
                 iconData: MdiIcons.xml,
                 onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..ublEmailAttachment = value)),
+                  settings.rebuild((b) => b..ublEmailAttachment = value),
+                ),
               ),
             ],
           ),

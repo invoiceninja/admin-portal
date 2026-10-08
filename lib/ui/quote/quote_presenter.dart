@@ -71,7 +71,8 @@ class QuotePresenter extends EntityPresenter {
         return EntityStatusChip(entity: quote, showState: true);
       case QuoteFields.number:
         return Text(
-            quote.number.isEmpty ? localization!.pending : quote.number);
+          quote.number.isEmpty ? localization!.pending : quote.number,
+        );
       case QuoteFields.client:
         return LinkTextRelatedEntity(entity: client, relation: quote);
       case QuoteFields.date:
@@ -82,7 +83,8 @@ class QuotePresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(
-              formatNumber(quote.amount, context, clientId: quote.clientId)!),
+            formatNumber(quote.amount, context, clientId: quote.clientId)!,
+          ),
         );
       case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
@@ -99,22 +101,36 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.privateNotes:
         return TableTooltip(message: quote.privateNotes);
       case QuoteFields.discount:
-        return Text(quote.isAmountDiscount
-            ? formatNumber(quote.discount, context,
-                formatNumberType: FormatNumberType.money,
-                clientId: quote.clientId)!
-            : formatNumber(quote.discount, context,
-                formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          quote.isAmountDiscount
+              ? formatNumber(
+                  quote.discount,
+                  context,
+                  formatNumberType: FormatNumberType.money,
+                  clientId: quote.clientId,
+                )!
+              : formatNumber(
+                  quote.discount,
+                  context,
+                  formatNumberType: FormatNumberType.percent,
+                )!,
+        );
       case QuoteFields.poNumber:
         return Text(quote.poNumber);
       case QuoteFields.documents:
         return Text('${quote.documents.length}');
       case QuoteFields.taxAmount:
         return Text(
-            formatNumber(quote.taxAmount, context, clientId: quote.clientId)!);
+          formatNumber(quote.taxAmount, context, clientId: quote.clientId)!,
+        );
       case QuoteFields.exchangeRate:
-        return Text(formatNumber(quote.exchangeRate, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            quote.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case QuoteFields.isViewed:
         return Text(quote.isViewed ? localization!.yes : localization!.no);
       case QuoteFields.project:
@@ -133,8 +149,10 @@ class QuotePresenter extends EntityPresenter {
         return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case QuoteFields.contactName:
       case QuoteFields.contactEmail:
-        final contact =
-            quoteContactSelector(quote, state.clientState.get(quote.clientId));
+        final contact = quoteContactSelector(
+          quote,
+          state.clientState.get(quote.clientId),
+        );
         if (contact == null) {
           return SizedBox();
         }

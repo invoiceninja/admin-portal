@@ -16,24 +16,33 @@ class _$RecurringExpenseStateSerializer
   @override
   final Iterable<Type> types = const [
     RecurringExpenseState,
-    _$RecurringExpenseState
+    _$RecurringExpenseState,
   ];
   @override
   final String wireName = 'RecurringExpenseState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, RecurringExpenseState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    RecurringExpenseState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(ExpenseEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(ExpenseEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -41,8 +50,10 @@ class _$RecurringExpenseStateSerializer
 
   @override
   RecurringExpenseState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = RecurringExpenseStateBuilder();
 
     final iterator = serialized.iterator;
@@ -52,17 +63,26 @@ class _$RecurringExpenseStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(ExpenseEntity)
-              ]))!);
+                const FullType(ExpenseEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -76,45 +96,58 @@ class _$RecurringExpenseUIStateSerializer
   @override
   final Iterable<Type> types = const [
     RecurringExpenseUIState,
-    _$RecurringExpenseUIState
+    _$RecurringExpenseUIState,
   ];
   @override
   final String wireName = 'RecurringExpenseUIState';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, RecurringExpenseUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    RecurringExpenseUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(ExpenseEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(ExpenseEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   RecurringExpenseUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = RecurringExpenseUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -124,20 +157,38 @@ class _$RecurringExpenseUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ExpenseEntity))! as ExpenseEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ExpenseEntity),
+                )!
+                as ExpenseEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -152,16 +203,16 @@ class _$RecurringExpenseState extends RecurringExpenseState {
   @override
   final BuiltList<String> list;
 
-  factory _$RecurringExpenseState(
-          [void Function(RecurringExpenseStateBuilder)? updates]) =>
-      (RecurringExpenseStateBuilder()..update(updates))._build();
+  factory _$RecurringExpenseState([
+    void Function(RecurringExpenseStateBuilder)? updates,
+  ]) => (RecurringExpenseStateBuilder()..update(updates))._build();
 
   _$RecurringExpenseState._({required this.map, required this.list})
-      : super._();
+    : super._();
   @override
   RecurringExpenseState rebuild(
-          void Function(RecurringExpenseStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(RecurringExpenseStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   RecurringExpenseStateBuilder toBuilder() =>
@@ -236,11 +287,9 @@ class RecurringExpenseStateBuilder
   _$RecurringExpenseState _build() {
     _$RecurringExpenseState _$result;
     try {
-      _$result = _$v ??
-          _$RecurringExpenseState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result =
+          _$v ??
+          _$RecurringExpenseState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -250,7 +299,10 @@ class RecurringExpenseStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'RecurringExpenseState', _$failedField, e.toString());
+          r'RecurringExpenseState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -275,23 +327,23 @@ class _$RecurringExpenseUIState extends RecurringExpenseUIState {
   @override
   final Completer<Null>? cancelCompleter;
 
-  factory _$RecurringExpenseUIState(
-          [void Function(RecurringExpenseUIStateBuilder)? updates]) =>
-      (RecurringExpenseUIStateBuilder()..update(updates))._build();
+  factory _$RecurringExpenseUIState([
+    void Function(RecurringExpenseUIStateBuilder)? updates,
+  ]) => (RecurringExpenseUIStateBuilder()..update(updates))._build();
 
-  _$RecurringExpenseUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$RecurringExpenseUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   RecurringExpenseUIState rebuild(
-          void Function(RecurringExpenseUIStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(RecurringExpenseUIStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   RecurringExpenseUIStateBuilder toBuilder() =>
@@ -412,14 +464,18 @@ class RecurringExpenseUIStateBuilder
   _$RecurringExpenseUIState _build() {
     _$RecurringExpenseUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$RecurringExpenseUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'RecurringExpenseUIState', 'tabIndex'),
+              tabIndex,
+              r'RecurringExpenseUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -432,7 +488,10 @@ class RecurringExpenseUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'RecurringExpenseUIState', _$failedField, e.toString());
+          r'RecurringExpenseUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

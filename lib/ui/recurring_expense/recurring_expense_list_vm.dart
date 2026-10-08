@@ -32,29 +32,30 @@ class RecurringExpenseListBuilder extends StatelessWidget {
       converter: RecurringExpenseListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.recurringExpense,
-            presenter: RecurringExpensePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.recurringExpenseList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final recurringExpenseId = viewModel.recurringExpenseList[index];
-              final recurringExpense =
-                  viewModel.recurringExpenseMap[recurringExpenseId]!;
-              final listState = state.getListState(EntityType.recurringExpense);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.recurringExpense,
+          presenter: RecurringExpensePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.recurringExpenseList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final recurringExpenseId = viewModel.recurringExpenseList[index];
+            final recurringExpense =
+                viewModel.recurringExpenseMap[recurringExpenseId]!;
+            final listState = state.getListState(EntityType.recurringExpense);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return RecurringExpenseListItem(
-                filter: viewModel.filter,
-                expense: recurringExpense,
-                isChecked: isInMultiselect &&
-                    listState.isSelected(recurringExpense.id),
-              );
-            });
+            return RecurringExpenseListItem(
+              filter: viewModel.filter,
+              expense: recurringExpense,
+              isChecked:
+                  isInMultiselect && listState.isSelected(recurringExpense.id),
+            );
+          },
+        );
       },
     );
   }
@@ -81,8 +82,9 @@ class RecurringExpenseListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -94,24 +96,30 @@ class RecurringExpenseListVM {
       userCompany: state.userCompany,
       listState: state.recurringExpenseListState,
       recurringExpenseList: memoizedFilteredRecurringExpenseList(
-          state.getUISelection(EntityType.recurringExpense),
-          state.recurringExpenseState.map,
-          state.clientState.map,
-          state.vendorState.map,
-          state.userState.map,
-          state.recurringExpenseListState,
-          state.invoiceState.map,
-          state.expenseCategoryState.map,
-          state.staticState),
+        state.getUISelection(EntityType.recurringExpense),
+        state.recurringExpenseState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.userState.map,
+        state.recurringExpenseListState,
+        state.invoiceState.map,
+        state.expenseCategoryState.map,
+        state.staticState,
+      ),
       recurringExpenseMap: state.recurringExpenseState.map,
       isLoading: state.isLoading,
       filter: state.recurringExpenseUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> recurringExpenses,
-              EntityAction action) =>
-          handleRecurringExpenseAction(context, recurringExpenses, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringExpenses,
+            EntityAction action,
+          ) => handleRecurringExpenseAction(context, recurringExpenses, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.recurringExpense) ??
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
+            EntityType.recurringExpense,
+          ) ??
           RecurringExpensePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortRecurringExpenses(field)),
       onClearMultielsect: () =>

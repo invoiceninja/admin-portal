@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'webhook_screen_vm.dart';
 
 class WebhookScreen extends StatelessWidget {
-  const WebhookScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const WebhookScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsWebhooks';
 
@@ -62,14 +59,13 @@ class WebhookScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.webhook,
         tableColumns: WebhookPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            WebhookPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: WebhookPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) {
           store.dispatch(SortWebhooks(value));
         },
-        sortFields: [
-          WebhookFields.targetUrl,
-        ],
+        sortFields: [WebhookFields.targetUrl],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterWebhooksByState(state));
         },
@@ -89,19 +85,19 @@ class WebhookScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterWebhooksByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.webhook)
           ? FloatingActionButton(
               heroTag: 'webhook_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.webhook);
+                  context: context,
+                  entityType: EntityType.webhook,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newWebhook,
             )
           : null,

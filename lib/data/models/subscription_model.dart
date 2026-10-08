@@ -14,9 +14,9 @@ part 'subscription_model.g.dart';
 abstract class SubscriptionListResponse
     implements
         Built<SubscriptionListResponse, SubscriptionListResponseBuilder> {
-  factory SubscriptionListResponse(
-          [void updates(SubscriptionListResponseBuilder b)]) =
-      _$SubscriptionListResponse;
+  factory SubscriptionListResponse([
+    void updates(SubscriptionListResponseBuilder b),
+  ]) = _$SubscriptionListResponse;
 
   SubscriptionListResponse._();
 
@@ -33,9 +33,9 @@ abstract class SubscriptionListResponse
 abstract class SubscriptionItemResponse
     implements
         Built<SubscriptionItemResponse, SubscriptionItemResponseBuilder> {
-  factory SubscriptionItemResponse(
-          [void updates(SubscriptionItemResponseBuilder b)]) =
-      _$SubscriptionItemResponse;
+  factory SubscriptionItemResponse([
+    void updates(SubscriptionItemResponseBuilder b),
+  ]) = _$SubscriptionItemResponse;
 
   SubscriptionItemResponse._();
 
@@ -191,12 +191,13 @@ abstract class SubscriptionEntity extends Object
   String get displayName => id;
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted!) {
@@ -213,16 +214,19 @@ abstract class SubscriptionEntity extends Object
   }
 
   int compareTo(
-      SubscriptionEntity? subscription, String sortField, bool sortAscending) {
+    SubscriptionEntity? subscription,
+    String sortField,
+    bool sortAscending,
+  ) {
     int response = 0;
     final subscriptionA = sortAscending ? this : subscription;
     final subscriptionB = sortAscending ? subscription : this;
 
     switch (sortField) {
       case SubscriptionFields.name:
-        response = subscriptionA!.displayName
-            .toLowerCase()
-            .compareTo(subscriptionB!.displayName.toLowerCase());
+        response = subscriptionA!.displayName.toLowerCase().compareTo(
+          subscriptionB!.displayName.toLowerCase(),
+        );
         break;
       case SubscriptionFields.createdAt:
         response = subscriptionA!.createdAt.compareTo(subscriptionB!.createdAt);
@@ -245,22 +249,12 @@ abstract class SubscriptionEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [name], needle: filter);
   }
 
   @override

@@ -22,9 +22,7 @@ class SubscriptionScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, SubscriptionScreenVM>(
       converter: SubscriptionScreenVM.fromStore,
       builder: (context, vm) {
-        return SubscriptionScreen(
-          viewModel: vm,
-        );
+        return SubscriptionScreen(viewModel: vm);
       },
     );
   }
@@ -58,9 +56,12 @@ class SubscriptionScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.subscriptionListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> subscriptions,
-              EntityAction action) =>
-          handleSubscriptionAction(context, subscriptions, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> subscriptions,
+            EntityAction action,
+          ) => handleSubscriptionAction(context, subscriptions, action),
     );
   }
 }

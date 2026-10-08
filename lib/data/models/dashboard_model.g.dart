@@ -61,12 +61,15 @@ final BuiltSet<DateRange> _$values = BuiltSet<DateRange>(const <DateRange>[
   _$custom,
 ]);
 
-const DateRangeComparison _$previousPeriod =
-    const DateRangeComparison._('previousPeriod');
-const DateRangeComparison _$previousYear =
-    const DateRangeComparison._('previousYear');
-const DateRangeComparison _$customRange =
-    const DateRangeComparison._('customRange');
+const DateRangeComparison _$previousPeriod = const DateRangeComparison._(
+  'previousPeriod',
+);
+const DateRangeComparison _$previousYear = const DateRangeComparison._(
+  'previousYear',
+);
+const DateRangeComparison _$customRange = const DateRangeComparison._(
+  'customRange',
+);
 
 DateRangeComparison _$comparisonValueOf(String name) {
   switch (name) {
@@ -83,10 +86,10 @@ DateRangeComparison _$comparisonValueOf(String name) {
 
 final BuiltSet<DateRangeComparison> _$comparisonValues =
     BuiltSet<DateRangeComparison>(const <DateRangeComparison>[
-  _$previousPeriod,
-  _$previousYear,
-  _$customRange,
-]);
+      _$previousPeriod,
+      _$previousYear,
+      _$customRange,
+    ]);
 
 Serializer<DateRange> _$dateRangeSerializer = _$DateRangeSerializer();
 Serializer<DateRangeComparison> _$dateRangeComparisonSerializer =
@@ -99,14 +102,18 @@ class _$DateRangeSerializer implements PrimitiveSerializer<DateRange> {
   final String wireName = 'DateRange';
 
   @override
-  Object serialize(Serializers serializers, DateRange object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    DateRange object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  DateRange deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      DateRange.valueOf(serialized as String);
+  DateRange deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => DateRange.valueOf(serialized as String);
 }
 
 class _$DateRangeComparisonSerializer
@@ -117,14 +124,18 @@ class _$DateRangeComparisonSerializer
   final String wireName = 'DateRangeComparison';
 
   @override
-  Object serialize(Serializers serializers, DateRangeComparison object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
+  Object serialize(
+    Serializers serializers,
+    DateRangeComparison object, {
+    FullType specifiedType = FullType.unspecified,
+  }) => object.name;
 
   @override
-  DateRangeComparison deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      DateRangeComparison.valueOf(serialized as String);
+  DateRangeComparison deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) => DateRangeComparison.valueOf(serialized as String);
 }
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

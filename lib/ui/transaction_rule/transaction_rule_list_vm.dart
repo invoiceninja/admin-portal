@@ -25,30 +25,31 @@ class TransactionRuleListBuilder extends StatelessWidget {
       converter: TransactionRuleListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.transactionRule,
-            presenter: TransactionRulePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.transactionRuleList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final transactionRuleId = viewModel.transactionRuleList[index];
-              final transactionRule =
-                  viewModel.transactionRuleMap[transactionRuleId]!;
-              final listState = state.getListState(EntityType.transactionRule);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.transactionRule,
+          presenter: TransactionRulePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.transactionRuleList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final transactionRuleId = viewModel.transactionRuleList[index];
+            final transactionRule =
+                viewModel.transactionRuleMap[transactionRuleId]!;
+            final listState = state.getListState(EntityType.transactionRule);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return TransactionRuleListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                transactionRule: transactionRule,
-                isChecked:
-                    isInMultiselect && listState.isSelected(transactionRule.id),
-              );
-            });
+            return TransactionRuleListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              transactionRule: transactionRule,
+              isChecked:
+                  isInMultiselect && listState.isSelected(transactionRule.id),
+            );
+          },
+        );
       },
     );
   }
@@ -75,8 +76,9 @@ class TransactionRuleListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -88,19 +90,25 @@ class TransactionRuleListVM {
       userCompany: state.userCompany,
       listState: state.transactionRuleListState,
       transactionRuleList: memoizedFilteredTransactionRuleList(
-          state.getUISelection(EntityType.transactionRule),
-          state.transactionRuleState.map,
-          state.transactionRuleState.list,
-          state.transactionRuleListState),
+        state.getUISelection(EntityType.transactionRule),
+        state.transactionRuleState.map,
+        state.transactionRuleState.list,
+        state.transactionRuleListState,
+      ),
       transactionRuleMap: state.transactionRuleState.map,
       isLoading: state.isLoading,
       filter: state.transactionRuleUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> transactionRules,
-              EntityAction action) =>
-          handleTransactionRuleAction(context, transactionRules, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> transactionRules,
+            EntityAction action,
+          ) => handleTransactionRuleAction(context, transactionRules, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.transactionRule) ??
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
+            EntityType.transactionRule,
+          ) ??
           TransactionRulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactionRules(field)),
       onClearMultielsect: () =>

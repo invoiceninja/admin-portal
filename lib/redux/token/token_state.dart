@@ -39,9 +39,11 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<TokenState> get serializer => _$tokenStateSerializer;
@@ -52,8 +54,10 @@ abstract class TokenUIState extends Object
     implements Built<TokenUIState, TokenUIStateBuilder> {
   factory TokenUIState(PrefStateSortField? sortField) {
     return _$TokenUIState._(
-      listUIState: ListUIState(sortField?.field ?? TokenFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? TokenFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: TokenEntity(),
       selectedId: '',
       tabIndex: 0,

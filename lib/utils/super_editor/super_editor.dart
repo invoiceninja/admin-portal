@@ -10,11 +10,8 @@ import 'package:invoiceninja_flutter/utils/super_editor/toolbar.dart';
 /// This editor will expand in functionality as package
 /// capabilities expand.
 class ExampleEditor extends StatefulWidget {
-  const ExampleEditor({
-    Key? key,
-    required this.value,
-    this.onChanged,
-  }) : super(key: key);
+  const ExampleEditor({Key? key, required this.value, this.onChanged})
+    : super(key: key);
 
   final String value;
   final Function(String)? onChanged;
@@ -52,8 +49,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
   final _imageSelectionAnchor = ValueNotifier<Offset?>(null);
 
   // TODO: get rid of overlay controller once Android is refactored to use a control scope (as follow up to: https://github.com/superlistapp/super_editor/pull/1470)
-  final _overlayController = MagnifierAndToolbarController() //
-    ..screenPadding = const EdgeInsets.all(20.0);
+  final _overlayController =
+      MagnifierAndToolbarController() //
+        ..screenPadding = const EdgeInsets.all(20.0);
 
   late final SuperEditorIosControlsController _iosControlsController;
 
@@ -75,7 +73,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
     _composer = MutableDocumentComposer();
     _composer.selectionNotifier.addListener(_hideOrShowToolbar);
     _docEditor = createDefaultDocumentEditor(
-        document: _doc, composer: _composer, isHistoryEnabled: true);
+      document: _doc,
+      composer: _composer,
+      isHistoryEnabled: true,
+    );
     _docOps = CommonEditorOperations(
       editor: _docEditor,
       document: _doc,
@@ -111,8 +112,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
     _doc = deserializeMarkdownToDocument(markdown)
       ..addListener(_onDocumentChange);
 
-    _docEditor =
-        createDefaultDocumentEditor(document: _doc, composer: _composer);
+    _docEditor = createDefaultDocumentEditor(
+      document: _doc,
+      composer: _composer,
+    );
   }
 
   @override
@@ -201,9 +204,12 @@ class _ExampleEditorState extends State<ExampleEditor> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final layout = _docLayoutKey.currentState as DocumentLayout;
       final docBoundingBox = layout.getRectForSelection(
-          _composer.selection!.base, _composer.selection!.extent)!;
-      final globalOffset =
-          layout.getGlobalOffsetFromDocumentOffset(Offset.zero);
+        _composer.selection!.base,
+        _composer.selection!.extent,
+      )!;
+      final globalOffset = layout.getGlobalOffsetFromDocumentOffset(
+        Offset.zero,
+      );
       final overlayBoundingBox = docBoundingBox.shift(globalOffset);
 
       _textSelectionAnchor.value = overlayBoundingBox.topCenter;
@@ -293,7 +299,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final docBoundingBox = (_docLayoutKey.currentState as DocumentLayout)
           .getRectForSelection(
-              _composer.selection!.base, _composer.selection!.extent)!;
+            _composer.selection!.base,
+            _composer.selection!.extent,
+          )!;
       final docBox =
           _docLayoutKey.currentContext!.findRenderObject() as RenderBox;
       final overlayBoundingBox = Rect.fromPoints(
@@ -350,9 +358,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
                 children: [
                   Column(
                     children: [
-                      Expanded(
-                        child: _buildEditor(themedContext),
-                      ),
+                      Expanded(child: _buildEditor(themedContext)),
                       if (_isMobile) //
                         _buildMountedToolbar(),
                     ],
@@ -469,7 +475,8 @@ class _ExampleEditorState extends State<ExampleEditor> {
               documentOverlayBuilders: [
                 DefaultCaretOverlayBuilder(
                   caretStyle: const CaretStyle().copyWith(
-                      color: isLight ? Colors.black : Colors.redAccent),
+                    color: isLight ? Colors.black : Colors.redAccent,
+                  ),
                 ),
                 if (defaultTargetPlatform == TargetPlatform.iOS) ...[
                   SuperEditorIosHandlesDocumentLayerBuilder(),
@@ -487,10 +494,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
                       selectionColor: Colors.red.withValues(alpha: 0.3),
                     ),
               stylesheet: defaultStylesheet.copyWith(
-                addRulesAfter: [
-                  if (!isLight) ..._darkModeStyles,
-                  taskStyles,
-                ],
+                addRulesAfter: [if (!isLight) ..._darkModeStyles, taskStyles],
               ),
               componentBuilders: [
                 TaskComponentBuilder(_docEditor),
@@ -503,9 +507,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
                   : defaultKeyboardActions,
               androidToolbarBuilder: (_) => _buildAndroidFloatingToolbar(),
               overlayController: _overlayController,
-              plugins: {
-                MarkdownInlineUpstreamSyntaxPlugin(),
-              },
+              plugins: {MarkdownInlineUpstreamSyntaxPlugin()},
             ),
           ),
         ),
@@ -532,10 +534,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
   Widget _buildMountedToolbar() {
     return MultiListenableBuilder(
-      listenables: <Listenable>{
-        _docChangeSignal,
-        _composer.selectionNotifier,
-      },
+      listenables: <Listenable>{_docChangeSignal, _composer.selectionNotifier},
       builder: (_) {
         final selection = _composer.selection;
 
@@ -572,8 +571,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
       setWidth: (nodeId, width) {
         print('Applying width $width to node $nodeId');
         final node = _doc.getNodeById(nodeId)!;
-        final currentStyles =
-            SingleColumnLayoutComponentStyles.fromMetadata(node);
+        final currentStyles = SingleColumnLayoutComponentStyles.fromMetadata(
+          node,
+        );
 
         _docEditor.execute([
           ChangeSingleColumnLayoutComponentStylesRequest(
@@ -582,7 +582,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
               width: width,
               padding: currentStyles.padding,
             ),
-          )
+          ),
         ]);
       },
       closeToolbar: _hideImageToolbar,
@@ -592,34 +592,13 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
 // Makes text light, for use during dark mode styling.
 final _darkModeStyles = [
-  StyleRule(
-    BlockSelector.all,
-    (doc, docNode) {
-      return {
-        Styles.textStyle: const TextStyle(
-          color: Color(0xFFCCCCCC),
-        ),
-      };
-    },
-  ),
-  StyleRule(
-    const BlockSelector('header1'),
-    (doc, docNode) {
-      return {
-        Styles.textStyle: const TextStyle(
-          color: Color(0xFF888888),
-        ),
-      };
-    },
-  ),
-  StyleRule(
-    const BlockSelector('header2'),
-    (doc, docNode) {
-      return {
-        Styles.textStyle: const TextStyle(
-          color: Color(0xFF888888),
-        ),
-      };
-    },
-  ),
+  StyleRule(BlockSelector.all, (doc, docNode) {
+    return {Styles.textStyle: const TextStyle(color: Color(0xFFCCCCCC))};
+  }),
+  StyleRule(const BlockSelector('header1'), (doc, docNode) {
+    return {Styles.textStyle: const TextStyle(color: Color(0xFF888888))};
+  }),
+  StyleRule(const BlockSelector('header2'), (doc, docNode) {
+    return {Styles.textStyle: const TextStyle(color: Color(0xFF888888))};
+  }),
 ];

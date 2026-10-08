@@ -29,8 +29,9 @@ class _StateInspectorState extends State<StateInspector> {
 
         final regExp = RegExp(pattern, caseSensitive: false);
         final dynamic index = (data as Map).keys.firstWhere(
-            (dynamic key) => regExp.hasMatch(key),
-            orElse: () => null);
+          (dynamic key) => regExp.hasMatch(key),
+          orElse: () => null,
+        );
 
         if (index != null) {
           data = data[index];
@@ -72,9 +73,7 @@ class _StateInspectorState extends State<StateInspector> {
               Container(
                 color: Colors.white,
                 padding: const EdgeInsets.all(4),
-                child: JsonViewer(
-                  filterJson(data: data, filter: _filter),
-                ),
+                child: JsonViewer(filterJson(data: data, filter: _filter)),
               ),
             ],
           ),

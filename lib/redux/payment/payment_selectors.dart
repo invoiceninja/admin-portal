@@ -7,42 +7,61 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedPaymentsByInvoice = memo3((String invoiceId,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltList<String> paymentList) =>
-    paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
+var memoizedPaymentsByInvoice = memo3(
+  (
+    String invoiceId,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList,
+  ) => paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList),
+);
 
-List<PaymentEntity?> paymentsByInvoiceSelector(String invoiceId,
-    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
+List<PaymentEntity?> paymentsByInvoiceSelector(
+  String invoiceId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltList<String> paymentList,
+) {
   return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
     return payment!.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
         !payment.isDeleted!;
   }).toList();
 }
 
-var memoizedPaymentsByCredit = memo3((String invoiceId,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltList<String> paymentList) =>
-    paymentsByCreditSelector(invoiceId, paymentMap, paymentList));
+var memoizedPaymentsByCredit = memo3(
+  (
+    String invoiceId,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList,
+  ) => paymentsByCreditSelector(invoiceId, paymentMap, paymentList),
+);
 
-List<PaymentEntity?> paymentsByCreditSelector(String creditId,
-    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
+List<PaymentEntity?> paymentsByCreditSelector(
+  String creditId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltList<String> paymentList,
+) {
   return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
     return payment!.paymentables.map((p) => p.creditId).contains(creditId) &&
         !payment.isDeleted!;
   }).toList();
 }
 
-var memoizedDropdownPaymentList = memo6((
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltList<String> paymentList,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
-) =>
-    dropdownPaymentsSelector(paymentMap, paymentList, invoiceMap, clientMap,
-        userMap, paymentTypeMap));
+var memoizedDropdownPaymentList = memo6(
+  (
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
+  ) => dropdownPaymentsSelector(
+    paymentMap,
+    paymentList,
+    invoiceMap,
+    clientMap,
+    userMap,
+    paymentTypeMap,
+  ),
+);
 
 List<String> dropdownPaymentsSelector(
   BuiltMap<String, PaymentEntity> paymentMap,
@@ -74,26 +93,8 @@ List<String> dropdownPaymentsSelector(
   return list;
 }
 
-var memoizedFilteredPaymentList = memo8((SelectionState selectionState,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltList<String> paymentList,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, UserEntity> userMap,
-        BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
-        ListUIState paymentListState) =>
-    filteredPaymentsSelector(
-      selectionState,
-      paymentMap,
-      paymentList,
-      invoiceMap,
-      clientMap,
-      userMap,
-      paymentTypeMap,
-      paymentListState,
-    ));
-
-List<String> filteredPaymentsSelector(
+var memoizedFilteredPaymentList = memo8(
+  (
     SelectionState selectionState,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltList<String> paymentList,
@@ -101,7 +102,29 @@ List<String> filteredPaymentsSelector(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
-    ListUIState paymentListState) {
+    ListUIState paymentListState,
+  ) => filteredPaymentsSelector(
+    selectionState,
+    paymentMap,
+    paymentList,
+    invoiceMap,
+    clientMap,
+    userMap,
+    paymentTypeMap,
+    paymentListState,
+  ),
+);
+
+List<String> filteredPaymentsSelector(
+  SelectionState selectionState,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltList<String> paymentList,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
+  ListUIState paymentListState,
+) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
@@ -169,15 +192,19 @@ List<String> filteredPaymentsSelector(
   return list;
 }
 
-var memoizedPaymentStatsForClient = memo3((String clientId,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    paymentStatsForClient(clientId, paymentMap, invoiceMap));
-
-EntityStats paymentStatsForClient(
+var memoizedPaymentStatsForClient = memo3(
+  (
     String clientId,
     BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap) {
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+  ) => paymentStatsForClient(clientId, paymentMap, invoiceMap),
+);
+
+EntityStats paymentStatsForClient(
+  String clientId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
@@ -193,15 +220,19 @@ EntityStats paymentStatsForClient(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedPaymentStatsForUser = memo3((String userId,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltMap<String, InvoiceEntity> invoiceMap) =>
-    paymentStatsForClient(userId, paymentMap, invoiceMap));
-
-EntityStats paymentStatsForUser(
+var memoizedPaymentStatsForUser = memo3(
+  (
     String userId,
     BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap) {
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+  ) => paymentStatsForClient(userId, paymentMap, invoiceMap),
+);
+
+EntityStats paymentStatsForUser(
+  String userId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+) {
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {

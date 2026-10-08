@@ -23,32 +23,27 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewVendorList implements PersistUI {
-  ViewVendorList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewVendorList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewVendor implements PersistUI, PersistPrefs {
-  ViewVendor({
-    required this.vendorId,
-    this.force = false,
-  });
+  ViewVendor({required this.vendorId, this.force = false});
 
   final String? vendorId;
   final bool force;
 }
 
 class EditVendor implements PersistUI, PersistPrefs {
-  EditVendor(
-      {required this.vendor,
-      this.contact,
-      this.completer,
-      this.cancelCompleter,
-      this.force = false});
+  EditVendor({
+    required this.vendor,
+    this.contact,
+    this.completer,
+    this.cancelCompleter,
+    this.force = false,
+  });
 
   final VendorEntity vendor;
   final VendorContactEntity? contact;
@@ -255,10 +250,7 @@ class AddVendorContact implements PersistUI {
 }
 
 class UpdateVendorContact implements PersistUI {
-  UpdateVendorContact({
-    required this.index,
-    required this.contact,
-  });
+  UpdateVendorContact({required this.index, required this.contact});
 
   final int index;
   final VendorContactEntity contact;
@@ -312,8 +304,11 @@ class FilterVendorsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
-    EntityAction? action) async {
+void handleVendorAction(
+  BuildContext? context,
+  List<BaseEntity> vendors,
+  EntityAction? action,
+) async {
   if (vendors.isEmpty) {
     return;
   }
@@ -351,54 +346,54 @@ void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
     case EntityAction.newRecurringExpense:
       createEntity(
         entity: ExpenseEntity(
-            state: state,
-            vendor: vendor,
-            entityType: EntityType.recurringExpense),
+          state: state,
+          vendor: vendor,
+          entityType: EntityType.recurringExpense,
+        ),
       );
       break;
     case EntityAction.restore:
       final message = vendorIds.length > 1
           ? localization!.restoredVendors
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', vendorIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', vendorIds.length.toString())
           : localization!.restoredVendor;
       store.dispatch(
-          RestoreVendorRequest(snackBarCompleter<Null>(message), vendorIds));
+        RestoreVendorRequest(snackBarCompleter<Null>(message), vendorIds),
+      );
       break;
     case EntityAction.archive:
       final message = vendorIds.length > 1
           ? localization!.archivedVendors
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', vendorIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', vendorIds.length.toString())
           : localization!.archivedVendor;
       store.dispatch(
-          ArchiveVendorRequest(snackBarCompleter<Null>(message), vendorIds));
+        ArchiveVendorRequest(snackBarCompleter<Null>(message), vendorIds),
+      );
       break;
     case EntityAction.delete:
       final message = vendorIds.length > 1
           ? localization!.deletedVendors
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', vendorIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', vendorIds.length.toString())
           : localization!.deletedVendor;
       store.dispatch(
-          DeleteVendorRequest(snackBarCompleter<Null>(message), vendorIds));
+        DeleteVendorRequest(snackBarCompleter<Null>(message), vendorIds),
+      );
       break;
     case EntityAction.bulkUpdate:
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => BulkUpdateDialog(
-          entityType: EntityType.vendor,
-          entities: vendors,
-        ),
+        builder: (context) =>
+            BulkUpdateDialog(entityType: EntityType.vendor, entities: vendors),
       );
       break;
     case EntityAction.merge:
       showDialog<void>(
         context: context,
-        builder: (context) => _MergVendorPicker(
-          vendor: vendor,
-        ),
+        builder: (context) => _MergVendorPicker(vendor: vendor),
       );
       break;
     case EntityAction.toggleMultiselect:
@@ -419,9 +414,7 @@ void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [vendor],
-      );
+      showEntityActionsDialog(entities: [vendor]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -436,9 +429,7 @@ void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }
@@ -511,10 +502,7 @@ class UpdateVendorTab implements PersistUI {
 }
 
 class _MergVendorPicker extends StatefulWidget {
-  const _MergVendorPicker({
-    Key? key,
-    required this.vendor,
-  }) : super(key: key);
+  const _MergVendorPicker({Key? key, required this.vendor}) : super(key: key);
 
   final VendorEntity? vendor;
 
@@ -553,9 +541,10 @@ class __MergVendorPickerState extends State<_MergVendorPicker> {
         TextButton(
           onPressed: () {
             passwordCallback(
-                context: context,
-                callback: (password, idToken) {
-                  store.dispatch(MergeVendorsRequest(
+              context: context,
+              callback: (password, idToken) {
+                store.dispatch(
+                  MergeVendorsRequest(
                     vendorId: widget.vendor!.id,
                     idToken: idToken,
                     password: password,
@@ -563,9 +552,11 @@ class __MergVendorPickerState extends State<_MergVendorPicker> {
                     completer: snackBarCompleter<Null>(
                       localization.mergedVendors,
                     ),
-                  ));
-                  Navigator.of(context).pop();
-                });
+                  ),
+                );
+                Navigator.of(context).pop();
+              },
+            );
           },
           child: Text(localization.merge),
         ),

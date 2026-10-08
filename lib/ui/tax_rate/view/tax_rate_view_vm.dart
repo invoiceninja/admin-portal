@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateViewScreen extends StatelessWidget {
-  const TaxRateViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const TaxRateViewScreen({Key? key, this.isFilter = false}) : super(key: key);
 
   final bool isFilter;
   static const String route = '/$kSettings/$kSettingsTaxRatesView';
@@ -36,10 +33,7 @@ class TaxRateViewScreen extends StatelessWidget {
         return TaxRateViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return TaxRateView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return TaxRateView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -60,12 +54,14 @@ class TaxRateViewVM {
 
   factory TaxRateViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final taxRate = state.taxRateState.map[state.taxRateUIState.selectedId] ??
+    final taxRate =
+        state.taxRateState.map[state.taxRateUIState.selectedId] ??
         TaxRateEntity(id: state.taxRateUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadTaxRate(completer: completer, taxRateId: taxRate.id));
       return completer.future;
     }

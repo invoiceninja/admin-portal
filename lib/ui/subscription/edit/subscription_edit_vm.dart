@@ -88,37 +88,51 @@ class SubscriptionEditVM {
           final navigator = navigatorKey.currentState;
           if (subscription.name.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(localization!.pleaseEnterAName);
-                });
+              context: navigatorKey.currentContext!,
+              builder: (BuildContext context) {
+                return ErrorDialog(localization!.pleaseEnterAName);
+              },
+            );
             return null;
           }
           final Completer<SubscriptionEntity> completer =
               new Completer<SubscriptionEntity>();
-          store.dispatch(SaveSubscriptionRequest(
-              completer: completer, subscription: subscription));
-          return completer.future.then((savedSubscription) {
-            showToast(subscription.isNew
-                ? localization!.createdPaymentLink
-                : localization!.updatedPaymentLink);
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
-              if (subscription.isNew) {
-                navigator!.pushReplacementNamed(SubscriptionViewScreen.route);
-              } else {
-                navigator!.pop(savedSubscription);
-              }
-            } else {
-              viewEntity(entity: savedSubscription, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          store.dispatch(
+            SaveSubscriptionRequest(
+              completer: completer,
+              subscription: subscription,
+            ),
+          );
+          return completer.future
+              .then((savedSubscription) {
+                showToast(
+                  subscription.isNew
+                      ? localization!.createdPaymentLink
+                      : localization!.updatedPaymentLink,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(SubscriptionViewScreen.route),
+                  );
+                  if (subscription.isNew) {
+                    navigator!.pushReplacementNamed(
+                      SubscriptionViewScreen.route,
+                    );
+                  } else {
+                    navigator!.pop(savedSubscription);
+                  }
+                } else {
+                  viewEntity(entity: savedSubscription, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

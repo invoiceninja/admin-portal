@@ -72,16 +72,23 @@ enum VendorReportFields {
   */
 }
 
-var memoizedVendorReport = memo6((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, GroupEntity> groupMap,
-  StaticState staticState,
-) =>
-    vendorReport(userCompany!, reportsUIState, vendorMap, userMap, groupMap,
-        staticState));
+var memoizedVendorReport = memo6(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, GroupEntity> groupMap,
+    StaticState staticState,
+  ) => vendorReport(
+    userCompany!,
+    reportsUIState,
+    vendorMap,
+    userMap,
+    groupMap,
+    staticState,
+  ),
+);
 
 ReportResult vendorReport(
   UserCompanyEntity userCompany,
@@ -111,10 +118,12 @@ ReportResult vendorReport(
   ];
 
   if (vendorReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(vendorReportSettings.columns
-        .map((e) => EnumUtils.fromString(VendorReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      vendorReportSettings.columns
+          .map((e) => EnumUtils.fromString(VendorReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -129,9 +138,11 @@ ReportResult vendorReport(
     bool skip = false;
     final List<ReportElement> row = [];
 
-    final exchangeRate = getExchangeRate(staticState.currencyMap,
-        fromCurrencyId: vendor.currencyId,
-        toCurrencyId: userCompany.company.currencyId);
+    final exchangeRate = getExchangeRate(
+      staticState.currencyMap,
+      fromCurrencyId: vendor.currencyId,
+      toCurrencyId: userCompany.company.currencyId,
+    );
 
     for (var column in columns) {
       dynamic value = '';
@@ -326,12 +337,14 @@ ReportResult vendorReport(
           value = vendor.routingId;
           break;
         case VendorReportFields.classification:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(vendor.classification);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(vendor.classification);
           break;
         case VendorReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(vendor.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(vendor.entityState);
           break;
         case VendorReportFields.tax_exempt:
           value = vendor.isTaxExempt;
@@ -352,11 +365,13 @@ ReportResult vendorReport(
       } else if (column == VendorReportFields.documents) {
         row.add(vendor.getReportInt(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(vendor.getReportDouble(
-          value: value,
-          currencyId: vendor.currencyId,
-          exchangeRate: exchangeRate,
-        ));
+        row.add(
+          vendor.getReportDouble(
+            value: value,
+            currencyId: vendor.currencyId,
+            exchangeRate: exchangeRate,
+          ),
+        );
       } else {
         row.add(vendor.getReportString(value: '$value'));
       }
@@ -369,15 +384,19 @@ ReportResult vendorReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, vendorReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) =>
+        sortReportTableRows(rowA, rowB, vendorReportSettings, selectedColumns)!,
+  );
 
   return ReportResult(
-    allColumns:
-        VendorReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
+    allColumns: VendorReportFields.values
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

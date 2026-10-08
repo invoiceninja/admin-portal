@@ -41,8 +41,10 @@ abstract class TaxRateUIState extends Object
     implements Built<TaxRateUIState, TaxRateUIStateBuilder> {
   factory TaxRateUIState(PrefStateSortField? sortField) {
     return _$TaxRateUIState._(
-      listUIState: ListUIState(sortField?.field ?? TaxRateFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? TaxRateFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: TaxRateEntity(),
       selectedId: '',
       tabIndex: 0,

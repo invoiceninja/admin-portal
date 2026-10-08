@@ -32,18 +32,20 @@ class ResponsivePadding extends StatelessWidget {
     if (isMobile(context)) {
       return Padding(
         padding: EdgeInsets.only(
-            left: kMobileDialogPadding,
-            top: kMobileDialogPadding,
-            right: kMobileDialogPadding,
-            bottom: kMobileDialogPadding +
-                MediaQuery.of(context).viewInsets.bottom),
+          left: kMobileDialogPadding,
+          top: kMobileDialogPadding,
+          right: kMobileDialogPadding,
+          bottom:
+              kMobileDialogPadding + MediaQuery.of(context).viewInsets.bottom,
+        ),
         child: child,
       );
     } else {
       return FractionallySizedBox(
         child: Padding(
-            child: child,
-            padding: EdgeInsets.only(top: kMobileDialogPadding * 2)),
+          child: child,
+          padding: EdgeInsets.only(top: kMobileDialogPadding * 2),
+        ),
         //bottom: (kMobileDialogPadding * 2) +
         //MediaQuery.of(context).viewInsets.bottom)),
         widthFactor: .4,

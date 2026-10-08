@@ -31,7 +31,7 @@ class WebUtils {
     Function(dynamic) failureCallback,
   ) async {}
 
-/*
+  /*
   static String loadToken() => null;
 
   static void saveToken(String token) {}

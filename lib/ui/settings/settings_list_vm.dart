@@ -40,23 +40,25 @@ class SettingsListVM {
     final settingsUIState = state.uiState.settingsUIState;
 
     return SettingsListVM(
-        state: state,
-        loadSection: (context, section, tabIndex) {
-          store.dispatch(ViewSettings(
+      state: state,
+      loadSection: (context, section, tabIndex) {
+        store.dispatch(
+          ViewSettings(
             section: section,
             company: state.company,
             user: state.user,
             tabIndex: tabIndex,
-          ));
-        },
-        onClearSettingsFilterPressed: () =>
-            store.dispatch(ClearSettingsFilter()),
-        onViewClientPressed: (context) {
-          viewEntity(entity: settingsUIState.client);
-        },
-        onViewGroupPressed: (context) {
-          viewEntity(entity: settingsUIState.group);
-        });
+          ),
+        );
+      },
+      onClearSettingsFilterPressed: () => store.dispatch(ClearSettingsFilter()),
+      onViewClientPressed: (context) {
+        viewEntity(entity: settingsUIState.client);
+      },
+      onViewGroupPressed: (context) {
+        viewEntity(entity: settingsUIState.group);
+      },
+    );
   }
 
   final AppState state;

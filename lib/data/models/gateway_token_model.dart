@@ -13,9 +13,9 @@ part 'gateway_token_model.g.dart';
 abstract class GatewayTokenListResponse
     implements
         Built<GatewayTokenListResponse, GatewayTokenListResponseBuilder> {
-  factory GatewayTokenListResponse(
-          [void updates(GatewayTokenListResponseBuilder b)]) =
-      _$GatewayTokenListResponse;
+  factory GatewayTokenListResponse([
+    void updates(GatewayTokenListResponseBuilder b),
+  ]) = _$GatewayTokenListResponse;
 
   GatewayTokenListResponse._();
 
@@ -32,9 +32,9 @@ abstract class GatewayTokenListResponse
 abstract class GatewayTokenItemResponse
     implements
         Built<GatewayTokenItemResponse, GatewayTokenItemResponseBuilder> {
-  factory GatewayTokenItemResponse(
-          [void updates(GatewayTokenItemResponseBuilder b)]) =
-      _$GatewayTokenItemResponse;
+  factory GatewayTokenItemResponse([
+    void updates(GatewayTokenItemResponseBuilder b),
+  ]) = _$GatewayTokenItemResponse;
 
   GatewayTokenItemResponse._();
 
@@ -109,12 +109,17 @@ abstract class GatewayTokenEntity extends Object
   }
 
   int compareTo(
-      GatewayTokenEntity gatewayToken, String sortField, bool sortAscending) {
+    GatewayTokenEntity gatewayToken,
+    String sortField,
+    bool sortAscending,
+  ) {
     const int response = 0;
-    final GatewayTokenEntity gatewayTokenA =
-        sortAscending ? this : gatewayToken;
-    final GatewayTokenEntity gatewayTokenB =
-        sortAscending ? gatewayToken : this;
+    final GatewayTokenEntity gatewayTokenA = sortAscending
+        ? this
+        : gatewayToken;
+    final GatewayTokenEntity gatewayTokenB = sortAscending
+        ? gatewayToken
+        : this;
 
     switch (sortField) {
       case GatewayTokenFields.name:
@@ -123,9 +128,9 @@ abstract class GatewayTokenEntity extends Object
     }
 
     if (response == 0) {
-      return gatewayTokenA.customerReference
-          .toLowerCase()
-          .compareTo(gatewayTokenB.customerReference.toLowerCase());
+      return gatewayTokenA.customerReference.toLowerCase().compareTo(
+        gatewayTokenB.customerReference.toLowerCase(),
+      );
     } else {
       return response;
     }
@@ -133,27 +138,22 @@ abstract class GatewayTokenEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [customerReference],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [customerReference], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [customerReference],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [customerReference], needle: filter);
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {

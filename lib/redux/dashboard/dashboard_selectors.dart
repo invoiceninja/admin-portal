@@ -42,47 +42,53 @@ class ChartMoneyData {
   final double? amount;
 }
 
-var memoizedChartInvoices = memo5((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _chartInvoices(
-        currencyMap: currencyMap,
-        company: company!,
-        settings: settings,
-        invoiceMap: invoiceMap,
-        clientMap: clientMap));
+var memoizedChartInvoices = memo5(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _chartInvoices(
+    currencyMap: currencyMap,
+    company: company!,
+    settings: settings,
+    invoiceMap: invoiceMap,
+    clientMap: clientMap,
+  ),
+);
 
-var memoizedChartOverviewInvoices = memo5((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _chartInvoices(
-        currencyMap: currencyMap,
-        company: company!,
-        settings: settings,
-        invoiceMap: invoiceMap,
-        clientMap: clientMap));
+var memoizedChartOverviewInvoices = memo5(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _chartInvoices(
+    currencyMap: currencyMap,
+    company: company!,
+    settings: settings,
+    invoiceMap: invoiceMap,
+    clientMap: clientMap,
+  ),
+);
 
-var memoizedPreviousChartInvoices = memo5((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-) =>
-    _chartInvoices(
-        currencyMap: currencyMap,
-        company: company!,
-        settings: settings,
-        invoiceMap: invoiceMap,
-        clientMap: clientMap));
+var memoizedPreviousChartInvoices = memo5(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+  ) => _chartInvoices(
+    currencyMap: currencyMap,
+    company: company!,
+    settings: settings,
+    invoiceMap: invoiceMap,
+    clientMap: clientMap,
+  ),
+);
 
 List<ChartDataGroup> _chartInvoices({
   BuiltMap<String, CurrencyEntity>? currencyMap,
@@ -125,19 +131,23 @@ List<ChartDataGroup> _chartInvoices({
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
-      double amount =
-          settings.includeTaxes ? invoice.amount : invoice.netAmount;
-      double balance =
-          settings.includeTaxes ? invoice.balance : invoice.netBalance;
+      double amount = settings.includeTaxes
+          ? invoice.amount
+          : invoice.netAmount;
+      double balance = settings.includeTaxes
+          ? invoice.balance
+          : invoice.netBalance;
 
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
         final exchangeRate = invoice.hasExchangeRate
             ? 1 / invoice.exchangeRate
-            : getExchangeRate(currencyMap,
+            : getExchangeRate(
+                currencyMap,
                 fromCurrencyId: client.currencyId,
-                toCurrencyId: company.currencyId);
+                toCurrencyId: company.currencyId,
+              );
         amount *= exchangeRate;
         balance *= exchangeRate;
       }
@@ -149,7 +159,9 @@ List<ChartDataGroup> _chartInvoices({
       outstandingData.totalCount++;
 
       if (invoice.isBetween(
-          settings.startDate(company)!, settings.endDate(company))) {
+        settings.startDate(company)!,
+        settings.endDate(company),
+      )) {
         if (totals[STATUS_ACTIVE]![date] == null) {
           totals[STATUS_ACTIVE]![date] = 0.0;
           totals[STATUS_OUTSTANDING]![date] = 0.0;
@@ -182,10 +194,12 @@ List<ChartDataGroup> _chartInvoices({
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals[STATUS_ACTIVE]!.containsKey(key)) {
-      activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_ACTIVE]![key]));
-      outstandingData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING]![key]));
+      activeData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_ACTIVE]![key]),
+      );
+      outstandingData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_OUTSTANDING]![key]),
+      );
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -200,47 +214,46 @@ List<ChartDataGroup> _chartInvoices({
     }
   }
 
-  final List<ChartDataGroup> data = [
-    activeData,
-    outstandingData,
-  ];
+  final List<ChartDataGroup> data = [activeData, outstandingData];
 
   return data;
 }
 
-var memoizedChartQuotes = memo6((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-) =>
-    chartQuotes(
-      currencyMap: currencyMap,
-      company: company!,
-      settings: settings,
-      quoteMap: quoteMap,
-      clientMap: clientMap,
-      invoiceMap: invoiceMap,
-    ));
+var memoizedChartQuotes = memo6(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+  ) => chartQuotes(
+    currencyMap: currencyMap,
+    company: company!,
+    settings: settings,
+    quoteMap: quoteMap,
+    clientMap: clientMap,
+    invoiceMap: invoiceMap,
+  ),
+);
 
-var memoizedPreviousChartQuotes = memo6((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-) =>
-    chartQuotes(
-      currencyMap: currencyMap,
-      company: company!,
-      settings: settings,
-      quoteMap: quoteMap,
-      clientMap: clientMap,
-      invoiceMap: invoiceMap,
-    ));
+var memoizedPreviousChartQuotes = memo6(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> quoteMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+  ) => chartQuotes(
+    currencyMap: currencyMap,
+    company: company!,
+    settings: settings,
+    quoteMap: quoteMap,
+    clientMap: clientMap,
+    invoiceMap: invoiceMap,
+  ),
+);
 
 List<ChartDataGroup> chartQuotes({
   BuiltMap<String, CurrencyEntity>? currencyMap,
@@ -297,9 +310,11 @@ List<ChartDataGroup> chartQuotes({
           client.currencyId != company.currencyId) {
         final exchangeRate = quote.hasExchangeRate
             ? 1 / quote.exchangeRate
-            : getExchangeRate(currencyMap,
+            : getExchangeRate(
+                currencyMap,
                 fromCurrencyId: client.currencyId,
-                toCurrencyId: company.currencyId);
+                toCurrencyId: company.currencyId,
+              );
         amount *= exchangeRate;
       }
 
@@ -315,7 +330,9 @@ List<ChartDataGroup> chartQuotes({
       }
 
       if (quote.isBetween(
-          settings.startDate(company)!, settings.endDate(company))) {
+        settings.startDate(company)!,
+        settings.endDate(company),
+      )) {
         if (totals[STATUS_ACTIVE]![date] == null) {
           totals[STATUS_ACTIVE]![date] = 0.0;
           totals[STATUS_APPROVED]![date] = 0.0;
@@ -373,14 +390,18 @@ List<ChartDataGroup> chartQuotes({
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals[STATUS_ACTIVE]!.containsKey(key)) {
-      activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_ACTIVE]![key]));
-      approvedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_APPROVED]![key]));
-      unapprovedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_UNAPPROVED]![key]));
-      invoicedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_INVOICED]![key]));
+      activeData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_ACTIVE]![key]),
+      );
+      approvedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_APPROVED]![key]),
+      );
+      unapprovedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_UNAPPROVED]![key]),
+      );
+      invoicedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_INVOICED]![key]),
+      );
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID]![key]));
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -410,39 +431,41 @@ List<ChartDataGroup> chartQuotes({
   return data;
 }
 
-var memoizedChartPayments = memo6((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-) =>
-    chartPayments(
-      currencyMap,
-      company!,
-      settings,
-      invoiceMap,
-      clientMap,
-      paymentMap,
-    ));
+var memoizedChartPayments = memo6(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+  ) => chartPayments(
+    currencyMap,
+    company!,
+    settings,
+    invoiceMap,
+    clientMap,
+    paymentMap,
+  ),
+);
 
-var memoizedPreviousChartPayments = memo6((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-) =>
-    chartPayments(
-      currencyMap,
-      company!,
-      settings,
-      invoiceMap,
-      clientMap,
-      paymentMap,
-    ));
+var memoizedPreviousChartPayments = memo6(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+  ) => chartPayments(
+    currencyMap,
+    company!,
+    settings,
+    invoiceMap,
+    clientMap,
+    paymentMap,
+  ),
+);
 
 List<ChartDataGroup> chartPayments(
   BuiltMap<String, CurrencyEntity> currencyMap,
@@ -498,10 +521,12 @@ List<ChartDataGroup> chartPayments(
         final exchangeRate = payment.hasExchangeRate
             ? payment.exchangeRate
             : invoice.hasExchangeRate
-                ? invoice.exchangeRate
-                : getExchangeRate(currencyMap,
-                    fromCurrencyId: client.currencyId,
-                    toCurrencyId: company.currencyId);
+            ? invoice.exchangeRate
+            : getExchangeRate(
+                currencyMap,
+                fromCurrencyId: client.currencyId,
+                toCurrencyId: company.currencyId,
+              );
         completedAmount *= exchangeRate;
         refunded *= exchangeRate;
       }
@@ -515,7 +540,9 @@ List<ChartDataGroup> chartPayments(
       }
 
       if (payment.isBetween(
-          settings.startDate(company)!, settings.endDate(company))) {
+        settings.startDate(company)!,
+        settings.endDate(company),
+      )) {
         if (totals[STATUS_COMPLETED]![date] == null) {
           totals[STATUS_COMPLETED]![date] = 0.0;
           totals[STATUS_REFUNDED]![date] = 0.0;
@@ -548,10 +575,12 @@ List<ChartDataGroup> chartPayments(
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals[STATUS_COMPLETED]!.containsKey(key)) {
-      activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_COMPLETED]![key]));
-      refundedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_REFUNDED]![key]));
+      activeData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_COMPLETED]![key]),
+      );
+      refundedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_REFUNDED]![key]),
+      );
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       refundedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -566,55 +595,54 @@ List<ChartDataGroup> chartPayments(
     }
   }
 
-  final List<ChartDataGroup> data = [
-    activeData,
-    refundedData,
-  ];
+  final List<ChartDataGroup> data = [activeData, refundedData];
 
   return data;
 }
 
-var memoizedChartTasks = memo8((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, GroupEntity> groupMap,
-) =>
-    chartTasks(
-      currencyMap,
-      company!,
-      settings,
-      taskMap,
-      invoiceMap,
-      projectMap,
-      clientMap,
-      groupMap,
-    ));
+var memoizedChartTasks = memo8(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap,
+  ) => chartTasks(
+    currencyMap,
+    company!,
+    settings,
+    taskMap,
+    invoiceMap,
+    projectMap,
+    clientMap,
+    groupMap,
+  ),
+);
 
-var memoizedPreviousChartTasks = memo8((
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity? company,
-  DashboardUISettings settings,
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, GroupEntity> groupMap,
-) =>
-    chartTasks(
-      currencyMap,
-      company!,
-      settings,
-      taskMap,
-      invoiceMap,
-      projectMap,
-      clientMap,
-      groupMap,
-    ));
+var memoizedPreviousChartTasks = memo8(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap,
+  ) => chartTasks(
+    currencyMap,
+    company!,
+    settings,
+    taskMap,
+    invoiceMap,
+    projectMap,
+    clientMap,
+    groupMap,
+  ),
+);
 
 List<ChartDataGroup> chartTasks(
   BuiltMap<String, CurrencyEntity> currencyMap,
@@ -646,10 +674,12 @@ List<ChartDataGroup> chartTasks(
   final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
   final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
-  final ChartDataGroup loggedDataDuration =
-      ChartDataGroup(STATUS_LOGGED_DURATION);
-  final ChartDataGroup invoicedDataDuration =
-      ChartDataGroup(STATUS_INVOICED_DURATION);
+  final ChartDataGroup loggedDataDuration = ChartDataGroup(
+    STATUS_LOGGED_DURATION,
+  );
+  final ChartDataGroup invoicedDataDuration = ChartDataGroup(
+    STATUS_INVOICED_DURATION,
+  );
   final ChartDataGroup paidDataDuration = ChartDataGroup(STATUS_PAID_DURATION);
 
   taskMap.forEach((int, task) {
@@ -708,9 +738,11 @@ List<ChartDataGroup> chartTasks(
               client.currencyId != company.currencyId) {
             final exchangeRate = invoice.hasExchangeRate
                 ? 1 / invoice.exchangeRate
-                : getExchangeRate(currencyMap,
+                : getExchangeRate(
+                    currencyMap,
                     fromCurrencyId: client.currencyId,
-                    toCurrencyId: company.currencyId);
+                    toCurrencyId: company.currencyId,
+                  );
             amount *= exchangeRate;
           }
 
@@ -811,10 +843,12 @@ List<ChartDataGroup> chartTasks(
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals[STATUS_LOGGED]!.containsKey(key)) {
-      loggedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_LOGGED]![key]));
-      invoicedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_INVOICED]![key]));
+      loggedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_LOGGED]![key]),
+      );
+      invoicedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_INVOICED]![key]),
+      );
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID]![key]));
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -844,11 +878,12 @@ List<ChartDataGroup> chartTasks(
 }
 
 List<ChartDataGroup> chartExpenses(
-    BuiltMap<String, CurrencyEntity> currencyMap,
-    CompanyEntity company,
-    DashboardUISettings settings,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ExpenseEntity> expenseMap) {
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+) {
   const STATUS_LOGGED = 'logged';
   const STATUS_PENDING = 'pending';
   const STATUS_INVOICED = 'invoiced';
@@ -877,8 +912,9 @@ List<ChartDataGroup> chartExpenses(
       }
     }
 
-    double amount =
-        settings.includeTaxes ? expense.grossAmount : expense.netAmount;
+    double amount = settings.includeTaxes
+        ? expense.grossAmount
+        : expense.netAmount;
 
     if (expense.isDeleted! || date.isEmpty) {
       // skip it
@@ -888,11 +924,15 @@ List<ChartDataGroup> chartExpenses(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
-        final exchangeRate = expense.hasExchangeRate &&
+        final exchangeRate =
+            expense.hasExchangeRate &&
                 expense.invoiceCurrencyId == company.currencyId
             ? expense.exchangeRate
-            : getExchangeRate(currencyMap,
-                fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
+            : getExchangeRate(
+                currencyMap,
+                fromCurrencyId: currencyId,
+                toCurrencyId: company.currencyId,
+              );
         amount *= exchangeRate;
       }
 
@@ -914,7 +954,9 @@ List<ChartDataGroup> chartExpenses(
       }
 
       if (expense.isBetween(
-          settings.startDate(company), settings.endDate(company))) {
+        settings.startDate(company),
+        settings.endDate(company),
+      )) {
         if (totals[STATUS_LOGGED]![date] == null) {
           totals[STATUS_LOGGED]![date] = 0.0;
           totals[STATUS_PENDING]![date] = 0.0;
@@ -963,12 +1005,15 @@ List<ChartDataGroup> chartExpenses(
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
     if (totals[STATUS_LOGGED]!.containsKey(key)) {
-      loggedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_LOGGED]![key]));
-      pendingData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_PENDING]![key]));
-      invoicedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_INVOICED]![key]));
+      loggedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_LOGGED]![key]),
+      );
+      pendingData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_PENDING]![key]),
+      );
+      invoicedData.rawSeries.add(
+        ChartMoneyData(date, totals[STATUS_INVOICED]![key]),
+      );
       paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID]![key]));
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -996,27 +1041,35 @@ List<ChartDataGroup> chartExpenses(
   return data;
 }
 
-var memoizedChartExpenses = memo5((BuiltMap<String, CurrencyEntity> currencyMap,
-        CompanyEntity? company,
-        DashboardUISettings settings,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, ExpenseEntity> expenseMap) =>
-    chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
+var memoizedChartExpenses = memo5(
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+  ) => chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap),
+);
 
 var memoizedPreviousChartExpenses = memo5(
-    (BuiltMap<String, CurrencyEntity> currencyMap,
-            CompanyEntity? company,
-            DashboardUISettings settings,
-            BuiltMap<String, InvoiceEntity> invoiceMap,
-            BuiltMap<String, ExpenseEntity> expenseMap) =>
-        chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
+  (
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity? company,
+    DashboardUISettings settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+  ) => chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap),
+);
 
 var memoizedRunningTasks = memo2(
-    (BuiltMap<String, TaskEntity> taskMap, String userId) =>
-        runningTasks(taskMap, userId));
+  (BuiltMap<String, TaskEntity> taskMap, String userId) =>
+      runningTasks(taskMap, userId),
+);
 
 List<TaskEntity?> runningTasks(
-    BuiltMap<String, TaskEntity> taskMap, String userId) {
+  BuiltMap<String, TaskEntity> taskMap,
+  String userId,
+) {
   final tasks = <TaskEntity?>[];
 
   taskMap.forEach((taskId, task) {

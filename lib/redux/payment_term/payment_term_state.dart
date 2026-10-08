@@ -41,9 +41,11 @@ abstract class PaymentTermState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<PaymentTermState> get serializer =>
@@ -55,8 +57,10 @@ abstract class PaymentTermUIState extends Object
     implements Built<PaymentTermUIState, PaymentTermUIStateBuilder> {
   factory PaymentTermUIState(PrefStateSortField? sortField) {
     return _$PaymentTermUIState._(
-      listUIState: ListUIState(sortField?.field ?? PaymentTermFields.name,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? PaymentTermFields.name,
+        sortAscending: sortField?.ascending,
+      ),
       editing: PaymentTermEntity(),
       selectedId: '',
       tabIndex: 0,

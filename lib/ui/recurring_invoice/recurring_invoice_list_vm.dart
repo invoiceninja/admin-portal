@@ -32,24 +32,25 @@ class RecurringInvoiceListBuilder extends StatelessWidget {
       converter: RecurringInvoiceListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.recurringInvoice,
-            presenter: RecurringInvoicePresenter(),
-            state: viewModel.state,
-            entityList: viewModel.recurringInvoiceList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final recurringInvoiceId = viewModel.recurringInvoiceList[index];
-              final recurringInvoice =
-                  viewModel.recurringInvoiceMap[recurringInvoiceId]!;
+          entityType: EntityType.recurringInvoice,
+          presenter: RecurringInvoicePresenter(),
+          state: viewModel.state,
+          entityList: viewModel.recurringInvoiceList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final recurringInvoiceId = viewModel.recurringInvoiceList[index];
+            final recurringInvoice =
+                viewModel.recurringInvoiceMap[recurringInvoiceId]!;
 
-              return RecurringInvoiceListItem(
-                filter: viewModel.filter,
-                invoice: recurringInvoice,
-              );
-            });
+            return RecurringInvoiceListItem(
+              filter: viewModel.filter,
+              invoice: recurringInvoice,
+            );
+          },
+        );
       },
     );
   }
@@ -76,8 +77,9 @@ class RecurringInvoiceListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -89,22 +91,28 @@ class RecurringInvoiceListVM {
       userCompany: state.userCompany,
       listState: state.recurringInvoiceListState,
       recurringInvoiceList: memoizedFilteredRecurringInvoiceList(
-          state.getUISelection(EntityType.recurringInvoice),
-          state.recurringInvoiceState.map,
-          state.clientState.map,
-          state.vendorState.map,
-          state.recurringInvoiceState.list,
-          state.recurringInvoiceListState,
-          state.userState.map),
+        state.getUISelection(EntityType.recurringInvoice),
+        state.recurringInvoiceState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.recurringInvoiceState.list,
+        state.recurringInvoiceListState,
+        state.userState.map,
+      ),
       recurringInvoiceMap: state.recurringInvoiceState.map,
       isLoading: state.isLoading,
       filter: state.recurringInvoiceUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> recurringInvoices,
-              EntityAction action) =>
-          handleRecurringInvoiceAction(context, recurringInvoices, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> recurringInvoices,
+            EntityAction action,
+          ) => handleRecurringInvoiceAction(context, recurringInvoices, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.recurringInvoice) ??
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
+            EntityType.recurringInvoice,
+          ) ??
           RecurringInvoicePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortRecurringInvoices(field)),
       onClearMultielsect: () =>

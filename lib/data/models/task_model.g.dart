@@ -21,13 +21,19 @@ class _$TaskListResponseSerializer
   final String wireName = 'TaskListResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaskListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaskListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(TaskEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(TaskEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -35,8 +41,10 @@ class _$TaskListResponseSerializer
 
   @override
   TaskListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaskListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -46,10 +54,15 @@ class _$TaskListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(TaskEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(TaskEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -66,12 +79,17 @@ class _$TaskItemResponseSerializer
   final String wireName = 'TaskItemResponse';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaskItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaskItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(TaskEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(TaskEntity),
+      ),
     ];
 
     return result;
@@ -79,8 +97,10 @@ class _$TaskItemResponseSerializer
 
   @override
   TaskItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaskItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -90,8 +110,13 @@ class _$TaskItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaskEntity))! as TaskEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(TaskEntity),
+                )!
+                as TaskEntity,
+          );
           break;
       }
     }
@@ -107,37 +132,49 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   final String wireName = 'TaskTime';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaskTime object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaskTime object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'description',
-      serializers.serialize(object.description,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.description,
+        specifiedType: const FullType(String),
+      ),
       'isBillable',
-      serializers.serialize(object.isBillable,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isBillable,
+        specifiedType: const FullType(bool),
+      ),
     ];
     Object? value;
     value = object.startDate;
     if (value != null) {
       result
         ..add('startDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DateTime)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(DateTime)),
+        );
     }
     value = object.endDate;
     if (value != null) {
       result
         ..add('endDate')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(DateTime)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(DateTime)),
+        );
     }
     return result;
   }
 
   @override
-  TaskTime deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  TaskTime deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaskTimeBuilder();
 
     final iterator = serialized.iterator;
@@ -147,20 +184,36 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
       final Object? value = iterator.current;
       switch (key) {
         case 'startDate':
-          result.startDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime?;
+          result.startDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime?;
           break;
         case 'endDate':
-          result.endDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime?;
+          result.endDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(DateTime),
+                  )
+                  as DateTime?;
           break;
         case 'description':
-          result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.description =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'isBillable':
-          result.isBillable = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isBillable =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
       }
     }
@@ -176,57 +229,91 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   final String wireName = 'TaskEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, TaskEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    TaskEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'description',
-      serializers.serialize(object.description,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.description,
+        specifiedType: const FullType(String),
+      ),
       'number',
-      serializers.serialize(object.number,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.number,
+        specifiedType: const FullType(String),
+      ),
       'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.invoiceId,
+        specifiedType: const FullType(String),
+      ),
       'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.clientId,
+        specifiedType: const FullType(String),
+      ),
       'rate',
       serializers.serialize(object.rate, specifiedType: const FullType(double)),
       'project_id',
-      serializers.serialize(object.projectId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.projectId,
+        specifiedType: const FullType(String),
+      ),
       'time_log',
-      serializers.serialize(object.timeLog,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.timeLog,
+        specifiedType: const FullType(String),
+      ),
       'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue1,
+        specifiedType: const FullType(String),
+      ),
       'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue2,
+        specifiedType: const FullType(String),
+      ),
       'custom_value3',
-      serializers.serialize(object.customValue3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue3,
+        specifiedType: const FullType(String),
+      ),
       'custom_value4',
-      serializers.serialize(object.customValue4,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue4,
+        specifiedType: const FullType(String),
+      ),
       'status_id',
-      serializers.serialize(object.statusId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.statusId,
+        specifiedType: const FullType(String),
+      ),
       'documents',
-      serializers.serialize(object.documents,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DocumentEntity)])),
+      serializers.serialize(
+        object.documents,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DocumentEntity),
+        ]),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -242,35 +329,42 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
-  TaskEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  TaskEntity deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = TaskEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -280,94 +374,180 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       final Object? value = iterator.current;
       switch (key) {
         case 'description':
-          result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.description =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'number':
-          result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.number =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'invoice_id':
-          result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.invoiceId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'client_id':
-          result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.clientId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'rate':
-          result.rate = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.rate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'project_id':
-          result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.projectId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'time_log':
-          result.timeLog = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.timeLog =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'status_id':
-          result.statusId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.statusId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'status_order':
-          result.statusOrder = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.statusOrder =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'documents':
-          result.documents.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))!
-              as BuiltList<Object?>);
+          result.documents.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -380,9 +560,9 @@ class _$TaskListResponse extends TaskListResponse {
   @override
   final BuiltList<TaskEntity> data;
 
-  factory _$TaskListResponse(
-          [void Function(TaskListResponseBuilder)? updates]) =>
-      (TaskListResponseBuilder()..update(updates))._build();
+  factory _$TaskListResponse([
+    void Function(TaskListResponseBuilder)? updates,
+  ]) => (TaskListResponseBuilder()..update(updates))._build();
 
   _$TaskListResponse._({required this.data}) : super._();
   @override
@@ -411,8 +591,9 @@ class _$TaskListResponse extends TaskListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'TaskListResponse')..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'TaskListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -452,10 +633,7 @@ class TaskListResponseBuilder
   _$TaskListResponse _build() {
     _$TaskListResponse _$result;
     try {
-      _$result = _$v ??
-          _$TaskListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$TaskListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -463,7 +641,10 @@ class TaskListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaskListResponse', _$failedField, e.toString());
+          r'TaskListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -476,9 +657,9 @@ class _$TaskItemResponse extends TaskItemResponse {
   @override
   final TaskEntity data;
 
-  factory _$TaskItemResponse(
-          [void Function(TaskItemResponseBuilder)? updates]) =>
-      (TaskItemResponseBuilder()..update(updates))._build();
+  factory _$TaskItemResponse([
+    void Function(TaskItemResponseBuilder)? updates,
+  ]) => (TaskItemResponseBuilder()..update(updates))._build();
 
   _$TaskItemResponse._({required this.data}) : super._();
   @override
@@ -507,8 +688,9 @@ class _$TaskItemResponse extends TaskItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'TaskItemResponse')..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'TaskItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -547,10 +729,7 @@ class TaskItemResponseBuilder
   _$TaskItemResponse _build() {
     _$TaskItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$TaskItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$TaskItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -558,7 +737,10 @@ class TaskItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaskItemResponse', _$failedField, e.toString());
+          r'TaskItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -580,12 +762,12 @@ class _$TaskTime extends TaskTime {
   factory _$TaskTime([void Function(TaskTimeBuilder)? updates]) =>
       (TaskTimeBuilder()..update(updates))._build();
 
-  _$TaskTime._(
-      {this.startDate,
-      this.endDate,
-      required this.description,
-      required this.isBillable})
-      : super._();
+  _$TaskTime._({
+    this.startDate,
+    this.endDate,
+    required this.description,
+    required this.isBillable,
+  }) : super._();
   @override
   TaskTime rebuild(void Function(TaskTimeBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -674,14 +856,21 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   TaskTime build() => _build();
 
   _$TaskTime _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$TaskTime._(
           startDate: startDate,
           endDate: endDate,
           description: BuiltValueNullFieldError.checkNotNull(
-              description, r'TaskTime', 'description'),
+            description,
+            r'TaskTime',
+            'description',
+          ),
           isBillable: BuiltValueNullFieldError.checkNotNull(
-              isBillable, r'TaskTime', 'isBillable'),
+            isBillable,
+            r'TaskTime',
+            'isBillable',
+          ),
         );
     replace(_$result);
     return _$result;
@@ -737,30 +926,30 @@ class _$TaskEntity extends TaskEntity {
   factory _$TaskEntity([void Function(TaskEntityBuilder)? updates]) =>
       (TaskEntityBuilder()..update(updates))._build();
 
-  _$TaskEntity._(
-      {required this.description,
-      required this.number,
-      required this.invoiceId,
-      required this.clientId,
-      required this.rate,
-      required this.projectId,
-      required this.timeLog,
-      required this.customValue1,
-      required this.customValue2,
-      required this.customValue3,
-      required this.customValue4,
-      required this.statusId,
-      this.statusOrder,
-      required this.documents,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$TaskEntity._({
+    required this.description,
+    required this.number,
+    required this.invoiceId,
+    required this.clientId,
+    required this.rate,
+    required this.projectId,
+    required this.timeLog,
+    required this.customValue1,
+    required this.customValue2,
+    required this.customValue3,
+    required this.customValue4,
+    required this.statusId,
+    this.statusOrder,
+    required this.documents,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   TaskEntity rebuild(void Function(TaskEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -999,41 +1188,87 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   _$TaskEntity _build() {
     _$TaskEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$TaskEntity._(
             description: BuiltValueNullFieldError.checkNotNull(
-                description, r'TaskEntity', 'description'),
+              description,
+              r'TaskEntity',
+              'description',
+            ),
             number: BuiltValueNullFieldError.checkNotNull(
-                number, r'TaskEntity', 'number'),
+              number,
+              r'TaskEntity',
+              'number',
+            ),
             invoiceId: BuiltValueNullFieldError.checkNotNull(
-                invoiceId, r'TaskEntity', 'invoiceId'),
+              invoiceId,
+              r'TaskEntity',
+              'invoiceId',
+            ),
             clientId: BuiltValueNullFieldError.checkNotNull(
-                clientId, r'TaskEntity', 'clientId'),
+              clientId,
+              r'TaskEntity',
+              'clientId',
+            ),
             rate: BuiltValueNullFieldError.checkNotNull(
-                rate, r'TaskEntity', 'rate'),
+              rate,
+              r'TaskEntity',
+              'rate',
+            ),
             projectId: BuiltValueNullFieldError.checkNotNull(
-                projectId, r'TaskEntity', 'projectId'),
+              projectId,
+              r'TaskEntity',
+              'projectId',
+            ),
             timeLog: BuiltValueNullFieldError.checkNotNull(
-                timeLog, r'TaskEntity', 'timeLog'),
+              timeLog,
+              r'TaskEntity',
+              'timeLog',
+            ),
             customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'TaskEntity', 'customValue1'),
+              customValue1,
+              r'TaskEntity',
+              'customValue1',
+            ),
             customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, r'TaskEntity', 'customValue2'),
+              customValue2,
+              r'TaskEntity',
+              'customValue2',
+            ),
             customValue3: BuiltValueNullFieldError.checkNotNull(
-                customValue3, r'TaskEntity', 'customValue3'),
+              customValue3,
+              r'TaskEntity',
+              'customValue3',
+            ),
             customValue4: BuiltValueNullFieldError.checkNotNull(
-                customValue4, r'TaskEntity', 'customValue4'),
+              customValue4,
+              r'TaskEntity',
+              'customValue4',
+            ),
             statusId: BuiltValueNullFieldError.checkNotNull(
-                statusId, r'TaskEntity', 'statusId'),
+              statusId,
+              r'TaskEntity',
+              'statusId',
+            ),
             statusOrder: statusOrder,
             documents: documents.build(),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'TaskEntity', 'createdAt'),
+              createdAt,
+              r'TaskEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'TaskEntity', 'updatedAt'),
+              updatedAt,
+              r'TaskEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'TaskEntity', 'archivedAt'),
+              archivedAt,
+              r'TaskEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
@@ -1046,7 +1281,10 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
         documents.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'TaskEntity', _$failedField, e.toString());
+          r'TaskEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

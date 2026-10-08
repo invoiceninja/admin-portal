@@ -15,10 +15,7 @@ abstract class PaymentStatusEntity extends Object
     with EntityStatus, SelectableEntity
     implements Built<PaymentStatusEntity, PaymentStatusEntityBuilder> {
   factory PaymentStatusEntity() {
-    return _$PaymentStatusEntity._(
-      id: '',
-      name: '',
-    );
+    return _$PaymentStatusEntity._(id: '', name: '');
   }
 
   PaymentStatusEntity._();

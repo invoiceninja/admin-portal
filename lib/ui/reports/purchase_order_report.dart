@@ -81,17 +81,25 @@ enum PurchaseOrderReportFields {
   record_state,
 }
 
-var memoizedPurchaseOrderReport = memo7((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    purchaseOrderReport(userCompany!, reportsUIState, purchaseOrderMap,
-        clientMap, vendorMap, userMap, staticState));
+var memoizedPurchaseOrderReport = memo7(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, InvoiceEntity> purchaseOrderMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => purchaseOrderReport(
+    userCompany!,
+    reportsUIState,
+    purchaseOrderMap,
+    clientMap,
+    vendorMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult purchaseOrderReport(
   UserCompanyEntity userCompany,
@@ -109,8 +117,8 @@ ReportResult purchaseOrderReport(
   final reportSettings = userCompany.settings.reportSettings;
   final purchaseOrderReportSettings =
       reportSettings.containsKey(kReportPurchaseOrder)
-          ? reportSettings[kReportPurchaseOrder]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportPurchaseOrder]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     PurchaseOrderReportFields.number,
@@ -121,10 +129,12 @@ ReportResult purchaseOrderReport(
   ];
 
   if (purchaseOrderReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(purchaseOrderReportSettings.columns
-        .map((e) => EnumUtils.fromString(PurchaseOrderReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      purchaseOrderReportSettings.columns
+          .map((e) => EnumUtils.fromString(PurchaseOrderReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -137,8 +147,9 @@ ReportResult purchaseOrderReport(
       continue;
     }
 
-    final contact =
-        vendor.getContact(purchaseOrder.invitations.first.vendorContactId);
+    final contact = vendor.getContact(
+      purchaseOrder.invitations.first.vendorContactId,
+    );
     //final vendor = vendorMap[purchaseOrder.vendorId];
 
     if ((purchaseOrder.isDeleted! &&
@@ -165,8 +176,10 @@ ReportResult purchaseOrderReport(
           value = purchaseOrder.amount;
           break;
         case PurchaseOrderReportFields.converted_amount:
-          value =
-              round(purchaseOrder.amount * 1 / purchaseOrder.exchangeRate, 2);
+          value = round(
+            purchaseOrder.amount * 1 / purchaseOrder.exchangeRate,
+            2,
+          );
           break;
         case PurchaseOrderReportFields.number:
           value = purchaseOrder.number;
@@ -306,7 +319,9 @@ ReportResult purchaseOrderReport(
           value = vendor.city;
           break;
         case PurchaseOrderReportFields.currency:
-          value = staticState.currencyMap[userCompany.company.currencyId]
+          value =
+              staticState
+                  .currencyMap[userCompany.company.currencyId]
                   ?.listDisplayName ??
               '';
           break;
@@ -361,8 +376,9 @@ ReportResult purchaseOrderReport(
           value = vendor.number;
           break;
         case PurchaseOrderReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(purchaseOrder.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(purchaseOrder.entityState);
           break;
       }
 
@@ -379,16 +395,16 @@ ReportResult purchaseOrderReport(
         row.add(purchaseOrder.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         String currencyId = vendor.currencyId;
-        if ([
-          PurchaseOrderReportFields.converted_amount,
-        ].contains(column)) {
+        if ([PurchaseOrderReportFields.converted_amount].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(purchaseOrder.getReportDouble(
-          value: value,
-          currencyId: currencyId,
-          exchangeRate: purchaseOrder.exchangeRate,
-        ));
+        row.add(
+          purchaseOrder.getReportDouble(
+            value: value,
+            currencyId: currencyId,
+            exchangeRate: purchaseOrder.exchangeRate,
+          ),
+        );
       } else {
         row.add(purchaseOrder.getReportString(value: value));
       }
@@ -401,16 +417,23 @@ ReportResult purchaseOrderReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, purchaseOrderReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      purchaseOrderReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
     allColumns: PurchaseOrderReportFields.values
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

@@ -86,8 +86,11 @@ class DesignFields {
 abstract class DesignEntity extends Object
     with BaseEntity
     implements Built<DesignEntity, DesignEntityBuilder> {
-  factory DesignEntity(
-      {String? id, AppState? state, BuiltMap<String, String>? design}) {
+  factory DesignEntity({
+    String? id,
+    AppState? state,
+    BuiltMap<String, String>? design,
+  }) {
     if (design == null && state != null) {
       final designMap = state.designState.map;
       design = designMap[state.company.settings.defaultInvoiceDesignId]?.design;
@@ -102,7 +105,8 @@ abstract class DesignEntity extends Object
       isChanged: false,
       isFree: true,
       name: '',
-      design: design ??
+      design:
+          design ??
           BuiltMap<String, String>({
             kDesignHeader: '',
             kDesignBody: '',
@@ -141,22 +145,25 @@ abstract class DesignEntity extends Object
 
   String get entities;
 
-  DesignEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..isChanged = false
-    ..isDeleted = false);
+  DesignEntity get clone => rebuild(
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..isChanged = false
+      ..isDeleted = false,
+  );
 
   String get displayName => name;
 
   String? getSection(String section) => design[section];
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted! && !multiselect) {
@@ -208,18 +215,12 @@ abstract class DesignEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [name],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [name],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [name], needle: filter);
   }
 
   @override

@@ -31,10 +31,12 @@ class SearchText extends StatelessWidget {
     Color? color;
     if (enableDarkMode) {
       color = convertHexStringToColor(
-          isFilterSet ? kDefaultDarkBorderColor : kDefaultDarkBorderColor);
+        isFilterSet ? kDefaultDarkBorderColor : kDefaultDarkBorderColor,
+      );
     } else {
       color = convertHexStringToColor(
-          isFilterSet ? kDefaultLightBorderColor : kDefaultLightBorderColor);
+        isFilterSet ? kDefaultLightBorderColor : kDefaultLightBorderColor,
+      );
     }
 
     return Container(
@@ -55,14 +57,12 @@ class SearchText extends StatelessWidget {
           contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 6),
           suffixIcon: filterController!.text.isNotEmpty || focusNode!.hasFocus
               ? IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    color: textColor,
-                  ),
+                  icon: Icon(Icons.clear, color: textColor),
                   onPressed: () {
                     filterController!.text = '';
                     focusNode!.unfocus(
-                        disposition: UnfocusDisposition.previouslyFocusedChild);
+                      disposition: UnfocusDisposition.previouslyFocusedChild,
+                    );
                     onCleared!();
                   },
                 )

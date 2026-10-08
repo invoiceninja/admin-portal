@@ -11,10 +11,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentEdit extends StatefulWidget {
-  const DocumentEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const DocumentEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final DocumentEditVM viewModel;
 
@@ -23,8 +20,9 @@ class DocumentEdit extends StatefulWidget {
 }
 
 class _DocumentEditState extends State<DocumentEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_documentEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_documentEdit',
+  );
   final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
@@ -33,9 +31,7 @@ class _DocumentEditState extends State<DocumentEdit> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-    ];
+    _controllers = [_nameController];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
@@ -58,8 +54,9 @@ class _DocumentEditState extends State<DocumentEdit> {
   }
 
   void _onChanged() {
-    final document = widget.viewModel.document
-        .rebuild((b) => b..name = _nameController.text.trim());
+    final document = widget.viewModel.document.rebuild(
+      (b) => b..name = _nameController.text.trim(),
+    );
     if (document != widget.viewModel.document) {
       _debouncer.run(() {
         widget.viewModel.onChanged(document);
@@ -91,8 +88,9 @@ class _DocumentEditState extends State<DocumentEdit> {
       onSavePressed: (_) => _onSavePressed(),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
+        key: _formKey,
+        child: Builder(
+          builder: (BuildContext context) {
             return ScrollableListView(
               children: <Widget>[
                 FormCard(
@@ -111,7 +109,9 @@ class _DocumentEditState extends State<DocumentEdit> {
                 ),
               ],
             );
-          })),
+          },
+        ),
+      ),
     );
   }
 }

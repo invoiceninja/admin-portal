@@ -53,14 +53,15 @@ class UserLoadUrl {
 }
 
 class UserLoginRequest implements StartLoading {
-  UserLoginRequest(
-      {required this.completer,
-      required this.email,
-      required this.password,
-      required this.url,
-      required this.secret,
-      required this.platform,
-      required this.oneTimePassword});
+  UserLoginRequest({
+    required this.completer,
+    required this.email,
+    required this.password,
+    required this.url,
+    required this.secret,
+    required this.platform,
+    required this.oneTimePassword,
+  });
 
   final Completer completer;
   final String email;

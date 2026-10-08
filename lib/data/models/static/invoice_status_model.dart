@@ -15,10 +15,7 @@ abstract class InvoiceStatusEntity extends Object
     with EntityStatus, SelectableEntity
     implements Built<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
   factory InvoiceStatusEntity() {
-    return _$InvoiceStatusEntity._(
-      id: '',
-      name: '',
-    );
+    return _$InvoiceStatusEntity._(id: '', name: '');
   }
 
   InvoiceStatusEntity._();

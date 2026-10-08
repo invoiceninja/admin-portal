@@ -26,18 +26,14 @@ enum DocumentReportFields {
   private,
 }
 
-var memoizedDocumentReport = memo4((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, DocumentEntity> documentMap,
-  BuiltMap<String, UserEntity> userMap,
-) =>
-    documentReport(
-      userCompany!,
-      reportsUIState,
-      documentMap,
-      userMap,
-    ));
+var memoizedDocumentReport = memo4(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, DocumentEntity> documentMap,
+    BuiltMap<String, UserEntity> userMap,
+  ) => documentReport(userCompany!, reportsUIState, documentMap, userMap),
+);
 
 ReportResult documentReport(
   UserCompanyEntity userCompany,
@@ -49,8 +45,9 @@ ReportResult documentReport(
   final List<BaseEntity> entities = [];
   BuiltList<DocumentReportFields> columns;
 
-  final localization =
-      AppLocalization(AppLocalization.createLocale(Intl.defaultLocale));
+  final localization = AppLocalization(
+    AppLocalization.createLocale(Intl.defaultLocale),
+  );
   final reportSettings = userCompany.settings.reportSettings;
   final documentReportSettings = reportSettings.containsKey(kReportDocument)
       ? reportSettings[kReportDocument]!
@@ -67,10 +64,12 @@ ReportResult documentReport(
   ];
 
   if (documentReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(documentReportSettings.columns
-        .map((e) => EnumUtils.fromString(DocumentReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      documentReportSettings.columns
+          .map((e) => EnumUtils.fromString(DocumentReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -132,10 +131,13 @@ ReportResult documentReport(
       } else if (value.runtimeType == double) {
         row.add(document.getReportDouble(value: value));
       } else if (value.runtimeType == EntityType) {
-        row.add(ReportEntityTypeValue(
+        row.add(
+          ReportEntityTypeValue(
             entityId: document.parentId,
             entityType: document.parentType,
-            value: document.parentType));
+            value: document.parentType,
+          ),
+        );
       } else {
         row.add(document.getReportString(value: value));
       }
@@ -148,15 +150,23 @@ ReportResult documentReport(
   });
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, documentReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      documentReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        DocumentReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: DocumentReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     showTotals: false,
     entities: entities,

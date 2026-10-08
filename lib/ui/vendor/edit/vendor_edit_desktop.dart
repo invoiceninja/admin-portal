@@ -12,10 +12,8 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 
 class VendorEditDesktop extends StatelessWidget {
-  const VendorEditDesktop({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const VendorEditDesktop({Key? key, required this.viewModel})
+    : super(key: key);
 
   final VendorEditVM viewModel;
 
@@ -31,12 +29,8 @@ class VendorEditDesktop extends StatelessWidget {
               child: FocusTraversalGroup(
                 child: Column(
                   children: [
-                    VendorEditDetails(
-                      viewModel: viewModel,
-                    ),
-                    VendorEditNotes(
-                      viewModel: viewModel,
-                    ),
+                    VendorEditDetails(viewModel: viewModel),
+                    VendorEditNotes(viewModel: viewModel),
                   ],
                 ),
               ),
@@ -45,12 +39,8 @@ class VendorEditDesktop extends StatelessWidget {
               child: FocusTraversalGroup(
                 child: Column(
                   children: [
-                    VendorEditContactsScreen(
-                      viewModel: viewModel,
-                    ),
-                    VendorEditSettings(
-                      viewModel: viewModel,
-                    ),
+                    VendorEditContactsScreen(viewModel: viewModel),
+                    VendorEditSettings(viewModel: viewModel),
                   ],
                 ),
               ),
@@ -58,19 +48,13 @@ class VendorEditDesktop extends StatelessWidget {
             Expanded(
               child: FocusTraversalGroup(
                 child: Column(
-                  children: [
-                    VendorEditAddress(
-                      viewModel: viewModel,
-                    ),
-                  ],
+                  children: [VendorEditAddress(viewModel: viewModel)],
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(
-          height: kMobileDialogPadding,
-        ),
+        SizedBox(height: kMobileDialogPadding),
       ],
     );
   }

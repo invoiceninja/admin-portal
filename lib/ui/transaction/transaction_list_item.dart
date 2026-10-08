@@ -54,7 +54,8 @@ class TransactionListItem extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) &&
+      isSelected:
+          isDesktop(context) &&
           transaction.id ==
               (uiState.isEditing
                   ? transactionUIState.editing!.id
@@ -62,230 +63,251 @@ class TransactionListItem extends StatelessWidget {
       userCompany: store.state.userCompany,
       entity: transaction,
       child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return constraints.maxWidth > kTableListWidthCutoff
-            ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap!()
-                    : selectEntity(entity: transaction),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress!()
-                    : selectEntity(entity: transaction, longPress: true),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 28,
-                    top: 4,
-                    bottom: 4,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: showCheckbox
-                            ? Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: IgnorePointer(
-                                  ignoring: listUIState.isInMultiselect(),
-                                  child: Checkbox(
-                                    value: isChecked,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) =>
-                                        onCheckboxChanged!(value),
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return constraints.maxWidth > kTableListWidthCutoff
+              ? InkWell(
+                  onTap: () => onTap != null
+                      ? onTap!()
+                      : selectEntity(entity: transaction),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress!()
+                      : selectEntity(entity: transaction, longPress: true),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 28,
+                      top: 4,
+                      bottom: 4,
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: showCheckbox
+                              ? Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: IgnorePointer(
+                                    ignoring: listUIState.isInMultiselect(),
+                                    child: Checkbox(
+                                      value: isChecked,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      onChanged: (value) =>
+                                          onCheckboxChanged!(value),
+                                      activeColor: Theme.of(
+                                        context,
+                                      ).colorScheme.secondary,
+                                    ),
                                   ),
+                                )
+                              : ActionMenuButton(
+                                  entityActions: transaction.getActions(
+                                    userCompany: state.userCompany,
+                                    includeEdit: true,
+                                  ),
+                                  isSaving: false,
+                                  entity: transaction,
+                                  onSelected: (context, action) =>
+                                      handleEntityAction(transaction, action),
                                 ),
-                              )
-                            : ActionMenuButton(
-                                entityActions: transaction.getActions(
-                                  userCompany: state.userCompany,
-                                  includeEdit: true,
-                                ),
-                                isSaving: false,
-                                entity: transaction,
-                                onSelected: (context, action) =>
-                                    handleEntityAction(transaction, action),
-                              ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (transaction.participant.isNotEmpty &&
-                                    transaction.participantName.isNotEmpty) ...[
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (transaction.participant.isNotEmpty &&
+                                      transaction
+                                          .participantName
+                                          .isNotEmpty) ...[
+                                    Text(
+                                      transaction.participant +
+                                          ' • ' +
+                                          transaction.participantName,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                            color: TransactionStatusColors(
+                                              state.prefState.colorThemeModel,
+                                            ).colors[kTransactionStatusMatched],
+                                          ),
+                                    ),
+                                  ],
                                   Text(
-                                    transaction.participant +
-                                        ' • ' +
-                                        transaction.participantName,
+                                    transaction.formattedDescription,
+                                    style: textStyle,
+                                  ),
+                                  Text(
+                                    state.bankAccountState
+                                        .get(transaction.bankAccountId)
+                                        .name,
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .titleMedium!
+                                        .titleSmall!
                                         .copyWith(
-                                            color: TransactionStatusColors(
-                                                        state.prefState
-                                                            .colorThemeModel)
-                                                    .colors[
-                                                kTransactionStatusMatched]),
+                                          color: textColor!.withValues(
+                                            alpha: kLighterOpacity,
+                                          ),
+                                        ),
                                   ),
                                 ],
-                                Text(transaction.formattedDescription,
-                                    style: textStyle),
+                              ),
+                              if (filterMatch != null)
                                 Text(
-                                  state.bankAccountState
-                                      .get(transaction.bankAccountId)
-                                      .name,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: textColor!
-                                            .withValues(alpha: kLighterOpacity),
-                                      ),
-                                ),
-                              ],
-                            ),
-                            if (filterMatch != null)
-                              Text(
-                                filterMatch,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 100,
-                        child: Text(
-                          transaction.isWithdrawal
-                              ? localization!.withdrawal
-                              : localization!.deposit,
-                        ),
-                      ),
-                      SizedBox(width: 30),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(minWidth: 100),
-                        child: Text(
-                          formatNumber(transaction.amount, context,
-                              currencyId: transaction.currencyId)!,
-                          style: textStyle,
-                          textAlign: TextAlign.end,
-                        ),
-                      ),
-                      SizedBox(width: 25),
-                      EntityStatusChip(entity: transaction),
-                    ],
-                  ),
-                ),
-              )
-            : ListTile(
-                onTap: () => onTap != null
-                    ? onTap!()
-                    : selectEntity(entity: transaction),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress!()
-                    : selectEntity(entity: transaction, longPress: true),
-                leading: showCheckbox
-                    ? IgnorePointer(
-                        ignoring: listUIState.isInMultiselect(),
-                        child: Checkbox(
-                          value: isChecked,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged!(value),
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                        ),
-                      )
-                    : null,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      if (transaction.participant.isNotEmpty &&
-                          transaction.participantName.isNotEmpty) ...[
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                transaction.participant +
-                                    ' • ' +
-                                    transaction.participantName,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              transaction.formattedDescription,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ),
-                          Text(
-                              formatNumber(transaction.amount, context,
-                                  currencyId: transaction.currencyId)!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      color: TransactionStatusColors(
-                                              state.prefState.colorThemeModel)
-                                          .colors[transaction
-                                              .isDeposit
-                                          ? kTransactionStatusDeposit
-                                          : kTransactionStatusWithdrawal])),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: filterMatch == null
-                              ? Text(state.bankAccountState
-                                      .get(transaction.bankAccountId)
-                                      .name +
-                                  ' • ' +
-                                  (transaction.isDeposit
-                                      ? localization!.deposit
-                                      : localization!.withdrawal))
-                              : Text(
                                   filterMatch,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
+                            ],
+                          ),
                         ),
-                        Text(
-                            localization!.lookup(
-                                kPurchaseOrderStatuses[transaction.statusId]),
-                            style: TextStyle(
-                                color: TransactionStatusColors(
-                                        state.prefState.colorThemeModel)
-                                    .colors[transaction.statusId])),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          width: 100,
+                          child: Text(
+                            transaction.isWithdrawal
+                                ? localization!.withdrawal
+                                : localization!.deposit,
+                          ),
+                        ),
+                        SizedBox(width: 30),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(minWidth: 100),
+                          child: Text(
+                            formatNumber(
+                              transaction.amount,
+                              context,
+                              currencyId: transaction.currencyId,
+                            )!,
+                            style: textStyle,
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                        SizedBox(width: 25),
+                        EntityStatusChip(entity: transaction),
                       ],
                     ),
-                    EntityStateLabel(transaction),
-                  ],
-                ),
-              );
-      }),
+                  ),
+                )
+              : ListTile(
+                  onTap: () => onTap != null
+                      ? onTap!()
+                      : selectEntity(entity: transaction),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress!()
+                      : selectEntity(entity: transaction, longPress: true),
+                  leading: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged!(value),
+                            activeColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                          ),
+                        )
+                      : null,
+                  title: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        if (transaction.participant.isNotEmpty &&
+                            transaction.participantName.isNotEmpty) ...[
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  transaction.participant +
+                                      ' • ' +
+                                      transaction.participantName,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                transaction.formattedDescription,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Text(
+                              formatNumber(
+                                transaction.amount,
+                                context,
+                                currencyId: transaction.currencyId,
+                              )!,
+                              style: Theme.of(context).textTheme.titleMedium!
+                                  .copyWith(
+                                    color:
+                                        TransactionStatusColors(
+                                          state.prefState.colorThemeModel,
+                                        ).colors[transaction.isDeposit
+                                            ? kTransactionStatusDeposit
+                                            : kTransactionStatusWithdrawal],
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: filterMatch == null
+                                ? Text(
+                                    state.bankAccountState
+                                            .get(transaction.bankAccountId)
+                                            .name +
+                                        ' • ' +
+                                        (transaction.isDeposit
+                                            ? localization!.deposit
+                                            : localization!.withdrawal),
+                                  )
+                                : Text(
+                                    filterMatch,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                          ),
+                          Text(
+                            localization!.lookup(
+                              kPurchaseOrderStatuses[transaction.statusId],
+                            ),
+                            style: TextStyle(
+                              color: TransactionStatusColors(
+                                state.prefState.colorThemeModel,
+                              ).colors[transaction.statusId],
+                            ),
+                          ),
+                        ],
+                      ),
+                      EntityStateLabel(transaction),
+                    ],
+                  ),
+                );
+        },
+      ),
     );
   }
 }

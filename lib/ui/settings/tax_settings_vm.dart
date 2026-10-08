@@ -70,21 +70,36 @@ class TaxSettingsVM {
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveCompanyRequest(
-                  completer: completer, company: settingsUIState.company));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveCompanyRequest(
+                  completer: completer,
+                  company: settingsUIState.company,
+                ),
+              );
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveGroupRequest(
-                  completer: completer, group: settingsUIState.group));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveGroupRequest(
+                  completer: completer,
+                  group: settingsUIState.group,
+                ),
+              );
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  AppLocalization.of(context)!.savedSettings);
-              store.dispatch(SaveClientRequest(
-                  completer: completer, client: settingsUIState.client));
+                AppLocalization.of(context)!.savedSettings,
+              );
+              store.dispatch(
+                SaveClientRequest(
+                  completer: completer,
+                  client: settingsUIState.client,
+                ),
+              );
               break;
           }
         });

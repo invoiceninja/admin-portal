@@ -83,13 +83,14 @@ class ProjectEditVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            entity: ClientEntity(),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
-              }));
+          entity: ClientEntity(),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
         });
@@ -102,32 +103,39 @@ class ProjectEditVM {
           final Completer<ProjectEntity> completer =
               new Completer<ProjectEntity>();
           store.dispatch(
-              SaveProjectRequest(completer: completer, project: project));
-          return completer.future.then((savedProject) {
-            showToast(project!.isNew
-                ? localization!.createdProject
-                : localization!.updatedProject);
+            SaveProjectRequest(completer: completer, project: project),
+          );
+          return completer.future
+              .then((savedProject) {
+                showToast(
+                  project!.isNew
+                      ? localization!.createdProject
+                      : localization!.updatedProject,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
-              if (project.isNew && state.projectUIState.saveCompleter == null) {
-                navigator!.pushReplacementNamed(ProjectViewScreen.route);
-              } else {
-                navigator!.pop(savedProject);
-              }
-            } else if (state.projectUIState.saveCompleter == null) {
-              if (!state.prefState.isPreviewVisible) {
-                store.dispatch(TogglePreviewSidebar());
-              }
-              viewEntity(entity: savedProject, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
+                  if (project.isNew &&
+                      state.projectUIState.saveCompleter == null) {
+                    navigator!.pushReplacementNamed(ProjectViewScreen.route);
+                  } else {
+                    navigator!.pop(savedProject);
+                  }
+                } else if (state.projectUIState.saveCompleter == null) {
+                  if (!state.prefState.isPreviewVisible) {
+                    store.dispatch(TogglePreviewSidebar());
+                  }
+                  viewEntity(entity: savedProject, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );
@@ -143,5 +151,5 @@ class ProjectEditVM {
   final bool isLoading;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddClientPressed;
+  onAddClientPressed;
 }

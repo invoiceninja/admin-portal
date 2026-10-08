@@ -179,18 +179,20 @@ abstract class ExpenseEntity extends Object
   @memoized
   int get hashCode;
 
-  ExpenseEntity get clone => rebuild((b) => b
-    ..id = BaseEntity.nextId
-    ..number = ''
-    ..isChanged = false
-    ..isDeleted = false
-    ..invoiceId = null
-    ..date = convertDateTimeToSqlDate()
-    ..documents.clear()
-    ..transactionReference = ''
-    ..transactionId = ''
-    ..paymentTypeId = ''
-    ..paymentDate = '');
+  ExpenseEntity get clone => rebuild(
+    (b) => b
+      ..id = BaseEntity.nextId
+      ..number = ''
+      ..isChanged = false
+      ..isDeleted = false
+      ..invoiceId = null
+      ..date = convertDateTimeToSqlDate()
+      ..documents.clear()
+      ..transactionReference = ''
+      ..transactionId = ''
+      ..paymentTypeId = ''
+      ..paymentDate = '',
+  );
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -322,12 +324,13 @@ abstract class ExpenseEntity extends Object
   BuiltList<ExpenseScheduleEntity>? get recurringDates;
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isDeleted!) {
@@ -389,15 +392,16 @@ abstract class ExpenseEntity extends Object
   }
 
   int compareTo(
-      ExpenseEntity? expense,
-      String sortField,
-      bool sortAscending,
-      BuiltMap<String, ClientEntity> clientMap,
-      BuiltMap<String, UserEntity> userMap,
-      BuiltMap<String, VendorEntity> vendorMap,
-      BuiltMap<String, InvoiceEntity> invoiceMap,
-      BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-      StaticState staticState) {
+    ExpenseEntity? expense,
+    String sortField,
+    bool sortAscending,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    StaticState staticState,
+  ) {
     int response = 0;
     final ExpenseEntity? expenseA = sortAscending ? this : expense;
     final ExpenseEntity? expenseB = sortAscending ? expense : this;
@@ -412,16 +416,16 @@ abstract class ExpenseEntity extends Object
       case EntityFields.assignedTo:
         final userA = userMap[expenseA!.assignedUserId] ?? UserEntity();
         final userB = userMap[expenseB!.assignedUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case EntityFields.createdBy:
         final userA = userMap[expenseA!.createdUserId] ?? UserEntity();
         final userB = userMap[expenseB!.createdUserId] ?? UserEntity();
-        response = userA.listDisplayName
-            .toLowerCase()
-            .compareTo(userB.listDisplayName.toLowerCase());
+        response = userA.listDisplayName.toLowerCase().compareTo(
+          userB.listDisplayName.toLowerCase(),
+        );
         break;
       case ExpenseFields.clientId:
       case ExpenseFields.client:
@@ -442,23 +446,24 @@ abstract class ExpenseEntity extends Object
       case EntityFields.state:
         final stateA = EntityState.valueOf(expenseA!.entityState);
         final stateB = EntityState.valueOf(expenseB!.entityState);
-        response =
-            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        response = stateA.name.toLowerCase().compareTo(
+          stateB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.publicNotes:
-        response = expenseA!.publicNotes
-            .toLowerCase()
-            .compareTo(expenseB!.publicNotes.toLowerCase());
+        response = expenseA!.publicNotes.toLowerCase().compareTo(
+          expenseB!.publicNotes.toLowerCase(),
+        );
         break;
       case ExpenseFields.expenseDate:
-        response = expenseA!.date!
-            .toLowerCase()
-            .compareTo(expenseB!.date!.toLowerCase());
+        response = expenseA!.date!.toLowerCase().compareTo(
+          expenseB!.date!.toLowerCase(),
+        );
         break;
       case ExpenseFields.paymentDate:
-        response = expenseA!.paymentDate
-            .toLowerCase()
-            .compareTo(expenseB!.paymentDate.toLowerCase());
+        response = expenseA!.paymentDate.toLowerCase().compareTo(
+          expenseB!.paymentDate.toLowerCase(),
+        );
         break;
       case EntityFields.createdAt:
         response = expenseA!.createdAt.compareTo(expenseB!.createdAt);
@@ -470,8 +475,9 @@ abstract class ExpenseEntity extends Object
         response = expenseA!.archivedAt.compareTo(expenseB!.archivedAt);
         break;
       case ExpenseFields.documents:
-        response =
-            expenseA!.documents.length.compareTo(expenseB!.documents.length);
+        response = expenseA!.documents.length.compareTo(
+          expenseB!.documents.length,
+        );
         break;
       case ExpenseFields.number:
         response = compareNatural(expenseA!.number, expenseB!.number);
@@ -483,8 +489,9 @@ abstract class ExpenseEntity extends Object
         response = expenseA!.transactionId.compareTo(expenseB!.transactionId);
         break;
       case ExpenseFields.transactionReference:
-        response = expenseA!.transactionReference
-            .compareTo(expenseB!.transactionReference);
+        response = expenseA!.transactionReference.compareTo(
+          expenseB!.transactionReference,
+        );
         break;
       case ExpenseFields.bankId:
         response = expenseA!.bankId.compareTo(expenseB!.bankId);
@@ -493,9 +500,9 @@ abstract class ExpenseEntity extends Object
         final currencyMap = staticState.currencyMap;
         final currencyA = currencyMap[expenseA!.currencyId] ?? CurrencyEntity();
         final currencyB = currencyMap[expenseB!.currencyId] ?? CurrencyEntity();
-        response = currencyA.name
-            .toLowerCase()
-            .compareTo(currencyB.name.toLowerCase());
+        response = currencyA.name.toLowerCase().compareTo(
+          currencyB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.categoryId:
       case ExpenseFields.category:
@@ -503,9 +510,9 @@ abstract class ExpenseEntity extends Object
             expenseCategoryMap[expenseA!.categoryId] ?? ExpenseCategoryEntity();
         final categoryB =
             expenseCategoryMap[expenseB!.categoryId] ?? ExpenseCategoryEntity();
-        response = categoryA.name
-            .toLowerCase()
-            .compareTo(categoryB.name.toLowerCase());
+        response = categoryA.name.toLowerCase().compareTo(
+          categoryB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.exchangeRate:
         response = expenseA!.exchangeRate.compareTo(expenseB!.exchangeRate);
@@ -516,9 +523,9 @@ abstract class ExpenseEntity extends Object
             currencyMap[expenseA!.invoiceCurrencyId] ?? CurrencyEntity();
         final currencyB =
             currencyMap[expenseB!.invoiceCurrencyId] ?? CurrencyEntity();
-        response = currencyA.name
-            .toLowerCase()
-            .compareTo(currencyB.name.toLowerCase());
+        response = currencyA.name.toLowerCase().compareTo(
+          currencyB.name.toLowerCase(),
+        );
         break;
       case ExpenseFields.taxName1:
         response = expenseA!.taxName1.compareTo(expenseB!.taxName1);
@@ -568,8 +575,9 @@ abstract class ExpenseEntity extends Object
         response = expenseA!.lastSentDate.compareTo(expenseB!.lastSentDate);
         break;
       case ExpenseFields.status:
-        response = expenseA!.calculatedStatusId!
-            .compareTo(expenseB!.calculatedStatusId!);
+        response = expenseA!.calculatedStatusId!.compareTo(
+          expenseB!.calculatedStatusId!,
+        );
         break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');
@@ -599,7 +607,7 @@ abstract class ExpenseEntity extends Object
         customValue3,
         customValue4,
         formatNumber(amount, navigatorKey.currentContext),
-        formatDate(date, navigatorKey.currentContext)
+        formatDate(date, navigatorKey.currentContext),
       ],
       needle: filter,
     );
@@ -621,7 +629,7 @@ abstract class ExpenseEntity extends Object
         customValue3,
         customValue4,
         formatNumber(amount, navigatorKey.currentContext),
-        formatDate(date, navigatorKey.currentContext)
+        formatDate(date, navigatorKey.currentContext),
       ],
       needle: filter,
     );
@@ -700,14 +708,18 @@ abstract class ExpenseEntity extends Object
 
   bool get canBeStarted =>
       isRecurring &&
-      ([kRecurringExpenseStatusDraft, kRecurringExpenseStatusPaused]
-              .contains(calculatedStatusId) ||
+      ([
+            kRecurringExpenseStatusDraft,
+            kRecurringExpenseStatusPaused,
+          ].contains(calculatedStatusId) ||
           statusId == null);
 
   bool get canBeStopped =>
       isRecurring &&
-      [kRecurringExpenseStatusPending, kRecurringExpenseStatusActive]
-          .contains(calculatedStatusId);
+      [
+        kRecurringExpenseStatusPending,
+        kRecurringExpenseStatusActive,
+      ].contains(calculatedStatusId);
 
   @override
   double? get listDisplayAmount => null;
@@ -754,60 +766,77 @@ abstract class ExpenseEntity extends Object
   double get taxAmount =>
       calculateTaxAmount1 + calculateTaxAmount2 + calculateTaxAmount3;
 
+  /// Sum of this expense's inclusive tax rates (Σr), feeding the shared divisor
+  /// `1 + Σr/100` (issue invoiceninja/invoiceninja#12072).
+  double get _inclusiveTaxRateSum => taxRate1 + taxRate2 + taxRate3;
+
   double get calculateTaxAmount1 {
     if (calculateTaxByAmount == true) {
       return taxAmount1;
     }
-
+    if (taxRate1 == 0) {
+      return 0;
+    }
     if (usesInclusiveTaxes) {
-      if (taxRate1 != 0) {
+      // Combined inclusive rate ≤ 0 → no tax (parity with backend
+      // InclusiveTax::backout `combined_rate <= 0`).
+      if (_inclusiveTaxRateSum <= 0) {
+        return 0;
+      }
+      // Single applicable rate: exact legacy extraction (byte-identical). Two
+      // or more inclusive rates share one divisor, net = amount / (1 + Σr/100).
+      if (_inclusiveTaxRateSum == taxRate1) {
         return round(amount - (amount / (1 + (taxRate1 / 100))), 2);
       }
-    } else {
-      if (taxRate1 != 0) {
-        return round(amount * taxRate1 / 100, 2);
-      }
+      final net = amount / (1 + (_inclusiveTaxRateSum / 100));
+      return round(taxRate1 / 100 * net, 2);
     }
-
-    return 0;
+    return round(amount * taxRate1 / 100, 2);
   }
 
   double get calculateTaxAmount2 {
     if (calculateTaxByAmount == true) {
       return taxAmount2;
     }
-
+    if (taxRate2 == 0) {
+      return 0;
+    }
     if (usesInclusiveTaxes) {
-      if (taxRate2 != 0) {
+      if (_inclusiveTaxRateSum <= 0) {
+        return 0;
+      }
+      if (_inclusiveTaxRateSum == taxRate2) {
         return round(amount - (amount / (1 + (taxRate2 / 100))), 2);
       }
-    } else {
-      if (taxRate2 != 0) {
-        return round(amount * taxRate2 / 100, 2);
-      }
+      final net = amount / (1 + (_inclusiveTaxRateSum / 100));
+      return round(taxRate2 / 100 * net, 2);
     }
-
-    return 0;
+    return round(amount * taxRate2 / 100, 2);
   }
 
   double get calculateTaxAmount3 {
     if (calculateTaxByAmount == true) {
       return taxAmount3;
     }
-
+    if (taxRate3 == 0) {
+      return 0;
+    }
     if (usesInclusiveTaxes) {
-      if (taxRate3 != 0) {
+      if (_inclusiveTaxRateSum <= 0) {
+        return 0;
+      }
+      if (_inclusiveTaxRateSum == taxRate3) {
         return round(amount - (amount / (1 + (taxRate3 / 100))), 2);
       }
-    } else {
-      if (taxRate3 != 0) {
-        return round(amount * taxRate3 / 100, 2);
-      }
+      final net = amount / (1 + (_inclusiveTaxRateSum / 100));
+      return round(taxRate3 / 100 * net, 2);
     }
-
-    return 0;
+    return round(amount * taxRate3 / 100, 2);
   }
 
+  // Net = gross − summed tax. Inclusive multi-rate tiers are additive
+  // shared-base (issue #12072) so net reconciles: 1000 @ 10%+10% → 833.34,
+  // matching the backend InclusiveTax::backout (gross − Σtax).
   double get netAmount => usesInclusiveTaxes ? amount - taxAmount : amount;
 
   double get grossAmount => usesInclusiveTaxes ? amount : amount + taxAmount;
@@ -872,9 +901,7 @@ abstract class ExpenseEntity extends Object
 abstract class ExpenseScheduleEntity
     implements Built<ExpenseScheduleEntity, ExpenseScheduleEntityBuilder> {
   factory ExpenseScheduleEntity() {
-    return _$ExpenseScheduleEntity._(
-      sendDate: '',
-    );
+    return _$ExpenseScheduleEntity._(sendDate: '');
   }
 
   ExpenseScheduleEntity._();
@@ -894,10 +921,7 @@ abstract class ExpenseStatusEntity extends Object
     with EntityStatus, SelectableEntity
     implements Built<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
   factory ExpenseStatusEntity() {
-    return _$ExpenseStatusEntity._(
-      id: '',
-      name: '',
-    );
+    return _$ExpenseStatusEntity._(id: '', name: '');
   }
 
   ExpenseStatusEntity._();

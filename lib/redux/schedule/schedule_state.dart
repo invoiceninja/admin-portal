@@ -30,8 +30,10 @@ abstract class ScheduleState
     if (map.containsKey(scheduleId)) {
       return map[scheduleId]!;
     } else {
-      return ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
-          id: scheduleId);
+      return ScheduleEntity(
+        ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
+        id: scheduleId,
+      );
     }
   }
 
@@ -42,9 +44,11 @@ abstract class ScheduleState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<ScheduleState> get serializer => _$scheduleStateSerializer;
@@ -55,8 +59,10 @@ abstract class ScheduleUIState extends Object
     implements Built<ScheduleUIState, ScheduleUIStateBuilder> {
   factory ScheduleUIState(PrefStateSortField? sortField) {
     return _$ScheduleUIState._(
-      listUIState: ListUIState(sortField?.field ?? ScheduleFields.nextRun,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? ScheduleFields.nextRun,
+        sortAscending: sortField?.ascending,
+      ),
       editing: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
       selectedId: '',
       tabIndex: 0,

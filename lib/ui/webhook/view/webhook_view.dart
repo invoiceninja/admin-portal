@@ -13,11 +13,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookView extends StatefulWidget {
-  const WebhookView({
-    Key? key,
-    required this.viewModel,
-    required this.isFilter,
-  }) : super(key: key);
+  const WebhookView({Key? key, required this.viewModel, required this.isFilter})
+    : super(key: key);
 
   final WebhookViewVM viewModel;
   final bool isFilter;
@@ -45,12 +42,12 @@ class _WebhookViewState extends State<WebhookView> {
             value: localization.lookup(webhook.eventType),
             secondLabel: localization.createdOn,
             secondValue: formatDate(
-                convertTimestampToDateString(webhook.createdAt), context),
+              convertTimestampToDateString(webhook.createdAt),
+              context,
+            ),
           ),
           ListDivider(),
-          TargetListTile(
-            webhook: webhook,
-          ),
+          TargetListTile(webhook: webhook),
           ListDivider(),
         ],
       ),
@@ -59,9 +56,7 @@ class _WebhookViewState extends State<WebhookView> {
 }
 
 class TargetListTile extends StatelessWidget {
-  const TargetListTile({
-    required this.webhook,
-  });
+  const TargetListTile({required this.webhook});
 
   final WebhookEntity webhook;
 

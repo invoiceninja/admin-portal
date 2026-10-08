@@ -41,10 +41,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:printing/printing.dart';
 
 class InvoiceDesign extends StatefulWidget {
-  const InvoiceDesign({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const InvoiceDesign({Key? key, required this.viewModel}) : super(key: key);
 
   final InvoiceDesignVM viewModel;
 
@@ -54,8 +51,9 @@ class InvoiceDesign extends StatefulWidget {
 
 class _InvoiceDesignState extends State<InvoiceDesign>
     with SingleTickerProviderStateMixin {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_invoiceDesign');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_invoiceDesign',
+  );
 
   TabController? _controller;
   FocusScopeNode? _focusNode;
@@ -107,26 +105,29 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     });
 
     _controller = TabController(
-        vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: tabs,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _logoSizeController,
-    ];
+    _controllers = [_logoSizeController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final settings = widget.viewModel.settings;
     _logoSizeController.text = (settings.companyLogoSize ?? '').isEmpty
         ? ''
         : parseInt(settings.companyLogoSize!).toString();
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -140,13 +141,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final viewModel = widget.viewModel;
     final logoSize = _logoSizeController.text.trim();
 
-    final settings = viewModel.settings.rebuild((b) => b
-      ..companyLogoSize = logoSize.isEmpty
-          ? ''
-          : logoSize +
-              (viewModel.settings.companyLogoSize!.contains('px')
-                  ? 'px'
-                  : '%'));
+    final settings = viewModel.settings.rebuild(
+      (b) => b
+        ..companyLogoSize = logoSize.isEmpty
+            ? ''
+            : logoSize +
+                  (viewModel.settings.companyLogoSize!.contains('px')
+                      ? 'px'
+                      : '%'),
+    );
     if (settings != viewModel.settings) {
       _debouncer.run(() {
         viewModel.onSettingsChanged(settings);
@@ -215,11 +218,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               key: ValueKey(state.settingsUIState.updatedAt),
               controller: _controller,
               isScrollable: true,
-              tabs: tabs
-                  .map((tab) => Tab(
-                        child: Text(tab),
-                      ))
-                  .toList(),
+              tabs: tabs.map((tab) => Tab(child: Text(tab))).toList(),
             ),
       body: Row(
         children: [
@@ -246,34 +245,37 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               iconData: Icons.settings,
                               onPressed: () =>
                                   state.designState.customDesigns.isEmpty
-                                      ? createEntity(
-                                          entity: DesignEntity(state: state),
-                                        )
-                                      : store.dispatch(ViewSettings(
-                                          section: kSettingsCustomDesigns,
-                                        )),
+                                  ? createEntity(
+                                      entity: DesignEntity(state: state),
+                                    )
+                                  : store.dispatch(
+                                      ViewSettings(
+                                        section: kSettingsCustomDesigns,
+                                      ),
+                                    ),
                             ),
                           ),
                           if (isDesktop(context)) ...[
-                            SizedBox(
-                              width: kTableColumnGap,
-                            ),
+                            SizedBox(width: kTableColumnGap),
                             Expanded(
-                                child: Padding(
-                              padding: const EdgeInsets.only(top: 18),
-                              child: SwitchListTile(
-                                title: Text(localization.showPreview),
-                                value: state.settingsUIState.showPdfPreview,
-                                onChanged: (value) {
-                                  final store =
-                                      StoreProvider.of<AppState>(context);
-                                  store.dispatch(ToggleShowPdfPreview());
-                                },
-                                activeThumbColor:
-                                    Theme.of(context).colorScheme.secondary,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 18),
+                                child: SwitchListTile(
+                                  title: Text(localization.showPreview),
+                                  value: state.settingsUIState.showPdfPreview,
+                                  onChanged: (value) {
+                                    final store = StoreProvider.of<AppState>(
+                                      context,
+                                    );
+                                    store.dispatch(ToggleShowPdfPreview());
+                                  },
+                                  activeThumbColor: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
+                                ),
                               ),
-                            )),
-                          ]
+                            ),
+                          ],
                         ],
                       ),
                     ),
@@ -289,9 +291,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 setState(() {
                                   _wasInvoiceDesignChanged = true;
                                 });
-                                viewModel.onSettingsChanged(settings.rebuild(
+                                viewModel.onSettingsChanged(
+                                  settings.rebuild(
                                     (b) =>
-                                        b..defaultInvoiceDesignId = value!.id));
+                                        b..defaultInvoiceDesignId = value!.id,
+                                  ),
+                                );
                               },
                             ),
                             if (_wasInvoiceDesignChanged &&
@@ -299,8 +304,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
-                                  activeColor:
-                                      Theme.of(context).colorScheme.secondary,
+                                  activeColor: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
                                   title: Text(localization.updateAllRecords),
                                   value: _updateAllInvoiceDesigns,
                                   onChanged: (value) => setState(
@@ -317,9 +323,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 setState(() {
                                   _wasQuoteDesignChanged = true;
                                 });
-                                viewModel.onSettingsChanged(settings.rebuild(
-                                    (b) =>
-                                        b..defaultQuoteDesignId = value!.id));
+                                viewModel.onSettingsChanged(
+                                  settings.rebuild(
+                                    (b) => b..defaultQuoteDesignId = value!.id,
+                                  ),
+                                );
                               },
                             ),
                             if (_wasQuoteDesignChanged &&
@@ -327,8 +335,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
-                                  activeColor:
-                                      Theme.of(context).colorScheme.secondary,
+                                  activeColor: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
                                   title: Text(localization.updateAllRecords),
                                   value: _updateAllQuoteDesigns,
                                   onChanged: (value) => setState(
@@ -345,9 +354,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 setState(() {
                                   _wasCreditDesignChanged = true;
                                 });
-                                viewModel.onSettingsChanged(settings.rebuild(
-                                    (b) =>
-                                        b..defaultCreditDesignId = value!.id));
+                                viewModel.onSettingsChanged(
+                                  settings.rebuild(
+                                    (b) => b..defaultCreditDesignId = value!.id,
+                                  ),
+                                );
                               },
                             ),
                             if (_wasCreditDesignChanged &&
@@ -355,8 +366,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
-                                  activeColor:
-                                      Theme.of(context).colorScheme.secondary,
+                                  activeColor: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
                                   title: Text(localization.updateAllRecords),
                                   value: _updateAllCreditDesigns,
                                   onChanged: (value) => setState(
@@ -365,8 +377,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 ),
                               ),
                           ],
-                          if (company
-                              .isModuleEnabled(EntityType.purchaseOrder)) ...[
+                          if (company.isModuleEnabled(
+                            EntityType.purchaseOrder,
+                          )) ...[
                             DesignPicker(
                               label: localization.purchaseOrderDesign,
                               initialValue:
@@ -375,10 +388,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 setState(() {
                                   _wasPurchaseOrderDesignChanged = true;
                                 });
-                                viewModel.onSettingsChanged(settings.rebuild(
+                                viewModel.onSettingsChanged(
+                                  settings.rebuild(
                                     (b) => b
                                       ..defaultPurchaseOrderDesignId =
-                                          value!.id));
+                                          value!.id,
+                                  ),
+                                );
                               },
                             ),
                             if (_wasPurchaseOrderDesignChanged &&
@@ -386,8 +402,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
-                                  activeColor:
-                                      Theme.of(context).colorScheme.secondary,
+                                  activeColor: Theme.of(
+                                    context,
+                                  ).colorScheme.secondary,
                                   title: Text(localization.updateAllRecords),
                                   value: _updateAllPurchaseOrderDesigns,
                                   onChanged: (value) => setState(
@@ -400,13 +417,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ] else ...[
                           OutlinedButton(
                             child: Text(
-                                localization.setDefaultDesign.toUpperCase()),
+                              localization.setDefaultDesign.toUpperCase(),
+                            ),
                             onPressed: () {
-                              store.dispatch(ViewSettings(
-                                company: state.company,
-                                section: kSettingsCompanyDetails,
-                                tabIndex: 3,
-                              ));
+                              store.dispatch(
+                                ViewSettings(
+                                  company: state.company,
+                                  section: kSettingsCompanyDetails,
+                                  tabIndex: 3,
+                                ),
+                              );
                             },
                           ),
                           SizedBox(height: 16),
@@ -416,8 +436,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           label: localization.deliveryNoteDesign,
                           initialValue: settings.defaultDeliveryNoteDesignId,
                           onSelected: (value) {
-                            viewModel.onSettingsChanged(settings.rebuild((b) =>
-                                b..defaultDeliveryNoteDesignId = value?.id));
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) =>
+                                    b..defaultDeliveryNoteDesignId = value?.id,
+                              ),
+                            );
                           },
                         ),
                         DesignPicker(
@@ -425,8 +449,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           label: localization.statementDesign,
                           initialValue: settings.defaultStatementDesignId,
                           onSelected: (value) {
-                            viewModel.onSettingsChanged(settings.rebuild((b) =>
-                                b..defaultStatementDesignId = value?.id));
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) => b..defaultStatementDesignId = value?.id,
+                              ),
+                            );
                           },
                         ),
                         DesignPicker(
@@ -434,8 +461,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           label: localization.paymentReceiptDesign,
                           initialValue: settings.defaultPaymentReceiptDesignId,
                           onSelected: (value) {
-                            viewModel.onSettingsChanged(settings.rebuild((b) =>
-                                b..defaultPaymentReceiptDesignId = value?.id));
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) => b
+                                  ..defaultPaymentReceiptDesignId = value?.id,
+                              ),
+                            );
                           },
                         ),
                         DesignPicker(
@@ -443,8 +474,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           label: localization.paymentRefundDesign,
                           initialValue: settings.defaultPaymentRefundDesignId,
                           onSelected: (value) {
-                            viewModel.onSettingsChanged(settings.rebuild((b) =>
-                                b..defaultPaymentRefundDesignId = value?.id));
+                            viewModel.onSettingsChanged(
+                              settings.rebuild(
+                                (b) =>
+                                    b..defaultPaymentRefundDesignId = value?.id,
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -455,14 +490,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           labelText: localization.pageLayout,
                           value: settings.pageLayout,
                           onChanged: (dynamic value) =>
-                              viewModel.onSettingsChanged(settings
-                                  .rebuild((b) => b..pageLayout = value)),
+                              viewModel.onSettingsChanged(
+                                settings.rebuild((b) => b..pageLayout = value),
+                              ),
                           items: kPageLayouts
-                              .map((pageLayout) => DropdownMenuItem<String>(
-                                    value: pageLayout,
-                                    child:
-                                        Text(localization.lookup(pageLayout)),
-                                  ))
+                              .map(
+                                (pageLayout) => DropdownMenuItem<String>(
+                                  value: pageLayout,
+                                  child: Text(localization.lookup(pageLayout)),
+                                ),
+                              )
                               .toList(),
                         ),
                         AppDropdownButton(
@@ -470,12 +507,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: settings.pageSize,
                           onChanged: (dynamic value) =>
                               viewModel.onSettingsChanged(
-                                  settings.rebuild((b) => b..pageSize = value)),
+                                settings.rebuild((b) => b..pageSize = value),
+                              ),
                           items: kPageSizes
-                              .map((pageSize) => DropdownMenuItem<String>(
-                                    value: pageSize,
-                                    child: Text(localization.lookup(pageSize)),
-                                  ))
+                              .map(
+                                (pageSize) => DropdownMenuItem<String>(
+                                  value: pageSize,
+                                  child: Text(localization.lookup(pageSize)),
+                                ),
+                              )
                               .toList(),
                         ),
                         AppDropdownButton(
@@ -484,16 +524,21 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               ? ''
                               : '${settings.fontSize}',
                           onChanged: (dynamic value) =>
-                              viewModel.onSettingsChanged(settings.rebuild(
-                                  (b) => b..fontSize = int.parse(value))),
+                              viewModel.onSettingsChanged(
+                                settings.rebuild(
+                                  (b) => b..fontSize = int.parse(value),
+                                ),
+                              ),
                           items:
                               List<int>.generate(18, (index) => (index * 2) + 6)
-                                  .map((fontSize) => DropdownMenuItem<String>(
-                                        value: '$fontSize',
-                                        child: fontSize == 0
-                                            ? SizedBox()
-                                            : Text('$fontSize'),
-                                      ))
+                                  .map(
+                                    (fontSize) => DropdownMenuItem<String>(
+                                      value: '$fontSize',
+                                      child: fontSize == 0
+                                          ? SizedBox()
+                                          : Text('$fontSize'),
+                                    ),
+                                  )
                                   .toList(),
                         ),
                         Row(
@@ -511,19 +556,23 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               width: 150,
                               child: AppDropdownButton(
                                 labelText: '',
-                                value: (settings.companyLogoSize ?? '')
-                                        .contains('px')
+                                value:
+                                    (settings.companyLogoSize ?? '').contains(
+                                      'px',
+                                    )
                                     ? localization.pixels
                                     : localization.percent,
                                 onChanged: (dynamic value) =>
                                     viewModel.onSettingsChanged(
-                                  settings.rebuild((b) => b
-                                    ..companyLogoSize =
-                                        _logoSizeController.text +
-                                            (value == localization.pixels
-                                                ? 'px'
-                                                : '%')),
-                                ),
+                                      settings.rebuild(
+                                        (b) => b
+                                          ..companyLogoSize =
+                                              _logoSizeController.text +
+                                              (value == localization.pixels
+                                                  ? 'px'
+                                                  : '%'),
+                                      ),
+                                    ),
                                 items: [
                                   DropdownMenuItem<String>(
                                     child: Text(localization.percent),
@@ -541,44 +590,49 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       ],
                     ),
                     FormCard(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          LearnMoreUrl(
-                            url: 'https://fonts.google.com',
-                            child: EntityDropdown(
-                              entityType: EntityType.font,
-                              labelText: localization.primaryFont,
-                              entityId: settings.primaryFont,
-                              entityMap: memoizedFontMap(kGoogleFonts),
-                              onSelected: (font) => viewModel.onSettingsChanged(
-                                  settings.rebuild(
-                                      (b) => b..primaryFont = font?.id)),
-                            ),
-                          ),
-                          EntityDropdown(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        LearnMoreUrl(
+                          url: 'https://fonts.google.com',
+                          child: EntityDropdown(
                             entityType: EntityType.font,
-                            labelText: localization.secondaryFont,
-                            entityId: settings.secondaryFont,
+                            labelText: localization.primaryFont,
+                            entityId: settings.primaryFont,
                             entityMap: memoizedFontMap(kGoogleFonts),
                             onSelected: (font) => viewModel.onSettingsChanged(
-                                settings.rebuild(
-                                    (b) => b..secondaryFont = font?.id)),
+                              settings.rebuild(
+                                (b) => b..primaryFont = font?.id,
+                              ),
+                            ),
                           ),
-                          FormColorPicker(
-                            labelText: localization.primaryColor,
-                            onSelected: (value) => viewModel.onSettingsChanged(
-                                settings
-                                    .rebuild((b) => b..primaryColor = value)),
-                            initialValue: settings.primaryColor,
+                        ),
+                        EntityDropdown(
+                          entityType: EntityType.font,
+                          labelText: localization.secondaryFont,
+                          entityId: settings.secondaryFont,
+                          entityMap: memoizedFontMap(kGoogleFonts),
+                          onSelected: (font) => viewModel.onSettingsChanged(
+                            settings.rebuild(
+                              (b) => b..secondaryFont = font?.id,
+                            ),
                           ),
-                          FormColorPicker(
-                            labelText: localization.secondaryColor,
-                            onSelected: (value) => viewModel.onSettingsChanged(
-                                settings
-                                    .rebuild((b) => b..secondaryColor = value)),
-                            initialValue: settings.secondaryColor,
+                        ),
+                        FormColorPicker(
+                          labelText: localization.primaryColor,
+                          onSelected: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..primaryColor = value),
                           ),
-                        ]),
+                          initialValue: settings.primaryColor,
+                        ),
+                        FormColorPicker(
+                          labelText: localization.secondaryColor,
+                          onSelected: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild((b) => b..secondaryColor = value),
+                          ),
+                          initialValue: settings.secondaryColor,
+                        ),
+                      ],
+                    ),
                     FormCard(
                       children: [
                         BoolDropdownButton(
@@ -594,8 +648,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: settings.showShippingAddress ?? false,
                           iconData: Icons.local_shipping,
                           onChanged: (value) => viewModel.onSettingsChanged(
-                            settings
-                                .rebuild((b) => b..showShippingAddress = value),
+                            settings.rebuild(
+                              (b) => b..showShippingAddress = value,
+                            ),
                           ),
                         ),
                         if (company.isModuleEnabled(EntityType.document))
@@ -605,8 +660,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             value: settings.embedDocuments ?? false,
                             iconData: MdiIcons.image,
                             onChanged: (value) => viewModel.onSettingsChanged(
-                                settings
-                                    .rebuild((b) => b..embedDocuments = value)),
+                              settings.rebuild(
+                                (b) => b..embedDocuments = value,
+                              ),
+                            ),
                           ),
                       ],
                     ),
@@ -618,8 +675,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: !(settings.hideEmptyColumnsOnPdf ?? false),
                           iconData: MdiIcons.table,
                           onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild((b) =>
-                                b..hideEmptyColumnsOnPdf = value == false),
+                            settings.rebuild(
+                              (b) => b..hideEmptyColumnsOnPdf = value == false,
+                            ),
                           ),
                           enabledLabel: localization.show,
                           disabledLabel: localization.hide,
@@ -638,8 +696,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           labelText: localization.pageNumberingAlignment,
                           value: settings.pageNumberingAlignment,
                           onChanged: (dynamic value) =>
-                              viewModel.onSettingsChanged(settings.rebuild(
-                                  (b) => b..pageNumberingAlignment = value)),
+                              viewModel.onSettingsChanged(
+                                settings.rebuild(
+                                  (b) => b..pageNumberingAlignment = value,
+                                ),
+                              ),
                           items: [
                             DropdownMenuItem<String>(
                               child: Text(localization.left),
@@ -650,8 +711,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               value: SettingsEntity.PAGE_NUMBER_ALIGN_CENTER,
                             ),
                             DropdownMenuItem<String>(
-                                child: Text(localization.right),
-                                value: SettingsEntity.PAGE_NUMBER_ALIGN_RIGHT),
+                              child: Text(localization.right),
+                              value: SettingsEntity.PAGE_NUMBER_ALIGN_RIGHT,
+                            ),
                           ],
                           /*
                           items: kPageLayouts
@@ -667,10 +729,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   ],
                 ),
                 if (isMobile(context))
-                  _PdfPreview(
-                    settings: viewModel.settings,
-                    state: state,
-                  ),
+                  _PdfPreview(settings: viewModel.settings, state: state),
                 /*
                 ScrollableListView(
                   padding: const EdgeInsets.all(10),
@@ -760,11 +819,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ContactFields.email,
                       ].map((field) => '\$contact.$field'),
                     ],
-                    selected:
-                        settings.getFieldsForSection(kPdfFieldsClientDetails),
+                    selected: settings.getFieldsForSection(
+                      kPdfFieldsClientDetails,
+                    ),
                     onSelected: (values) {
-                      viewModel.onSettingsChanged(settings.setFieldsForSection(
-                          kPdfFieldsClientDetails, values));
+                      viewModel.onSettingsChanged(
+                        settings.setFieldsForSection(
+                          kPdfFieldsClientDetails,
+                          values,
+                        ),
+                      );
                     },
                     addTitle: localization.addField,
                     liveChanges: true,
@@ -800,11 +864,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       CompanyFields.email,
                       CompanyFields.phone,
                     ].map((field) => '\$company.$field').toList(),
-                    selected:
-                        settings.getFieldsForSection(kPdfFieldsCompanyDetails),
+                    selected: settings.getFieldsForSection(
+                      kPdfFieldsCompanyDetails,
+                    ),
                     onSelected: (values) {
-                      viewModel.onSettingsChanged(settings.setFieldsForSection(
-                          kPdfFieldsCompanyDetails, values));
+                      viewModel.onSettingsChanged(
+                        settings.setFieldsForSection(
+                          kPdfFieldsCompanyDetails,
+                          values,
+                        ),
+                      );
                     },
                     addTitle: localization.addField,
                     liveChanges: true,
@@ -838,11 +907,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       CompanyFields.cityStatePostal,
                       CompanyFields.country,
                     ].map((field) => '\$company.$field').toList(),
-                    selected:
-                        settings.getFieldsForSection(kPdfFieldsCompanyAddress),
+                    selected: settings.getFieldsForSection(
+                      kPdfFieldsCompanyAddress,
+                    ),
                     onSelected: (values) {
-                      viewModel.onSettingsChanged(settings.setFieldsForSection(
-                          kPdfFieldsCompanyAddress, values));
+                      viewModel.onSettingsChanged(
+                        settings.setFieldsForSection(
+                          kPdfFieldsCompanyAddress,
+                          values,
+                        ),
+                      );
                     },
                     addTitle: localization.addField,
                     liveChanges: true,
@@ -871,7 +945,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ].map((field) => '\$invoice.$field'),
                         ...[
                           ClientFields.balance,
-                        ].map((field) => '\$client.$field')
+                        ].map((field) => '\$client.$field'),
                       ],
                       defaultSelected: [
                         InvoiceFields.number,
@@ -881,12 +955,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         InvoiceFields.total,
                         InvoiceFields.balanceDue,
                       ].map((field) => '\$invoice.$field').toList(),
-                      selected: settings
-                          .getFieldsForSection(kPdfFieldsInvoiceDetails),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsInvoiceDetails,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsInvoiceDetails, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsInvoiceDetails,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -912,7 +990,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ].map((field) => '\$quote.$field'),
                         ...[
                           ClientFields.balance,
-                        ].map((field) => '\$client.$field')
+                        ].map((field) => '\$client.$field'),
                       ],
                       defaultSelected: [
                         QuoteFields.number,
@@ -921,12 +999,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         QuoteFields.validUntil,
                         QuoteFields.total,
                       ].map((field) => '\$quote.$field').toList(),
-                      selected:
-                          settings.getFieldsForSection(kPdfFieldsQuoteDetails),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsQuoteDetails,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsQuoteDetails, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsQuoteDetails,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -951,7 +1033,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ].map((field) => '\$credit.$field'),
                         ...[
                           ClientFields.balance,
-                        ].map((field) => '\$client.$field')
+                        ].map((field) => '\$client.$field'),
                       ],
                       defaultSelected: [
                         CreditFields.number,
@@ -960,12 +1042,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         CreditFields.balance,
                         CreditFields.total,
                       ].map((field) => '\$credit.$field').toList(),
-                      selected:
-                          settings.getFieldsForSection(kPdfFieldsCreditDetails),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsCreditDetails,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsCreditDetails, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsCreditDetails,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -1009,12 +1095,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ContactFields.email,
                         ].map((field) => '\$contact.$field'),
                       ],
-                      selected:
-                          settings.getFieldsForSection(kPdfFieldsVendorDetails),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsVendorDetails,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsVendorDetails, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsVendorDetails,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -1050,12 +1140,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         PurchaseOrderFields.total,
                         PurchaseOrderFields.balanceDue,
                       ].map((field) => '\$purchase_order.$field').toList(),
-                      selected: settings
-                          .getFieldsForSection(kPdfFieldsPurchaseOrderDetails),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsPurchaseOrderDetails,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsPurchaseOrderDetails, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsPurchaseOrderDetails,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -1100,12 +1194,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             if (company.hasItemTaxes) ProductItemFields.tax,
                             ProductItemFields.lineTotal,
                           ].map((field) => '\$product.$field').toList(),
-                          selected: settings
-                              .getFieldsForSection(kPdfFieldsProductColumns),
+                          selected: settings.getFieldsForSection(
+                            kPdfFieldsProductColumns,
+                          ),
                           onSelected: (values) {
                             viewModel.onSettingsChanged(
-                                settings.setFieldsForSection(
-                                    kPdfFieldsProductColumns, values));
+                              settings.setFieldsForSection(
+                                kPdfFieldsProductColumns,
+                                values,
+                              ),
+                            );
                           },
                           addTitle: localization.addField,
                           liveChanges: true,
@@ -1118,14 +1216,18 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       child: SwitchListTile(
                         title: Text(localization.shareInvoiceQuoteColumns),
                         value: settings.shareInvoiceQuoteColumns ?? true,
-                        activeThumbColor:
-                            Theme.of(context).colorScheme.secondary,
+                        activeThumbColor: Theme.of(
+                          context,
+                        ).colorScheme.secondary,
                         onChanged: (value) {
-                          viewModel.onSettingsChanged(settings.rebuild(
-                              (b) => b..shareInvoiceQuoteColumns = value));
+                          viewModel.onSettingsChanged(
+                            settings.rebuild(
+                              (b) => b..shareInvoiceQuoteColumns = value,
+                            ),
+                          );
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
                 if (settings.shareInvoiceQuoteColumns == false)
@@ -1162,12 +1264,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         if (company.hasItemTaxes) ProductItemFields.tax,
                         ProductItemFields.lineTotal,
                       ].map((field) => '\$product.$field').toList(),
-                      selected: settings
-                          .getFieldsForSection(kPdfFieldsProductQuoteColumns),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsProductQuoteColumns,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsProductQuoteColumns, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsProductQuoteColumns,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -1206,12 +1312,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         if (company.hasItemTaxes) TaskItemFields.tax,
                         TaskItemFields.lineTotal,
                       ].map((field) => '\$task.$field').toList(),
-                      selected:
-                          settings.getFieldsForSection(kPdfFieldsTaskColumns),
+                      selected: settings.getFieldsForSection(
+                        kPdfFieldsTaskColumns,
+                      ),
                       onSelected: (values) {
                         viewModel.onSettingsChanged(
-                            settings.setFieldsForSection(
-                                kPdfFieldsTaskColumns, values));
+                          settings.setFieldsForSection(
+                            kPdfFieldsTaskColumns,
+                            values,
+                          ),
+                        );
                       },
                       addTitle: localization.addField,
                       liveChanges: true,
@@ -1248,11 +1358,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                       InvoiceTotalFields.paidToDate,
                       InvoiceTotalFields.outstanding,
                     ].map((field) => '\$$field').toList(),
-                    selected:
-                        settings.getFieldsForSection(kPdfFieldsTotalFields),
+                    selected: settings.getFieldsForSection(
+                      kPdfFieldsTotalFields,
+                    ),
                     onSelected: (values) {
-                      viewModel.onSettingsChanged(settings.setFieldsForSection(
-                          kPdfFieldsTotalFields, values));
+                      viewModel.onSettingsChanged(
+                        settings.setFieldsForSection(
+                          kPdfFieldsTotalFields,
+                          values,
+                        ),
+                      );
                     },
                     addTitle: localization.addField,
                     liveChanges: true,
@@ -1267,16 +1382,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               child: _PdfPreview(
                 state: state,
                 settings: viewModel.settings,
-                entityType: tabs[_controller!.index] ==
-                            localization.vendorDetails ||
+                entityType:
+                    tabs[_controller!.index] == localization.vendorDetails ||
                         tabs[_controller!.index] ==
                             localization.purchaseOrderDetails
                     ? EntityType.purchaseOrder
                     : tabs[_controller!.index] == localization.quoteDetails
-                        ? EntityType.quote
-                        : tabs[_controller!.index] == localization.creditDetails
-                            ? EntityType.credit
-                            : EntityType.invoice,
+                    ? EntityType.quote
+                    : tabs[_controller!.index] == localization.creditDetails
+                    ? EntityType.credit
+                    : EntityType.invoice,
               ),
             ),
         ],
@@ -1338,19 +1453,16 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
     response = await WebClient()
         .post(
-      url,
-      state.credentials.token,
-      data: jsonEncode(
-        serializers.serializeWith(
-          PdfPreviewRequest.serializer,
-          request,
-        ),
-      ),
-      rawResponse: true,
-    )
+          url,
+          state.credentials.token,
+          data: jsonEncode(
+            serializers.serializeWith(PdfPreviewRequest.serializer, request),
+          ),
+          rawResponse: true,
+        )
         .catchError((dynamic error) {
-      print('## Error: $error');
-    });
+          print('## Error: $error');
+        });
 
     setState(() => isLoading = false);
   }

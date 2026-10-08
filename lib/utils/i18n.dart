@@ -18,6 +18,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'documents_public_by_default': 'Documents public by default',
+      'documents_public_by_default_help':
+          'New attachments are visible to clients in the portal unless marked private',
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
+      'activity_159': 'Invoice :invoice for :client was signed',
+      'activity_160': 'Quote :quote for :client was signed',
+      'activity_161': 'Credit :credit for :client was signed',
+      'activity_162': 'Purchase Order :purchase_order for :vendor was signed',
+      'activity_163': 'Custom Document :document for :client was signed',
+      'activity_164': 'QuickBooks sync failed. :notes',
+      'activity_165': 'QuickBooks sync successful. :notes',
+      'activity_166': 'User :notes was purged by :user',
+      'activity_167': 'E-Invoice :invoice status updated to :notes',
       'invoice_outstanding_tasks': 'Invoice Outstanding Tasks',
       'payment_schedule': 'Payment Schedule',
       'auto_send': 'Auto Send',
@@ -25,6 +40,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
+      'forward_invoices': 'Forward Invoices',
+      'forward_expenses': 'Forward Expenses',
       'cc_only': 'CC Only',
       'activity_149': ':user emailed credit :credit for :client to :contact',
       'activity_150': 'Account deleted :notes',
@@ -322,6 +339,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_e_invoice': 'Enable E-Invoice',
       'e_invoice_type': 'E-Invoice Type',
       'e_quote_type': 'E-Quote Type',
+      'france_reporting': 'France Reporting',
+      'reporting_schedule': 'Reporting Schedule',
+      'ten_day': 'Ten Days',
+      'monthly': 'Monthly',
       'reduced_tax': 'Reduced',
       'override_tax': 'Override',
       'zero_rated': 'Zero Rated',
@@ -2806,6 +2827,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'af_ZA': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -8341,6 +8364,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'ar': {
+      'disable_emails': 'تعطيل رسائل البريد الإلكتروني',
+      'disable_emails_help': 'منع المستخدم من إرسال رسائل البريد الإلكتروني من النظام',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -11080,6 +11105,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'تحميل موضوع اللون',
     },
     'bg': {
+      'disable_emails': 'Деактивиране на имейли',
+      'disable_emails_help': 'Предотвратява изпращането на имейли от системата от Потребител',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -13884,6 +13911,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Заредете цветна тема',
     },
     'ca': {
+      'disable_emails': 'Desactiva els correus electrònics',
+      'disable_emails_help': 'Impedeix que un usuari enviï correus electrònics des del sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -16682,6 +16711,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'zh_TW': {
+      'disable_emails': '停用電子郵件',
+      'disable_emails_help': '阻止使用者從系統發送電子郵件',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -19317,6 +19348,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': '載入顏色主題',
     },
     'hr': {
+      'disable_emails': 'Onemogući e-poštu',
+      'disable_emails_help': 'Sprječava korisnika da šalje e-poštu iz sustava',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -22101,6 +22134,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Učitaj temu u boji',
     },
     'cs': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -24867,6 +24902,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'da': {
+      'disable_emails': 'Deaktiver e-mails',
+      'disable_emails_help': 'Forhindrer en bruger i at sende e-mails fra systemet',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -27655,6 +27692,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Indlæs farvetema',
     },
     'nl': {
+      'disable_emails': 'E-mails uitschakelen',
+      'disable_emails_help': 'Voorkomt dat een gebruiker e-mails vanuit het systeem verzendt',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -33240,6 +33279,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'et': {
+      'disable_emails': 'Keela meilid',
+      'disable_emails_help': 'Takistab kasutajal süsteemist e-kirju saatmast',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -35992,6 +36033,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Laadige värviteema',
     },
     'fi': {
+      'disable_emails': 'Poista sähköpostit käytöstä',
+      'disable_emails_help': 'Estää käyttäjää lähettämästä sähköposteja järjestelmästä',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -38775,6 +38818,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Lataa väriteema',
     },
     'fr': {
+      'disable_emails': 'Désactiver les e-mails',
+      'disable_emails_help': 'Empêche un utilisateur d&#39;envoyer des e-mails depuis le système',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -41657,6 +41702,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Charger le thème de couleur',
     },
     'fr_CA': {
+      'disable_emails': 'Désactiver les courriels',
+      'disable_emails_help': 'Empêche un utilisateur d\'envoyer des courriels depuis le système',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -44511,6 +44558,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Charger le thème de couleurs',
     },
     'fr_CH': {
+      'disable_emails': 'Désactiver les e-mails',
+      'disable_emails_help': 'Empêche un utilisateur d&#39;envoyer des e-mails depuis le système',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -47377,6 +47426,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'de': {
+      'disable_emails': 'E-Mails deaktivieren',
+      'disable_emails_help': 'Verhindert, dass ein Benutzer E-Mails vom System aus sendet',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -50258,6 +50309,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'lade Farbschema',
     },
     'el': {
+      'disable_emails': 'Απενεργοποίηση email',
+      'disable_emails_help': 'Αποτρέπει έναν χρήστη από το να στέλνει email από το σύστημα',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -53152,6 +53205,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Φόρτωση θέματος χρώματος',
     },
     'he': {
+      'disable_emails': 'השבתת אימיילים',
+      'disable_emails_help': 'מונע ממשתמש לשלוח מיילים מהמערכת',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -55860,6 +55915,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'טען ערכת נושא צבע',
     },
     'hu': {
+      'disable_emails': 'E-mailek letiltása',
+      'disable_emails_help': 'Megakadályozza, hogy a felhasználó e-maileket küldjön a rendszerből',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -58604,6 +58661,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Szín téma betöltése',
     },
     'id_ID': {
+      'disable_emails': 'Nonaktifkan Email',
+      'disable_emails_help': 'Mencegah pengguna mengirim email dari sistem',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -61368,6 +61427,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'it': {
+      'disable_emails': 'Disabilita le e-mail',
+      'disable_emails_help': 'Impedisce a un utente di inviare e-mail dal sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -64219,6 +64280,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Carica tema colore',
     },
     'ja': {
+      'disable_emails': 'メールを無効にする',
+      'disable_emails_help': 'ユーザーがシステムからメールを送信できないようにします',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -66867,6 +66930,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'カラーテーマを読み込む',
     },
     'km_KH': {
+      'disable_emails': 'បិទអ៊ីមែល',
+      'disable_emails_help': 'ការពារអ្នកប្រើប្រាស់ពីការផ្ញើអ៊ីមែលពីប្រព័ន្ធ',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -69661,6 +69726,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'ផ្ទុកស្បែកពណ៌',
     },
     'lo_LA': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -72395,6 +72462,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'lv_LV': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -75159,6 +75228,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'lt': {
+      'disable_emails': 'Išjungti el. laiškus',
+      'disable_emails_help': 'Neleidžia vartotojui siųsti el. laiškų iš sistemos',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -78011,6 +78082,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Įkelti spalvų temą',
     },
     'mk_MK': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -80779,6 +80852,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'nb_NO': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -83544,6 +83619,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'fa': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -86307,6 +86384,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'pl': {
+      'disable_emails': 'Wyłącz wiadomości e-mail',
+      'disable_emails_help': 'Zapobiega użytkownikowi wysyłania wiadomości e-mail z systemu',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -89116,6 +89195,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Załaduj motyw kolorów',
     },
     'pt_BR': {
+      'disable_emails': 'Desativar e-mails',
+      'disable_emails_help': 'Impede que um usuário envie e-mails do sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -91945,6 +92026,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Carregar tema de cores',
     },
     'pt_PT': {
+      'disable_emails': 'Desativar e-mails',
+      'disable_emails_help': 'Impede que um usuário envie e-mails pelo sistema.',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -94766,6 +94849,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Carregar tema de cores',
     },
     'ro': {
+      'disable_emails': 'Dezactivați e-mailurile',
+      'disable_emails_help': 'Împiedică un utilizator să trimită e-mailuri din sistem',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -97641,6 +97726,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Schemă de culori încărcare',
     },
     'ru_RU': {
+      'disable_emails': 'Отключить emails',
+      'disable_emails_help': 'Предупреждать пользователей об отправке писем из системы',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -100433,6 +100520,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Загрузить цветовую тему',
     },
     'sr': {
+      'disable_emails': 'Онемогући имејлове',
+      'disable_emails_help': 'Спречава корисника да шаље имејлове са система',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -103221,6 +103310,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Учитај тему у боји',
     },
     'sk': {
+      'disable_emails': 'Zakázať e-maily',
+      'disable_emails_help': 'Zabraňuje používateľovi v odosielaní e-mailov zo systému',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -106024,6 +106115,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Načítať farebný motív',
     },
     'sl': {
+      'disable_emails': 'Onemogoči e-pošto',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -108835,6 +108928,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Naloži barvno shemo',
     },
     'es': {
+      'disable_emails': 'Deshabilitar correos electrónicos',
+      'disable_emails_help': 'Impide que un usuario envíe correos electrónicos desde el sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -111690,6 +111785,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Cargar tema de color',
     },
     'es_ES': {
+      'disable_emails': 'Desactivar Correos Electrónicos.',
+      'disable_emails_help': 'Previene que un usuario envíe correos electrónicos desde el sistema.',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -114555,6 +114652,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Cargar color del tema',
     },
     'sv': {
+      'disable_emails': 'Inaktivera e-postmeddelanden',
+      'disable_emails_help': 'Förhindrar att en användare skickar e-postmeddelanden från systemet',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -117338,6 +117437,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Ladda färgtema',
     },
     'th': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -120099,6 +120200,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'tr_TR': {
+      'disable_emails': 'Disable Emails',
+      'disable_emails_help': 'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -122864,6 +122967,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'load_color_theme': 'Load Color Theme',
     },
     'vi': {
+      'disable_emails': 'Vô hiệu hóa Email',
+      'disable_emails_help': 'Ngăn chặn Người dùng gửi email từ hệ thống',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -132459,8 +132564,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']!['preference_product_notes_for_html_view']!;
 
   String get preferenceProductNotesForHtmlViewHelp =>
-      _localizedValues[localeCode]![
-          'preference_product_notes_for_html_view_help'] ??
+      _localizedValues[localeCode]!['preference_product_notes_for_html_view_help'] ??
       _localizedValues['en']!['preference_product_notes_for_html_view_help']!;
 
   String get locations =>
@@ -132532,8 +132636,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues['en']!['disable_recurring_payment_notification']!;
 
   String get disableRecurringPaymentNotificationHelp =>
-      _localizedValues[localeCode]![
-          'disable_recurring_payment_notification_help'] ??
+      _localizedValues[localeCode]!['disable_recurring_payment_notification_help'] ??
       _localizedValues['en']!['disable_recurring_payment_notification_help']!;
 
   String get rejected =>
@@ -132547,6 +132650,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get forwardEmail =>
       _localizedValues[localeCode]!['forward_email'] ??
       _localizedValues['en']!['forward_email']!;
+
+  String get forwardInvoices =>
+      _localizedValues[localeCode]!['forward_invoices'] ??
+      _localizedValues['en']!['forward_invoices']!;
+
+  String get forwardExpenses =>
+      _localizedValues[localeCode]!['forward_expenses'] ??
+      _localizedValues['en']!['forward_expenses']!;
 
   String get eInvoiceSettings =>
       _localizedValues[localeCode]!['e_invoice_settings'] ??
@@ -132580,6 +132691,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]!['account_holder'] ??
       _localizedValues['en']!['account_holder']!;
 
+  String get disableEmails =>
+      _localizedValues[localeCode]!['disable_emails'] ??
+      _localizedValues['en']!['disable_emails']!;
+
+  String get disableEmailsHelp =>
+      _localizedValues[localeCode]!['disable_emails_help'] ??
+      _localizedValues['en']!['disable_emails_help']!;
+
+  String get documentsPublicByDefault =>
+      _localizedValues[localeCode]!['documents_public_by_default'] ??
+      _localizedValues['en']!['documents_public_by_default']!;
+
+  String get documentsPublicByDefaultHelp =>
+      _localizedValues[localeCode]!['documents_public_by_default_help'] ??
+      _localizedValues['en']!['documents_public_by_default_help']!;
+
   // STARTER: lang field - do not remove comment
 
   String lookup(String? key, {String? overrideLocaleCode}) {
@@ -132595,8 +132722,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
     final value =
         _localizedValues[overrideLocaleCode ?? localeCode]![lookupKey] ??
-            _localizedValues[localeCode]![lookupKey.replaceFirst('_id', '')] ??
-            '';
+        _localizedValues[localeCode]![lookupKey.replaceFirst('_id', '')] ??
+        '';
 
     if (value.isEmpty) {
       print('## ERROR: localization key not found - $key');

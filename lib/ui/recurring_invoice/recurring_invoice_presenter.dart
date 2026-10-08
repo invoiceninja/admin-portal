@@ -59,7 +59,8 @@ class RecurringInvoicePresenter extends EntityPresenter {
         return EntityStatusChip(entity: invoice, showState: true);
       case RecurringInvoiceFields.number:
         return Text(
-            invoice.number.isEmpty ? localization!.pending : invoice.number);
+          invoice.number.isEmpty ? localization!.pending : invoice.number,
+        );
       case RecurringInvoiceFields.client:
         final client = state.clientState.get(invoice.clientId);
         return LinkTextRelatedEntity(entity: client, relation: invoice);
@@ -76,8 +77,9 @@ class RecurringInvoicePresenter extends EntityPresenter {
       case RecurringInvoiceFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(invoice.amount, context,
-              clientId: invoice.clientId)!),
+          child: Text(
+            formatNumber(invoice.amount, context, clientId: invoice.clientId)!,
+          ),
         );
       case RecurringInvoiceFields.customValue1:
         return Text(presentCustomField(context, invoice.customValue1)!);
@@ -92,44 +94,70 @@ class RecurringInvoicePresenter extends EntityPresenter {
       case RecurringInvoiceFields.privateNotes:
         return TableTooltip(message: invoice.privateNotes);
       case RecurringInvoiceFields.discount:
-        return Text(invoice.isAmountDiscount
-            ? formatNumber(invoice.discount, context,
-                formatNumberType: FormatNumberType.money,
-                clientId: invoice.clientId)!
-            : formatNumber(invoice.discount, context,
-                formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          invoice.isAmountDiscount
+              ? formatNumber(
+                  invoice.discount,
+                  context,
+                  formatNumberType: FormatNumberType.money,
+                  clientId: invoice.clientId,
+                )!
+              : formatNumber(
+                  invoice.discount,
+                  context,
+                  formatNumberType: FormatNumberType.percent,
+                )!,
+        );
       case RecurringInvoiceFields.poNumber:
         return Text(invoice.poNumber);
       case RecurringInvoiceFields.documents:
         return Text('${invoice.documents.length}');
       case RecurringInvoiceFields.taxAmount:
-        return Text(formatNumber(invoice.taxAmount, context,
-            clientId: invoice.clientId)!);
+        return Text(
+          formatNumber(invoice.taxAmount, context, clientId: invoice.clientId)!,
+        );
       case RecurringInvoiceFields.exchangeRate:
-        return Text(formatNumber(invoice.exchangeRate, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            invoice.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case RecurringInvoiceFields.remainingCycles:
-        return Text(invoice.remainingCycles == -1
-            ? localization!.endless
-            : '${invoice.remainingCycles}');
+        return Text(
+          invoice.remainingCycles == -1
+              ? localization!.endless
+              : '${invoice.remainingCycles}',
+        );
       case RecurringInvoiceFields.nextSendDate:
-        return Text(invoice.nextSendDatetime.isNotEmpty
-            ? formatDate(invoice.nextSendDatetime, context,
-                showTime: true, showSeconds: false)
-            : formatDate(invoice.nextSendDate, context));
+        return Text(
+          invoice.nextSendDatetime.isNotEmpty
+              ? formatDate(
+                  invoice.nextSendDatetime,
+                  context,
+                  showTime: true,
+                  showSeconds: false,
+                )
+              : formatDate(invoice.nextSendDate, context),
+        );
       case RecurringInvoiceFields.frequency:
         return Text(localization!.lookup(kFrequencies[invoice.frequencyId]));
       case RecurringInvoiceFields.dueDateDays:
-        return Text(invoice.dueDateDays == 'terms'
-            ? localization!.paymentTerm
-            : invoice.dueDateDays == 'on_receipt'
-                ? localization!.dueOnReceipt
-                : invoice.dueDateDays == '1'
-                    ? localization!.firstDayOfTheMonth
-                    : invoice.dueDateDays == '31'
-                        ? localization!.lastDayOfTheMonth
-                        : localization!.dayCount
-                            .replaceFirst(':count', '${invoice.dueDateDays}'));
+        return Text(
+          invoice.dueDateDays == 'terms'
+              ? localization!.paymentTerm
+              : invoice.dueDateDays == 'on_receipt'
+              ? localization!.dueOnReceipt
+              : invoice.dueDateDays == '1'
+              ? localization!.firstDayOfTheMonth
+              : invoice.dueDateDays == '31'
+              ? localization!.lastDayOfTheMonth
+              : localization!.dayCount.replaceFirst(
+                  ':count',
+                  '${invoice.dueDateDays}',
+                ),
+        );
       case RecurringInvoiceFields.autoBill:
         return Text(localization!.lookup(invoice.autoBill));
     }

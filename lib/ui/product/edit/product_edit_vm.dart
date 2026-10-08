@@ -33,10 +33,7 @@ class ProductEditScreen extends StatelessWidget {
         return ProductEditVM.fromStore(store);
       },
       builder: (context, vm) {
-        return ProductEdit(
-          viewModel: vm,
-          key: ValueKey(vm.product.id),
-        );
+        return ProductEdit(viewModel: vm, key: ValueKey(vm.product.id));
       },
     );
   }
@@ -82,29 +79,35 @@ class ProductEditVM {
           final Completer<ProductEntity> completer =
               new Completer<ProductEntity>();
           store.dispatch(
-              SaveProductRequest(completer: completer, product: product));
-          return completer.future.then((savedProduct) {
-            showToast(product!.isNew
-                ? localization!.createdProduct
-                : localization!.updatedProduct);
+            SaveProductRequest(completer: completer, product: product),
+          );
+          return completer.future
+              .then((savedProduct) {
+                showToast(
+                  product!.isNew
+                      ? localization!.createdProduct
+                      : localization!.updatedProduct,
+                );
 
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-              if (product.isNew) {
-                navigator!.pushReplacementNamed(ProductViewScreen.route);
-              } else {
-                navigator!.pop(savedProduct);
-              }
-            } else {
-              viewEntity(entity: savedProduct);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
+                  if (product.isNew) {
+                    navigator!.pushReplacementNamed(ProductViewScreen.route);
+                  } else {
+                    navigator!.pop(savedProduct);
+                  }
+                } else {
+                  viewEntity(entity: savedProduct);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
       onEntityAction: (BuildContext context, EntityAction action) {

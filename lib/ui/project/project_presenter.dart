@@ -57,8 +57,9 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.clientNumber:
         return Text(client.number);
       case ProjectFields.taskRate:
-        return Text(formatNumber(project.taskRate, context,
-            clientId: project.clientId)!);
+        return Text(
+          formatNumber(project.taskRate, context, clientId: project.clientId)!,
+        );
       case ProjectFields.dueDate:
         return Text(formatDate(project.dueDate, context));
       case ProjectFields.publicNotes:
@@ -66,8 +67,13 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.privateNotes:
         return TableTooltip(message: project.privateNotes);
       case ProjectFields.budgetedHours:
-        return Text(formatNumber(project.budgetedHours, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            project.budgetedHours,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case ProjectFields.number:
         return Text(project.number);
       case ProjectFields.customValue1:
@@ -81,8 +87,13 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.documents:
         return Text('${project.documents.length}');
       case ProjectFields.totalHours:
-        return Text(formatNumber(project.totalHours, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            project.totalHours,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
     }
 
     return super.getField(field: field, context: context);

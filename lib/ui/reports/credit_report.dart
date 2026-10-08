@@ -82,16 +82,23 @@ enum CreditReportFields {
   record_state,
 }
 
-var memoizedCreditReport = memo6((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
-) =>
-    creditReport(userCompany!, reportsUIState, creditMap, clientMap, userMap,
-        staticState));
+var memoizedCreditReport = memo6(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, InvoiceEntity> creditMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    StaticState staticState,
+  ) => creditReport(
+    userCompany!,
+    reportsUIState,
+    creditMap,
+    clientMap,
+    userMap,
+    staticState,
+  ),
+);
 
 ReportResult creditReport(
   UserCompanyEntity userCompany,
@@ -116,14 +123,16 @@ ReportResult creditReport(
     CreditReportFields.balance,
     CreditReportFields.date,
     CreditReportFields.valid_until,
-    CreditReportFields.client
+    CreditReportFields.client,
   ];
 
   if (creditReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(creditReportSettings.columns
-        .map((e) => EnumUtils.fromString(CreditReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      creditReportSettings.columns
+          .map((e) => EnumUtils.fromString(CreditReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -361,8 +370,9 @@ ReportResult creditReport(
           value = client.idNumber;
           break;
         case CreditReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(credit.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(credit.entityState);
           break;
       }
 
@@ -381,15 +391,17 @@ ReportResult creditReport(
         String? currencyId = client.currencyId;
         if ([
           CreditReportFields.converted_amount,
-          CreditReportFields.converted_balance
+          CreditReportFields.converted_balance,
         ].contains(column)) {
           currencyId = userCompany.company.currencyId;
         }
-        row.add(credit.getReportDouble(
-          value: value,
-          currencyId: currencyId,
-          exchangeRate: credit.exchangeRate,
-        ));
+        row.add(
+          credit.getReportDouble(
+            value: value,
+            currencyId: currencyId,
+            exchangeRate: credit.exchangeRate,
+          ),
+        );
       } else {
         row.add(credit.getReportString(value: value));
       }
@@ -402,15 +414,19 @@ ReportResult creditReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, creditReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) =>
+        sortReportTableRows(rowA, rowB, creditReportSettings, selectedColumns)!,
+  );
 
   return ReportResult(
-    allColumns:
-        CreditReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: CreditReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

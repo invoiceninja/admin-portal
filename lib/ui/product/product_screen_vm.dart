@@ -21,9 +21,7 @@ class ProductScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ProductScreenVM>(
       converter: ProductScreenVM.fromStore,
       builder: (context, vm) {
-        return ProductScreen(
-          viewModel: vm,
-        );
+        return ProductScreen(viewModel: vm);
       },
     );
   }
@@ -48,11 +46,12 @@ class ProductScreenVM {
     return ProductScreenVM(
       productMap: state.productState.map,
       productList: memoizedFilteredProductList(
-          state.getUISelection(EntityType.product),
-          state.productState.map,
-          state.productState.list,
-          state.productListState,
-          state.userState.map),
+        state.getUISelection(EntityType.product),
+        state.productState.map,
+        state.productState.list,
+        state.productListState,
+        state.userState.map,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.productListState.isInMultiselect(),
     );

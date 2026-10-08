@@ -13,10 +13,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditNotes extends StatefulWidget {
-  const InvoiceEditNotes({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const InvoiceEditNotes({Key? key, required this.viewModel}) : super(key: key);
 
   final EntityEditNotesVM viewModel;
 
@@ -42,8 +39,9 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
       _footerController,
     ];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final invoice = widget.viewModel.invoice!;
     _publicNotesController.text = invoice.publicNotes;
@@ -51,8 +49,9 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     _termsController.text = invoice.terms;
     _footerController.text = invoice.footer;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -68,11 +67,13 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   }
 
   void _onChanged() {
-    final invoice = widget.viewModel.invoice!.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim()
-      ..terms = _termsController.text.trim()
-      ..footer = _footerController.text.trim());
+    final invoice = widget.viewModel.invoice!.rebuild(
+      (b) => b
+        ..publicNotes = _publicNotesController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim()
+        ..terms = _termsController.text.trim()
+        ..footer = _footerController.text.trim(),
+    );
     if (invoice != widget.viewModel.invoice) {
       _debouncer.run(() {
         widget.viewModel.onChanged!(invoice);
@@ -101,8 +102,8 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               label: invoice.entityType == EntityType.credit
                   ? localization.creditTerms
                   : invoice.entityType == EntityType.quote
-                      ? localization.quoteTerms
-                      : localization.invoiceTerms,
+                  ? localization.quoteTerms
+                  : localization.invoiceTerms,
               hint: invoice.isOld
                   ? ''
                   : settings.getDefaultTerms(invoice.entityType),
@@ -114,8 +115,8 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
               label: invoice.entityType == EntityType.credit
                   ? localization.creditFooter
                   : invoice.entityType == EntityType.quote
-                      ? localization.quoteFooter
-                      : localization.invoiceFooter,
+                  ? localization.quoteFooter
+                  : localization.invoiceFooter,
               hint: invoice.isOld
                   ? ''
                   : settings.getDefaultFooter(invoice.entityType),

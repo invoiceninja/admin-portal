@@ -51,82 +51,107 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     return UserCompanyState(false);
   }
 
-  return state.rebuild((b) => b
-    ..lastUpdated = lastUpdatedReducer(state.lastUpdated, action)
-    ..userCompany.replace(userCompanyEntityReducer(state.userCompany, action)!)
-    ..documentState.replace(documentsReducer(state.documentState, action))
-    ..clientState.replace(clientsReducer(state.clientState, action))
-    ..productState.replace(productsReducer(state.productState, action))
-    ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
-    ..expenseState.replace(expensesReducer(state.expenseState, action))
-    ..vendorState.replace(vendorsReducer(state.vendorState, action))
-    ..taskState.replace(tasksReducer(state.taskState, action))
-    // STARTER: reducer - do not remove comment
-    ..scheduleState.replace(schedulesReducer(state.scheduleState, action))
-    ..transactionRuleState
-        .replace(transactionRulesReducer(state.transactionRuleState, action))
-    ..transactionState
-        .replace(transactionsReducer(state.transactionState, action))
-    ..bankAccountState
-        .replace(bankAccountsReducer(state.bankAccountState, action))
-    ..purchaseOrderState
-        .replace(purchaseOrdersReducer(state.purchaseOrderState, action))
-    ..recurringExpenseState
-        .replace(recurringExpensesReducer(state.recurringExpenseState, action))
-    ..subscriptionState
-        .replace(subscriptionsReducer(state.subscriptionState, action))
-    ..taskStatusState
-        .replace(taskStatusesReducer(state.taskStatusState, action))
-    ..expenseCategoryState
-        .replace(expenseCategoriesReducer(state.expenseCategoryState, action))
-    ..recurringInvoiceState
-        .replace(recurringInvoicesReducer(state.recurringInvoiceState, action))
-    ..webhookState.replace(webhooksReducer(state.webhookState, action))
-    ..tokenState.replace(tokensReducer(state.tokenState, action))
-    ..paymentTermState
-        .replace(paymentTermsReducer(state.paymentTermState, action))
-    ..designState.replace(designsReducer(state.designState, action))
-    ..creditState.replace(creditsReducer(state.creditState, action))
-    ..userState.replace(usersReducer(state.userState, action))
-    ..taxRateState.replace(taxRatesReducer(state.taxRateState, action))
-    ..companyGatewayState
-        .replace(companyGatewaysReducer(state.companyGatewayState, action))
-    ..projectState.replace(projectsReducer(state.projectState, action))
-    ..paymentState.replace(paymentsReducer(state.paymentState, action))
-    ..quoteState.replace(quotesReducer(state.quoteState, action))
-    ..groupState.replace(groupsReducer(state.groupState, action)));
+  return state.rebuild(
+    (b) => b
+      ..lastUpdated = lastUpdatedReducer(state.lastUpdated, action)
+      ..userCompany.replace(
+        userCompanyEntityReducer(state.userCompany, action)!,
+      )
+      ..documentState.replace(documentsReducer(state.documentState, action))
+      ..clientState.replace(clientsReducer(state.clientState, action))
+      ..productState.replace(productsReducer(state.productState, action))
+      ..invoiceState.replace(invoicesReducer(state.invoiceState, action))
+      ..expenseState.replace(expensesReducer(state.expenseState, action))
+      ..vendorState.replace(vendorsReducer(state.vendorState, action))
+      ..taskState.replace(tasksReducer(state.taskState, action))
+      // STARTER: reducer - do not remove comment
+      ..scheduleState.replace(schedulesReducer(state.scheduleState, action))
+      ..transactionRuleState.replace(
+        transactionRulesReducer(state.transactionRuleState, action),
+      )
+      ..transactionState.replace(
+        transactionsReducer(state.transactionState, action),
+      )
+      ..bankAccountState.replace(
+        bankAccountsReducer(state.bankAccountState, action),
+      )
+      ..purchaseOrderState.replace(
+        purchaseOrdersReducer(state.purchaseOrderState, action),
+      )
+      ..recurringExpenseState.replace(
+        recurringExpensesReducer(state.recurringExpenseState, action),
+      )
+      ..subscriptionState.replace(
+        subscriptionsReducer(state.subscriptionState, action),
+      )
+      ..taskStatusState.replace(
+        taskStatusesReducer(state.taskStatusState, action),
+      )
+      ..expenseCategoryState.replace(
+        expenseCategoriesReducer(state.expenseCategoryState, action),
+      )
+      ..recurringInvoiceState.replace(
+        recurringInvoicesReducer(state.recurringInvoiceState, action),
+      )
+      ..webhookState.replace(webhooksReducer(state.webhookState, action))
+      ..tokenState.replace(tokensReducer(state.tokenState, action))
+      ..paymentTermState.replace(
+        paymentTermsReducer(state.paymentTermState, action),
+      )
+      ..designState.replace(designsReducer(state.designState, action))
+      ..creditState.replace(creditsReducer(state.creditState, action))
+      ..userState.replace(usersReducer(state.userState, action))
+      ..taxRateState.replace(taxRatesReducer(state.taxRateState, action))
+      ..companyGatewayState.replace(
+        companyGatewaysReducer(state.companyGatewayState, action),
+      )
+      ..projectState.replace(projectsReducer(state.projectState, action))
+      ..paymentState.replace(paymentsReducer(state.paymentState, action))
+      ..quoteState.replace(quotesReducer(state.quoteState, action))
+      ..groupState.replace(groupsReducer(state.groupState, action)),
+  );
 }
 
 Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
   TypedReducer<UserCompanyEntity?, LoadCompanySuccess>(
-      loadCompanySuccessReducer),
+    loadCompanySuccessReducer,
+  ),
   TypedReducer<UserCompanyEntity?, SaveCompanySuccess>(
-      saveCompanySuccessReducer),
-  TypedReducer<UserCompanyEntity?, SaveEInvoiceCertificateSuccess>(
-      (userCompany, action) {
-    return userCompany!.rebuild((b) => b
-      ..company.hasEInvoiceCertificate = action.company.hasEInvoiceCertificate
-      ..company.hasEInvoiceCertificatePassphrase =
-          action.company.hasEInvoiceCertificatePassphrase);
+    saveCompanySuccessReducer,
+  ),
+  TypedReducer<UserCompanyEntity?, SaveEInvoiceCertificateSuccess>((
+    userCompany,
+    action,
+  ) {
+    return userCompany!.rebuild(
+      (b) => b
+        ..company.hasEInvoiceCertificate = action.company.hasEInvoiceCertificate
+        ..company.hasEInvoiceCertificatePassphrase =
+            action.company.hasEInvoiceCertificatePassphrase,
+    );
   }),
   TypedReducer<UserCompanyEntity?, UpdateReportSettings>((userCompany, action) {
     if (userCompany!.settings.reportSettings.containsKey(action.report)) {
       final settings = userCompany.settings.reportSettings[action.report];
-      return userCompany.rebuild((b) => b
-        ..settings.reportSettings[action.report] = settings!.rebuild((b) => b
-          ..sortAscending = action.sortColumn == null
-              ? settings.sortAscending
-              : action.sortColumn == settings.sortColumn
+      return userCompany.rebuild(
+        (b) => b
+          ..settings.reportSettings[action.report] = settings!.rebuild(
+            (b) => b
+              ..sortAscending = action.sortColumn == null
+                  ? settings.sortAscending
+                  : action.sortColumn == settings.sortColumn
                   ? !settings.sortAscending
                   : true
-          ..sortTotalsAscending = action.sortTotalsIndex == null
-              ? settings.sortTotalsAscending
-              : action.sortTotalsIndex == settings.sortTotalsIndex
+              ..sortTotalsAscending = action.sortTotalsIndex == null
+                  ? settings.sortTotalsAscending
+                  : action.sortTotalsIndex == settings.sortTotalsIndex
                   ? !settings.sortTotalsAscending
                   : true
-          ..sortColumn = action.sortColumn ?? settings.sortColumn
-          ..sortTotalsIndex =
-              action.sortTotalsIndex ?? settings.sortTotalsIndex));
+              ..sortColumn = action.sortColumn ?? settings.sortColumn
+              ..sortTotalsIndex =
+                  action.sortTotalsIndex ?? settings.sortTotalsIndex,
+          ),
+      );
     } else {
       return userCompany.rebuild(
         (b) => b
@@ -138,9 +163,11 @@ Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
     }
   }),
   TypedReducer<UserCompanyEntity?, SaveAuthUserSuccess>(
-    (userCompany, action) => userCompany!.rebuild((b) => b
-      ..user.replace(action.user)
-      ..settings.replace(action.user.userCompany!.settings)),
+    (userCompany, action) => userCompany!.rebuild(
+      (b) => b
+        ..user.replace(action.user)
+        ..settings.replace(action.user.userCompany!.settings),
+    ),
   ),
   TypedReducer<UserCompanyEntity?, ConnectOAuthUserSuccess>(
     (userCompany, action) =>
@@ -163,41 +190,54 @@ Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
         userCompany!.rebuild((b) => b..user.isTwoFactorEnabled = false),
   ),
   TypedReducer<UserCompanyEntity?, SaveUserSettingsSuccess>(
-      (userCompany, action) => userCompany!
-          .rebuild((b) => b..settings.replace(action.userCompany.settings))),
+    (userCompany, action) => userCompany!.rebuild(
+      (b) => b..settings.replace(action.userCompany.settings),
+    ),
+  ),
   TypedReducer<UserCompanyEntity?, UpdateCompanyLanguage>(
-    (userCompany, action) => userCompany!
-        .rebuild((b) => b..company.settings.languageId = action.languageId),
+    (userCompany, action) => userCompany!.rebuild(
+      (b) => b..company.settings.languageId = action.languageId,
+    ),
   ),
   TypedReducer<UserCompanyEntity?, UpdateDashboardFields>(
     (userCompany, action) => userCompany!.rebuild(
-        (b) => b..settings.dashboardFields.replace(action.dashboardFields!)),
+      (b) => b..settings.dashboardFields.replace(action.dashboardFields!),
+    ),
   ),
-  TypedReducer<UserCompanyEntity?, UpdateDashboardFieldSettingss>(
-    (userCompany, action) {
-      if (action.numberFieldsPerRowDesktop != null) {
-        return userCompany!.rebuild((b) => b
+  TypedReducer<UserCompanyEntity?, UpdateDashboardFieldSettingss>((
+    userCompany,
+    action,
+  ) {
+    if (action.numberFieldsPerRowDesktop != null) {
+      return userCompany!.rebuild(
+        (b) => b
           ..settings.dashboardFieldsPerRowDesktop =
-              action.numberFieldsPerRowDesktop);
-      } else if (action.numberFieldsPerRowMobile != null) {
-        return userCompany!.rebuild((b) => b
+              action.numberFieldsPerRowDesktop,
+      );
+    } else if (action.numberFieldsPerRowMobile != null) {
+      return userCompany!.rebuild(
+        (b) => b
           ..settings.dashboardFieldsPerRowMobile =
-              action.numberFieldsPerRowMobile);
-      }
+              action.numberFieldsPerRowMobile,
+      );
+    }
 
-      return userCompany;
-    },
-  ),
+    return userCompany;
+  }),
 ]);
 
 UserCompanyEntity loadCompanySuccessReducer(
-    UserCompanyEntity? company, LoadCompanySuccess action) {
+  UserCompanyEntity? company,
+  LoadCompanySuccess action,
+) {
   var userCompany = action.userCompany;
 
-  userCompany = userCompany.rebuild((b) => b.company
-    ..taskStatuses.replace(<TaskStatusEntity>[])
-    ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
-    ..expenseCategories.replace(<ExpenseCategoryEntity>[]));
+  userCompany = userCompany.rebuild(
+    (b) => b.company
+      ..taskStatuses.replace(<TaskStatusEntity>[])
+      ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
+      ..expenseCategories.replace(<ExpenseCategoryEntity>[]),
+  );
 
   /*
 
@@ -225,20 +265,25 @@ UserCompanyEntity loadCompanySuccessReducer(
   */
 
   // clear all sub-data
-  userCompany = userCompany
-      .rebuild((b) => b..company.replace(userCompany.company.coreCompany));
+  userCompany = userCompany.rebuild(
+    (b) => b..company.replace(userCompany.company.coreCompany),
+  );
 
   return userCompany;
 }
 
 UserCompanyEntity saveCompanySuccessReducer(
-    UserCompanyEntity? userCompany, SaveCompanySuccess action) {
-  final company = action.company.rebuild((b) => b
-    ..taxRates.replace(userCompany!.company.taxRates)
-    ..taskStatuses.replace(userCompany.company.taskStatuses)
-    ..taskStatusMap.replace(userCompany.company.taskStatusMap)
-    ..expenseCategories.replace(userCompany.company.expenseCategories)
-    ..users.replace(userCompany.company.users));
+  UserCompanyEntity? userCompany,
+  SaveCompanySuccess action,
+) {
+  final company = action.company.rebuild(
+    (b) => b
+      ..taxRates.replace(userCompany!.company.taxRates)
+      ..taskStatuses.replace(userCompany.company.taskStatuses)
+      ..taskStatusMap.replace(userCompany.company.taskStatusMap)
+      ..expenseCategories.replace(userCompany.company.expenseCategories)
+      ..users.replace(userCompany.company.users),
+  );
 
   userCompany = userCompany!.rebuild((b) => b..company.replace(company));
 

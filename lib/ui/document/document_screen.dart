@@ -19,10 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'document_screen_vm.dart';
 
 class DocumentScreen extends StatelessWidget {
-  const DocumentScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const DocumentScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/document';
 
@@ -90,8 +87,9 @@ class DocumentScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.document,
         tableColumns: DocumentPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            DocumentPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: DocumentPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) => store.dispatch(SortDocuments(value)),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterDocumentsByCustom1(value)),

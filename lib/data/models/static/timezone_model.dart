@@ -51,11 +51,7 @@ abstract class TimezoneEntity extends Object
     with SelectableEntity
     implements Built<TimezoneEntity, TimezoneEntityBuilder> {
   factory TimezoneEntity() {
-    return _$TimezoneEntity._(
-      id: '',
-      name: '',
-      location: '',
-    );
+    return _$TimezoneEntity._(id: '', name: '', location: '');
   }
 
   TimezoneEntity._();

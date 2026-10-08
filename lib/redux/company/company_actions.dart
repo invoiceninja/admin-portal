@@ -13,10 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
 class SelectCompany implements ClearClientMultiselect {
-  SelectCompany({
-    required this.companyIndex,
-    this.clearSelection = true,
-  });
+  SelectCompany({required this.companyIndex, this.clearSelection = true});
 
   final int companyIndex;
   final bool clearSelection;
@@ -35,10 +32,7 @@ class UpdateCompany implements PersistUI {
 }
 
 class SaveCompanyRequest implements StartSaving {
-  SaveCompanyRequest({
-    this.completer,
-    this.company,
-  });
+  SaveCompanyRequest({this.completer, this.company});
 
   final Completer? completer;
   final CompanyEntity? company;
@@ -170,9 +164,7 @@ class SaveCompanyDocumentFailure implements StopSaving {
 }
 
 class SetDefaultCompanyRequest implements StartSaving {
-  SetDefaultCompanyRequest({
-    required this.completer,
-  });
+  SetDefaultCompanyRequest({required this.completer});
 
   final Completer completer;
 }

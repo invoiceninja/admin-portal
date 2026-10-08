@@ -32,28 +32,29 @@ class WebhookListBuilder extends StatelessWidget {
       converter: WebhookListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.webhook,
-            presenter: WebhookPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.webhookList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final webhookId = viewModel.webhookList[index];
-              final webhook = viewModel.webhookMap[webhookId]!;
-              final listState = state.getListState(EntityType.webhook);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.webhook,
+          presenter: WebhookPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.webhookList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final webhookId = viewModel.webhookList[index];
+            final webhook = viewModel.webhookMap[webhookId]!;
+            final listState = state.getListState(EntityType.webhook);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return WebhookListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                webhook: webhook,
-                isChecked: isInMultiselect && listState.isSelected(webhook.id),
-              );
-            });
+            return WebhookListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              webhook: webhook,
+              isChecked: isInMultiselect && listState.isSelected(webhook.id),
+            );
+          },
+        );
       },
     );
   }
@@ -80,8 +81,9 @@ class WebhookListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -93,20 +95,24 @@ class WebhookListVM {
       userCompany: state.userCompany,
       listState: state.webhookListState,
       webhookList: memoizedFilteredWebhookList(
-          state.getUISelection(EntityType.webhook),
-          state.webhookState.map,
-          state.webhookState.list,
-          state.webhookListState),
+        state.getUISelection(EntityType.webhook),
+        state.webhookState.map,
+        state.webhookState.list,
+        state.webhookListState,
+      ),
       webhookMap: state.webhookState.map,
       isLoading: state.isLoading,
       filter: state.webhookUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> webhooks,
-              EntityAction action) =>
-          handleWebhookAction(context, webhooks, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> webhooks,
+            EntityAction action,
+          ) => handleWebhookAction(context, webhooks, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.webhook) ??
-              WebhookPresenter.getDefaultTableFields(state.userCompany),
+          WebhookPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortWebhooks(field)),
       onClearMultielsect: () => store.dispatch(ClearWebhookMultiselect()),
     );

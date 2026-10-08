@@ -25,27 +25,18 @@ class LockScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(
-                MdiIcons.lock,
-                size: 24.0,
-                color: Colors.grey[400],
-              ),
-              SizedBox(
-                width: 12.0,
-              ),
+              Icon(MdiIcons.lock, size: 24.0, color: Colors.grey[400]),
+              SizedBox(width: 12.0),
               Text(
                 localization.locked,
-                style: TextStyle(
-                  fontSize: 32.0,
-                  color: Colors.grey[400],
-                ),
+                style: TextStyle(fontSize: 32.0, color: Colors.grey[400]),
               ),
             ],
           ),
           ElevatedButton(
             onPressed: onAuthenticatePressed as void Function()?,
             child: Text(localization.authenticate),
-          )
+          ),
         ],
       ),
     );

@@ -27,11 +27,8 @@ import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserView extends StatelessWidget {
-  const UserView({
-    Key? key,
-    required this.viewModel,
-    required this.isFilter,
-  }) : super(key: key);
+  const UserView({Key? key, required this.viewModel, required this.isFilter})
+    : super(key: key);
 
   final UserViewVM viewModel;
   final bool isFilter;
@@ -50,8 +47,10 @@ class UserView extends StatelessWidget {
       body: ScrollableListView(
         children: <Widget>[
           if (user.emailVerifiedAt == null)
-            IconMessage(localization.emailSentToConfirmEmail,
-                color: Colors.orange),
+            IconMessage(
+              localization.emailSentToConfirmEmail,
+              color: Colors.orange,
+            ),
           EntityHeader(
             entity: user,
             value: user.email,
@@ -65,9 +64,10 @@ class UserView extends StatelessWidget {
               isFilter: isFilter,
               title: localization.clients,
               entityType: EntityType.client,
-              subtitle:
-                  memoizedClientStatsForUser(user.id, state.clientState.map)
-                      .present(localization.active, localization.archived),
+              subtitle: memoizedClientStatsForUser(
+                user.id,
+                state.clientState.map,
+              ).present(localization.active, localization.archived),
             ),
           if (userCompany.canViewCreateOrEdit(EntityType.invoice))
             EntitiesListTile(
@@ -75,9 +75,10 @@ class UserView extends StatelessWidget {
               isFilter: isFilter,
               title: localization.invoices,
               entityType: EntityType.invoice,
-              subtitle:
-                  memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
-                      .present(localization.active, localization.archived),
+              subtitle: memoizedInvoiceStatsForUser(
+                user.id,
+                state.invoiceState.map,
+              ).present(localization.active, localization.archived),
             ),
           if (userCompany.canViewCreateOrEdit(EntityType.quote))
             EntitiesListTile(
@@ -152,8 +153,9 @@ class UserView extends StatelessWidget {
               title: localization.recurringInvoices,
               entityType: EntityType.recurringInvoice,
               subtitle: memoizedRecurringInvoiceStatsForUser(
-                      user.id, state.recurringInvoiceState.map)
-                  .present(localization.active, localization.archived),
+                user.id,
+                state.recurringInvoiceState.map,
+              ).present(localization.active, localization.archived),
             ),
           if (userCompany.canViewCreateOrEdit(EntityType.recurringExpense))
             EntitiesListTile(

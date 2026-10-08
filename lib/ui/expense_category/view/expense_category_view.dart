@@ -35,7 +35,9 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
     final expenseCategory = viewModel.expenseCategory;
     final localization = AppLocalization.of(context)!;
     final amount = memoizedCalculateExpenseCategoryAmount(
-        expenseCategory.id, viewModel.state.expenseState.map);
+      expenseCategory.id,
+      viewModel.state.expenseState.map,
+    );
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -44,9 +46,10 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
       body: ScrollableListView(
         children: <Widget>[
           EntityHeader(
-              entity: expenseCategory,
-              label: localization.total,
-              value: formatNumber(amount, context)),
+            entity: expenseCategory,
+            label: localization.total,
+            value: formatNumber(amount, context),
+          ),
           ListDivider(),
           EntitiesListTile(
             entity: expenseCategory,
@@ -54,8 +57,9 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
             entityType: EntityType.expense,
             title: localization.expenses,
             subtitle: memoizedExpenseStatsForExpenseCategory(
-                    expenseCategory.id, state.expenseState.map)
-                .present(localization.active, localization.archived),
+              expenseCategory.id,
+              state.expenseState.map,
+            ).present(localization.active, localization.archived),
           ),
           if (state.company.isModuleEnabled(EntityType.transaction))
             EntitiesListTile(
@@ -64,8 +68,9 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
               entityType: EntityType.transaction,
               title: localization.transactions,
               subtitle: memoizedTransactionStatsForExpenseCategory(
-                      expenseCategory.id, state.transactionState.map)
-                  .present(localization.active, localization.archived),
+                expenseCategory.id,
+                state.transactionState.map,
+              ).present(localization.active, localization.archived),
             ),
         ],
       ),

@@ -38,30 +38,31 @@ enum TransactionReportFields {
   participant_name,
 }
 
-var memoizedTransactionReport = memo10((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, TransactionEntity> transactionMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, BankAccountEntity> bankAccountMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  StaticState staticState,
-) =>
-    transactionReport(
-      userCompany!,
-      reportsUIState,
-      transactionMap,
-      vendorMap,
-      expenseMap,
-      categoryMap,
-      invoiceMap,
-      bankAccountMap,
-      paymentMap,
-      staticState,
-    ));
+var memoizedTransactionReport = memo10(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, TransactionEntity> transactionMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> categoryMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    StaticState staticState,
+  ) => transactionReport(
+    userCompany!,
+    reportsUIState,
+    transactionMap,
+    vendorMap,
+    expenseMap,
+    categoryMap,
+    invoiceMap,
+    bankAccountMap,
+    paymentMap,
+    staticState,
+  ),
+);
 
 ReportResult transactionReport(
   UserCompanyEntity userCompany,
@@ -82,8 +83,8 @@ ReportResult transactionReport(
   final reportSettings = userCompany.settings.reportSettings;
   final transactionReportSettings =
       reportSettings.containsKey(kReportTransaction)
-          ? reportSettings[kReportTransaction]!
-          : ReportSettingsEntity();
+      ? reportSettings[kReportTransaction]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     TransactionReportFields.status,
@@ -96,10 +97,12 @@ ReportResult transactionReport(
   ];
 
   if (transactionReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(transactionReportSettings.columns
-        .map((e) => EnumUtils.fromString(TransactionReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      transactionReportSettings.columns
+          .map((e) => EnumUtils.fromString(TransactionReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -123,7 +126,8 @@ ReportResult transactionReport(
           break;
         case TransactionReportFields.accountType:
           value = toTitleCase(
-              bankAccountMap[transaction.bankAccountId]?.type ?? '');
+            bankAccountMap[transaction.bankAccountId]?.type ?? '',
+          );
           break;
         case TransactionReportFields.amount:
           value = transaction.amount;
@@ -178,8 +182,9 @@ ReportResult transactionReport(
           value = convertTimestampToDateString(transaction.createdAt);
           break;
         case TransactionReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(transaction.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(transaction.entityState);
           break;
         case TransactionReportFields.participant_name:
           value = transaction.participantName;
@@ -201,8 +206,12 @@ ReportResult transactionReport(
       if (value.runtimeType == bool) {
         row.add(transaction.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(transaction.getReportDouble(
-            value: value, currencyId: transaction.currencyId));
+        row.add(
+          transaction.getReportDouble(
+            value: value,
+            currencyId: transaction.currencyId,
+          ),
+        );
       } else {
         row.add(transaction.getReportString(value: value));
       }
@@ -215,15 +224,23 @@ ReportResult transactionReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, transactionReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) => sortReportTableRows(
+      rowA,
+      rowB,
+      transactionReportSettings,
+      selectedColumns,
+    )!,
+  );
 
   return ReportResult(
-    allColumns:
-        TransactionReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
+    allColumns: TransactionReportFields.values
+        .map((e) => EnumUtils.parse(e))
+        .toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

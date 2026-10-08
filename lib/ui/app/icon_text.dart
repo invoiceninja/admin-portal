@@ -27,11 +27,7 @@ class IconText extends StatelessWidget {
       mainAxisAlignment: alignment ?? MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Icon(
-          icon,
-          color: style?.color,
-          size: iconSize,
-        ),
+        Icon(icon, color: style?.color, size: iconSize),
         SizedBox(width: 10),
         Flexible(
           child: copyToClipboard
@@ -42,7 +38,8 @@ class IconText extends StatelessWidget {
                     style: style,
                     overflow: TextOverflow.ellipsis,
                     maxLines: maxLines,
-                  ))
+                  ),
+                )
               : Text(
                   text ?? '',
                   style: style,

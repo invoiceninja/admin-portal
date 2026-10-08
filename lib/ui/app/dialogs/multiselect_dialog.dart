@@ -73,8 +73,9 @@ class MultiSelectListState extends State<MultiSelectList> {
   @override
   void initState() {
     super.initState();
-    selected =
-        widget.selected.isNotEmpty ? widget.selected : widget.defaultSelected;
+    selected = widget.selected.isNotEmpty
+        ? widget.selected
+        : widget.defaultSelected;
     _controller = ScrollController();
   }
 
@@ -110,20 +111,24 @@ class MultiSelectListState extends State<MultiSelectList> {
     final state = StoreProvider.of<AppState>(context).state;
 
     final Map<String?, String?> options = {};
-    widget.options
-        .where((option) => !selected.contains(option))
-        .forEach((option) {
+    widget.options.where((option) => !selected.contains(option)).forEach((
+      option,
+    ) {
       final columnTitle = state.company.getCustomFieldLabel(
-          widget.entityType != null
-              ? option.replaceFirst('custom', widget.entityType!.snakeCase)
-              : option);
-      options[option] =
-          columnTitle.isEmpty ? lookupOption(option) : columnTitle;
+        widget.entityType != null
+            ? option.replaceFirst('custom', widget.entityType!.snakeCase)
+            : option,
+      );
+      options[option] = columnTitle.isEmpty
+          ? lookupOption(option)
+          : columnTitle;
     });
     final keys = options.keys.toList();
-    keys.sort((a, b) => lookupOption(a!)!
-        .toLowerCase()
-        .compareTo(lookupOption(b!)!.toLowerCase()));
+    keys.sort(
+      (a, b) => lookupOption(
+        a!,
+      )!.toLowerCase().compareTo(lookupOption(b!)!.toLowerCase()),
+    );
 
     final column = Container(
       width: isMobile(context) ? double.maxFinite : 400,
@@ -170,14 +175,19 @@ class MultiSelectListState extends State<MultiSelectList> {
                 children: selected.asMap().entries.map((entry) {
                   final option = entry.value;
                   final columnTitle = state.company.getCustomFieldLabel(
-                      widget.entityType != null
-                          ? option.replaceFirst(
-                              'custom', widget.entityType!.snakeCase)
-                          : option);
+                    widget.entityType != null
+                        ? option.replaceFirst(
+                            'custom',
+                            widget.entityType!.snakeCase,
+                          )
+                        : option,
+                  );
                   return Padding(
                     key: ValueKey('__${entry.key}_${entry.value}__'),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 3,
+                      horizontal: 10,
+                    ),
                     child: Row(
                       children: <Widget>[
                         IconButton(
@@ -233,17 +243,19 @@ class MultiSelectListState extends State<MultiSelectList> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   TextButton(
-                      child: Text(localization!.reset.toUpperCase()),
-                      onPressed: () {
-                        setState(
-                            () => selected = widget.defaultSelected.toList());
-                        if (widget.liveChanges) {
-                          widget.onSelected(selected);
-                        }
-                      }),
+                    child: Text(localization!.reset.toUpperCase()),
+                    onPressed: () {
+                      setState(
+                        () => selected = widget.defaultSelected.toList(),
+                      );
+                      if (widget.liveChanges) {
+                        widget.onSelected(selected);
+                      }
+                    },
+                  ),
                 ],
               ),
-            )
+            ),
         ],
       ),
     );
@@ -255,24 +267,27 @@ class MultiSelectListState extends State<MultiSelectList> {
             content: column,
             actions: [
               TextButton(
-                  child: Text(localization.reset.toUpperCase()),
-                  onPressed: () {
-                    setState(() => selected = widget.defaultSelected.toList());
-                    if (widget.liveChanges) {
-                      widget.onSelected(selected);
-                    }
-                  }),
-              TextButton(
-                  child: Text(localization.cancel.toUpperCase()),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-              TextButton(
-                  child: Text(localization.save.toUpperCase()),
-                  onPressed: () {
-                    Navigator.pop(context);
+                child: Text(localization.reset.toUpperCase()),
+                onPressed: () {
+                  setState(() => selected = widget.defaultSelected.toList());
+                  if (widget.liveChanges) {
                     widget.onSelected(selected);
-                  })
+                  }
+                },
+              ),
+              TextButton(
+                child: Text(localization.cancel.toUpperCase()),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: Text(localization.save.toUpperCase()),
+                onPressed: () {
+                  Navigator.pop(context);
+                  widget.onSelected(selected);
+                },
+              ),
             ],
           )
         : column;

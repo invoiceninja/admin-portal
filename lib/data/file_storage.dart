@@ -15,10 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:idb_shim/idb_browser.dart';
 
 class FileStorage {
-  const FileStorage(
-    this.tag,
-    this.getDirectory,
-  );
+  const FileStorage(this.tag, this.getDirectory);
 
   static const GZIP_TAG = '_gzip';
   static const STORE_NAME = 'invoiceninja';

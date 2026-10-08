@@ -19,10 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'payment_term_screen_vm.dart';
 
 class PaymentTermScreen extends StatelessWidget {
-  const PaymentTermScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PaymentTermScreen({Key? key, required this.viewModel})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsPaymentTerms';
 
@@ -42,7 +40,8 @@ class PaymentTermScreen extends StatelessWidget {
       onCancelSettingsIndex: 1,
       appBarTitle: ListFilter(
         key: ValueKey(
-            '__filter_${state.paymentTermListState.filterClearedAt}__'),
+          '__filter_${state.paymentTermListState.filterClearedAt}__',
+        ),
         entityType: EntityType.paymentTerm,
         entityIds: viewModel.paymentTermList,
         filter: state.paymentTermListState.filter,
@@ -66,9 +65,7 @@ class PaymentTermScreen extends StatelessWidget {
         onSelectedSortField: (value) {
           store.dispatch(SortPaymentTerms(value));
         },
-        sortFields: [
-          PaymentTermFields.name,
-        ],
+        sortFields: [PaymentTermFields.name],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPaymentTermsByState(state));
         },
@@ -88,19 +85,19 @@ class PaymentTermScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterPaymentTermsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMobile &&
+      floatingActionButton:
+          state.prefState.isMobile &&
               userCompany.canCreate(EntityType.paymentTerm)
           ? FloatingActionButton(
               heroTag: 'payment_term_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.paymentTerm);
+                  context: context,
+                  entityType: EntityType.paymentTerm,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newPaymentTerm,
             )
           : null,

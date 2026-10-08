@@ -23,9 +23,7 @@ class PaymentTermScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, PaymentTermScreenVM>(
       converter: PaymentTermScreenVM.fromStore,
       builder: (context, vm) {
-        return PaymentTermScreen(
-          viewModel: vm,
-        );
+        return PaymentTermScreen(viewModel: vm);
       },
     );
   }
@@ -52,15 +50,19 @@ class PaymentTermScreenVM {
     return PaymentTermScreenVM(
       paymentTermMap: state.paymentTermState.map,
       paymentTermList: memoizedFilteredPaymentTermList(
-          state.getUISelection(EntityType.paymentTerm),
-          state.paymentTermState.map,
-          state.paymentTermState.list,
-          state.paymentTermListState),
+        state.getUISelection(EntityType.paymentTerm),
+        state.paymentTermState.map,
+        state.paymentTermState.list,
+        state.paymentTermListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.paymentTermListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> paymentTerms,
-              EntityAction action) =>
-          handlePaymentTermAction(context, paymentTerms, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> paymentTerms,
+            EntityAction action,
+          ) => handlePaymentTermAction(context, paymentTerms, action),
     );
   }
 }

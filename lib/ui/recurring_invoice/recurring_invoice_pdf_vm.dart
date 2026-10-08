@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class RecurringInvoicePdfScreen extends StatelessWidget {
   const RecurringInvoicePdfScreen({Key? key, this.showAppBar = true})
-      : super(key: key);
+    : super(key: key);
 
   final bool showAppBar;
 
@@ -41,11 +41,7 @@ class RecurringInvoicePdfVM extends EntityPdfVM {
     AppState? state,
     InvoiceEntity? invoice,
     String? activityId,
-  }) : super(
-          state: state,
-          invoice: invoice,
-          activityId: activityId,
-        );
+  }) : super(state: state, invoice: invoice, activityId: activityId);
 
   factory RecurringInvoicePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;

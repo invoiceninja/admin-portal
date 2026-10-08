@@ -49,30 +49,31 @@ enum TaskReportFields {
   is_invoiced,
 }
 
-var memoizedTaskReport = memo10((
-  UserCompanyEntity? userCompany,
-  ReportsUIState reportsUIState,
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, GroupEntity> groupMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  StaticState staticState,
-) =>
-    taskReport(
-      userCompany!,
-      reportsUIState,
-      taskMap,
-      invoiceMap,
-      groupMap,
-      clientMap,
-      taskStatusMap,
-      userMap,
-      projectMap,
-      staticState,
-    ));
+var memoizedTaskReport = memo10(
+  (
+    UserCompanyEntity? userCompany,
+    ReportsUIState reportsUIState,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, GroupEntity> groupMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    StaticState staticState,
+  ) => taskReport(
+    userCompany!,
+    reportsUIState,
+    taskMap,
+    invoiceMap,
+    groupMap,
+    clientMap,
+    taskStatusMap,
+    userMap,
+    projectMap,
+    staticState,
+  ),
+);
 
 ReportResult taskReport(
   UserCompanyEntity userCompany,
@@ -107,10 +108,12 @@ ReportResult taskReport(
   ];
 
   if (taskReportSettings.columns.isNotEmpty) {
-    columns = BuiltList(taskReportSettings.columns
-        .map((e) => EnumUtils.fromString(TaskReportFields.values, e))
-        .nonNulls
-        .toList());
+    columns = BuiltList(
+      taskReportSettings.columns
+          .map((e) => EnumUtils.fromString(TaskReportFields.values, e))
+          .nonNulls
+          .toList(),
+    );
   } else {
     columns = BuiltList(defaultColumns);
   }
@@ -252,8 +255,9 @@ ReportResult taskReport(
           );
           break;
         case TaskReportFields.record_state:
-          value = AppLocalization.of(navigatorKey.currentContext!)!
-              .lookup(task.entityState);
+          value = AppLocalization.of(
+            navigatorKey.currentContext!,
+          )!.lookup(task.entityState);
           break;
         case TaskReportFields.is_invoiced:
           value = task.isInvoiced;
@@ -270,13 +274,18 @@ ReportResult taskReport(
       }
 
       if (column == TaskReportFields.duration) {
-        row.add(task.getReportDuration(
-            value: value, currencyId: client.currencyId));
+        row.add(
+          task.getReportDuration(value: value, currencyId: client.currencyId),
+        );
       } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(task.getReportDouble(
-            value: value, currencyId: client.settings.currencyId));
+        row.add(
+          task.getReportDouble(
+            value: value,
+            currencyId: client.settings.currencyId,
+          ),
+        );
       } else {
         row.add(task.getReportString(value: value));
       }
@@ -289,14 +298,17 @@ ReportResult taskReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, taskReportSettings, selectedColumns)!);
+  data.sort(
+    (rowA, rowB) =>
+        sortReportTableRows(rowA, rowB, taskReportSettings, selectedColumns)!,
+  );
 
   return ReportResult(
     allColumns: TaskReportFields.values.map((e) => EnumUtils.parse(e)).toList(),
     columns: selectedColumns,
-    defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+    defaultColumns: defaultColumns
+        .map((item) => EnumUtils.parse(item))
+        .toList(),
     data: data,
     entities: entities,
   );

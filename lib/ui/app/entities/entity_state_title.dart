@@ -17,10 +17,6 @@ class EntityStateTitle extends StatelessWidget {
       titleText = EntityPresenter().initialize(entity, context).title();
     }
 
-    return Text(
-      titleText!,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-    );
+    return Text(titleText!, maxLines: 2, overflow: TextOverflow.ellipsis);
   }
 }

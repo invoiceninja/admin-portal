@@ -31,35 +31,35 @@ class PurchaseOrderListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, PurchaseOrderListVM>(
-        converter: PurchaseOrderListVM.fromStore,
-        builder: (context, viewModel) {
-          return EntityList(
-              onClearMultiselect: viewModel.onClearMultiselect,
-              entityType: EntityType.purchaseOrder,
-              presenter: PurchaseOrderPresenter(),
-              state: viewModel.state,
-              entityList: viewModel.invoiceList,
-              tableColumns: viewModel.tableColumns,
-              onRefreshed: viewModel.onRefreshed,
-              onSortColumn: viewModel.onSortColumn,
-              itemBuilder: (BuildContext context, index) {
-                final state = viewModel.state;
-                final invoiceId = viewModel.invoiceList[index];
-                final invoice = viewModel.invoiceMap[invoiceId]!;
-                final listUIState =
-                    state.getListState(EntityType.purchaseOrder);
-                final isInMultiselect = listUIState.isInMultiselect();
+      converter: PurchaseOrderListVM.fromStore,
+      builder: (context, viewModel) {
+        return EntityList(
+          onClearMultiselect: viewModel.onClearMultiselect,
+          entityType: EntityType.purchaseOrder,
+          presenter: PurchaseOrderPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.invoiceList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final invoiceId = viewModel.invoiceList[index];
+            final invoice = viewModel.invoiceMap[invoiceId]!;
+            final listUIState = state.getListState(EntityType.purchaseOrder);
+            final isInMultiselect = listUIState.isInMultiselect();
 
-                return PurchaseOrderListItem(
-                  user: state.user,
-                  filter: viewModel.filter,
-                  purchaseOrder: invoice,
-                  vendor: state.vendorState.get(invoice.vendorId),
-                  isChecked:
-                      isInMultiselect && listUIState.isSelected(invoice.id),
-                );
-              });
-        });
+            return PurchaseOrderListItem(
+              user: state.user,
+              filter: viewModel.filter,
+              purchaseOrder: invoice,
+              vendor: state.vendorState.get(invoice.vendorId),
+              isChecked: isInMultiselect && listUIState.isSelected(invoice.id),
+            );
+          },
+        );
+      },
+    );
   }
 }
 
@@ -73,32 +73,33 @@ class PurchaseOrderListVM extends EntityListVM {
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
     required Function(BuildContext, List<InvoiceEntity>, EntityAction)
-        onEntityAction,
+    onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
     required Function onClearMultiselect,
   }) : super(
-          state: state,
-          invoiceList: invoiceList,
-          invoiceMap: invoiceMap,
-          clientMap: clientMap,
-          filter: filter,
-          isLoading: isLoading,
-          onRefreshed: onRefreshed,
-          tableColumns: tableColumns,
-          entityType: entityType,
-          onSortColumn: onSortColumn,
-          onClearMultiselect: onClearMultiselect,
-        );
+         state: state,
+         invoiceList: invoiceList,
+         invoiceMap: invoiceMap,
+         clientMap: clientMap,
+         filter: filter,
+         isLoading: isLoading,
+         onRefreshed: onRefreshed,
+         tableColumns: tableColumns,
+         entityType: entityType,
+         onSortColumn: onSortColumn,
+         onClearMultiselect: onClearMultiselect,
+       );
 
   static PurchaseOrderListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -108,23 +109,29 @@ class PurchaseOrderListVM extends EntityListVM {
     return PurchaseOrderListVM(
       state: state,
       invoiceList: memoizedFilteredPurchaseOrderList(
-          state.getUISelection(EntityType.purchaseOrder),
-          state.purchaseOrderState.map,
-          state.purchaseOrderState.list,
-          state.clientState.map,
-          state.vendorState.map,
-          state.purchaseOrderListState,
-          state.userState.map),
+        state.getUISelection(EntityType.purchaseOrder),
+        state.purchaseOrderState.map,
+        state.purchaseOrderState.list,
+        state.clientState.map,
+        state.vendorState.map,
+        state.purchaseOrderListState,
+        state.userState.map,
+      ),
       invoiceMap: state.purchaseOrderState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.purchaseOrderListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onEntityAction: (BuildContext context, List<BaseEntity> purchaseOrders,
-              EntityAction action) =>
-          handlePurchaseOrderAction(context, purchaseOrders, action),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.purchaseOrder) ??
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> purchaseOrders,
+            EntityAction action,
+          ) => handlePurchaseOrderAction(context, purchaseOrders, action),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(
+            EntityType.purchaseOrder,
+          ) ??
           PurchaseOrderPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.purchaseOrder,
       onSortColumn: (field) => store.dispatch(SortPurchaseOrders(field)),

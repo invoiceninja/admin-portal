@@ -46,35 +46,50 @@ import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
     return AppState(
-            prefState: state.prefState,
-            isWhiteLabeled: state.isWhiteLabeled,
-            reportErrors: state.account.reportErrors)
-        .rebuild((b) => b
-          ..authState.replace(state.authState.rebuild((b) => b
-            ..isAuthenticated = false
-            ..lastEnteredPasswordAt = 0))
-          ..isTesting = state.isTesting);
+      prefState: state.prefState,
+      isWhiteLabeled: state.isWhiteLabeled,
+      reportErrors: state.account.reportErrors,
+    ).rebuild(
+      (b) => b
+        ..authState.replace(
+          state.authState.rebuild(
+            (b) => b
+              ..isAuthenticated = false
+              ..lastEnteredPasswordAt = 0,
+          ),
+        )
+        ..isTesting = state.isTesting,
+    );
   } else if (action is LoadStateSuccess) {
-    return action.state.rebuild((b) => b
-      ..isLoading = false
-      ..isSaving = false);
+    return action.state.rebuild(
+      (b) => b
+        ..isLoading = false
+        ..isSaving = false,
+    );
   } else if (action is ClearData) {
-    return state.rebuild((b) => b
-      ..userCompanyStates[state.uiState.selectedCompanyIndex] =
-          UserCompanyState(state.account.reportErrors));
+    return state.rebuild(
+      (b) => b
+        ..userCompanyStates[state.uiState.selectedCompanyIndex] =
+            UserCompanyState(state.account.reportErrors),
+    );
   }
 
-  return state.rebuild((b) => b
-    ..isLoading = loadingReducer(state.isLoading, action)
-    ..isSaving = savingReducer(state.isSaving, action)
-    ..lastError = lastErrorReducer(state.lastError, action)
-    ..authState.replace(authReducer(state.authState, action))
-    ..staticState.replace(staticReducer(state.staticState, action))
-    ..userCompanyStates[state.uiState.selectedCompanyIndex] = companyReducer(
-        state.userCompanyStates[state.uiState.selectedCompanyIndex], action)
-    ..uiState.replace(uiReducer(state.uiState, action))
-    ..prefState
-        .replace(prefReducer(state.prefState, action, state.company.id)));
+  return state.rebuild(
+    (b) => b
+      ..isLoading = loadingReducer(state.isLoading, action)
+      ..isSaving = savingReducer(state.isSaving, action)
+      ..lastError = lastErrorReducer(state.lastError, action)
+      ..authState.replace(authReducer(state.authState, action))
+      ..staticState.replace(staticReducer(state.staticState, action))
+      ..userCompanyStates[state.uiState.selectedCompanyIndex] = companyReducer(
+        state.userCompanyStates[state.uiState.selectedCompanyIndex],
+        action,
+      )
+      ..uiState.replace(uiReducer(state.uiState, action))
+      ..prefState.replace(
+        prefReducer(state.prefState, action, state.company.id),
+      ),
+  );
 }
 
 final lastErrorReducer = combineReducers<String>([

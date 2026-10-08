@@ -22,10 +22,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermViewScreen extends StatelessWidget {
-  const PaymentTermViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const PaymentTermViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
   final bool isFilter;
   static const String route = '/$kSettings/$kSettingsPaymentTermView';
 
@@ -36,9 +34,7 @@ class PaymentTermViewScreen extends StatelessWidget {
         return PaymentTermViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return PaymentTermView(
-          viewModel: vm,
-        );
+        return PaymentTermView(viewModel: vm);
       },
     );
   }
@@ -61,13 +57,15 @@ class PaymentTermViewVM {
     final state = store.state;
     final paymentTerm =
         state.paymentTermState.map[state.paymentTermUIState.selectedId] ??
-            PaymentTermEntity(id: state.paymentTermUIState.selectedId);
+        PaymentTermEntity(id: state.paymentTermUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(
-          LoadPaymentTerm(completer: completer, paymentTermId: paymentTerm.id));
+        LoadPaymentTerm(completer: completer, paymentTermId: paymentTerm.id),
+      );
       return completer.future;
     }
 

@@ -27,10 +27,7 @@ class ViewGroupList implements PersistUI {
 }
 
 class ViewGroup implements PersistUI, PersistPrefs {
-  ViewGroup({
-    required this.groupId,
-    this.force = false,
-  });
+  ViewGroup({required this.groupId, this.force = false});
 
   final String? groupId;
   final bool force;
@@ -219,7 +216,10 @@ class FilterGroupsByState implements PersistUI {
 }
 
 void handleGroupAction(
-    BuildContext? context, List<BaseEntity> groups, EntityAction? action) {
+  BuildContext? context,
+  List<BaseEntity> groups,
+  EntityAction? action,
+) {
   if (groups.isEmpty) {
     return;
   }
@@ -235,44 +235,50 @@ void handleGroupAction(
       editEntity(entity: group);
       break;
     case EntityAction.settings:
-      store.dispatch(ViewSettings(
-        company: store.state.company,
-        user: store.state.user,
-        group: group as GroupEntity?,
-        section: state.prefState.isDesktop ? kSettingsLocalization : null,
-        clearFilter: true,
-      ));
+      store.dispatch(
+        ViewSettings(
+          company: store.state.company,
+          user: store.state.user,
+          group: group as GroupEntity?,
+          section: state.prefState.isDesktop ? kSettingsLocalization : null,
+          clearFilter: true,
+        ),
+      );
       break;
     case EntityAction.newClient:
       createEntity(
-          entity: ClientEntity().rebuild((b) => b..groupId = group.id));
+        entity: ClientEntity().rebuild((b) => b..groupId = group.id),
+      );
       break;
     case EntityAction.restore:
       final message = groupIds.length > 1
           ? localization!.restoredGroups
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', groupIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', groupIds.length.toString())
           : localization!.restoredGroup;
       store.dispatch(
-          RestoreGroupRequest(snackBarCompleter<Null>(message), groupIds));
+        RestoreGroupRequest(snackBarCompleter<Null>(message), groupIds),
+      );
       break;
     case EntityAction.archive:
       final message = groupIds.length > 1
           ? localization!.archivedGroups
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', groupIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', groupIds.length.toString())
           : localization!.archivedGroup;
       store.dispatch(
-          ArchiveGroupRequest(snackBarCompleter<Null>(message), groupIds));
+        ArchiveGroupRequest(snackBarCompleter<Null>(message), groupIds),
+      );
       break;
     case EntityAction.delete:
       final message = groupIds.length > 1
           ? localization!.deletedGroups
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', groupIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', groupIds.length.toString())
           : localization!.deletedGroup;
       store.dispatch(
-          DeleteGroupRequest(snackBarCompleter<Null>(message), groupIds));
+        DeleteGroupRequest(snackBarCompleter<Null>(message), groupIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {
@@ -292,9 +298,7 @@ void handleGroupAction(
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [group],
-      );
+      showEntityActionsDialog(entities: [group]);
       break;
   }
 }

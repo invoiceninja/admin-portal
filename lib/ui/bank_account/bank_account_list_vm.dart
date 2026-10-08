@@ -25,29 +25,30 @@ class BankAccountListBuilder extends StatelessWidget {
       converter: BankAccountListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.bankAccount,
-            presenter: BankAccountPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.bankAccountList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            onClearMultiselect: viewModel.onClearMultielsect,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final bankAccountId = viewModel.bankAccountList[index];
-              final bankAccount = viewModel.bankAccountMap[bankAccountId]!;
-              final listState = state.getListState(EntityType.bankAccount);
-              final isInMultiselect = listState.isInMultiselect();
+          entityType: EntityType.bankAccount,
+          presenter: BankAccountPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.bankAccountList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          onClearMultiselect: viewModel.onClearMultielsect,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final bankAccountId = viewModel.bankAccountList[index];
+            final bankAccount = viewModel.bankAccountMap[bankAccountId]!;
+            final listState = state.getListState(EntityType.bankAccount);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return BankAccountListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                bankAccount: bankAccount,
-                isChecked:
-                    isInMultiselect && listState.isSelected(bankAccount.id),
-              );
-            });
+            return BankAccountListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              bankAccount: bankAccount,
+              isChecked:
+                  isInMultiselect && listState.isSelected(bankAccount.id),
+            );
+          },
+        );
       },
     );
   }
@@ -74,8 +75,9 @@ class BankAccountListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -87,20 +89,24 @@ class BankAccountListVM {
       userCompany: state.userCompany,
       listState: state.bankAccountListState,
       bankAccountList: memoizedFilteredBankAccountList(
-          state.getUISelection(EntityType.bankAccount),
-          state.bankAccountState.map,
-          state.bankAccountState.list,
-          state.bankAccountListState),
+        state.getUISelection(EntityType.bankAccount),
+        state.bankAccountState.map,
+        state.bankAccountState.list,
+        state.bankAccountListState,
+      ),
       bankAccountMap: state.bankAccountState.map,
       isLoading: state.isLoading,
       filter: state.bankAccountUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> bankAccounts,
-              EntityAction action) =>
-          handleBankAccountAction(context, bankAccounts, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> bankAccounts,
+            EntityAction action,
+          ) => handleBankAccountAction(context, bankAccounts, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.bankAccount) ??
-              BankAccountPresenter.getDefaultTableFields(state.userCompany),
+          BankAccountPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortBankAccounts(field)),
       onClearMultielsect: () => store.dispatch(ClearBankAccountMultiselect()),
     );

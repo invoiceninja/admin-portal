@@ -25,18 +25,18 @@ class ViewCompanyGatewayList implements PersistUI {
 }
 
 class ViewCompanyGateway implements PersistUI, PersistPrefs {
-  ViewCompanyGateway({
-    required this.companyGatewayId,
-    this.force = false,
-  });
+  ViewCompanyGateway({required this.companyGatewayId, this.force = false});
 
   final String? companyGatewayId;
   final bool force;
 }
 
 class EditCompanyGateway implements PersistUI, PersistPrefs {
-  EditCompanyGateway(
-      {required this.companyGateway, this.completer, this.force = false});
+  EditCompanyGateway({
+    required this.companyGateway,
+    this.completer,
+    this.force = false,
+  });
 
   final CompanyGatewayEntity companyGateway;
   final Completer? completer;
@@ -263,8 +263,11 @@ class FilterCompanyGatewaysByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleCompanyGatewayAction(BuildContext? context,
-    List<BaseEntity> companyGateways, EntityAction? action) {
+void handleCompanyGatewayAction(
+  BuildContext? context,
+  List<BaseEntity> companyGateways,
+  EntityAction? action,
+) {
   if (companyGateways.isEmpty) {
     return;
   }
@@ -272,8 +275,9 @@ void handleCompanyGatewayAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final companyGateway = companyGateways.first;
-  final companyGatewayIds =
-      companyGateways.map((companyGateway) => companyGateway.id).toList();
+  final companyGatewayIds = companyGateways
+      .map((companyGateway) => companyGateway.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -282,53 +286,67 @@ void handleCompanyGatewayAction(BuildContext? context,
     case EntityAction.restore:
       final message = companyGatewayIds.length > 1
           ? localization!.restoredCompanyGateways
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', companyGatewayIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.restoredCompanyGateway;
-      store.dispatch(RestoreCompanyGatewayRequest(
-          snackBarCompleter<Null>(message), companyGatewayIds));
+      store.dispatch(
+        RestoreCompanyGatewayRequest(
+          snackBarCompleter<Null>(message),
+          companyGatewayIds,
+        ),
+      );
       break;
     case EntityAction.archive:
       final message = companyGatewayIds.length > 1
           ? localization!.archivedCompanyGateways
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', companyGatewayIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.archivedCompanyGateway;
-      store.dispatch(ArchiveCompanyGatewayRequest(
-          snackBarCompleter<Null>(message), companyGatewayIds));
+      store.dispatch(
+        ArchiveCompanyGatewayRequest(
+          snackBarCompleter<Null>(message),
+          companyGatewayIds,
+        ),
+      );
       break;
     case EntityAction.delete:
       final message = companyGatewayIds.length > 1
           ? localization!.deletedCompanyGateways
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', companyGatewayIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.deletedCompanyGateway;
-      store.dispatch(DeleteCompanyGatewayRequest(
-          snackBarCompleter<Null>(message), companyGatewayIds));
+      store.dispatch(
+        DeleteCompanyGatewayRequest(
+          snackBarCompleter<Null>(message),
+          companyGatewayIds,
+        ),
+      );
       break;
     case EntityAction.disconnect:
-      final completer =
-          snackBarCompleter<Null>(localization!.disconnectedGateway);
+      final completer = snackBarCompleter<Null>(
+        localization!.disconnectedGateway,
+      );
       completer.future.then<Null>((_) {
         store.dispatch(RefreshData());
       });
       confirmCallback(
-          context: context,
-          callback: (_) {
-            passwordCallback(
-              context: context,
-              callback: (password, idToken) {
-                store.dispatch(
-                  DisconnectCompanyGatewayRequest(
-                    completer: completer,
-                    companyGatewayId: companyGateway.id,
-                    password: password,
-                    idToken: idToken,
-                  ),
-                );
-              },
-            );
-          });
+        context: context,
+        callback: (_) {
+          passwordCallback(
+            context: context,
+            callback: (password, idToken) {
+              store.dispatch(
+                DisconnectCompanyGatewayRequest(
+                  completer: completer,
+                  companyGatewayId: companyGateway.id,
+                  password: password,
+                  idToken: idToken,
+                ),
+              );
+            },
+          );
+        },
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.companyGatewayListState.isInMultiselect()) {
@@ -340,20 +358,21 @@ void handleCompanyGatewayAction(BuildContext? context,
       }
 
       for (final companyGateway in companyGateways) {
-        if (!store.state.companyGatewayListState
-            .isSelected(companyGateway.id)) {
-          store
-              .dispatch(AddToCompanyGatewayMultiselect(entity: companyGateway));
+        if (!store.state.companyGatewayListState.isSelected(
+          companyGateway.id,
+        )) {
+          store.dispatch(
+            AddToCompanyGatewayMultiselect(entity: companyGateway),
+          );
         } else {
           store.dispatch(
-              RemoveFromCompanyGatewayMultiselect(entity: companyGateway));
+            RemoveFromCompanyGatewayMultiselect(entity: companyGateway),
+          );
         }
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [companyGateway],
-      );
+      showEntityActionsDialog(entities: [companyGateway]);
       break;
   }
 }

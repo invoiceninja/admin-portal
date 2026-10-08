@@ -80,7 +80,8 @@ class InvoicePresenter extends EntityPresenter {
         return EntityStatusChip(entity: invoice, showState: true);
       case InvoiceFields.number:
         return Text(
-            invoice.number.isEmpty ? localization!.pending : invoice.number);
+          invoice.number.isEmpty ? localization!.pending : invoice.number,
+        );
       case InvoiceFields.client:
         return LinkTextRelatedEntity(entity: client, relation: invoice);
       case InvoiceFields.project:
@@ -94,12 +95,18 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.lastSentDate:
         return Text(formatDate(invoice.lastSentDate, context));
       case InvoiceFields.nextSendDate:
-        return Text(invoice.isPaid
-            ? ''
-            : invoice.nextSendDatetime.isNotEmpty
-                ? formatDate(invoice.nextSendDatetime, context,
-                    showTime: true, showSeconds: false)
-                : formatDate(invoice.nextSendDate, context));
+        return Text(
+          invoice.isPaid
+              ? ''
+              : invoice.nextSendDatetime.isNotEmpty
+              ? formatDate(
+                  invoice.nextSendDatetime,
+                  context,
+                  showTime: true,
+                  showSeconds: false,
+                )
+              : formatDate(invoice.nextSendDate, context),
+        );
       case InvoiceFields.reminder1Sent:
         return Text(formatDate(invoice.reminder1Sent, context));
       case InvoiceFields.reminder2Sent:
@@ -111,14 +118,20 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(invoice.amount, context,
-              clientId: invoice.clientId)!),
+          child: Text(
+            formatNumber(invoice.amount, context, clientId: invoice.clientId)!,
+          ),
         );
       case InvoiceFields.balance:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(invoice.balanceOrAmount, context,
-              clientId: invoice.clientId)!),
+          child: Text(
+            formatNumber(
+              invoice.balanceOrAmount,
+              context,
+              clientId: invoice.clientId,
+            )!,
+          ),
         );
       case InvoiceFields.dueDate:
         return Text(formatDate(invoice.dueDate, context));
@@ -135,27 +148,44 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.privateNotes:
         return TableTooltip(message: invoice.privateNotes);
       case InvoiceFields.discount:
-        return Text(invoice.isAmountDiscount
-            ? formatNumber(invoice.discount, context,
-                formatNumberType: FormatNumberType.money,
-                clientId: invoice.clientId)!
-            : formatNumber(invoice.discount, context,
-                formatNumberType: FormatNumberType.percent)!);
+        return Text(
+          invoice.isAmountDiscount
+              ? formatNumber(
+                  invoice.discount,
+                  context,
+                  formatNumberType: FormatNumberType.money,
+                  clientId: invoice.clientId,
+                )!
+              : formatNumber(
+                  invoice.discount,
+                  context,
+                  formatNumberType: FormatNumberType.percent,
+                )!,
+        );
       case InvoiceFields.poNumber:
         return Text(invoice.poNumber);
       case InvoiceFields.documents:
         return Text('${invoice.documents.length}');
       case InvoiceFields.taxAmount:
-        return Text(formatNumber(invoice.taxAmount, context,
-            clientId: invoice.clientId)!);
+        return Text(
+          formatNumber(invoice.taxAmount, context, clientId: invoice.clientId)!,
+        );
       case InvoiceFields.exchangeRate:
-        return Text(formatNumber(invoice.exchangeRate, context,
-            formatNumberType: FormatNumberType.double)!);
+        return Text(
+          formatNumber(
+            invoice.exchangeRate,
+            context,
+            formatNumberType: FormatNumberType.double,
+          )!,
+        );
       case InvoiceFields.isViewed:
         return Text(invoice.isViewed ? localization!.yes : localization!.no);
       case InvoiceFields.autoBillEnabled:
-        return Text(localization!.lookup(
-            invoice.autoBillEnabled ? localization.yes : localization.no));
+        return Text(
+          localization!.lookup(
+            invoice.autoBillEnabled ? localization.yes : localization.no,
+          ),
+        );
       case InvoiceFields.clientState:
         return Text(client.state);
       case InvoiceFields.clientCity:
@@ -167,7 +197,9 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.contactName:
       case InvoiceFields.contactEmail:
         final contact = invoiceContactSelector(
-            invoice, state.clientState.get(invoice.clientId));
+          invoice,
+          state.clientState.get(invoice.clientId),
+        );
         if (contact == null) {
           return SizedBox();
         }
@@ -184,14 +216,19 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.partialDueDate:
         return Text(formatDate(invoice.partialDueDate, context));
       case InvoiceFields.quote:
-        final quote =
-            memoizedInvoiceQuoteSelector(invoice, state.quoteState.map);
+        final quote = memoizedInvoiceQuoteSelector(
+          invoice,
+          state.quoteState.map,
+        );
         return LinkTextRelatedEntity(entity: quote, relation: invoice);
       case InvoiceFields.recurringInvoice:
-        final recurringInvoice =
-            state.recurringInvoiceState.get(invoice.recurringId!);
+        final recurringInvoice = state.recurringInvoiceState.get(
+          invoice.recurringId!,
+        );
         return LinkTextRelatedEntity(
-            entity: recurringInvoice, relation: invoice);
+          entity: recurringInvoice,
+          relation: invoice,
+        );
       case InvoiceFields.lastSentTemplate:
         if (invoice.reminderLastSent!.isNotEmpty &&
             invoice.reminderLastSent != invoice.reminder3Sent) {

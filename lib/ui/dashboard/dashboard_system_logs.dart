@@ -6,10 +6,8 @@ import 'package:invoiceninja_flutter/ui/app/system_log_viewer.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 
 class DashboardSystemLogs extends StatelessWidget {
-  const DashboardSystemLogs({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const DashboardSystemLogs({Key? key, required this.viewModel})
+    : super(key: key);
 
   final DashboardVM viewModel;
 
@@ -18,8 +16,6 @@ class DashboardSystemLogs extends StatelessWidget {
     final company = viewModel.state.company;
     final systemLogs = company.systemLogs;
 
-    return SystemLogViewer(
-      systemLogs: systemLogs,
-    );
+    return SystemLogViewer(systemLogs: systemLogs);
   }
 }

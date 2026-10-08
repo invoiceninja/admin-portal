@@ -19,19 +19,27 @@ class _$BankAccountStateSerializer
   final String wireName = 'BankAccountState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, BankAccountState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    BankAccountState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(BankAccountEntity)
-          ])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(BankAccountEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +47,10 @@ class _$BankAccountStateSerializer
 
   @override
   BankAccountState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = BankAccountStateBuilder();
 
     final iterator = serialized.iterator;
@@ -50,17 +60,26 @@ class _$BankAccountStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(BankAccountEntity)
-              ]))!);
+                const FullType(BankAccountEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -78,38 +97,51 @@ class _$BankAccountUIStateSerializer
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, BankAccountUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    BankAccountUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(BankAccountEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(BankAccountEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   BankAccountUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = BankAccountUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -119,21 +151,38 @@ class _$BankAccountUIStateSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(BankAccountEntity))!
-              as BankAccountEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BankAccountEntity),
+                )!
+                as BankAccountEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -148,9 +197,9 @@ class _$BankAccountState extends BankAccountState {
   @override
   final BuiltList<String> list;
 
-  factory _$BankAccountState(
-          [void Function(BankAccountStateBuilder)? updates]) =>
-      (BankAccountStateBuilder()..update(updates))._build();
+  factory _$BankAccountState([
+    void Function(BankAccountStateBuilder)? updates,
+  ]) => (BankAccountStateBuilder()..update(updates))._build();
 
   _$BankAccountState._({required this.map, required this.list}) : super._();
   @override
@@ -228,11 +277,8 @@ class BankAccountStateBuilder
   _$BankAccountState _build() {
     _$BankAccountState _$result;
     try {
-      _$result = _$v ??
-          _$BankAccountState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result =
+          _$v ?? _$BankAccountState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -242,7 +288,10 @@ class BankAccountStateBuilder
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'BankAccountState', _$failedField, e.toString());
+          r'BankAccountState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -267,23 +316,23 @@ class _$BankAccountUIState extends BankAccountUIState {
   @override
   final Completer<Null>? cancelCompleter;
 
-  factory _$BankAccountUIState(
-          [void Function(BankAccountUIStateBuilder)? updates]) =>
-      (BankAccountUIStateBuilder()..update(updates))._build();
+  factory _$BankAccountUIState([
+    void Function(BankAccountUIStateBuilder)? updates,
+  ]) => (BankAccountUIStateBuilder()..update(updates))._build();
 
-  _$BankAccountUIState._(
-      {this.editing,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$BankAccountUIState._({
+    this.editing,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   BankAccountUIState rebuild(
-          void Function(BankAccountUIStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(BankAccountUIStateBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   BankAccountUIStateBuilder toBuilder() =>
@@ -403,14 +452,18 @@ class BankAccountUIStateBuilder
   _$BankAccountUIState _build() {
     _$BankAccountUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$BankAccountUIState._(
             editing: _editing?.build(),
             listUIState: listUIState.build(),
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'BankAccountUIState', 'tabIndex'),
+              tabIndex,
+              r'BankAccountUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -423,7 +476,10 @@ class BankAccountUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'BankAccountUIState', _$failedField, e.toString());
+          r'BankAccountUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

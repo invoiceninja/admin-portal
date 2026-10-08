@@ -13,19 +13,20 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class UserRepository {
-  const UserRepository({
-    this.webClient = const WebClient(),
-  });
+  const UserRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<UserEntity> loadItem(Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/users/$entityId?include=company_user',
-        credentials.token);
+      '${credentials.url}/users/$entityId?include=company_user',
+      credentials.token,
+    );
 
-    final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response)!;
+    final UserItemResponse userResponse = serializers.deserializeWith(
+      UserItemResponse.serializer,
+      response,
+    )!;
 
     return userResponse.data;
   }
@@ -35,8 +36,10 @@ class UserRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response)!;
+    final UserListResponse userResponse = serializers.deserializeWith(
+      UserListResponse.serializer,
+      response,
+    )!;
 
     return userResponse.data;
   }
@@ -52,7 +55,8 @@ class UserRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url =
+        credentials.url +
         '/users/bulk?per_page=$kMaxEntitiesPerBulkAction&include=company_user';
     final dynamic response = await webClient.post(
       url,
@@ -62,8 +66,10 @@ class UserRepository {
       idToken: idToken,
     );
 
-    final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response)!;
+    final UserListResponse userResponse = serializers.deserializeWith(
+      UserListResponse.serializer,
+      response,
+    )!;
 
     return userResponse.data.toList();
   }
@@ -82,8 +88,10 @@ class UserRepository {
       idToken: idToken,
     );
 
-    final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response)!;
+    final UserListResponse userResponse = serializers.deserializeWith(
+      UserListResponse.serializer,
+      response,
+    )!;
 
     return userResponse.data.toList();
   }
@@ -141,8 +149,10 @@ class UserRepository {
       );
     }
 
-    final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response)!;
+    final UserItemResponse userResponse = serializers.deserializeWith(
+      UserItemResponse.serializer,
+      response,
+    )!;
 
     return userResponse.data;
   }

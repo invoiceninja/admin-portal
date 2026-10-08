@@ -21,9 +21,7 @@ class PaymentScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, PaymentScreenVM>(
       converter: PaymentScreenVM.fromStore,
       builder: (context, vm) {
-        return PaymentScreen(
-          viewModel: vm,
-        );
+        return PaymentScreen(viewModel: vm);
       },
     );
   }
@@ -48,14 +46,15 @@ class PaymentScreenVM {
     return PaymentScreenVM(
       paymentMap: state.paymentState.map,
       paymentList: memoizedFilteredPaymentList(
-          state.getUISelection(EntityType.payment),
-          state.paymentState.map,
-          state.paymentState.list,
-          state.invoiceState.map,
-          state.clientState.map,
-          state.userState.map,
-          state.staticState.paymentTypeMap,
-          state.paymentListState),
+        state.getUISelection(EntityType.payment),
+        state.paymentState.map,
+        state.paymentState.list,
+        state.invoiceState.map,
+        state.clientState.map,
+        state.userState.map,
+        state.staticState.paymentTypeMap,
+        state.paymentListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.paymentListState.isInMultiselect(),
     );

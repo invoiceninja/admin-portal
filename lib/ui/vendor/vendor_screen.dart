@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorScreen extends StatelessWidget {
-  const VendorScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const VendorScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/vendor';
 
@@ -63,14 +60,22 @@ class VendorScreen extends StatelessWidget {
         tableColumns: VendorPresenter.getAllTableFields(userCompany),
         defaultTableColumns: VendorPresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) => store.dispatch(SortVendors(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.vendor1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.vendor2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.vendor3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.vendor4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.vendor1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.vendor2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.vendor3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.vendor4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterVendorsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -95,19 +100,19 @@ class VendorScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.vendor)
           ? FloatingActionButton(
               heroTag: 'vendor_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.vendor);
+                  context: context,
+                  entityType: EntityType.vendor,
+                );
               },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newVendor,
             )
           : null,

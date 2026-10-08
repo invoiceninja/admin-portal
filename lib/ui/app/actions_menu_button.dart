@@ -47,31 +47,30 @@ class ActionMenuButton extends StatelessWidget {
       if (action == null) {
         actions.add(PopupMenuDivider());
       } else {
-        actions.add(PopupMenuItem<EntityAction>(
-          value: action,
-          child: Row(
-            children: <Widget>[
-              Icon(
-                getEntityActionIcon(action),
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-              SizedBox(width: 16.0),
-              Expanded(
-                child: Text(
-                    AppLocalization.of(context)!.lookup(action.toString())),
-              ),
-            ],
+        actions.add(
+          PopupMenuItem<EntityAction>(
+            value: action,
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  getEntityActionIcon(action),
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                SizedBox(width: 16.0),
+                Expanded(
+                  child: Text(
+                    AppLocalization.of(context)!.lookup(action.toString()),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ));
+        );
       }
     });
 
     return PopupMenuButton<EntityAction>(
-      icon: Icon(
-        iconData ?? Icons.more_vert,
-        size: iconSize,
-        color: color,
-      ),
+      icon: Icon(iconData ?? Icons.more_vert, size: iconSize, color: color),
       itemBuilder: (BuildContext context) => actions,
       onSelected: (EntityAction action) {
         onSelected(context, action);
@@ -100,9 +99,10 @@ class ViewActionMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionMenuButton(
-        entity: entity,
-        onSelected: onSelected,
-        isSaving: isSaving,
-        entityActions: entityActions);
+      entity: entity,
+      onSelected: onSelected,
+      isSaving: isSaving,
+      entityActions: entityActions,
+    );
   }
 }

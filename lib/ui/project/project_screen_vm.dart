@@ -21,9 +21,7 @@ class ProjectScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ProjectScreenVM>(
       converter: ProjectScreenVM.fromStore,
       builder: (context, vm) {
-        return ProjectScreen(
-          viewModel: vm,
-        );
+        return ProjectScreen(viewModel: vm);
       },
     );
   }

@@ -16,25 +16,38 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
   final String wireName = 'QuoteState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, QuoteState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    QuoteState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'map',
-      serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(InvoiceEntity)])),
+      serializers.serialize(
+        object.map,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType(String),
+          const FullType(InvoiceEntity),
+        ]),
+      ),
       'list',
-      serializers.serialize(object.list,
-          specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+      serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(String),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  QuoteState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  QuoteState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = QuoteStateBuilder();
 
     final iterator = serialized.iterator;
@@ -44,17 +57,26 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'map':
-          result.map.replace(serializers.deserialize(value,
+          result.map.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(InvoiceEntity)
-              ]))!);
+                const FullType(InvoiceEntity),
+              ]),
+            )!,
+          );
           break;
         case 'list':
-          result.list.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.list.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(String),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -70,38 +92,52 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
   final String wireName = 'QuoteUIState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, QuoteUIState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    QuoteUIState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'listUIState',
-      serializers.serialize(object.listUIState,
-          specifiedType: const FullType(ListUIState)),
+      serializers.serialize(
+        object.listUIState,
+        specifiedType: const FullType(ListUIState),
+      ),
       'tabIndex',
-      serializers.serialize(object.tabIndex,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.tabIndex,
+        specifiedType: const FullType(int),
+      ),
     ];
     Object? value;
     value = object.editing;
     if (value != null) {
       result
         ..add('editing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(InvoiceEntity)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(InvoiceEntity),
+          ),
+        );
     }
     value = object.selectedId;
     if (value != null) {
       result
         ..add('selectedId')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   QuoteUIState deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = QuoteUIStateBuilder();
 
     final iterator = serialized.iterator;
@@ -111,20 +147,38 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'editing':
-          result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity))! as InvoiceEntity);
+          result.editing.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(InvoiceEntity),
+                )!
+                as InvoiceEntity,
+          );
           break;
         case 'listUIState':
-          result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState))! as ListUIState);
+          result.listUIState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(ListUIState),
+                )!
+                as ListUIState,
+          );
           break;
         case 'selectedId':
-          result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.selectedId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'tabIndex':
-          result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.tabIndex =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
       }
     }
@@ -216,11 +270,7 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
   _$QuoteState _build() {
     _$QuoteState _$result;
     try {
-      _$result = _$v ??
-          _$QuoteState._(
-            map: map.build(),
-            list: list.build(),
-          );
+      _$result = _$v ?? _$QuoteState._(map: map.build(), list: list.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -230,7 +280,10 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
         list.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'QuoteState', _$failedField, e.toString());
+          r'QuoteState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -262,17 +315,17 @@ class _$QuoteUIState extends QuoteUIState {
   factory _$QuoteUIState([void Function(QuoteUIStateBuilder)? updates]) =>
       (QuoteUIStateBuilder()..update(updates))._build();
 
-  _$QuoteUIState._(
-      {this.editing,
-      this.editingItemIndex,
-      this.historyActivityId,
-      required this.listUIState,
-      this.selectedId,
-      this.forceSelected,
-      required this.tabIndex,
-      this.saveCompleter,
-      this.cancelCompleter})
-      : super._();
+  _$QuoteUIState._({
+    this.editing,
+    this.editingItemIndex,
+    this.historyActivityId,
+    required this.listUIState,
+    this.selectedId,
+    this.forceSelected,
+    required this.tabIndex,
+    this.saveCompleter,
+    this.cancelCompleter,
+  }) : super._();
   @override
   QuoteUIState rebuild(void Function(QuoteUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -412,7 +465,8 @@ class QuoteUIStateBuilder
   _$QuoteUIState _build() {
     _$QuoteUIState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$QuoteUIState._(
             editing: _editing?.build(),
             editingItemIndex: editingItemIndex,
@@ -421,7 +475,10 @@ class QuoteUIStateBuilder
             selectedId: selectedId,
             forceSelected: forceSelected,
             tabIndex: BuiltValueNullFieldError.checkNotNull(
-                tabIndex, r'QuoteUIState', 'tabIndex'),
+              tabIndex,
+              r'QuoteUIState',
+              'tabIndex',
+            ),
             saveCompleter: saveCompleter,
             cancelCompleter: cancelCompleter,
           );
@@ -435,7 +492,10 @@ class QuoteUIStateBuilder
         listUIState.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'QuoteUIState', _$failedField, e.toString());
+          r'QuoteUIState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

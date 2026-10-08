@@ -14,11 +14,8 @@ import 'package:flutter/material.dart';
 //import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class WebSocketRefresh extends StatefulWidget {
-  const WebSocketRefresh({
-    Key? key,
-    this.child,
-    this.companyId,
-  }) : super(key: key);
+  const WebSocketRefresh({Key? key, this.child, this.companyId})
+    : super(key: key);
 
   final Widget? child;
   final String? companyId;

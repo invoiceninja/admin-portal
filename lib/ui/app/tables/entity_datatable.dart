@@ -19,15 +19,16 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityDataTableSource extends DataTableSource {
-  EntityDataTableSource(
-      {required this.context,
-      required this.editingId,
-      required this.entityList,
-      required this.entityMap,
-      required this.entityPresenter,
-      required this.tableColumns,
-      required this.entityType,
-      required this.onTap});
+  EntityDataTableSource({
+    required this.context,
+    required this.editingId,
+    required this.entityList,
+    required this.entityMap,
+    required this.entityPresenter,
+    required this.tableColumns,
+    required this.entityType,
+    required this.onTap,
+  });
 
   EntityType entityType;
   String editingId;
@@ -69,14 +70,17 @@ class EntityDataTableSource extends DataTableSource {
     }
 
     Color? backgroundColor;
-    final rowColor = state.prefState.activeCustomColors[
-            PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
+    final rowColor =
+        state.prefState.activeCustomColors[PrefState
+            .THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
         '';
 
     if (isSelected && isDesktop(context)) {
-      backgroundColor = convertHexStringToColor(state.prefState.enableDarkMode
-          ? kDefaultDarkSelectedColor
-          : kDefaultLightSelectedColor);
+      backgroundColor = convertHexStringToColor(
+        state.prefState.enableDarkMode
+            ? kDefaultDarkSelectedColor
+            : kDefaultLightSelectedColor,
+      );
     } else if (rowColor.isNotEmpty && index % 2 == 0) {
       backgroundColor = convertHexStringToColor(rowColor);
     }
@@ -96,8 +100,9 @@ class EntityDataTableSource extends DataTableSource {
           ? null
           : WidgetStateProperty.all<Color>(backgroundColor),
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
-      onSelectChanged:
-          listState.isInMultiselect() ? (value) => onTap(entity) : null,
+      onSelectChanged: listState.isInMultiselect()
+          ? (value) => onTap(entity)
+          : null,
       cells: [
         if (!listState.isInMultiselect())
           DataCell(
@@ -111,17 +116,20 @@ class EntityDataTableSource extends DataTableSource {
                   icon: GestureDetector(
                     child: Icon(MdiIcons.circleEditOutline),
                     onLongPress: () => handleEntityAction(
-                        entity, EntityAction.toggleMultiselect),
+                      entity,
+                      EntityAction.toggleMultiselect,
+                    ),
                   ),
                 ),
                 ActionMenuButton(
                   entityActions: entity.getActions(
-                      userCompany: state.userCompany,
-                      includeEdit: state.prefState.tapSelectedToEdit,
-                      client: entity is BelongsToClient
-                          ? state.clientState
-                              .map[(entity as BelongsToClient).clientId]
-                          : null),
+                    userCompany: state.userCompany,
+                    includeEdit: state.prefState.tapSelectedToEdit,
+                    client: entity is BelongsToClient
+                        ? state.clientState.map[(entity as BelongsToClient)
+                              .clientId]
+                        : null,
+                  ),
                   isSaving: false,
                   entity: entity,
                   onSelected: (context, action) =>
@@ -147,7 +155,7 @@ class EntityDataTableSource extends DataTableSource {
             onTap: () => onTap(entity),
             onLongPress: () => selectEntity(entity: entity, longPress: true),
           ),
-        )
+        ),
       ],
     );
   }

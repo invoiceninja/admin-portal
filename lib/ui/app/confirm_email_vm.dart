@@ -62,28 +62,32 @@ class ConfirmEmailVM {
       },
       onChangeEmail: (context, email, password, idToken) {
         final user = store.state.user.rebuild((b) => b..email = email);
-        final completer =
-            snackBarCompleter<Null>(AppLocalization.of(context)!.savedSettings);
-        store.dispatch(SaveAuthUserRequest(
-          user: user,
-          password: password,
-          idToken: idToken,
-          completer: completer,
-        ));
+        final completer = snackBarCompleter<Null>(
+          AppLocalization.of(context)!.savedSettings,
+        );
+        store.dispatch(
+          SaveAuthUserRequest(
+            user: user,
+            password: password,
+            idToken: idToken,
+            completer: completer,
+          ),
+        );
       },
       onUseLastPressed: (context) {
         final user = state.user;
         passwordCallback(
-            context: context,
-            callback: (password, idToken) {
-              store.dispatch(
-                SaveAuthUserRequest(
-                  user: user.rebuild((b) => b..email = user.lastEmailAddress),
-                  password: password,
-                  idToken: idToken,
-                ),
-              );
-            });
+          context: context,
+          callback: (password, idToken) {
+            store.dispatch(
+              SaveAuthUserRequest(
+                user: user.rebuild((b) => b..email = user.lastEmailAddress),
+                password: password,
+                idToken: idToken,
+              ),
+            );
+          },
+        );
       },
     );
   }

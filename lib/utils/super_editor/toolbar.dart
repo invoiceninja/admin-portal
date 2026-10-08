@@ -78,10 +78,12 @@ class _EditorToolbarState extends State<EditorToolbar> {
     _popoverFocusNode = FocusNode();
 
     _urlFocusNode = FocusNode();
-    _urlController = ImeAttributedTextEditingController(
-        controller: SingleLineAttributedTextEditingController(_applyLink)) //
-      ..onPerformActionPressed = _onPerformAction
-      ..text = AttributedText('https://');
+    _urlController =
+        ImeAttributedTextEditingController(
+            controller: SingleLineAttributedTextEditingController(_applyLink),
+          ) //
+          ..onPerformActionPressed = _onPerformAction
+          ..text = AttributedText('https://');
   }
 
   @override
@@ -120,8 +122,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
   ///
   /// Throws an exception if the currently selected node is not a text node.
   _TextType _getCurrentTextType() {
-    final selectedNode =
-        widget.document.getNodeById(widget.composer.selection!.extent.nodeId);
+    final selectedNode = widget.document.getNodeById(
+      widget.composer.selection!.extent.nodeId,
+    );
     if (selectedNode is ParagraphNode) {
       final type = selectedNode.getMetadataValue('blockType');
 
@@ -142,7 +145,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
           : _TextType.unorderedListItem;
     } else {
       throw Exception(
-          'Alignment does not apply to node of type: $selectedNode');
+        'Alignment does not apply to node of type: $selectedNode',
+      );
     }
   }
 
@@ -211,9 +215,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       widget.editor!.execute([
         ConvertListItemToParagraphRequest(
           nodeId: widget.composer.selection!.extent.nodeId,
-          paragraphMetadata: {
-            'blockType': _getBlockTypeAttribution(newType),
-          },
+          paragraphMetadata: {'blockType': _getBlockTypeAttribution(newType)},
         ),
       ]);
     } else if (!_isListItem(existingTextType) && _isListItem(newType)) {
@@ -414,8 +416,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final extentOffset = (selection.extent.nodePosition as TextPosition).offset;
     final selectionStart = min(baseOffset, extentOffset);
     final selectionEnd = max(baseOffset, extentOffset);
-    final selectionRange =
-        TextRange(start: selectionStart, end: selectionEnd - 1);
+    final selectionRange = TextRange(
+      start: selectionStart,
+      end: selectionEnd - 1,
+    );
 
     final textNode =
         widget.document.getNodeById(selection.extent.nodeId) as TextNode;
@@ -446,7 +450,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
     setState(() {
       _showUrlField = false;
       _urlFocusNode.unfocus(
-          disposition: UnfocusDisposition.previouslyFocusedChild);
+        disposition: UnfocusDisposition.previouslyFocusedChild,
+      );
       widget.closeToolbar();
     });
   }
@@ -518,9 +523,12 @@ class _EditorToolbarState extends State<EditorToolbar> {
   void _onBlockTypeSelected(SuperEditorDemoTextItem? selectedItem) {
     if (selectedItem != null) {
       setState(() {
-        _convertTextToNewType(_TextType.values //
-            .where((e) => e.name == selectedItem.id)
-            .first);
+        _convertTextToNewType(
+          _TextType
+              .values //
+              .where((e) => e.name == selectedItem.id)
+              .first,
+        );
       });
     }
   }
@@ -564,10 +572,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildToolbar(),
-          if (_showUrlField) ...[
-            const SizedBox(height: 8),
-            _buildUrlField(),
-          ],
+          if (_showUrlField) ...[const SizedBox(height: 8), _buildUrlField()],
         ],
       ),
     );
@@ -752,17 +757,11 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 hintBuilder: (context) {
                   return const Text(
                     'enter a url...',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                   );
                 },
                 textStyleBuilder: (_) {
-                  return const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  );
+                  return const TextStyle(color: Colors.black, fontSize: 16);
                 },
               ),
             ),
@@ -786,10 +785,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
   }
 
   Widget _buildVerticalDivider() {
-    return Container(
-      width: 1,
-      color: Colors.grey.shade300,
-    );
+    return Container(width: 1, color: Colors.grey.shade300);
   }
 
   /*

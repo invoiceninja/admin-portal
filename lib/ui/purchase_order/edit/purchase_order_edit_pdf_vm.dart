@@ -21,9 +21,7 @@ class PurchaseOrderEditPDFScreen extends StatelessWidget {
         return PurchaseOrderEditPDFVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditPDF(
-          viewModel: viewModel,
-        );
+        return InvoiceEditPDF(viewModel: viewModel);
       },
     );
   }
@@ -34,11 +32,7 @@ class PurchaseOrderEditPDFVM extends EntityEditPDFVM {
     required CompanyEntity? company,
     required InvoiceEntity? invoice,
     required AppState state,
-  }) : super(
-          company: company,
-          invoice: invoice,
-          state: state,
-        );
+  }) : super(company: company, invoice: invoice, state: state);
 
   factory PurchaseOrderEditPDFVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;

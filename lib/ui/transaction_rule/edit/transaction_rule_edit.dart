@@ -23,10 +23,8 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TransactionRuleEdit extends StatefulWidget {
-  const TransactionRuleEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const TransactionRuleEdit({Key? key, required this.viewModel})
+    : super(key: key);
 
   final TransactionRuleEditVM viewModel;
 
@@ -35,8 +33,9 @@ class TransactionRuleEdit extends StatefulWidget {
 }
 
 class _TransactionRuleEditState extends State<TransactionRuleEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_transactionRuleEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_transactionRuleEdit',
+  );
   final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
@@ -45,9 +44,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-    ];
+    _controllers = [_nameController];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
@@ -71,8 +68,9 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final transactionRule = widget.viewModel.transactionRule
-          .rebuild((b) => b..name = _nameController.text.trim());
+      final transactionRule = widget.viewModel.transactionRule.rebuild(
+        (b) => b..name = _nameController.text.trim(),
+      );
       if (transactionRule != widget.viewModel.transactionRule) {
         widget.viewModel.onChanged(transactionRule);
       }
@@ -146,8 +144,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       activeThumbColor: Theme.of(context).colorScheme.secondary,
                       value: transactionRule.matchesOnAll,
                       onChanged: (value) {
-                        viewModel.onChanged(transactionRule
-                            .rebuild((b) => b..matchesOnAll = value));
+                        viewModel.onChanged(
+                          transactionRule.rebuild(
+                            (b) => b..matchesOnAll = value,
+                          ),
+                        );
                       },
                     ),
                     SwitchListTile(
@@ -156,8 +157,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       activeThumbColor: Theme.of(context).colorScheme.secondary,
                       value: transactionRule.autoConvert,
                       onChanged: (value) {
-                        viewModel.onChanged(transactionRule
-                            .rebuild((b) => b..autoConvert = value));
+                        viewModel.onChanged(
+                          transactionRule.rebuild(
+                            (b) => b..autoConvert = value,
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -169,10 +173,8 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       Row(
                         children: [
                           Expanded(
-                              child: Text(
-                            localization.field,
-                            style: textStyle,
-                          )),
+                            child: Text(localization.field, style: textStyle),
+                          ),
                           Expanded(
                             child: Text(
                               localization.operator,
@@ -180,10 +182,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                             ),
                           ),
                           Expanded(
-                            child: Text(
-                              localization.value,
-                              style: textStyle,
-                            ),
+                            child: Text(localization.value, style: textStyle),
                           ),
                           SizedBox(width: 100),
                         ],
@@ -198,34 +197,40 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                       TransactionEntity.TYPE_WITHDRAWL
                                   ? [
                                       Expanded(
-                                        child: Text(localization
-                                            .lookup(rule.searchKey)),
+                                        child: Text(
+                                          localization.lookup(rule.searchKey),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                            localization.lookup(rule.operator)),
+                                          localization.lookup(rule.operator),
+                                        ),
                                       ),
-                                      Expanded(
-                                        child: Text(rule.value),
-                                      )
+                                      Expanded(child: Text(rule.value)),
                                     ]
                                   : [
                                       Expanded(
                                         child: Text(
-                                            rule.searchKey.contains('amount')
-                                                ? localization.amount
-                                                : localization.description),
+                                          rule.searchKey.contains('amount')
+                                              ? localization.amount
+                                              : localization.description,
+                                        ),
                                       ),
                                       Expanded(
                                         child: Text(
-                                            localization.lookup(rule.operator)),
+                                          localization.lookup(rule.operator),
+                                        ),
                                       ),
                                       Expanded(
-                                        child: Text(localization.lookup(
-                                                rule.searchKey.split('.')[0]) +
-                                            ' - ' +
-                                            localization.lookup(
-                                                rule.searchKey.split('.')[1])),
+                                        child: Text(
+                                          localization.lookup(
+                                                rule.searchKey.split('.')[0],
+                                              ) +
+                                              ' - ' +
+                                              localization.lookup(
+                                                rule.searchKey.split('.')[1],
+                                              ),
+                                        ),
                                       ),
                                     ]),
                               SizedBox(
@@ -235,21 +240,31 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                   children: [
                                     IconButton(
                                       onPressed: () async {
-                                        final updatedRule = await showDialog<
-                                                TransactionRuleCriteriaEntity>(
-                                            context: context,
-                                            builder: (context) => _RuleCriteria(
-                                                  criteria: rule,
-                                                  type:
-                                                      transactionRule.appliesTo,
-                                                ));
+                                        final updatedRule =
+                                            await showDialog<
+                                              TransactionRuleCriteriaEntity
+                                            >(
+                                              context: context,
+                                              builder: (context) =>
+                                                  _RuleCriteria(
+                                                    criteria: rule,
+                                                    type: transactionRule
+                                                        .appliesTo,
+                                                  ),
+                                            );
                                         if (updatedRule != null) {
                                           final index = transactionRule.rules
                                               .indexOf(rule);
                                           viewModel.onChanged(
-                                              transactionRule.rebuild((b) => b
-                                                ..rules.replaceRange(index,
-                                                    index + 1, [updatedRule])));
+                                            transactionRule.rebuild(
+                                              (b) => b
+                                                ..rules.replaceRange(
+                                                  index,
+                                                  index + 1,
+                                                  [updatedRule],
+                                                ),
+                                            ),
+                                          );
                                         }
                                       },
                                       icon: Icon(MdiIcons.circleEditOutline),
@@ -258,8 +273,10 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                     IconButton(
                                       onPressed: () {
                                         viewModel.onChanged(
-                                            transactionRule.rebuild(
-                                                (b) => b..rules.remove(rule)));
+                                          transactionRule.rebuild(
+                                            (b) => b..rules.remove(rule),
+                                          ),
+                                        );
                                       },
                                       icon: Icon(Icons.clear),
                                     ),
@@ -275,14 +292,16 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                       onPressed: () async {
                         final rule =
                             await showDialog<TransactionRuleCriteriaEntity>(
-                                context: context,
-                                builder: (context) => _RuleCriteria(
-                                      type: transactionRule.appliesTo,
-                                    ));
+                              context: context,
+                              builder: (context) => _RuleCriteria(
+                                type: transactionRule.appliesTo,
+                              ),
+                            );
 
                         if (rule != null) {
-                          viewModel.onChanged(transactionRule
-                              .rebuild((b) => b..rules.add(rule)));
+                          viewModel.onChanged(
+                            transactionRule.rebuild((b) => b..rules.add(rule)),
+                          );
                         }
                       },
                       child: Padding(
@@ -304,20 +323,28 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         entityType: EntityType.vendor,
                         entityId: transactionRule.vendorId,
                         entityList: memoizedDropdownVendorList(
-                            state.vendorState.map,
-                            state.vendorState.list,
-                            state.userState.map,
-                            state.staticState),
+                          state.vendorState.map,
+                          state.vendorState.list,
+                          state.userState.map,
+                          state.staticState,
+                        ),
                         labelText: localization.vendor,
                         onSelected: (vendor) {
-                          viewModel.onChanged(transactionRule
-                              .rebuild((b) => b..vendorId = vendor?.id ?? ''));
+                          viewModel.onChanged(
+                            transactionRule.rebuild(
+                              (b) => b..vendorId = vendor?.id ?? '',
+                            ),
+                          );
                         },
                         onCreateNew: (completer, name) {
-                          store.dispatch(SaveVendorRequest(
-                              vendor:
-                                  VendorEntity().rebuild((b) => b..name = name),
-                              completer: completer));
+                          store.dispatch(
+                            SaveVendorRequest(
+                              vendor: VendorEntity().rebuild(
+                                (b) => b..name = name,
+                              ),
+                              completer: completer,
+                            ),
+                          );
                         },
                       ),
                       EntityDropdown(
@@ -332,14 +359,21 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         ),
                         labelText: localization.category,
                         onSelected: (category) {
-                          viewModel.onChanged(transactionRule.rebuild(
-                              (b) => b..categoryId = category?.id ?? ''));
+                          viewModel.onChanged(
+                            transactionRule.rebuild(
+                              (b) => b..categoryId = category?.id ?? '',
+                            ),
+                          );
                         },
                         onCreateNew: (completer, name) {
-                          store.dispatch(SaveExpenseCategoryRequest(
-                              expenseCategory: ExpenseCategoryEntity()
-                                  .rebuild((b) => b..name = name),
-                              completer: completer));
+                          store.dispatch(
+                            SaveExpenseCategoryRequest(
+                              expenseCategory: ExpenseCategoryEntity().rebuild(
+                                (b) => b..name = name,
+                              ),
+                              completer: completer,
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -354,11 +388,8 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 }
 
 class _RuleCriteria extends StatefulWidget {
-  const _RuleCriteria({
-    Key? key,
-    required this.type,
-    this.criteria,
-  }) : super(key: key);
+  const _RuleCriteria({Key? key, required this.type, this.criteria})
+    : super(key: key);
 
   final TransactionRuleCriteriaEntity? criteria;
   final String type;
@@ -369,8 +400,9 @@ class _RuleCriteria extends StatefulWidget {
 
 class __RuleCriteriaState extends State<_RuleCriteria> {
   TransactionRuleCriteriaEntity? _criteria;
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_ruleCriteria');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_ruleCriteria',
+  );
 
   @override
   void initState() {
@@ -414,21 +446,24 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                 value: _criteria!.searchKey,
                 onChanged: (dynamic value) {
                   setState(() {
-                    _criteria = _criteria!.rebuild((b) => b
-                      ..searchKey = value
-                      ..operator = (value ==
-                                  TransactionRuleCriteriaEntity
-                                      .SEARCH_KEY_DESCRIPTION ||
-                              value ==
-                                  TransactionRuleCriteriaEntity
-                                      .SEARCH_KEY_PARTICIPANT ||
-                              value ==
-                                  TransactionRuleCriteriaEntity
-                                      .SEARCH_KEY_PARTICIPANT_NAME)
-                          ? TransactionRuleCriteriaEntity
-                              .STRING_OPERATOR_CONTAINS
-                          : TransactionRuleCriteriaEntity
-                              .NUMBER_OPERATOR_EQUALS);
+                    _criteria = _criteria!.rebuild(
+                      (b) => b
+                        ..searchKey = value
+                        ..operator =
+                            (value ==
+                                    TransactionRuleCriteriaEntity
+                                        .SEARCH_KEY_DESCRIPTION ||
+                                value ==
+                                    TransactionRuleCriteriaEntity
+                                        .SEARCH_KEY_PARTICIPANT ||
+                                value ==
+                                    TransactionRuleCriteriaEntity
+                                        .SEARCH_KEY_PARTICIPANT_NAME)
+                            ? TransactionRuleCriteriaEntity
+                                  .STRING_OPERATOR_CONTAINS
+                            : TransactionRuleCriteriaEntity
+                                  .NUMBER_OPERATOR_EQUALS,
+                    );
                   });
                 },
                 items: [
@@ -469,15 +504,16 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   _criteria = _criteria!.rebuild((b) => b..operator = value);
                 });
               },
-              items: [
-                TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
-                TransactionRuleCriteriaEntity
-                    .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
-                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
-                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_ID_NUMBER,
-                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
-                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_PO_NUMBER,
-              ].contains(_criteria!.searchKey)
+              items:
+                  [
+                    TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                    TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                    TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
+                    TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_ID_NUMBER,
+                    TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
+                    TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_PO_NUMBER,
+                  ].contains(_criteria!.searchKey)
                   ? [
                       DropdownMenuItem<String>(
                         child: Text(localization.contains),
@@ -501,32 +537,41 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                     ]
                   : [
                       DropdownMenuItem<String>(
-                        child: Text(TransactionRuleCriteriaEntity
-                            .NUMBER_OPERATOR_LESS_THAN),
+                        child: Text(
+                          TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_LESS_THAN,
+                        ),
                         value: TransactionRuleCriteriaEntity
                             .NUMBER_OPERATOR_LESS_THAN,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(TransactionRuleCriteriaEntity
-                            .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS),
+                        child: Text(
+                          TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS,
+                        ),
                         value: TransactionRuleCriteriaEntity
                             .NUMBER_OPERATOR_LESS_THAN_OR_EQUALS,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(TransactionRuleCriteriaEntity
-                            .NUMBER_OPERATOR_EQUALS),
+                        child: Text(
+                          TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS,
+                        ),
                         value: TransactionRuleCriteriaEntity
                             .NUMBER_OPERATOR_EQUALS,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(TransactionRuleCriteriaEntity
-                            .NUMBER_OPERATOR_GREATER_THAN),
+                        child: Text(
+                          TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_GREATER_THAN,
+                        ),
                         value: TransactionRuleCriteriaEntity
                             .NUMBER_OPERATOR_GREATER_THAN,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(TransactionRuleCriteriaEntity
-                            .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS),
+                        child: Text(
+                          TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS,
+                        ),
                         value: TransactionRuleCriteriaEntity
                             .NUMBER_OPERATOR_GREATER_THAN_OR_EQUALS,
                       ),
@@ -556,64 +601,75 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                 value: _criteria!.searchKey,
                 onChanged: (dynamic value) {
                   setState(() {
-                    _criteria = _criteria!.rebuild((b) => b
-                      ..searchKey = value
-                      ..operator = (value ==
-                                  TransactionRuleCriteriaEntity
-                                      .SEARCH_KEY_DESCRIPTION ||
-                              value ==
-                                  TransactionRuleCriteriaEntity
-                                      .SEARCH_KEY_PARTICIPANT ||
-                              value ==
-                                  TransactionRuleCriteriaEntity
-                                      .SEARCH_KEY_PARTICIPANT_NAME)
-                          ? TransactionRuleCriteriaEntity
-                              .STRING_OPERATOR_CONTAINS
-                          : TransactionRuleCriteriaEntity
-                              .NUMBER_OPERATOR_EQUALS);
+                    _criteria = _criteria!.rebuild(
+                      (b) => b
+                        ..searchKey = value
+                        ..operator =
+                            (value ==
+                                    TransactionRuleCriteriaEntity
+                                        .SEARCH_KEY_DESCRIPTION ||
+                                value ==
+                                    TransactionRuleCriteriaEntity
+                                        .SEARCH_KEY_PARTICIPANT ||
+                                value ==
+                                    TransactionRuleCriteriaEntity
+                                        .SEARCH_KEY_PARTICIPANT_NAME)
+                            ? TransactionRuleCriteriaEntity
+                                  .STRING_OPERATOR_CONTAINS
+                            : TransactionRuleCriteriaEntity
+                                  .NUMBER_OPERATOR_EQUALS,
+                    );
                   });
                 },
                 items: [
                   DropdownMenuItem<String>(
-                    child:
-                        Text(localization.client + ' - ' + localization.email),
+                    child: Text(
+                      localization.client + ' - ' + localization.email,
+                    ),
                     value:
                         TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
                   ),
                   DropdownMenuItem<String>(
                     child: Text(
-                        localization.client + ' - ' + localization.idNumber),
+                      localization.client + ' - ' + localization.idNumber,
+                    ),
                     value: TransactionRuleCriteriaEntity
                         .SEARCH_KEY_CLIENT_ID_NUMBER,
                   ),
                   DropdownMenuItem<String>(
                     child: Text(
-                        localization.invoice + ' - ' + localization.number),
+                      localization.invoice + ' - ' + localization.number,
+                    ),
                     value:
                         TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
                   ),
                   DropdownMenuItem<String>(
                     child: Text(
-                        localization.invoice + ' - ' + localization.amount),
+                      localization.invoice + ' - ' + localization.amount,
+                    ),
                     value:
                         TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_AMOUNT,
                   ),
                   DropdownMenuItem<String>(
                     child: Text(
-                        localization.invoice + ' - ' + localization.poNumber),
+                      localization.invoice + ' - ' + localization.poNumber,
+                    ),
                     value: TransactionRuleCriteriaEntity
                         .SEARCH_KEY_INVOICE_PO_NUMBER,
                   ),
                   DropdownMenuItem<String>(
                     child: Text(
-                        localization.payment + ' - ' + localization.amount),
+                      localization.payment + ' - ' + localization.amount,
+                    ),
                     value:
                         TransactionRuleCriteriaEntity.SEARCH_KEY_PAYMENT_AMOUNT,
                   ),
                   DropdownMenuItem<String>(
-                    child: Text(localization.payment +
-                        ' - ' +
-                        localization.transactionReference),
+                    child: Text(
+                      localization.payment +
+                          ' - ' +
+                          localization.transactionReference,
+                    ),
                     value: TransactionRuleCriteriaEntity
                         .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
                   ),

@@ -7,10 +7,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewReports implements PersistUI {
-  ViewReports({
-    this.report,
-    this.force = false,
-  });
+  ViewReports({this.report, this.force = false});
 
   final bool force;
   final String? report;

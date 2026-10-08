@@ -29,8 +29,9 @@ class ListFilterMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final filteredEntity =
-        state.getEntityMap(filterEntityType)![filterEntityId];
+    final filteredEntity = state.getEntityMap(
+      filterEntityType,
+    )![filterEntityId];
 
     return Material(
       color: Colors.orange,
@@ -76,8 +77,10 @@ class FilterListTile extends StatelessWidget {
         title = localization!.groupSettings;
       }
     } else {
-      title = localization!.filteredBy
-          .replaceFirst(':value', entity!.listDisplayName);
+      title = localization!.filteredBy.replaceFirst(
+        ':value',
+        entity!.listDisplayName,
+      );
       subtitle = localization.lookup(entityType.toString());
     }
 
@@ -86,27 +89,25 @@ class FilterListTile extends StatelessWidget {
         padding: const EdgeInsets.only(top: 2),
         child: Container(
           decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: .5,
-            ),
+            border: Border.all(color: Colors.grey, width: .5),
             borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
           ),
           child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return ListTile(
-              leading: constraints.maxWidth > 250
-                  ? Icon(getEntityIcon(entityType))
-                  : null,
-              title: Text(title),
-              subtitle: Text(subtitle!),
-              onTap: () => onPressed(context),
-              trailing: IconButton(
-                icon: Icon(Icons.clear),
-                onPressed: onClearPressed,
-              ),
-            );
-          }),
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return ListTile(
+                leading: constraints.maxWidth > 250
+                    ? Icon(getEntityIcon(entityType))
+                    : null,
+                title: Text(title),
+                subtitle: Text(subtitle!),
+                onTap: () => onPressed(context),
+                trailing: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: onClearPressed,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

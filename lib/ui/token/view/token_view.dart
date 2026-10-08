@@ -13,11 +13,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenView extends StatefulWidget {
-  const TokenView({
-    Key? key,
-    required this.viewModel,
-    required this.isFilter,
-  }) : super(key: key);
+  const TokenView({Key? key, required this.viewModel, required this.isFilter})
+    : super(key: key);
 
   final TokenViewVM viewModel;
   final bool isFilter;
@@ -46,7 +43,9 @@ class _TokenViewState extends State<TokenView> {
             value: user.listDisplayName,
             secondLabel: localization.createdOn,
             secondValue: formatDate(
-                convertTimestampToDateString(token.createdAt), context),
+              convertTimestampToDateString(token.createdAt),
+              context,
+            ),
           ),
           ListDivider(),
           _TokenListTile(token),

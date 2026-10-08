@@ -21,9 +21,7 @@ class TaskScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, TaskScreenVM>(
       converter: TaskScreenVM.fromStore,
       builder: (context, vm) {
-        return TaskScreen(
-          viewModel: vm,
-        );
+        return TaskScreen(viewModel: vm);
       },
     );
   }
@@ -48,15 +46,16 @@ class TaskScreenVM {
     return TaskScreenVM(
       taskMap: state.taskState.map,
       taskList: memoizedFilteredTaskList(
-          state.getUISelection(EntityType.task),
-          state.taskState.map,
-          state.clientState.map,
-          state.userState.map,
-          state.projectState.map,
-          state.invoiceState.map,
-          state.taskStatusState.map,
-          state.taskState.list,
-          state.taskListState),
+        state.getUISelection(EntityType.task),
+        state.taskState.map,
+        state.clientState.map,
+        state.userState.map,
+        state.projectState.map,
+        state.invoiceState.map,
+        state.taskStatusState.map,
+        state.taskState.list,
+        state.taskListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.taskListState.isInMultiselect(),
     );

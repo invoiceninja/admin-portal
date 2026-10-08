@@ -11,10 +11,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditNotes extends StatefulWidget {
-  const VendorEditNotes({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const VendorEditNotes({Key? key, required this.viewModel}) : super(key: key);
 
   final VendorEditVM viewModel;
 
@@ -31,20 +28,19 @@ class VendorEditNotesState extends State<VendorEditNotes> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _publicNotesController,
-      _privateNotesController,
-    ];
+    _controllers = [_publicNotesController, _privateNotesController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final vendor = widget.viewModel.vendor;
     _publicNotesController.text = vendor.publicNotes;
     _privateNotesController.text = vendor.privateNotes;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -61,9 +57,11 @@ class VendorEditNotesState extends State<VendorEditNotes> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final vendor = viewModel.vendor.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text);
+    final vendor = viewModel.vendor.rebuild(
+      (b) => b
+        ..publicNotes = _publicNotesController.text
+        ..privateNotes = _privateNotesController.text,
+    );
     if (vendor != viewModel.vendor) {
       _debouncer.run(() {
         viewModel.onChanged(vendor);

@@ -22,20 +22,14 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewExpenseList implements PersistUI {
-  ViewExpenseList({
-    this.force = false,
-    this.page = 0,
-  });
+  ViewExpenseList({this.force = false, this.page = 0});
 
   final bool force;
   final int? page;
 }
 
 class ViewExpense implements PersistUI, PersistPrefs {
-  ViewExpense({
-    required this.expenseId,
-    this.force = false,
-  });
+  ViewExpense({required this.expenseId, this.force = false});
 
   final String? expenseId;
   final bool force;
@@ -254,8 +248,11 @@ class FilterExpensesByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
-    EntityAction? action) async {
+void handleExpenseAction(
+  BuildContext context,
+  List<BaseEntity> expenses,
+  EntityAction? action,
+) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -270,14 +267,16 @@ void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
     case EntityAction.clone:
     case EntityAction.cloneToExpense:
       createEntity(
-        entity:
-            expense.clone.rebuild((b) => b..entityType = EntityType.expense),
+        entity: expense.clone.rebuild(
+          (b) => b..entityType = EntityType.expense,
+        ),
       );
       break;
     case EntityAction.cloneToRecurring:
       createEntity(
-        entity: expense.clone
-            .rebuild((b) => b..entityType = EntityType.recurringExpense),
+        entity: expense.clone.rebuild(
+          (b) => b..entityType = EntityType.recurringExpense,
+        ),
       );
       break;
     case EntityAction.invoiceExpense:
@@ -304,10 +303,12 @@ void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
       }
 
       final items = availableExpenses
-          .map((expense) => convertExpenseToInvoiceItem(
-                expense: expense as ExpenseEntity,
-                context: context,
-              ))
+          .map(
+            (expense) => convertExpenseToInvoiceItem(
+              expense: expense as ExpenseEntity,
+              context: context,
+            ),
+          )
           .toList();
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceExpense) {
@@ -331,29 +332,32 @@ void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
     case EntityAction.restore:
       final message = expenseIds.length > 1
           ? localization!.restoredExpenses
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseIds.length.toString())
           : localization!.restoredExpense;
       store.dispatch(
-          RestoreExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
+        RestoreExpenseRequest(snackBarCompleter<Null>(message), expenseIds),
+      );
       break;
     case EntityAction.archive:
       final message = expenseIds.length > 1
           ? localization!.archivedExpenses
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseIds.length.toString())
           : localization!.archivedExpense;
       store.dispatch(
-          ArchiveExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
+        ArchiveExpenseRequest(snackBarCompleter<Null>(message), expenseIds),
+      );
       break;
     case EntityAction.delete:
       final message = expenseIds.length > 1
           ? localization!.deletedExpenses
-              .replaceFirst(':value', ':count')
-              .replaceFirst(':count', expenseIds.length.toString())
+                .replaceFirst(':value', ':count')
+                .replaceFirst(':count', expenseIds.length.toString())
           : localization!.deletedExpense;
       store.dispatch(
-          DeleteExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
+        DeleteExpenseRequest(snackBarCompleter<Null>(message), expenseIds),
+      );
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {
@@ -373,9 +377,7 @@ void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
       }
       break;
     case EntityAction.more:
-      showEntityActionsDialog(
-        entities: [expense],
-      );
+      showEntityActionsDialog(entities: [expense]);
       break;
     case EntityAction.documents:
       final documentIds = <String>[];
@@ -390,9 +392,7 @@ void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
-            completer: snackBarCompleter<Null>(
-              localization!.exportedData,
-            ),
+            completer: snackBarCompleter<Null>(localization!.exportedData),
           ),
         );
       }

@@ -32,23 +32,21 @@ class TaskListBuilder extends StatelessWidget {
       converter: TaskListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.task,
-            presenter: TaskPresenter(),
-            state: viewModel.state,
-            entityList: viewModel.taskList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final taskId = viewModel.taskList[index];
-              final task = viewModel.taskMap[taskId]!;
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.task,
+          presenter: TaskPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.taskList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final taskId = viewModel.taskList[index];
+            final task = viewModel.taskMap[taskId]!;
 
-              return TaskListItem(
-                filter: viewModel.filter,
-                task: task,
-              );
-            });
+            return TaskListItem(filter: viewModel.filter, task: task);
+          },
+        );
       },
     );
   }
@@ -75,8 +73,9 @@ class TaskListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -88,15 +87,16 @@ class TaskListVM {
       user: state.user,
       listState: state.taskListState,
       taskList: memoizedFilteredTaskList(
-          state.getUISelection(EntityType.task),
-          state.taskState.map,
-          state.clientState.map,
-          state.userState.map,
-          state.projectState.map,
-          state.invoiceState.map,
-          state.taskStatusState.map,
-          state.taskState.list,
-          state.taskListState),
+        state.getUISelection(EntityType.task),
+        state.taskState.map,
+        state.clientState.map,
+        state.userState.map,
+        state.projectState.map,
+        state.invoiceState.map,
+        state.taskStatusState.map,
+        state.taskState.list,
+        state.taskListState,
+      ),
       taskMap: state.taskState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
@@ -105,7 +105,7 @@ class TaskListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.task) ??
-              TaskPresenter.getDefaultTableFields(state.userCompany),
+          TaskPresenter.getDefaultTableFields(state.userCompany),
       onClearMultielsect: () => store.dispatch(ClearTaskMultiselect()),
     );
   }

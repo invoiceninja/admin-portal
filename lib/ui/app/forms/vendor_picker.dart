@@ -45,8 +45,12 @@ class VendorPicker extends StatelessWidget {
       labelText: localization.vendor,
       entityId: vendorId,
       autofocus: autofocus,
-      entityList: memoizedDropdownVendorList(vendorState.map, vendorState.list,
-          state.userState.map, state.staticState),
+      entityList: memoizedDropdownVendorList(
+        vendorState.map,
+        vendorState.list,
+        state.userState.map,
+        state.staticState,
+      ),
       entityMap: vendorState.map,
       validator: (String? val) => (val ?? '').trim().isEmpty
           ? AppLocalization.of(context)!.pleaseSelectAVendor
@@ -54,9 +58,12 @@ class VendorPicker extends StatelessWidget {
       onSelected: onSelected,
       onAddPressed: onAddPressed,
       onCreateNew: (completer, name) {
-        store.dispatch(SaveVendorRequest(
+        store.dispatch(
+          SaveVendorRequest(
             vendor: VendorEntity().rebuild((b) => b..name = name),
-            completer: completer));
+            completer: completer,
+          ),
+        );
       },
       excludeIds: excludeIds,
     );

@@ -20,20 +20,25 @@ class _$CompanyGatewayListResponseSerializer
   @override
   final Iterable<Type> types = const [
     CompanyGatewayListResponse,
-    _$CompanyGatewayListResponse
+    _$CompanyGatewayListResponse,
   ];
   @override
   final String wireName = 'CompanyGatewayListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CompanyGatewayListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CompanyGatewayListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(CompanyGatewayEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(CompanyGatewayEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -41,8 +46,10 @@ class _$CompanyGatewayListResponseSerializer
 
   @override
   CompanyGatewayListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CompanyGatewayListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -52,10 +59,15 @@ class _$CompanyGatewayListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CompanyGatewayEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(CompanyGatewayEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -69,19 +81,23 @@ class _$CompanyGatewayItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     CompanyGatewayItemResponse,
-    _$CompanyGatewayItemResponse
+    _$CompanyGatewayItemResponse,
   ];
   @override
   final String wireName = 'CompanyGatewayItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CompanyGatewayItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CompanyGatewayItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(CompanyGatewayEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(CompanyGatewayEntity),
+      ),
     ];
 
     return result;
@@ -89,8 +105,10 @@ class _$CompanyGatewayItemResponseSerializer
 
   @override
   CompanyGatewayItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CompanyGatewayItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -100,9 +118,13 @@ class _$CompanyGatewayItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(CompanyGatewayEntity))!
-              as CompanyGatewayEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(CompanyGatewayEntity),
+                )!
+                as CompanyGatewayEntity,
+          );
           break;
       }
     }
@@ -116,104 +138,163 @@ class _$CompanyGatewayEntitySerializer
   @override
   final Iterable<Type> types = const [
     CompanyGatewayEntity,
-    _$CompanyGatewayEntity
+    _$CompanyGatewayEntity,
   ];
   @override
   final String wireName = 'CompanyGatewayEntity';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, CompanyGatewayEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    CompanyGatewayEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'gateway_key',
-      serializers.serialize(object.gatewayId,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.gatewayId,
+        specifiedType: const FullType(String),
+      ),
       'accepted_credit_cards',
-      serializers.serialize(object.acceptedCreditCards,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.acceptedCreditCards,
+        specifiedType: const FullType(int),
+      ),
       'require_shipping_address',
-      serializers.serialize(object.requireShippingAddress,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireShippingAddress,
+        specifiedType: const FullType(bool),
+      ),
       'require_billing_address',
-      serializers.serialize(object.requireBillingAddress,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireBillingAddress,
+        specifiedType: const FullType(bool),
+      ),
       'require_client_name',
-      serializers.serialize(object.requireClientName,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireClientName,
+        specifiedType: const FullType(bool),
+      ),
       'require_client_phone',
-      serializers.serialize(object.requireClientPhone,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireClientPhone,
+        specifiedType: const FullType(bool),
+      ),
       'require_contact_name',
-      serializers.serialize(object.requireContactName,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireContactName,
+        specifiedType: const FullType(bool),
+      ),
       'require_contact_email',
-      serializers.serialize(object.requireContactEmail,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireContactEmail,
+        specifiedType: const FullType(bool),
+      ),
       'require_custom_value1',
-      serializers.serialize(object.requireCustomValue1,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireCustomValue1,
+        specifiedType: const FullType(bool),
+      ),
       'require_custom_value2',
-      serializers.serialize(object.requireCustomValue2,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireCustomValue2,
+        specifiedType: const FullType(bool),
+      ),
       'require_custom_value3',
-      serializers.serialize(object.requireCustomValue3,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireCustomValue3,
+        specifiedType: const FullType(bool),
+      ),
       'require_custom_value4',
-      serializers.serialize(object.requireCustomValue4,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireCustomValue4,
+        specifiedType: const FullType(bool),
+      ),
       'require_cvv',
-      serializers.serialize(object.requireCvv,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.requireCvv,
+        specifiedType: const FullType(bool),
+      ),
       'update_details',
-      serializers.serialize(object.updateDetails,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.updateDetails,
+        specifiedType: const FullType(bool),
+      ),
       'fees_and_limits',
-      serializers.serialize(object.feesAndLimitsMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType(FeesAndLimitsSettings)
-          ])),
+      serializers.serialize(
+        object.feesAndLimitsMap,
+        specifiedType: const FullType(BuiltMap, const [
+          const FullType.nullable(String),
+          const FullType(FeesAndLimitsSettings),
+        ]),
+      ),
       'system_logs',
-      serializers.serialize(object.systemLogs,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(SystemLogEntity)])),
+      serializers.serialize(
+        object.systemLogs,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(SystemLogEntity),
+        ]),
+      ),
       'custom_value1',
-      serializers.serialize(object.customValue1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue1,
+        specifiedType: const FullType(String),
+      ),
       'custom_value2',
-      serializers.serialize(object.customValue2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue2,
+        specifiedType: const FullType(String),
+      ),
       'custom_value3',
-      serializers.serialize(object.customValue3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue3,
+        specifiedType: const FullType(String),
+      ),
       'custom_value4',
-      serializers.serialize(object.customValue4,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.customValue4,
+        specifiedType: const FullType(String),
+      ),
       'config',
-      serializers.serialize(object.config,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.config,
+        specifiedType: const FullType(String),
+      ),
       'token_billing',
-      serializers.serialize(object.tokenBilling,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.tokenBilling,
+        specifiedType: const FullType(String),
+      ),
       'test_mode',
-      serializers.serialize(object.isTestMode,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isTestMode,
+        specifiedType: const FullType(bool),
+      ),
       'always_show_required_fields',
-      serializers.serialize(object.alwaysShowRequiredFields,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.alwaysShowRequiredFields,
+        specifiedType: const FullType(bool),
+      ),
       'label',
-      serializers.serialize(object.label,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.label,
+        specifiedType: const FullType(String),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -229,43 +310,50 @@ class _$CompanyGatewayEntitySerializer
       result
         ..add('require_postal_code')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isChanged;
     if (value != null) {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   CompanyGatewayEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = CompanyGatewayEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -275,149 +363,287 @@ class _$CompanyGatewayEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'loadedAt':
-          result.loadedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+          result.loadedAt =
+              serializers.deserialize(value, specifiedType: const FullType(int))
+                  as int?;
           break;
         case 'gateway_key':
-          result.gatewayId = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.gatewayId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'accepted_credit_cards':
-          result.acceptedCreditCards = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.acceptedCreditCards =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'require_shipping_address':
-          result.requireShippingAddress = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireShippingAddress =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_billing_address':
-          result.requireBillingAddress = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireBillingAddress =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_client_name':
-          result.requireClientName = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireClientName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_postal_code':
-          result.requirePostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.requirePostalCode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'require_client_phone':
-          result.requireClientPhone = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireClientPhone =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_contact_name':
-          result.requireContactName = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireContactName =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_contact_email':
-          result.requireContactEmail = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireContactEmail =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_custom_value1':
-          result.requireCustomValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireCustomValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_custom_value2':
-          result.requireCustomValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireCustomValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_custom_value3':
-          result.requireCustomValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireCustomValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_custom_value4':
-          result.requireCustomValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireCustomValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'require_cvv':
-          result.requireCvv = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.requireCvv =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'update_details':
-          result.updateDetails = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.updateDetails =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'fees_and_limits':
-          result.feesAndLimitsMap.replace(serializers.deserialize(value,
+          result.feesAndLimitsMap.replace(
+            serializers.deserialize(
+              value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType.nullable(String),
-                const FullType(FeesAndLimitsSettings)
-              ]))!);
+                const FullType(FeesAndLimitsSettings),
+              ]),
+            )!,
+          );
           break;
         case 'system_logs':
-          result.systemLogs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(SystemLogEntity)]))!
-              as BuiltList<Object?>);
+          result.systemLogs.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(SystemLogEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
         case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.customValue4 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'config':
-          result.config = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.config =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'token_billing':
-          result.tokenBilling = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.tokenBilling =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'test_mode':
-          result.isTestMode = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isTestMode =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'always_show_required_fields':
-          result.alwaysShowRequiredFields = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.alwaysShowRequiredFields =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'label':
-          result.label = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.label =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -431,55 +657,83 @@ class _$FeesAndLimitsSettingsSerializer
   @override
   final Iterable<Type> types = const [
     FeesAndLimitsSettings,
-    _$FeesAndLimitsSettings
+    _$FeesAndLimitsSettings,
   ];
   @override
   final String wireName = 'FeesAndLimitsSettings';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, FeesAndLimitsSettings object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    FeesAndLimitsSettings object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'min_limit',
-      serializers.serialize(object.minLimit,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.minLimit,
+        specifiedType: const FullType(double),
+      ),
       'max_limit',
-      serializers.serialize(object.maxLimit,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.maxLimit,
+        specifiedType: const FullType(double),
+      ),
       'fee_amount',
-      serializers.serialize(object.feeAmount,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.feeAmount,
+        specifiedType: const FullType(double),
+      ),
       'fee_percent',
-      serializers.serialize(object.feePercent,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.feePercent,
+        specifiedType: const FullType(double),
+      ),
       'fee_cap',
-      serializers.serialize(object.feeCap,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.feeCap,
+        specifiedType: const FullType(double),
+      ),
       'fee_tax_rate1',
-      serializers.serialize(object.taxRate1,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate1,
+        specifiedType: const FullType(double),
+      ),
       'fee_tax_name1',
-      serializers.serialize(object.taxName1,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName1,
+        specifiedType: const FullType(String),
+      ),
       'fee_tax_rate2',
-      serializers.serialize(object.taxRate2,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate2,
+        specifiedType: const FullType(double),
+      ),
       'fee_tax_name2',
-      serializers.serialize(object.taxName2,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName2,
+        specifiedType: const FullType(String),
+      ),
       'fee_tax_rate3',
-      serializers.serialize(object.taxRate3,
-          specifiedType: const FullType(double)),
+      serializers.serialize(
+        object.taxRate3,
+        specifiedType: const FullType(double),
+      ),
       'fee_tax_name3',
-      serializers.serialize(object.taxName3,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.taxName3,
+        specifiedType: const FullType(String),
+      ),
       'adjust_fee_percent',
-      serializers.serialize(object.adjustFeePercent,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.adjustFeePercent,
+        specifiedType: const FullType(bool),
+      ),
       'is_enabled',
-      serializers.serialize(object.isEnabled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isEnabled,
+        specifiedType: const FullType(bool),
+      ),
     ];
 
     return result;
@@ -487,8 +741,10 @@ class _$FeesAndLimitsSettingsSerializer
 
   @override
   FeesAndLimitsSettings deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = FeesAndLimitsSettingsBuilder();
 
     final iterator = serialized.iterator;
@@ -498,56 +754,108 @@ class _$FeesAndLimitsSettingsSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'min_limit':
-          result.minLimit = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.minLimit =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'max_limit':
-          result.maxLimit = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.maxLimit =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_amount':
-          result.feeAmount = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.feeAmount =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_percent':
-          result.feePercent = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.feePercent =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_cap':
-          result.feeCap = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.feeCap =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_tax_rate1':
-          result.taxRate1 = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_tax_name1':
-          result.taxName1 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName1 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'fee_tax_rate2':
-          result.taxRate2 = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_tax_name2':
-          result.taxName2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName2 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'fee_tax_rate3':
-          result.taxRate3 = serializers.deserialize(value,
-              specifiedType: const FullType(double))! as double;
+          result.taxRate3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(double),
+                  )!
+                  as double;
           break;
         case 'fee_tax_name3':
-          result.taxName3 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.taxName3 =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'adjust_fee_percent':
-          result.adjustFeePercent = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.adjustFeePercent =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_enabled':
-          result.isEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isEnabled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
       }
     }
@@ -560,15 +868,15 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
   @override
   final BuiltList<CompanyGatewayEntity> data;
 
-  factory _$CompanyGatewayListResponse(
-          [void Function(CompanyGatewayListResponseBuilder)? updates]) =>
-      (CompanyGatewayListResponseBuilder()..update(updates))._build();
+  factory _$CompanyGatewayListResponse([
+    void Function(CompanyGatewayListResponseBuilder)? updates,
+  ]) => (CompanyGatewayListResponseBuilder()..update(updates))._build();
 
   _$CompanyGatewayListResponse._({required this.data}) : super._();
   @override
   CompanyGatewayListResponse rebuild(
-          void Function(CompanyGatewayListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CompanyGatewayListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayListResponseBuilder toBuilder() =>
@@ -592,9 +900,9 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CompanyGatewayListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'CompanyGatewayListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -635,10 +943,7 @@ class CompanyGatewayListResponseBuilder
   _$CompanyGatewayListResponse _build() {
     _$CompanyGatewayListResponse _$result;
     try {
-      _$result = _$v ??
-          _$CompanyGatewayListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$CompanyGatewayListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -646,7 +951,10 @@ class CompanyGatewayListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CompanyGatewayListResponse', _$failedField, e.toString());
+          r'CompanyGatewayListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -659,15 +967,15 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
   @override
   final CompanyGatewayEntity data;
 
-  factory _$CompanyGatewayItemResponse(
-          [void Function(CompanyGatewayItemResponseBuilder)? updates]) =>
-      (CompanyGatewayItemResponseBuilder()..update(updates))._build();
+  factory _$CompanyGatewayItemResponse([
+    void Function(CompanyGatewayItemResponseBuilder)? updates,
+  ]) => (CompanyGatewayItemResponseBuilder()..update(updates))._build();
 
   _$CompanyGatewayItemResponse._({required this.data}) : super._();
   @override
   CompanyGatewayItemResponse rebuild(
-          void Function(CompanyGatewayItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CompanyGatewayItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayItemResponseBuilder toBuilder() =>
@@ -691,9 +999,9 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CompanyGatewayItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'CompanyGatewayItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -734,10 +1042,7 @@ class CompanyGatewayItemResponseBuilder
   _$CompanyGatewayItemResponse _build() {
     _$CompanyGatewayItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$CompanyGatewayItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$CompanyGatewayItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -745,7 +1050,10 @@ class CompanyGatewayItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CompanyGatewayItemResponse', _$failedField, e.toString());
+          r'CompanyGatewayItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -826,51 +1134,51 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String id;
 
-  factory _$CompanyGatewayEntity(
-          [void Function(CompanyGatewayEntityBuilder)? updates]) =>
-      (CompanyGatewayEntityBuilder()..update(updates))._build();
+  factory _$CompanyGatewayEntity([
+    void Function(CompanyGatewayEntityBuilder)? updates,
+  ]) => (CompanyGatewayEntityBuilder()..update(updates))._build();
 
-  _$CompanyGatewayEntity._(
-      {this.loadedAt,
-      required this.gatewayId,
-      required this.acceptedCreditCards,
-      required this.requireShippingAddress,
-      required this.requireBillingAddress,
-      required this.requireClientName,
-      this.requirePostalCode,
-      required this.requireClientPhone,
-      required this.requireContactName,
-      required this.requireContactEmail,
-      required this.requireCustomValue1,
-      required this.requireCustomValue2,
-      required this.requireCustomValue3,
-      required this.requireCustomValue4,
-      required this.requireCvv,
-      required this.updateDetails,
-      required this.feesAndLimitsMap,
-      required this.systemLogs,
-      required this.customValue1,
-      required this.customValue2,
-      required this.customValue3,
-      required this.customValue4,
-      required this.config,
-      required this.tokenBilling,
-      required this.isTestMode,
-      required this.alwaysShowRequiredFields,
-      required this.label,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$CompanyGatewayEntity._({
+    this.loadedAt,
+    required this.gatewayId,
+    required this.acceptedCreditCards,
+    required this.requireShippingAddress,
+    required this.requireBillingAddress,
+    required this.requireClientName,
+    this.requirePostalCode,
+    required this.requireClientPhone,
+    required this.requireContactName,
+    required this.requireContactEmail,
+    required this.requireCustomValue1,
+    required this.requireCustomValue2,
+    required this.requireCustomValue3,
+    required this.requireCustomValue4,
+    required this.requireCvv,
+    required this.updateDetails,
+    required this.feesAndLimitsMap,
+    required this.systemLogs,
+    required this.customValue1,
+    required this.customValue2,
+    required this.customValue3,
+    required this.customValue4,
+    required this.config,
+    required this.tokenBilling,
+    required this.isTestMode,
+    required this.alwaysShowRequiredFields,
+    required this.label,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   CompanyGatewayEntity rebuild(
-          void Function(CompanyGatewayEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(CompanyGatewayEntityBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   CompanyGatewayEntityBuilder toBuilder() =>
@@ -1086,8 +1394,8 @@ class CompanyGatewayEntityBuilder
   MapBuilder<String?, FeesAndLimitsSettings> get feesAndLimitsMap =>
       _$this._feesAndLimitsMap ??= MapBuilder<String?, FeesAndLimitsSettings>();
   set feesAndLimitsMap(
-          MapBuilder<String?, FeesAndLimitsSettings>? feesAndLimitsMap) =>
-      _$this._feesAndLimitsMap = feesAndLimitsMap;
+    MapBuilder<String?, FeesAndLimitsSettings>? feesAndLimitsMap,
+  ) => _$this._feesAndLimitsMap = feesAndLimitsMap;
 
   ListBuilder<SystemLogEntity>? _systemLogs;
   ListBuilder<SystemLogEntity> get systemLogs =>
@@ -1229,94 +1537,152 @@ class CompanyGatewayEntityBuilder
   _$CompanyGatewayEntity _build() {
     _$CompanyGatewayEntity _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$CompanyGatewayEntity._(
             loadedAt: loadedAt,
             gatewayId: BuiltValueNullFieldError.checkNotNull(
-                gatewayId, r'CompanyGatewayEntity', 'gatewayId'),
+              gatewayId,
+              r'CompanyGatewayEntity',
+              'gatewayId',
+            ),
             acceptedCreditCards: BuiltValueNullFieldError.checkNotNull(
-                acceptedCreditCards,
-                r'CompanyGatewayEntity',
-                'acceptedCreditCards'),
+              acceptedCreditCards,
+              r'CompanyGatewayEntity',
+              'acceptedCreditCards',
+            ),
             requireShippingAddress: BuiltValueNullFieldError.checkNotNull(
-                requireShippingAddress,
-                r'CompanyGatewayEntity',
-                'requireShippingAddress'),
+              requireShippingAddress,
+              r'CompanyGatewayEntity',
+              'requireShippingAddress',
+            ),
             requireBillingAddress: BuiltValueNullFieldError.checkNotNull(
-                requireBillingAddress,
-                r'CompanyGatewayEntity',
-                'requireBillingAddress'),
+              requireBillingAddress,
+              r'CompanyGatewayEntity',
+              'requireBillingAddress',
+            ),
             requireClientName: BuiltValueNullFieldError.checkNotNull(
-                requireClientName,
-                r'CompanyGatewayEntity',
-                'requireClientName'),
+              requireClientName,
+              r'CompanyGatewayEntity',
+              'requireClientName',
+            ),
             requirePostalCode: requirePostalCode,
             requireClientPhone: BuiltValueNullFieldError.checkNotNull(
-                requireClientPhone,
-                r'CompanyGatewayEntity',
-                'requireClientPhone'),
+              requireClientPhone,
+              r'CompanyGatewayEntity',
+              'requireClientPhone',
+            ),
             requireContactName: BuiltValueNullFieldError.checkNotNull(
-                requireContactName,
-                r'CompanyGatewayEntity',
-                'requireContactName'),
+              requireContactName,
+              r'CompanyGatewayEntity',
+              'requireContactName',
+            ),
             requireContactEmail: BuiltValueNullFieldError.checkNotNull(
-                requireContactEmail,
-                r'CompanyGatewayEntity',
-                'requireContactEmail'),
+              requireContactEmail,
+              r'CompanyGatewayEntity',
+              'requireContactEmail',
+            ),
             requireCustomValue1: BuiltValueNullFieldError.checkNotNull(
-                requireCustomValue1,
-                r'CompanyGatewayEntity',
-                'requireCustomValue1'),
+              requireCustomValue1,
+              r'CompanyGatewayEntity',
+              'requireCustomValue1',
+            ),
             requireCustomValue2: BuiltValueNullFieldError.checkNotNull(
-                requireCustomValue2,
-                r'CompanyGatewayEntity',
-                'requireCustomValue2'),
+              requireCustomValue2,
+              r'CompanyGatewayEntity',
+              'requireCustomValue2',
+            ),
             requireCustomValue3: BuiltValueNullFieldError.checkNotNull(
-                requireCustomValue3,
-                r'CompanyGatewayEntity',
-                'requireCustomValue3'),
+              requireCustomValue3,
+              r'CompanyGatewayEntity',
+              'requireCustomValue3',
+            ),
             requireCustomValue4: BuiltValueNullFieldError.checkNotNull(
-                requireCustomValue4,
-                r'CompanyGatewayEntity',
-                'requireCustomValue4'),
+              requireCustomValue4,
+              r'CompanyGatewayEntity',
+              'requireCustomValue4',
+            ),
             requireCvv: BuiltValueNullFieldError.checkNotNull(
-                requireCvv, r'CompanyGatewayEntity', 'requireCvv'),
+              requireCvv,
+              r'CompanyGatewayEntity',
+              'requireCvv',
+            ),
             updateDetails: BuiltValueNullFieldError.checkNotNull(
-                updateDetails, r'CompanyGatewayEntity', 'updateDetails'),
+              updateDetails,
+              r'CompanyGatewayEntity',
+              'updateDetails',
+            ),
             feesAndLimitsMap: feesAndLimitsMap.build(),
             systemLogs: systemLogs.build(),
             customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'CompanyGatewayEntity', 'customValue1'),
+              customValue1,
+              r'CompanyGatewayEntity',
+              'customValue1',
+            ),
             customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, r'CompanyGatewayEntity', 'customValue2'),
+              customValue2,
+              r'CompanyGatewayEntity',
+              'customValue2',
+            ),
             customValue3: BuiltValueNullFieldError.checkNotNull(
-                customValue3, r'CompanyGatewayEntity', 'customValue3'),
+              customValue3,
+              r'CompanyGatewayEntity',
+              'customValue3',
+            ),
             customValue4: BuiltValueNullFieldError.checkNotNull(
-                customValue4, r'CompanyGatewayEntity', 'customValue4'),
+              customValue4,
+              r'CompanyGatewayEntity',
+              'customValue4',
+            ),
             config: BuiltValueNullFieldError.checkNotNull(
-                config, r'CompanyGatewayEntity', 'config'),
+              config,
+              r'CompanyGatewayEntity',
+              'config',
+            ),
             tokenBilling: BuiltValueNullFieldError.checkNotNull(
-                tokenBilling, r'CompanyGatewayEntity', 'tokenBilling'),
+              tokenBilling,
+              r'CompanyGatewayEntity',
+              'tokenBilling',
+            ),
             isTestMode: BuiltValueNullFieldError.checkNotNull(
-                isTestMode, r'CompanyGatewayEntity', 'isTestMode'),
+              isTestMode,
+              r'CompanyGatewayEntity',
+              'isTestMode',
+            ),
             alwaysShowRequiredFields: BuiltValueNullFieldError.checkNotNull(
-                alwaysShowRequiredFields,
-                r'CompanyGatewayEntity',
-                'alwaysShowRequiredFields'),
+              alwaysShowRequiredFields,
+              r'CompanyGatewayEntity',
+              'alwaysShowRequiredFields',
+            ),
             label: BuiltValueNullFieldError.checkNotNull(
-                label, r'CompanyGatewayEntity', 'label'),
+              label,
+              r'CompanyGatewayEntity',
+              'label',
+            ),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'CompanyGatewayEntity', 'createdAt'),
+              createdAt,
+              r'CompanyGatewayEntity',
+              'createdAt',
+            ),
             updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'CompanyGatewayEntity', 'updatedAt'),
+              updatedAt,
+              r'CompanyGatewayEntity',
+              'updatedAt',
+            ),
             archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'CompanyGatewayEntity', 'archivedAt'),
+              archivedAt,
+              r'CompanyGatewayEntity',
+              'archivedAt',
+            ),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(
-                id, r'CompanyGatewayEntity', 'id'),
+              id,
+              r'CompanyGatewayEntity',
+              'id',
+            ),
           );
     } catch (_) {
       late String _$failedField;
@@ -1327,7 +1693,10 @@ class CompanyGatewayEntityBuilder
         systemLogs.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'CompanyGatewayEntity', _$failedField, e.toString());
+          r'CompanyGatewayEntity',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -1364,29 +1733,29 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
   @override
   final bool isEnabled;
 
-  factory _$FeesAndLimitsSettings(
-          [void Function(FeesAndLimitsSettingsBuilder)? updates]) =>
-      (FeesAndLimitsSettingsBuilder()..update(updates))._build();
+  factory _$FeesAndLimitsSettings([
+    void Function(FeesAndLimitsSettingsBuilder)? updates,
+  ]) => (FeesAndLimitsSettingsBuilder()..update(updates))._build();
 
-  _$FeesAndLimitsSettings._(
-      {required this.minLimit,
-      required this.maxLimit,
-      required this.feeAmount,
-      required this.feePercent,
-      required this.feeCap,
-      required this.taxRate1,
-      required this.taxName1,
-      required this.taxRate2,
-      required this.taxName2,
-      required this.taxRate3,
-      required this.taxName3,
-      required this.adjustFeePercent,
-      required this.isEnabled})
-      : super._();
+  _$FeesAndLimitsSettings._({
+    required this.minLimit,
+    required this.maxLimit,
+    required this.feeAmount,
+    required this.feePercent,
+    required this.feeCap,
+    required this.taxRate1,
+    required this.taxName1,
+    required this.taxRate2,
+    required this.taxName2,
+    required this.taxRate3,
+    required this.taxName3,
+    required this.adjustFeePercent,
+    required this.isEnabled,
+  }) : super._();
   @override
   FeesAndLimitsSettings rebuild(
-          void Function(FeesAndLimitsSettingsBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(FeesAndLimitsSettingsBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   FeesAndLimitsSettingsBuilder toBuilder() =>
@@ -1549,34 +1918,74 @@ class FeesAndLimitsSettingsBuilder
   FeesAndLimitsSettings build() => _build();
 
   _$FeesAndLimitsSettings _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$FeesAndLimitsSettings._(
           minLimit: BuiltValueNullFieldError.checkNotNull(
-              minLimit, r'FeesAndLimitsSettings', 'minLimit'),
+            minLimit,
+            r'FeesAndLimitsSettings',
+            'minLimit',
+          ),
           maxLimit: BuiltValueNullFieldError.checkNotNull(
-              maxLimit, r'FeesAndLimitsSettings', 'maxLimit'),
+            maxLimit,
+            r'FeesAndLimitsSettings',
+            'maxLimit',
+          ),
           feeAmount: BuiltValueNullFieldError.checkNotNull(
-              feeAmount, r'FeesAndLimitsSettings', 'feeAmount'),
+            feeAmount,
+            r'FeesAndLimitsSettings',
+            'feeAmount',
+          ),
           feePercent: BuiltValueNullFieldError.checkNotNull(
-              feePercent, r'FeesAndLimitsSettings', 'feePercent'),
+            feePercent,
+            r'FeesAndLimitsSettings',
+            'feePercent',
+          ),
           feeCap: BuiltValueNullFieldError.checkNotNull(
-              feeCap, r'FeesAndLimitsSettings', 'feeCap'),
+            feeCap,
+            r'FeesAndLimitsSettings',
+            'feeCap',
+          ),
           taxRate1: BuiltValueNullFieldError.checkNotNull(
-              taxRate1, r'FeesAndLimitsSettings', 'taxRate1'),
+            taxRate1,
+            r'FeesAndLimitsSettings',
+            'taxRate1',
+          ),
           taxName1: BuiltValueNullFieldError.checkNotNull(
-              taxName1, r'FeesAndLimitsSettings', 'taxName1'),
+            taxName1,
+            r'FeesAndLimitsSettings',
+            'taxName1',
+          ),
           taxRate2: BuiltValueNullFieldError.checkNotNull(
-              taxRate2, r'FeesAndLimitsSettings', 'taxRate2'),
+            taxRate2,
+            r'FeesAndLimitsSettings',
+            'taxRate2',
+          ),
           taxName2: BuiltValueNullFieldError.checkNotNull(
-              taxName2, r'FeesAndLimitsSettings', 'taxName2'),
+            taxName2,
+            r'FeesAndLimitsSettings',
+            'taxName2',
+          ),
           taxRate3: BuiltValueNullFieldError.checkNotNull(
-              taxRate3, r'FeesAndLimitsSettings', 'taxRate3'),
+            taxRate3,
+            r'FeesAndLimitsSettings',
+            'taxRate3',
+          ),
           taxName3: BuiltValueNullFieldError.checkNotNull(
-              taxName3, r'FeesAndLimitsSettings', 'taxName3'),
+            taxName3,
+            r'FeesAndLimitsSettings',
+            'taxName3',
+          ),
           adjustFeePercent: BuiltValueNullFieldError.checkNotNull(
-              adjustFeePercent, r'FeesAndLimitsSettings', 'adjustFeePercent'),
+            adjustFeePercent,
+            r'FeesAndLimitsSettings',
+            'adjustFeePercent',
+          ),
           isEnabled: BuiltValueNullFieldError.checkNotNull(
-              isEnabled, r'FeesAndLimitsSettings', 'isEnabled'),
+            isEnabled,
+            r'FeesAndLimitsSettings',
+            'isEnabled',
+          ),
         );
     replace(_$result);
     return _$result;

@@ -29,10 +29,7 @@ import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentEdit extends StatefulWidget {
-  const PaymentEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const PaymentEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final PaymentEditVM viewModel;
 
@@ -41,8 +38,9 @@ class PaymentEdit extends StatefulWidget {
 }
 
 class _PaymentEditState extends State<PaymentEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_paymentEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_paymentEdit',
+  );
 
   final _amountController = TextEditingController();
   final _numberController = TextEditingController();
@@ -85,8 +83,11 @@ class _PaymentEditState extends State<PaymentEdit> {
       _showConvertCurrency = true;
     }
 
-    _amountController.text = formatNumber(payment.amount, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _amountController.text = formatNumber(
+      payment.amount,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _numberController.text = payment.number;
     _transactionReferenceController.text = payment.transactionReference;
     _privateNotesController.text = payment.privateNotes;
@@ -94,8 +95,11 @@ class _PaymentEditState extends State<PaymentEdit> {
     _custom2Controller.text = payment.customValue2;
     _custom3Controller.text = payment.customValue3;
     _custom4Controller.text = payment.customValue4;
-    _exchangeRateController.text = formatNumber(payment.exchangeRate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _exchangeRateController.text = formatNumber(
+      payment.exchangeRate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -113,16 +117,18 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 
   void _onChanged() {
-    final payment = widget.viewModel.payment.rebuild((b) => b
-      ..amount = parseDouble(_amountController.text)
-      ..number = _numberController.text.trim()
-      ..transactionReference = _transactionReferenceController.text.trim()
-      ..privateNotes = _privateNotesController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim()
-      ..exchangeRate = parseDouble(_exchangeRateController.text));
+    final payment = widget.viewModel.payment.rebuild(
+      (b) => b
+        ..amount = parseDouble(_amountController.text)
+        ..number = _numberController.text.trim()
+        ..transactionReference = _transactionReferenceController.text.trim()
+        ..privateNotes = _privateNotesController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
+        ..exchangeRate = parseDouble(_exchangeRateController.text),
+    );
     if (payment != widget.viewModel.payment) {
       _debouncer.run(() {
         widget.viewModel.onChanged(payment);
@@ -147,18 +153,28 @@ class _PaymentEditState extends State<PaymentEdit> {
     double exchangeRate = 1;
     if (currency != null) {
       final client = state.clientState.get(payment.clientId);
-      exchangeRate = getExchangeRate(state.staticState.currencyMap,
-          fromCurrencyId: client.currencyId, toCurrencyId: currency.id);
+      exchangeRate = getExchangeRate(
+        state.staticState.currencyMap,
+        fromCurrencyId: client.currencyId,
+        toCurrencyId: currency.id,
+      );
     }
 
     _exchangeRateController.removeListener(_onChanged);
-    _exchangeRateController.text = formatNumber(exchangeRate, context,
-        formatNumberType: FormatNumberType.inputMoney)!;
+    _exchangeRateController.text = formatNumber(
+      exchangeRate,
+      context,
+      formatNumberType: FormatNumberType.inputMoney,
+    )!;
     _exchangeRateController.addListener(_onChanged);
 
-    viewModel.onChanged(payment.rebuild((b) => b
-      ..exchangeCurrencyId = currency?.id ?? ''
-      ..exchangeRate = exchangeRate));
+    viewModel.onChanged(
+      payment.rebuild(
+        (b) => b
+          ..exchangeCurrencyId = currency?.id ?? ''
+          ..exchangeRate = exchangeRate,
+      ),
+    );
   }
 
   @override
@@ -215,25 +231,30 @@ class _PaymentEditState extends State<PaymentEdit> {
                       ? AppLocalization.of(context)!.pleaseSelectAClient
                       : null,
                   onSelected: (client) {
-                    viewModel.onChanged(payment.rebuild(
-                      (b) => b
-                        ..clientId = client?.id ?? ''
-                        ..credits.clear()
-                        ..invoices.clear(),
-                    ));
+                    viewModel.onChanged(
+                      payment.rebuild(
+                        (b) => b
+                          ..clientId = client?.id ?? ''
+                          ..credits.clear()
+                          ..invoices.clear(),
+                      ),
+                    );
                   },
                   entityList: memoizedDropdownClientList(
-                      state.clientState.map,
-                      state.clientState.list,
-                      state.userState.map,
-                      state.staticState),
+                    state.clientState.map,
+                    state.clientState.list,
+                    state.userState.map,
+                    state.staticState,
+                  ),
                 ),
                 if (state.company.enableApplyingPayments)
                   DecoratedFormField(
                     controller: _amountController,
                     autocorrect: false,
                     keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: true),
+                      decimal: true,
+                      signed: true,
+                    ),
                     label: localization.amount,
                     onSavePressed: _onSavePressed,
                   ),
@@ -250,7 +271,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
-                        '__invoice_paymentable_${index}_${invoicePaymentables[index].invoiceId}__'),
+                      '__invoice_paymentable_${index}_${invoicePaymentables[index].invoiceId}__',
+                    ),
                     viewModel: viewModel,
                     paymentable: invoicePaymentables[index],
                     index: index,
@@ -273,20 +295,25 @@ class _PaymentEditState extends State<PaymentEdit> {
                 EntityDropdown(
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
-                      viewModel.staticState.paymentTypeMap),
+                    viewModel.staticState.paymentTypeMap,
+                  ),
                   labelText: localization.paymentType,
                   entityId: payment.typeId,
-                  onSelected: (paymentType) => viewModel.onChanged(payment
-                      .rebuild((b) => b..typeId = paymentType?.id ?? '')),
+                  onSelected: (paymentType) => viewModel.onChanged(
+                    payment.rebuild((b) => b..typeId = paymentType?.id ?? ''),
+                  ),
                 ),
               if (payment.isNew || payment.isApplying == true)
                 if (state.company.isModuleEnabled(EntityType.credit))
-                  for (var index = 0;
-                      index < creditPaymentables.length;
-                      index++)
+                  for (
+                    var index = 0;
+                    index < creditPaymentables.length;
+                    index++
+                  )
                     PaymentableEditor(
                       key: ValueKey(
-                          '__credit_paymentable_${index}_${creditPaymentables[index].creditId}__'),
+                        '__credit_paymentable_${index}_${creditPaymentables[index].creditId}__',
+                      ),
                       viewModel: viewModel,
                       paymentable: creditPaymentables[index],
                       index: index,
@@ -343,8 +370,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                   title: Text(localization.sendEmail),
                   value: payment.sendEmail ?? false,
                   subtitle: Text(localization.emailReceipt),
-                  onChanged: (value) => viewModel
-                      .onChanged(payment.rebuild((b) => b..sendEmail = value)),
+                  onChanged: (value) => viewModel.onChanged(
+                    payment.rebuild((b) => b..sendEmail = value),
+                  ),
                 ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -356,12 +384,17 @@ class _PaymentEditState extends State<PaymentEdit> {
                     _exchangeRateController.text = '';
                     _exchangeRateController.addListener(_onChanged);
 
-                    viewModel.onChanged(payment.rebuild((b) => b
-                      ..exchangeCurrencyId = ''
-                      ..exchangeRate = 1));
+                    viewModel.onChanged(
+                      payment.rebuild(
+                        (b) => b
+                          ..exchangeCurrencyId = ''
+                          ..exchangeRate = 1,
+                      ),
+                    );
                   } else {
                     final currency = state
-                        .staticState.currencyMap[payment.exchangeCurrencyId];
+                        .staticState
+                        .currencyMap[payment.exchangeCurrencyId];
                     convertCurrency(currency);
                   }
                   setState(() {
@@ -372,8 +405,9 @@ class _PaymentEditState extends State<PaymentEdit> {
               if (_showConvertCurrency) ...[
                 EntityDropdown(
                   entityType: EntityType.currency,
-                  entityList:
-                      memoizedCurrencyList(viewModel.staticState.currencyMap),
+                  entityList: memoizedCurrencyList(
+                    viewModel.staticState.currencyMap,
+                  ),
                   labelText: localization.currency,
                   entityId: payment.exchangeCurrencyId,
                   onSelected: (SelectableEntity? currency) =>
@@ -381,7 +415,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                 ),
                 DecoratedFormField(
                   key: ValueKey(
-                      '__payment_amount_${payment.exchangeCurrencyId}__'),
+                    '__payment_amount_${payment.exchangeCurrencyId}__',
+                  ),
                   controller: _exchangeRateController,
                   label: localization.exchangeRate,
                   onSavePressed: _onSavePressed,
@@ -399,92 +434,93 @@ class _PaymentEditState extends State<PaymentEdit> {
                     final exchangeRate = _convertedAmount! / amount;
                     _exchangeRateController.removeListener(_onChanged);
                     _exchangeRateController.text = formatNumber(
-                        exchangeRate, context,
-                        formatNumberType: FormatNumberType.inputMoney)!;
+                      exchangeRate,
+                      context,
+                      formatNumberType: FormatNumberType.inputMoney,
+                    )!;
                     _exchangeRateController.addListener(_onChanged);
 
                     viewModel.onChanged(
-                        payment.rebuild((b) => b..exchangeRate = exchangeRate));
+                      payment.rebuild((b) => b..exchangeRate = exchangeRate),
+                    );
                     _convertedAmount = 0;
                   },
                   child: DecoratedFormField(
                     key: ValueKey(
-                        '__payment_amount_${paymentTotal}_${creditTotal}_${payment.exchangeRate}__'),
+                      '__payment_amount_${paymentTotal}_${creditTotal}_${payment.exchangeRate}__',
+                    ),
                     initialValue:
                         payment.exchangeRate != 1 && payment.exchangeRate != 0
-                            ? formatNumber(
-                                (payment.isNew
-                                        ? paymentTotal - creditTotal
-                                        : payment.amount) *
-                                    payment.exchangeRate,
-                                context,
-                                formatNumberType: FormatNumberType.inputMoney)
-                            : '',
+                        ? formatNumber(
+                            (payment.isNew
+                                    ? paymentTotal - creditTotal
+                                    : payment.amount) *
+                                payment.exchangeRate,
+                            context,
+                            formatNumberType: FormatNumberType.inputMoney,
+                          )
+                        : '',
                     label: localization.convertedAmount,
                     onChanged: (value) {
                       _convertedAmount = parseDouble(value);
                     },
                     onSavePressed: _onSavePressed,
                     keyboardType: TextInputType.numberWithOptions(
-                        decimal: true, signed: false),
+                      decimal: true,
+                      signed: false,
+                    ),
                   ),
                 ),
               ],
             ],
-          )
+          ),
         ],
       ),
     );
 
     if (payment.isApplying == true && isDesktop(context)) {
       return AlertDialog(
-          backgroundColor: Theme.of(context).canvasColor,
-          contentPadding: const EdgeInsets.all(0),
-          actionsPadding: const EdgeInsets.only(right: 4),
-          title: Text(localization.applyPayment),
-          content: SingleChildScrollView(
-            child: SizedBox(
-              child: body,
-              width: kDialogWidth,
+        backgroundColor: Theme.of(context).canvasColor,
+        contentPadding: const EdgeInsets.all(0),
+        actionsPadding: const EdgeInsets.only(right: 4),
+        title: Text(localization.applyPayment),
+        content: SingleChildScrollView(
+          child: SizedBox(child: body, width: kDialogWidth),
+        ),
+        actions: <Widget>[
+          if (viewModel.state.isSaving)
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+                height: 30,
+                width: 30,
+              ),
+            )
+          else ...[
+            TextButton(
+              child: Text(localization.cancel.toUpperCase()),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-          ),
-          actions: <Widget>[
-            if (viewModel.state.isSaving)
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                  height: 30,
-                  width: 30,
-                ),
-              )
-            else ...[
-              TextButton(
-                child: Text(localization.cancel.toUpperCase()),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              TextButton(
-                child: Text(localization.apply.toUpperCase()),
-                onPressed: () => _onSavePressed(context),
-              ),
-            ],
-          ]);
+            TextButton(
+              child: Text(localization.apply.toUpperCase()),
+              onPressed: () => _onSavePressed(context),
+            ),
+          ],
+        ],
+      );
     } else {
       return EditScaffold(
         entity: payment,
         title: viewModel.payment.isNew
             ? localization.enterPayment
             : payment.isApplying == true
-                ? localization.applyPayment
-                : localization.editPayment,
+            ? localization.applyPayment
+            : localization.editPayment,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         onSavePressed: _onSavePressed,
-        body: ScrollableListView(
-          children: [body],
-        ),
-        bottomNavigationBar: PaymentEditFooter(
-          payment: payment,
-        ),
+        body: ScrollableListView(children: [body]),
+        bottomNavigationBar: PaymentEditFooter(payment: payment),
       );
     }
   }
@@ -520,15 +556,17 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _amountController,
-    ];
+    _controllers = [_amountController];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final paymentable = widget.paymentable;
-    _amountController.text = formatNumber(paymentable.amount, context,
-            formatNumberType: FormatNumberType.inputMoney) ??
+    _amountController.text =
+        formatNumber(
+          paymentable.amount,
+          context,
+          formatNumberType: FormatNumberType.inputMoney,
+        ) ??
         '0';
     if (paymentable.entityType == EntityType.invoice) {
       _invoiceId = paymentable.invoiceId;
@@ -554,13 +592,17 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
   void _onChanged([String? clientId]) {
     PaymentableEntity paymentable;
     if (widget.entityType == EntityType.invoice) {
-      paymentable = widget.paymentable.rebuild((b) => b
-        ..invoiceId = _invoiceId ?? widget.paymentable.invoiceId
-        ..amount = parseDouble(_amountController.text));
+      paymentable = widget.paymentable.rebuild(
+        (b) => b
+          ..invoiceId = _invoiceId ?? widget.paymentable.invoiceId
+          ..amount = parseDouble(_amountController.text),
+      );
     } else {
-      paymentable = widget.paymentable.rebuild((b) => b
-        ..creditId = _creditId ?? widget.paymentable.creditId
-        ..amount = parseDouble(_amountController.text));
+      paymentable = widget.paymentable.rebuild(
+        (b) => b
+          ..creditId = _creditId ?? widget.paymentable.creditId
+          ..amount = parseDouble(_amountController.text),
+      );
     }
 
     if (paymentable == widget.paymentable || paymentable.isEmpty) {
@@ -571,19 +613,23 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     if (widget.entityType == EntityType.invoice) {
       if (widget.index == widget.viewModel.payment.invoices.length) {
-        payment = widget.viewModel.payment
-            .rebuild((b) => b..invoices.add(paymentable));
+        payment = widget.viewModel.payment.rebuild(
+          (b) => b..invoices.add(paymentable),
+        );
       } else {
-        payment = widget.viewModel.payment
-            .rebuild((b) => b..invoices[widget.index] = paymentable);
+        payment = widget.viewModel.payment.rebuild(
+          (b) => b..invoices[widget.index] = paymentable,
+        );
       }
     } else {
       if (widget.index == widget.viewModel.payment.credits.length) {
-        payment = widget.viewModel.payment
-            .rebuild((b) => b..credits.add(paymentable));
+        payment = widget.viewModel.payment.rebuild(
+          (b) => b..credits.add(paymentable),
+        );
       } else {
-        payment = widget.viewModel.payment
-            .rebuild((b) => b..credits[widget.index] = paymentable);
+        payment = widget.viewModel.payment.rebuild(
+          (b) => b..credits[widget.index] = paymentable,
+        );
       }
     }
 
@@ -614,13 +660,14 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     );
 
     final creditList = memoizedDropdownCreditList(
-        state.creditState.map,
-        state.clientState.map,
-        state.vendorState.map,
-        state.creditState.list,
-        payment.clientId,
-        state.userState.map,
-        payment.credits.map((p) => p.creditId).toList());
+      state.creditState.map,
+      state.clientState.map,
+      state.vendorState.map,
+      state.creditState.list,
+      payment.clientId,
+      state.userState.map,
+      payment.credits.map((p) => p.creditId).toList(),
+    );
 
     // If a client isn't selected or a client is selected but the client
     // doesn't have any more credits then don't show the picker
@@ -655,16 +702,23 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 }
               },
               overrideSuggestedAmount: (entity) {
-                return formatNumber(entity.listDisplayAmount, context,
-                    clientId: (entity as InvoiceEntity).clientId);
+                return formatNumber(
+                  entity.listDisplayAmount,
+                  context,
+                  clientId: (entity as InvoiceEntity).clientId,
+                );
               },
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
                     ? min(widget.limit!, invoice.balanceOrAmount)
                     : invoice.balanceOrAmount;
-                _amountController.text = formatNumber(amount, context,
-                        formatNumberType: FormatNumberType.inputMoney) ??
+                _amountController.text =
+                    formatNumber(
+                      amount,
+                      context,
+                      formatNumberType: FormatNumberType.inputMoney,
+                    ) ??
                     '0';
                 _invoiceId = invoice.id;
                 _onChanged(invoice.clientId);
@@ -689,14 +743,20 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 }
               },
               overrideSuggestedAmount: (entity) {
-                return formatNumber(entity.listDisplayAmount, context,
-                    clientId: (entity as InvoiceEntity).clientId);
+                return formatNumber(
+                  entity.listDisplayAmount,
+                  context,
+                  clientId: (entity as InvoiceEntity).clientId,
+                );
               },
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
-                _amountController.text = formatNumber(
-                        credit.balanceOrAmount, context,
-                        formatNumberType: FormatNumberType.inputMoney) ??
+                _amountController.text =
+                    formatNumber(
+                      credit.balanceOrAmount,
+                      context,
+                      formatNumberType: FormatNumberType.inputMoney,
+                    ) ??
                     '0';
                 _creditId = credit.id;
                 _onChanged(credit.clientId);
@@ -704,20 +764,21 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             ),
           ),
         if ((_creditId ?? '').isNotEmpty || (_invoiceId ?? '').isNotEmpty) ...[
-          SizedBox(
-            width: kTableColumnGap,
-          ),
+          SizedBox(width: kTableColumnGap),
           Expanded(
             child: DecoratedFormField(
-                showClear: false,
-                controller: _amountController,
-                autocorrect: false,
-                keyboardType: TextInputType.numberWithOptions(
-                    decimal: true, signed: true),
-                label: widget.entityType == EntityType.invoice
-                    ? localization!.amount
-                    : localization!.applied,
-                onSavePressed: widget.onSavePressed),
+              showClear: false,
+              controller: _amountController,
+              autocorrect: false,
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: true,
+                signed: true,
+              ),
+              label: widget.entityType == EntityType.invoice
+                  ? localization!.amount
+                  : localization!.applied,
+              onSavePressed: widget.onSavePressed,
+            ),
           ),
         ],
         if ((widget.entityType == EntityType.invoice &&
@@ -726,9 +787,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&
                 _creditId != null)) ...[
-          SizedBox(
-            width: kTableColumnGap,
-          ),
+          SizedBox(width: kTableColumnGap),
           IconButton(
             icon: Icon(Icons.clear, color: Colors.grey),
             tooltip: localization!.remove,
@@ -736,11 +795,17 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 ? null
                 : () {
                     if (widget.entityType == EntityType.invoice) {
-                      viewModel.onChanged(payment
-                          .rebuild((b) => b..invoices.removeAt(widget.index)));
+                      viewModel.onChanged(
+                        payment.rebuild(
+                          (b) => b..invoices.removeAt(widget.index),
+                        ),
+                      );
                     } else {
-                      viewModel.onChanged(payment
-                          .rebuild((b) => b..credits.removeAt(widget.index)));
+                      viewModel.onChanged(
+                        payment.rebuild(
+                          (b) => b..credits.removeAt(widget.index),
+                        ),
+                      );
                     }
                   },
           ),

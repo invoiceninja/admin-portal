@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class KanbanView extends StatefulWidget {
-  const KanbanView({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const KanbanView({Key? key, required this.viewModel}) : super(key: key);
 
   final KanbanVM viewModel;
 
@@ -55,7 +52,9 @@ class KanbanViewState extends State<KanbanView> {
     final state = viewModel.state;
 
     _statuses = memoizedSortedActiveTaskStatusIds(
-        state.taskStatusState.list, state.taskStatusState.map);
+      state.taskStatusState.list,
+      state.taskStatusState.map,
+    );
 
     _tasks = {};
 
@@ -76,8 +75,9 @@ class KanbanViewState extends State<KanbanView> {
         if (taskA.statusOrder == taskB.statusOrder) {
           return taskB.updatedAt.compareTo(taskA.updatedAt);
         } else {
-          return (taskA.statusOrder ?? 99999)
-              .compareTo(taskB.statusOrder ?? 99999);
+          return (taskA.statusOrder ?? 99999).compareTo(
+            taskB.statusOrder ?? 99999,
+          );
         }
       });
     });
@@ -140,7 +140,8 @@ class KanbanViewState extends State<KanbanView> {
 
     final boardList = filteredStatusIds.map((statusId) {
       final status = state.taskStatusState.get(statusId);
-      final hasCorectOrder = statusId.isEmpty ||
+      final hasCorectOrder =
+          statusId.isEmpty ||
           status.statusOrder == filteredStatusIds.indexOf(status.id);
 
       return BoardList(
@@ -173,7 +174,11 @@ class KanbanViewState extends State<KanbanView> {
               onSavePressed: (completer, name) {
                 final statusOrder = _statuses!.indexOf(statusId);
                 widget.viewModel.onSaveStatusPressed(
-                    completer, statusId, name, statusOrder);
+                  completer,
+                  statusId,
+                  name,
+                  statusOrder,
+                );
               },
             ),
           ),
@@ -207,8 +212,9 @@ class KanbanViewState extends State<KanbanView> {
                     child: Text(AppLocalization.of(context)!.newTask),
                     onPressed: () {
                       setState(() {
-                        _newTask = TaskEntity(state: widget.viewModel.state)
-                            .rebuild((b) => b..statusId = status.id);
+                        _newTask = TaskEntity(
+                          state: widget.viewModel.state,
+                        ).rebuild((b) => b..statusId = status.id);
                       });
                     },
                   ),
@@ -216,93 +222,97 @@ class KanbanViewState extends State<KanbanView> {
         ),
         items: (_tasks![status.id] ?? [])
             .map((taskId) => widget.viewModel.state.taskState.get(taskId))
-            .map(
-          (task) {
-            final isVisible =
-                widget.viewModel.filteredTaskList.contains(task.id) ||
-                    task.isNew;
-            return BoardItem(
-              draggable: task.isOld,
-              item: !isVisible
-                  ? SizedBox()
-                  : KanbanTaskCard(
-                      task: task,
-                      isSaving: state.isSaving,
-                      isDragging: isDragging,
-                      isSelected: (state.uiState.isEditing
-                              ? state.taskUIState.editingId
-                              : state.taskUIState.selectedId) ==
-                          task.id,
-                      isCorrectOrder: (task.statusOrder ==
-                              _tasks![status.id]!.indexOf(task.id)) &&
-                          task.statusId == statusId,
-                      onSavePressed: (completer, description) {
-                        final statusOrder =
-                            _tasks![status.id]!.indexOf(task.id);
-                        widget.viewModel.onSaveTaskPressed(
-                          completer,
-                          task.id,
-                          status.id,
-                          description,
-                          statusOrder,
-                        );
-                      },
-                      onCancelPressed: () {
-                        if (task.isNew) {
-                          setState(() {
-                            _newTask = null;
-                          });
-                        }
-                      },
-                    ),
-              onStartDragItem: (listIndex, itemIndex, state) {
-                setState(() => isDragging = true);
-              },
-              /*
+            .map((task) {
+              final isVisible =
+                  widget.viewModel.filteredTaskList.contains(task.id) ||
+                  task.isNew;
+              return BoardItem(
+                draggable: task.isOld,
+                item: !isVisible
+                    ? SizedBox()
+                    : KanbanTaskCard(
+                        task: task,
+                        isSaving: state.isSaving,
+                        isDragging: isDragging,
+                        isSelected:
+                            (state.uiState.isEditing
+                                ? state.taskUIState.editingId
+                                : state.taskUIState.selectedId) ==
+                            task.id,
+                        isCorrectOrder:
+                            (task.statusOrder ==
+                                _tasks![status.id]!.indexOf(task.id)) &&
+                            task.statusId == statusId,
+                        onSavePressed: (completer, description) {
+                          final statusOrder = _tasks![status.id]!.indexOf(
+                            task.id,
+                          );
+                          widget.viewModel.onSaveTaskPressed(
+                            completer,
+                            task.id,
+                            status.id,
+                            description,
+                            statusOrder,
+                          );
+                        },
+                        onCancelPressed: () {
+                          if (task.isNew) {
+                            setState(() {
+                              _newTask = null;
+                            });
+                          }
+                        },
+                      ),
+                onStartDragItem: (listIndex, itemIndex, state) {
+                  setState(() => isDragging = true);
+                },
+                /*
               onDragItem: (oldListIndex, oldItemIndex, newListIndex,
                   newItemIndex, state) {
                 setState(() => _isDragging = true);
               },
               */
-              onDropItem: (
-                int? listIndex,
-                int? itemIndex,
-                int? oldListIndex,
-                int? oldItemIndex,
-                BoardItemState state,
-              ) {
-                setState(() => isDragging = false);
+                onDropItem:
+                    (
+                      int? listIndex,
+                      int? itemIndex,
+                      int? oldListIndex,
+                      int? oldItemIndex,
+                      BoardItemState state,
+                    ) {
+                      setState(() => isDragging = false);
 
-                if (listIndex == oldListIndex && itemIndex == oldItemIndex) {
-                  return;
-                }
+                      if (listIndex == oldListIndex &&
+                          itemIndex == oldItemIndex) {
+                        return;
+                      }
 
-                final oldStatusId = _statuses![oldListIndex!];
-                final newStatusId = _statuses![listIndex!];
-                final taskId = _tasks![status.id]![oldItemIndex!];
+                      final oldStatusId = _statuses![oldListIndex!];
+                      final newStatusId = _statuses![listIndex!];
+                      final taskId = _tasks![status.id]![oldItemIndex!];
 
-                setState(() {
-                  if (_tasks!.containsKey(oldStatusId) &&
-                      _tasks![oldStatusId]!.contains(taskId)) {
-                    _tasks![oldStatusId]!.remove(taskId);
-                  }
+                      setState(() {
+                        if (_tasks!.containsKey(oldStatusId) &&
+                            _tasks![oldStatusId]!.contains(taskId)) {
+                          _tasks![oldStatusId]!.remove(taskId);
+                        }
 
-                  if (!_tasks!.containsKey(newStatusId)) {
-                    _tasks![newStatusId] = [];
-                  }
+                        if (!_tasks!.containsKey(newStatusId)) {
+                          _tasks![newStatusId] = [];
+                        }
 
-                  _tasks![newStatusId] = [
-                    ..._tasks![newStatusId]!.sublist(0, itemIndex),
-                    taskId,
-                    ..._tasks![newStatusId]!.sublist(itemIndex!),
-                  ];
-                });
+                        _tasks![newStatusId] = [
+                          ..._tasks![newStatusId]!.sublist(0, itemIndex),
+                          taskId,
+                          ..._tasks![newStatusId]!.sublist(itemIndex!),
+                        ];
+                      });
 
-                _onBoardChanged();
-              },
-            );
-          },
-        ).toList(),
+                      _onBoardChanged();
+                    },
+              );
+            })
+            .toList(),
       );
     }).toList();
 

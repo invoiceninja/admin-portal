@@ -21,10 +21,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignViewScreen extends StatelessWidget {
-  const DesignViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const DesignViewScreen({Key? key, this.isFilter = false}) : super(key: key);
   final bool isFilter;
 
   static const String route = '/$kSettings/$kSettingsCustomDesignsView';
@@ -36,10 +33,7 @@ class DesignViewScreen extends StatelessWidget {
         return DesignViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return DesignView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return DesignView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -60,12 +54,14 @@ class DesignViewVM {
 
   factory DesignViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final design = state.designState.map[state.designUIState.selectedId] ??
+    final design =
+        state.designState.map[state.designUIState.selectedId] ??
         DesignEntity(id: state.designUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(LoadDesign(completer: completer, designId: design.id));
       return completer.future;
     }

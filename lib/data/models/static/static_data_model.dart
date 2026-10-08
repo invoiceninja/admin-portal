@@ -20,9 +20,9 @@ part 'static_data_model.g.dart';
 
 abstract class StaticDataListResponse
     implements Built<StaticDataListResponse, StaticDataListResponseBuilder> {
-  factory StaticDataListResponse(
-          [void updates(StaticDataListResponseBuilder b)]) =
-      _$StaticDataListResponse;
+  factory StaticDataListResponse([
+    void updates(StaticDataListResponseBuilder b),
+  ]) = _$StaticDataListResponse;
 
   StaticDataListResponse._();
 
@@ -38,9 +38,9 @@ abstract class StaticDataListResponse
 
 abstract class StaticDataItemResponse
     implements Built<StaticDataItemResponse, StaticDataItemResponseBuilder> {
-  factory StaticDataItemResponse(
-          [void updates(StaticDataItemResponseBuilder b)]) =
-      _$StaticDataItemResponse;
+  factory StaticDataItemResponse([
+    void updates(StaticDataItemResponseBuilder b),
+  ]) = _$StaticDataItemResponse;
 
   StaticDataItemResponse._();
 
@@ -141,10 +141,7 @@ abstract class StaticDataEntity
 abstract class TemplateEntity
     implements Built<TemplateEntity, TemplateEntityBuilder> {
   factory TemplateEntity() {
-    return _$TemplateEntity._(
-      subject: '',
-      body: '',
-    );
+    return _$TemplateEntity._(subject: '', body: '');
   }
 
   TemplateEntity._();

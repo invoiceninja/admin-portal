@@ -13,10 +13,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class BankAccountEdit extends StatefulWidget {
-  const BankAccountEdit({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const BankAccountEdit({Key? key, required this.viewModel}) : super(key: key);
 
   final BankAccountEditVM viewModel;
 
@@ -25,8 +22,9 @@ class BankAccountEdit extends StatefulWidget {
 }
 
 class _BankAccountEditState extends State<BankAccountEdit> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_bankAccountEdit');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_bankAccountEdit',
+  );
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   final _nameController = TextEditingController();
@@ -36,18 +34,18 @@ class _BankAccountEditState extends State<BankAccountEdit> {
 
   @override
   void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-    ];
+    _controllers = [_nameController];
 
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.removeListener(_onChanged),
+    );
 
     final bankAccount = widget.viewModel.bankAccount;
     _nameController.text = bankAccount.name;
 
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+    _controllers.forEach(
+      (dynamic controller) => controller.addListener(_onChanged),
+    );
 
     super.didChangeDependencies();
   }
@@ -64,8 +62,9 @@ class _BankAccountEditState extends State<BankAccountEdit> {
   }
 
   void _onChanged() {
-    final bankAccount = widget.viewModel.bankAccount
-        .rebuild((b) => b..name = _nameController.text.trim());
+    final bankAccount = widget.viewModel.bankAccount.rebuild(
+      (b) => b..name = _nameController.text.trim(),
+    );
     if (bankAccount != widget.viewModel.bankAccount) {
       _debouncer.run(() {
         widget.viewModel.onChanged(bankAccount);
@@ -101,7 +100,8 @@ class _BankAccountEditState extends State<BankAccountEdit> {
         focusNode: _focusNode,
         child: ScrollableListView(
           key: ValueKey(
-              '__bankAccount_${bankAccount.id}_${bankAccount.updatedAt}__'),
+            '__bankAccount_${bankAccount.id}_${bankAccount.updatedAt}__',
+          ),
           children: <Widget>[
             FormCard(
               isLast: true,
@@ -120,7 +120,8 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                   DatePicker(
                     labelText: localization.syncFrom,
                     onSelected: (date, _) => viewModel.onChanged(
-                        bankAccount.rebuild((b) => b..fromDate = date)),
+                      bankAccount.rebuild((b) => b..fromDate = date),
+                    ),
                     selectedDate: bankAccount.fromDate,
                     allowClearing: true,
                   ),
@@ -130,7 +131,8 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                     title: Text(localization.autoSync),
                     value: bankAccount.autoSync,
                     onChanged: (value) => viewModel.onChanged(
-                        bankAccount.rebuild((b) => b..autoSync = value)),
+                      bankAccount.rebuild((b) => b..autoSync = value),
+                    ),
                   ),
                 ],
               ],

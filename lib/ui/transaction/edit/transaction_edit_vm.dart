@@ -77,42 +77,56 @@ class TransactionEditVM {
           final localization = AppLocalization.of(context);
           final Completer<TransactionEntity> completer =
               new Completer<TransactionEntity>();
-          store.dispatch(SaveTransactionRequest(
-              completer: completer, transaction: transaction));
-          return completer.future.then((savedTransaction) {
-            showToast(transaction!.isNew
-                ? localization!.createdTransaction
-                : localization!.updatedTransaction);
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(TransactionViewScreen.route));
-              if (transaction.isNew) {
-                Navigator.of(navigatorKey.currentContext!)
-                    .pushReplacementNamed(TransactionViewScreen.route);
-              } else {
-                Navigator.of(navigatorKey.currentContext!)
-                    .pop(savedTransaction);
-              }
-            } else {
-              viewEntity(entity: savedTransaction, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          store.dispatch(
+            SaveTransactionRequest(
+              completer: completer,
+              transaction: transaction,
+            ),
+          );
+          return completer.future
+              .then((savedTransaction) {
+                showToast(
+                  transaction!.isNew
+                      ? localization!.createdTransaction
+                      : localization!.updatedTransaction,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(
+                    UpdateCurrentRoute(TransactionViewScreen.route),
+                  );
+                  if (transaction.isNew) {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pushReplacementNamed(TransactionViewScreen.route);
+                  } else {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pop(savedTransaction);
+                  }
+                } else {
+                  viewEntity(entity: savedTransaction, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
       onAddBankAccountPressed: (context, completer) {
         createEntity(
-            entity: BankAccountEntity(state: state),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
-              }));
+          entity: BankAccountEntity(state: state),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
         });
@@ -130,5 +144,5 @@ class TransactionEditVM {
   final TransactionEntity? origTransaction;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
-      onAddBankAccountPressed;
+  onAddBankAccountPressed;
 }

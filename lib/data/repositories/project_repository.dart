@@ -18,26 +18,31 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class ProjectRepository {
-  const ProjectRepository({
-    this.webClient = const WebClient(),
-  });
+  const ProjectRepository({this.webClient = const WebClient()});
 
   final WebClient webClient;
 
   Future<ProjectEntity> loadItem(
-      Credentials credentials, String? entityId) async {
+    Credentials credentials,
+    String? entityId,
+  ) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/projects/$entityId', credentials.token);
+      '${credentials.url}/projects/$entityId',
+      credentials.token,
+    );
 
     final ProjectItemResponse projectResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[ProjectItemResponse.serializer, response]);
+      SerializationUtils.deserializeWith,
+      <dynamic>[ProjectItemResponse.serializer, response],
+    );
 
     return projectResponse.data;
   }
 
   Future<BuiltList<ProjectEntity>> loadList(
-      Credentials credentials, bool filterDeleted) async {
+    Credentials credentials,
+    bool filterDeleted,
+  ) async {
     String url = credentials.url + '/projects?';
 
     if (filterDeleted) {
@@ -47,66 +52,90 @@ class ProjectRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ProjectListResponse projectResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[ProjectListResponse.serializer, response]);
+      SerializationUtils.deserializeWith,
+      <dynamic>[ProjectListResponse.serializer, response],
+    );
 
     return projectResponse.data;
   }
 
   Future<List<ProjectEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+    Credentials credentials,
+    List<String> ids,
+    EntityAction action,
+  ) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
         credentials.url + '/projects/bulk?per_page=$kMaxEntitiesPerBulkAction';
-    final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+    final dynamic response = await webClient.post(
+      url,
+      credentials.token,
+      data: json.encode({'ids': ids, 'action': action.toApiParam()}),
+    );
 
-    final ProjectListResponse projectResponse =
-        serializers.deserializeWith(ProjectListResponse.serializer, response)!;
+    final ProjectListResponse projectResponse = serializers.deserializeWith(
+      ProjectListResponse.serializer,
+      response,
+    )!;
 
     return projectResponse.data.toList();
   }
 
   Future<ProjectEntity> saveData(
-      Credentials credentials, ProjectEntity project) async {
+    Credentials credentials,
+    ProjectEntity project,
+  ) async {
     final data = serializers.serializeWith(ProjectEntity.serializer, project);
     dynamic response;
 
     if (project.isNew) {
       response = await webClient.post(
-          credentials.url + '/projects', credentials.token,
-          data: json.encode(data));
+        credentials.url + '/projects',
+        credentials.token,
+        data: json.encode(data),
+      );
     } else {
       final url = credentials.url + '/projects/${project.id}';
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(
+        url,
+        credentials.token,
+        data: json.encode(data),
+      );
     }
 
-    final ProjectItemResponse projectResponse =
-        serializers.deserializeWith(ProjectItemResponse.serializer, response)!;
+    final ProjectItemResponse projectResponse = serializers.deserializeWith(
+      ProjectItemResponse.serializer,
+      response,
+    )!;
 
     return projectResponse.data;
   }
 
   Future<ProjectEntity> uploadDocuments(
-      Credentials credentials,
-      BaseEntity entity,
-      List<MultipartFile> multipartFiles,
-      bool isPrivate) async {
+    Credentials credentials,
+    BaseEntity entity,
+    List<MultipartFile> multipartFiles,
+    bool isPrivate,
+  ) async {
     final fields = <String, String>{
       '_method': 'put',
       'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/projects/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: multipartFiles);
+      '${credentials.url}/projects/${entity.id}/upload',
+      credentials.token,
+      data: fields,
+      multipartFiles: multipartFiles,
+    );
 
-    final ProjectItemResponse projectResponse =
-        serializers.deserializeWith(ProjectItemResponse.serializer, response)!;
+    final ProjectItemResponse projectResponse = serializers.deserializeWith(
+      ProjectItemResponse.serializer,
+      response,
+    )!;
 
     return projectResponse.data;
   }

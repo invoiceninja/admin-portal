@@ -54,10 +54,12 @@ class DesignPicker extends StatelessWidget {
             }
             return design.isActive || designId == initialValue;
           })
-          .map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(designState.map[value]!.displayName),
-              ))
+          .map(
+            (value) => DropdownMenuItem(
+              value: value,
+              child: Text(designState.map[value]!.displayName),
+            ),
+          )
           .toList(),
       labelText: label ?? localization!.design,
     );

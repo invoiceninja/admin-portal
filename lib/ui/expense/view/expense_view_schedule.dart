@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseViewSchedule extends StatefulWidget {
   const ExpenseViewSchedule({Key? key, required this.viewModel})
-      : super(key: key);
+    : super(key: key);
 
   final AbstractExpenseViewVM viewModel;
 
@@ -46,20 +46,20 @@ class _ExpenseViewScheduleState extends State<ExpenseViewSchedule> {
           ],
         ),
         if (expense.isStale && expense.recurringDates!.isEmpty)
-          LoadingIndicator(
-            height: 300,
-          ),
+          LoadingIndicator(height: 300),
         ...expense.recurringDates!
-            .map((schedule) => Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(formatDate(schedule.sendDate, context)),
-                      ),
-                    ],
-                  ),
-                ))
+            .map(
+              (schedule) => Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(formatDate(schedule.sendDate, context)),
+                    ),
+                  ],
+                ),
+              ),
+            )
             .toList(),
       ],
     );

@@ -9,14 +9,18 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownWebhookList = memo3(
-    (BuiltMap<String, WebhookEntity> webhookMap, BuiltList<String> webhookList,
-            String clientId) =>
-        dropdownWebhooksSelector(webhookMap, webhookList, clientId));
-
-List<String> dropdownWebhooksSelector(
+  (
     BuiltMap<String, WebhookEntity> webhookMap,
     BuiltList<String> webhookList,
-    String clientId) {
+    String clientId,
+  ) => dropdownWebhooksSelector(webhookMap, webhookList, clientId),
+);
+
+List<String> dropdownWebhooksSelector(
+  BuiltMap<String, WebhookEntity> webhookMap,
+  BuiltList<String> webhookList,
+  String clientId,
+) {
   final list = webhookList.where((webhookId) {
     final webhook = webhookMap[webhookId]!;
     /*
@@ -36,18 +40,19 @@ List<String> dropdownWebhooksSelector(
   return list;
 }
 
-var memoizedFilteredWebhookList = memo4((
-  SelectionState selectionState,
-  BuiltMap<String, WebhookEntity> webhookMap,
-  BuiltList<String> webhookList,
-  ListUIState webhookListState,
-) =>
-    filteredWebhooksSelector(
-      selectionState,
-      webhookMap,
-      webhookList,
-      webhookListState,
-    ));
+var memoizedFilteredWebhookList = memo4(
+  (
+    SelectionState selectionState,
+    BuiltMap<String, WebhookEntity> webhookMap,
+    BuiltList<String> webhookList,
+    ListUIState webhookListState,
+  ) => filteredWebhooksSelector(
+    selectionState,
+    webhookMap,
+    webhookList,
+    webhookListState,
+  ),
+);
 
 List<String> filteredWebhooksSelector(
   SelectionState selectionState,
@@ -72,7 +77,10 @@ List<String> filteredWebhooksSelector(
     final webhookA = webhookMap[webhookAId]!;
     final webhookB = webhookMap[webhookBId];
     return webhookA.compareTo(
-        webhookB, webhookListState.sortField, webhookListState.sortAscending);
+      webhookB,
+      webhookListState.sortField,
+      webhookListState.sortAscending,
+    );
   });
 
   return list;

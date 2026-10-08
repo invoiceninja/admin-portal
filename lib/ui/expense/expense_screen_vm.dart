@@ -21,9 +21,7 @@ class ExpenseScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ExpenseScreenVM>(
       converter: ExpenseScreenVM.fromStore,
       builder: (context, vm) {
-        return ExpenseScreen(
-          viewModel: vm,
-        );
+        return ExpenseScreen(viewModel: vm);
       },
     );
   }
@@ -48,15 +46,16 @@ class ExpenseScreenVM {
     return ExpenseScreenVM(
       expenseMap: state.expenseState.map,
       expenseList: memoizedFilteredExpenseList(
-          state.getUISelection(EntityType.expense),
-          state.expenseState.map,
-          state.clientState.map,
-          state.vendorState.map,
-          state.userState.map,
-          state.expenseListState,
-          state.invoiceState.map,
-          state.expenseCategoryState.map,
-          state.staticState),
+        state.getUISelection(EntityType.expense),
+        state.expenseState.map,
+        state.clientState.map,
+        state.vendorState.map,
+        state.userState.map,
+        state.expenseListState,
+        state.invoiceState.map,
+        state.expenseCategoryState.map,
+        state.staticState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.expenseListState.isInMultiselect(),
     );

@@ -14,10 +14,7 @@ import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseSettings extends StatefulWidget {
-  const ExpenseSettings({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ExpenseSettings({Key? key, required this.viewModel}) : super(key: key);
 
   final ExpenseSettingsVM viewModel;
 
@@ -26,8 +23,9 @@ class ExpenseSettings extends StatefulWidget {
 }
 
 class _ExpenseSettingsState extends State<ExpenseSettings> {
-  static final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(debugLabel: '_expenseSettings');
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(
+    debugLabel: '_expenseSettings',
+  );
   FocusScopeNode? _focusNode;
 
   @override
@@ -65,7 +63,8 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 value: company.markExpensesInvoiceable,
                 subtitle: Text(localization.shouldBeInvoicedHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..markExpensesInvoiceable = value)),
+                  company.rebuild((b) => b..markExpensesInvoiceable = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -73,7 +72,8 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 value: company.markExpensesPaid,
                 subtitle: Text(localization.markPaidHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..markExpensesPaid = value)),
+                  company.rebuild((b) => b..markExpensesPaid = value),
+                ),
               ),
               if (company.markExpensesPaid == true)
                 Padding(
@@ -81,12 +81,15 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                   child: EntityDropdown(
                     entityType: EntityType.paymentType,
                     entityList: memoizedPaymentTypeList(
-                        state.staticState.paymentTypeMap),
+                      state.staticState.paymentTypeMap,
+                    ),
                     labelText: localization.paymentType,
                     entityId: settings.defaultExpensePaymentTypeId,
                     onSelected: (paymentType) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) =>
-                            b..defaultExpensePaymentTypeId = paymentType?.id)),
+                      settings.rebuild(
+                        (b) => b..defaultExpensePaymentTypeId = paymentType?.id,
+                      ),
+                    ),
                   ),
                 ),
               SwitchListTile(
@@ -95,7 +98,8 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 value: company.convertExpenseCurrency,
                 subtitle: Text(localization.convertExpenseCurrencyHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..convertExpenseCurrency = value)),
+                  company.rebuild((b) => b..convertExpenseCurrency = value),
+                ),
               ),
               SwitchListTile(
                 activeThumbColor: Theme.of(context).colorScheme.secondary,
@@ -103,20 +107,24 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 value: company.invoiceExpenseDocuments,
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..invoiceExpenseDocuments = value)),
+                  company.rebuild((b) => b..invoiceExpenseDocuments = value),
+                ),
               ),
             ],
           ),
-          FormCard(children: <Widget>[
-            SwitchListTile(
-              activeThumbColor: Theme.of(context).colorScheme.secondary,
-              title: Text(localization.notifyVendorWhenPaid),
-              value: company.notifyVendorWhenPaid,
-              subtitle: Text(localization.notifyVendorWhenPaidHelp),
-              onChanged: (value) => viewModel.onCompanyChanged(
-                  company.rebuild((b) => b..notifyVendorWhenPaid = value)),
-            ),
-          ]),
+          FormCard(
+            children: <Widget>[
+              SwitchListTile(
+                activeThumbColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.notifyVendorWhenPaid),
+                value: company.notifyVendorWhenPaid,
+                subtitle: Text(localization.notifyVendorWhenPaidHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                  company.rebuild((b) => b..notifyVendorWhenPaid = value),
+                ),
+              ),
+            ],
+          ),
           if (company.numberOfItemTaxRates > 0)
             FormCard(
               children: [
@@ -125,8 +133,11 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                   enabledLabel: localization.byAmount,
                   disabledLabel: localization.byRate,
                   value: company.calculateExpenseTaxByAmount,
-                  onChanged: (value) => viewModel.onCompanyChanged(company
-                      .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild(
+                      (b) => b..calculateExpenseTaxByAmount = value,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 16),
                 SwitchListTile(
@@ -134,9 +145,11 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                   title: Text(localization.inclusiveTaxes),
                   value: company.expenseInclusiveTaxes,
                   subtitle: Text(
-                      '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
+                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
+                  ),
                   onChanged: (value) => viewModel.onCompanyChanged(
-                      company.rebuild((b) => b..expenseInclusiveTaxes = value)),
+                    company.rebuild((b) => b..expenseInclusiveTaxes = value),
+                  ),
                 ),
               ],
             ),

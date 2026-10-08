@@ -48,9 +48,11 @@ abstract class InvoiceState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
@@ -61,8 +63,10 @@ abstract class InvoiceUIState extends Object
     implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
   factory InvoiceUIState(PrefStateSortField? sortField) {
     return _$InvoiceUIState._(
-      listUIState: ListUIState(sortField?.field ?? InvoiceFields.number,
-          sortAscending: sortField?.ascending ?? false),
+      listUIState: ListUIState(
+        sortField?.field ?? InvoiceFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

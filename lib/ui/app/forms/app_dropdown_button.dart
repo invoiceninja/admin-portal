@@ -52,7 +52,7 @@ class AppDropdownButton<T> extends StatelessWidget {
             value: blankValue,
             child: blankLabel == null ? SizedBox() : Text(blankLabel!),
           ),
-        ...items
+        ...items,
       ],
     );
   }

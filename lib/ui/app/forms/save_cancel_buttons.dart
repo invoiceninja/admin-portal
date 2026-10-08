@@ -29,26 +29,31 @@ class SaveCancelButtons extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return Row(
-      crossAxisAlignment:
-          isHeader ? CrossAxisAlignment.stretch : CrossAxisAlignment.center,
+      crossAxisAlignment: isHeader
+          ? CrossAxisAlignment.stretch
+          : CrossAxisAlignment.center,
       children: <Widget>[
         if (onCancelPressed != null)
-          Builder(builder: (BuildContext context) {
+          Builder(
+            builder: (BuildContext context) {
+              return AppTextButton(
+                label: cancelLabel ?? localization!.cancel,
+                isInHeader: isHeader && (isEnabled || isCancelEnabled),
+                onPressed: isEnabled || isCancelEnabled
+                    ? () => onCancelPressed!(context)
+                    : null,
+              );
+            },
+          ),
+        Builder(
+          builder: (BuildContext context) {
             return AppTextButton(
-              label: cancelLabel ?? localization!.cancel,
-              isInHeader: isHeader && (isEnabled || isCancelEnabled),
-              onPressed: isEnabled || isCancelEnabled
-                  ? () => onCancelPressed!(context)
-                  : null,
+              label: saveLabel ?? localization!.save,
+              isInHeader: isHeader,
+              onPressed: isEnabled ? () => onSavePressed!(context) : null,
             );
-          }),
-        Builder(builder: (BuildContext context) {
-          return AppTextButton(
-            label: saveLabel ?? localization!.save,
-            isInHeader: isHeader,
-            onPressed: isEnabled ? () => onSavePressed!(context) : null,
-          );
-        }),
+          },
+        ),
       ],
     );
   }

@@ -63,13 +63,17 @@ final cancelCompleterReducer = combineReducers<Completer<Null>?>([
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveProjectSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteProjectSuccess>((completer, action) => ''),
-  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.project ? action.entityId : selectedId),
+  TypedReducer<String?, PreviewEntity>(
+    (selectedId, action) =>
+        action.entityType == EntityType.project ? action.entityId : selectedId,
+  ),
   TypedReducer<String?, ViewProject>((selectedId, action) => action.projectId),
   TypedReducer<String?, AddProjectSuccess>(
-      (selectedId, action) => action.project.id),
+    (selectedId, action) => action.project.id,
+  ),
   TypedReducer<String?, SelectCompany>(
-      (selectedId, action) => action.clearSelection ? '' : selectedId),
+    (selectedId, action) => action.clearSelection ? '' : selectedId,
+  ),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortProjects>((selectedId, action) => ''),
   TypedReducer<String?, FilterProjects>((selectedId, action) => ''),
@@ -79,11 +83,12 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterProjectsByCustom3>((selectedId, action) => ''),
   TypedReducer<String?, FilterProjectsByCustom4>((selectedId, action) => ''),
   TypedReducer<String?, FilterByEntity>(
-      (selectedId, action) => action.clearSelection
-          ? ''
-          : action.entityType == EntityType.project
-              ? action.entityId
-              : selectedId),
+    (selectedId, action) => action.clearSelection
+        ? ''
+        : action.entityType == EntityType.project
+        ? action.entityId
+        : selectedId,
+  ),
 ]);
 
 final editingReducer = combineReducers<ProjectEntity?>([
@@ -124,106 +129,144 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, StartProjectMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToProjectMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
-      _removeFromListMultiselect),
+    _removeFromListMultiselect,
+  ),
   TypedReducer<ListUIState, ClearProjectMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ViewProjectList>(_viewProjectList),
   TypedReducer<ListUIState, FilterByEntity>(
-      (state, action) => state.rebuild((b) => b
+    (state, action) => state.rebuild(
+      (b) => b
         ..filter = null
-        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+        ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+    ),
+  ),
 ]);
 
 ListUIState _viewProjectList(
-    ListUIState projectListState, ViewProjectList action) {
-  return projectListState.rebuild((b) => b
-    ..selectedIds = null
-    ..filter = null
-    ..filterClearedAt = DateTime.now().millisecondsSinceEpoch);
+  ListUIState projectListState,
+  ViewProjectList action,
+) {
+  return projectListState.rebuild(
+    (b) => b
+      ..selectedIds = null
+      ..filter = null
+      ..filterClearedAt = DateTime.now().millisecondsSinceEpoch,
+  );
 }
 
 ListUIState _filterProjectsByCustom1(
-    ListUIState projectListState, FilterProjectsByCustom1 action) {
+  ListUIState projectListState,
+  FilterProjectsByCustom1 action,
+) {
   if (projectListState.custom1Filters.contains(action.value)) {
-    return projectListState
-        .rebuild((b) => b..custom1Filters.remove(action.value));
+    return projectListState.rebuild(
+      (b) => b..custom1Filters.remove(action.value),
+    );
   } else {
     return projectListState.rebuild((b) => b..custom1Filters.add(action.value));
   }
 }
 
 ListUIState _filterProjectsByCustom2(
-    ListUIState projectListState, FilterProjectsByCustom2 action) {
+  ListUIState projectListState,
+  FilterProjectsByCustom2 action,
+) {
   if (projectListState.custom2Filters.contains(action.value)) {
-    return projectListState
-        .rebuild((b) => b..custom2Filters.remove(action.value));
+    return projectListState.rebuild(
+      (b) => b..custom2Filters.remove(action.value),
+    );
   } else {
     return projectListState.rebuild((b) => b..custom2Filters.add(action.value));
   }
 }
 
 ListUIState _filterProjectsByCustom3(
-    ListUIState projectListState, FilterProjectsByCustom3 action) {
+  ListUIState projectListState,
+  FilterProjectsByCustom3 action,
+) {
   if (projectListState.custom3Filters.contains(action.value)) {
-    return projectListState
-        .rebuild((b) => b..custom3Filters.remove(action.value));
+    return projectListState.rebuild(
+      (b) => b..custom3Filters.remove(action.value),
+    );
   } else {
     return projectListState.rebuild((b) => b..custom3Filters.add(action.value));
   }
 }
 
 ListUIState _filterProjectsByCustom4(
-    ListUIState projectListState, FilterProjectsByCustom4 action) {
+  ListUIState projectListState,
+  FilterProjectsByCustom4 action,
+) {
   if (projectListState.custom4Filters.contains(action.value)) {
-    return projectListState
-        .rebuild((b) => b..custom4Filters.remove(action.value));
+    return projectListState.rebuild(
+      (b) => b..custom4Filters.remove(action.value),
+    );
   } else {
     return projectListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
 ListUIState _filterProjectsByState(
-    ListUIState projectListState, FilterProjectsByState action) {
+  ListUIState projectListState,
+  FilterProjectsByState action,
+) {
   if (projectListState.stateFilters.contains(action.state)) {
-    return projectListState
-        .rebuild((b) => b..stateFilters.remove(action.state));
+    return projectListState.rebuild(
+      (b) => b..stateFilters.remove(action.state),
+    );
   } else {
     return projectListState.rebuild((b) => b..stateFilters.add(action.state));
   }
 }
 
 ListUIState _filterProjects(
-    ListUIState projectListState, FilterProjects action) {
-  return projectListState.rebuild((b) => b
-    ..filter = action.filter
-    ..filterClearedAt = action.filter == null
-        ? DateTime.now().millisecondsSinceEpoch
-        : projectListState.filterClearedAt);
+  ListUIState projectListState,
+  FilterProjects action,
+) {
+  return projectListState.rebuild(
+    (b) => b
+      ..filter = action.filter
+      ..filterClearedAt = action.filter == null
+          ? DateTime.now().millisecondsSinceEpoch
+          : projectListState.filterClearedAt,
+  );
 }
 
 ListUIState _sortProjects(ListUIState projectListState, SortProjects action) {
-  return projectListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending!
-    ..sortField = action.field);
+  return projectListState.rebuild(
+    (b) => b
+      ..sortAscending = b.sortField != action.field || !b.sortAscending!
+      ..sortField = action.field,
+  );
 }
 
 ListUIState _startListMultiselect(
-    ListUIState projectListState, StartProjectMultiselect action) {
+  ListUIState projectListState,
+  StartProjectMultiselect action,
+) {
   return projectListState.rebuild((b) => b..selectedIds = ListBuilder());
 }
 
 ListUIState _addToListMultiselect(
-    ListUIState projectListState, AddToProjectMultiselect action) {
+  ListUIState projectListState,
+  AddToProjectMultiselect action,
+) {
   return projectListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
-    ListUIState projectListState, RemoveFromProjectMultiselect action) {
-  return projectListState
-      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  ListUIState projectListState,
+  RemoveFromProjectMultiselect action,
+) {
+  return projectListState.rebuild(
+    (b) => b..selectedIds.remove(action.entity!.id),
+  );
 }
 
 ListUIState _clearListMultiselect(
-    ListUIState projectListState, ClearProjectMultiselect action) {
+  ListUIState projectListState,
+  ClearProjectMultiselect action,
+) {
   return projectListState.rebuild((b) => b..selectedIds = null);
 }
 
@@ -240,19 +283,25 @@ final projectsReducer = combineReducers<ProjectState>([
 ]);
 
 ProjectState _purgeClientSuccess(
-    ProjectState projectState, PurgeClientSuccess action) {
+  ProjectState projectState,
+  PurgeClientSuccess action,
+) {
   final ids = projectState.map.values
       .where((each) => each.clientId == action.clientId)
       .map((each) => each.id)
       .toList();
 
-  return projectState.rebuild((b) => b
-    ..map.removeWhere((p0, p1) => ids.contains(p0))
-    ..list.removeWhere((p0) => ids.contains(p0)));
+  return projectState.rebuild(
+    (b) => b
+      ..map.removeWhere((p0, p1) => ids.contains(p0))
+      ..list.removeWhere((p0) => ids.contains(p0)),
+  );
 }
 
 ProjectState _archiveProjectSuccess(
-    ProjectState projectState, ArchiveProjectSuccess action) {
+  ProjectState projectState,
+  ArchiveProjectSuccess action,
+) {
   return projectState.rebuild((b) {
     for (final project in action.projects) {
       b.map[project.id] = project;
@@ -261,7 +310,9 @@ ProjectState _archiveProjectSuccess(
 }
 
 ProjectState _deleteProjectSuccess(
-    ProjectState projectState, DeleteProjectSuccess action) {
+  ProjectState projectState,
+  DeleteProjectSuccess action,
+) {
   return projectState.rebuild((b) {
     for (final project in action.projects) {
       b.map[project.id] = project;
@@ -270,7 +321,9 @@ ProjectState _deleteProjectSuccess(
 }
 
 ProjectState _restoreProjectSuccess(
-    ProjectState projectState, RestoreProjectSuccess action) {
+  ProjectState projectState,
+  RestoreProjectSuccess action,
+) {
   return projectState.rebuild((b) {
     for (final project in action.projects) {
       b.map[project.id] = project;
@@ -279,29 +332,40 @@ ProjectState _restoreProjectSuccess(
 }
 
 ProjectState _addProject(ProjectState projectState, AddProjectSuccess action) {
-  return projectState.rebuild((b) => b
-    ..map[action.project.id] = action.project
-    ..list.add(action.project.id));
+  return projectState.rebuild(
+    (b) => b
+      ..map[action.project.id] = action.project
+      ..list.add(action.project.id),
+  );
 }
 
 ProjectState _updateProject(
-    ProjectState projectState, SaveProjectSuccess action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  ProjectState projectState,
+  SaveProjectSuccess action,
+) {
+  return projectState.rebuild(
+    (b) => b..map[action.project.id] = action.project,
+  );
 }
 
 ProjectState _setLoadedProject(
-    ProjectState projectState, LoadProjectSuccess action) {
-  return projectState
-      .rebuild((b) => b..map[action.project.id] = action.project);
+  ProjectState projectState,
+  LoadProjectSuccess action,
+) {
+  return projectState.rebuild(
+    (b) => b..map[action.project.id] = action.project,
+  );
 }
 
 ProjectState _setLoadedProjects(
-        ProjectState projectState, LoadProjectsSuccess action) =>
-    projectState.loadProjects(action.projects);
+  ProjectState projectState,
+  LoadProjectsSuccess action,
+) => projectState.loadProjects(action.projects);
 
 ProjectState _setLoadedCompany(
-    ProjectState projectState, LoadCompanySuccess action) {
+  ProjectState projectState,
+  LoadCompanySuccess action,
+) {
   final company = action.userCompany.company;
   return projectState.loadProjects(company.projects);
 }

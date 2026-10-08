@@ -15,48 +15,75 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   final String wireName = 'AppState';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, AppState object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    AppState object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'isLoading',
-      serializers.serialize(object.isLoading,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isLoading,
+        specifiedType: const FullType(bool),
+      ),
       'isSaving',
-      serializers.serialize(object.isSaving,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isSaving,
+        specifiedType: const FullType(bool),
+      ),
       'isTesting',
-      serializers.serialize(object.isTesting,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isTesting,
+        specifiedType: const FullType(bool),
+      ),
       'isWhiteLabeled',
-      serializers.serialize(object.isWhiteLabeled,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isWhiteLabeled,
+        specifiedType: const FullType(bool),
+      ),
       'lastError',
-      serializers.serialize(object.lastError,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.lastError,
+        specifiedType: const FullType(String),
+      ),
       'authState',
-      serializers.serialize(object.authState,
-          specifiedType: const FullType(AuthState)),
+      serializers.serialize(
+        object.authState,
+        specifiedType: const FullType(AuthState),
+      ),
       'staticState',
-      serializers.serialize(object.staticState,
-          specifiedType: const FullType(StaticState)),
+      serializers.serialize(
+        object.staticState,
+        specifiedType: const FullType(StaticState),
+      ),
       'prefState',
-      serializers.serialize(object.prefState,
-          specifiedType: const FullType(PrefState)),
+      serializers.serialize(
+        object.prefState,
+        specifiedType: const FullType(PrefState),
+      ),
       'uiState',
-      serializers.serialize(object.uiState,
-          specifiedType: const FullType(UIState)),
+      serializers.serialize(
+        object.uiState,
+        specifiedType: const FullType(UIState),
+      ),
       'userCompanyStates',
-      serializers.serialize(object.userCompanyStates,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(UserCompanyState)])),
+      serializers.serialize(
+        object.userCompanyStates,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(UserCompanyState),
+        ]),
+      ),
     ];
 
     return result;
   }
 
   @override
-  AppState deserialize(Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+  AppState deserialize(
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = AppStateBuilder();
 
     final iterator = serialized.iterator;
@@ -66,46 +93,91 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       final Object? value = iterator.current;
       switch (key) {
         case 'isLoading':
-          result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isLoading =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'isSaving':
-          result.isSaving = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isSaving =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'isTesting':
-          result.isTesting = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isTesting =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'isWhiteLabeled':
-          result.isWhiteLabeled = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isWhiteLabeled =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'lastError':
-          result.lastError = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.lastError =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'authState':
-          result.authState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(AuthState))! as AuthState);
+          result.authState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(AuthState),
+                )!
+                as AuthState,
+          );
           break;
         case 'staticState':
-          result.staticState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(StaticState))! as StaticState);
+          result.staticState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(StaticState),
+                )!
+                as StaticState,
+          );
           break;
         case 'prefState':
-          result.prefState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(PrefState))! as PrefState);
+          result.prefState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(PrefState),
+                )!
+                as PrefState,
+          );
           break;
         case 'uiState':
-          result.uiState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UIState))! as UIState);
+          result.uiState.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(UIState),
+                )!
+                as UIState,
+          );
           break;
         case 'userCompanyStates':
-          result.userCompanyStates.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(UserCompanyState)]))!
-              as BuiltList<Object?>);
+          result.userCompanyStates.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(UserCompanyState),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -139,18 +211,18 @@ class _$AppState extends AppState {
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (AppStateBuilder()..update(updates))._build();
 
-  _$AppState._(
-      {required this.isLoading,
-      required this.isSaving,
-      required this.isTesting,
-      required this.isWhiteLabeled,
-      required this.lastError,
-      required this.authState,
-      required this.staticState,
-      required this.prefState,
-      required this.uiState,
-      required this.userCompanyStates})
-      : super._();
+  _$AppState._({
+    required this.isLoading,
+    required this.isSaving,
+    required this.isTesting,
+    required this.isWhiteLabeled,
+    required this.lastError,
+    required this.authState,
+    required this.staticState,
+    required this.prefState,
+    required this.uiState,
+    required this.userCompanyStates,
+  }) : super._();
   @override
   AppState rebuild(void Function(AppStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -278,18 +350,34 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _build() {
     _$AppState _$result;
     try {
-      _$result = _$v ??
+      _$result =
+          _$v ??
           _$AppState._(
             isLoading: BuiltValueNullFieldError.checkNotNull(
-                isLoading, r'AppState', 'isLoading'),
+              isLoading,
+              r'AppState',
+              'isLoading',
+            ),
             isSaving: BuiltValueNullFieldError.checkNotNull(
-                isSaving, r'AppState', 'isSaving'),
+              isSaving,
+              r'AppState',
+              'isSaving',
+            ),
             isTesting: BuiltValueNullFieldError.checkNotNull(
-                isTesting, r'AppState', 'isTesting'),
+              isTesting,
+              r'AppState',
+              'isTesting',
+            ),
             isWhiteLabeled: BuiltValueNullFieldError.checkNotNull(
-                isWhiteLabeled, r'AppState', 'isWhiteLabeled'),
+              isWhiteLabeled,
+              r'AppState',
+              'isWhiteLabeled',
+            ),
             lastError: BuiltValueNullFieldError.checkNotNull(
-                lastError, r'AppState', 'lastError'),
+              lastError,
+              r'AppState',
+              'lastError',
+            ),
             authState: authState.build(),
             staticState: staticState.build(),
             prefState: prefState.build(),
@@ -311,7 +399,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         userCompanyStates.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'AppState', _$failedField, e.toString());
+          r'AppState',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }

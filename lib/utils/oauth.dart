@@ -106,15 +106,17 @@ class GoogleOAuth {
   }
 
   static Future<String> _resolveAccessToken(GoogleSignInAccount account) async {
-    final silent =
-        await account.authorizationClient.authorizationForScopes(_scopes);
+    final silent = await account.authorizationClient.authorizationForScopes(
+      _scopes,
+    );
     if (silent != null) {
       return silent.accessToken;
     }
 
     try {
-      final interactive =
-          await account.authorizationClient.authorizeScopes(_scopes);
+      final interactive = await account.authorizationClient.authorizeScopes(
+        _scopes,
+      );
       return interactive.accessToken;
     } on GoogleSignInException catch (e) {
       debugPrint('## authorizeScopes failed: ${e.code}');

@@ -51,9 +51,10 @@ class _ClientViewState extends State<ClientView>
 
     final state = widget.viewModel.state;
     _controller = TabController(
-        vsync: this,
-        length: state.company.isModuleEnabled(EntityType.document) ? 7 : 6,
-        initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex);
+      vsync: this,
+      length: state.company.isModuleEnabled(EntityType.document) ? 7 : 6,
+      initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -99,13 +100,12 @@ class _ClientViewState extends State<ClientView>
           children: [
             EntityTopFilterHeader(),
             Expanded(
-                child: AppBorder(
-              isTop: true,
-              isBottom: true,
-              child: ClientViewFullwidth(
-                viewModel: viewModel,
+              child: AppBorder(
+                isTop: true,
+                isBottom: true,
+                child: ClientViewFullwidth(viewModel: viewModel),
               ),
-            )),
+            ),
           ],
         ),
       );
@@ -118,12 +118,8 @@ class _ClientViewState extends State<ClientView>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization!.overview,
-          ),
-          Tab(
-            text: localization.details,
-          ),
+          Tab(text: localization!.overview),
+          Tab(text: localization.details),
           if (company.isModuleEnabled(EntityType.document))
             Tab(
               text: documents.isEmpty
@@ -135,81 +131,77 @@ class _ClientViewState extends State<ClientView>
                 ? localization.locations
                 : '${localization.locations} (${client.locations.length})',
           ),
-          Tab(
-            text: localization.ledger,
-          ),
-          Tab(
-            text: localization.activity,
-          ),
-          Tab(
-            text: localization.systemLogs,
-          ),
+          Tab(text: localization.ledger),
+          Tab(text: localization.activity),
+          Tab(text: localization.systemLogs),
         ],
       ),
-      body: Builder(builder: (context) {
-        return Column(
-          children: <Widget>[
-            Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: <Widget>[
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientOverview(
-                      viewModel: viewModel,
-                      isFilter: widget.isFilter,
+      body: Builder(
+        builder: (context) {
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: TabBarView(
+                  controller: _controller,
+                  children: <Widget>[
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientOverview(
+                        viewModel: viewModel,
+                        isFilter: widget.isFilter,
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewDetails(client: viewModel.client),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewDocuments(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.client.id),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientViewDetails(client: viewModel.client),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewLocations(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.client.id),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientViewDocuments(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.client.id),
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewLedger(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.client.id),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientViewLocations(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.client.id),
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewActivity(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.client.id),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientViewLedger(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.client.id),
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewSystemLogs(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.client.id),
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientViewActivity(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.client.id),
+                      ),
                     ),
-                  ),
-                ],
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ClientViewSystemLogs(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.client.id),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            BottomButtons(
-              entity: client,
-              action1: EntityAction.viewStatement,
-              action2: EntityAction.clientPortal,
-            ),
-          ],
-        );
-      }),
+              BottomButtons(
+                entity: client,
+                action1: EntityAction.viewStatement,
+                action2: EntityAction.clientPortal,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

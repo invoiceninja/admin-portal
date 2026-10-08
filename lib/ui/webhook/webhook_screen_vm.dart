@@ -22,9 +22,7 @@ class WebhookScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, WebhookScreenVM>(
       converter: WebhookScreenVM.fromStore,
       builder: (context, vm) {
-        return WebhookScreen(
-          viewModel: vm,
-        );
+        return WebhookScreen(viewModel: vm);
       },
     );
   }
@@ -51,15 +49,19 @@ class WebhookScreenVM {
     return WebhookScreenVM(
       webhookMap: state.webhookState.map,
       webhookList: memoizedFilteredWebhookList(
-          state.getUISelection(EntityType.webhook),
-          state.webhookState.map,
-          state.webhookState.list,
-          state.webhookListState),
+        state.getUISelection(EntityType.webhook),
+        state.webhookState.map,
+        state.webhookState.list,
+        state.webhookListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.webhookListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> webhooks,
-              EntityAction action) =>
-          handleWebhookAction(context, webhooks, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> webhooks,
+            EntityAction action,
+          ) => handleWebhookAction(context, webhooks, action),
     );
   }
 }

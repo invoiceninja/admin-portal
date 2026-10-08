@@ -117,8 +117,9 @@ abstract class TokenEntity extends Object
 
     switch (sortField) {
       case TokenFields.name:
-        response =
-            tokenA!.name.toLowerCase().compareTo(tokenB!.name.toLowerCase());
+        response = tokenA!.name.toLowerCase().compareTo(
+          tokenB!.name.toLowerCase(),
+        );
         break;
       default:
         print('## ERROR: sort by token.$sortField is not implemented');
@@ -130,29 +131,22 @@ abstract class TokenEntity extends Object
 
   @override
   bool matchesFilter(String? filter) {
-    return matchesStrings(
-      haystacks: [
-        name,
-      ],
-      needle: filter,
-    );
+    return matchesStrings(haystacks: [name], needle: filter);
   }
 
   @override
   String? matchesFilterValue(String? filter) {
-    return matchesStringsValue(
-      haystacks: [],
-      needle: filter,
-    );
+    return matchesStringsValue(haystacks: [], needle: filter);
   }
 
   @override
-  List<EntityAction?> getActions(
-      {UserCompanyEntity? userCompany,
-      ClientEntity? client,
-      bool includeEdit = false,
-      bool includePreview = false,
-      bool multiselect = false}) {
+  List<EntityAction?> getActions({
+    UserCompanyEntity? userCompany,
+    ClientEntity? client,
+    bool includeEdit = false,
+    bool includePreview = false,
+    bool multiselect = false,
+  }) {
     final actions = <EntityAction?>[];
 
     if (!isMasked && !multiselect) {

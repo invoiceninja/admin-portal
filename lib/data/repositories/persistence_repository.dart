@@ -16,9 +16,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class PersistenceRepository {
-  const PersistenceRepository({
-    required this.fileStorage,
-  });
+  const PersistenceRepository({required this.fileStorage});
 
   final FileStorage fileStorage;
 
@@ -51,7 +49,9 @@ class PersistenceRepository {
   Future<UserCompanyState?> loadCompanyState(int index) async {
     final String data = await fileStorage.load();
     final companyState = serializers.deserializeWith(
-        UserCompanyState.serializer, json.decode(data));
+      UserCompanyState.serializer,
+      json.decode(data),
+    );
 
     return companyState;
 
@@ -67,7 +67,9 @@ class PersistenceRepository {
     if (await fileStorage.exists()) {
       final String data = await fileStorage.load();
       return serializers.deserializeWith(
-          AuthState.serializer, json.decode(data));
+        AuthState.serializer,
+        json.decode(data),
+      );
     } else {
       throw 'State does not exist on file';
     }
@@ -81,7 +83,9 @@ class PersistenceRepository {
   Future<StaticState?> loadStaticState() async {
     final String data = await fileStorage.load();
     return serializers.deserializeWith(
-        StaticState.serializer, json.decode(data));
+      StaticState.serializer,
+      json.decode(data),
+    );
   }
 
   Future<File?> saveUIState(UIState state) async {

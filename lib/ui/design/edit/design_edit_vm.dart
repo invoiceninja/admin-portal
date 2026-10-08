@@ -77,9 +77,11 @@ class DesignEditVM {
         Debouncer.runOnComplete(() {
           final design = store.state.designUIState.editing;
           final completer = snackBarCompleter<DesignEntity>(
-              AppLocalization.of(context)!.savedDesign);
+            AppLocalization.of(context)!.savedDesign,
+          );
           store.dispatch(
-              SaveDesignRequest(completer: completer, design: design));
+            SaveDesignRequest(completer: completer, design: design),
+          );
         });
       },
     );

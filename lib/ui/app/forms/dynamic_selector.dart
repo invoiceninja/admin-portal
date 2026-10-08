@@ -55,12 +55,16 @@ class DynamicSelector extends StatelessWidget {
         showBlank: allowClearing,
         onChanged: (dynamic entityId) => onChanged!(entityId),
         items: entityIds!
-            .map((entityId) => DropdownMenuItem(
-                  child: Text(overrideSuggestedLabel != null
+            .map(
+              (entityId) => DropdownMenuItem(
+                child: Text(
+                  overrideSuggestedLabel != null
                       ? overrideSuggestedLabel!(entityMap![entityId])
-                      : entityMap![entityId]?.listDisplayName ?? ''),
-                  value: entityId,
-                ))
+                      : entityMap![entityId]?.listDisplayName ?? '',
+                ),
+                value: entityId,
+              ),
+            )
             .toList(),
       );
     } else {

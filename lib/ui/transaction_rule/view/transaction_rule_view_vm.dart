@@ -14,10 +14,8 @@ import 'package:invoiceninja_flutter/ui/transaction_rule/view/transaction_rule_v
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TransactionRuleViewScreen extends StatelessWidget {
-  const TransactionRuleViewScreen({
-    Key? key,
-    this.isFilter = false,
-  }) : super(key: key);
+  const TransactionRuleViewScreen({Key? key, this.isFilter = false})
+    : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTransactionRulesView';
 
@@ -30,10 +28,7 @@ class TransactionRuleViewScreen extends StatelessWidget {
         return TransactionRuleViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return TransactionRuleView(
-          viewModel: vm,
-          isFilter: isFilter,
-        );
+        return TransactionRuleView(viewModel: vm, isFilter: isFilter);
       },
     );
   }
@@ -54,15 +49,22 @@ class TransactionRuleViewVM {
 
   factory TransactionRuleViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final transactionRule = state.transactionRuleState
-            .map[state.transactionRuleUIState.selectedId] ??
+    final transactionRule =
+        state.transactionRuleState.map[state
+            .transactionRuleUIState
+            .selectedId] ??
         TransactionRuleEntity(id: state.transactionRuleUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
-      store.dispatch(LoadTransactionRule(
-          completer: completer, transactionRuleId: transactionRule.id));
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
+      store.dispatch(
+        LoadTransactionRule(
+          completer: completer,
+          transactionRuleId: transactionRule.id,
+        ),
+      );
       return completer.future;
     }
 

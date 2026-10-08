@@ -90,7 +90,8 @@ class VendorPresenter extends EntityPresenter {
         return Text(vendor!.postalCode);
       case VendorFields.countryId:
         return Text(
-            state.staticState.countryMap[vendor!.countryId]?.name ?? '');
+          state.staticState.countryMap[vendor!.countryId]?.name ?? '',
+        );
       case VendorFields.isTaxExempt:
         return Text(vendor!.isTaxExempt ? localization!.yes : localization!.no);
       case VendorFields.privateNotes:
@@ -103,10 +104,12 @@ class VendorPresenter extends EntityPresenter {
         return Text(vendor!.vatNumber);
       case VendorFields.currencyId:
         return Text(
-            state.staticState.currencyMap[vendor!.currencyId]?.name ?? '');
+          state.staticState.currencyMap[vendor!.currencyId]?.name ?? '',
+        );
       case VendorFields.languageId:
         return Text(
-            state.staticState.languageMap[vendor!.languageId]?.name ?? '');
+          state.staticState.languageMap[vendor!.languageId]?.name ?? '',
+        );
       case VendorFields.customValue1:
         return Text(presentCustomField(context, vendor!.customValue1)!);
       case VendorFields.customValue2:
@@ -131,10 +134,14 @@ class VendorPresenter extends EntityPresenter {
               launchUrl(Uri.parse('mailto:${vendor.primaryContact.email}')),
         );
       case VendorFields.lastLoginAt:
-        return Text(vendor!.lastLogin == 0
-            ? ''
-            : formatDate(
-                convertTimestampToDateString(vendor.lastLogin), context));
+        return Text(
+          vendor!.lastLogin == 0
+              ? ''
+              : formatDate(
+                  convertTimestampToDateString(vendor.lastLogin),
+                  context,
+                ),
+        );
       case VendorFields.classification:
         return Text(localization!.lookup(vendor!.classification));
     }

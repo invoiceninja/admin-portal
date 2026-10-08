@@ -17,16 +17,13 @@ class ListDivider extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final color = convertHexStringToColor(
-        enableDarkMode ? kDefaultDarkBorderColor : kDefaultLightBorderColor);
+      enableDarkMode ? kDefaultDarkBorderColor : kDefaultLightBorderColor,
+    );
 
     // https://github.com/flutter/flutter/issues/46339#issuecomment-562859241
     return Container(
       color: color,
-      child: Divider(
-        color: color,
-        thickness: 1.5,
-        height: 1.5,
-      ),
+      child: Divider(color: color, thickness: 1.5, height: 1.5),
     );
   }
 }

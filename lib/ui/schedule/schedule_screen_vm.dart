@@ -18,9 +18,7 @@ class ScheduleScreenBuilder extends StatelessWidget {
     return StoreConnector<AppState, ScheduleScreenVM>(
       converter: ScheduleScreenVM.fromStore,
       builder: (context, vm) {
-        return ScheduleScreen(
-          viewModel: vm,
-        );
+        return ScheduleScreen(viewModel: vm);
       },
     );
   }
@@ -54,9 +52,12 @@ class ScheduleScreenVM {
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.scheduleListState.isInMultiselect(),
-      onEntityAction: (BuildContext context, List<BaseEntity> schedules,
-              EntityAction action) =>
-          handleScheduleAction(context, schedules, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> schedules,
+            EntityAction action,
+          ) => handleScheduleAction(context, schedules, action),
     );
   }
 }

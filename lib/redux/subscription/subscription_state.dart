@@ -48,9 +48,11 @@ abstract class SubscriptionState
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<SubscriptionState> get serializer =>
@@ -62,8 +64,10 @@ abstract class SubscriptionUIState extends Object
     implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
   factory SubscriptionUIState(PrefStateSortField? sortField) {
     return _$SubscriptionUIState._(
-      listUIState: ListUIState(sortField?.field ?? SubscriptionFields.createdAt,
-          sortAscending: sortField?.ascending),
+      listUIState: ListUIState(
+        sortField?.field ?? SubscriptionFields.createdAt,
+        sortAscending: sortField?.ascending,
+      ),
       editing: SubscriptionEntity(),
       selectedId: '',
       tabIndex: 0,

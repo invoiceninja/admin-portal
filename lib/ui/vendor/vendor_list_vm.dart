@@ -78,8 +78,9 @@ class VendorListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -90,19 +91,20 @@ class VendorListVM {
       state: state,
       listState: state.vendorListState,
       vendorList: memoizedFilteredVendorList(
-          state.getUISelection(EntityType.vendor),
-          state.vendorState.map,
-          state.vendorState.list,
-          state.vendorListState,
-          state.userState.map,
-          state.staticState),
+        state.getUISelection(EntityType.vendor),
+        state.vendorState.map,
+        state.vendorState.list,
+        state.vendorListState,
+        state.userState.map,
+        state.staticState,
+      ),
       vendorMap: state.vendorState.map,
       isLoading: state.isLoading,
       filter: state.vendorUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.vendor) ??
-              VendorPresenter.getDefaultTableFields(state.userCompany),
+          VendorPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
       onClearMultielsect: () => store.dispatch(ClearVendorMultiselect()),
     );

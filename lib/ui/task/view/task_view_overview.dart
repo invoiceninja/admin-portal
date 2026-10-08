@@ -38,8 +38,10 @@ class _TaskOverviewState extends State<TaskOverview> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 1),
-        (Timer timer) => mounted ? setState(() => false) : false);
+    _timer = Timer.periodic(
+      Duration(seconds: 1),
+      (Timer timer) => mounted ? setState(() => false) : false,
+    );
   }
 
   @override
@@ -65,8 +67,12 @@ class _TaskOverviewState extends State<TaskOverview> {
     final status = state.taskStatusState.get(task.statusId);
 
     final Map<String, String?> fields = {
-      TaskFields.rate: formatNumber(task.rate, context,
-          zeroIsNull: true, clientId: client?.id),
+      TaskFields.rate: formatNumber(
+        task.rate,
+        context,
+        zeroIsNull: true,
+        clientId: client?.id,
+      ),
     };
 
     if (task.statusId.isNotEmpty) {
@@ -78,36 +84,40 @@ class _TaskOverviewState extends State<TaskOverview> {
         task.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.task1);
       fields[label1] = formatCustomValue(
-          context: context,
-          field: CustomFieldType.task1,
-          value: task.customValue1);
+        context: context,
+        field: CustomFieldType.task1,
+        value: task.customValue1,
+      );
     }
 
     if (company.hasCustomField(CustomFieldType.task2) &&
         task.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.task2);
       fields[label2] = formatCustomValue(
-          context: context,
-          field: CustomFieldType.task2,
-          value: task.customValue2);
+        context: context,
+        field: CustomFieldType.task2,
+        value: task.customValue2,
+      );
     }
 
     if (company.hasCustomField(CustomFieldType.task3) &&
         task.customValue3.isNotEmpty) {
       final label3 = company.getCustomFieldLabel(CustomFieldType.task3);
       fields[label3] = formatCustomValue(
-          context: context,
-          field: CustomFieldType.task3,
-          value: task.customValue3);
+        context: context,
+        field: CustomFieldType.task3,
+        value: task.customValue3,
+      );
     }
 
     if (company.hasCustomField(CustomFieldType.task4) &&
         task.customValue4.isNotEmpty) {
       final label4 = company.getCustomFieldLabel(CustomFieldType.task4);
       fields[label4] = formatCustomValue(
-          context: context,
-          field: CustomFieldType.task4,
-          value: task.customValue4);
+        context: context,
+        field: CustomFieldType.task4,
+        value: task.customValue4,
+      );
     }
 
     List<Widget> _buildView() {
@@ -118,8 +128,8 @@ class _TaskOverviewState extends State<TaskOverview> {
           statusColor: task.isInvoiced
               ? Colors.green
               : task.isRunning
-                  ? Colors.blue
-                  : null,
+              ? Colors.blue
+              : null,
           label: localization!.duration,
           value: formatDuration(task.calculateDuration()),
           secondLabel: localization.amount,
@@ -142,44 +152,29 @@ class _TaskOverviewState extends State<TaskOverview> {
 
       if (client != null) {
         widgets.addAll([
-          EntityListTile(
-            entity: client,
-            isFilter: widget.isFilter,
-          ),
+          EntityListTile(entity: client, isFilter: widget.isFilter),
         ]);
       }
 
       if (project != null) {
         widgets.addAll([
-          EntityListTile(
-            entity: project,
-            isFilter: widget.isFilter,
-          ),
+          EntityListTile(entity: project, isFilter: widget.isFilter),
         ]);
       }
 
       widgets.addAll([
-        EntityListTile(
-          entity: status,
-          isFilter: widget.isFilter,
-        ),
+        EntityListTile(entity: status, isFilter: widget.isFilter),
       ]);
 
       if (user != null) {
         widgets.addAll([
-          EntityListTile(
-            entity: user,
-            isFilter: widget.isFilter,
-          ),
+          EntityListTile(entity: user, isFilter: widget.isFilter),
         ]);
       }
 
       if (invoice != null) {
         widgets.addAll([
-          EntityListTile(
-            entity: invoice,
-            isFilter: widget.isFilter,
-          ),
+          EntityListTile(entity: invoice, isFilter: widget.isFilter),
         ]);
       }
 
@@ -191,9 +186,7 @@ class _TaskOverviewState extends State<TaskOverview> {
       }
 
       if (fields.isNotEmpty) {
-        widgets.addAll([
-          FieldGrid(fields),
-        ]);
+        widgets.addAll([FieldGrid(fields)]);
       }
 
       final items = task.getTaskTimes();
@@ -206,9 +199,9 @@ class _TaskOverviewState extends State<TaskOverview> {
               isValid: true,
               onTap: (BuildContext context) =>
                   viewModel.state.userCompany.canEditEntity(task)
-                      ? viewModel.onEditPressed(context, taskTime)
-                      : null,
-            )
+                  ? viewModel.onEditPressed(context, taskTime)
+                  : null,
+            ),
           ]);
         });
       }
@@ -218,9 +211,7 @@ class _TaskOverviewState extends State<TaskOverview> {
 
     return RefreshIndicator(
       onRefresh: () => viewModel.onRefreshed(context),
-      child: ScrollableListView(
-        children: _buildView(),
-      ),
+      child: ScrollableListView(children: _buildView()),
     );
   }
 }

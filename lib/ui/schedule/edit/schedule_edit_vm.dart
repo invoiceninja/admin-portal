@@ -65,8 +65,9 @@ class ScheduleEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(
-            entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
-            force: true);
+          entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
+          force: true,
+        );
         if (state.scheduleUIState.cancelCompleter != null) {
           state.scheduleUIState.cancelCompleter!.complete();
         } else {
@@ -80,29 +81,38 @@ class ScheduleEditVM {
           final Completer<ScheduleEntity> completer =
               new Completer<ScheduleEntity>();
           store.dispatch(
-              SaveScheduleRequest(completer: completer, schedule: schedule));
-          return completer.future.then((savedSchedule) {
-            showToast(schedule!.isNew
-                ? localization!.createdSchedule
-                : localization!.updatedSchedule);
-            if (state.prefState.isMobile) {
-              store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
-              if (schedule.isNew) {
-                Navigator.of(navigatorKey.currentContext!)
-                    .pushReplacementNamed(ScheduleViewScreen.route);
-              } else {
-                Navigator.of(navigatorKey.currentContext!).pop(savedSchedule);
-              }
-            } else {
-              viewEntity(entity: savedSchedule, force: true);
-            }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext!,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+            SaveScheduleRequest(completer: completer, schedule: schedule),
+          );
+          return completer.future
+              .then((savedSchedule) {
+                showToast(
+                  schedule!.isNew
+                      ? localization!.createdSchedule
+                      : localization!.updatedSchedule,
+                );
+                if (state.prefState.isMobile) {
+                  store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
+                  if (schedule.isNew) {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pushReplacementNamed(ScheduleViewScreen.route);
+                  } else {
+                    Navigator.of(
+                      navigatorKey.currentContext!,
+                    ).pop(savedSchedule);
+                  }
+                } else {
+                  viewEntity(entity: savedSchedule, force: true);
+                }
+              })
+              .catchError((Object error) {
+                showDialog<ErrorDialog>(
+                  context: navigatorKey.currentContext!,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  },
+                );
+              });
         });
       },
     );

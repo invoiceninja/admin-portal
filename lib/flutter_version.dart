@@ -11,5 +11,5 @@ const FLUTTER_VERSION = const <String, String>{
   'dartSdkVersion': '3.11.5',
   'devToolsVersion': '2.54.2',
   'flutterVersion': '3.41.9',
-  'flutterRoot': '/Users/hillel/Code/flutter'
+  'flutterRoot': '/Users/hillel/Code/flutter',
 };

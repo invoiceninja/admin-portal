@@ -18,20 +18,25 @@ class _$DocumentListResponseSerializer
   @override
   final Iterable<Type> types = const [
     DocumentListResponse,
-    _$DocumentListResponse
+    _$DocumentListResponse,
   ];
   @override
   final String wireName = 'DocumentListResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DocumentListResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DocumentListResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DocumentEntity)])),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(BuiltList, const [
+          const FullType(DocumentEntity),
+        ]),
+      ),
     ];
 
     return result;
@@ -39,8 +44,10 @@ class _$DocumentListResponseSerializer
 
   @override
   DocumentListResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DocumentListResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -50,10 +57,15 @@ class _$DocumentListResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))!
-              as BuiltList<Object?>);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(BuiltList, const [
+                    const FullType(DocumentEntity),
+                  ]),
+                )!
+                as BuiltList<Object?>,
+          );
           break;
       }
     }
@@ -67,19 +79,23 @@ class _$DocumentItemResponseSerializer
   @override
   final Iterable<Type> types = const [
     DocumentItemResponse,
-    _$DocumentItemResponse
+    _$DocumentItemResponse,
   ];
   @override
   final String wireName = 'DocumentItemResponse';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, DocumentItemResponse object,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    DocumentItemResponse object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'data',
-      serializers.serialize(object.data,
-          specifiedType: const FullType(DocumentEntity)),
+      serializers.serialize(
+        object.data,
+        specifiedType: const FullType(DocumentEntity),
+      ),
     ];
 
     return result;
@@ -87,8 +103,10 @@ class _$DocumentItemResponseSerializer
 
   @override
   DocumentItemResponse deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DocumentItemResponseBuilder();
 
     final iterator = serialized.iterator;
@@ -98,9 +116,13 @@ class _$DocumentItemResponseSerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DocumentEntity))!
-              as DocumentEntity);
+          result.data.replace(
+            serializers.deserialize(
+                  value,
+                  specifiedType: const FullType(DocumentEntity),
+                )!
+                as DocumentEntity,
+          );
           break;
       }
     }
@@ -117,8 +139,11 @@ class _$DocumentEntitySerializer
   final String wireName = 'DocumentEntity';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, DocumentEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
+  Iterable<Object?> serialize(
+    Serializers serializers,
+    DocumentEntity object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
@@ -135,23 +160,35 @@ class _$DocumentEntitySerializer
       'size',
       serializers.serialize(object.size, specifiedType: const FullType(int)),
       'preview',
-      serializers.serialize(object.preview,
-          specifiedType: const FullType(String)),
+      serializers.serialize(
+        object.preview,
+        specifiedType: const FullType(String),
+      ),
       'is_default',
-      serializers.serialize(object.isDefault,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isDefault,
+        specifiedType: const FullType(bool),
+      ),
       'is_public',
-      serializers.serialize(object.isPublic,
-          specifiedType: const FullType(bool)),
+      serializers.serialize(
+        object.isPublic,
+        specifiedType: const FullType(bool),
+      ),
       'created_at',
-      serializers.serialize(object.createdAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.createdAt,
+        specifiedType: const FullType(int),
+      ),
       'updated_at',
-      serializers.serialize(object.updatedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.updatedAt,
+        specifiedType: const FullType(int),
+      ),
       'archived_at',
-      serializers.serialize(object.archivedAt,
-          specifiedType: const FullType(int)),
+      serializers.serialize(
+        object.archivedAt,
+        specifiedType: const FullType(int),
+      ),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -160,51 +197,62 @@ class _$DocumentEntitySerializer
     if (value != null) {
       result
         ..add('parent_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.parentType;
     if (value != null) {
       result
         ..add('parent_type')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(EntityType)));
+        ..add(
+          serializers.serialize(
+            value,
+            specifiedType: const FullType(EntityType),
+          ),
+        );
     }
     value = object.isChanged;
     if (value != null) {
       result
         ..add('isChanged')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.isDeleted;
     if (value != null) {
       result
         ..add('is_deleted')
         ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+          serializers.serialize(value, specifiedType: const FullType(bool)),
+        );
     }
     value = object.createdUserId;
     if (value != null) {
       result
         ..add('user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     value = object.assignedUserId;
     if (value != null) {
       result
         ..add('assigned_user_id')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
     }
     return result;
   }
 
   @override
   DocumentEntity deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
+    Serializers serializers,
+    Iterable<Object?> serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
     final result = DocumentEntityBuilder();
 
     final iterator = serialized.iterator;
@@ -214,84 +262,164 @@ class _$DocumentEntitySerializer
       final Object? value = iterator.current;
       switch (key) {
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.name =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'hash':
-          result.hash = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.hash =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.type =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'url':
-          result.url = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.url =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'width':
-          result.width = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.width =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'height':
-          result.height = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.height =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'size':
-          result.size = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.size =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'preview':
-          result.preview = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.preview =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
         case 'is_default':
-          result.isDefault = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isDefault =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'is_public':
-          result.isPublic = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+          result.isPublic =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )!
+                  as bool;
           break;
         case 'parent_id':
-          result.parentId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.parentId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'parent_type':
-          result.parentType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType?;
+          result.parentType =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(EntityType),
+                  )
+                  as EntityType?;
           break;
         case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isChanged =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.createdAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.updatedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+          result.archivedAt =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(int),
+                  )!
+                  as int;
           break;
         case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+          result.isDeleted =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(bool),
+                  )
+                  as bool?;
           break;
         case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.createdUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+          result.assignedUserId =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+          result.id =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )!
+                  as String;
           break;
       }
     }
@@ -304,15 +432,15 @@ class _$DocumentListResponse extends DocumentListResponse {
   @override
   final BuiltList<DocumentEntity> data;
 
-  factory _$DocumentListResponse(
-          [void Function(DocumentListResponseBuilder)? updates]) =>
-      (DocumentListResponseBuilder()..update(updates))._build();
+  factory _$DocumentListResponse([
+    void Function(DocumentListResponseBuilder)? updates,
+  ]) => (DocumentListResponseBuilder()..update(updates))._build();
 
   _$DocumentListResponse._({required this.data}) : super._();
   @override
   DocumentListResponse rebuild(
-          void Function(DocumentListResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DocumentListResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DocumentListResponseBuilder toBuilder() =>
@@ -336,9 +464,9 @@ class _$DocumentListResponse extends DocumentListResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'DocumentListResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'DocumentListResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -378,10 +506,7 @@ class DocumentListResponseBuilder
   _$DocumentListResponse _build() {
     _$DocumentListResponse _$result;
     try {
-      _$result = _$v ??
-          _$DocumentListResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$DocumentListResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -389,7 +514,10 @@ class DocumentListResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DocumentListResponse', _$failedField, e.toString());
+          r'DocumentListResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -402,15 +530,15 @@ class _$DocumentItemResponse extends DocumentItemResponse {
   @override
   final DocumentEntity data;
 
-  factory _$DocumentItemResponse(
-          [void Function(DocumentItemResponseBuilder)? updates]) =>
-      (DocumentItemResponseBuilder()..update(updates))._build();
+  factory _$DocumentItemResponse([
+    void Function(DocumentItemResponseBuilder)? updates,
+  ]) => (DocumentItemResponseBuilder()..update(updates))._build();
 
   _$DocumentItemResponse._({required this.data}) : super._();
   @override
   DocumentItemResponse rebuild(
-          void Function(DocumentItemResponseBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+    void Function(DocumentItemResponseBuilder) updates,
+  ) => (toBuilder()..update(updates)).build();
 
   @override
   DocumentItemResponseBuilder toBuilder() =>
@@ -434,9 +562,9 @@ class _$DocumentItemResponse extends DocumentItemResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'DocumentItemResponse')
-          ..add('data', data))
-        .toString();
+    return (newBuiltValueToStringHelper(
+      r'DocumentItemResponse',
+    )..add('data', data)).toString();
   }
 }
 
@@ -475,10 +603,7 @@ class DocumentItemResponseBuilder
   _$DocumentItemResponse _build() {
     _$DocumentItemResponse _$result;
     try {
-      _$result = _$v ??
-          _$DocumentItemResponse._(
-            data: data.build(),
-          );
+      _$result = _$v ?? _$DocumentItemResponse._(data: data.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -486,7 +611,10 @@ class DocumentItemResponseBuilder
         data.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'DocumentItemResponse', _$failedField, e.toString());
+          r'DocumentItemResponse',
+          _$failedField,
+          e.toString(),
+        );
       }
       rethrow;
     }
@@ -542,29 +670,29 @@ class _$DocumentEntity extends DocumentEntity {
   factory _$DocumentEntity([void Function(DocumentEntityBuilder)? updates]) =>
       (DocumentEntityBuilder()..update(updates))._build();
 
-  _$DocumentEntity._(
-      {required this.name,
-      required this.hash,
-      required this.type,
-      required this.url,
-      required this.width,
-      required this.height,
-      required this.size,
-      required this.preview,
-      this.data,
-      required this.isDefault,
-      required this.isPublic,
-      this.parentId,
-      this.parentType,
-      this.isChanged,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      required this.id})
-      : super._();
+  _$DocumentEntity._({
+    required this.name,
+    required this.hash,
+    required this.type,
+    required this.url,
+    required this.width,
+    required this.height,
+    required this.size,
+    required this.preview,
+    this.data,
+    required this.isDefault,
+    required this.isPublic,
+    this.parentId,
+    this.parentType,
+    this.isChanged,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.archivedAt,
+    this.isDeleted,
+    this.createdUserId,
+    this.assignedUserId,
+    required this.id,
+  }) : super._();
   @override
   DocumentEntity rebuild(void Function(DocumentEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -794,43 +922,86 @@ class DocumentEntityBuilder
   DocumentEntity build() => _build();
 
   _$DocumentEntity _build() {
-    final _$result = _$v ??
+    final _$result =
+        _$v ??
         _$DocumentEntity._(
           name: BuiltValueNullFieldError.checkNotNull(
-              name, r'DocumentEntity', 'name'),
+            name,
+            r'DocumentEntity',
+            'name',
+          ),
           hash: BuiltValueNullFieldError.checkNotNull(
-              hash, r'DocumentEntity', 'hash'),
+            hash,
+            r'DocumentEntity',
+            'hash',
+          ),
           type: BuiltValueNullFieldError.checkNotNull(
-              type, r'DocumentEntity', 'type'),
+            type,
+            r'DocumentEntity',
+            'type',
+          ),
           url: BuiltValueNullFieldError.checkNotNull(
-              url, r'DocumentEntity', 'url'),
+            url,
+            r'DocumentEntity',
+            'url',
+          ),
           width: BuiltValueNullFieldError.checkNotNull(
-              width, r'DocumentEntity', 'width'),
+            width,
+            r'DocumentEntity',
+            'width',
+          ),
           height: BuiltValueNullFieldError.checkNotNull(
-              height, r'DocumentEntity', 'height'),
+            height,
+            r'DocumentEntity',
+            'height',
+          ),
           size: BuiltValueNullFieldError.checkNotNull(
-              size, r'DocumentEntity', 'size'),
+            size,
+            r'DocumentEntity',
+            'size',
+          ),
           preview: BuiltValueNullFieldError.checkNotNull(
-              preview, r'DocumentEntity', 'preview'),
+            preview,
+            r'DocumentEntity',
+            'preview',
+          ),
           data: data,
           isDefault: BuiltValueNullFieldError.checkNotNull(
-              isDefault, r'DocumentEntity', 'isDefault'),
+            isDefault,
+            r'DocumentEntity',
+            'isDefault',
+          ),
           isPublic: BuiltValueNullFieldError.checkNotNull(
-              isPublic, r'DocumentEntity', 'isPublic'),
+            isPublic,
+            r'DocumentEntity',
+            'isPublic',
+          ),
           parentId: parentId,
           parentType: parentType,
           isChanged: isChanged,
           createdAt: BuiltValueNullFieldError.checkNotNull(
-              createdAt, r'DocumentEntity', 'createdAt'),
+            createdAt,
+            r'DocumentEntity',
+            'createdAt',
+          ),
           updatedAt: BuiltValueNullFieldError.checkNotNull(
-              updatedAt, r'DocumentEntity', 'updatedAt'),
+            updatedAt,
+            r'DocumentEntity',
+            'updatedAt',
+          ),
           archivedAt: BuiltValueNullFieldError.checkNotNull(
-              archivedAt, r'DocumentEntity', 'archivedAt'),
+            archivedAt,
+            r'DocumentEntity',
+            'archivedAt',
+          ),
           isDeleted: isDeleted,
           createdUserId: createdUserId,
           assignedUserId: assignedUserId,
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'DocumentEntity', 'id'),
+            id,
+            r'DocumentEntity',
+            'id',
+          ),
         );
     replace(_$result);
     return _$result;

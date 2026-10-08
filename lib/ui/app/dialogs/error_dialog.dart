@@ -38,33 +38,38 @@ class ErrorDialog extends StatelessWidget {
     return PointerInterceptor(
       child: AlertDialog(
         title: Text(localization.error),
-        content:
-            error != null ? SelectableText(errorStr.toString()) : SizedBox(),
+        content: error != null
+            ? SelectableText(errorStr.toString())
+            : SizedBox(),
         actions: [
           if (clearErrorOnDismiss && !Config.DEMO_MODE)
             TextButton(
-                child: Text(localization.logout.toUpperCase()),
-                onPressed: () {
-                  confirmCallback(
-                      context: context,
-                      callback: (_) {
-                        store.dispatch(UserLogout());
-                      });
-                }),
-          TextButton(
-              child: Text(localization.copy.toUpperCase()),
+              child: Text(localization.logout.toUpperCase()),
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: errorStr));
-              }),
+                confirmCallback(
+                  context: context,
+                  callback: (_) {
+                    store.dispatch(UserLogout());
+                  },
+                );
+              },
+            ),
           TextButton(
-              autofocus: true,
-              child: Text(localization.dismiss.toUpperCase()),
-              onPressed: () {
-                if (clearErrorOnDismiss) {
-                  store.dispatch(ClearLastError());
-                }
-                Navigator.of(context).pop();
-              }),
+            child: Text(localization.copy.toUpperCase()),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: errorStr));
+            },
+          ),
+          TextButton(
+            autofocus: true,
+            child: Text(localization.dismiss.toUpperCase()),
+            onPressed: () {
+              if (clearErrorOnDismiss) {
+                store.dispatch(ClearLastError());
+              }
+              Navigator.of(context).pop();
+            },
+          ),
         ],
       ),
     );

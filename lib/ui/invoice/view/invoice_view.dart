@@ -144,9 +144,10 @@ class _InvoiceViewState extends State<InvoiceView>
           Tab(text: localization.contacts),
           if (company.isModuleEnabled(EntityType.document))
             Tab(
-                text: documents.isEmpty
-                    ? localization.documents
-                    : '${localization.documents} (${documents.length})'),
+              text: documents.isEmpty
+                  ? localization.documents
+                  : '${localization.documents} (${documents.length})',
+            ),
           if (invoice.isRecurring) Tab(text: localization.schedule),
           if (!invoice.isRecurring) Tab(text: localization.history),
           Tab(text: localization.activity),
@@ -168,7 +169,8 @@ class _InvoiceViewState extends State<InvoiceView>
                           viewModel: viewModel,
                           isFilter: widget.isFilter,
                           key: ValueKey(
-                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}'),
+                            '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}',
+                          ),
                         ),
                       ),
                       RefreshIndicator(
@@ -176,17 +178,20 @@ class _InvoiceViewState extends State<InvoiceView>
                         child: InvoiceViewContacts(
                           viewModel: viewModel,
                           key: ValueKey(
-                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}'),
+                            '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}',
+                          ),
                         ),
                       ),
                       if (company.isModuleEnabled(EntityType.document))
                         RefreshIndicator(
                           onRefresh: () => viewModel.onRefreshed!(context),
                           child: InvoiceViewDocuments(
-                              viewModel: viewModel,
-                              invoice: viewModel.invoice,
-                              key: ValueKey(
-                                  '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}')),
+                            viewModel: viewModel,
+                            invoice: viewModel.invoice,
+                            key: ValueKey(
+                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}',
+                            ),
+                          ),
                         ),
                       if (invoice.isRecurring)
                         RefreshIndicator(
@@ -194,23 +199,28 @@ class _InvoiceViewState extends State<InvoiceView>
                           child: InvoiceViewSchedule(
                             viewModel: viewModel,
                             key: ValueKey(
-                                '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}'),
+                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}',
+                            ),
                           ),
                         ),
                       if (!invoice.isRecurring)
                         RefreshIndicator(
                           onRefresh: () => viewModel.onRefreshed!(context),
                           child: InvoiceViewHistory(
-                              viewModel: viewModel,
-                              key: ValueKey(
-                                  '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}')),
+                            viewModel: viewModel,
+                            key: ValueKey(
+                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}',
+                            ),
+                          ),
                         ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed!(context),
                         child: InvoiceViewActivity(
-                            viewModel: viewModel,
-                            key: ValueKey(
-                                '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}')),
+                          viewModel: viewModel,
+                          key: ValueKey(
+                            '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}',
+                          ),
+                        ),
                       ),
                     ],
                   ),

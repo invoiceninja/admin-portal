@@ -18,10 +18,7 @@ import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectScreen extends StatelessWidget {
-  const ProjectScreen({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const ProjectScreen({Key? key, required this.viewModel}) : super(key: key);
 
   static const String route = '/project';
 
@@ -61,17 +58,26 @@ class ProjectScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,
         tableColumns: ProjectPresenter.getAllTableFields(userCompany),
-        defaultTableColumns:
-            ProjectPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns: ProjectPresenter.getDefaultTableFields(
+          userCompany,
+        ),
         onSelectedSortField: (value) => store.dispatch(SortProjects(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.project1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.project2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.project3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.project4,
-            excludeBlank: true),
+        customValues1: company.getCustomFieldValues(
+          CustomFieldType.project1,
+          excludeBlank: true,
+        ),
+        customValues2: company.getCustomFieldValues(
+          CustomFieldType.project2,
+          excludeBlank: true,
+        ),
+        customValues3: company.getCustomFieldValues(
+          CustomFieldType.project3,
+          excludeBlank: true,
+        ),
+        customValues4: company.getCustomFieldValues(
+          CustomFieldType.project4,
+          excludeBlank: true,
+        ),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterProjectsByCustom1(value)),
         onSelectedCustom2: (value) =>
@@ -96,17 +102,17 @@ class ProjectScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton:
+          state.prefState.isMenuFloated &&
               userCompany.canCreate(EntityType.project)
           ? FloatingActionButton(
               heroTag: 'project_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () => createEntityByType(
-                  context: context, entityType: EntityType.project),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
+                context: context,
+                entityType: EntityType.project,
               ),
+              child: Icon(Icons.add, color: Colors.white),
               tooltip: localization!.newProject,
             )
           : null,

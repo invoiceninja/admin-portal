@@ -36,15 +36,8 @@ class QuotePdfScreen extends StatelessWidget {
 }
 
 class QuotePdfVM extends EntityPdfVM {
-  QuotePdfVM({
-    AppState? state,
-    InvoiceEntity? invoice,
-    String? activityId,
-  }) : super(
-          state: state,
-          invoice: invoice,
-          activityId: activityId,
-        );
+  QuotePdfVM({AppState? state, InvoiceEntity? invoice, String? activityId})
+    : super(state: state, invoice: invoice, activityId: activityId);
 
   factory QuotePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;

@@ -32,28 +32,29 @@ class PaymentTermListBuilder extends StatelessWidget {
       converter: PaymentTermListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.paymentTerm,
-            state: viewModel.state,
-            entityList: viewModel.paymentTermList,
-            tableColumns: viewModel.tableColumns,
-            onRefreshed: viewModel.onRefreshed,
-            onSortColumn: viewModel.onSortColumn,
-            itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
-              final paymentTermId = viewModel.paymentTermList[index];
-              final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
-              final listState = state.getListState(EntityType.paymentTerm);
-              final isInMultiselect = listState.isInMultiselect();
+          onClearMultiselect: viewModel.onClearMultielsect,
+          entityType: EntityType.paymentTerm,
+          state: viewModel.state,
+          entityList: viewModel.paymentTermList,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final state = viewModel.state;
+            final paymentTermId = viewModel.paymentTermList[index];
+            final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
+            final listState = state.getListState(EntityType.paymentTerm);
+            final isInMultiselect = listState.isInMultiselect();
 
-              return PaymentTermListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                paymentTerm: paymentTerm,
-                isChecked:
-                    isInMultiselect && listState.isSelected(paymentTerm.id),
-              );
-            });
+            return PaymentTermListItem(
+              user: viewModel.state.user,
+              filter: viewModel.filter,
+              paymentTerm: paymentTerm,
+              isChecked:
+                  isInMultiselect && listState.isSelected(paymentTerm.id),
+            );
+          },
+        );
       },
     );
   }
@@ -80,8 +81,9 @@ class PaymentTermListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer =
-          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
+      final completer = snackBarCompleter<Null>(
+        AppLocalization.of(context)!.refreshComplete,
+      );
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -93,16 +95,20 @@ class PaymentTermListVM {
       userCompany: state.userCompany,
       listState: state.paymentTermListState,
       paymentTermList: memoizedFilteredPaymentTermList(
-          state.getUISelection(EntityType.paymentTerm),
-          state.paymentTermState.map,
-          state.paymentTermState.list,
-          state.paymentTermListState),
+        state.getUISelection(EntityType.paymentTerm),
+        state.paymentTermState.map,
+        state.paymentTermState.list,
+        state.paymentTermListState,
+      ),
       paymentTermMap: state.paymentTermState.map,
       isLoading: state.isLoading,
       filter: state.paymentTermUIState.listUIState.filter,
-      onEntityAction: (BuildContext context, List<BaseEntity> paymentTerms,
-              EntityAction action) =>
-          handlePaymentTermAction(context, paymentTerms, action),
+      onEntityAction:
+          (
+            BuildContext context,
+            List<BaseEntity> paymentTerms,
+            EntityAction action,
+          ) => handlePaymentTermAction(context, paymentTerms, action),
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortPaymentTerms(field)),
       onClearMultielsect: () => store.dispatch(ClearPaymentTermMultiselect()),

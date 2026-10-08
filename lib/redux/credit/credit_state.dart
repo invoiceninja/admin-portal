@@ -47,9 +47,11 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
       value: (dynamic item) => item,
     );
 
-    return rebuild((b) => b
-      ..map.addAll(map)
-      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+    return rebuild(
+      (b) => b
+        ..map.addAll(map)
+        ..list.replace((map.keys.toList() + list.toList()).toSet().toList()),
+    );
   }
 
   static Serializer<CreditState> get serializer => _$creditStateSerializer;
@@ -60,8 +62,10 @@ abstract class CreditUIState extends Object
     implements Built<CreditUIState, CreditUIStateBuilder> {
   factory CreditUIState(PrefStateSortField? sortField) {
     return _$CreditUIState._(
-      listUIState: ListUIState(sortField?.field ?? CreditFields.number,
-          sortAscending: sortField?.ascending ?? false),
+      listUIState: ListUIState(
+        sortField?.field ?? CreditFields.number,
+        sortAscending: sortField?.ascending ?? false,
+      ),
       editing: InvoiceEntity(),
       selectedId: '',
       tabIndex: 0,

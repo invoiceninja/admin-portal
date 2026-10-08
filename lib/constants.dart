@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.194';
+const String kClientVersion = '5.0.197';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -48,6 +48,39 @@ const String kMacOSUrl = 'https://apps.apple.com/app/$kAppStoreAppId';
 const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
     'https://apps.microsoft.com/store/detail/invoice-ninja/$kMicrosoftAppStoreId';
+
+// Beta of the rebuilt app, promoted from lib/ui/app/beta_promo
+const bool kBetaPromoEnabled = true;
+const bool kBetaPromoEnabledOnApple = true;
+// The Play listing only works for the public once a build is on an open or
+// closed testing track
+const bool kBetaPromoEnabledOnAndroid = true;
+// The web build points to the React app instead, see ImportantMessageBanner
+const bool kBetaPromoEnabledOnWeb = false;
+// The Microsoft Store listing is restricted to accounts we have added, set to
+// false if it becomes available by direct link
+const bool kBetaWindowsInviteOnly = true;
+// Installs which are never updated stop promoting these links
+final DateTime kBetaPromoEndDate = DateTime(2027, 4, 1);
+const String kBetaDemoUrl = 'https://hillelcoren.github.io/admin';
+const String kBetaTestFlightUrl = 'https://testflight.apple.com/join/YY1BZ7uR';
+const String kBetaGooglePlayUrl =
+    'https://play.google.com/apps/testing/com.invoiceninja.admin';
+const String kBetaWindowsUrl =
+    'https://apps.microsoft.com/detail/restricted/9NG93WNXN797';
+const String kBetaAppImageUrl =
+    'https://github.com/invoiceninja/flutter/releases';
+const String kBetaContactEmail = 'contact@invoiceninja.com';
+const String kBetaSnapConnectCommand =
+    'sudo snap connect invoiceninja:password-manager-service';
+const String kBetaSnapRefreshCommand =
+    'sudo snap refresh invoiceninja --edge && $kBetaSnapConnectCommand';
+const String kBetaSnapInstallCommand =
+    'sudo snap install invoiceninja --edge && $kBetaSnapConnectCommand';
+const String kBetaSnapRevertCommand = 'sudo snap refresh invoiceninja --stable';
+// What the beta is called once installed
+const String kBetaAppNameMobile = 'Ninja Beta';
+const String kBetaAppNameWindows = 'Invoice Ninja - Beta';
 
 const String kSlackUrl = 'http://slack.invoiceninja.com';
 const String kGitHubUrl = 'https://github.com/invoiceninja';
@@ -104,14 +137,7 @@ const String kStatusCheckUrl = 'https://status.invoiceninja.com';
 const String kGoogleAnalyticsUrl =
     'https://support.google.com/analytics/answer/1037249?hl=en';
 
-enum AppEnvironment {
-  hosted,
-  selfhosted,
-  testing,
-  demo,
-  staging,
-  develop,
-}
+enum AppEnvironment { hosted, selfhosted, testing, demo, staging, develop }
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefUrl = 'url';
@@ -121,6 +147,11 @@ const String kSharedPrefHeight = 'height';
 const String kSharedPrefMaximized = 'maximized';
 const String kSharedPrefHostOverride = 'host_override';
 const String kSharedPrefCompanyId = 'company_id';
+const String kSharedPrefBetaPromoCloses = 'beta_promo_closes';
+const String kSharedPrefBetaPromoNextAt = 'beta_promo_next_at';
+const String kSharedPrefBetaPromoDone = 'beta_promo_done';
+const String kSharedPrefBetaPromoEngaged = 'beta_promo_engaged';
+const String kSharedPrefBetaPromoWindowsEmail = 'beta_promo_windows_email';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';
@@ -312,6 +343,14 @@ const kEQuoteTypes = [
   kEQuoteTypeOrderX_Comfort,
   kEQuoteTypeOrderX_Basic,
   kEQuoteType,
+];
+
+const String kFranceReportingScheduleTenDay = 'ten_day';
+const String kFranceReportingScheduleMonthly = 'monthly';
+
+const kFranceReportingSchedules = [
+  kFranceReportingScheduleTenDay,
+  kFranceReportingScheduleMonthly,
 ];
 
 const kPaymentMeansCodes = <String, String>{
@@ -1377,3 +1416,12 @@ const String kActivityVerifactuInvoiceSentFailure = '155';
 const String kActivityVerifactuCancellationSent = '156';
 const String kActivityVerifactuCancellationSentFailure = '157';
 const String kActivityQuoteRejected = '158';
+const String kActivityInvoiceDocumentSigned = '159';
+const String kActivityQuoteDocumentSigned = '160';
+const String kActivityCreditDocumentSigned = '161';
+const String kActivityPurchaseOrderDocumentSigned = '162';
+const String kActivityCustomDocumentSigned = '163';
+const String kActivityQuickbooksPushFailure = '164';
+const String kActivityQuickbooksPushSuccess = '165';
+const String kActivityPurgeUser = '166';
+const String kActivityEInvoiceStatusUpdated = '167';
