@@ -55,6 +55,8 @@ const bool kBetaPromoEnabledOnApple = true;
 // The Play listing only works for the public once a build is on an open or
 // closed testing track
 const bool kBetaPromoEnabledOnAndroid = true;
+// The web build points to the React app instead, see ImportantMessageBanner
+const bool kBetaPromoEnabledOnWeb = false;
 // The Microsoft Store listing is restricted to accounts we have added, set to
 // false if it becomes available by direct link
 const bool kBetaWindowsInviteOnly = true;
