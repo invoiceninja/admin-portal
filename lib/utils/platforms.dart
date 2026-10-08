@@ -144,6 +144,10 @@ bool isLinux() {
   return Platform.isLinux;
 }
 
+// SNAP alone also leaks into other builds launched from a snap's terminal
+bool isInvoiceNinjaSnap() =>
+    isLinux() && Platform.environment['SNAP_NAME'] == 'invoiceninja';
+
 bool isAndroid() {
   if (kIsWeb) {
     return false;

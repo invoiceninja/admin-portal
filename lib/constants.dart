@@ -49,6 +49,37 @@ const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
     'https://apps.microsoft.com/store/detail/invoice-ninja/$kMicrosoftAppStoreId';
 
+// Beta of the rebuilt app, promoted from lib/ui/app/beta_promo
+const bool kBetaPromoEnabled = true;
+const bool kBetaPromoEnabledOnApple = true;
+// The Play listing only works for the public once a build is on an open or
+// closed testing track
+const bool kBetaPromoEnabledOnAndroid = true;
+// The Microsoft Store listing is restricted to accounts we have added, set to
+// false if it becomes available by direct link
+const bool kBetaWindowsInviteOnly = true;
+// Installs which are never updated stop promoting these links
+final DateTime kBetaPromoEndDate = DateTime(2027, 4, 1);
+const String kBetaDemoUrl = 'https://hillelcoren.github.io/admin';
+const String kBetaTestFlightUrl = 'https://testflight.apple.com/join/YY1BZ7uR';
+const String kBetaGooglePlayUrl =
+    'https://play.google.com/apps/testing/com.invoiceninja.admin';
+const String kBetaWindowsUrl =
+    'https://apps.microsoft.com/detail/restricted/9NG93WNXN797';
+const String kBetaAppImageUrl =
+    'https://github.com/invoiceninja/flutter/releases';
+const String kBetaContactEmail = 'contact@invoiceninja.com';
+const String kBetaSnapConnectCommand =
+    'sudo snap connect invoiceninja:password-manager-service';
+const String kBetaSnapRefreshCommand =
+    'sudo snap refresh invoiceninja --edge && $kBetaSnapConnectCommand';
+const String kBetaSnapInstallCommand =
+    'sudo snap install invoiceninja --edge && $kBetaSnapConnectCommand';
+const String kBetaSnapRevertCommand = 'sudo snap refresh invoiceninja --stable';
+// What the beta is called once installed
+const String kBetaAppNameMobile = 'Ninja Beta';
+const String kBetaAppNameWindows = 'Invoice Ninja - Beta';
+
 const String kSlackUrl = 'http://slack.invoiceninja.com';
 const String kGitHubUrl = 'https://github.com/invoiceninja';
 const String kTwitterUrl = 'https://twitter.com/invoiceninja';
@@ -114,6 +145,11 @@ const String kSharedPrefHeight = 'height';
 const String kSharedPrefMaximized = 'maximized';
 const String kSharedPrefHostOverride = 'host_override';
 const String kSharedPrefCompanyId = 'company_id';
+const String kSharedPrefBetaPromoCloses = 'beta_promo_closes';
+const String kSharedPrefBetaPromoNextAt = 'beta_promo_next_at';
+const String kSharedPrefBetaPromoDone = 'beta_promo_done';
+const String kSharedPrefBetaPromoEngaged = 'beta_promo_engaged';
+const String kSharedPrefBetaPromoWindowsEmail = 'beta_promo_windows_email';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';

@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/app/web_session_timeout.dart';
@@ -176,6 +177,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     if (kIsWeb) {
       WebUtils.warnChanges(widget.store);
     }
+
+    BetaPromoController.instance.start(widget.store!);
 
     Timer.periodic(Duration(milliseconds: kMillisecondsToTimerRefreshData), (
       _,
