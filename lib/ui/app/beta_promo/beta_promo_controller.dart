@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -70,6 +71,8 @@ class BetaPromoController {
 
   static bool get isAvailable {
     if (!kBetaPromoEnabled || DateTime.now().isAfter(kBetaPromoEndDate)) {
+      return false;
+    } else if (kIsWeb && !kBetaPromoEnabledOnWeb) {
       return false;
     } else if (isApple() && !kBetaPromoEnabledOnApple) {
       return false;
