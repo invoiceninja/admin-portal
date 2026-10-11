@@ -39,12 +39,18 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
       statusFilters.hashCode ^
       filterClearedAt.hashCode ^
       filter.hashCode ^
+      filterStartDate.hashCode ^
+      filterEndDate.hashCode ^
       sortAscending.hashCode ^
       sortField.hashCode;
 
   String? get filter;
 
   int get filterClearedAt;
+
+  String? get filterStartDate;
+
+  String? get filterEndDate;
 
   String get sortField;
 
@@ -89,6 +95,24 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
   bool get hasCustom3Filters => custom3Filters.isNotEmpty;
 
   bool get hasCustom4Filters => custom4Filters.isNotEmpty;
+
+  bool get hasDateRangeFilter =>
+      (filterStartDate ?? '').isNotEmpty || (filterEndDate ?? '').isNotEmpty;
+
+  // Dates are stored as yyyy-MM-dd so they can be compared as strings
+  bool matchesDateRange(String? date) {
+    if ((filterStartDate ?? '').isNotEmpty &&
+        (date ?? '').compareTo(filterStartDate!) < 0) {
+      return false;
+    }
+
+    if ((filterEndDate ?? '').isNotEmpty &&
+        (date ?? '').compareTo(filterEndDate!) > 0) {
+      return false;
+    }
+
+    return true;
+  }
 
   BuiltList<String>? get selectedIds;
 

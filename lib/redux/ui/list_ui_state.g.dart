@@ -88,6 +88,22 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           serializers.serialize(value, specifiedType: const FullType(String)),
         );
     }
+    value = object.filterStartDate;
+    if (value != null) {
+      result
+        ..add('filterStartDate')
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
+    }
+    value = object.filterEndDate;
+    if (value != null) {
+      result
+        ..add('filterEndDate')
+        ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)),
+        );
+    }
     value = object.selectedIds;
     if (value != null) {
       result
@@ -133,6 +149,22 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
                     specifiedType: const FullType(int),
                   )!
                   as int;
+          break;
+        case 'filterStartDate':
+          result.filterStartDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
+          break;
+        case 'filterEndDate':
+          result.filterEndDate =
+              serializers.deserialize(
+                    value,
+                    specifiedType: const FullType(String),
+                  )
+                  as String?;
           break;
         case 'sortField':
           result.sortField =
@@ -240,6 +272,10 @@ class _$ListUIState extends ListUIState {
   @override
   final int filterClearedAt;
   @override
+  final String? filterStartDate;
+  @override
+  final String? filterEndDate;
+  @override
   final String sortField;
   @override
   final bool sortAscending;
@@ -264,6 +300,8 @@ class _$ListUIState extends ListUIState {
   _$ListUIState._({
     this.filter,
     required this.filterClearedAt,
+    this.filterStartDate,
+    this.filterEndDate,
     required this.sortField,
     required this.sortAscending,
     required this.stateFilters,
@@ -287,6 +325,8 @@ class _$ListUIState extends ListUIState {
     return other is ListUIState &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt &&
+        filterStartDate == other.filterStartDate &&
+        filterEndDate == other.filterEndDate &&
         sortField == other.sortField &&
         sortAscending == other.sortAscending &&
         stateFilters == other.stateFilters &&
@@ -305,6 +345,8 @@ class _$ListUIState extends ListUIState {
     var _$hash = 0;
     _$hash = $jc(_$hash, filter.hashCode);
     _$hash = $jc(_$hash, filterClearedAt.hashCode);
+    _$hash = $jc(_$hash, filterStartDate.hashCode);
+    _$hash = $jc(_$hash, filterEndDate.hashCode);
     _$hash = $jc(_$hash, sortField.hashCode);
     _$hash = $jc(_$hash, sortAscending.hashCode);
     _$hash = $jc(_$hash, stateFilters.hashCode);
@@ -323,6 +365,8 @@ class _$ListUIState extends ListUIState {
     return (newBuiltValueToStringHelper(r'ListUIState')
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
+          ..add('filterStartDate', filterStartDate)
+          ..add('filterEndDate', filterEndDate)
           ..add('sortField', sortField)
           ..add('sortAscending', sortAscending)
           ..add('stateFilters', stateFilters)
@@ -347,6 +391,16 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   int? get filterClearedAt => _$this._filterClearedAt;
   set filterClearedAt(int? filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
+
+  String? _filterStartDate;
+  String? get filterStartDate => _$this._filterStartDate;
+  set filterStartDate(String? filterStartDate) =>
+      _$this._filterStartDate = filterStartDate;
+
+  String? _filterEndDate;
+  String? get filterEndDate => _$this._filterEndDate;
+  set filterEndDate(String? filterEndDate) =>
+      _$this._filterEndDate = filterEndDate;
 
   String? _sortField;
   String? get sortField => _$this._sortField;
@@ -406,6 +460,8 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
     if ($v != null) {
       _filter = $v.filter;
       _filterClearedAt = $v.filterClearedAt;
+      _filterStartDate = $v.filterStartDate;
+      _filterEndDate = $v.filterEndDate;
       _sortField = $v.sortField;
       _sortAscending = $v.sortAscending;
       _stateFilters = $v.stateFilters.toBuilder();
@@ -445,6 +501,8 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
               r'ListUIState',
               'filterClearedAt',
             ),
+            filterStartDate: filterStartDate,
+            filterEndDate: filterEndDate,
             sortField: BuiltValueNullFieldError.checkNotNull(
               sortField,
               r'ListUIState',

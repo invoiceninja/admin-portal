@@ -262,6 +262,10 @@ List<String?> filteredExpensesSelector(
       return false;
     }
 
+    if (!expenseListState.matchesDateRange(expense.date)) {
+      return false;
+    }
+
     if (expenseListState.custom1Filters.isNotEmpty &&
         !expenseListState.custom1Filters.contains(expense.customValue1)) {
       return false;
