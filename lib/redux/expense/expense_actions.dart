@@ -248,6 +248,13 @@ class FilterExpensesByCustom4 implements PersistUI {
   final String value;
 }
 
+class FilterExpensesByDateRange implements PersistUI {
+  FilterExpensesByDateRange({this.startDate, this.endDate});
+
+  final String? startDate;
+  final String? endDate;
+}
+
 void handleExpenseAction(
   BuildContext context,
   List<BaseEntity> expenses,
