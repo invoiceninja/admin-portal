@@ -766,60 +766,77 @@ abstract class ExpenseEntity extends Object
   double get taxAmount =>
       calculateTaxAmount1 + calculateTaxAmount2 + calculateTaxAmount3;
 
+  /// Sum of this expense's inclusive tax rates (Σr), feeding the shared divisor
+  /// `1 + Σr/100` (issue invoiceninja/invoiceninja#12072).
+  double get _inclusiveTaxRateSum => taxRate1 + taxRate2 + taxRate3;
+
   double get calculateTaxAmount1 {
     if (calculateTaxByAmount == true) {
       return taxAmount1;
     }
-
+    if (taxRate1 == 0) {
+      return 0;
+    }
     if (usesInclusiveTaxes) {
-      if (taxRate1 != 0) {
+      // Combined inclusive rate ≤ 0 → no tax (parity with backend
+      // InclusiveTax::backout `combined_rate <= 0`).
+      if (_inclusiveTaxRateSum <= 0) {
+        return 0;
+      }
+      // Single applicable rate: exact legacy extraction (byte-identical). Two
+      // or more inclusive rates share one divisor, net = amount / (1 + Σr/100).
+      if (_inclusiveTaxRateSum == taxRate1) {
         return round(amount - (amount / (1 + (taxRate1 / 100))), 2);
       }
-    } else {
-      if (taxRate1 != 0) {
-        return round(amount * taxRate1 / 100, 2);
-      }
+      final net = amount / (1 + (_inclusiveTaxRateSum / 100));
+      return round(taxRate1 / 100 * net, 2);
     }
-
-    return 0;
+    return round(amount * taxRate1 / 100, 2);
   }
 
   double get calculateTaxAmount2 {
     if (calculateTaxByAmount == true) {
       return taxAmount2;
     }
-
+    if (taxRate2 == 0) {
+      return 0;
+    }
     if (usesInclusiveTaxes) {
-      if (taxRate2 != 0) {
+      if (_inclusiveTaxRateSum <= 0) {
+        return 0;
+      }
+      if (_inclusiveTaxRateSum == taxRate2) {
         return round(amount - (amount / (1 + (taxRate2 / 100))), 2);
       }
-    } else {
-      if (taxRate2 != 0) {
-        return round(amount * taxRate2 / 100, 2);
-      }
+      final net = amount / (1 + (_inclusiveTaxRateSum / 100));
+      return round(taxRate2 / 100 * net, 2);
     }
-
-    return 0;
+    return round(amount * taxRate2 / 100, 2);
   }
 
   double get calculateTaxAmount3 {
     if (calculateTaxByAmount == true) {
       return taxAmount3;
     }
-
+    if (taxRate3 == 0) {
+      return 0;
+    }
     if (usesInclusiveTaxes) {
-      if (taxRate3 != 0) {
+      if (_inclusiveTaxRateSum <= 0) {
+        return 0;
+      }
+      if (_inclusiveTaxRateSum == taxRate3) {
         return round(amount - (amount / (1 + (taxRate3 / 100))), 2);
       }
-    } else {
-      if (taxRate3 != 0) {
-        return round(amount * taxRate3 / 100, 2);
-      }
+      final net = amount / (1 + (_inclusiveTaxRateSum / 100));
+      return round(taxRate3 / 100 * net, 2);
     }
-
-    return 0;
+    return round(amount * taxRate3 / 100, 2);
   }
 
+  // Net = gross − summed tax. Inclusive multi-rate tiers are additive
+  // shared-base (issue #12072) so net reconciles: 1000 @ 10%+10% → 833.34,
+  // matching the backend InclusiveTax::backout (gross − Σtax).
   double get netAmount => usesInclusiveTaxes ? amount - taxAmount : amount;
 
   double get grossAmount => usesInclusiveTaxes ? amount : amount + taxAmount;
