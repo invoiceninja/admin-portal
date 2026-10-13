@@ -64,7 +64,8 @@ class _DocumentGridState extends State<DocumentGrid> {
     // Every upload below sends `is_public` explicitly, so without this seed the
     // client would override the company setting on every single attachment.
     final isPrivate =
-        _isPrivate ?? !(state.company.settings.documentsPublicByDefault ?? true);
+        _isPrivate ??
+        !(state.company.settings.documentsPublicByDefault ?? true);
 
     final privateSwitch = Padding(
       padding: const EdgeInsets.all(8.0),

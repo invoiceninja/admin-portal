@@ -2828,7 +2828,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'af_ZA': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -8365,7 +8366,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'ar': {
       'disable_emails': 'تعطيل رسائل البريد الإلكتروني',
-      'disable_emails_help': 'منع المستخدم من إرسال رسائل البريد الإلكتروني من النظام',
+      'disable_emails_help':
+          'منع المستخدم من إرسال رسائل البريد الإلكتروني من النظام',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -11106,7 +11108,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'bg': {
       'disable_emails': 'Деактивиране на имейли',
-      'disable_emails_help': 'Предотвратява изпращането на имейли от системата от Потребител',
+      'disable_emails_help':
+          'Предотвратява изпращането на имейли от системата от Потребител',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -13912,7 +13915,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'ca': {
       'disable_emails': 'Desactiva els correus electrònics',
-      'disable_emails_help': 'Impedeix que un usuari enviï correus electrònics des del sistema',
+      'disable_emails_help':
+          'Impedeix que un usuari enviï correus electrònics des del sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -22135,7 +22139,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'cs': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -24903,7 +24908,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'da': {
       'disable_emails': 'Deaktiver e-mails',
-      'disable_emails_help': 'Forhindrer en bruger i at sende e-mails fra systemet',
+      'disable_emails_help':
+          'Forhindrer en bruger i at sende e-mails fra systemet',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -27693,7 +27699,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'nl': {
       'disable_emails': 'E-mails uitschakelen',
-      'disable_emails_help': 'Voorkomt dat een gebruiker e-mails vanuit het systeem verzendt',
+      'disable_emails_help':
+          'Voorkomt dat een gebruiker e-mails vanuit het systeem verzendt',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -36034,7 +36041,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fi': {
       'disable_emails': 'Poista sähköpostit käytöstä',
-      'disable_emails_help': 'Estää käyttäjää lähettämästä sähköposteja järjestelmästä',
+      'disable_emails_help':
+          'Estää käyttäjää lähettämästä sähköposteja järjestelmästä',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -38819,7 +38827,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fr': {
       'disable_emails': 'Désactiver les e-mails',
-      'disable_emails_help': 'Empêche un utilisateur d&#39;envoyer des e-mails depuis le système',
+      'disable_emails_help':
+          'Empêche un utilisateur d&#39;envoyer des e-mails depuis le système',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -41703,7 +41712,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fr_CA': {
       'disable_emails': 'Désactiver les courriels',
-      'disable_emails_help': 'Empêche un utilisateur d\'envoyer des courriels depuis le système',
+      'disable_emails_help':
+          'Empêche un utilisateur d\'envoyer des courriels depuis le système',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -44559,7 +44569,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fr_CH': {
       'disable_emails': 'Désactiver les e-mails',
-      'disable_emails_help': 'Empêche un utilisateur d&#39;envoyer des e-mails depuis le système',
+      'disable_emails_help':
+          'Empêche un utilisateur d&#39;envoyer des e-mails depuis le système',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -47427,7 +47438,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'de': {
       'disable_emails': 'E-Mails deaktivieren',
-      'disable_emails_help': 'Verhindert, dass ein Benutzer E-Mails vom System aus sendet',
+      'disable_emails_help':
+          'Verhindert, dass ein Benutzer E-Mails vom System aus sendet',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -50310,7 +50322,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'el': {
       'disable_emails': 'Απενεργοποίηση email',
-      'disable_emails_help': 'Αποτρέπει έναν χρήστη από το να στέλνει email από το σύστημα',
+      'disable_emails_help':
+          'Αποτρέπει έναν χρήστη από το να στέλνει email από το σύστημα',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -55916,7 +55929,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'hu': {
       'disable_emails': 'E-mailek letiltása',
-      'disable_emails_help': 'Megakadályozza, hogy a felhasználó e-maileket küldjön a rendszerből',
+      'disable_emails_help':
+          'Megakadályozza, hogy a felhasználó e-maileket küldjön a rendszerből',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -61428,7 +61442,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'it': {
       'disable_emails': 'Disabilita le e-mail',
-      'disable_emails_help': 'Impedisce a un utente di inviare e-mail dal sistema',
+      'disable_emails_help':
+          'Impedisce a un utente di inviare e-mail dal sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -69727,7 +69742,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'lo_LA': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -72463,7 +72479,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'lv_LV': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -75229,7 +75246,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'lt': {
       'disable_emails': 'Išjungti el. laiškus',
-      'disable_emails_help': 'Neleidžia vartotojui siųsti el. laiškų iš sistemos',
+      'disable_emails_help':
+          'Neleidžia vartotojui siųsti el. laiškų iš sistemos',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -78083,7 +78101,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'mk_MK': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -80853,7 +80872,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'nb_NO': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -83620,7 +83640,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'fa': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -86385,7 +86406,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'pl': {
       'disable_emails': 'Wyłącz wiadomości e-mail',
-      'disable_emails_help': 'Zapobiega użytkownikowi wysyłania wiadomości e-mail z systemu',
+      'disable_emails_help':
+          'Zapobiega użytkownikowi wysyłania wiadomości e-mail z systemu',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -92027,7 +92049,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'pt_PT': {
       'disable_emails': 'Desativar e-mails',
-      'disable_emails_help': 'Impede que um usuário envie e-mails pelo sistema.',
+      'disable_emails_help':
+          'Impede que um usuário envie e-mails pelo sistema.',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -94850,7 +94873,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'ro': {
       'disable_emails': 'Dezactivați e-mailurile',
-      'disable_emails_help': 'Împiedică un utilizator să trimită e-mailuri din sistem',
+      'disable_emails_help':
+          'Împiedică un utilizator să trimită e-mailuri din sistem',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -97727,7 +97751,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'ru_RU': {
       'disable_emails': 'Отключить emails',
-      'disable_emails_help': 'Предупреждать пользователей об отправке писем из системы',
+      'disable_emails_help':
+          'Предупреждать пользователей об отправке писем из системы',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -103311,7 +103336,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sk': {
       'disable_emails': 'Zakázať e-maily',
-      'disable_emails_help': 'Zabraňuje používateľovi v odosielaní e-mailov zo systému',
+      'disable_emails_help':
+          'Zabraňuje používateľovi v odosielaní e-mailov zo systému',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -106116,7 +106142,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sl': {
       'disable_emails': 'Onemogoči e-pošto',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -108929,7 +108956,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'es': {
       'disable_emails': 'Deshabilitar correos electrónicos',
-      'disable_emails_help': 'Impide que un usuario envíe correos electrónicos desde el sistema',
+      'disable_emails_help':
+          'Impide que un usuario envíe correos electrónicos desde el sistema',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -111786,7 +111814,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'es_ES': {
       'disable_emails': 'Desactivar Correos Electrónicos.',
-      'disable_emails_help': 'Previene que un usuario envíe correos electrónicos desde el sistema.',
+      'disable_emails_help':
+          'Previene que un usuario envíe correos electrónicos desde el sistema.',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -114653,7 +114682,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'sv': {
       'disable_emails': 'Inaktivera e-postmeddelanden',
-      'disable_emails_help': 'Förhindrar att en användare skickar e-postmeddelanden från systemet',
+      'disable_emails_help':
+          'Förhindrar att en användare skickar e-postmeddelanden från systemet',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -117438,7 +117468,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'th': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
@@ -120201,7 +120232,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
     'tr_TR': {
       'disable_emails': 'Disable Emails',
-      'disable_emails_help': 'Prevents a user from sending emails from the system',
+      'disable_emails_help':
+          'Prevents a user from sending emails from the system',
       'net_cost': 'Net Cost',
       'skip_automatic_emails': 'Skip Automatic Emails',
       'forward_email': 'Forward Email',
