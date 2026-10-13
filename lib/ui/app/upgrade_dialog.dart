@@ -294,13 +294,10 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
         '/api/admin/subscription';
 
-    var purchaseID = purchaseDetails.purchaseID;
-    if (purchaseDetails is AppStorePurchaseDetails) {
-      final originalTransaction =
-          purchaseDetails.skPaymentTransaction.originalTransaction;
-      if (originalTransaction != null) {
-        purchaseID = originalTransaction.transactionIdentifier;
-      }
+    final purchaseID = _inAppTransactionId(purchaseDetails);
+    if (purchaseID == null || purchaseID.isEmpty) {
+      // The server requires a non-empty string; posting null just 422s.
+      return;
     }
 
     final data = {
@@ -322,6 +319,71 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       navigator.pop();
     }
      */
+  }
+
+  /// The value the hosted endpoint stores as `accounts.inapp_transaction_id`.
+  ///
+  /// Apple keys its renewal / cancellation / refund notifications on the
+  /// subscription's **original** transaction id and the server matches that
+  /// exactly, so storing a per-transaction id silently orphans the account —
+  /// later notifications find no match and the plan stops being extended. For
+  /// an initial purchase the two are identical; they diverge on restore and on
+  /// renewals, which both reach here.
+  ///
+  /// Google is the opposite: its notifications resolve to the `orderId` that
+  /// already arrives as [PurchaseDetails.purchaseID], so Android falls through
+  /// unchanged.
+  String? _inAppTransactionId(PurchaseDetails purchaseDetails) {
+    if (purchaseDetails is AppStorePurchaseDetails) {
+      // StoreKit 1 — only reached if `enableStoreKit1()` is ever called.
+      // `originalTransaction` is populated for restored transactions only.
+      final originalTransaction =
+          purchaseDetails.skPaymentTransaction.originalTransaction;
+      if (originalTransaction != null) {
+        return originalTransaction.transactionIdentifier;
+      }
+    } else {
+      // StoreKit 2 (the plugin default) drops `originalId` when it builds
+      // SK2PurchaseDetails, but Apple's own transaction JSON is passed through
+      // as `localVerificationData` and still carries it. Google's equivalent
+      // JSON has no such key, so Android returns null here and falls back to
+      // `purchaseID`.
+      final original = _appleOriginalTransactionId(
+        purchaseDetails.verificationData.localVerificationData,
+      );
+      if (original != null) {
+        return original;
+      }
+    }
+    return purchaseDetails.purchaseID;
+  }
+
+  /// Pulls Apple's `originalTransactionId` out of a StoreKit 2 transaction's
+  /// `localVerificationData` — Apple's `Transaction.jsonRepresentation`.
+  ///
+  /// Returns null when the payload is empty, isn't a JSON object, or carries no
+  /// usable `originalTransactionId`. Never throws: this runs inside the
+  /// purchase-stream callback, where an exception would take down delivery of a
+  /// paid purchase. Apple documents the field as a string but encodes some
+  /// numeric ids as JSON numbers, so both are accepted.
+  String? _appleOriginalTransactionId(String localVerificationData) {
+    if (localVerificationData.isEmpty) {
+      return null;
+    }
+    try {
+      final decoded = jsonDecode(localVerificationData);
+      if (decoded is! Map<String, dynamic>) {
+        return null;
+      }
+      final value = decoded['originalTransactionId'];
+      if (value == null) {
+        return null;
+      }
+      final id = value is String ? value : value.toString();
+      return id.isEmpty ? null : id;
+    } catch (_) {
+      return null;
+    }
   }
 
   void handleError(IAPError? error) {
