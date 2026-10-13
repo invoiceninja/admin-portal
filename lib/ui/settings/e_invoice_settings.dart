@@ -512,6 +512,35 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                   ],
                 ],
               ],
+              BoolDropdownButton(
+                label: localization.lookup('france_reporting'),
+                value: settings.franceReportingEnabled,
+                iconData: MdiIcons.fileChartOutline,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                  settings.rebuild((b) => b..franceReportingEnabled = value),
+                ),
+              ),
+              if (settings.franceReportingEnabled == true)
+                AppDropdownButton<String>(
+                  labelText: localization.lookup('reporting_schedule'),
+                  showBlank: settingsUIState.isFiltered,
+                  value: settings.franceReportingSchedule,
+                  onChanged: (dynamic value) {
+                    viewModel.onSettingsChanged(
+                      settings.rebuild(
+                        (b) => b..franceReportingSchedule = value,
+                      ),
+                    );
+                  },
+                  items: kFranceReportingSchedules
+                      .map(
+                        (type) => DropdownMenuItem<String>(
+                          value: type,
+                          child: Text(localization.lookup(type)),
+                        ),
+                      )
+                      .toList(),
+                ),
             ],
           ),
           if (isPeppol) ...[

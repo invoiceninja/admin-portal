@@ -843,6 +843,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'e_quote_type')
   String? get eQuoteType;
 
+  @BuiltValueField(wireName: 'france_reporting_enabled')
+  bool? get franceReportingEnabled;
+
+  @BuiltValueField(wireName: 'france_reporting_schedule')
+  String? get franceReportingSchedule;
+
   @BuiltValueField(wireName: 'default_expense_payment_type_id')
   String? get defaultExpensePaymentTypeId;
 
