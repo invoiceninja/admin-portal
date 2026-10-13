@@ -631,7 +631,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
 
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, _) {
+      onPopInvoked: (didPop) {
         // The app's own pops arrive here too, only the back button is ours
         if (!didPop) {
           _close();

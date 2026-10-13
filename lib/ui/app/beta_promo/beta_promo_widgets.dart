@@ -14,7 +14,7 @@ class BetaPromoPalette {
       muted = isDark ? const Color(0xFFA9ADB3) : const Color(0xFF5B6470),
       border = isDark ? const Color(0xFF393A3C) : const Color(0xFFE3E6EA),
       accent = isDark ? const Color(0xFF7DB6F2) : kBetaPromoBrandColor,
-      tint = kBetaPromoBrandColor.withValues(alpha: isDark ? .24 : .10);
+      tint = kBetaPromoBrandColor.withOpacity(isDark ? .24 : .10);
 
   final bool isDark;
   final Color surface;
