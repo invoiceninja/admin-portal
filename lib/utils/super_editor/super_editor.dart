@@ -108,6 +108,12 @@ class _ExampleEditorState extends State<ExampleEditor> {
     markdown = markdown.replaceAll('</p>', '');
     markdown = markdown.replaceAll('</div>', '');
 
+    // The selection points at nodes in the old document, keeping it once the
+    // document is replaced crashes the caret layout with a null check error
+    if (_composer.selection != null) {
+      _composer.clearSelection();
+    }
+
     _doc.removeListener(_onDocumentChange);
     _doc = deserializeMarkdownToDocument(markdown)
       ..addListener(_onDocumentChange);
