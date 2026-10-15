@@ -65,8 +65,10 @@ cp lib/ui/app/pinput.dart.foss lib/ui/app/pinput.dart
 cp android/app/src/main/AndroidManifest.foss.xml android/app/src/main/AndroidManifest.xml
 cp android/settings.gradle.foss.kts android/settings.gradle.kts
 cp pubspec.foss.yaml pubspec.yaml 
-rm pubspec.lock
+cp pubspec.foss.lock pubspec.lock
 ```
+
+`pubspec.foss.yaml` and `pubspec.foss.lock` are generated from `pubspec.yaml` and `pubspec.lock` by `./update_foss.sh`, which `bump_version.sh` runs; don't edit them by hand.
 
 ## Application Architecture
 
