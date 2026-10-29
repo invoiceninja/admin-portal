@@ -193,5 +193,10 @@ part 'serializers.g.dart';
   EInvoiceDocumentReferenceEntity,
   HealthCheckLastErrorResponse,
 ])
+// DesignJsonPlugin must run ahead of StandardJsonPlugin so it sees the raw
+// JSON map when deserializing.
 final Serializers serializers =
-    (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
+    (_$serializers.toBuilder()
+          ..addPlugin(DesignJsonPlugin())
+          ..addPlugin(StandardJsonPlugin()))
+        .build();
