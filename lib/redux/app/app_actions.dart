@@ -248,12 +248,17 @@ class RefreshData implements StartLoading {
     this.clearData = false,
     this.includeStatic = false,
     this.allCompanies = false,
+    this.loadCompany = false,
   });
 
   final Completer? completer;
   final bool clearData;
   final bool includeStatic;
   final bool allCompanies;
+
+  // Refresh even if the selected company hasn't been loaded yet,
+  // used to fetch its company-level data with its own token
+  final bool loadCompany;
 }
 
 class RefreshDataSuccess implements StopLoading {

@@ -239,6 +239,7 @@ Middleware<AppState> _createLoadState(
       store.dispatch(LoadStateSuccess(appState));
       store.dispatch(
         RefreshData(
+          loadCompany: true,
           completer: Completer<Null>()
             ..future.then<Null>((_) {
               AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
@@ -563,7 +564,14 @@ Middleware<AppState> _createDataRefreshed() {
     WidgetUtils.updateData();
 
     if (store.state.company.isLarge && !store.state.isLoaded) {
-      store.dispatch(LoadClients());
+      // When multiple companies are returned the selected company may not
+      // be the one the token belongs to, in which case its data is missing
+      if (response.userCompanies.length > 1 &&
+          store.state.userCompany.token.token.isNotEmpty) {
+        store.dispatch(RefreshData(loadCompany: true));
+      } else {
+        store.dispatch(LoadClients());
+      }
     }
   };
 }
