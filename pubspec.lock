@@ -47,7 +47,7 @@ packages:
       path: attributed_text
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
-      url: "https://github.com/superlistapp/super_editor"
+      url: "https://github.com/Flutter-Bounty-Hunters/super_editor"
     source: git
     version: "0.3.0"
   barcode:
@@ -1566,7 +1566,7 @@ packages:
       path: super_editor
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
-      url: "https://github.com/superlistapp/super_editor"
+      url: "https://github.com/Flutter-Bounty-Hunters/super_editor"
     source: git
     version: "0.2.6"
   super_editor_markdown:
@@ -1575,7 +1575,7 @@ packages:
       path: super_editor_markdown
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
-      url: "https://github.com/superlistapp/super_editor"
+      url: "https://github.com/Flutter-Bounty-Hunters/super_editor"
     source: git
     version: "0.1.5"
   super_text_layout:
@@ -1584,7 +1584,7 @@ packages:
       path: super_text_layout
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
-      url: "https://github.com/superlistapp/super_editor"
+      url: "https://github.com/Flutter-Bounty-Hunters/super_editor"
     source: git
     version: "0.1.9"
   sync_http:

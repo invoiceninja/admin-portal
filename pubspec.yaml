@@ -107,22 +107,22 @@ dependency_overrides:
   states_rebuilder: ^6.3.0
   super_editor:
     git:
-      url: https://github.com/superlistapp/super_editor
+      url: https://github.com/Flutter-Bounty-Hunters/super_editor
       path: super_editor
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
   super_editor_markdown:
     git:
-      url: https://github.com/superlistapp/super_editor
+      url: https://github.com/Flutter-Bounty-Hunters/super_editor
       path: super_editor_markdown
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
   super_text_layout:
     git:
-      url: https://github.com/superlistapp/super_editor
+      url: https://github.com/Flutter-Bounty-Hunters/super_editor
       path: super_text_layout
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
   attributed_text:
     git:
-      url: https://github.com/superlistapp/super_editor
+      url: https://github.com/Flutter-Bounty-Hunters/super_editor
       path: attributed_text
       ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
 
