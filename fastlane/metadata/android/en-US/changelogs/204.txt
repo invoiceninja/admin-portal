@@ -1,0 +1,3 @@
+The new Invoice Ninja app is now on F-Droid: https://f-droid.org/packages/com.invoiceninja.admin/
+
+Same account, same data. This update shows an invitation to install it.

@@ -66,6 +66,9 @@ const String kBetaDemoUrl = 'https://hillelcoren.github.io/admin';
 const String kBetaTestFlightUrl = 'https://testflight.apple.com/join/YY1BZ7uR';
 const String kBetaGooglePlayUrl =
     'https://play.google.com/apps/testing/com.invoiceninja.admin';
+// Where the FOSS build, the one installed from F-Droid, points instead
+const String kBetaFDroidUrl =
+    'https://f-droid.org/packages/com.invoiceninja.admin/';
 const String kBetaWindowsUrl =
     'https://apps.microsoft.com/detail/restricted/9NG93WNXN797';
 const String kBetaAppImageUrl =
