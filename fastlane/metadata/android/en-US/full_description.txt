@@ -1,3 +1,5 @@
+The new Invoice Ninja app is now on F-Droid: https://f-droid.org/packages/com.invoiceninja.admin/ Same account, same data.
+
 200,000+ businesses trust Invoice Ninja. And it's 100% free!
 
 Create invoices, track payments, vendors, expenses, and time billable-tasks & projects.

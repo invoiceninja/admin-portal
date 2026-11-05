@@ -27,6 +27,7 @@ enum BetaStr {
   getBeta,
   captionApple,
   captionAndroid,
+  captionFDroid,
   captionWindows,
   captionLinux,
   chipsLabel,
@@ -126,6 +127,8 @@ class BetaPromoStrings {
           "Opens TestFlight, Apple's free app for trying beta versions.",
       BetaStr.captionAndroid:
           'Tap "Become a tester", then install it from Google Play.',
+      BetaStr.captionFDroid:
+          'Opens F-Droid. Install it there, then sign in with the account you use here.',
       BetaStr.captionWindows:
           'Invite-only on the Microsoft Store for now. Requesting access takes a few seconds.',
       BetaStr.captionLinux: 'Available as a snap or an AppImage.',
@@ -211,6 +214,8 @@ class BetaPromoStrings {
           'Öffnet TestFlight, Apples kostenlose App zum Testen von Beta-Versionen.',
       BetaStr.captionAndroid:
           'Treten Sie dem Testprogramm bei und installieren Sie die App dann über Google Play.',
+      BetaStr.captionFDroid:
+          'Öffnet F-Droid. Installieren Sie die App dort und melden Sie sich mit dem Konto an, das Sie hier verwenden.',
       BetaStr.captionWindows:
           'Im Microsoft Store derzeit nur auf Einladung. Die Anfrage dauert nur wenige Sekunden.',
       BetaStr.captionLinux: 'Als Snap oder AppImage verfügbar.',
@@ -300,6 +305,8 @@ class BetaPromoStrings {
           "Ouvre TestFlight, l'application gratuite d'Apple pour essayer les versions bêta.",
       BetaStr.captionAndroid:
           "Rejoignez le programme de test, puis installez l'application depuis Google Play.",
+      BetaStr.captionFDroid:
+          "Ouvre F-Droid. Installez l'application, puis connectez-vous avec le compte que vous utilisez ici.",
       BetaStr.captionWindows:
           "Sur invitation dans le Microsoft Store pour l'instant. La demande ne prend que quelques secondes.",
       BetaStr.captionLinux: 'Disponible en snap ou en AppImage.',
@@ -401,6 +408,8 @@ class BetaPromoStrings {
           'Abre TestFlight, la aplicación gratuita de Apple para probar versiones beta.',
       BetaStr.captionAndroid:
           'Únete al programa de pruebas y luego instálala desde Google Play.',
+      BetaStr.captionFDroid:
+          'Abre F-Droid. Instálala allí y luego inicia sesión con la cuenta que usas aquí.',
       BetaStr.captionWindows:
           'Por ahora, solo por invitación en Microsoft Store. Solicitar acceso lleva unos segundos.',
       BetaStr.captionLinux: 'Disponible como snap o AppImage.',
@@ -493,6 +502,8 @@ class BetaPromoStrings {
           "Apre TestFlight, l'app gratuita di Apple per provare le versioni beta.",
       BetaStr.captionAndroid:
           'Partecipa al programma di test, poi installala da Google Play.',
+      BetaStr.captionFDroid:
+          "Apre F-Droid. Installala da lì, poi accedi con l'account che usi qui.",
       BetaStr.captionWindows:
           "Per ora solo su invito nel Microsoft Store. Per richiedere l'accesso bastano pochi secondi.",
       BetaStr.captionLinux: 'Disponibile come snap o AppImage.',
@@ -581,6 +592,8 @@ class BetaPromoStrings {
           'Opent TestFlight, de gratis app van Apple om bètaversies te proberen.',
       BetaStr.captionAndroid:
           'Meld je aan als tester en installeer de app daarna via Google Play.',
+      BetaStr.captionFDroid:
+          'Opent F-Droid. Installeer de app daar en log in met het account dat je hier gebruikt.',
       BetaStr.captionWindows:
           'Voorlopig alleen op uitnodiging in de Microsoft Store. Toegang aanvragen duurt een paar seconden.',
       BetaStr.captionLinux: 'Beschikbaar als snap of AppImage.',
@@ -667,6 +680,8 @@ class BetaPromoStrings {
           'Abre o TestFlight, o aplicativo gratuito da Apple para testar versões beta.',
       BetaStr.captionAndroid:
           'Participe do programa de testes e depois instale pelo Google Play.',
+      BetaStr.captionFDroid:
+          'Abre o F-Droid. Instale por lá e depois entre com a conta que você usa aqui.',
       BetaStr.captionWindows:
           'Por enquanto, apenas por convite na Microsoft Store. Solicitar acesso leva alguns segundos.',
       BetaStr.captionLinux: 'Disponível como snap ou AppImage.',

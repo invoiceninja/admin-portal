@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_widgets.dart';
+import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -447,7 +448,8 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
       case BetaPlatform.macos:
         return kBetaTestFlightUrl;
       case BetaPlatform.android:
-        return kBetaGooglePlayUrl;
+        // The FOSS build is the one installed from F-Droid
+        return AppReview.isStoreBuild ? kBetaGooglePlayUrl : kBetaFDroidUrl;
       case BetaPlatform.windows:
         return kBetaWindowsUrl;
       case BetaPlatform.linux:
@@ -478,7 +480,9 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
       case BetaPlatform.macos:
         return BetaStr.captionApple;
       case BetaPlatform.android:
-        return BetaStr.captionAndroid;
+        return AppReview.isStoreBuild
+            ? BetaStr.captionAndroid
+            : BetaStr.captionFDroid;
       case BetaPlatform.windows:
         return kBetaWindowsInviteOnly ? BetaStr.captionWindows : null;
       case BetaPlatform.linux:
