@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -109,8 +108,10 @@ class MenuDrawerVM {
                 store.dispatch(ClearEntityFilter());
                 store.dispatch(DiscardChanges());
                 store.dispatch(SelectCompany(companyIndex: index));
-                if (store.state.company.isLarge && !store.state.isLoaded) {
-                  store.dispatch(LoadClients());
+                if (!store.state.isLoaded) {
+                  // The login/refresh response only includes the
+                  // selected company's data, load this company's data
+                  store.dispatch(RefreshData(loadCompany: true));
                 } else if (store.state.isStale) {
                   store.dispatch(RefreshData());
                 }

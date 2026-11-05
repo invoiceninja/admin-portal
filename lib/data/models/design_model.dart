@@ -1,3 +1,6 @@
+// Dart imports:
+import 'dart:convert';
+
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -11,6 +14,102 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'design_model.g.dart';
+
+/// A design made in the visual designer (React, or the new app) carries
+/// `blocks` (a list) and `documentSettings` (a map) inside `design`, which
+/// this app models as `BuiltMap<String, String>` - so deserializing one threw
+/// and broke the whole login. Non-string values are held as JSON strings
+/// while in the app and decoded again when the design is sent back, so a
+/// save here keeps the blocks instead of turning the design back into Twig.
+class DesignJsonPlugin implements SerializerPlugin {
+  static const _templateKeys = {
+    kDesignHeader,
+    kDesignBody,
+    kDesignFooter,
+    kDesignProducts,
+    kDesignTasks,
+    kDesignIncludes,
+  };
+
+  static const _designKey = 'design';
+
+  static bool isBlockDesign(BuiltMap<String, String> design) =>
+      design.containsKey('blocks');
+
+  @override
+  Object? beforeDeserialize(Object? object, FullType specifiedType) {
+    if (specifiedType.root != DesignEntity || object is! Map) {
+      return object;
+    }
+
+    final design = object[_designKey];
+    if (design is! Map ||
+        !design.values.any((v) => v != null && v is! String)) {
+      return object;
+    }
+
+    return <dynamic, dynamic>{
+      ...object,
+      _designKey: design.map(
+        (dynamic key, dynamic value) => MapEntry<dynamic, dynamic>(
+          key,
+          value == null || value is String ? value : jsonEncode(value),
+        ),
+      ),
+    };
+  }
+
+  @override
+  Object? afterDeserialize(Object? object, FullType specifiedType) => object;
+
+  @override
+  Object? beforeSerialize(Object? object, FullType specifiedType) => object;
+
+  @override
+  Object? afterSerialize(Object? object, FullType specifiedType) {
+    if (specifiedType.root != DesignEntity) {
+      return object;
+    }
+
+    // Runs ahead of StandardJsonPlugin, so the entity is still in the
+    // [key, value, key, value] list form; the nested map is already a map.
+    if (object is List) {
+      final index = object.indexOf(_designKey);
+      if (index >= 0 && index.isEven && index + 1 < object.length) {
+        return List<Object?>.from(object)
+          ..[index + 1] = _decode(object[index + 1]);
+      }
+    } else if (object is Map && object.containsKey(_designKey)) {
+      return <dynamic, dynamic>{
+        ...object,
+        _designKey: _decode(object[_designKey]),
+      };
+    }
+
+    return object;
+  }
+
+  static Object? _decode(Object? design) {
+    if (design is! Map) {
+      return design;
+    }
+
+    return design.map((dynamic key, dynamic value) {
+      if (_templateKeys.contains(key) || value is! String) {
+        return MapEntry<dynamic, dynamic>(key, value);
+      }
+      final trimmed = value.trimLeft();
+      if (!trimmed.startsWith('[') && !trimmed.startsWith('{')) {
+        return MapEntry<dynamic, dynamic>(key, value);
+      }
+      try {
+        return MapEntry<dynamic, dynamic>(key, jsonDecode(value));
+      } catch (_) {
+        return MapEntry<dynamic, dynamic>(key, value);
+      }
+    });
+  }
+}
 
 abstract class DesignListResponse
     implements Built<DesignListResponse, DesignListResponseBuilder> {
@@ -93,7 +192,23 @@ abstract class DesignEntity extends Object
   }) {
     if (design == null && state != null) {
       final designMap = state.designState.map;
-      design = designMap[state.company.settings.defaultInvoiceDesignId]?.design;
+      var source = designMap[state.company.settings.defaultInvoiceDesignId];
+      // A new design is edited as Twig here. A visual-designer default has
+      // empty sections and its `blocks` would make the server ignore every
+      // section the user writes, so start from a built-in design instead.
+      if (source != null && DesignJsonPlugin.isBlockDesign(source.design)) {
+        for (final builtIn in designMap.values) {
+          if (!builtIn.isCustom && !builtIn.isTemplate) {
+            source = builtIn;
+            break;
+          }
+        }
+      }
+      design = source?.design.rebuild(
+        (b) => b.removeWhere(
+          (key, _) => !DesignJsonPlugin._templateKeys.contains(key),
+        ),
+      );
     }
 
     return _$DesignEntity._(

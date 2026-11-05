@@ -41,7 +41,7 @@ class _WebSessionTimeoutState extends State<WebSessionTimeout> {
       final state = store.state;
       final sessionTimeout = state.company.sessionTimeout;
 
-      if (sessionTimeout == 0) {
+      if (sessionTimeout == 0 || !state.isLoaded) {
         return;
       }
 
