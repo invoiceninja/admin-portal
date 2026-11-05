@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_dialog.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 /// The invitation is closed at most this many times before it stops returning
@@ -76,10 +75,7 @@ class BetaPromoController {
       return false;
     } else if (isApple() && !kBetaPromoEnabledOnApple) {
       return false;
-    } else if (isAndroid() &&
-        (!kBetaPromoEnabledOnAndroid || !AppReview.isStoreBuild)) {
-      // The beta isn't published on F-Droid, which is where the FOSS build of
-      // this app is installed from
+    } else if (isAndroid() && !kBetaPromoEnabledOnAndroid) {
       return false;
     }
 
