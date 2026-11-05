@@ -276,7 +276,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         print('## Skipping refresh request - pending load');
         action.completer?.complete();
         return;
-      } else if (state.company.isLarge && !state.isLoaded) {
+      } else if (state.company.isLarge &&
+          !state.isLoaded &&
+          !action.loadCompany) {
         print('## Skipping refresh request - not loaded');
         action.completer?.complete();
         return;
@@ -410,6 +412,9 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
                   store.dispatch(
                     SelectCompany(companyIndex: state.companies.length),
                   );
+                  if (!store.state.isLoaded) {
+                    store.dispatch(RefreshData(loadCompany: true));
+                  }
                   store.dispatch(ViewDashboard(force: true));
 
                   action!.completer!.complete();
