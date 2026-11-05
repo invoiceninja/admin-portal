@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.203+203
+version: 5.0.204+204
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
