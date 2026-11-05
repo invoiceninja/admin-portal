@@ -82,10 +82,9 @@ Reducer<String?> selectedIdReducer = combineReducers([
   ),
   TypedReducer<String?, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String?, AddTaskSuccess>(
-    (selectedId, action) =>
-        (selectedId ?? '').isNotEmpty || action.autoSelect
-            ? action.task.id
-            : '',
+    (selectedId, action) => (selectedId ?? '').isNotEmpty || action.autoSelect
+        ? action.task.id
+        : '',
   ),
   TypedReducer<String?, SelectCompany>(
     (selectedId, action) => action.clearSelection ? '' : selectedId,

@@ -50,6 +50,11 @@
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="5.0.203" date="2026-11-05"/>
+    <release version="5.0.202" date="2026-11-05"/>
+    <release version="5.0.201" date="2026-11-05"/>
+    <release version="5.0.200" date="2026-11-05"/>
+    <release version="5.0.199" date="2026-11-05"/>
     <release version="5.0.198" date="2026-10-09"/>
     <release version="5.0.197" date="2026-05-31"/>
     <release version="5.0.196" date="2026-05-31"/>
