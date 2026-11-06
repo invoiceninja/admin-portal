@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/health_check_model.dart';
 import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/null_list_items_plugin.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/data/models/tax_model.dart';
@@ -198,5 +199,6 @@ part 'serializers.g.dart';
 final Serializers serializers =
     (_$serializers.toBuilder()
           ..addPlugin(DesignJsonPlugin())
+          ..addPlugin(NullListItemsPlugin())
           ..addPlugin(StandardJsonPlugin()))
         .build();
