@@ -1,5 +1,5 @@
 [Desktop Entry]
-Version=1.0
+Version=1.5
 Type=Application
 
 Name=Invoice Ninja
@@ -10,3 +10,9 @@ Icon=com.invoiceninja.InvoiceNinja
 Exec=invoiceninja
 Terminal=false
 StartupWMClass=invoiceninja
+SingleMainWindow=false
+Actions=new-window;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=invoiceninja
