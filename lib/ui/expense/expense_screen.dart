@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/expense/expense_date_range_dialog.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_presenter.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -93,6 +94,16 @@ class ExpenseScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,
         iconButtons: [
+          IconButton(
+            tooltip: state.prefState.enableTooltips
+                ? localization!.dateRange
+                : null,
+            icon: Icon(Icons.date_range),
+            onPressed: () => showExpenseDateRangeDialog(context),
+            color: state.expenseListState.hasDateRangeFilter
+                ? Theme.of(context).colorScheme.secondary
+                : null,
+          ),
           IconButton(
             icon: Icon(getEntityIcon(EntityType.settings)),
             onPressed: () {

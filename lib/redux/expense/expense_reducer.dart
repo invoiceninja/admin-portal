@@ -33,6 +33,7 @@ final forceSelectedReducer = combineReducers<bool?>([
   TypedReducer<bool?, FilterExpensesByCustom2>((completer, action) => false),
   TypedReducer<bool?, FilterExpensesByCustom3>((completer, action) => false),
   TypedReducer<bool?, FilterExpensesByCustom4>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByDateRange>((completer, action) => false),
 ]);
 
 final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
@@ -67,6 +68,7 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterExpensesByCustom2>((selectedId, action) => ''),
   TypedReducer<String?, FilterExpensesByCustom3>((selectedId, action) => ''),
   TypedReducer<String?, FilterExpensesByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByDateRange>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<ExpenseEntity?>([
@@ -106,6 +108,9 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterExpensesByCustom2>(_filterExpensesByCustom2),
   TypedReducer<ListUIState, FilterExpensesByCustom3>(_filterExpensesByCustom3),
   TypedReducer<ListUIState, FilterExpensesByCustom4>(_filterExpensesByCustom4),
+  TypedReducer<ListUIState, FilterExpensesByDateRange>(
+    _filterExpensesByDateRange,
+  ),
   TypedReducer<ListUIState, StartExpenseMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToExpenseMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromExpenseMultiselect>(
@@ -184,6 +189,17 @@ ListUIState _filterExpensesByCustom4(
   } else {
     return expenseListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
+}
+
+ListUIState _filterExpensesByDateRange(
+  ListUIState expenseListState,
+  FilterExpensesByDateRange action,
+) {
+  return expenseListState.rebuild(
+    (b) => b
+      ..filterStartDate = action.startDate
+      ..filterEndDate = action.endDate,
+  );
 }
 
 ListUIState _filterExpensesByState(
