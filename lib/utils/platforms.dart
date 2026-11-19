@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:ios_open_subscriptions_settings/ios_open_subscriptions_settings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -16,6 +15,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
+import 'package:invoiceninja_flutter/utils/app_review.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -80,6 +83,25 @@ bool supportsInAppPurchase() {
   return isIOS() || isAndroid() || isMacOS();
 }
 
+/// A build sold through the App Store or Google Play, where a plan can't be
+/// paid for outside the store. The F-Droid build can.
+bool isInAppStoreBuild() =>
+    isApple() || (isAndroid() && AppReview.isStoreBuild);
+
+/// Opens where a store subscription to this app is managed
+void openStoreSubscriptions() {
+  if (isIOS()) {
+    IosOpenSubscriptionsSettings.openSubscriptionsSettings();
+  } else if (isAndroid()) {
+    launchUrl(Uri.parse(kPlaySubscriptionsUrl));
+  } else if (isMacOS()) {
+    launchUrl(Uri.parse(kAppleSubscriptionsUrl));
+  }
+}
+
+/// Plans are no longer sold in this app, new ones are bought in the new app.
+/// An existing store subscription can still be managed, and restored from
+/// account management.
 void initiatePurchase() {
   final context = navigatorKey.currentContext!;
   final store = StoreProvider.of<AppState>(context);
@@ -88,20 +110,26 @@ void initiatePurchase() {
 
   if (supportsInAppPurchase()) {
     if (account.hasIapPlan) {
-      if (isIOS()) {
-        IosOpenSubscriptionsSettings.openSubscriptionsSettings();
-      } else if (isAndroid()) {
-        launchUrl(
-          Uri.parse('https://play.google.com/store/account/subscriptions'),
-        );
-      } else {
-        // TODO support viewing plans on macOS
-        launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
-      }
-    } else if (state.isProPlan) {
+      openStoreSubscriptions();
+    } else if (state.isProPlan && !isInAppStoreBuild()) {
       launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+    } else if (state.isProPlan) {
+      // Not the portal, the stores don't allow pointing to another way to pay
+      final strings = BetaPromoStrings(AppLocalization.of(context)!.localeCode);
+      showMessageDialog(
+        message: strings.get(BetaStr.managePlan),
+        secondaryActions: [
+          TextButton(
+            onPressed: () {
+              navigatorKey.currentState?.pop();
+              showBetaPromoDialog(isManual: true);
+            },
+            child: Text(strings.get(BetaStr.getNewApp).toUpperCase()),
+          ),
+        ],
+      );
     } else {
-      showDialog<void>(context: context, builder: (context) => UpgradeDialog());
+      showBetaPromoDialog(isManual: true);
     }
   } else {
     launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));

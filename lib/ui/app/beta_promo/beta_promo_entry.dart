@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-/// The way back to the invitation from the sidebar, kept until the user has
-/// installed the beta or asked not to see it
+/// The way back to the move prompt from the sidebar, kept while this app is
+/// being retired
 class BetaPromoSidebarTile extends StatelessWidget {
   const BetaPromoSidebarTile({Key? key}) : super(key: key);
 
@@ -42,7 +42,7 @@ class BetaPromoSidebarTile extends StatelessWidget {
 
         final title = BetaPromoStrings(
           AppLocalization.of(context)!.localeCode,
-        ).get(BetaStr.entryTitle);
+        ).get(BetaStr.getNewApp);
 
         return Material(
           child: Tooltip(

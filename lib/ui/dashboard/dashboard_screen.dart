@@ -238,7 +238,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               state.isSelfHosted &&
               !state.isDemo &&
               !isPaidAccount(context) &&
-              !isApple())
+              // Sold outside the store, which store builds can't offer
+              !isInAppStoreBuild())
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(

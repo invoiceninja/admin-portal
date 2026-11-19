@@ -15,27 +15,14 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/move_support.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-/// The invitation is closed at most this many times before it stops returning
-const int kBetaPromoMaxCloses = 3;
-
-/// How long the invitation stays away after its nth close, null once it has
-/// been closed often enough to stop
-Duration? betaPromoSnooze(int closes) {
-  switch (closes) {
-    case 1:
-      return const Duration(days: 7);
-    case 2:
-      return const Duration(days: 30);
-  }
-
-  return null;
-}
-
-/// Decides when the invitation to the beta of the new app is shown and
-/// remembers what the user did with it.
+/// Decides when the prompt to move to the new app is shown and remembers
+/// what the user did with it. Shown on a schedule counting down to
+/// [kSunsetDate] (see [isMovePromptDue]), and never turned off for good: the
+/// date is the reason to keep reminding.
 ///
 /// The state lives in SharedPreferences rather than PrefState so it survives a
 /// logout without touching the generated serializers, and can be deleted along
@@ -53,23 +40,20 @@ class BetaPromoController {
   /// Whether the sidebar row and the dashboard card are offered
   final ValueNotifier<bool> showEntry = ValueNotifier<bool>(false);
 
-  /// The user has started installing, so the invitation opens on the sign-in
-  /// details and no longer shows itself
+  /// The user has started installing, so the prompt opens on the sign-in
+  /// details
   bool hasEngaged = false;
 
   SharedPreferences? _prefs;
   StreamSubscription<AppState>? _subscription;
   Timer? _timer;
-  int _closes = 0;
-  int _nextAt = 0;
+  DateTime? _lastShown;
   int? _settledAt;
-  String _windowsRequest = '';
-  bool _isDone = false;
   bool _isStarted = false;
   bool _wasShown = false;
 
   static bool get isAvailable {
-    if (!kBetaPromoEnabled || DateTime.now().isAfter(kBetaPromoEndDate)) {
+    if (!kBetaPromoEnabled) {
       return false;
     } else if (kIsWeb && !kBetaPromoEnabledOnWeb) {
       return false;
@@ -82,13 +66,10 @@ class BetaPromoController {
     return true;
   }
 
-  static bool allowsState(AppState state) =>
-      !state.isDemo && !Config.DEMO_MODE && !state.isWhiteLabeled;
+  // White-labeled installs included, they are retired along with the rest
+  static bool allowsState(AppState state) => !state.isDemo && !Config.DEMO_MODE;
 
   bool showsEntryFor(AppState state) => showEntry.value && allowsState(state);
-
-  /// Closing it this time is the last time it shows itself
-  bool get isLastReminder => _closes >= kBetaPromoMaxCloses - 1;
 
   Future<void> start(Store<AppState> store) async {
     if (_isStarted || !isAvailable) {
@@ -98,17 +79,17 @@ class BetaPromoController {
 
     try {
       final prefs = _prefs = await SharedPreferences.getInstance();
-      _closes = prefs.getInt(kSharedPrefBetaPromoCloses) ?? 0;
-      _nextAt = prefs.getInt(kSharedPrefBetaPromoNextAt) ?? 0;
-      _isDone = prefs.getBool(kSharedPrefBetaPromoDone) ?? false;
-      hasEngaged = prefs.getBool(kSharedPrefBetaPromoEngaged) ?? false;
-      _windowsRequest = prefs.getString(kSharedPrefBetaPromoWindowsEmail) ?? '';
+      final shownAt = prefs.getInt(kSharedPrefMovePromoShownAt);
+      _lastShown = shownAt == null
+          ? null
+          : DateTime.fromMillisecondsSinceEpoch(shownAt);
+      hasEngaged = prefs.getBool(kSharedPrefMovePromoEngaged) ?? false;
     } catch (error) {
-      print('## ERROR: failed to load the beta promo state - $error');
+      print('## ERROR: failed to load the move promo state - $error');
       return;
     }
 
-    showEntry.value = !_isDone;
+    showEntry.value = true;
 
     if (!_isDue) {
       return;
@@ -120,9 +101,11 @@ class BetaPromoController {
 
   bool get _isDue =>
       !_wasShown &&
-      !_isDone &&
-      _closes < kBetaPromoMaxCloses &&
-      DateTime.now().millisecondsSinceEpoch >= _nextAt;
+      isMovePromptDue(
+        now: DateTime.now(),
+        lastShown: _lastShown,
+        sunset: kSunsetDate,
+      );
 
   // The account is loaded and the user isn't in the middle of something
   bool _isIdle(AppState state) {
@@ -199,67 +182,32 @@ class BetaPromoController {
     _timer = null;
   }
 
-  /// The invitation is on screen, whether it opened itself or the user opened
-  /// it, and won't open itself again this session
+  /// The prompt is on screen, whether it opened itself or the user opened it,
+  /// and won't open itself again until the schedule says so. Saved now rather
+  /// than when it closes, the store can take this app out of memory.
   void markShown() {
     _wasShown = true;
     _stop();
+
+    final now = DateTime.now();
+    _lastShown = now;
+
+    _save(
+      (prefs) =>
+          prefs.setInt(kSharedPrefMovePromoShownAt, now.millisecondsSinceEpoch),
+    );
   }
 
-  /// The invitation was closed without being acted on
-  void snooze() {
-    _closes++;
-    final delay = betaPromoSnooze(_closes);
-    _nextAt = delay == null
-        ? 0
-        : DateTime.now().add(delay).millisecondsSinceEpoch;
-
-    _save((prefs) async {
-      await prefs.setInt(kSharedPrefBetaPromoCloses, _closes);
-      await prefs.setInt(kSharedPrefBetaPromoNextAt, _nextAt);
-    });
-  }
-
-  /// The user started installing. Saved straight away rather than when the
-  /// invitation closes, the store can take this app out of memory. The
-  /// sidebar row stays for the sign-in details.
+  /// The user started installing, so the prompt opens on the sign-in details
+  /// from now on
   void markEngaged() {
     if (hasEngaged) {
       return;
     }
 
     hasEngaged = true;
-    _closes = kBetaPromoMaxCloses;
 
-    _save((prefs) async {
-      await prefs.setBool(kSharedPrefBetaPromoEngaged, true);
-      await prefs.setInt(kSharedPrefBetaPromoCloses, _closes);
-    });
-  }
-
-  /// The user installed the beta or asked not to be shown it again
-  void finish() {
-    _isDone = true;
-    showEntry.value = false;
-
-    _save((prefs) => prefs.setBool(kSharedPrefBetaPromoDone, true));
-  }
-
-  /// The Microsoft account an invite was requested for by [accountEmail],
-  /// empty if none. Kept per account, this device may be shared.
-  String windowsEmailFor(String accountEmail) {
-    final parts = _windowsRequest.split('\n');
-
-    return parts.length == 2 && parts.first == accountEmail ? parts.last : '';
-  }
-
-  void saveWindowsEmail(String accountEmail, String email) {
-    _windowsRequest = '$accountEmail\n$email';
-
-    _save(
-      (prefs) =>
-          prefs.setString(kSharedPrefBetaPromoWindowsEmail, _windowsRequest),
-    );
+    _save((prefs) => prefs.setBool(kSharedPrefMovePromoEngaged, true));
   }
 
   // On the web a full localStorage makes the write throw
@@ -267,7 +215,7 @@ class BetaPromoController {
     try {
       await write(_prefs ??= await SharedPreferences.getInstance());
     } catch (error) {
-      print('## ERROR: failed to save the beta promo state - $error');
+      print('## ERROR: failed to save the move promo state - $error');
     }
   }
 }

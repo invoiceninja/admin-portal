@@ -20,9 +20,52 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
+  const UpgradeDialog({Key? key, this.restoreOnly = false}) : super(key: key);
+
+  /// Only restores a subscription bought in this app, new plans are bought in
+  /// the new app
+  final bool restoreOnly;
+
   @override
   State<UpgradeDialog> createState() => _UpgradeDialogState();
 }
+
+/// What became of a purchase sent to the server, which decides whether the
+/// store is told it's finished
+enum PurchaseDelivery {
+  /// The plan was applied, finish the purchase
+  applied,
+
+  /// The server won't ever apply it (409 / 422: a sandbox purchase, one
+  /// linked to another account, one it can't verify). Apple's is finished so
+  /// it stops being delivered again; Google's is left unacknowledged, which
+  /// Play refunds.
+  refused,
+
+  /// A server or network error, left unfinished so the store delivers it
+  /// again
+  retry,
+}
+
+/// The HTTP status at the start of an error thrown by WebClient, which reads
+/// "<status>: <reason> • <message>", null for a network error
+int? purchaseErrorStatus(String error) {
+  final match = RegExp(r'^(\d{3}): ').firstMatch(error);
+
+  return match == null ? null : int.tryParse(match.group(1)!);
+}
+
+/// The server's own message from an error thrown by WebClient, without the
+/// status and the reason phrase in front of it
+String purchaseErrorMessage(String error) => error
+    .replaceFirst(RegExp(r'^\d{3}: '), '')
+    .replaceFirst(RegExp(r'^[^\n•]* • '), '')
+    .trim();
+
+PurchaseDelivery purchaseDeliveryFor(int? status) =>
+    status == 409 || status == 422
+    ? PurchaseDelivery.refused
+    : PurchaseDelivery.retry;
 
 class _UpgradeDialogState extends State<UpgradeDialog> {
   final _scrollController = ScrollController();
@@ -33,7 +76,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   bool _isAvailable = false;
   bool _purchasePending = false;
   bool _loading = true;
+  bool _isRestoring = false;
   String? _queryProductError;
+  String? _statusMessage;
 
   @override
   void initState() {
@@ -72,6 +117,14 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           _inAppPurchase
               .getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
       await iosPlatformAddition.setDelegate(ExamplePaymentQueueDelegate());
+    }
+
+    if (widget.restoreOnly) {
+      setState(() {
+        _isAvailable = isAvailable;
+        _loading = false;
+      });
+      return;
     }
 
     final ProductDetailsResponse productDetailResponse = await _inAppPurchase
@@ -121,8 +174,88 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     super.dispose();
   }
 
+  Future<void> _restore() async {
+    setState(() {
+      _isRestoring = true;
+      _statusMessage = 'Checking with the store...';
+    });
+
+    try {
+      await _inAppPurchase.restorePurchases();
+    } catch (error) {
+      if (mounted) {
+        setState(() {
+          _isRestoring = false;
+          _statusMessage = '$error';
+        });
+      }
+      return;
+    }
+
+    // The store sends nothing at all when there's nothing to restore
+    Timer(const Duration(seconds: 15), () {
+      if (mounted && _isRestoring) {
+        setState(() {
+          _isRestoring = false;
+          _statusMessage = 'No subscription to restore was found.';
+        });
+      }
+    });
+  }
+
+  Widget _buildRestoreOnly(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+    final statusMessage = _statusMessage;
+
+    return AlertDialog(
+      title: Text(localization.restorePurchases),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            !_loading && !_isAvailable
+                ? 'The store isn\'t available on this device.'
+                : 'Restore a subscription you bought in this app so it applies to your account. New plans are bought in the new Invoice Ninja app.',
+          ),
+          if (_loading || _isRestoring || statusMessage != null) ...[
+            SizedBox(height: 20),
+            Row(
+              children: [
+                if (_loading || _isRestoring) ...[
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  SizedBox(width: 12),
+                ],
+                if (statusMessage != null) Expanded(child: Text(statusMessage)),
+              ],
+            ),
+          ],
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(localization.close.toUpperCase()),
+        ),
+        if (!_loading && _isAvailable)
+          TextButton(
+            onPressed: _isRestoring ? null : _restore,
+            child: Text(localization.restorePurchases.toUpperCase()),
+          ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.restoreOnly) {
+      return _buildRestoreOnly(context);
+    }
+
     final localization = AppLocalization.of(context)!;
     final List<Widget> stack = <Widget>[];
     if (_queryProductError == null) {
@@ -142,6 +275,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                       'Payment will be charged to iTunes Account at confirmation of purchase. Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. Account will be charged for renewal within 24-hours prior to the end of the current period, and identify the cost of the renewal. Subscriptions may be managed by the user and auto-renewal may be turned off by going to the user\'s Account Settings after purchase.',
                       style: TextStyle(fontSize: 12, color: Colors.grey),
                     ),
+                  ),
+                if (_statusMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Text(_statusMessage!),
                   ),
                 _buildProductList(),
               ],
@@ -174,9 +312,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       actions: [
         if (!_loading)
           TextButton(
-            onPressed: () {
-              _inAppPurchase.restorePurchases();
-            },
+            onPressed: _isRestoring ? null : _restore,
             child: Text(localization.restorePurchases),
           ),
         TextButton(
@@ -209,10 +345,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     final Map<String, PurchaseDetails> purchases =
         Map<String, PurchaseDetails>.fromEntries(
+          // Only purchases the server applied, finishing them is left to
+          // _listenToPurchaseUpdated
           _purchases.map((PurchaseDetails purchase) {
-            if (purchase.pendingCompletePurchase) {
-              _inAppPurchase.completePurchase(purchase);
-            }
             return MapEntry<String, PurchaseDetails>(
               purchase.productID,
               purchase,
@@ -280,10 +415,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     });
   }
 
-  Future<void> deliverProduct(PurchaseDetails purchaseDetails) async {
-    // IMPORTANT!! Always verify purchase details before delivering the product.
+  Future<PurchaseDelivery> deliverProduct(
+    PurchaseDetails purchaseDetails,
+  ) async {
+    // The server verifies the purchase with the store before applying it
     setState(() {
-      _purchases.add(purchaseDetails);
       _purchasePending = false;
     });
 
@@ -297,7 +433,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final purchaseID = _inAppTransactionId(purchaseDetails);
     if (purchaseID == null || purchaseID.isEmpty) {
       // The server requires a non-empty string; posting null just 422s.
-      return;
+      // Finished, as it always has been, there's nothing to send again.
+      return PurchaseDelivery.applied;
     }
 
     final data = {
@@ -306,11 +443,35 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'plan': purchaseDetails.productID.replaceAll('-', '_'),
     };
 
-    await WebClient().post(
-      url,
-      state.credentials.token,
-      data: jsonEncode(data),
-    );
+    try {
+      await WebClient().post(
+        url,
+        state.credentials.token,
+        data: jsonEncode(data),
+      );
+    } catch (error) {
+      final delivery = purchaseDeliveryFor(purchaseErrorStatus('$error'));
+      final message = purchaseErrorMessage('$error');
+
+      if (mounted) {
+        setState(() {
+          _isRestoring = false;
+          _statusMessage = message.isNotEmpty
+              ? message
+              : 'The purchase couldn\'t be applied to your account.';
+        });
+      }
+
+      return delivery;
+    }
+
+    if (mounted) {
+      setState(() {
+        _purchases.add(purchaseDetails);
+        _isRestoring = false;
+        _statusMessage = 'Your subscription is linked to this account.';
+      });
+    }
 
     store.dispatch(RefreshData());
 
@@ -319,6 +480,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       navigator.pop();
     }
      */
+
+    return PurchaseDelivery.applied;
   }
 
   /// The value the hosted endpoint stores as `accounts.inapp_transaction_id`.
@@ -389,6 +552,10 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   void handleError(IAPError? error) {
     setState(() {
       _purchasePending = false;
+      if (_isRestoring) {
+        _isRestoring = false;
+        _statusMessage = error?.message;
+      }
     });
   }
 
@@ -403,7 +570,12 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           handleError(purchaseDetails.error);
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          await deliverProduct(purchaseDetails);
+          final delivery = await deliverProduct(purchaseDetails);
+
+          if (delivery == PurchaseDelivery.retry ||
+              (delivery == PurchaseDelivery.refused && !isApple())) {
+            continue;
+          }
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);

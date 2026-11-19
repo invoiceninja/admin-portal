@@ -25,6 +25,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
@@ -32,6 +33,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
+import 'package:invoiceninja_flutter/ui/app/retired_app_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/app/web_session_timeout.dart';
 import 'package:invoiceninja_flutter/ui/app/web_socket_refresh.dart';
@@ -385,7 +387,19 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               state.company.settings.enableMilitaryTime ??
                               false,
                         ),
-                        child: child!,
+                        // Over everything, the navigator and its dialogs
+                        // included, once the server retires this version
+                        child: ValueListenableBuilder<bool>(
+                          valueListenable: appRetired,
+                          builder: (context, isRetired, _) => Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              ExcludeFocus(excluding: isRetired, child: child!),
+                              if (isRetired)
+                                Positioned.fill(child: RetiredAppScreen()),
+                            ],
+                          ),
+                        ),
                       );
                     },
                     scrollBehavior:

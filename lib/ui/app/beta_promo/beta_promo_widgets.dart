@@ -60,12 +60,14 @@ class BetaPromoFeatureRow extends StatelessWidget {
     required this.title,
     required this.body,
     required this.palette,
+    this.action,
   }) : super(key: key);
 
   final IconData icon;
   final String title;
   final String body;
   final BetaPromoPalette palette;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +108,7 @@ class BetaPromoFeatureRow extends StatelessWidget {
                     height: 1.35,
                   ),
                 ),
+                if (action != null) action!,
               ],
             ),
           ),
@@ -229,57 +232,7 @@ class BetaPromoCopyRow extends StatelessWidget {
   }
 }
 
-/// A terminal command, with a button to copy it
-class BetaPromoCommandBox extends StatelessWidget {
-  const BetaPromoCommandBox({
-    Key? key,
-    required this.command,
-    required this.copyTooltip,
-    required this.onCopy,
-  }) : super(key: key);
-
-  final String command;
-  final String copyTooltip;
-  final VoidCallback onCopy;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsetsDirectional.fromSTEB(12, 6, 2, 6),
-      decoration: BoxDecoration(
-        color: const Color(0xFF10151C),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: Row(
-          children: [
-            Expanded(
-              child: SelectableText(
-                command,
-                style: const TextStyle(
-                  color: Color(0xFFE6EDF3),
-                  fontSize: 12.5,
-                  height: 1.4,
-                  fontFamily: 'monospace',
-                  fontFamilyFallback: ['Menlo', 'Consolas', 'DejaVu Sans Mono'],
-                ),
-              ),
-            ),
-            IconButton(
-              tooltip: copyTooltip,
-              icon: Icon(Icons.copy, size: 18, color: Colors.white70),
-              onPressed: onCopy,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// A code to scan so someone at a desk can install the beta on their phone
+/// A code to scan so someone at a desk can install the new app on their phone
 class BetaPromoQrCard extends StatelessWidget {
   const BetaPromoQrCard({
     Key? key,

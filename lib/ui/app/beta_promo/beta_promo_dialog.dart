@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -10,20 +9,20 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_widgets.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/move_support.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -31,8 +30,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 enum BetaPlatform { ios, macos, android, windows, linux }
 
-/// The platform the beta would be installed on, which on the web is the one
-/// the browser is running on
+/// The platform the new app would be installed on, which on the web is the
+/// one the browser is running on
 BetaPlatform? currentBetaPlatform() {
   if (isIOS()) {
     return BetaPlatform.ios;
@@ -76,77 +75,56 @@ BetaPlatform? currentBetaPlatform() {
   }
 }
 
-class BetaFeature {
-  const BetaFeature(this.icon, this.title, this.body);
-
-  final IconData icon;
-  final BetaStr title;
-  final BetaStr body;
+/// Where the new app is installed from on [platform], one link each
+String? newAppUrl(BetaPlatform? platform) {
+  switch (platform) {
+    case BetaPlatform.ios:
+      return kMoveAppUrlIos;
+    case BetaPlatform.macos:
+      return kMoveAppUrlMac;
+    case BetaPlatform.android:
+      // The FOSS build is the one installed from F-Droid
+      return AppReview.isStoreBuild ? kMoveAppUrlAndroid : kBetaFDroidUrl;
+    case BetaPlatform.windows:
+      return kMoveAppUrlWindows;
+    case BetaPlatform.linux:
+      return kBetaAppImageUrl;
+    case null:
+      return null;
+  }
 }
 
-/// The strongest reasons to switch for this user, most convincing first
-List<BetaFeature> betaPromoFeatures({
-  required bool isPhone,
-  required bool hasTasks,
-  required bool hasExpenses,
-  required bool hasDesigner,
-  required int count,
-}) {
-  const offline = BetaFeature(
-    Icons.cloud_off_outlined,
-    BetaStr.offlineTitle,
-    BetaStr.offlineBody,
-  );
-  const dashboard = BetaFeature(
-    Icons.dashboard_customize_outlined,
-    BetaStr.dashboardTitle,
-    BetaStr.dashboardBody,
-  );
-  const tasks = BetaFeature(
-    Icons.calendar_month_outlined,
-    BetaStr.tasksTitle,
-    BetaStr.tasksBody,
-  );
-  const big = BetaFeature(
-    Icons.bolt_outlined,
-    BetaStr.bigTitle,
-    BetaStr.bigBody,
-  );
+/// Where a device too old for the new app uses it instead: the web app, which
+/// for a selfhosted account is on its own server
+String newAppWebUrl(AppState state) =>
+    state.isSelfHosted && cleanApiUrl(state.authState.url).isNotEmpty
+    ? cleanApiUrl(state.authState.url)
+    : kMoveWebAppUrl;
 
-  final features = isPhone
-      ? [
-          offline,
-          dashboard,
-          if (hasExpenses)
-            const BetaFeature(
-              Icons.receipt_long_outlined,
-              BetaStr.receiptTitle,
-              BetaStr.receiptBody,
-            ),
-          const BetaFeature(
-            Icons.phone_in_talk_outlined,
-            BetaStr.callsTitle,
-            BetaStr.callsBody,
-          ),
-          if (hasTasks) tasks,
-          big,
-        ]
-      : [
-          offline,
-          dashboard,
-          // Saving a design is part of the pro plan
-          if (hasDesigner)
-            const BetaFeature(
-              Icons.design_services_outlined,
-              BetaStr.designerTitle,
-              BetaStr.designerBody,
-            ),
-          if (hasTasks) tasks,
-          const BetaFeature(Icons.tab, BetaStr.tabsTitle, BetaStr.tabsBody),
-          big,
-        ];
+/// Opens [url] outside the app. The default mode opens store links inside an
+/// in-app browser on mobile, which can't hand off to the store.
+Future<bool> launchMoveUrl(String url) async {
+  try {
+    return await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
+  } catch (error) {
+    return false;
+  }
+}
 
-  return features.take(count).toList();
+/// A mail to us, for feedback on the move
+String get moveContactUrl =>
+    'mailto:$kBetaContactEmail?subject=${Uri.encodeComponent('Invoice Ninja Legacy')}';
+
+/// [date] written out in full, in the language [strings] uses for [key]
+String formatMoveDate(DateTime date, BetaPromoStrings strings, BetaStr key) {
+  try {
+    return DateFormat.yMMMMd(strings.localeOf(key)).format(date);
+  } catch (error) {
+    return DateFormat.yMMMMd('en').format(date);
+  }
 }
 
 /// Labels which name something elsewhere in the app, so they use its words.
@@ -158,9 +136,10 @@ class BetaPromoLabels {
   final String setPassword;
 }
 
-/// Invites the user to the beta of the new app. Opened by
-/// [BetaPromoController] once the account has loaded, and by hand from the
-/// sidebar, the dashboard and the about dialog.
+/// Asks the user to move to the new app before this one is retired. Opened
+/// by [BetaPromoController] once the account has loaded, and by hand from the
+/// sidebar, the dashboard, the about dialog and anywhere this app used to
+/// sell a plan.
 Future<void> showBetaPromoDialog({bool isManual = false}) async {
   // Always the app's own navigator. The sidebar wraps its rows in a theme of
   // its own, which a dialog opened from one of them would inherit.
@@ -182,6 +161,7 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
       platform == BetaPlatform.android && !kBetaPromoEnabledOnAndroid
       ? null
       : platform;
+  final isAfterSunset = !DateTime.now().isBefore(kSunsetDate);
 
   // Before anything is awaited, so it can't also open itself meanwhile
   controller.markShown();
@@ -195,47 +175,15 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
     );
   }
 
-  // The default mode opens store links inside an in-app browser on mobile,
-  // which can't hand off to TestFlight or Google Play
-  Future<bool> launch(String url) async {
-    try {
-      return await launchUrl(
-        Uri.parse(url),
-        mode: LaunchMode.externalApplication,
-      );
-    } catch (error) {
-      return false;
-    }
-  }
-
-  // Goes through the contact us endpoint, which the server emails to us with
-  // the user set as the reply-to. Leaving out send_logs keeps a selfhosted
-  // server from attaching its logs.
-  Future<bool> requestWindowsAccess(String email) async {
-    try {
-      await WebClient().post(
-        '${state.credentials.url}/support/messages/send',
-        state.credentials.token,
-        data: json.encode({
-          'message':
-              '[Windows beta access] Please add this Microsoft account to the Windows beta: $email',
-          'platform': getPlatformLetter(),
-          'version': state.appVersion,
-        }),
-      );
-    } catch (error) {
-      return false;
-    }
-
-    controller.saveWindowsEmail(user.email, email);
-    return true;
-  }
+  final belowFloor = deviceIsBelowNewAppFloor();
 
   // Decoded up front so the screenshots are there on the first frame
   await Future.wait([
     for (final asset in betaPromoHeroAssets(isDark))
       precacheImage(AssetImage(asset), context),
   ]);
+
+  final isBelowFloor = await belowFloor;
 
   if (!context.mounted) {
     return;
@@ -260,24 +208,27 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
           BetaPlatform.windows,
           BetaPlatform.linux,
         ].contains(devicePlatform),
-        isSnap: isInvoiceNinjaSnap(),
         isDark: isDark,
         isManual: isManual,
         email: user.email,
         serverUrl: state.isSelfHosted ? cleanApiUrl(state.authState.url) : '',
         needsPassword: !user.hasPassword && user.oauthProvider.isNotEmpty,
-        hasTasks: state.company.isModuleEnabled(EntityType.task),
-        hasExpenses: state.company.isModuleEnabled(EntityType.expense),
-        hasDesigner: state.isProPlan || state.isTrial,
         hasEngaged: controller.hasEngaged,
-        isLastReminder: controller.isLastReminder,
-        windowsEmail: controller.windowsEmailFor(user.email),
-        onLaunch: launch,
-        onRequestWindowsAccess: requestWindowsAccess,
+        isBelowFloor: isBelowFloor,
+        webAppUrl: newAppWebUrl(state),
+        sunsetDate: formatMoveDate(
+          kSunsetDate,
+          strings,
+          isAfterSunset ? BetaStr.bothBodyAfter : BetaStr.bothBody,
+        ),
+        isAfterSunset: isAfterSunset,
+        // Their v1 Play subscription can't be moved, the server cancels and
+        // refunds it once they buy in the new app
+        showPlayRefund:
+            isAndroid() && AppReview.isStoreBuild && state.account.hasIapPlan,
+        onLaunch: launchMoveUrl,
         onCopy: copy,
-        onSnooze: controller.snooze,
         onEngaged: controller.markEngaged,
-        onFinish: controller.finish,
         // Without the user the form edits whichever one settings last held,
         // which is a blank one until settings has been opened
         onSetPassword: () => store.dispatch(
@@ -299,8 +250,8 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
   );
 }
 
-/// The invitation itself. Takes plain values rather than reading the store so
-/// it can be rendered on its own.
+/// The prompt itself. Takes plain values rather than reading the store so it
+/// can be rendered on its own.
 class BetaPromoDialog extends StatefulWidget {
   const BetaPromoDialog({
     Key? key,
@@ -310,24 +261,20 @@ class BetaPromoDialog extends StatefulWidget {
     required this.showPlatformChips,
     required this.showOtherPlatforms,
     required this.showQr,
-    required this.isSnap,
     required this.isDark,
     required this.isManual,
     required this.email,
     required this.serverUrl,
     required this.needsPassword,
-    required this.hasTasks,
-    required this.hasExpenses,
-    required this.hasDesigner,
     required this.hasEngaged,
-    required this.isLastReminder,
-    required this.windowsEmail,
+    required this.isBelowFloor,
+    required this.webAppUrl,
+    required this.sunsetDate,
+    required this.isAfterSunset,
+    required this.showPlayRefund,
     required this.onLaunch,
-    required this.onRequestWindowsAccess,
     required this.onCopy,
-    required this.onSnooze,
     required this.onEngaged,
-    required this.onFinish,
     required this.onSetPassword,
   }) : super(key: key);
 
@@ -337,44 +284,42 @@ class BetaPromoDialog extends StatefulWidget {
   final bool showPlatformChips;
   final bool showOtherPlatforms;
   final bool showQr;
-  final bool isSnap;
   final bool isDark;
 
-  /// Opened by the user rather than shown to them, so closing it isn't
-  /// counted against the number of times it comes back
+  /// Opened by the user rather than shown to them
   final bool isManual;
   final String email;
 
   /// Empty for a hosted account
   final String serverUrl;
   final bool needsPassword;
-  final bool hasTasks;
-  final bool hasExpenses;
-  final bool hasDesigner;
 
   /// Opened again after starting to install, what's left is to sign in
   final bool hasEngaged;
 
-  /// It won't show itself again after this, so it doesn't offer to
-  final bool isLastReminder;
+  /// This device's OS is older than the new app supports, so the button
+  /// opens [webAppUrl] instead of the store
+  final bool isBelowFloor;
+  final String webAppUrl;
 
-  /// The address an invite was already requested for, empty if none
-  final String windowsEmail;
+  /// [kSunsetDate], formatted
+  final String sunsetDate;
+  final bool isAfterSunset;
+
+  /// Says what happens to their Google Play subscription
+  final bool showPlayRefund;
   final Future<bool> Function(String url) onLaunch;
-  final Future<bool> Function(String email) onRequestWindowsAccess;
   final void Function(String value) onCopy;
-  final VoidCallback onSnooze;
 
-  /// The user has started to install, which is the end of the reminders
+  /// The user has started to install
   final VoidCallback onEngaged;
-  final VoidCallback onFinish;
   final VoidCallback onSetPassword;
 
   @override
   State<BetaPromoDialog> createState() => _BetaPromoDialogState();
 }
 
-enum _Step { pitch, install, signIn }
+enum _Step { pitch, signIn }
 
 class _BetaPromoDialogState extends State<BetaPromoDialog> {
   static const Map<BetaPlatform, String> _platformNames = {
@@ -385,22 +330,11 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     BetaPlatform.linux: 'Linux',
   };
 
-  // Loose on what an address is, strict on what could turn into markup in the
-  // email the server builds from it
-  static final RegExp _emailPattern = RegExp(
-    r'''^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$''',
-  );
-
-  late final TextEditingController _emailController;
   Timer? _armTimer;
   BetaPlatform? _platform;
   _Step _step = _Step.pitch;
   bool _isArmed = false;
   bool _hasEngaged = false;
-  bool _isSending = false;
-  bool _isSent = false;
-  bool _hasSendFailed = false;
-  String? _emailError;
   String? _failedUrl;
   int _qrOption = 0;
 
@@ -409,23 +343,14 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     super.initState();
 
     _platform = widget.devicePlatform;
-    _isSent = widget.windowsEmail.isNotEmpty;
-    _emailController = TextEditingController(
-      text: _isSent ? widget.windowsEmail : widget.email,
-    );
 
     if (widget.hasEngaged) {
       _hasEngaged = true;
-
-      if (_platform == BetaPlatform.windows && kBetaWindowsInviteOnly) {
-        _step = _isSent ? _Step.install : _Step.pitch;
-      } else {
-        _step = _Step.signIn;
-      }
+      _step = _Step.signIn;
     }
 
-    // A click aimed at the screen underneath shouldn't close the invitation
-    // or follow one of its links
+    // A click aimed at the screen underneath shouldn't close the prompt or
+    // follow one of its links
     _armTimer = Timer(const Duration(milliseconds: 400), () {
       if (mounted) {
         setState(() => _isArmed = true);
@@ -436,67 +361,24 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
   @override
   void dispose() {
     _armTimer?.cancel();
-    _emailController.dispose();
     super.dispose();
   }
 
   String _text(BetaStr key) => widget.strings.get(key);
 
-  String? get _storeUrl {
-    switch (_platform) {
-      case BetaPlatform.ios:
-      case BetaPlatform.macos:
-        return kBetaTestFlightUrl;
-      case BetaPlatform.android:
-        // The FOSS build is the one installed from F-Droid
-        return AppReview.isStoreBuild ? kBetaGooglePlayUrl : kBetaFDroidUrl;
-      case BetaPlatform.windows:
-        return kBetaWindowsUrl;
-      case BetaPlatform.linux:
-        return kBetaAppImageUrl;
-      case null:
-        return null;
-    }
-  }
+  // Only the device's own platform can be too old, on the web someone may be
+  // picking another one
+  bool get _usesBrowser =>
+      widget.isBelowFloor && _platform == widget.devicePlatform;
 
-  // Whether installing is a single link, the others get a step of their own
-  bool get _opensStore {
-    switch (_platform) {
-      case BetaPlatform.ios:
-      case BetaPlatform.macos:
-      case BetaPlatform.android:
-        return true;
-      case BetaPlatform.windows:
-        return !kBetaWindowsInviteOnly;
-      case BetaPlatform.linux:
-      case null:
-        return false;
-    }
-  }
-
-  BetaStr? get _buttonCaption {
-    switch (_platform) {
-      case BetaPlatform.ios:
-      case BetaPlatform.macos:
-        return BetaStr.captionApple;
-      case BetaPlatform.android:
-        return AppReview.isStoreBuild
-            ? BetaStr.captionAndroid
-            : BetaStr.captionFDroid;
-      case BetaPlatform.windows:
-        return kBetaWindowsInviteOnly ? BetaStr.captionWindows : null;
-      case BetaPlatform.linux:
-        return BetaStr.captionLinux;
-      case null:
-        return null;
-    }
-  }
+  String? get _storeUrl =>
+      _usesBrowser ? widget.webAppUrl : newAppUrl(_platform);
 
   String? get _installedName {
     switch (_platform) {
       case BetaPlatform.ios:
       case BetaPlatform.android:
-        return kBetaAppNameMobile;
+        return _usesBrowser ? null : kBetaAppNameMobile;
       case BetaPlatform.windows:
         return kBetaAppNameWindows;
       case BetaPlatform.macos:
@@ -507,6 +389,10 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
   }
 
   IconData _iconFor(BetaPlatform platform) {
+    if (_usesBrowser) {
+      return Icons.open_in_browser;
+    }
+
     switch (platform) {
       case BetaPlatform.ios:
       case BetaPlatform.macos:
@@ -520,19 +406,10 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     }
   }
 
-  // Installing this way replaces this app rather than sitting beside it
-  bool get _replacesThisApp =>
-      widget.isSnap && widget.devicePlatform == BetaPlatform.linux;
-
   void _close() {
-    // Escape and the back button come through here as well as taps, and a
-    // stray one of those shouldn't use up a reminder either
+    // Escape and the back button come through here as well as taps
     if (!_isArmed) {
       return;
-    }
-
-    if (!_hasEngaged && !widget.isManual) {
-      widget.onSnooze();
     }
 
     Navigator.of(context).pop();
@@ -547,30 +424,16 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     }
   }
 
-  void _finish() {
-    widget.onFinish();
-    Navigator.of(context).pop();
-  }
-
   void _setPassword() {
     Navigator.of(context).pop();
     widget.onSetPassword();
   }
 
-  void _goTo(_Step step) {
-    setState(() {
-      _step = step;
-      _failedUrl = null;
-    });
-  }
-
-  void _getBeta() {
+  void _getNewApp() {
     final storeUrl = _storeUrl;
 
-    if (_opensStore && storeUrl != null) {
+    if (storeUrl != null) {
       _open(storeUrl, next: _Step.signIn);
-    } else {
-      _goTo(_Step.install);
     }
   }
 
@@ -586,42 +449,16 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     }
 
     setState(() {
-      // A mail link has nothing worth copying, the address is offered beside it
-      _failedUrl = isOpen || url.startsWith('mailto:') ? null : url;
+      // Without a mail app there's nothing to open, the address is offered
+      // to copy instead
+      _failedUrl = isOpen
+          ? null
+          : url.startsWith('mailto:')
+          ? kBetaContactEmail
+          : url;
       if (next != null && isOpen) {
         _step = next;
       }
-    });
-  }
-
-  Future<void> _requestWindowsAccess() async {
-    final email = _emailController.text.trim();
-
-    if (!_emailPattern.hasMatch(email)) {
-      setState(() => _emailError = _text(BetaStr.winInvalid));
-      return;
-    }
-
-    setState(() {
-      _emailError = null;
-      _hasSendFailed = false;
-      _isSending = true;
-    });
-
-    final isSent = await widget.onRequestWindowsAccess(email);
-
-    if (!mounted) {
-      return;
-    }
-
-    if (isSent) {
-      _engage();
-    }
-
-    setState(() {
-      _isSending = false;
-      _isSent = isSent;
-      _hasSendFailed = !isSent;
     });
   }
 
@@ -686,7 +523,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     final scale = MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 1.5);
     final hasHero = isWide || (constraints.maxHeight >= 620 && scale <= 1.2);
     final contentWidth = 440 + (scale - 1) * 220;
-    final fourFeatureHeight = (widget.showPlatformChips ? 690 : 650) * scale;
 
     final closeButton = hasHero
         // Sits on the screenshots, which can be any colour
@@ -718,10 +554,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     final content = _content(
       palette,
       isWide: isWide,
-      // Three reasons fit a short window without scrolling, four need more
-      featureCount: isWide && constraints.maxHeight >= fourFeatureHeight
-          ? 4
-          : 3,
       closeButton: hasHero ? null : closeButton,
     );
 
@@ -768,13 +600,13 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
       return null;
     } else if (!widget.showOtherPlatforms) {
       return BetaPromoQrCard(
-        url: kBetaTestFlightUrl,
+        url: kMoveAppUrlIos,
         caption: _text(BetaStr.qrCaptionApple),
       );
     }
 
     return BetaPromoQrCard(
-      url: _qrOption == 0 ? kBetaTestFlightUrl : kBetaGooglePlayUrl,
+      url: _qrOption == 0 ? kMoveAppUrlIos : kMoveAppUrlAndroid,
       caption: _text(BetaStr.qrCaption),
       options: [
         _platformNames[BetaPlatform.ios]!,
@@ -788,7 +620,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
   Widget _content(
     BetaPromoPalette palette, {
     required bool isWide,
-    required int featureCount,
     required Widget? closeButton,
   }) {
     final padding = isWide ? 32.0 : 22.0;
@@ -798,20 +629,13 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
 
     switch (_step) {
       case _Step.pitch:
-        title = _text(BetaStr.headline);
-        subtitle = _replacesThisApp
-            ? _text(BetaStr.sub)
-            : '${_text(BetaStr.sub)} ${_text(BetaStr.subKeep)}';
-        body = _pitch(palette, featureCount);
-        break;
-      case _Step.install:
-        title = _text(BetaStr.getBeta);
+        title = _text(BetaStr.moveTitle);
         subtitle = null;
-        body = _install(palette);
+        body = _pitch(palette);
         break;
       case _Step.signIn:
         title = _text(BetaStr.stepTitle);
-        subtitle = _text(BetaStr.stepSub);
+        subtitle = _text(BetaStr.signInSub);
         body = _signIn(palette);
         break;
     }
@@ -835,7 +659,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
                 Row(
                   children: [
                     BetaPromoPill(
-                      label: '${_text(BetaStr.pillNew).toUpperCase()} · BETA',
+                      label: _text(BetaStr.pillNew).toUpperCase(),
                       palette: palette,
                     ),
                     Spacer(),
@@ -893,16 +717,14 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     );
   }
 
-  List<Widget> _pitch(BetaPromoPalette palette, int featureCount) {
-    final features = betaPromoFeatures(
-      isPhone:
-          _platform == BetaPlatform.ios || _platform == BetaPlatform.android,
-      hasTasks: widget.hasTasks,
-      hasExpenses: widget.hasExpenses,
-      hasDesigner: widget.hasDesigner,
-      // The notice takes the room of one reason
-      count: widget.needsPassword ? featureCount - 1 : featureCount,
-    );
+  // The same four points every surface about the move makes, in this order
+  List<Widget> _pitch(BetaPromoPalette palette) {
+    final isSelfHosted = widget.serverUrl.isNotEmpty;
+    final both =
+        (widget.isAfterSunset
+                ? _text(BetaStr.bothBodyAfter)
+                : _text(BetaStr.bothBody))
+            .replaceFirst(':date', widget.sunsetDate);
 
     return [
       // Shown before they leave for the store, they may not come back here
@@ -910,23 +732,49 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
         _passwordNotice(palette),
         SizedBox(height: 16),
       ],
-      for (final feature in features)
-        BetaPromoFeatureRow(
-          icon: feature.icon,
-          title: _text(feature.title),
-          body: _text(feature.body),
-          palette: palette,
+      BetaPromoFeatureRow(
+        icon: Icons.cloud_done_outlined,
+        title: _text(BetaStr.dataTitle),
+        body: isSelfHosted
+            ? _text(BetaStr.dataBodySelfHosted)
+            : _text(BetaStr.dataBody),
+        palette: palette,
+      ),
+      BetaPromoFeatureRow(
+        icon: Icons.devices_outlined,
+        title: _text(BetaStr.newAppTitle),
+        body: [
+          _text(BetaStr.newAppBody),
+          if (isSelfHosted) _text(BetaStr.newAppSelfHosted),
+        ].join(' '),
+        palette: palette,
+      ),
+      BetaPromoFeatureRow(
+        icon: Icons.compare_arrows,
+        title: _text(BetaStr.bothTitle),
+        body: [
+          both,
+          // A selfhosted server has no plan of ours
+          if (!isSelfHosted) _text(BetaStr.planBody),
+          if (widget.showPlayRefund) _text(BetaStr.playRefund),
+        ].join(' '),
+        palette: palette,
+      ),
+      BetaPromoFeatureRow(
+        icon: Icons.chat_bubble_outline,
+        title: _text(BetaStr.feedbackTitle),
+        body: _text(BetaStr.feedbackBody),
+        palette: palette,
+        action: Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: _linkButton(
+            _text(BetaStr.contactUs),
+            palette,
+            icon: Icons.mail_outline,
+            onPressed: () => _open(moveContactUrl),
+          ),
         ),
-      if (_failedUrl != null) _failedLink(palette),
-    ];
-  }
-
-  List<Widget> _install(BetaPromoPalette palette) {
-    return [
-      if (_platform == BetaPlatform.windows)
-        ..._windowsPanel(palette)
-      else
-        ..._linuxPanel(palette),
+      ),
       if (_failedUrl != null) _failedLink(palette),
     ];
   }
@@ -969,13 +817,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     );
   }
 
-  Widget _body(String text, BetaPromoPalette palette) {
-    return Text(
-      text,
-      style: TextStyle(color: palette.text, fontSize: 14, height: 1.4),
-    );
-  }
-
   Widget _passwordNotice(BetaPromoPalette palette) {
     return BetaPromoNotice(
       icon: Icons.key_outlined,
@@ -991,6 +832,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
 
   Widget _failedLink(BetaPromoPalette palette) {
     final url = _failedUrl!;
+    final host = Uri.tryParse(url)?.host ?? '';
 
     return Padding(
       padding: const EdgeInsets.only(top: 6),
@@ -1000,7 +842,8 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
           _caption(_text(BetaStr.launchFailed), palette),
           SizedBox(height: 6),
           BetaPromoCopyRow(
-            label: Uri.parse(url).host,
+            // An email address has no host
+            label: host.isEmpty ? _text(BetaStr.contactUs) : host,
             value: url,
             copyTooltip: _text(BetaStr.copy),
             onCopy: () => widget.onCopy(url),
@@ -1012,7 +855,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
   }
 
   // The browser can't always tell which platform it is on, and someone on
-  // the web may want the beta for a different device
+  // the web may want the new app for a different device
   Widget _platformPicker(BetaPromoPalette palette) {
     final platform = _platform;
 
@@ -1075,218 +918,40 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     );
   }
 
-  List<Widget> _windowsPanel(BetaPromoPalette palette) {
-    if (_isSent) {
-      return [
-        BetaPromoNotice(
-          icon: Icons.check_circle_outline,
-          text: _text(BetaStr.winSent).replaceFirst(':email', widget.email),
-          palette: palette,
-          action: _linkButton(
-            _text(BetaStr.winChange),
-            palette,
-            onPressed: () => setState(() => _isSent = false),
-          ),
-        ),
-        // Their own server sent it, and one set up to log or drop mail says
-        // it went
-        if (widget.serverUrl.isNotEmpty) ...[
-          SizedBox(height: 8),
-          _caption(
-            _text(
-              BetaStr.winSelfHosted,
-            ).replaceFirst(':contact', kBetaContactEmail),
-            palette,
-          ),
-        ],
-        SizedBox(height: 16),
-        // Not the main button, the listing stays closed until we've added them
-        _secondaryButton(
-          palette,
-          label: _text(BetaStr.winOpenStore),
-          icon: MdiIcons.microsoftWindows,
-          onPressed: () => _open(kBetaWindowsUrl, next: _Step.signIn),
-        ),
-        SizedBox(height: 8),
-        Center(
-          child: _linkButton(
-            _text(BetaStr.demo),
-            palette,
-            icon: Icons.open_in_new,
-            onPressed: () => _open(kBetaDemoUrl),
-          ),
-        ),
-      ];
-    }
-
-    return [
-      _body(_text(BetaStr.winIntro), palette),
-      SizedBox(height: 16),
-      // An address reads left to right in every locale
-      Directionality(
-        textDirection: TextDirection.ltr,
-        child: TextField(
-          controller: _emailController,
-          enabled: !_isSending,
-          autocorrect: false,
-          keyboardType: TextInputType.emailAddress,
-          style: TextStyle(color: palette.text, fontSize: 14.5),
-          decoration: InputDecoration(
-            labelText: _text(BetaStr.winField),
-            errorText: _emailError,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          ),
-          onSubmitted: (_) => _requestWindowsAccess(),
-        ),
-      ),
-      SizedBox(height: 12),
-      _primaryButton(
-        label: _text(BetaStr.winRequest),
-        isBusy: _isSending,
-        onPressed: _requestWindowsAccess,
-      ),
-      if (_hasSendFailed) ...[
-        SizedBox(height: 12),
-        BetaPromoNotice(
-          icon: Icons.error_outline,
-          text: _text(
-            BetaStr.winFailed,
-          ).replaceFirst(':contact', kBetaContactEmail),
-          palette: palette,
-          action: Wrap(
-            spacing: 16,
-            children: [
-              _linkButton(
-                _text(BetaStr.winOpenEmail),
-                palette,
-                onPressed: () => _open(_mailtoUrl),
-              ),
-              _linkButton(
-                _text(BetaStr.copy),
-                palette,
-                onPressed: () => widget.onCopy(kBetaContactEmail),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ];
-  }
-
-  String get _mailtoUrl {
-    final subject = Uri.encodeComponent('Windows beta access');
-    final body = Uri.encodeComponent(
-      'Microsoft account email: ${_emailController.text.trim()}',
-    );
-
-    return 'mailto:$kBetaContactEmail?subject=$subject&body=$body';
-  }
-
-  List<Widget> _linuxPanel(BetaPromoPalette palette) {
-    Widget command(String value) => BetaPromoCommandBox(
-      command: value,
-      copyTooltip: _text(BetaStr.copy),
-      onCopy: () {
-        _engage();
-        widget.onCopy(value);
-      },
-    );
-
-    // Beside the command rather than on a step after it, copying the address
-    // there would replace the command on the clipboard
-    final thenSignIn = [
-      _body(
-        _text(BetaStr.thenSignIn).replaceFirst(':email', widget.email),
-        palette,
-      ),
-      if (widget.serverUrl.isNotEmpty)
-        _body('${_text(BetaStr.serverUrl)}: ${widget.serverUrl}', palette),
-    ];
-
-    // Only this install can be told apart, on the web it could be either
-    if (_replacesThisApp) {
-      return [
-        _body(_text(BetaStr.snapIntro), palette),
-        SizedBox(height: 4),
-        command(kBetaSnapRefreshCommand),
-        ...thenSignIn,
-        SizedBox(height: 14),
-        _caption(_text(BetaStr.snapNote), palette),
-        command(kBetaSnapRevertCommand),
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: _linkButton(
-            _text(BetaStr.keepBoth),
-            palette,
-            onPressed: () => _open(kBetaAppImageUrl),
-          ),
-        ),
-      ];
-    }
-
-    return [
-      _primaryButton(
-        label: _text(BetaStr.appImage),
-        icon: Icons.download,
-        onPressed: () => _open(kBetaAppImageUrl, next: _Step.signIn),
-      ),
-      SizedBox(height: 8),
-      _caption(_text(BetaStr.appImageCaption), palette),
-      SizedBox(height: 20),
-      _body(_text(BetaStr.orSnap), palette),
-      SizedBox(height: 4),
-      command(kBetaSnapInstallCommand),
-      ...thenSignIn,
-    ];
-  }
-
   Widget _footer(BetaPromoPalette palette) {
     switch (_step) {
       case _Step.pitch:
         return _pitchFooter(palette);
-      case _Step.install:
-        final back = _linkButton(
-          _text(BetaStr.back),
-          palette,
-          onPressed: () => _goTo(_Step.pitch),
-        );
-
-        // The Windows steps carry their own buttons
-        if (_platform != BetaPlatform.linux) {
-          return Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: back,
-          );
-        }
-
-        return Row(
-          children: [
-            back,
-            SizedBox(width: 16),
-            Expanded(
-              child: _primaryButton(
-                label: _text(BetaStr.done),
-                onPressed: _finish,
-              ),
-            ),
-          ],
-        );
       case _Step.signIn:
         final storeUrl = _storeUrl;
-        final canReopen = storeUrl != null && _platform != BetaPlatform.linux;
+        final String reopenLabel;
+        if (_usesBrowser) {
+          reopenLabel = _text(BetaStr.openInBrowser);
+        } else if (_platform == BetaPlatform.linux) {
+          reopenLabel = _text(BetaStr.getNewApp);
+        } else {
+          reopenLabel = _text(BetaStr.openAgain);
+        }
 
         return Row(
           children: [
             Expanded(
               child: Align(
                 alignment: AlignmentDirectional.centerStart,
-                child: _linkButton(
-                  canReopen ? _text(BetaStr.openAgain) : _text(BetaStr.back),
-                  palette,
-                  onPressed: canReopen
-                      ? () => _open(storeUrl)
-                      : () => _goTo(_Step.install),
-                ),
+                child: storeUrl == null
+                    ? _linkButton(
+                        _text(BetaStr.back),
+                        palette,
+                        onPressed: () => setState(() {
+                          _step = _Step.pitch;
+                          _failedUrl = null;
+                        }),
+                      )
+                    : _linkButton(
+                        reopenLabel,
+                        palette,
+                        onPressed: () => _open(storeUrl),
+                      ),
               ),
             ),
             SizedBox(width: 12),
@@ -1294,7 +959,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
               constraints: const BoxConstraints(minWidth: 140),
               child: _primaryButton(
                 label: _text(BetaStr.done),
-                onPressed: _finish,
+                onPressed: _close,
               ),
             ),
           ],
@@ -1304,7 +969,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
 
   Widget _pitchFooter(BetaPromoPalette palette) {
     final platform = _platform;
-    final caption = _buttonCaption;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -1313,14 +977,16 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
         if (widget.showPlatformChips) _platformPicker(palette),
         if (platform != null) ...[
           _primaryButton(
-            label: _text(BetaStr.getBeta),
+            label: _usesBrowser
+                ? _text(BetaStr.openInBrowser)
+                : _text(BetaStr.getNewApp),
             icon: _iconFor(platform),
-            onPressed: _getBeta,
+            onPressed: _getNewApp,
           ),
-          if (caption != null) ...[
+          if (_usesBrowser) ...[
             SizedBox(height: 8),
             Text(
-              _text(caption),
+              _text(BetaStr.belowFloor),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: palette.muted,
@@ -1342,31 +1008,13 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
               onPressed: () => _open(kBetaDemoUrl),
             ),
             _linkButton(
-              widget.isManual || widget.isLastReminder
+              widget.isManual
                   ? _text(BetaStr.close)
                   : _text(BetaStr.remindLater),
               palette,
               onPressed: _close,
             ),
           ],
-        ),
-        Center(
-          child: TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: palette.muted,
-              minimumSize: const Size(0, 28),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
-            onPressed: _finish,
-            child: Text(
-              _text(BetaStr.dontShow),
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-              ),
-            ),
-          ),
         ),
       ],
     );
@@ -1376,7 +1024,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     required String label,
     required VoidCallback onPressed,
     IconData? icon,
-    bool isBusy = false,
   }) {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 48),
@@ -1385,59 +1032,6 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
           backgroundColor: kBetaPromoBrandColor,
           foregroundColor: Colors.white,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        // Stays lit while it works rather than greying out
-        onPressed: isBusy ? () {} : onPressed,
-        child: isBusy
-            ? const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: Colors.white,
-                ),
-              )
-            : Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (icon != null) ...[
-                    Icon(icon, size: 20),
-                    SizedBox(width: 8),
-                  ],
-                  Flexible(
-                    child: Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      // Set here so the theme's font family is kept
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-      ),
-    );
-  }
-
-  Widget _secondaryButton(
-    BetaPromoPalette palette, {
-    required String label,
-    required VoidCallback onPressed,
-    IconData? icon,
-  }) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 48),
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: palette.accent,
-          side: BorderSide(color: palette.border),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -1452,8 +1046,9 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
               child: Text(
                 label,
                 textAlign: TextAlign.center,
+                // Set here so the theme's font family is kept
                 style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0,
                 ),

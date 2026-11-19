@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -459,6 +460,25 @@ class _AccountOverview extends StatelessWidget {
                 onPressed: () => initiatePurchase(),
               ),
             ),
+          // Plans aren't sold here any more, one bought here can still be
+          // restored to the account
+          if (isInAppStoreBuild())
+            Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
+              child: OutlinedButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconText(
+                    icon: Icons.restore,
+                    text: localization.restorePurchases.toUpperCase(),
+                  ),
+                ),
+                onPressed: () => showDialog<void>(
+                  context: context,
+                  builder: (context) => UpgradeDialog(restoreOnly: true),
+                ),
+              ),
+            ),
         ],
         FormCard(
           children: [
@@ -528,16 +548,19 @@ class _AccountOverview extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                Expanded(
-                  child: AppButton(
-                    label: localization.purchaseLicense.toUpperCase(),
-                    iconData: isMobile(context) ? null : Icons.cloud_download,
-                    onPressed: () async {
-                      launchUrl(Uri.parse(kWhiteLabelUrl));
-                    },
+                // Sold outside the store, which store builds can't offer
+                if (!isInAppStoreBuild()) ...[
+                  Expanded(
+                    child: AppButton(
+                      label: localization.purchaseLicense.toUpperCase(),
+                      iconData: isMobile(context) ? null : Icons.cloud_download,
+                      onPressed: () async {
+                        launchUrl(Uri.parse(kWhiteLabelUrl));
+                      },
+                    ),
                   ),
-                ),
-                SizedBox(width: kGutterWidth),
+                  SizedBox(width: kGutterWidth),
+                ],
                 Expanded(
                   child: AppButton(
                     label: localization.applyLicense.toUpperCase(),
