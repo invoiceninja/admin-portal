@@ -1490,7 +1490,7 @@ void _showAbout(BuildContext context) async {
                   AppButton(
                     label: BetaPromoStrings(
                       localization.localeCode,
-                    ).get(BetaStr.entryTitle).toUpperCase(),
+                    ).get(BetaStr.getNewApp).toUpperCase(),
                     iconData: Icons.rocket_launch,
                     color: Colors.indigo,
                     onPressed: () {

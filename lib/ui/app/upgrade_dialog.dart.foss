@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class UpgradeDialog extends StatefulWidget {
+  const UpgradeDialog({Key? key, this.restoreOnly = false}) : super(key: key);
+
+  final bool restoreOnly;
+
   @override
   _UpgradeDialogState createState() => _UpgradeDialogState();
 }

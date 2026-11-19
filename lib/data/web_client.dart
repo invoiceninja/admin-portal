@@ -20,6 +20,12 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
+/// Set once the server says this version is no longer supported, which is
+/// how this app is retired in favor of the new one. The app shows
+/// RetiredAppScreen over everything from then on. Set by the server alone,
+/// never by a date, so the sunset can move with a server change.
+final ValueNotifier<bool> appRetired = ValueNotifier<bool>(false);
+
 class WebClient {
   const WebClient();
 
@@ -246,6 +252,9 @@ class WebClient {
       throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
     } else if (Version.parse(kClientVersion) <
         Version.parse(minClientVersion!)) {
+      // A 5xx is thrown above before the version is checked, so a server
+      // error never retires the app; the next good response does
+      appRetired.value = true;
       throw 'Error: client not supported, please update to the latest version [Current v$kClientVersion < Minimum v$minClientVersion]';
     } else if (Version.parse(serverVersion) <
         Version.parse(kMinServerVersion)) {

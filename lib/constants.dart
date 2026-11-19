@@ -49,41 +49,41 @@ const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
     'https://apps.microsoft.com/store/detail/invoice-ninja/$kMicrosoftAppStoreId';
 
-// Beta of the rebuilt app, promoted from lib/ui/app/beta_promo
+// The new app, promoted from lib/ui/app/beta_promo while this one is retired
 const bool kBetaPromoEnabled = true;
 const bool kBetaPromoEnabledOnApple = true;
-// The Play listing only works for the public once a build is on an open or
-// closed testing track
 const bool kBetaPromoEnabledOnAndroid = true;
-// The web build points to the React app instead, see ImportantMessageBanner
+// This app gets no further web releases
 const bool kBetaPromoEnabledOnWeb = false;
-// The Microsoft Store listing is restricted to accounts we have added, set to
-// false if it becomes available by direct link
-const bool kBetaWindowsInviteOnly = true;
-// Installs which are never updated stop promoting these links
-final DateTime kBetaPromoEndDate = DateTime(2027, 4, 1);
+// The day this app stops being supported: the prompt counts down to it and
+// names it. Provisional, about six months after the new app launches; set the
+// final date before this release is submitted. The app is retired by the
+// server (x-minimum-client-version), never by this date.
+final DateTime kSunsetDate = DateTime(2027, 7, 15);
 const String kBetaDemoUrl = 'https://hillelcoren.github.io/admin';
-const String kBetaTestFlightUrl = 'https://testflight.apple.com/join/YY1BZ7uR';
-const String kBetaGooglePlayUrl =
-    'https://play.google.com/apps/testing/com.invoiceninja.admin';
+// Redirects we control, pointing at each platform's listing of the new app
+const String kMoveAppUrlIos = 'https://invoiceninja.com/app/ios';
+const String kMoveAppUrlMac = 'https://invoiceninja.com/app/mac';
+const String kMoveAppUrlAndroid = 'https://invoiceninja.com/app/android';
+const String kMoveAppUrlWindows = 'https://invoiceninja.com/app/windows';
 // Where the FOSS build, the one installed from F-Droid, points instead
 const String kBetaFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.admin/';
-const String kBetaWindowsUrl =
-    'https://apps.microsoft.com/detail/restricted/9NG93WNXN797';
 const String kBetaAppImageUrl =
-    'https://github.com/invoiceninja/flutter/releases';
+    'https://github.com/invoiceninja/app/releases/latest';
+// For a hosted account on a device below the new app's minimum OS version, a
+// selfhosted one uses its own server
+const String kMoveWebAppUrl = kAppReactUrl;
 const String kBetaContactEmail = 'contact@invoiceninja.com';
-const String kBetaSnapConnectCommand =
-    'sudo snap connect invoiceninja:password-manager-service';
-const String kBetaSnapRefreshCommand =
-    'sudo snap refresh invoiceninja --edge && $kBetaSnapConnectCommand';
-const String kBetaSnapInstallCommand =
-    'sudo snap install invoiceninja --edge && $kBetaSnapConnectCommand';
-const String kBetaSnapRevertCommand = 'sudo snap refresh invoiceninja --stable';
-// What the beta is called once installed
-const String kBetaAppNameMobile = 'Ninja Beta';
-const String kBetaAppNameWindows = 'Invoice Ninja - Beta';
+// Where an existing store subscription to this app is managed, iOS opens its
+// own settings sheet
+const String kPlaySubscriptionsUrl =
+    'https://play.google.com/store/account/subscriptions';
+const String kAppleSubscriptionsUrl =
+    'https://apps.apple.com/account/subscriptions';
+// What the new app is called once installed
+const String kBetaAppNameMobile = 'Invoice Ninja';
+const String kBetaAppNameWindows = 'Invoice Ninja';
 
 const String kSlackUrl = 'http://slack.invoiceninja.com';
 const String kGitHubUrl = 'https://github.com/invoiceninja';
@@ -150,11 +150,10 @@ const String kSharedPrefHeight = 'height';
 const String kSharedPrefMaximized = 'maximized';
 const String kSharedPrefHostOverride = 'host_override';
 const String kSharedPrefCompanyId = 'company_id';
-const String kSharedPrefBetaPromoCloses = 'beta_promo_closes';
-const String kSharedPrefBetaPromoNextAt = 'beta_promo_next_at';
-const String kSharedPrefBetaPromoDone = 'beta_promo_done';
-const String kSharedPrefBetaPromoEngaged = 'beta_promo_engaged';
-const String kSharedPrefBetaPromoWindowsEmail = 'beta_promo_windows_email';
+// New names rather than the beta invitation's, so the prompt comes back for
+// users who closed or accepted that
+const String kSharedPrefMovePromoShownAt = 'move_promo_shown_at';
+const String kSharedPrefMovePromoEngaged = 'move_promo_engaged';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';
