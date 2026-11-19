@@ -156,7 +156,7 @@ flutter:
         - asset: assets/google_fonts/Roboto-Regular.ttf
 
 msix_config:
-  display_name: Invoice Ninja
+  display_name: Invoice Ninja Legacy
   publisher_display_name: Invoice Ninja
   identity_name: InvoiceNinja.InvoiceNinja
   publisher: CN=2B7AA393-06A0-46F5-AF85-1917142440C3
