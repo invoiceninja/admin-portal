@@ -225,7 +225,10 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
         // Their v1 Play subscription can't be moved, the server cancels and
         // refunds it once they buy in the new app
         showPlayRefund:
-            isAndroid() && AppReview.isStoreBuild && state.account.hasIapPlan,
+            kMovePromoPlayRefundLive &&
+            isAndroid() &&
+            AppReview.isStoreBuild &&
+            state.account.hasIapPlan,
         onLaunch: launchMoveUrl,
         onCopy: copy,
         onEngaged: controller.markEngaged,
