@@ -1,9 +1,11 @@
 name: Build Web
 
+# Manual only. A push to master used to commit this app's web build into
+# invoiceninja/invoiceninja v5-develop, for hosted and self-hosted alike. The
+# new app replaces it, so a release of this app (Invoice Ninja Legacy) must
+# never reach the server's web build again.
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 #concurrency:
 #  group: ci-release-${{ github.ref }}-1
