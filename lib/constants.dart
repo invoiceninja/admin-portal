@@ -60,6 +60,11 @@ const bool kBetaPromoEnabledOnWeb = false;
 // final date before this release is submitted. The app is retired by the
 // server (x-minimum-client-version), never by this date.
 final DateTime kSunsetDate = DateTime(2027, 7, 15);
+// The move prompt promises a Play subscriber that their Legacy subscription is
+// cancelled and refunded once they buy in the new app. The hosted billing does
+// that only once its migration step is live, so the sentence stays off until
+// then
+const bool kMovePromoPlayRefundLive = false;
 const String kBetaDemoUrl = 'https://hillelcoren.github.io/admin';
 // Redirects we control, pointing at each platform's listing of the new app
 const String kMoveAppUrlIos = 'https://invoiceninja.com/app/ios';

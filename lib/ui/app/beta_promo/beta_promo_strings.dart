@@ -62,24 +62,29 @@ class BetaPromoStrings {
     'pt_PT': 'pt_BR',
   };
 
-  bool get isTranslated =>
-      _values.containsKey(localeCode) || _baseLocales.containsKey(localeCode);
+  /// The locale whose strings this prompt reads: the user's (or its base
+  /// language) only when that one carries the whole move copy, else English,
+  /// so a dialog is never half one language and half another
+  String? get _source {
+    for (final code in [localeCode, _baseLocales[localeCode]]) {
+      final values = _values[code];
+      if (values != null && values.containsKey(BetaStr.moveTitle)) {
+        return code;
+      }
+    }
+    return null;
+  }
 
-  String get(BetaStr key) =>
-      _values[localeCode]?[key] ??
-      _values[_baseLocales[localeCode]]?[key] ??
-      _values['en']![key]!;
+  bool get isTranslated => _source != null;
+
+  String get(BetaStr key) => _values[_source]?[key] ?? _values['en']![key]!;
 
   /// The locale [get] reads [key] from, so a date put into it matches the
   /// language of the sentence around it
   String localeOf(BetaStr key) {
-    if (_values[localeCode]?[key] != null) {
-      return localeCode;
-    }
+    final source = _source;
 
-    final base = _baseLocales[localeCode];
-
-    return base != null && _values[base]?[key] != null ? base : 'en';
+    return source != null && _values[source]?[key] != null ? source : 'en';
   }
 
   static const Map<String, Map<BetaStr, String>> _values = {
@@ -117,10 +122,10 @@ class BetaPromoStrings {
       BetaStr.passwordHint:
           "You sign in here without a password. If the new app doesn't offer the same sign-in on your device, use your email and a password.",
       BetaStr.cardBody: 'Invoice Ninja has a new app. Same account, same data.',
-      BetaStr.managePlan: 'Manage your plan in the new Invoice Ninja app.',
+      BetaStr.managePlan: 'Your plan is billed on the web.',
       BetaStr.retiredTitle: 'This app has been retired.',
       BetaStr.retiredBody:
-          'Your data is safe in your account. Install the new Invoice Ninja app and sign in with the same account.',
+          'Your data is safe in your account. Install the new Invoice Ninja app and sign in with the same account. Your plan carries over, so keep your subscription.',
       BetaStr.manageSubscription: 'Manage subscription',
       BetaStr.chipsLabel: 'Get it for',
       BetaStr.qrCaption: 'Scan to get it on your phone',

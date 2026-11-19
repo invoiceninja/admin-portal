@@ -1440,7 +1440,7 @@ void _showAbout(BuildContext context) async {
                     child: apppIcon,
                   ),
                   title: Text(
-                    'Invoice Ninja',
+                    'Invoice Ninja Legacy',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   subtitle: Text(subtitle),
