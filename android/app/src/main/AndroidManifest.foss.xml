@@ -17,7 +17,7 @@
     <uses-feature android:name="android.hardware.CALL_PHONE" android:required="false"/>
 
     <application
-        android:label="Invoice Ninja"
+        android:label="IN Legacy"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

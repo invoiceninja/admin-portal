@@ -90,7 +90,7 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Invoice Ninja" "\0"
-            VALUE "FileDescription", "Invoice Ninja" "\0"
+            VALUE "FileDescription", "Invoice Ninja Legacy" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "invoiceninja" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 Invoice Ninja. All rights reserved." "\0"
