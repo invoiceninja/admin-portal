@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_widgets.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 /// The way back to the move prompt from the sidebar, kept while this app is
@@ -40,9 +39,7 @@ class BetaPromoSidebarTile extends StatelessWidget {
           return SizedBox();
         }
 
-        final title = BetaPromoStrings(
-          AppLocalization.of(context)!.localeCode,
-        ).get(BetaStr.getNewApp);
+        final title = const BetaPromoStrings().get(BetaStr.getNewApp);
 
         return Material(
           child: Tooltip(
@@ -89,9 +86,7 @@ class BetaPromoDashboardCard extends StatelessWidget {
           return SizedBox();
         }
 
-        final strings = BetaPromoStrings(
-          AppLocalization.of(context)!.localeCode,
-        );
+        const strings = BetaPromoStrings();
 
         // One target with nothing else in the row, on a narrow phone buttons
         // would leave the sentence a few words per line

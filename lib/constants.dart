@@ -10,6 +10,9 @@ const String kClientVersion = '5.0.204';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
+// What this app is called on screen. Not kAppName, which also names the web
+// database and must not change.
+const String kAppDisplayName = 'Invoice Ninja Legacy';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppReactUrl = 'https://app.invoicing.co';
@@ -86,9 +89,8 @@ const String kPlaySubscriptionsUrl =
     'https://play.google.com/store/account/subscriptions';
 const String kAppleSubscriptionsUrl =
     'https://apps.apple.com/account/subscriptions';
-// What the new app is called once installed
-const String kBetaAppNameMobile = 'Invoice Ninja';
-const String kBetaAppNameWindows = 'Invoice Ninja';
+// What the new app is called once installed, on every platform
+const String kNewAppName = 'Invoice Ninja';
 
 const String kSlackUrl = 'http://slack.invoiceninja.com';
 const String kGitHubUrl = 'https://github.com/invoiceninja';
@@ -159,6 +161,15 @@ const String kSharedPrefCompanyId = 'company_id';
 // users who closed or accepted that
 const String kSharedPrefMovePromoShownAt = 'move_promo_shown_at';
 const String kSharedPrefMovePromoEngaged = 'move_promo_engaged';
+// The beta invitation's state, deleted at start-up. The Windows one held the
+// email address the user asked to be invited with.
+const List<String> kSharedPrefBetaPromoKeys = [
+  'beta_promo_closes',
+  'beta_promo_next_at',
+  'beta_promo_done',
+  'beta_promo_engaged',
+  'beta_promo_windows_email',
+];
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';

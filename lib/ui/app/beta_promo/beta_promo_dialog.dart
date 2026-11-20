@@ -25,7 +25,6 @@ import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_widgets.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/move_support.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 enum BetaPlatform { ios, macos, android, windows, linux }
@@ -95,11 +94,15 @@ String? newAppUrl(BetaPlatform? platform) {
 }
 
 /// Where a device too old for the new app uses it instead: the web app, which
-/// for a selfhosted account is on its own server
-String newAppWebUrl(AppState state) =>
-    state.isSelfHosted && cleanApiUrl(state.authState.url).isNotEmpty
-    ? cleanApiUrl(state.authState.url)
-    : kMoveWebAppUrl;
+/// for a selfhosted account is on its own server. Only ever an https link, a
+/// server URL on any other scheme gets the hosted web app.
+String newAppWebUrl(AppState state) {
+  final serverUrl = state.isSelfHosted ? cleanApiUrl(state.authState.url) : '';
+
+  return Uri.tryParse(serverUrl)?.scheme == 'https'
+      ? serverUrl
+      : kMoveWebAppUrl;
+}
 
 /// Opens [url] outside the app. The default mode opens store links inside an
 /// in-app browser on mobile, which can't hand off to the store.
@@ -116,31 +119,23 @@ Future<bool> launchMoveUrl(String url) async {
 
 /// A mail to us, for feedback on the move
 String get moveContactUrl =>
-    'mailto:$kBetaContactEmail?subject=${Uri.encodeComponent('Invoice Ninja Legacy')}';
+    'mailto:$kBetaContactEmail?subject=${Uri.encodeComponent(kAppDisplayName)}';
 
-/// [date] written out in full, in the language [strings] uses for [key]
-String formatMoveDate(DateTime date, BetaPromoStrings strings, BetaStr key) {
-  try {
-    return DateFormat.yMMMMd(strings.localeOf(key)).format(date);
-  } catch (error) {
-    return DateFormat.yMMMMd('en').format(date);
-  }
-}
-
-/// Labels which name something elsewhere in the app, so they use its words.
-/// The rest of the dialog has its own, a few of the app's are mistranslated.
-class BetaPromoLabels {
-  const BetaPromoLabels({required this.email, required this.setPassword});
-
-  final String email;
-  final String setPassword;
-}
+/// [date] written out in full, in English like the sentence around it
+String formatMoveDate(DateTime date) => DateFormat.yMMMMd('en').format(date);
 
 /// Asks the user to move to the new app before this one is retired. Opened
 /// by [BetaPromoController] once the account has loaded, and by hand from the
 /// sidebar, the dashboard, the about dialog and anywhere this app used to
-/// sell a plan.
-Future<void> showBetaPromoDialog({bool isManual = false}) async {
+/// sell a plan, where [isUpgrade] adds that plans are sold in the new app.
+///
+/// Does nothing where the prompt isn't offered (see
+/// [BetaPromoController.isAvailable] and [BetaPromoController.allowsState]),
+/// the demo included, whoever opens it.
+Future<void> showBetaPromoDialog({
+  bool isManual = false,
+  bool isUpgrade = false,
+}) async {
   // Always the app's own navigator. The sidebar wraps its rows in a theme of
   // its own, which a dialog opened from one of them would inherit.
   final context = navigatorKey.currentContext;
@@ -150,10 +145,15 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
 
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
+
+  if (!BetaPromoController.isAvailable ||
+      !BetaPromoController.allowsState(state)) {
+    return;
+  }
+
   final user = state.user;
-  final localization = AppLocalization.of(context)!;
   final controller = BetaPromoController.instance;
-  final strings = BetaPromoStrings(localization.localeCode);
+  const strings = BetaPromoStrings();
   final isDark = state.prefState.enableDarkMode;
   final platform = currentBetaPlatform();
   // The switch has to hold on the web too, where the browser may be Android's
@@ -171,7 +171,9 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
 
     final preview = value.length > 30 ? '${value.substring(0, 30)}...' : value;
     showToast(
-      localization.copiedToClipboard.replaceFirst(':value', '"$preview"'),
+      strings
+          .get(BetaStr.copiedToClipboard)
+          .replaceFirst(':value', '"$preview"'),
     );
   }
 
@@ -195,10 +197,6 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
     builder: (BuildContext context) {
       final dialog = BetaPromoDialog(
         strings: strings,
-        labels: BetaPromoLabels(
-          email: localization.email,
-          setPassword: localization.setPassword,
-        ),
         devicePlatform: devicePlatform,
         showPlatformChips: kIsWeb,
         // Apple rejects apps which mention other platforms
@@ -210,18 +208,18 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
         ].contains(devicePlatform),
         isDark: isDark,
         isManual: isManual,
+        isUpgrade: isUpgrade,
         email: user.email,
         serverUrl: state.isSelfHosted ? cleanApiUrl(state.authState.url) : '',
         needsPassword: !user.hasPassword && user.oauthProvider.isNotEmpty,
         hasEngaged: controller.hasEngaged,
         isBelowFloor: isBelowFloor,
         webAppUrl: newAppWebUrl(state),
-        sunsetDate: formatMoveDate(
-          kSunsetDate,
-          strings,
-          isAfterSunset ? BetaStr.bothBodyAfter : BetaStr.bothBody,
-        ),
+        sunsetDate: formatMoveDate(kSunsetDate),
         isAfterSunset: isAfterSunset,
+        // Only a plan someone pays for comes with them, a trial or a free
+        // plan has nothing to carry over
+        hasPaidPlan: state.isHosted && state.isPaidAccount,
         // Their v1 Play subscription can't be moved, the server cancels and
         // refunds it once they buy in the new app
         showPlayRefund:
@@ -244,10 +242,8 @@ Future<void> showBetaPromoDialog({bool isManual = false}) async {
       );
 
       return PointerInterceptor(
-        // Copy which falls back to English reads left to right
-        child: strings.isTranslated
-            ? dialog
-            : Directionality(textDirection: TextDirection.ltr, child: dialog),
+        // The copy is English in every locale, so it reads left to right
+        child: Directionality(textDirection: TextDirection.ltr, child: dialog),
       );
     },
   );
@@ -259,13 +255,13 @@ class BetaPromoDialog extends StatefulWidget {
   const BetaPromoDialog({
     Key? key,
     required this.strings,
-    required this.labels,
     required this.devicePlatform,
     required this.showPlatformChips,
     required this.showOtherPlatforms,
     required this.showQr,
     required this.isDark,
     required this.isManual,
+    required this.isUpgrade,
     required this.email,
     required this.serverUrl,
     required this.needsPassword,
@@ -274,6 +270,7 @@ class BetaPromoDialog extends StatefulWidget {
     required this.webAppUrl,
     required this.sunsetDate,
     required this.isAfterSunset,
+    required this.hasPaidPlan,
     required this.showPlayRefund,
     required this.onLaunch,
     required this.onCopy,
@@ -282,7 +279,6 @@ class BetaPromoDialog extends StatefulWidget {
   }) : super(key: key);
 
   final BetaPromoStrings strings;
-  final BetaPromoLabels labels;
   final BetaPlatform? devicePlatform;
   final bool showPlatformChips;
   final bool showOtherPlatforms;
@@ -291,6 +287,9 @@ class BetaPromoDialog extends StatefulWidget {
 
   /// Opened by the user rather than shown to them
   final bool isManual;
+
+  /// Opened from Upgrade by a free plan, so it says where plans are sold now
+  final bool isUpgrade;
   final String email;
 
   /// Empty for a hosted account
@@ -308,6 +307,9 @@ class BetaPromoDialog extends StatefulWidget {
   /// [kSunsetDate], formatted
   final String sunsetDate;
   final bool isAfterSunset;
+
+  /// A hosted plan someone pays for, the only one that carries over
+  final bool hasPaidPlan;
 
   /// Says what happens to their Google Play subscription
   final bool showPlayRefund;
@@ -381,9 +383,9 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
     switch (_platform) {
       case BetaPlatform.ios:
       case BetaPlatform.android:
-        return _usesBrowser ? null : kBetaAppNameMobile;
+        return _usesBrowser ? null : kNewAppName;
       case BetaPlatform.windows:
-        return kBetaAppNameWindows;
+        return kNewAppName;
       case BetaPlatform.macos:
       case BetaPlatform.linux:
       case null:
@@ -735,6 +737,14 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
         _passwordNotice(palette),
         SizedBox(height: 16),
       ],
+      if (widget.isUpgrade) ...[
+        BetaPromoNotice(
+          icon: Icons.workspace_premium_outlined,
+          text: _text(BetaStr.upgradeNote),
+          palette: palette,
+        ),
+        SizedBox(height: 16),
+      ],
       BetaPromoFeatureRow(
         icon: Icons.cloud_done_outlined,
         title: _text(BetaStr.dataTitle),
@@ -757,8 +767,9 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
         title: _text(BetaStr.bothTitle),
         body: [
           both,
-          // A selfhosted server has no plan of ours
-          if (!isSelfHosted) _text(BetaStr.planBody),
+          // A selfhosted server has no plan of ours, and a free or trial
+          // plan has nothing to carry over
+          if (!isSelfHosted && widget.hasPaidPlan) _text(BetaStr.planBody),
           if (widget.showPlayRefund) _text(BetaStr.playRefund),
         ].join(' '),
         palette: palette,
@@ -787,7 +798,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
 
     return [
       BetaPromoCopyRow(
-        label: widget.labels.email,
+        label: _text(BetaStr.email),
         value: widget.email,
         copyTooltip: _text(BetaStr.copy),
         onCopy: () => widget.onCopy(widget.email),
@@ -826,7 +837,7 @@ class _BetaPromoDialogState extends State<BetaPromoDialog> {
       text: _text(BetaStr.passwordHint),
       palette: palette,
       action: _linkButton(
-        widget.labels.setPassword,
+        _text(BetaStr.setPassword),
         palette,
         onPressed: _setPassword,
       ),

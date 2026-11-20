@@ -15,10 +15,17 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// Restores a subscription bought in this app ([restoreOnly], from account
+/// management), or sells one.
+///
+/// The selling mode is reachable only from the debug long-press on the about
+/// dialog's app name, on purpose: plans aren't sold in this app any more, and
+/// that keeps a way to test a purchase's delivery in a debug build.
 class UpgradeDialog extends StatefulWidget {
   const UpgradeDialog({Key? key, this.restoreOnly = false}) : super(key: key);
 
@@ -79,6 +86,9 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   bool _isRestoring = false;
   String? _queryProductError;
   String? _statusMessage;
+  Timer? _restoreTimer;
+
+  static const _strings = BetaPromoStrings();
 
   @override
   void initState() {
@@ -170,6 +180,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       iosPlatformAddition.setDelegate(null);
     }
     _subscription.cancel();
+    _restoreTimer?.cancel();
     _scrollController.dispose();
     super.dispose();
   }
@@ -177,7 +188,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   Future<void> _restore() async {
     setState(() {
       _isRestoring = true;
-      _statusMessage = 'Checking with the store...';
+      _statusMessage = _strings.get(BetaStr.restoreChecking);
     });
 
     try {
@@ -193,30 +204,39 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     }
 
     // The store sends nothing at all when there's nothing to restore
-    Timer(const Duration(seconds: 15), () {
+    _restoreTimer?.cancel();
+    _restoreTimer = Timer(const Duration(seconds: 15), () {
       if (mounted && _isRestoring) {
         setState(() {
           _isRestoring = false;
-          _statusMessage = 'No subscription to restore was found.';
+          _statusMessage = _strings.get(BetaStr.restoreNoneFound);
         });
       }
     });
   }
 
+  // English and left to right like the rest of the move copy, so nothing
+  // from AppLocalization, not even the buttons
   Widget _buildRestoreOnly(BuildContext context) {
-    final localization = AppLocalization.of(context)!;
     final statusMessage = _statusMessage;
 
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: _buildRestoreOnlyDialog(context, statusMessage),
+    );
+  }
+
+  Widget _buildRestoreOnlyDialog(BuildContext context, String? statusMessage) {
     return AlertDialog(
-      title: Text(localization.restorePurchases),
+      title: Text(_strings.get(BetaStr.restorePurchases)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             !_loading && !_isAvailable
-                ? 'The store isn\'t available on this device.'
-                : 'Restore a subscription you bought in this app so it applies to your account. New plans are bought in the new Invoice Ninja app.',
+                ? _strings.get(BetaStr.storeUnavailable)
+                : _strings.get(BetaStr.restoreBody),
           ),
           if (_loading || _isRestoring || statusMessage != null) ...[
             SizedBox(height: 20),
@@ -239,12 +259,12 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(localization.close.toUpperCase()),
+          child: Text(_strings.get(BetaStr.close).toUpperCase()),
         ),
         if (!_loading && _isAvailable)
           TextButton(
             onPressed: _isRestoring ? null : _restore,
-            child: Text(localization.restorePurchases.toUpperCase()),
+            child: Text(_strings.get(BetaStr.restorePurchases).toUpperCase()),
           ),
       ],
     );
@@ -458,7 +478,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           _isRestoring = false;
           _statusMessage = message.isNotEmpty
               ? message
-              : 'The purchase couldn\'t be applied to your account.';
+              : _strings.get(BetaStr.purchaseNotApplied);
         });
       }
 
@@ -469,7 +489,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       setState(() {
         _purchases.add(purchaseDetails);
         _isRestoring = false;
-        _statusMessage = 'Your subscription is linked to this account.';
+        _statusMessage = _strings.get(BetaStr.purchaseLinked);
       });
     }
 

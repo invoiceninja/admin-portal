@@ -15,10 +15,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_controller.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -88,14 +88,23 @@ bool supportsInAppPurchase() {
 bool isInAppStoreBuild() =>
     isApple() || (isAndroid() && AppReview.isStoreBuild);
 
+/// Whether [openStoreSubscriptions] has somewhere to go on this device
+bool canOpenStoreSubscriptions() => isIOS() || isAndroid() || isMacOS();
+
 /// Opens where a store subscription to this app is managed
 void openStoreSubscriptions() {
   if (isIOS()) {
     IosOpenSubscriptionsSettings.openSubscriptionsSettings();
   } else if (isAndroid()) {
-    launchUrl(Uri.parse(kPlaySubscriptionsUrl));
+    launchUrl(
+      Uri.parse(kPlaySubscriptionsUrl),
+      mode: LaunchMode.externalApplication,
+    );
   } else if (isMacOS()) {
-    launchUrl(Uri.parse(kAppleSubscriptionsUrl));
+    launchUrl(
+      Uri.parse(kAppleSubscriptionsUrl),
+      mode: LaunchMode.externalApplication,
+    );
   }
 }
 
@@ -115,25 +124,46 @@ void initiatePurchase() {
       launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
     } else if (state.isProPlan) {
       // Not the portal, the stores don't allow pointing to another way to pay
-      final strings = BetaPromoStrings(AppLocalization.of(context)!.localeCode);
-      showMessageDialog(
-        message: strings.get(BetaStr.managePlan),
-        secondaryActions: [
-          TextButton(
-            onPressed: () {
-              navigatorKey.currentState?.pop();
-              showBetaPromoDialog(isManual: true);
-            },
-            child: Text(strings.get(BetaStr.getNewApp).toUpperCase()),
-          ),
-        ],
-      );
+      _showManagePlanDialog(context, state);
     } else {
-      showBetaPromoDialog(isManual: true);
+      // A free plan tapping Upgrade, so the prompt says where plans are sold
+      showBetaPromoDialog(isManual: true, isUpgrade: true);
     }
   } else {
     launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
   }
+}
+
+// English and left to right like the rest of the move copy, so nothing from
+// AppLocalization, not even the buttons
+void _showManagePlanDialog(BuildContext context, AppState state) {
+  const strings = BetaPromoStrings();
+  final canMove =
+      BetaPromoController.isAvailable && BetaPromoController.allowsState(state);
+
+  showDialog<void>(
+    context: context,
+    builder: (BuildContext context) => Directionality(
+      textDirection: TextDirection.ltr,
+      child: AlertDialog(
+        content: Text(strings.get(BetaStr.managePlan)),
+        actions: [
+          if (canMove)
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                showBetaPromoDialog(isManual: true);
+              },
+              child: Text(strings.get(BetaStr.getNewApp).toUpperCase()),
+            ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(strings.get(BetaStr.close).toUpperCase()),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();
@@ -171,10 +201,6 @@ bool isLinux() {
 
   return Platform.isLinux;
 }
-
-// SNAP alone also leaks into other builds launched from a snap's terminal
-bool isInvoiceNinjaSnap() =>
-    isLinux() && Platform.environment['SNAP_NAME'] == 'invoiceninja';
 
 bool isAndroid() {
   if (kIsWeb) {

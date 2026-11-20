@@ -1440,7 +1440,7 @@ void _showAbout(BuildContext context) async {
                     child: apppIcon,
                   ),
                   title: Text(
-                    'Invoice Ninja Legacy',
+                    kAppDisplayName,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   subtitle: Text(subtitle),
@@ -1454,6 +1454,9 @@ void _showAbout(BuildContext context) async {
                     );
                   },
                   onLongPress: () async {
+                    // The only way into UpgradeDialog's purchase UI, on
+                    // purpose: plans aren't sold in this app any more, and
+                    // this keeps a debug path to test delivery with
                     if (!kReleaseMode && supportsInAppPurchase()) {
                       showDialog<void>(
                         context: context,
@@ -1486,11 +1489,12 @@ void _showAbout(BuildContext context) async {
                   title: Text(state.user.fullName),
                   subtitle: Text(state.user.email),
                 ),
-                if (BetaPromoController.isAvailable)
+                if (BetaPromoController.isAvailable &&
+                    BetaPromoController.allowsState(state))
                   AppButton(
-                    label: BetaPromoStrings(
-                      localization.localeCode,
-                    ).get(BetaStr.getNewApp).toUpperCase(),
+                    label: const BetaPromoStrings()
+                        .get(BetaStr.getNewApp)
+                        .toUpperCase(),
                     iconData: Icons.rocket_launch,
                     color: Colors.indigo,
                     onPressed: () {
@@ -1693,7 +1697,22 @@ void _showAbout(BuildContext context) async {
                     );
                   },
                 ),
-                SizedBox(height: 22),
+                SizedBox(height: 12),
+                // Reachable once signed in too, not only from the login page
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  children: [
+                    TextButton(
+                      child: Text(localization.termsOfService),
+                      onPressed: () => launchUrl(Uri.parse(kTermsOfServiceURL)),
+                    ),
+                    TextButton(
+                      child: Text(localization.privacyPolicy),
+                      onPressed: () => launchUrl(Uri.parse(kPrivacyPolicyURL)),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
                 Wrap(
                   alignment: WrapAlignment.center,
                   children: [

@@ -534,7 +534,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           ),
                     // The OS's name for the app (Android recents), not
                     // kAppName, which also names the web database
-                    title: 'Invoice Ninja Legacy',
+                    title: kAppDisplayName,
                     onGenerateRoute: isMobile(context) ? null : generateRoute,
                     routes: isMobile(context)
                         ? {
