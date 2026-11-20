@@ -446,7 +446,7 @@ class _AccountOverview extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: IconText(
                       icon: MdiIcons.openInNew,
-                      text: const BetaPromoStrings()
+                      text: BetaPromoStrings.of(state)
                           .get(BetaStr.manageSubscription)
                           .toUpperCase(),
                     ),
@@ -458,7 +458,7 @@ class _AccountOverview extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(
-                  const BetaPromoStrings().get(BetaStr.subscriptionInStore),
+                  BetaPromoStrings.of(state).get(BetaStr.subscriptionInStore),
                   textAlign: TextAlign.center,
                   textDirection: TextDirection.ltr,
                 ),

@@ -121,8 +121,14 @@ Future<bool> launchMoveUrl(String url) async {
 String get moveContactUrl =>
     'mailto:$kBetaContactEmail?subject=${Uri.encodeComponent(kAppDisplayName)}';
 
-/// [date] written out in full, in English like the sentence around it
-String formatMoveDate(DateTime date) => DateFormat.yMMMMd('en').format(date);
+/// [date] written out in full, in the language of the sentence around it
+String formatMoveDate(DateTime date, BetaPromoStrings strings) {
+  try {
+    return DateFormat.yMMMMd(strings.sourceLocale).format(date);
+  } catch (_) {
+    return DateFormat.yMMMMd('en').format(date);
+  }
+}
 
 /// Asks the user to move to the new app before this one is retired. Opened
 /// by [BetaPromoController] once the account has loaded, and by hand from the
@@ -153,7 +159,7 @@ Future<void> showBetaPromoDialog({
 
   final user = state.user;
   final controller = BetaPromoController.instance;
-  const strings = BetaPromoStrings();
+  final strings = BetaPromoStrings.of(state);
   final isDark = state.prefState.enableDarkMode;
   final platform = currentBetaPlatform();
   // The switch has to hold on the web too, where the browser may be Android's
@@ -215,7 +221,7 @@ Future<void> showBetaPromoDialog({
         hasEngaged: controller.hasEngaged,
         isBelowFloor: isBelowFloor,
         webAppUrl: newAppWebUrl(state),
-        sunsetDate: formatMoveDate(kSunsetDate),
+        sunsetDate: formatMoveDate(kSunsetDate, strings),
         isAfterSunset: isAfterSunset,
         // Only a plan someone pays for comes with them, a trial or a free
         // plan has nothing to carry over
@@ -242,7 +248,8 @@ Future<void> showBetaPromoDialog({
       );
 
       return PointerInterceptor(
-        // The copy is English in every locale, so it reads left to right
+        // The copy is English or another left-to-right language in every
+        // locale, so it reads left to right
         child: Directionality(textDirection: TextDirection.ltr, child: dialog),
       );
     },

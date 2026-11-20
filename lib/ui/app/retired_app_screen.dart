@@ -24,8 +24,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 ///
 /// Sits above the navigator, so nothing here may need an Overlay: no
 /// tooltips, menus or dialogs. There's no Restore button, the server refuses
-/// this version's requests by now. English and left to right in every
-/// locale, like the rest of the move copy.
+/// this version's requests by now. Left to right in every locale, like the
+/// rest of the move copy.
 class RetiredAppScreen extends StatefulWidget {
   const RetiredAppScreen({Key? key}) : super(key: key);
 
@@ -85,7 +85,7 @@ class _RetiredAppScreenState extends State<RetiredAppScreen> {
 
   Widget _build(Store<AppState> store) {
     final state = store.state;
-    const strings = BetaPromoStrings();
+    final strings = BetaPromoStrings.of(state);
     final palette = BetaPromoPalette(state.prefState.enableDarkMode);
     final platform = currentBetaPlatform();
     // The web app, which is always ours and https: only a hosted server

@@ -88,10 +88,13 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   String? _statusMessage;
   Timer? _restoreTimer;
 
-  static const _strings = BetaPromoStrings();
+  late final BetaPromoStrings _strings;
 
   @override
   void initState() {
+    _strings = BetaPromoStrings.of(
+      StoreProvider.of<AppState>(context, listen: false).state,
+    );
     final Stream<List<PurchaseDetails>> purchaseUpdated =
         _inAppPurchase.purchaseStream;
     _subscription = purchaseUpdated.listen(
@@ -215,8 +218,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     });
   }
 
-  // English and left to right like the rest of the move copy, so nothing
-  // from AppLocalization, not even the buttons
+  // Left to right like the rest of the move copy, and nothing from
+  // AppLocalization, not even the buttons
   Widget _buildRestoreOnly(BuildContext context) {
     final statusMessage = _statusMessage;
 
