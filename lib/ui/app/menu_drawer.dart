@@ -1492,7 +1492,7 @@ void _showAbout(BuildContext context) async {
                 if (BetaPromoController.isAvailable &&
                     BetaPromoController.allowsState(state))
                   AppButton(
-                    label: const BetaPromoStrings()
+                    label: BetaPromoStrings.of(state)
                         .get(BetaStr.getNewApp)
                         .toUpperCase(),
                     iconData: Icons.rocket_launch,

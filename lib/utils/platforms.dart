@@ -134,10 +134,10 @@ void initiatePurchase() {
   }
 }
 
-// English and left to right like the rest of the move copy, so nothing from
+// Left to right like the rest of the move copy, and nothing from
 // AppLocalization, not even the buttons
 void _showManagePlanDialog(BuildContext context, AppState state) {
-  const strings = BetaPromoStrings();
+  final strings = BetaPromoStrings.of(state);
   final canMove =
       BetaPromoController.isAvailable && BetaPromoController.allowsState(state);
 

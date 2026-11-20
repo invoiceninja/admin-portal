@@ -39,7 +39,7 @@ class BetaPromoSidebarTile extends StatelessWidget {
           return SizedBox();
         }
 
-        final title = const BetaPromoStrings().get(BetaStr.getNewApp);
+        final title = BetaPromoStrings.of(state).get(BetaStr.getNewApp);
 
         return Material(
           child: Tooltip(
@@ -86,7 +86,7 @@ class BetaPromoDashboardCard extends StatelessWidget {
           return SizedBox();
         }
 
-        const strings = BetaPromoStrings();
+        final strings = BetaPromoStrings.of(state);
 
         // One target with nothing else in the row, on a narrow phone buttons
         // would leave the sentence a few words per line
