@@ -20,11 +20,33 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
-/// Set once the server says this version is no longer supported, which is
-/// how this app is retired in favor of the new one. The app shows
-/// RetiredAppScreen over everything from then on. Set by the server alone,
-/// never by a date, so the sunset can move with a server change.
+/// Set once one of our hosted servers says this version is no longer
+/// supported, which is how this app is retired in favor of the new one. The
+/// app shows RetiredAppScreen over everything from then on. Set by the server
+/// alone, never by a date, so the sunset can move with a server change.
 final ValueNotifier<bool> appRetired = ValueNotifier<bool>(false);
+
+/// Whether [url] is on one of our hosted servers, the only ones whose minimum
+/// version retires this app. A selfhosted server sends a minimum of its own,
+/// and a mistyped server URL can reach anything, neither may retire it.
+bool isHostedServerUrl(String url) {
+  final uri = Uri.tryParse(url.trim());
+
+  if (uri == null || uri.scheme != 'https' || uri.port != 443) {
+    return false;
+  }
+
+  final host = uri.host.toLowerCase();
+
+  // The same servers AuthState.isHosted treats as ours
+  return [
+        kAppProductionUrl,
+        kAppStagingUrl,
+        kAppStagingNetUrl,
+        kFlutterDemoUrl,
+      ].any((hostedUrl) => Uri.parse(hostedUrl).host == host) ||
+      host.endsWith('.invoicing.co');
+}
 
 class WebClient {
   const WebClient();
@@ -250,11 +272,14 @@ class WebClient {
       );
     } else if (serverVersion == null) {
       throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
-    } else if (Version.parse(kClientVersion) <
-        Version.parse(minClientVersion!)) {
+    } else if (minClientVersion != null &&
+        Version.parse(kClientVersion) < Version.parse(minClientVersion)) {
       // A 5xx is thrown above before the version is checked, so a server
-      // error never retires the app; the next good response does
-      appRetired.value = true;
+      // error never retires the app; the next good response does. Only our
+      // own servers retire it, any other just refuses the request.
+      if (isHostedServerUrl(url)) {
+        appRetired.value = true;
+      }
       throw 'Error: client not supported, please update to the latest version [Current v$kClientVersion < Minimum v$minClientVersion]';
     } else if (Version.parse(serverVersion) <
         Version.parse(kMinServerVersion)) {

@@ -57,7 +57,7 @@ class AppTitleBar extends StatelessWidget {
                         Image.asset('assets/images/icon.png', width: 16),
                         SizedBox(width: 6),
                         Text(
-                          'Invoice Ninja Legacy',
+                          kAppDisplayName,
                           style: TextStyle(color: state.headerTextColor),
                         ),
                       ],

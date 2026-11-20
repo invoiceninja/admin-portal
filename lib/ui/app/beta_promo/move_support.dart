@@ -54,8 +54,9 @@ DateTime _day(DateTime value) =>
 
 /// Whether an OS version is below the oldest the new app runs on: iOS 15,
 /// macOS 12 and Android 8.0 (API 26). This app runs from iOS 13, macOS 11 and
-/// Android 7. Null for a platform the new app has no minimum on here.
-bool? isBelowNewAppFloor({int? iosMajor, int? macosMajor, int? androidSdk}) {
+/// Android 7. False when no version is given, a platform the new app has no
+/// minimum on here.
+bool isBelowNewAppFloor({int? iosMajor, int? macosMajor, int? androidSdk}) {
   if (iosMajor != null) {
     return iosMajor < 15;
   } else if (macosMajor != null) {
@@ -64,7 +65,7 @@ bool? isBelowNewAppFloor({int? iosMajor, int? macosMajor, int? androidSdk}) {
     return androidSdk < 26;
   }
 
-  return null;
+  return false;
 }
 
 Future<bool>? _belowNewAppFloor;
@@ -86,15 +87,15 @@ Future<bool> _readBelowNewAppFloor() async {
       final version = (await deviceInfo.iosInfo).systemVersion;
       final major = int.tryParse(version.split('.').first);
 
-      return major != null && isBelowNewAppFloor(iosMajor: major)!;
+      return major != null && isBelowNewAppFloor(iosMajor: major);
     } else if (isMacOS()) {
       final major = (await deviceInfo.macOsInfo).majorVersion;
 
-      return isBelowNewAppFloor(macosMajor: major)!;
+      return isBelowNewAppFloor(macosMajor: major);
     } else if (isAndroid()) {
       final sdk = (await deviceInfo.androidInfo).version.sdkInt;
 
-      return isBelowNewAppFloor(androidSdk: sdk)!;
+      return isBelowNewAppFloor(androidSdk: sdk);
     }
   } catch (error) {
     print('## ERROR: failed to read the OS version - $error');

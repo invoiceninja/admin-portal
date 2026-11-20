@@ -72,13 +72,19 @@ class BetaPromoController {
   bool showsEntryFor(AppState state) => showEntry.value && allowsState(state);
 
   Future<void> start(Store<AppState> store) async {
-    if (_isStarted || !isAvailable) {
+    if (_isStarted) {
       return;
     }
     _isStarted = true;
 
     try {
       final prefs = _prefs = await SharedPreferences.getInstance();
+      await _deleteBetaInviteState(prefs);
+
+      if (!isAvailable) {
+        return;
+      }
+
       final shownAt = prefs.getInt(kSharedPrefMovePromoShownAt);
       _lastShown = shownAt == null
           ? null
@@ -208,6 +214,16 @@ class BetaPromoController {
     hasEngaged = true;
 
     _save((prefs) => prefs.setBool(kSharedPrefMovePromoEngaged, true));
+  }
+
+  // The beta invitation's state is never read again, and the Windows one held
+  // an email address. Removed once, a key that isn't there is skipped.
+  Future<void> _deleteBetaInviteState(SharedPreferences prefs) async {
+    for (final key in kSharedPrefBetaPromoKeys) {
+      if (prefs.containsKey(key)) {
+        await prefs.remove(key);
+      }
+    }
   }
 
   // On the web a full localStorage makes the write throw

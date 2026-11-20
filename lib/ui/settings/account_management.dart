@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_header.dart';
+import 'package:invoiceninja_flutter/ui/app/beta_promo/beta_promo_strings.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -434,14 +435,34 @@ class _AccountOverview extends StatelessWidget {
             ),
           ),
         if (state.isHosted) ...[
+          // Bought in a store, so managed there: the store's own page where
+          // this device has one, else a word on where to find it
           if (state.isProPlan && account.hasIapPlan)
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                localization.useMobileToManagePlan,
-                textAlign: TextAlign.center,
-              ),
-            )
+            if (canOpenStoreSubscriptions())
+              Padding(
+                padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+                child: OutlinedButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconText(
+                      icon: MdiIcons.openInNew,
+                      text: const BetaPromoStrings()
+                          .get(BetaStr.manageSubscription)
+                          .toUpperCase(),
+                    ),
+                  ),
+                  onPressed: openStoreSubscriptions,
+                ),
+              )
+            else
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  const BetaPromoStrings().get(BetaStr.subscriptionInStore),
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.ltr,
+                ),
+              )
           else
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
@@ -543,24 +564,23 @@ class _AccountOverview extends StatelessWidget {
             ),
           ],
         ),
-        if (state.isSelfHosted) ...[
+        // A license is sold and applied outside the store, which store builds
+        // can't offer, so neither button is shown there
+        if (state.isSelfHosted && !isInAppStoreBuild()) ...[
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                // Sold outside the store, which store builds can't offer
-                if (!isInAppStoreBuild()) ...[
-                  Expanded(
-                    child: AppButton(
-                      label: localization.purchaseLicense.toUpperCase(),
-                      iconData: isMobile(context) ? null : Icons.cloud_download,
-                      onPressed: () async {
-                        launchUrl(Uri.parse(kWhiteLabelUrl));
-                      },
-                    ),
+                Expanded(
+                  child: AppButton(
+                    label: localization.purchaseLicense.toUpperCase(),
+                    iconData: isMobile(context) ? null : Icons.cloud_download,
+                    onPressed: () async {
+                      launchUrl(Uri.parse(kWhiteLabelUrl));
+                    },
                   ),
-                  SizedBox(width: kGutterWidth),
-                ],
+                ),
+                SizedBox(width: kGutterWidth),
                 Expanded(
                   child: AppButton(
                     label: localization.applyLicense.toUpperCase(),

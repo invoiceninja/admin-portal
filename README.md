@@ -1,12 +1,14 @@
-# Invoice Ninja
+# Invoice Ninja Legacy
 
-Client application for [Invoice Ninja](https://github.com/invoiceninja/invoiceninja).
+The previous client application for [Invoice Ninja](https://github.com/invoiceninja/invoiceninja), now being retired.
+
+**Invoice Ninja has a new app: [invoiceninja/app](https://github.com/invoiceninja/app).** Your data stays in your account, so install the new app and sign in with the same account. The Linux downloads (Snap, Flatpak) are the new app.
+
+This app's remaining store listings, until it is retired:
 
 #### Desktop Apps
 - [Windows](https://apps.microsoft.com/store/detail/invoice-ninja/9N3F2BBCFDR6)
 - [macOS](https://apps.apple.com/app/id1503970375?platform=mac)
-- [Linux - Snap](https://snapcraft.io/invoiceninja)
-- [Linux - Flatpak](https://flathub.org/apps/com.invoiceninja.InvoiceNinja)
 
 #### Mobile Apps
 - [iOS](https://apps.apple.com/app/id1503970375?platform=iphone)
